@@ -16,6 +16,9 @@
 		1F5FEA041FAB226D0093963A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5FEA031FAB226D0093963A /* main.m */; };
 		1F5FEA0E1FAB226D0093963A /* Wisnuc_iOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5FEA0D1FAB226D0093963A /* Wisnuc_iOSTests.m */; };
 		1F5FEA191FAB226D0093963A /* Wisnuc_iOSUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5FEA181FAB226D0093963A /* Wisnuc_iOSUITests.m */; };
+		1F5FEA2B1FAB248A0093963A /* FMUserLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5FEA271FAB24890093963A /* FMUserLoginViewController.m */; };
+		1F5FEA2C1FAB248A0093963A /* FMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5FEA281FAB24890093963A /* FMLoginViewController.m */; };
+		1F5FEA2F1FAB24A20093963A /* FMHandLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5FEA2E1FAB24A20093963A /* FMHandLoginVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,12 @@
 		1F5FEA141FAB226D0093963A /* Wisnuc-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Wisnuc-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F5FEA181FAB226D0093963A /* Wisnuc_iOSUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Wisnuc_iOSUITests.m; sourceTree = "<group>"; };
 		1F5FEA1A1FAB226D0093963A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1F5FEA271FAB24890093963A /* FMUserLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMUserLoginViewController.m; sourceTree = "<group>"; };
+		1F5FEA281FAB24890093963A /* FMLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMLoginViewController.m; sourceTree = "<group>"; };
+		1F5FEA291FAB24890093963A /* FMUserLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMUserLoginViewController.h; sourceTree = "<group>"; };
+		1F5FEA2A1FAB248A0093963A /* FMLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMLoginViewController.h; sourceTree = "<group>"; };
+		1F5FEA2D1FAB24A20093963A /* FMHandLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMHandLoginVC.h; sourceTree = "<group>"; };
+		1F5FEA2E1FAB24A20093963A /* FMHandLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMHandLoginVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +112,7 @@
 		1F5FE9F01FAB226D0093963A /* Wisnuc-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				1F5FEA261FAB246B0093963A /* Controller */,
 				1F5FE9F11FAB226D0093963A /* AppDelegate.h */,
 				1F5FE9F21FAB226D0093963A /* AppDelegate.m */,
 				1F5FE9F41FAB226D0093963A /* ViewController.h */,
@@ -133,6 +143,19 @@
 				1F5FEA1A1FAB226D0093963A /* Info.plist */,
 			);
 			path = "Wisnuc-iOSUITests";
+			sourceTree = "<group>";
+		};
+		1F5FEA261FAB246B0093963A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				1F5FEA2D1FAB24A20093963A /* FMHandLoginVC.h */,
+				1F5FEA2E1FAB24A20093963A /* FMHandLoginVC.m */,
+				1F5FEA2A1FAB248A0093963A /* FMLoginViewController.h */,
+				1F5FEA281FAB24890093963A /* FMLoginViewController.m */,
+				1F5FEA291FAB24890093963A /* FMUserLoginViewController.h */,
+				1F5FEA271FAB24890093963A /* FMUserLoginViewController.m */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -269,7 +292,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F5FE9F61FAB226D0093963A /* ViewController.m in Sources */,
+				1F5FEA2F1FAB24A20093963A /* FMHandLoginVC.m in Sources */,
+				1F5FEA2B1FAB248A0093963A /* FMUserLoginViewController.m in Sources */,
 				1F5FE9FC1FAB226D0093963A /* Wisnuc_iOS.xcdatamodeld in Sources */,
+				1F5FEA2C1FAB248A0093963A /* FMLoginViewController.m in Sources */,
 				1F5FEA041FAB226D0093963A /* main.m in Sources */,
 				1F5FE9F31FAB226D0093963A /* AppDelegate.m in Sources */,
 			);
