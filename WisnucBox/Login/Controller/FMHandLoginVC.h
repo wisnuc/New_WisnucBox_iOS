@@ -6,10 +6,10 @@
 //  Copyright © 2016年 WinSun. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "FABaseVC.h"
 
-//typedef void(^HandlecompleteBlock)(FMSerachService * service);
+typedef void(^HandlecompleteBlock)(FMSerachService * service);
 
-@interface FMHandLoginVC : UIViewController
-//@property (nonatomic) HandlecompleteBlock block;
+@interface FMHandLoginVC : FABaseVC
+@property (nonatomic) HandlecompleteBlock block;
 @end

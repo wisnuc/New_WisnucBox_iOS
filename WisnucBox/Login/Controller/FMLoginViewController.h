@@ -6,8 +6,8 @@
 //  Copyright © 2017年 WinSun. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "FABaseVC.h"
 
-@interface FMLoginViewController : UIViewController
+@interface FMLoginViewController : FABaseVC
 
 @end

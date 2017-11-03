@@ -9,6 +9,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FMUserLoginViewController : UIViewController
+@interface FMUserLoginViewController : FABaseVC
+@property (nonatomic) UserModel * user;
 
+@property (nonatomic) FMSerachService * service;
 @end

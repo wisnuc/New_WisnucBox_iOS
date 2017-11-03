@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F1251591FAC20D300EABF16 /* UIButton+EnlargeEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1251581FAC20D200EABF16 /* UIButton+EnlargeEdge.m */; };
+		1F12515C1FAC395D00EABF16 /* UIButton+Universal.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F12515A1FAC395D00EABF16 /* UIButton+Universal.m */; };
+		1F1251601FAC39AC00EABF16 /* UIImage+GKContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F12515E1FAC39AB00EABF16 /* UIImage+GKContact.m */; };
+		1F1251661FAC3A5400EABF16 /* UIColor+fm_color.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1251621FAC3A5300EABF16 /* UIColor+fm_color.m */; };
+		1F1251671FAC3A5400EABF16 /* UIColor+FM_UserHeadImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1251651FAC3A5400EABF16 /* UIColor+FM_UserHeadImage.m */; };
+		1F12516B1FAC3AC600EABF16 /* SXLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F12516A1FAC3AC600EABF16 /* SXLoadingView.m */; };
+		1F12516F1FAC3B5000EABF16 /* FMSerachService.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F12516D1FAC3B5000EABF16 /* FMSerachService.m */; };
+		1F4D75481FAC3DD500E6516C /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75461FAC3DD500E6516C /* UserModel.m */; };
 		1F5FEA351FAC0FA00093963A /* FMLoginTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5FEA341FAC0FA00093963A /* FMLoginTextField.m */; };
 		1F5FEA391FAC15830093963A /* DGPopUpViewTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F5FEA371FAC15820093963A /* DGPopUpViewTextView.xib */; };
 		1F5FEA3A1FAC15830093963A /* DGPopUpViewTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5FEA381FAC15820093963A /* DGPopUpViewTextView.m */; };
@@ -43,6 +51,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1F1251571FAC20D200EABF16 /* UIButton+EnlargeEdge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+EnlargeEdge.h"; sourceTree = "<group>"; };
+		1F1251581FAC20D200EABF16 /* UIButton+EnlargeEdge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+EnlargeEdge.m"; sourceTree = "<group>"; };
+		1F12515A1FAC395D00EABF16 /* UIButton+Universal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Universal.m"; sourceTree = "<group>"; };
+		1F12515B1FAC395D00EABF16 /* UIButton+Universal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Universal.h"; sourceTree = "<group>"; };
+		1F12515E1FAC39AB00EABF16 /* UIImage+GKContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GKContact.m"; sourceTree = "<group>"; };
+		1F12515F1FAC39AB00EABF16 /* UIImage+GKContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+GKContact.h"; sourceTree = "<group>"; };
+		1F1251621FAC3A5300EABF16 /* UIColor+fm_color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+fm_color.m"; sourceTree = "<group>"; };
+		1F1251631FAC3A5300EABF16 /* UIColor+FM_UserHeadImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+FM_UserHeadImage.h"; sourceTree = "<group>"; };
+		1F1251641FAC3A5300EABF16 /* UIColor+fm_color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+fm_color.h"; sourceTree = "<group>"; };
+		1F1251651FAC3A5400EABF16 /* UIColor+FM_UserHeadImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+FM_UserHeadImage.m"; sourceTree = "<group>"; };
+		1F1251691FAC3AC600EABF16 /* SXLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SXLoadingView.h; sourceTree = "<group>"; };
+		1F12516A1FAC3AC600EABF16 /* SXLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SXLoadingView.m; sourceTree = "<group>"; };
+		1F12516D1FAC3B5000EABF16 /* FMSerachService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMSerachService.m; sourceTree = "<group>"; };
+		1F12516E1FAC3B5000EABF16 /* FMSerachService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMSerachService.h; sourceTree = "<group>"; };
+		1F4D75461FAC3DD500E6516C /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
+		1F4D75471FAC3DD500E6516C /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
 		1F5FEA331FAC0FA00093963A /* FMLoginTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMLoginTextField.h; sourceTree = "<group>"; };
 		1F5FEA341FAC0FA00093963A /* FMLoginTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMLoginTextField.m; sourceTree = "<group>"; };
 		1F5FEA361FAC15820093963A /* DGPopUpViewTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGPopUpViewTextView.h; sourceTree = "<group>"; };
@@ -50,6 +74,10 @@
 		1F5FEA381FAC15820093963A /* DGPopUpViewTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGPopUpViewTextView.m; sourceTree = "<group>"; };
 		1F5FEA3D1FAC17300093963A /* FABaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FABaseVC.m; sourceTree = "<group>"; };
 		1F5FEA3E1FAC17310093963A /* FABaseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FABaseVC.h; sourceTree = "<group>"; };
+		1F5FEA411FAC188B0093963A /* FruitMixBlockDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FruitMixBlockDefine.h; sourceTree = "<group>"; };
+		1F5FEA421FAC188B0093963A /* FruitMixDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FruitMixDefine.h; sourceTree = "<group>"; };
+		1F5FEA431FAC188B0093963A /* FMColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMColors.h; sourceTree = "<group>"; };
+		1F5FEA441FAC18CA0093963A /* WisnucBox.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WisnucBox.pch; sourceTree = "<group>"; };
 		C2D8D4B5F409EFFBC1911C0E /* Pods-WisnucBox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.release.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.release.xcconfig"; sourceTree = "<group>"; };
 		EDB405E0F4B341258F4BE354 /* Pods_WisnucBox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WisnucBox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5FF1872DA4936232A1171B7 /* Pods-WisnucBox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.debug.xcconfig"; sourceTree = "<group>"; };
@@ -103,9 +131,61 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F1251561FAC20C700EABF16 /* UIButton */ = {
+			isa = PBXGroup;
+			children = (
+				1F1251571FAC20D200EABF16 /* UIButton+EnlargeEdge.h */,
+				1F1251581FAC20D200EABF16 /* UIButton+EnlargeEdge.m */,
+				1F12515B1FAC395D00EABF16 /* UIButton+Universal.h */,
+				1F12515A1FAC395D00EABF16 /* UIButton+Universal.m */,
+			);
+			path = UIButton;
+			sourceTree = "<group>";
+		};
+		1F12515D1FAC399700EABF16 /* UIIamge */ = {
+			isa = PBXGroup;
+			children = (
+				1F12515F1FAC39AB00EABF16 /* UIImage+GKContact.h */,
+				1F12515E1FAC39AB00EABF16 /* UIImage+GKContact.m */,
+			);
+			path = UIIamge;
+			sourceTree = "<group>";
+		};
+		1F1251611FAC3A3D00EABF16 /* UIColor */ = {
+			isa = PBXGroup;
+			children = (
+				1F1251641FAC3A5300EABF16 /* UIColor+fm_color.h */,
+				1F1251621FAC3A5300EABF16 /* UIColor+fm_color.m */,
+				1F1251631FAC3A5300EABF16 /* UIColor+FM_UserHeadImage.h */,
+				1F1251651FAC3A5400EABF16 /* UIColor+FM_UserHeadImage.m */,
+			);
+			path = UIColor;
+			sourceTree = "<group>";
+		};
+		1F1251681FAC3ABA00EABF16 /* HUD */ = {
+			isa = PBXGroup;
+			children = (
+				1F1251691FAC3AC600EABF16 /* SXLoadingView.h */,
+				1F12516A1FAC3AC600EABF16 /* SXLoadingView.m */,
+			);
+			path = HUD;
+			sourceTree = "<group>";
+		};
+		1F12516C1FAC3B3800EABF16 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1F4D75471FAC3DD500E6516C /* UserModel.h */,
+				1F4D75461FAC3DD500E6516C /* UserModel.m */,
+				1F12516E1FAC3B5000EABF16 /* FMSerachService.h */,
+				1F12516D1FAC3B5000EABF16 /* FMSerachService.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		1F5FEA311FAC0F6F0093963A /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				1F12516C1FAC3B3800EABF16 /* Model */,
 				1F5FEA321FAC0F900093963A /* View */,
 				F65035921FAC00FF0007979D /* Controller */,
 			);
@@ -127,6 +207,8 @@
 		1F5FEA3B1FAC16250093963A /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				1F1251681FAC3ABA00EABF16 /* HUD */,
+				1F5FEA451FAC1A4C0093963A /* Category */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -138,6 +220,27 @@
 				1F5FEA3D1FAC17300093963A /* FABaseVC.m */,
 			);
 			path = Based;
+			sourceTree = "<group>";
+		};
+		1F5FEA401FAC18640093963A /* Defines */ = {
+			isa = PBXGroup;
+			children = (
+				1F5FEA441FAC18CA0093963A /* WisnucBox.pch */,
+				1F5FEA431FAC188B0093963A /* FMColors.h */,
+				1F5FEA411FAC188B0093963A /* FruitMixBlockDefine.h */,
+				1F5FEA421FAC188B0093963A /* FruitMixDefine.h */,
+			);
+			path = Defines;
+			sourceTree = "<group>";
+		};
+		1F5FEA451FAC1A4C0093963A /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				1F1251611FAC3A3D00EABF16 /* UIColor */,
+				1F12515D1FAC399700EABF16 /* UIIamge */,
+				1F1251561FAC20C700EABF16 /* UIButton */,
+			);
+			path = Category;
 			sourceTree = "<group>";
 		};
 		95C9E3076DF87E8DB323CD2A /* Pods */ = {
@@ -174,6 +277,7 @@
 		F650355E1FAC00A60007979D /* WisnucBox */ = {
 			isa = PBXGroup;
 			children = (
+				1F5FEA401FAC18640093963A /* Defines */,
 				1F5FEA3C1FAC17180093963A /* Based */,
 				1F5FEA3B1FAC16250093963A /* Tools */,
 				1F5FEA311FAC0F6F0093963A /* Login */,
@@ -479,9 +583,17 @@
 				F65035641FAC00A60007979D /* AppDelegate.m in Sources */,
 				1F5FEA3F1FAC17310093963A /* FABaseVC.m in Sources */,
 				1F5FEA3A1FAC15830093963A /* DGPopUpViewTextView.m in Sources */,
+				1F1251601FAC39AC00EABF16 /* UIImage+GKContact.m in Sources */,
+				1F4D75481FAC3DD500E6516C /* UserModel.m in Sources */,
 				F650359A1FAC00FF0007979D /* FMHandLoginVC.m in Sources */,
+				1F12516F1FAC3B5000EABF16 /* FMSerachService.m in Sources */,
 				F650359B1FAC00FF0007979D /* FMLoginViewController.m in Sources */,
+				1F12516B1FAC3AC600EABF16 /* SXLoadingView.m in Sources */,
+				1F1251671FAC3A5400EABF16 /* UIColor+FM_UserHeadImage.m in Sources */,
+				1F12515C1FAC395D00EABF16 /* UIButton+Universal.m in Sources */,
+				1F1251661FAC3A5400EABF16 /* UIColor+fm_color.m in Sources */,
 				F650359C1FAC00FF0007979D /* FMUserLoginViewController.m in Sources */,
+				1F1251591FAC20D300EABF16 /* UIButton+EnlargeEdge.m in Sources */,
 				F65035611FAC00A60007979D /* main.m in Sources */,
 				1F5FEA351FAC0FA00093963A /* FMLoginTextField.m in Sources */,
 			);
@@ -636,6 +748,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 8SC32MU7TG;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "/Users/wisnuc-imac/Documents/New_WisnucBox_iOS/WisnucBox/Defines/WisnucBox.pch";
 				INFOPLIST_FILE = WisnucBox/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wisnuc.WisnucBox;
@@ -649,6 +763,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 8SC32MU7TG;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "/Users/wisnuc-imac/Documents/New_WisnucBox_iOS/WisnucBox/Defines/WisnucBox.pch";
 				INFOPLIST_FILE = WisnucBox/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wisnuc.WisnucBox;
