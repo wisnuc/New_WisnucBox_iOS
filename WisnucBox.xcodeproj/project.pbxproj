@@ -28,9 +28,6 @@
 		F650356F1FAC00A70007979D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F650356D1FAC00A70007979D /* LaunchScreen.storyboard */; };
 		F650357A1FAC00A70007979D /* WisnucBoxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035791FAC00A70007979D /* WisnucBoxTests.m */; };
 		F65035851FAC00A70007979D /* WisnucBoxUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035841FAC00A70007979D /* WisnucBoxUITests.m */; };
-		F650359A1FAC00FF0007979D /* FMHandLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035951FAC00FF0007979D /* FMHandLoginVC.m */; };
-		F650359B1FAC00FF0007979D /* FMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035971FAC00FF0007979D /* FMLoginViewController.m */; };
-		F650359C1FAC00FF0007979D /* FMUserLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035991FAC00FF0007979D /* FMUserLoginViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,12 +94,6 @@
 		F65035801FAC00A70007979D /* WisnucBoxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WisnucBoxUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F65035841FAC00A70007979D /* WisnucBoxUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WisnucBoxUITests.m; sourceTree = "<group>"; };
 		F65035861FAC00A70007979D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F65035941FAC00FF0007979D /* FMHandLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMHandLoginVC.h; sourceTree = "<group>"; };
-		F65035951FAC00FF0007979D /* FMHandLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMHandLoginVC.m; sourceTree = "<group>"; };
-		F65035961FAC00FF0007979D /* FMLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMLoginViewController.h; sourceTree = "<group>"; };
-		F65035971FAC00FF0007979D /* FMLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMLoginViewController.m; sourceTree = "<group>"; };
-		F65035981FAC00FF0007979D /* FMUserLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMUserLoginViewController.h; sourceTree = "<group>"; };
-		F65035991FAC00FF0007979D /* FMUserLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMUserLoginViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,7 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DE0A5E48BE214173521C303 /* Pods_WisnucBox.framework in Frameworks */,
+				CDE948E29C7CB81704A65159 /* Pods_WisnucBox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,37 +180,49 @@
 				1F5FEA321FAC0F900093963A /* View */,
 				F65035921FAC00FF0007979D /* Controller */,
 			);
-			path = Login;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		1F5FEA321FAC0F900093963A /* View */ = {
+		D9B3E6DE895EF13E2BDF26E5 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				1F5FEA361FAC15820093963A /* DGPopUpViewTextView.h */,
-				1F5FEA381FAC15820093963A /* DGPopUpViewTextView.m */,
-				1F5FEA371FAC15820093963A /* DGPopUpViewTextView.xib */,
-				1F5FEA331FAC0FA00093963A /* FMLoginTextField.h */,
-				1F5FEA341FAC0FA00093963A /* FMLoginTextField.m */,
+				70582270B9231CEB9A365B9C /* Pods-WisnucBox.debug.xcconfig */,
+				95E29BF9DD638FD32BD8BA2E /* Pods-WisnucBox.release.xcconfig */,
 			);
-			path = View;
+			name = Pods;
 			sourceTree = "<group>";
 		};
-		1F5FEA3B1FAC16250093963A /* Tools */ = {
+		F6005F541FAC1330003E909D /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
 				1F1251681FAC3ABA00EABF16 /* HUD */,
 				1F5FEA451FAC1A4C0093963A /* Category */,
 			);
-			path = Tools;
+			path = CoreData;
 			sourceTree = "<group>";
 		};
-		1F5FEA3C1FAC17180093963A /* Based */ = {
+		F6005F581FAC14FB003E909D /* ManagedObjects */ = {
 			isa = PBXGroup;
 			children = (
-				1F5FEA3E1FAC17310093963A /* FABaseVC.h */,
-				1F5FEA3D1FAC17300093963A /* FABaseVC.m */,
+				F6005F651FAC1639003E909D /* WBLocalAsset+CoreDataClass.h */,
+				F6005F661FAC1639003E909D /* WBLocalAsset+CoreDataClass.m */,
+				F6005F671FAC1639003E909D /* WBLocalAsset+CoreDataProperties.h */,
+				F6005F681FAC1639003E909D /* WBLocalAsset+CoreDataProperties.m */,
+				F6005F691FAC1639003E909D /* WBUser+CoreDataClass.h */,
+				F6005F6A1FAC1639003E909D /* WBUser+CoreDataClass.m */,
+				F6005F6B1FAC1639003E909D /* WBUser+CoreDataProperties.h */,
+				F6005F6C1FAC1639003E909D /* WBUser+CoreDataProperties.m */,
 			);
-			path = Based;
+			path = ManagedObjects;
+			sourceTree = "<group>";
+		};
+		F6005F711FAC18FD003E909D /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				F6005F721FAC1931003E909D /* default.pch */,
+				F6005F731FAC195B003E909D /* Define.h */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		1F5FEA401FAC18640093963A /* Defines */ = {
@@ -246,10 +249,66 @@
 		95C9E3076DF87E8DB323CD2A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				F5FF1872DA4936232A1171B7 /* Pods-WisnucBox.debug.xcconfig */,
-				C2D8D4B5F409EFFBC1911C0E /* Pods-WisnucBox.release.xcconfig */,
+				F6005F841FAC2C8B003E909D /* DBServices.h */,
+				F6005F851FAC2C8B003E909D /* DBServices.m */,
+				F6005F7B1FAC2C0E003E909D /* UserServices.h */,
+				F6005F7C1FAC2C0E003E909D /* UserServices.m */,
+				F6005F7E1FAC2C2F003E909D /* AssetsServices.h */,
+				F6005F7F1FAC2C2F003E909D /* AssetsServices.m */,
+				F6005F811FAC2C4F003E909D /* FilesServices.h */,
+				F6005F821FAC2C4F003E909D /* FilesServices.m */,
+				F6005F8A1FAC2FF8003E909D /* NetServices.h */,
+				F6005F8B1FAC2FF8003E909D /* NetServices.m */,
+				F6005F871FAC2CDD003E909D /* AppServices.h */,
+				F6005F881FAC2CDD003E909D /* AppServices.m */,
+				F6005F8D1FAC30F8003E909D /* ServiceProtocol.h */,
 			);
-			name = Pods;
+			path = Services;
+			sourceTree = "<group>";
+		};
+		F6005FAF1FAC3D9C003E909D /* Based */ = {
+			isa = PBXGroup;
+			children = (
+				F6005FB01FAC3D9C003E909D /* FABaseVC.h */,
+				F6005FB11FAC3D9C003E909D /* FABaseVC.m */,
+			);
+			name = Based;
+			path = WisnucBox/Modules/Based;
+			sourceTree = SOURCE_ROOT;
+		};
+		F6005FB21FAC3D9C003E909D /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				F6005FB31FAC3D9C003E909D /* Controller */,
+				F6005FBA1FAC3D9C003E909D /* View */,
+			);
+			name = Login;
+			path = WisnucBox/Modules/Login;
+			sourceTree = SOURCE_ROOT;
+		};
+		F6005FB31FAC3D9C003E909D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F6005FB41FAC3D9C003E909D /* FMHandLoginVC.h */,
+				F6005FB51FAC3D9C003E909D /* FMHandLoginVC.m */,
+				F6005FB61FAC3D9C003E909D /* FMLoginViewController.h */,
+				F6005FB71FAC3D9C003E909D /* FMLoginViewController.m */,
+				F6005FB81FAC3D9C003E909D /* FMUserLoginViewController.h */,
+				F6005FB91FAC3D9C003E909D /* FMUserLoginViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		F6005FBA1FAC3D9C003E909D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F6005FBB1FAC3D9C003E909D /* DGPopUpViewTextView.h */,
+				F6005FBC1FAC3D9C003E909D /* DGPopUpViewTextView.m */,
+				F6005FBD1FAC3D9C003E909D /* DGPopUpViewTextView.xib */,
+				F6005FBE1FAC3D9C003E909D /* FMLoginTextField.h */,
+				F6005FBF1FAC3D9C003E909D /* FMLoginTextField.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		F65035531FAC00A60007979D = {
@@ -259,8 +318,8 @@
 				F65035781FAC00A70007979D /* WisnucBoxTests */,
 				F65035831FAC00A70007979D /* WisnucBoxUITests */,
 				F650355D1FAC00A60007979D /* Products */,
-				95C9E3076DF87E8DB323CD2A /* Pods */,
-				FC14E2AAA530CEB2823817F5 /* Frameworks */,
+				D9B3E6DE895EF13E2BDF26E5 /* Pods */,
+				90744B10E8F94B50660A00D8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -320,25 +379,14 @@
 			path = WisnucBoxUITests;
 			sourceTree = "<group>";
 		};
-		F65035921FAC00FF0007979D /* Controller */ = {
+		F65035921FAC00FF0007979D /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				F65035941FAC00FF0007979D /* FMHandLoginVC.h */,
-				F65035951FAC00FF0007979D /* FMHandLoginVC.m */,
-				F65035961FAC00FF0007979D /* FMLoginViewController.h */,
-				F65035971FAC00FF0007979D /* FMLoginViewController.m */,
-				F65035981FAC00FF0007979D /* FMUserLoginViewController.h */,
-				F65035991FAC00FF0007979D /* FMUserLoginViewController.m */,
+				F6005FAF1FAC3D9C003E909D /* Based */,
+				F6005FB21FAC3D9C003E909D /* Login */,
 			);
+			name = Modules;
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		FC14E2AAA530CEB2823817F5 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				EDB405E0F4B341258F4BE354 /* Pods_WisnucBox.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -348,12 +396,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F65035891FAC00A70007979D /* Build configuration list for PBXNativeTarget "WisnucBox" */;
 			buildPhases = (
-				AB8EAF1A21980AA11BE56976 /* [CP] Check Pods Manifest.lock */,
+				2BA33A36FA417CC8F398A08A /* [CP] Check Pods Manifest.lock */,
 				F65035581FAC00A60007979D /* Sources */,
 				F65035591FAC00A60007979D /* Frameworks */,
 				F650355A1FAC00A60007979D /* Resources */,
-				73E935CCC0815EA244E8B5BE /* [CP] Embed Pods Frameworks */,
-				9911FB0AD46F3B523065E0C4 /* [CP] Copy Pods Resources */,
+				5C07CDE3069243D6C7FB5DF3 /* [CP] Embed Pods Frameworks */,
+				0800AAD4B26AEF1F0DA51905 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -455,7 +503,7 @@
 			files = (
 				F650356F1FAC00A70007979D /* LaunchScreen.storyboard in Resources */,
 				F650356C1FAC00A70007979D /* Assets.xcassets in Resources */,
-				1F5FEA391FAC15830093963A /* DGPopUpViewTextView.xib in Resources */,
+				F6005FC51FAC3D9C003E909D /* DGPopUpViewTextView.xib in Resources */,
 				F650356A1FAC00A70007979D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -477,7 +525,40 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		73E935CCC0815EA244E8B5BE /* [CP] Embed Pods Frameworks */ = {
+		0800AAD4B26AEF1F0DA51905 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2BA33A36FA417CC8F398A08A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WisnucBox-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5C07CDE3069243D6C7FB5DF3 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -539,39 +620,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9911FB0AD46F3B523065E0C4 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AB8EAF1A21980AA11BE56976 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-WisnucBox-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -579,7 +627,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6005FC01FAC3D9C003E909D /* FABaseVC.m in Sources */,
+				F6005F6D1FAC1639003E909D /* WBLocalAsset+CoreDataClass.m in Sources */,
+				F6005FC41FAC3D9C003E909D /* DGPopUpViewTextView.m in Sources */,
+				F6005F701FAC1639003E909D /* WBUser+CoreDataProperties.m in Sources */,
+				F6005F6E1FAC1639003E909D /* WBLocalAsset+CoreDataProperties.m in Sources */,
+				F6005F891FAC2CDD003E909D /* AppServices.m in Sources */,
+				F6005F6F1FAC1639003E909D /* WBUser+CoreDataClass.m in Sources */,
+				F6005F571FAC1340003E909D /* WisnucBox.xcdatamodeld in Sources */,
+				F6005F801FAC2C2F003E909D /* AssetsServices.m in Sources */,
+				F6005FC11FAC3D9C003E909D /* FMHandLoginVC.m in Sources */,
+				F6005FC21FAC3D9C003E909D /* FMLoginViewController.m in Sources */,
 				F65035671FAC00A60007979D /* ViewController.m in Sources */,
+				F6005FC31FAC3D9C003E909D /* FMUserLoginViewController.m in Sources */,
 				F65035641FAC00A60007979D /* AppDelegate.m in Sources */,
 				1F5FEA3F1FAC17310093963A /* FABaseVC.m in Sources */,
 				1F5FEA3A1FAC15830093963A /* DGPopUpViewTextView.m in Sources */,
@@ -595,7 +655,7 @@
 				F650359C1FAC00FF0007979D /* FMUserLoginViewController.m in Sources */,
 				1F1251591FAC20D300EABF16 /* UIButton+EnlargeEdge.m in Sources */,
 				F65035611FAC00A60007979D /* main.m in Sources */,
-				1F5FEA351FAC0FA00093963A /* FMLoginTextField.m in Sources */,
+				F6005FC61FAC3D9C003E909D /* FMLoginTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -744,7 +804,7 @@
 		};
 		F650358A1FAC00A70007979D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F5FF1872DA4936232A1171B7 /* Pods-WisnucBox.debug.xcconfig */;
+			baseConfigurationReference = 70582270B9231CEB9A365B9C /* Pods-WisnucBox.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 8SC32MU7TG;
@@ -759,7 +819,7 @@
 		};
 		F650358B1FAC00A70007979D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C2D8D4B5F409EFFBC1911C0E /* Pods-WisnucBox.release.xcconfig */;
+			baseConfigurationReference = 95E29BF9DD638FD32BD8BA2E /* Pods-WisnucBox.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 8SC32MU7TG;
@@ -862,6 +922,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F6005F551FAC1340003E909D /* WisnucBox.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F6005F561FAC1340003E909D /* WisnucBox.xcdatamodel */,
+			);
+			currentVersion = F6005F561FAC1340003E909D /* WisnucBox.xcdatamodel */;
+			path = WisnucBox.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = F65035541FAC00A60007979D /* Project object */;
 }
