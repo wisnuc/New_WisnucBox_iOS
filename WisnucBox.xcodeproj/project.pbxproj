@@ -19,6 +19,13 @@
 		F6005F861FAC2C8B003E909D /* DBServices.m in Sources */ = {isa = PBXBuildFile; fileRef = F6005F851FAC2C8B003E909D /* DBServices.m */; };
 		F6005F891FAC2CDD003E909D /* AppServices.m in Sources */ = {isa = PBXBuildFile; fileRef = F6005F881FAC2CDD003E909D /* AppServices.m */; };
 		F6005F8C1FAC2FF8003E909D /* NetServices.m in Sources */ = {isa = PBXBuildFile; fileRef = F6005F8B1FAC2FF8003E909D /* NetServices.m */; };
+		F6005FC01FAC3D9C003E909D /* FABaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F6005FB11FAC3D9C003E909D /* FABaseVC.m */; };
+		F6005FC11FAC3D9C003E909D /* FMHandLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F6005FB51FAC3D9C003E909D /* FMHandLoginVC.m */; };
+		F6005FC21FAC3D9C003E909D /* FMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6005FB71FAC3D9C003E909D /* FMLoginViewController.m */; };
+		F6005FC31FAC3D9C003E909D /* FMUserLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6005FB91FAC3D9C003E909D /* FMUserLoginViewController.m */; };
+		F6005FC41FAC3D9C003E909D /* DGPopUpViewTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F6005FBC1FAC3D9C003E909D /* DGPopUpViewTextView.m */; };
+		F6005FC51FAC3D9C003E909D /* DGPopUpViewTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6005FBD1FAC3D9C003E909D /* DGPopUpViewTextView.xib */; };
+		F6005FC61FAC3D9C003E909D /* FMLoginTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F6005FBF1FAC3D9C003E909D /* FMLoginTextField.m */; };
 		F65035611FAC00A60007979D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035601FAC00A60007979D /* main.m */; };
 		F65035641FAC00A60007979D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035631FAC00A60007979D /* AppDelegate.m */; };
 		F65035671FAC00A60007979D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035661FAC00A60007979D /* ViewController.m */; };
@@ -74,6 +81,19 @@
 		F6005F8A1FAC2FF8003E909D /* NetServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetServices.h; sourceTree = "<group>"; };
 		F6005F8B1FAC2FF8003E909D /* NetServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetServices.m; sourceTree = "<group>"; };
 		F6005F8D1FAC30F8003E909D /* ServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceProtocol.h; sourceTree = "<group>"; };
+		F6005FB01FAC3D9C003E909D /* FABaseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FABaseVC.h; sourceTree = "<group>"; };
+		F6005FB11FAC3D9C003E909D /* FABaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FABaseVC.m; sourceTree = "<group>"; };
+		F6005FB41FAC3D9C003E909D /* FMHandLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMHandLoginVC.h; sourceTree = "<group>"; };
+		F6005FB51FAC3D9C003E909D /* FMHandLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMHandLoginVC.m; sourceTree = "<group>"; };
+		F6005FB61FAC3D9C003E909D /* FMLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMLoginViewController.h; sourceTree = "<group>"; };
+		F6005FB71FAC3D9C003E909D /* FMLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMLoginViewController.m; sourceTree = "<group>"; };
+		F6005FB81FAC3D9C003E909D /* FMUserLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMUserLoginViewController.h; sourceTree = "<group>"; };
+		F6005FB91FAC3D9C003E909D /* FMUserLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMUserLoginViewController.m; sourceTree = "<group>"; };
+		F6005FBB1FAC3D9C003E909D /* DGPopUpViewTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGPopUpViewTextView.h; sourceTree = "<group>"; };
+		F6005FBC1FAC3D9C003E909D /* DGPopUpViewTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGPopUpViewTextView.m; sourceTree = "<group>"; };
+		F6005FBD1FAC3D9C003E909D /* DGPopUpViewTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DGPopUpViewTextView.xib; sourceTree = "<group>"; };
+		F6005FBE1FAC3D9C003E909D /* FMLoginTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMLoginTextField.h; sourceTree = "<group>"; };
+		F6005FBF1FAC3D9C003E909D /* FMLoginTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMLoginTextField.m; sourceTree = "<group>"; };
 		F650355C1FAC00A60007979D /* WisnucBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WisnucBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F65035601FAC00A60007979D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F65035621FAC00A60007979D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -188,6 +208,51 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		F6005FAF1FAC3D9C003E909D /* Based */ = {
+			isa = PBXGroup;
+			children = (
+				F6005FB01FAC3D9C003E909D /* FABaseVC.h */,
+				F6005FB11FAC3D9C003E909D /* FABaseVC.m */,
+			);
+			name = Based;
+			path = WisnucBox/Modules/Based;
+			sourceTree = SOURCE_ROOT;
+		};
+		F6005FB21FAC3D9C003E909D /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				F6005FB31FAC3D9C003E909D /* Controller */,
+				F6005FBA1FAC3D9C003E909D /* View */,
+			);
+			name = Login;
+			path = WisnucBox/Modules/Login;
+			sourceTree = SOURCE_ROOT;
+		};
+		F6005FB31FAC3D9C003E909D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F6005FB41FAC3D9C003E909D /* FMHandLoginVC.h */,
+				F6005FB51FAC3D9C003E909D /* FMHandLoginVC.m */,
+				F6005FB61FAC3D9C003E909D /* FMLoginViewController.h */,
+				F6005FB71FAC3D9C003E909D /* FMLoginViewController.m */,
+				F6005FB81FAC3D9C003E909D /* FMUserLoginViewController.h */,
+				F6005FB91FAC3D9C003E909D /* FMUserLoginViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		F6005FBA1FAC3D9C003E909D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F6005FBB1FAC3D9C003E909D /* DGPopUpViewTextView.h */,
+				F6005FBC1FAC3D9C003E909D /* DGPopUpViewTextView.m */,
+				F6005FBD1FAC3D9C003E909D /* DGPopUpViewTextView.xib */,
+				F6005FBE1FAC3D9C003E909D /* FMLoginTextField.h */,
+				F6005FBF1FAC3D9C003E909D /* FMLoginTextField.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		F65035531FAC00A60007979D = {
 			isa = PBXGroup;
 			children = (
@@ -215,7 +280,7 @@
 			children = (
 				F6005F711FAC18FD003E909D /* Common */,
 				F6005F541FAC1330003E909D /* CoreData */,
-				F65035921FAC00FF0007979D /* Controller */,
+				F65035921FAC00FF0007979D /* Modules */,
 				F6005F7A1FAC2BD9003E909D /* Services */,
 				F65035621FAC00A60007979D /* AppDelegate.h */,
 				F65035631FAC00A60007979D /* AppDelegate.m */,
@@ -256,27 +321,14 @@
 			path = WisnucBoxUITests;
 			sourceTree = "<group>";
 		};
-		F65035921FAC00FF0007979D /* Controller */ = {
+		F65035921FAC00FF0007979D /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				F65035931FAC00FF0007979D /* Login */,
+				F6005FAF1FAC3D9C003E909D /* Based */,
+				F6005FB21FAC3D9C003E909D /* Login */,
 			);
+			name = Modules;
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		F65035931FAC00FF0007979D /* Login */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		FC14E2AAA530CEB2823817F5 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				EDB405E0F4B341258F4BE354 /* Pods_WisnucBox.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -393,7 +445,7 @@
 			files = (
 				F650356F1FAC00A70007979D /* LaunchScreen.storyboard in Resources */,
 				F650356C1FAC00A70007979D /* Assets.xcassets in Resources */,
-				1F5FEA391FAC15830093963A /* DGPopUpViewTextView.xib in Resources */,
+				F6005FC51FAC3D9C003E909D /* DGPopUpViewTextView.xib in Resources */,
 				F650356A1FAC00A70007979D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -517,21 +569,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6005FC01FAC3D9C003E909D /* FABaseVC.m in Sources */,
 				F6005F6D1FAC1639003E909D /* WBLocalAsset+CoreDataClass.m in Sources */,
+				F6005FC41FAC3D9C003E909D /* DGPopUpViewTextView.m in Sources */,
 				F6005F701FAC1639003E909D /* WBUser+CoreDataProperties.m in Sources */,
 				F6005F6E1FAC1639003E909D /* WBLocalAsset+CoreDataProperties.m in Sources */,
 				F6005F891FAC2CDD003E909D /* AppServices.m in Sources */,
 				F6005F6F1FAC1639003E909D /* WBUser+CoreDataClass.m in Sources */,
 				F6005F571FAC1340003E909D /* WisnucBox.xcdatamodeld in Sources */,
 				F6005F801FAC2C2F003E909D /* AssetsServices.m in Sources */,
+				F6005FC11FAC3D9C003E909D /* FMHandLoginVC.m in Sources */,
+				F6005FC21FAC3D9C003E909D /* FMLoginViewController.m in Sources */,
 				F65035671FAC00A60007979D /* ViewController.m in Sources */,
+				F6005FC31FAC3D9C003E909D /* FMUserLoginViewController.m in Sources */,
 				F65035641FAC00A60007979D /* AppDelegate.m in Sources */,
 				F6005F861FAC2C8B003E909D /* DBServices.m in Sources */,
 				F6005F831FAC2C4F003E909D /* FilesServices.m in Sources */,
 				F6005F8C1FAC2FF8003E909D /* NetServices.m in Sources */,
 				F6005F7D1FAC2C0E003E909D /* UserServices.m in Sources */,
 				F65035611FAC00A60007979D /* main.m in Sources */,
-				1F5FEA351FAC0FA00093963A /* FMLoginTextField.m in Sources */,
+				F6005FC61FAC3D9C003E909D /* FMLoginTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
