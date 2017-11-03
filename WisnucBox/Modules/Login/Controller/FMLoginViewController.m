@@ -8,14 +8,22 @@
 
 #import "FMLoginViewController.h"
 #import "FMSerachService.h"
+#import "UserModel.h"
+#import "ServerBrowser.h"
+#import "ChooseAlertView.h"
+#import "GCDAsyncSocket.h"
+#import "FMHandLoginVC.h"
+#import "FMCloudUserTableViewCell.h"
+#import "LoginTableViewCell.h"
+#import "FMUserLoginViewController.h"
 
 @interface FMLoginViewController ()
 <
 UIScrollViewDelegate,
 UITableViewDelegate,
 UITableViewDataSource,
-//ServerBrowserDelegate,
-//WXApiDelegate
+ServerBrowserDelegate,
+WXApiDelegate
 >
 {
     NSMutableArray *_dataSource;
@@ -29,7 +37,7 @@ UITableViewDataSource,
 }
 @property (strong, nonatomic) UIScrollView *stationScrollView;
 @property (strong, nonatomic) UIView *stationCardView;
-@property (strong, nonatomic) StationPageControl *stationPageControl;
+@property (strong, nonatomic) UIPageControl *stationPageControl;
 @property (strong, nonatomic) UIButton *infoButton;
 @property (strong, nonatomic) UIImageView *logoImageView;
 @property (strong, nonatomic) UIImageView *stationLogoImageView;
@@ -165,68 +173,68 @@ UITableViewDataSource,
 }
 
 -(void)rightBtnClick{
-    FMHandLoginVC * vc = [[FMHandLoginVC alloc]init];
-    @weaky(self)
-    vc.block = ^(FMSerachService * ser){
-        ser.isReadly = YES;
-        [_dataSource addObject:ser];
-        [weak_self refreshDatasource];
-    };
-    [self.navigationController pushViewController:vc animated:YES];
+//    FMHandLoginVC * vc = [[FMHandLoginVC alloc]init];
+//    @weaky(self)
+//    vc.block = ^(FMSerachService * ser){
+//        ser.isReadly = YES;
+//        [_dataSource addObject:ser];
+//        [weak_self refreshDatasource];
+//    };
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 
 - (void)findIpToCheck:(NSString *)addressString andService:(NSNetService *)service{
-    NSString* urlString = [NSString stringWithFormat:@"http://%@:3000/", addressString];
-    NSLog(@"%@", urlString);
-      FMSerachService * ser = [FMSerachService new];
-     RACSubject *subject = [RACSubject subject];
-    [[GetStaionInfoAPI apiWithServicePath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-//        MyNSLog(@"%@",request.responseJsonObject);
-        NSDictionary *rootDic =  request.responseJsonObject;
-        NSString *nameString = [rootDic objectForKey:@"name"];
-        if (nameString.length == 0) {
-            nameString = @"闻上盒子";
-        }
-         [subject sendNext:nameString];
-    } failure:^(__kindof JYBaseRequest *request) {
-        
-    }];
-    
-    [subject subscribeNext:^(id x) {
-        [[GetSystemInformationAPI apiWithServicePath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-            //            MyNSLog(@"%@",request.responseJsonObject);
-            NSDictionary *rootDic =request.responseJsonObject;
-            NSDictionary *dic = [rootDic objectForKey:@"ws215i"];
-            NSString *type;
-            if (dic) {
-                type = @"WS215i";
-            }else{
-                type = @"虚拟机";
-            }
-            ser.name = x;
-            ser.path = urlString;
-            ser.type = type;
-            //            MyNSLog(@"%@",service.type);
-            ser.displayPath = addressString;
-            ser.hostName = service.hostName;
-            _expandCell = ser;
-            BOOL isNew = YES;
-            for (FMSerachService * s in _dataSource) {
-                if (IsEquallString(s.path, ser.path)) {
-                    isNew = NO;
-                    break;
-                }
-            }
-            if (isNew) {
-                [_dataSource addObject:ser];
-                [self refreshDatasource];
-            }
-        } failure:^(__kindof JYBaseRequest *request) {
-            
-        }];
-        
-    }];
+//    NSString* urlString = [NSString stringWithFormat:@"http://%@:3000/", addressString];
+//    NSLog(@"%@", urlString);
+//      FMSerachService * ser = [FMSerachService new];
+//     RACSubject *subject = [RACSubject subject];
+//    [[GetStaionInfoAPI apiWithServicePath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+////        MyNSLog(@"%@",request.responseJsonObject);
+//        NSDictionary *rootDic =  request.responseJsonObject;
+//        NSString *nameString = [rootDic objectForKey:@"name"];
+//        if (nameString.length == 0) {
+//            nameString = @"闻上盒子";
+//        }
+//         [subject sendNext:nameString];
+//    } failure:^(__kindof JYBaseRequest *request) {
+//
+//    }];
+//
+//    [subject subscribeNext:^(id x) {
+//        [[GetSystemInformationAPI apiWithServicePath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+//            //            MyNSLog(@"%@",request.responseJsonObject);
+//            NSDictionary *rootDic =request.responseJsonObject;
+//            NSDictionary *dic = [rootDic objectForKey:@"ws215i"];
+//            NSString *type;
+//            if (dic) {
+//                type = @"WS215i";
+//            }else{
+//                type = @"虚拟机";
+//            }
+//            ser.name = x;
+//            ser.path = urlString;
+//            ser.type = type;
+//            //            MyNSLog(@"%@",service.type);
+//            ser.displayPath = addressString;
+//            ser.hostName = service.hostName;
+//            _expandCell = ser;
+//            BOOL isNew = YES;
+//            for (FMSerachService * s in _dataSource) {
+//                if (IsEquallString(s.path, ser.path)) {
+//                    isNew = NO;
+//                    break;
+//                }
+//            }
+//            if (isNew) {
+//                [_dataSource addObject:ser];
+//                [self refreshDatasource];
+//            }
+//        } failure:^(__kindof JYBaseRequest *request) {
+//
+//        }];
+//
+//    }];
    
 }
 
@@ -262,7 +270,7 @@ UITableViewDataSource,
 }
 
 - (void)updateInfo{
-    _stationScrollView.contentSize = CGSizeMake(self.tempDataSource.count * JYSCREEN_WIDTH, 0);
+    _stationScrollView.contentSize = CGSizeMake(self.tempDataSource.count * __kWidth, 0);
     _stationPageControl.numberOfPages = self.tempDataSource.count;
 }
 
@@ -271,7 +279,7 @@ UITableViewDataSource,
     if (self.tempDataSource.count ==0) {
         _stationCardView = [[UIView alloc]init];
         _stationCardView.backgroundColor =  UICOLOR_RGB(0x03a9f4);
-        _stationCardView.frame = CGRectMake(32,64,JYSCREEN_WIDTH - 32*2, 166);
+        _stationCardView.frame = CGRectMake(32,64,__kWidth - 32*2, 166);
         _stationCardView.layer.cornerRadius = 8;
         _stationCardView.layer.masksToBounds = YES;
         [self.stationScrollView addSubview:self.stationCardView];
@@ -281,7 +289,7 @@ UITableViewDataSource,
     for (int i = 0; i<self.tempDataSource.count; i++) {
         _stationCardView = [[UIView alloc]init];
         _stationCardView.backgroundColor =  UICOLOR_RGB(0x03a9f4);
-        _stationCardView.frame = CGRectMake(i*JYSCREEN_WIDTH + 32,64,JYSCREEN_WIDTH - 32*2, 166);
+        _stationCardView.frame = CGRectMake(i*__kWidth + 32,64,__kWidth - 32*2, 166);
         _stationCardView.layer.cornerRadius = 8;
         _stationCardView.layer.masksToBounds = YES;
         [self.stationScrollView addSubview:self.stationCardView];
@@ -435,156 +443,156 @@ UITableViewDataSource,
 }
 
 - (void)weChatCallBackRespCode:(NSString *)code{
-    @weaky(self)
-    [FMDBControl asyncLoadPhotoToDB];
-    [SXLoadingView showProgressHUD:@"正在登录"];
-    [[WeChetLoginAPI apiWithCode:code] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        MyNSLog(@"%@",request.responseJsonObject);
-        [SXLoadingView hideProgressHUD];
-        [weak_self loginToDoWithResponse:request.responseJsonObject];
-    } failure:^(__kindof JYBaseRequest *request) {
-        [SXLoadingView hideProgressHUD];
-        MyNSLog(@"%@",request.error);
-        NSHTTPURLResponse * res = (NSHTTPURLResponse *)request.dataTask.response;
-        [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"登录失败:%ld",(long)res.statusCode] duration:1];
-    }];
+//    @weaky(self)
+//    [FMDBControl asyncLoadPhotoToDB];
+//    [SXLoadingView showProgressHUD:@"正在登录"];
+//    [[WeChetLoginAPI apiWithCode:code] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+//        MyNSLog(@"%@",request.responseJsonObject);
+//        [SXLoadingView hideProgressHUD];
+//        [weak_self loginToDoWithResponse:request.responseJsonObject];
+//    } failure:^(__kindof JYBaseRequest *request) {
+//        [SXLoadingView hideProgressHUD];
+//        MyNSLog(@"%@",request.error);
+//        NSHTTPURLResponse * res = (NSHTTPURLResponse *)request.dataTask.response;
+//        [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"登录失败:%ld",(long)res.statusCode] duration:1];
+//    }];
 }
 - (void)infoButtonClick:(UIButton *)sender{
     NSLog(@"点击了信息");
 }
 
 -(void)loginToDoWithResponse:(id)response{
-    @weaky(self)
-//    CloudLoginModel * model = [CloudLoginModel yy_modelWithJSON:response];
-    NSDictionary *dic = response;
-    NSDictionary *dataDic = dic[@"data"];
-    NSString *token = dataDic[@"token"];
-    _token = token;
-//    FMCloudUserModel *userModel = [FMCloudUserModel yy_modelWithDictionary:dataDic];
-    NSDictionary *userDic = dataDic[@"user"];
-    NSString *GUID = userDic[@"id"];
-    _guid = GUID;
-    _nickName = userDic[@"nickName"];
-    NSString *avatarString = userDic[@"avatarUrl"];
-    _avatarUrl = avatarString;
-    MyNSLog(@"Cloud登录");
-    FMConfigInstance.userToken = token;
-    FMConfigInstance.userUUID = userDic[@"id"];
-    JYRequestConfig * config = [JYRequestConfig sharedConfig];
-    config.baseURL = WX_BASE_URL;
-    [weak_self getStationWithGUID:GUID userDic:userDic];
+//    @weaky(self)
+////    CloudLoginModel * model = [CloudLoginModel yy_modelWithJSON:response];
+//    NSDictionary *dic = response;
+//    NSDictionary *dataDic = dic[@"data"];
+//    NSString *token = dataDic[@"token"];
+//    _token = token;
+////    FMCloudUserModel *userModel = [FMCloudUserModel yy_modelWithDictionary:dataDic];
+//    NSDictionary *userDic = dataDic[@"user"];
+//    NSString *GUID = userDic[@"id"];
+//    _guid = GUID;
+//    _nickName = userDic[@"nickName"];
+//    NSString *avatarString = userDic[@"avatarUrl"];
+//    _avatarUrl = avatarString;
+//    MyNSLog(@"Cloud登录");
+//    FMConfigInstance.userToken = token;
+//    FMConfigInstance.userUUID = userDic[@"id"];
+//    JYRequestConfig * config = [JYRequestConfig sharedConfig];
+//    config.baseURL = WX_BASE_URL;
+//    [weak_self getStationWithGUID:GUID userDic:userDic];
 }
 
 - (void)getStationWithGUID:(NSString *)Guid userDic:(NSDictionary *)userDic{
-    @weaky(self)
-    [[GetStationAPI apiWithGUID:Guid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        MyNSLog(@"%@",request.responseJsonObject);
-        NSDictionary *rootDic = request.responseJsonObject;
-        _cloudOriginStationArray = [NSMutableArray arrayWithCapacity:0];
-        if([rootDic[@"data"] isEqual:[NSNull null]]||rootDic[@"data"] ==nil) {
-            [SXLoadingView showProgressHUDText:@"您的微信尚未绑定任何设备" duration:1];
-            FMConfigInstance.userToken = nil;
-            JYRequestConfig * config = [JYRequestConfig sharedConfig];
-            config.baseURL = nil;
-        }else{
-            NSMutableArray *dataArray = [NSMutableArray arrayWithArray:[rootDic objectForKey:@"data"]];
-            [_expandCell.task cancel];
-            [_reachabilityTimer invalidate];
-            _reachabilityTimer = nil;
-            [_browser stopServer];
-             self.cloudLoginStationArray=[NSMutableArray arrayWithCapacity:0];
-            _subject = [RACSubject subject];
-            [weak_self setChooseView];
-//            __block BOOL fresh = false;
-//            [dataArray enumerateObjectsUsingBlock:^(NSDictionary *dic, NSUInteger idx, BOOL * _Nonnull stop) {
-//                 NSNumber * isOnlineNumber = dic[@"isOnline"];
-//                 BOOL isOnline =  [isOnlineNumber boolValue];
-//                if (isOnline) {
-//                    FMConfigInstance.isCloud = YES;
-//                    //常规登录
-//                    //[self LoginActionWithUserDic:userDic StationDic:dic];
-//                    [weak_self getUsersWithStationDic:dic completeBlock:^(NSMutableDictionary *mutableDic) {
-//                        _alertView.hidden = NO;
-//                        [_subject sendNext:@"1"];
-//                    }];
-//                    *stop = YES;
-                      FMConfigInstance.isCloud = NO;
-            
-                    for (NSDictionary *dic in dataArray) {
-                        NSLog(@"%@",dic);
-                        NSNumber * isOnlineNumber = dic[@"isOnline"];
-                        BOOL isOnline =  [isOnlineNumber boolValue];
-                        if (isOnline) {
-                            FMConfigInstance.isCloud = YES;
-                            //常规登录
-                            //[self LoginActionWithUserDic:userDic StationDic:dic];
-                            [weak_self getUsersWithStationDic:dic completeBlock:^(NSMutableDictionary *mutableDic) {
-                                  _alertView.hidden = NO;
-                                [_subject sendNext:@"1"];
-                            }];
-                        }
-//                            else{
-//                          [SXLoadingView showProgressHUDText:@"没有在线设备或未绑定设备" duration:1];
+//    @weaky(self)
+//    [[GetStationAPI apiWithGUID:Guid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+//        MyNSLog(@"%@",request.responseJsonObject);
+//        NSDictionary *rootDic = request.responseJsonObject;
+//        _cloudOriginStationArray = [NSMutableArray arrayWithCapacity:0];
+//        if([rootDic[@"data"] isEqual:[NSNull null]]||rootDic[@"data"] ==nil) {
+//            [SXLoadingView showProgressHUDText:@"您的微信尚未绑定任何设备" duration:1];
+//            FMConfigInstance.userToken = nil;
+//            JYRequestConfig * config = [JYRequestConfig sharedConfig];
+//            config.baseURL = nil;
+//        }else{
+//            NSMutableArray *dataArray = [NSMutableArray arrayWithArray:[rootDic objectForKey:@"data"]];
+//            [_expandCell.task cancel];
+//            [_reachabilityTimer invalidate];
+//            _reachabilityTimer = nil;
+//            [_browser stopServer];
+//             self.cloudLoginStationArray=[NSMutableArray arrayWithCapacity:0];
+//            _subject = [RACSubject subject];
+//            [weak_self setChooseView];
+////            __block BOOL fresh = false;
+////            [dataArray enumerateObjectsUsingBlock:^(NSDictionary *dic, NSUInteger idx, BOOL * _Nonnull stop) {
+////                 NSNumber * isOnlineNumber = dic[@"isOnline"];
+////                 BOOL isOnline =  [isOnlineNumber boolValue];
+////                if (isOnline) {
+////                    FMConfigInstance.isCloud = YES;
+////                    //常规登录
+////                    //[self LoginActionWithUserDic:userDic StationDic:dic];
+////                    [weak_self getUsersWithStationDic:dic completeBlock:^(NSMutableDictionary *mutableDic) {
+////                        _alertView.hidden = NO;
+////                        [_subject sendNext:@"1"];
+////                    }];
+////                    *stop = YES;
+//                      FMConfigInstance.isCloud = NO;
+//
+//                    for (NSDictionary *dic in dataArray) {
+//                        NSLog(@"%@",dic);
+//                        NSNumber * isOnlineNumber = dic[@"isOnline"];
+//                        BOOL isOnline =  [isOnlineNumber boolValue];
+//                        if (isOnline) {
+//                            FMConfigInstance.isCloud = YES;
+//                            //常规登录
+//                            //[self LoginActionWithUserDic:userDic StationDic:dic];
+//                            [weak_self getUsersWithStationDic:dic completeBlock:^(NSMutableDictionary *mutableDic) {
+//                                  _alertView.hidden = NO;
+//                                [_subject sendNext:@"1"];
+//                            }];
 //                        }
-                    }
-                    
+////                            else{
+////                          [SXLoadingView showProgressHUDText:@"没有在线设备或未绑定设备" duration:1];
+////                        }
+//                    }
+//
+////                }
+////            }];
+//
+//            [_subject subscribeNext:^(id x) {
+//                if (self.cloudLoginStationArray.count == 0) {
+//                    FMConfigInstance.userToken = nil;
+//                    FMConfigInstance.isCloud = NO;
+//                    [SXLoadingView showProgressHUDText:@"没有在线设备或未绑定设备" duration:1];
+//                }else{
+//                    [_alertView.tableView reloadData];
 //                }
 //            }];
-            
-            [_subject subscribeNext:^(id x) {
-                if (self.cloudLoginStationArray.count == 0) {
-                    FMConfigInstance.userToken = nil;
-                    FMConfigInstance.isCloud = NO;
-                    [SXLoadingView showProgressHUDText:@"没有在线设备或未绑定设备" duration:1];
-                }else{
-                    [_alertView.tableView reloadData];
-                }
-            }];
-            FMConfigInstance.userToken = nil;
-//            self.cloudLoginStationArray = userArr;
-//            if (self.cloudLoginStationArray.count == 1) {
-//                [self loginButtonClick:nil];
-//            }else
-        }
-    } failure:^(__kindof JYBaseRequest *request) {
-         NSLog(@"%@",request.error);
-    }];
-    
+//            FMConfigInstance.userToken = nil;
+////            self.cloudLoginStationArray = userArr;
+////            if (self.cloudLoginStationArray.count == 1) {
+////                [self loginButtonClick:nil];
+////            }else
+//        }
+//    } failure:^(__kindof JYBaseRequest *request) {
+//         NSLog(@"%@",request.error);
+//    }];
+//
 }
 
 - (void)getUsersWithStationDic:(NSDictionary *)stationDic completeBlock:(void(^)(NSMutableDictionary *mutableDic))block{
-     NSString *stationId = stationDic[@"id"];
-    FMGetUsersAPI *api = [FMGetUsersAPI apiWithStationId:stationId];
-    [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-         MyNSLog(@"%@",request.responseJsonObject);
-        NSDictionary *rootDic = request.responseJsonObject;
-        NSMutableArray *arr = rootDic[@"data"];
-        NSMutableDictionary *mutableDic;
-        for (int i = 0; i<arr.count; i++) {
-            NSDictionary *dic = arr[i];
-            if (dic[@"global"]!=nil && dic[@"global"]!=[NSNull null]) {
-                NSDictionary *globalDic = dic[@"global"];
-                NSString * idString =  globalDic[@"id"];
-                if ([_guid isEqualToString:idString]) {
-                     mutableDic = [NSMutableDictionary dictionaryWithDictionary:dic];
-                    [mutableDic addEntriesFromDictionary:stationDic];
-                    NSLog(@"%@",mutableDic);
-                    [_cloudLoginStationArray addObject:mutableDic];
-                 
-                    block(mutableDic);
-                }
-                   [_alertView.tableView reloadData];
-            }
-        }
- 
-    } failure:^(__kindof JYBaseRequest *request) {
-        NSLog(@"%@",request.error);
-    }];
+//     NSString *stationId = stationDic[@"id"];
+//    FMGetUsersAPI *api = [FMGetUsersAPI apiWithStationId:stationId];
+//    [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+//         MyNSLog(@"%@",request.responseJsonObject);
+//        NSDictionary *rootDic = request.responseJsonObject;
+//        NSMutableArray *arr = rootDic[@"data"];
+//        NSMutableDictionary *mutableDic;
+//        for (int i = 0; i<arr.count; i++) {
+//            NSDictionary *dic = arr[i];
+//            if (dic[@"global"]!=nil && dic[@"global"]!=[NSNull null]) {
+//                NSDictionary *globalDic = dic[@"global"];
+//                NSString * idString =  globalDic[@"id"];
+//                if ([_guid isEqualToString:idString]) {
+//                     mutableDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+//                    [mutableDic addEntriesFromDictionary:stationDic];
+//                    NSLog(@"%@",mutableDic);
+//                    [_cloudLoginStationArray addObject:mutableDic];
+//
+//                    block(mutableDic);
+//                }
+//                   [_alertView.tableView reloadData];
+//            }
+//        }
+//
+//    } failure:^(__kindof JYBaseRequest *request) {
+//        NSLog(@"%@",request.error);
+//    }];
 }
 
 - (void)setChooseView{
     _alertView = [[[NSBundle mainBundle] loadNibNamed:@"ChooseAlertView" owner:self options:nil] lastObject];
-    _alertView.frame = CGRectMake(0, 0, JYSCREEN_WIDTH, JYSCREEN_HEIGHT);
+    _alertView.frame = CGRectMake(0, 0, __kWidth, __kHeight);
     _alertView.tableView.delegate = self;
     _alertView.tableView.dataSource = self;
     [_alertView.loginButton addTarget:self action:@selector(loginButtonClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -593,179 +601,179 @@ UITableViewDataSource,
 }
 
 - (void)loginButtonClick:(UIButton *)sender{
-    [_alertView removeFromSuperview];
-    _alertView =nil;
-    
-    NSMutableDictionary *mutableDic;
-    if (_cloudLoginStationArray.count!=0) {
-     mutableDic  = _cloudLoginStationArray[_current];
-        
-    }else{
-        FMConfigInstance.userToken = nil;
-        FMConfigInstance.isCloud = NO;
-        [SXLoadingView showProgressHUDText:@"没有在线设备或未绑定设备" duration:1];
-        return;
-    }
-    FMConfigInstance.userToken = _token;
-    FMConfigInstance.isCloud = YES;
-    FMConfigInstance.userUUID = mutableDic[@"uuid"];
-    FMConfigInstance.avatarUrl = _avatarUrl;
-    [[NSUserDefaults standardUserDefaults] setObject:mutableDic[@"id"] forKey:KSTATIONID_STR];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    [[NSUserDefaults standardUserDefaults]setObject:@0 forKey:@"addCount"];
-    
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"uploadImageArr"];
-    if(IsNilString(USER_SHOULD_SYNC_PHOTO) || IsEquallString(USER_SHOULD_SYNC_PHOTO, mutableDic[@"id"])){
-        //设置   可备份用户为
-        [[NSUserDefaults standardUserDefaults] setObject:mutableDic[@"id"] forKey:USER_SHOULD_SYNC_PHOTO_STR];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        //重启photoSyncer
-        //        [PhotoManager shareManager].canUpload = YES;
-    }
-    //重置数据
-    [MyAppDelegate resetDatasource];
-    
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        //保存用户信息
-        FMUserLoginInfo * info = [FMUserLoginInfo new];
-        if ( _nickName.length !=0) {
-            info.userName = _nickName;
-        }
-        MyNSLog(@"登录用户:%@", info.userName);
-        info.uuid = mutableDic[@"uuid"];
-        //        info.deviceId = [PhotoManager getUUID];
-        //            info.jwt_token = token;
-        info.bonjour_name = mutableDic[@"name"] ;
-        //           NSLog(@"%@",_service.hostName);
-        [FMDBControl addUserLoginInfo:info];
-        //     NSLog(@"%@",[FMDBControl findUserLoginInfo:_user.uuid]);
-    });
-    //组装UI
-    //        if (def_token.length == 0 ) {
-    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否自动备份该手机的照片至WISNUC服务器" preferredStyle:UIAlertControllerStyleAlert];
-    // 2.添加取消按钮，block中存放点击了“取消”按钮要执行的操作
-    UIAlertAction *cancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        NSLog(@"点击了取消按钮");
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            //                [PhotoManager shareManager].canUpload = NO;
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"dontBackUp" object:nil userInfo:nil];
-            NSLog(@"点击了确定按钮");
-        });
-    }];
-    
-    UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"备份" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            //                 [PhotoManager shareManager].canUpload = YES;
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"backUp" object:nil];
-            NSLog(@"点击了确定按钮");
-        });
-    }];
-    // 3.将“取消”和“确定”按钮加入到弹框控制器中
-    [alertVc addAction:cancle];
-    [alertVc addAction:confirm];
-    [self presentViewController:alertVc animated:YES completion:^{
-    }];
-
-    MyAppDelegate.window.rootViewController = nil;
-    [MyAppDelegate.window resignKeyWindow];
-    [MyAppDelegate.window removeFromSuperview];
-    MyAppDelegate.sharesTabBar = [[RDVTabBarController alloc]init];
-    [MyAppDelegate initWithTabBar:MyAppDelegate.sharesTabBar];
-    [MyAppDelegate.sharesTabBar setSelectedIndex:0];
-    MyAppDelegate.filesTabBar = nil;
-    [MyAppDelegate resetDatasource];
-    MyAppDelegate.leftMenu = nil;
-    
-    [MyAppDelegate initLeftMenu];
-    [UIApplication sharedApplication].keyWindow.rootViewController = MyAppDelegate.sharesTabBar;
+//    [_alertView removeFromSuperview];
+//    _alertView =nil;
+//
+//    NSMutableDictionary *mutableDic;
+//    if (_cloudLoginStationArray.count!=0) {
+//     mutableDic  = _cloudLoginStationArray[_current];
+//
+//    }else{
+//        FMConfigInstance.userToken = nil;
+//        FMConfigInstance.isCloud = NO;
+//        [SXLoadingView showProgressHUDText:@"没有在线设备或未绑定设备" duration:1];
+//        return;
+//    }
+//    FMConfigInstance.userToken = _token;
+//    FMConfigInstance.isCloud = YES;
+//    FMConfigInstance.userUUID = mutableDic[@"uuid"];
+//    FMConfigInstance.avatarUrl = _avatarUrl;
+//    [[NSUserDefaults standardUserDefaults] setObject:mutableDic[@"id"] forKey:KSTATIONID_STR];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+//    [[NSUserDefaults standardUserDefaults]setObject:@0 forKey:@"addCount"];
+//
+//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"uploadImageArr"];
+//    if(IsNilString(USER_SHOULD_SYNC_PHOTO) || IsEquallString(USER_SHOULD_SYNC_PHOTO, mutableDic[@"id"])){
+//        //设置   可备份用户为
+//        [[NSUserDefaults standardUserDefaults] setObject:mutableDic[@"id"] forKey:USER_SHOULD_SYNC_PHOTO_STR];
+//        [[NSUserDefaults standardUserDefaults] synchronize];
+//        //重启photoSyncer
+//        //        [PhotoManager shareManager].canUpload = YES;
+//    }
+//    //重置数据
+//    [MyAppDelegate resetDatasource];
+//
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//        //保存用户信息
+//        FMUserLoginInfo * info = [FMUserLoginInfo new];
+//        if ( _nickName.length !=0) {
+//            info.userName = _nickName;
+//        }
+//        MyNSLog(@"登录用户:%@", info.userName);
+//        info.uuid = mutableDic[@"uuid"];
+//        //        info.deviceId = [PhotoManager getUUID];
+//        //            info.jwt_token = token;
+//        info.bonjour_name = mutableDic[@"name"] ;
+//        //           NSLog(@"%@",_service.hostName);
+//        [FMDBControl addUserLoginInfo:info];
+//        //     NSLog(@"%@",[FMDBControl findUserLoginInfo:_user.uuid]);
+//    });
+//    //组装UI
+//    //        if (def_token.length == 0 ) {
+//    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否自动备份该手机的照片至WISNUC服务器" preferredStyle:UIAlertControllerStyleAlert];
+//    // 2.添加取消按钮，block中存放点击了“取消”按钮要执行的操作
+//    UIAlertAction *cancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+//        NSLog(@"点击了取消按钮");
+//
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            //                [PhotoManager shareManager].canUpload = NO;
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"dontBackUp" object:nil userInfo:nil];
+//            NSLog(@"点击了确定按钮");
+//        });
+//    }];
+//
+//    UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"备份" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            //                 [PhotoManager shareManager].canUpload = YES;
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"backUp" object:nil];
+//            NSLog(@"点击了确定按钮");
+//        });
+//    }];
+//    // 3.将“取消”和“确定”按钮加入到弹框控制器中
+//    [alertVc addAction:cancle];
+//    [alertVc addAction:confirm];
+//    [self presentViewController:alertVc animated:YES completion:^{
+//    }];
+//
+//    MyAppDelegate.window.rootViewController = nil;
+//    [MyAppDelegate.window resignKeyWindow];
+//    [MyAppDelegate.window removeFromSuperview];
+//    MyAppDelegate.sharesTabBar = [[RDVTabBarController alloc]init];
+//    [MyAppDelegate initWithTabBar:MyAppDelegate.sharesTabBar];
+//    [MyAppDelegate.sharesTabBar setSelectedIndex:0];
+//    MyAppDelegate.filesTabBar = nil;
+//    [MyAppDelegate resetDatasource];
+//    MyAppDelegate.leftMenu = nil;
+//
+//    [MyAppDelegate initLeftMenu];
+//    [UIApplication sharedApplication].keyWindow.rootViewController = MyAppDelegate.sharesTabBar;
 }
 
 
 - (void)LoginActionWithUserDic:(NSDictionary *)userDic StationDic:(NSDictionary *)stationDic{
-//        NSString * def_token = DEF_Token;
-        [[NSUserDefaults standardUserDefaults] setObject:stationDic[@"id"] forKey:KSTATIONID_STR];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        [[NSUserDefaults standardUserDefaults]setObject:@0 forKey:@"addCount"];
-    
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"uploadImageArr"];
-        if(IsNilString(USER_SHOULD_SYNC_PHOTO) || IsEquallString(USER_SHOULD_SYNC_PHOTO, userDic[@"id"])){
-            //设置   可备份用户为
-            [[NSUserDefaults standardUserDefaults] setObject:userDic[@"id"] forKey:USER_SHOULD_SYNC_PHOTO_STR];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            //重启photoSyncer
-            //        [PhotoManager shareManager].canUpload = YES;
-        }
-        //重置数据
-        [MyAppDelegate resetDatasource];
-
-        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            //保存用户信息
-            FMUserLoginInfo * info = [FMUserLoginInfo new];
-            info.userName = userDic[@"nickName"];
-            MyNSLog(@"登录用户:%@", info.userName);
-            info.uuid = userDic[@"id"];
-            //        info.deviceId = [PhotoManager getUUID];
-//            info.jwt_token = token;
-            info.bonjour_name = stationDic[@"name"] ;
-            //           NSLog(@"%@",_service.hostName);
-            [FMDBControl addUserLoginInfo:info];
-            //     NSLog(@"%@",[FMDBControl findUserLoginInfo:_user.uuid]);
-        });
-        //组装UI
-//        if (def_token.length == 0 ) {
-            UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否自动备份该手机的照片至WISNUC服务器" preferredStyle:UIAlertControllerStyleAlert];
-            // 2.添加取消按钮，block中存放点击了“取消”按钮要执行的操作
-            UIAlertAction *cancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                NSLog(@"点击了取消按钮");
-    
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    //                [PhotoManager shareManager].canUpload = NO;
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"dontBackUp" object:nil userInfo:nil];
-                    NSLog(@"点击了确定按钮");
-                });
-            }];
-    
-            UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"备份" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    //                 [PhotoManager shareManager].canUpload = YES;
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"backUp" object:nil];
-                    NSLog(@"点击了确定按钮");
-                });
-            }];
-            // 3.将“取消”和“确定”按钮加入到弹框控制器中
-            [alertVc addAction:cancle];
-            [alertVc addAction:confirm];
-            [self presentViewController:alertVc animated:YES completion:^{
-            }];
-//        }
-        MyAppDelegate.window.rootViewController = nil;
-        [MyAppDelegate.window resignKeyWindow];
-        [MyAppDelegate.window removeFromSuperview];
-        MyAppDelegate.sharesTabBar = [[RDVTabBarController alloc]init];
-        [MyAppDelegate initWithTabBar:MyAppDelegate.sharesTabBar];
-        [MyAppDelegate.sharesTabBar setSelectedIndex:0];
-        MyAppDelegate.filesTabBar = nil;
-        [MyAppDelegate resetDatasource];
-        MyAppDelegate.leftMenu = nil;
-    
-        [MyAppDelegate initLeftMenu];
-        [UIApplication sharedApplication].keyWindow.rootViewController = MyAppDelegate.sharesTabBar;
-}
-//- (void)pageTurn:(UIPageControl *)pageControl{
-////    NSInteger page = pageControl.currentPage;
-//    
-//  [_stationScrollView setContentOffset:CGPointMake(JYSCREEN_WIDTH * pageControl.currentPage, 0) animated:YES];
+////        NSString * def_token = DEF_Token;
+//        [[NSUserDefaults standardUserDefaults] setObject:stationDic[@"id"] forKey:KSTATIONID_STR];
+//        [[NSUserDefaults standardUserDefaults] synchronize];
+//        [[NSUserDefaults standardUserDefaults]setObject:@0 forKey:@"addCount"];
 //
+//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"uploadImageArr"];
+//        if(IsNilString(USER_SHOULD_SYNC_PHOTO) || IsEquallString(USER_SHOULD_SYNC_PHOTO, userDic[@"id"])){
+//            //设置   可备份用户为
+//            [[NSUserDefaults standardUserDefaults] setObject:userDic[@"id"] forKey:USER_SHOULD_SYNC_PHOTO_STR];
+//            [[NSUserDefaults standardUserDefaults] synchronize];
+//            //重启photoSyncer
+//            //        [PhotoManager shareManager].canUpload = YES;
+//        }
+//        //重置数据
+//        [MyAppDelegate resetDatasource];
+//
+//        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//            //保存用户信息
+//            FMUserLoginInfo * info = [FMUserLoginInfo new];
+//            info.userName = userDic[@"nickName"];
+//            MyNSLog(@"登录用户:%@", info.userName);
+//            info.uuid = userDic[@"id"];
+//            //        info.deviceId = [PhotoManager getUUID];
+////            info.jwt_token = token;
+//            info.bonjour_name = stationDic[@"name"] ;
+//            //           NSLog(@"%@",_service.hostName);
+//            [FMDBControl addUserLoginInfo:info];
+//            //     NSLog(@"%@",[FMDBControl findUserLoginInfo:_user.uuid]);
+//        });
+//        //组装UI
+////        if (def_token.length == 0 ) {
+//            UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否自动备份该手机的照片至WISNUC服务器" preferredStyle:UIAlertControllerStyleAlert];
+//            // 2.添加取消按钮，block中存放点击了“取消”按钮要执行的操作
+//            UIAlertAction *cancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+//                NSLog(@"点击了取消按钮");
+//
+//                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                    //                [PhotoManager shareManager].canUpload = NO;
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"dontBackUp" object:nil userInfo:nil];
+//                    NSLog(@"点击了确定按钮");
+//                });
+//            }];
+//
+//            UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"备份" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+//                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                    //                 [PhotoManager shareManager].canUpload = YES;
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"backUp" object:nil];
+//                    NSLog(@"点击了确定按钮");
+//                });
+//            }];
+//            // 3.将“取消”和“确定”按钮加入到弹框控制器中
+//            [alertVc addAction:cancle];
+//            [alertVc addAction:confirm];
+//            [self presentViewController:alertVc animated:YES completion:^{
+//            }];
+////        }
+//        MyAppDelegate.window.rootViewController = nil;
+//        [MyAppDelegate.window resignKeyWindow];
+//        [MyAppDelegate.window removeFromSuperview];
+//        MyAppDelegate.sharesTabBar = [[RDVTabBarController alloc]init];
+//        [MyAppDelegate initWithTabBar:MyAppDelegate.sharesTabBar];
+//        [MyAppDelegate.sharesTabBar setSelectedIndex:0];
+//        MyAppDelegate.filesTabBar = nil;
+//        [MyAppDelegate resetDatasource];
+//        MyAppDelegate.leftMenu = nil;
+//
+//        [MyAppDelegate initLeftMenu];
+//        [UIApplication sharedApplication].keyWindow.rootViewController = MyAppDelegate.sharesTabBar;
 //}
+////- (void)pageTurn:(UIPageControl *)pageControl{
+//////    NSInteger page = pageControl.currentPage;
+////
+////  [_stationScrollView setContentOffset:CGPointMake(JYSCREEN_WIDTH * pageControl.currentPage, 0) animated:YES];
+////
+}
 
 #pragma mark ScrollView delegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    if (scrollView == self.stationScrollView &&scrollView.contentOffset.x > JYSCREEN_WIDTH/2) {
+    if (scrollView == self.stationScrollView &&scrollView.contentOffset.x > __kWidth/2) {
         
 //    if () {
-    int page = scrollView.contentOffset.x/JYSCREEN_WIDTH;
+    int page = scrollView.contentOffset.x/__kWidth;
     _stationPageControl.currentPage = page;
     FMSerachService *ser = _tempDataSource[page];
     _userDataSource = ser.users;
@@ -890,7 +898,7 @@ UITableViewDataSource,
 }
 - (UIScrollView *)stationScrollView{
     if (!_stationScrollView) {
-        _stationScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, JYSCREEN_WIDTH,448/2 + 64)];
+        _stationScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, __kWidth,448/2 + 64)];
         _stationScrollView.backgroundColor = UICOLOR_RGB(0x0288d1);
         _stationScrollView.pagingEnabled = YES;
 //        _stationScrollView.contentSize = CGSizeMake(self.tempDataSource.count * JYSCREEN_WIDTH, 0);
@@ -903,7 +911,7 @@ UITableViewDataSource,
 
 - (UIPageControl *)stationPageControl{
     if (!_stationPageControl) {
-        _stationPageControl = [[StationPageControl alloc] initWithFrame:CGRectMake(0,self.stationScrollView.frame.size.height - 36 , JYSCREEN_WIDTH, 30)];
+        _stationPageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0,self.stationScrollView.frame.size.height - 36 , __kWidth, 30)];
 //        _stationPageControl.numberOfPages = self.tempDataSource.count;
         _stationPageControl.currentPage = 0;
     }
@@ -922,9 +930,9 @@ UITableViewDataSource,
 
 -(UIView *)userView{
     if (!_userView) {
-        _userView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.stationScrollView.frame) + 8, JYSCREEN_WIDTH , 40)];
+        _userView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.stationScrollView.frame) + 8, __kWidth , 40)];
         _userView.backgroundColor = [UIColor whiteColor];
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(16, 0, JYSCREEN_WIDTH - 16, 40)];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(16, 0, __kWidth - 16, 40)];
         label.text = @"用户";
         label.font = [UIFont systemFontOfSize:14];
         label.textColor = [UIColor lightGrayColor];
@@ -935,9 +943,9 @@ UITableViewDataSource,
 
 - (UITableView *)userListTableViwe{
     if (!_userListTableViwe) {
-        _userListTableViwe = [[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.userView.frame), JYSCREEN_WIDTH, JYSCREEN_HEIGHT - _stationScrollView.frame.size.height - 8 - _userView.frame.size.height -48) style:UITableViewStylePlain];
+        _userListTableViwe = [[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.userView.frame), __kWidth, __kHeight - _stationScrollView.frame.size.height - 8 - _userView.frame.size.height -48) style:UITableViewStylePlain];
         if (![WXApi isWXAppInstalled]) {
-            _userListTableViwe.frame = CGRectMake(0, CGRectGetMaxY(self.userView.frame), JYSCREEN_WIDTH, JYSCREEN_HEIGHT - _stationScrollView.frame.size.height - 8 - _userView.frame.size.height);
+            _userListTableViwe.frame = CGRectMake(0, CGRectGetMaxY(self.userView.frame), __kWidth, __kHeight - _stationScrollView.frame.size.height - 8 - _userView.frame.size.height);
         }
         _userListTableViwe.delegate = self;
         _userListTableViwe.dataSource = self;
@@ -948,7 +956,7 @@ UITableViewDataSource,
 
 - (UIView *)wechatView{
     if (!_wechatView) {
-        _wechatView = [[UIView alloc]initWithFrame:CGRectMake(0, JYSCREEN_HEIGHT - 48, JYSCREEN_WIDTH, 48)];
+        _wechatView = [[UIView alloc]initWithFrame:CGRectMake(0, __kHeight - 48, __kWidth, 48)];
         _wechatView.backgroundColor = [UIColor whiteColor];
         _wechatView.layer.shadowColor = [[UIColor blackColor]CGColor];
         _wechatView.layer.shadowOffset = CGSizeMake(0, 2);
@@ -985,7 +993,7 @@ UITableViewDataSource,
 
 - (UIButton *)handButton{
     if (!_handButton) {
-        _handButton = [[UIButton alloc]initWithFrame:CGRectMake(JYSCREEN_WIDTH - 16 - 30 , CGRectGetMinY(_logoImageView.frame) - 5, 30, 30)];
+        _handButton = [[UIButton alloc]initWithFrame:CGRectMake(__kWidth - 16 - 30 , CGRectGetMinY(_logoImageView.frame) - 5, 30, 30)];
         [_handButton setImage:[UIImage imageNamed:@"PLUS"] forState:UIControlStateNormal];
         [_handButton addTarget:self action:@selector(rightBtnClick) forControlEvents:UIControlEventTouchUpInside];
         [_handButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
