@@ -109,7 +109,7 @@
 - (void)setShadowForUserNameView {
     UIView *userNameShadow = [[UIView alloc]init];
     userNameShadow.frame = CGRectMake(0, 0, 100, 100);
-    userNameShadow.center = CGPointMake(JYSCREEN_WIDTH/2, _userNameBackgroudView.frame.size.height/2 -25);
+    userNameShadow.center = CGPointMake(__kWidth/2, _userNameBackgroudView.frame.size.height/2 -25);
     userNameShadow.backgroundColor = [UIColor whiteColor];
     userNameShadow.alpha = 0.12;
     userNameShadow.layer.masksToBounds = YES;
@@ -123,7 +123,7 @@
 
 - (UIView *)navigationView{
     if (!_navigationView) {
-        _navigationView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, JYSCREEN_WIDTH, 64)];
+        _navigationView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 64)];
         _navigationView.backgroundColor = MainColor;
         UIImage *image = [UIImage imageNamed:@"back"];
         UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(16, CGRectGetMidY(_navigationView.frame), image.size.width, image.size.height)];
@@ -137,7 +137,7 @@
 
 - (UIView *)userNameBackgroudView{
     if (!_userNameBackgroudView) {
-        _userNameBackgroudView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_navigationView.frame), JYSCREEN_WIDTH , 160)];
+        _userNameBackgroudView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_navigationView.frame), __kWidth , 160)];
         _userNameBackgroudView.backgroundColor = MainColor;
     }
     return _userNameBackgroudView;
@@ -147,7 +147,7 @@
     if (!_userNameView) {
         _userNameView = [[UIImageView alloc]init];
         _userNameView.frame = CGRectMake(0, 0, 88, 88);
-        _userNameView.center = CGPointMake(JYSCREEN_WIDTH/2, _userNameBackgroudView.frame.size.height/2 - 25);
+        _userNameView.center = CGPointMake(__kWidth/2, _userNameBackgroudView.frame.size.height/2 - 25);
         _userNameView.backgroundColor = [UIColor whiteColor];
         _userNameView.layer.masksToBounds = YES;
         _userNameView.layer.cornerRadius = 44;
@@ -177,14 +177,14 @@
         _passwordLabel = [[UILabel alloc]initWithFrame:CGRectMake(16+CGRectGetMaxX(_leftTextFieldImageView.frame), CGRectGetMaxY(_userNameBackgroudView.frame) + 32, 100, 15)];
         _passwordLabel.text = @"密码";
         _passwordLabel.font = [UIFont systemFontOfSize:12];
-        _passwordLabel.textColor = COR3;
+        _passwordLabel.textColor = kBlackColor;
         _passwordLabel.alpha = 0.54;
     }
     return _passwordLabel;
 }
 - (FMLoginTextField *)loginTextField{
     if (!_loginTextField) {
-        _loginTextField = [[FMLoginTextField alloc]initWithFrame:CGRectMake(CGRectGetMinX(_passwordLabel.frame), CGRectGetMaxY(_passwordLabel.frame) + 8, JYSCREEN_WIDTH - CGRectGetMinX(_passwordLabel.frame) - 16, 20)];
+        _loginTextField = [[FMLoginTextField alloc]initWithFrame:CGRectMake(CGRectGetMinX(_passwordLabel.frame), CGRectGetMaxY(_passwordLabel.frame) + 8, __kWidth - CGRectGetMinX(_passwordLabel.frame) - 16, 20)];
         _loginTextField.secureTextEntry = YES;
         _loginTextField.returnKeyType = UIReturnKeyDone;
         _loginTextField.delegate = self;
@@ -196,7 +196,7 @@
     if (!_eyeButton) {
         UIImage *imageEye = [UIImage imageNamed:@"eye"];
         UIImage *imageEyeOff = [UIImage imageNamed:@"eye_off"];
-        _eyeButton = [[UIButton alloc]initWithFrame:CGRectMake(JYSCREEN_WIDTH - 16 - imageEye.size.width, CGRectGetMinY(_leftTextFieldImageView.frame),imageEye.size.width , imageEye.size.height)];
+        _eyeButton = [[UIButton alloc]initWithFrame:CGRectMake(__kWidth - 16 - imageEye.size.width, CGRectGetMinY(_leftTextFieldImageView.frame),imageEye.size.width , imageEye.size.height)];
         [_eyeButton setEnlargeEdgeWithTop:3 right:3 bottom:3 left:3];
         [_eyeButton setImage:imageEye forState:UIControlStateSelected];
         [_eyeButton setImage:imageEyeOff forState:UIControlStateNormal];

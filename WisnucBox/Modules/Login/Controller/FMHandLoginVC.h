@@ -7,6 +7,7 @@
 //
 
 #import "FABaseVC.h"
+#import "FMSerachService.h"
 
 typedef void(^HandlecompleteBlock)(FMSerachService * service);
 

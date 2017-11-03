@@ -7,6 +7,7 @@
 //
 
 #import "FMSerachService.h"
+#import "UserModel.h"
 
 @implementation FMSerachService
 

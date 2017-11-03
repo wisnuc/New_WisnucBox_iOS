@@ -12,5 +12,25 @@
 #import "ServiceProtocol.h"
 #import <MagicalRecord/MagicalRecord.h>
 
+//Define
+#import "ColorDefine.h"
+#import "Define.h"
+#import "FontDefine.h"
+
+//第三方
+#import <AFNetworking/AFNetworking.h>
+#import <YYModel/YYModel.h>
+#import <WXApi.h>
+
+//Base
+#import "FABaseVC.h"
+
+//Tools
+#import "SXLoadingView.h"
+
+//Category
+#import "UIButton+EnlargeEdge.h"
+#import "UIButton+Universal.h"
+#import "UIImage+GKContact.h"
 
 #endif /* default_pch */

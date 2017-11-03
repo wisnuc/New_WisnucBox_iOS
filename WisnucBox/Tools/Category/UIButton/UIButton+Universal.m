@@ -10,7 +10,7 @@
 
 @implementation UIButton (Universal)
 + (UIButton* _Nullable)buttionWithTitle:(NSString *_Nullable)title target:(nullable id)target action:(nonnull SEL)action{
-    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(16, JYSCREEN_HEIGHT - 16 - 36,JYSCREEN_WIDTH - 16*2 , 36)];
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(16, __kHeight - 16 - 36,__kWidth - 16*2 , 36)];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button setTitle:title forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont systemFontOfSize:16];
