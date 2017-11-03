@@ -421,6 +421,13 @@
 			path = Image;
 			sourceTree = "<group>";
 		};
+		1F7CE62B1FAC7E47004467C8 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		A425D85D003C084CDA92A5DA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -463,6 +470,7 @@
 		F650355E1FAC00A60007979D /* WisnucBox */ = {
 			isa = PBXGroup;
 			children = (
+				1F7CE62B1FAC7E47004467C8 /* Network */,
 				1F61E52B1FAC7AE0008ACEFB /* Source */,
 				1F4D75811FAC4BB800E6516C /* CoreData */,
 				1F4D756A1FAC4BB700E6516C /* Modules */,
