@@ -38,6 +38,10 @@
 		1F4D75C01FAC5E3400E6516C /* ChooseAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F4D75BE1FAC5E3400E6516C /* ChooseAlertView.xib */; };
 		1F4D75C61FAC5EB500E6516C /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75C41FAC5EB500E6516C /* GCDAsyncUdpSocket.m */; };
 		1F4D75C71FAC5EB500E6516C /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75C51FAC5EB500E6516C /* GCDAsyncSocket.m */; };
+		1F4D75CB1FAC5FF900E6516C /* FMCloudUserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75C81FAC5FF800E6516C /* FMCloudUserTableViewCell.m */; };
+		1F4D75CC1FAC5FF900E6516C /* FMCloudUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F4D75CA1FAC5FF900E6516C /* FMCloudUserTableViewCell.xib */; };
+		1F4D75D01FAC604100E6516C /* LoginTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75CE1FAC604100E6516C /* LoginTableViewCell.m */; };
+		1F4D75D11FAC604100E6516C /* LoginTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F4D75CF1FAC604100E6516C /* LoginTableViewCell.xib */; };
 		2C68507817DCDF432CF88A3F /* Pods_WisnucBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 357873726A4400954BE467E2 /* Pods_WisnucBox.framework */; };
 		F65035611FAC00A60007979D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035601FAC00A60007979D /* main.m */; };
 		F65035641FAC00A60007979D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035631FAC00A60007979D /* AppDelegate.m */; };
@@ -132,6 +136,12 @@
 		1F4D75C31FAC5EB500E6516C /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
 		1F4D75C41FAC5EB500E6516C /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
 		1F4D75C51FAC5EB500E6516C /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
+		1F4D75C81FAC5FF800E6516C /* FMCloudUserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMCloudUserTableViewCell.m; sourceTree = "<group>"; };
+		1F4D75C91FAC5FF800E6516C /* FMCloudUserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMCloudUserTableViewCell.h; sourceTree = "<group>"; };
+		1F4D75CA1FAC5FF900E6516C /* FMCloudUserTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FMCloudUserTableViewCell.xib; sourceTree = "<group>"; };
+		1F4D75CD1FAC604100E6516C /* LoginTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTableViewCell.h; sourceTree = "<group>"; };
+		1F4D75CE1FAC604100E6516C /* LoginTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTableViewCell.m; sourceTree = "<group>"; };
+		1F4D75CF1FAC604100E6516C /* LoginTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginTableViewCell.xib; sourceTree = "<group>"; };
 		357873726A4400954BE467E2 /* Pods_WisnucBox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WisnucBox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0D3F6BCD083EB684E36A713 /* Pods-WisnucBox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.release.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.release.xcconfig"; sourceTree = "<group>"; };
 		F650355C1FAC00A60007979D /* WisnucBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WisnucBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -296,6 +306,12 @@
 		1F4D75781FAC4BB800E6516C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1F4D75CD1FAC604100E6516C /* LoginTableViewCell.h */,
+				1F4D75CE1FAC604100E6516C /* LoginTableViewCell.m */,
+				1F4D75CF1FAC604100E6516C /* LoginTableViewCell.xib */,
+				1F4D75C91FAC5FF800E6516C /* FMCloudUserTableViewCell.h */,
+				1F4D75C81FAC5FF800E6516C /* FMCloudUserTableViewCell.m */,
+				1F4D75CA1FAC5FF900E6516C /* FMCloudUserTableViewCell.xib */,
 				1F4D757C1FAC4BB800E6516C /* DGPopUpViewTextView.h */,
 				1F4D75791FAC4BB800E6516C /* DGPopUpViewTextView.m */,
 				1F4D757A1FAC4BB800E6516C /* DGPopUpViewTextView.xib */,
@@ -582,8 +598,10 @@
 				F650356F1FAC00A70007979D /* LaunchScreen.storyboard in Resources */,
 				F650356C1FAC00A70007979D /* Assets.xcassets in Resources */,
 				1F4D75C01FAC5E3400E6516C /* ChooseAlertView.xib in Resources */,
+				1F4D75D11FAC604100E6516C /* LoginTableViewCell.xib in Resources */,
 				1F4D75A71FAC4BB800E6516C /* DGPopUpViewTextView.xib in Resources */,
 				F650356A1FAC00A70007979D /* Main.storyboard in Resources */,
+				1F4D75CC1FAC5FF900E6516C /* FMCloudUserTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -721,6 +739,7 @@
 				1F4D75AB1FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.m in Sources */,
 				1F4D75B31FAC4BB800E6516C /* NetServices.m in Sources */,
 				1F4D759C1FAC4BB800E6516C /* UIButton+EnlargeEdge.m in Sources */,
+				1F4D75CB1FAC5FF900E6516C /* FMCloudUserTableViewCell.m in Sources */,
 				1F4D75AC1FAC4BB800E6516C /* WBUser+CoreDataClass.m in Sources */,
 				1F4D75A51FAC4BB800E6516C /* FMSerachService.m in Sources */,
 				1F4D759B1FAC4BB800E6516C /* UIImage+GKContact.m in Sources */,
@@ -730,6 +749,7 @@
 				1F4D75C61FAC5EB500E6516C /* GCDAsyncUdpSocket.m in Sources */,
 				1F4D75AA1FAC4BB800E6516C /* WBUser+CoreDataProperties.m in Sources */,
 				1F4D75B11FAC4BB800E6516C /* UserServices.m in Sources */,
+				1F4D75D01FAC604100E6516C /* LoginTableViewCell.m in Sources */,
 				1F4D75A01FAC4BB800E6516C /* SXLoadingView.m in Sources */,
 				1F4D75A31FAC4BB800E6516C /* FMHandLoginVC.m in Sources */,
 				1F4D75BB1FAC5D2400E6516C /* ServerBrowser.m in Sources */,
