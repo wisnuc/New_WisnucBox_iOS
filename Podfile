@@ -25,6 +25,7 @@ pod 'ReactiveObjC'
 pod 'MJRefresh'
 pod 'WechatOpenSDK'
 pod 'MagicalRecord'
+pod 'RTRootNavigationController'
 end
 
 #post_install do |installer|

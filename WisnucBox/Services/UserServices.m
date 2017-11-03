@@ -60,6 +60,7 @@
        return [self logoutUser];
     self.defaultToken = currentUser.localToken;
     self.isUserLogin = false;
+    _currentUser = currentUser;
     [kUserDefaults setObject:currentUser.uuid forKey:WBCURRENTUSER_UUID];
     kUD_Synchronize;
 }

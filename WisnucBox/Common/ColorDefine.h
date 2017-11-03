@@ -14,4 +14,5 @@
 #define COR1  UICOLOR_RGB(0x03a9f4)
 #define kWhiteColor  [UIColor whiteColor]
 #define kBlackColor  [UIColor blackColor]
+
 #endif /* ColorDefine_h */

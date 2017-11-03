@@ -24,6 +24,7 @@
 #import <WXApi.h>
 #import <ReactiveObjC/ReactiveObjC.h>
 #import <Masonry/Masonry.h>
+#import <RTRootNavigationController/RTRootNavigationController.h>
 
 //Base
 #import "FABaseVC.h"

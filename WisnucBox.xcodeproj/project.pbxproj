@@ -51,6 +51,33 @@
 		F650356F1FAC00A70007979D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F650356D1FAC00A70007979D /* LaunchScreen.storyboard */; };
 		F650357A1FAC00A70007979D /* WisnucBoxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035791FAC00A70007979D /* WisnucBoxTests.m */; };
 		F65035851FAC00A70007979D /* WisnucBoxUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035841FAC00A70007979D /* WisnucBoxUITests.m */; };
+		F67D64061FAC7D3600E23D16 /* JYAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D63FF1FAC7D3600E23D16 /* JYAsset.m */; };
+		F67D64071FAC7D3600E23D16 /* PHAsset+JYEXT.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D64011FAC7D3600E23D16 /* PHAsset+JYEXT.m */; };
+		F67D64081FAC7D3600E23D16 /* PHFetchResult+JYEXT.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D64031FAC7D3600E23D16 /* PHFetchResult+JYEXT.m */; };
+		F67D64091FAC7D3600E23D16 /* PHPhotoLibrary+JYEXT.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D64051FAC7D3600E23D16 /* PHPhotoLibrary+JYEXT.m */; };
+		F67D64111FAC7D7F00E23D16 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D640C1FAC7D7F00E23D16 /* Base64.m */; };
+		F67D64121FAC7D7F00E23D16 /* CocoaSecurity.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D640E1FAC7D7F00E23D16 /* CocoaSecurity.m */; };
+		F67D64131FAC7D7F00E23D16 /* FileHash.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D64101FAC7D7F00E23D16 /* FileHash.m */; };
+		F67D64201FAC7D9A00E23D16 /* date_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = F67D64161FAC7D9A00E23D16 /* date_bg.png */; };
+		F67D64211FAC7D9A00E23D16 /* date_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F67D64171FAC7D9A00E23D16 /* date_bg@2x.png */; };
+		F67D64221FAC7D9A00E23D16 /* date_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F67D64181FAC7D9A00E23D16 /* date_bg@3x.png */; };
+		F67D64231FAC7D9A00E23D16 /* handrail.png in Resources */ = {isa = PBXBuildFile; fileRef = F67D64191FAC7D9A00E23D16 /* handrail.png */; };
+		F67D64241FAC7D9A00E23D16 /* handrail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F67D641A1FAC7D9A00E23D16 /* handrail@2x.png */; };
+		F67D64251FAC7D9A00E23D16 /* handrail@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F67D641B1FAC7D9A00E23D16 /* handrail@3x.png */; };
+		F67D64261FAC7D9A00E23D16 /* UIScrollView+IndicatorExt.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D641D1FAC7D9A00E23D16 /* UIScrollView+IndicatorExt.m */; };
+		F67D64271FAC7D9A00E23D16 /* UIView+JY_ExtendTouchRect.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D641F1FAC7D9A00E23D16 /* UIView+JY_ExtendTouchRect.m */; };
+		F67D643A1FAC7E5600E23D16 /* FirstDecorationSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D642D1FAC7E5600E23D16 /* FirstDecorationSectionView.m */; };
+		F67D643B1FAC7E5600E23D16 /* FirstDecorationSectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F67D642E1FAC7E5600E23D16 /* FirstDecorationSectionView.xib */; };
+		F67D643C1FAC7E5600E23D16 /* FMHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D64301FAC7E5600E23D16 /* FMHeadView.m */; };
+		F67D643D1FAC7E5600E23D16 /* JYBigImgCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D64321FAC7E5600E23D16 /* JYBigImgCell.m */; };
+		F67D643E1FAC7E5600E23D16 /* JYCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D64341FAC7E5600E23D16 /* JYCollectionViewCell.m */; };
+		F67D643F1FAC7E5600E23D16 /* JYProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D64371FAC7E5600E23D16 /* JYProgressHUD.m */; };
+		F67D64401FAC7E5600E23D16 /* TYDecorationSectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D64391FAC7E5600E23D16 /* TYDecorationSectionLayout.m */; };
+		F67D64481FAC7E6B00E23D16 /* JYForceTouchPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D64421FAC7E6B00E23D16 /* JYForceTouchPreviewController.m */; };
+		F67D64491FAC7E6B00E23D16 /* JYShowBigImgViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D64441FAC7E6B00E23D16 /* JYShowBigImgViewController.m */; };
+		F67D644A1FAC7E6B00E23D16 /* JYThumbVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D64461FAC7E6B00E23D16 /* JYThumbVC.m */; };
+		F67D644B1FAC7E6B00E23D16 /* JYThumbVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F67D64471FAC7E6B00E23D16 /* JYThumbVC.xib */; };
+		F67D644E1FAC84E800E23D16 /* NavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D644D1FAC84E800E23D16 /* NavViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,6 +187,53 @@
 		F65035801FAC00A70007979D /* WisnucBoxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WisnucBoxUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F65035841FAC00A70007979D /* WisnucBoxUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WisnucBoxUITests.m; sourceTree = "<group>"; };
 		F65035861FAC00A70007979D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F67D63FE1FAC7D3600E23D16 /* JYAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYAsset.h; sourceTree = "<group>"; };
+		F67D63FF1FAC7D3600E23D16 /* JYAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYAsset.m; sourceTree = "<group>"; };
+		F67D64001FAC7D3600E23D16 /* PHAsset+JYEXT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PHAsset+JYEXT.h"; sourceTree = "<group>"; };
+		F67D64011FAC7D3600E23D16 /* PHAsset+JYEXT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PHAsset+JYEXT.m"; sourceTree = "<group>"; };
+		F67D64021FAC7D3600E23D16 /* PHFetchResult+JYEXT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PHFetchResult+JYEXT.h"; sourceTree = "<group>"; };
+		F67D64031FAC7D3600E23D16 /* PHFetchResult+JYEXT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PHFetchResult+JYEXT.m"; sourceTree = "<group>"; };
+		F67D64041FAC7D3600E23D16 /* PHPhotoLibrary+JYEXT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PHPhotoLibrary+JYEXT.h"; sourceTree = "<group>"; };
+		F67D64051FAC7D3600E23D16 /* PHPhotoLibrary+JYEXT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PHPhotoLibrary+JYEXT.m"; sourceTree = "<group>"; };
+		F67D640B1FAC7D7F00E23D16 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
+		F67D640C1FAC7D7F00E23D16 /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
+		F67D640D1FAC7D7F00E23D16 /* CocoaSecurity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaSecurity.h; sourceTree = "<group>"; };
+		F67D640E1FAC7D7F00E23D16 /* CocoaSecurity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocoaSecurity.m; sourceTree = "<group>"; };
+		F67D640F1FAC7D7F00E23D16 /* FileHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileHash.h; sourceTree = "<group>"; };
+		F67D64101FAC7D7F00E23D16 /* FileHash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileHash.m; sourceTree = "<group>"; };
+		F67D64161FAC7D9A00E23D16 /* date_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = date_bg.png; sourceTree = "<group>"; };
+		F67D64171FAC7D9A00E23D16 /* date_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "date_bg@2x.png"; sourceTree = "<group>"; };
+		F67D64181FAC7D9A00E23D16 /* date_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "date_bg@3x.png"; sourceTree = "<group>"; };
+		F67D64191FAC7D9A00E23D16 /* handrail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = handrail.png; sourceTree = "<group>"; };
+		F67D641A1FAC7D9A00E23D16 /* handrail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "handrail@2x.png"; sourceTree = "<group>"; };
+		F67D641B1FAC7D9A00E23D16 /* handrail@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "handrail@3x.png"; sourceTree = "<group>"; };
+		F67D641C1FAC7D9A00E23D16 /* UIScrollView+IndicatorExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+IndicatorExt.h"; sourceTree = "<group>"; };
+		F67D641D1FAC7D9A00E23D16 /* UIScrollView+IndicatorExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+IndicatorExt.m"; sourceTree = "<group>"; };
+		F67D641E1FAC7D9A00E23D16 /* UIView+JY_ExtendTouchRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+JY_ExtendTouchRect.h"; sourceTree = "<group>"; };
+		F67D641F1FAC7D9A00E23D16 /* UIView+JY_ExtendTouchRect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+JY_ExtendTouchRect.m"; sourceTree = "<group>"; };
+		F67D642C1FAC7E5600E23D16 /* FirstDecorationSectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstDecorationSectionView.h; sourceTree = "<group>"; };
+		F67D642D1FAC7E5600E23D16 /* FirstDecorationSectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstDecorationSectionView.m; sourceTree = "<group>"; };
+		F67D642E1FAC7E5600E23D16 /* FirstDecorationSectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstDecorationSectionView.xib; sourceTree = "<group>"; };
+		F67D642F1FAC7E5600E23D16 /* FMHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMHeadView.h; sourceTree = "<group>"; };
+		F67D64301FAC7E5600E23D16 /* FMHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMHeadView.m; sourceTree = "<group>"; };
+		F67D64311FAC7E5600E23D16 /* JYBigImgCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYBigImgCell.h; sourceTree = "<group>"; };
+		F67D64321FAC7E5600E23D16 /* JYBigImgCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYBigImgCell.m; sourceTree = "<group>"; };
+		F67D64331FAC7E5600E23D16 /* JYCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYCollectionViewCell.h; sourceTree = "<group>"; };
+		F67D64341FAC7E5600E23D16 /* JYCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYCollectionViewCell.m; sourceTree = "<group>"; };
+		F67D64351FAC7E5600E23D16 /* JYConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYConst.h; sourceTree = "<group>"; };
+		F67D64361FAC7E5600E23D16 /* JYProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYProgressHUD.h; sourceTree = "<group>"; };
+		F67D64371FAC7E5600E23D16 /* JYProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYProgressHUD.m; sourceTree = "<group>"; };
+		F67D64381FAC7E5600E23D16 /* TYDecorationSectionLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYDecorationSectionLayout.h; sourceTree = "<group>"; };
+		F67D64391FAC7E5600E23D16 /* TYDecorationSectionLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYDecorationSectionLayout.m; sourceTree = "<group>"; };
+		F67D64411FAC7E6B00E23D16 /* JYForceTouchPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYForceTouchPreviewController.h; sourceTree = "<group>"; };
+		F67D64421FAC7E6B00E23D16 /* JYForceTouchPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYForceTouchPreviewController.m; sourceTree = "<group>"; };
+		F67D64431FAC7E6B00E23D16 /* JYShowBigImgViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYShowBigImgViewController.h; sourceTree = "<group>"; };
+		F67D64441FAC7E6B00E23D16 /* JYShowBigImgViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYShowBigImgViewController.m; sourceTree = "<group>"; };
+		F67D64451FAC7E6B00E23D16 /* JYThumbVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYThumbVC.h; sourceTree = "<group>"; };
+		F67D64461FAC7E6B00E23D16 /* JYThumbVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYThumbVC.m; sourceTree = "<group>"; };
+		F67D64471FAC7E6B00E23D16 /* JYThumbVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JYThumbVC.xib; sourceTree = "<group>"; };
+		F67D644C1FAC84E800E23D16 /* NavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavViewController.h; sourceTree = "<group>"; };
+		F67D644D1FAC84E800E23D16 /* NavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +276,9 @@
 		1F4D75581FAC4BB700E6516C /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				F67D64141FAC7D9A00E23D16 /* IndicatorExt */,
+				F67D640A1FAC7D7F00E23D16 /* crypto */,
+				F67D63FD1FAC7D3600E23D16 /* JYPhotos */,
 				1F4D75C11FAC5E9900E6516C /* GCD */,
 				1F4D75B81FAC5D1600E6516C /* ServerBrowser */,
 				1F4D75591FAC4BB700E6516C /* Category */,
@@ -263,6 +340,7 @@
 		1F4D756A1FAC4BB700E6516C /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				F67D64281FAC7DFE00E23D16 /* Photos */,
 				1F4D756B1FAC4BB700E6516C /* Login */,
 				1F4D757E1FAC4BB800E6516C /* Based */,
 			);
@@ -327,6 +405,8 @@
 		1F4D757E1FAC4BB800E6516C /* Based */ = {
 			isa = PBXGroup;
 			children = (
+				F67D644C1FAC84E800E23D16 /* NavViewController.h */,
+				F67D644D1FAC84E800E23D16 /* NavViewController.m */,
 				1F4D757F1FAC4BB800E6516C /* FABaseVC.h */,
 				1F4D75801FAC4BB800E6516C /* FABaseVC.m */,
 			);
@@ -483,6 +563,111 @@
 			path = WisnucBoxUITests;
 			sourceTree = "<group>";
 		};
+		F67D63FD1FAC7D3600E23D16 /* JYPhotos */ = {
+			isa = PBXGroup;
+			children = (
+				F67D63FE1FAC7D3600E23D16 /* JYAsset.h */,
+				F67D63FF1FAC7D3600E23D16 /* JYAsset.m */,
+				F67D64001FAC7D3600E23D16 /* PHAsset+JYEXT.h */,
+				F67D64011FAC7D3600E23D16 /* PHAsset+JYEXT.m */,
+				F67D64021FAC7D3600E23D16 /* PHFetchResult+JYEXT.h */,
+				F67D64031FAC7D3600E23D16 /* PHFetchResult+JYEXT.m */,
+				F67D64041FAC7D3600E23D16 /* PHPhotoLibrary+JYEXT.h */,
+				F67D64051FAC7D3600E23D16 /* PHPhotoLibrary+JYEXT.m */,
+			);
+			path = JYPhotos;
+			sourceTree = "<group>";
+		};
+		F67D640A1FAC7D7F00E23D16 /* crypto */ = {
+			isa = PBXGroup;
+			children = (
+				F67D640B1FAC7D7F00E23D16 /* Base64.h */,
+				F67D640C1FAC7D7F00E23D16 /* Base64.m */,
+				F67D640D1FAC7D7F00E23D16 /* CocoaSecurity.h */,
+				F67D640E1FAC7D7F00E23D16 /* CocoaSecurity.m */,
+				F67D640F1FAC7D7F00E23D16 /* FileHash.h */,
+				F67D64101FAC7D7F00E23D16 /* FileHash.m */,
+			);
+			path = crypto;
+			sourceTree = "<group>";
+		};
+		F67D64141FAC7D9A00E23D16 /* IndicatorExt */ = {
+			isa = PBXGroup;
+			children = (
+				F67D64151FAC7D9A00E23D16 /* asset */,
+				F67D641C1FAC7D9A00E23D16 /* UIScrollView+IndicatorExt.h */,
+				F67D641D1FAC7D9A00E23D16 /* UIScrollView+IndicatorExt.m */,
+				F67D641E1FAC7D9A00E23D16 /* UIView+JY_ExtendTouchRect.h */,
+				F67D641F1FAC7D9A00E23D16 /* UIView+JY_ExtendTouchRect.m */,
+			);
+			path = IndicatorExt;
+			sourceTree = "<group>";
+		};
+		F67D64151FAC7D9A00E23D16 /* asset */ = {
+			isa = PBXGroup;
+			children = (
+				F67D64161FAC7D9A00E23D16 /* date_bg.png */,
+				F67D64171FAC7D9A00E23D16 /* date_bg@2x.png */,
+				F67D64181FAC7D9A00E23D16 /* date_bg@3x.png */,
+				F67D64191FAC7D9A00E23D16 /* handrail.png */,
+				F67D641A1FAC7D9A00E23D16 /* handrail@2x.png */,
+				F67D641B1FAC7D9A00E23D16 /* handrail@3x.png */,
+			);
+			path = asset;
+			sourceTree = "<group>";
+		};
+		F67D64281FAC7DFE00E23D16 /* Photos */ = {
+			isa = PBXGroup;
+			children = (
+				F67D64291FAC7DFF00E23D16 /* Controller */,
+				F67D642A1FAC7DFF00E23D16 /* Model */,
+				F67D642B1FAC7DFF00E23D16 /* View */,
+			);
+			path = Photos;
+			sourceTree = "<group>";
+		};
+		F67D64291FAC7DFF00E23D16 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F67D64411FAC7E6B00E23D16 /* JYForceTouchPreviewController.h */,
+				F67D64421FAC7E6B00E23D16 /* JYForceTouchPreviewController.m */,
+				F67D64431FAC7E6B00E23D16 /* JYShowBigImgViewController.h */,
+				F67D64441FAC7E6B00E23D16 /* JYShowBigImgViewController.m */,
+				F67D64451FAC7E6B00E23D16 /* JYThumbVC.h */,
+				F67D64461FAC7E6B00E23D16 /* JYThumbVC.m */,
+				F67D64471FAC7E6B00E23D16 /* JYThumbVC.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		F67D642A1FAC7DFF00E23D16 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F67D642B1FAC7DFF00E23D16 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F67D642C1FAC7E5600E23D16 /* FirstDecorationSectionView.h */,
+				F67D642D1FAC7E5600E23D16 /* FirstDecorationSectionView.m */,
+				F67D642E1FAC7E5600E23D16 /* FirstDecorationSectionView.xib */,
+				F67D642F1FAC7E5600E23D16 /* FMHeadView.h */,
+				F67D64301FAC7E5600E23D16 /* FMHeadView.m */,
+				F67D64311FAC7E5600E23D16 /* JYBigImgCell.h */,
+				F67D64321FAC7E5600E23D16 /* JYBigImgCell.m */,
+				F67D64331FAC7E5600E23D16 /* JYCollectionViewCell.h */,
+				F67D64341FAC7E5600E23D16 /* JYCollectionViewCell.m */,
+				F67D64351FAC7E5600E23D16 /* JYConst.h */,
+				F67D64361FAC7E5600E23D16 /* JYProgressHUD.h */,
+				F67D64371FAC7E5600E23D16 /* JYProgressHUD.m */,
+				F67D64381FAC7E5600E23D16 /* TYDecorationSectionLayout.h */,
+				F67D64391FAC7E5600E23D16 /* TYDecorationSectionLayout.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -595,12 +780,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F67D64221FAC7D9A00E23D16 /* date_bg@3x.png in Resources */,
 				F650356F1FAC00A70007979D /* LaunchScreen.storyboard in Resources */,
 				F650356C1FAC00A70007979D /* Assets.xcassets in Resources */,
 				1F4D75C01FAC5E3400E6516C /* ChooseAlertView.xib in Resources */,
 				1F4D75D11FAC604100E6516C /* LoginTableViewCell.xib in Resources */,
+				F67D643B1FAC7E5600E23D16 /* FirstDecorationSectionView.xib in Resources */,
+				F67D64201FAC7D9A00E23D16 /* date_bg.png in Resources */,
 				1F4D75A71FAC4BB800E6516C /* DGPopUpViewTextView.xib in Resources */,
+				F67D64241FAC7D9A00E23D16 /* handrail@2x.png in Resources */,
+				F67D644B1FAC7E6B00E23D16 /* JYThumbVC.xib in Resources */,
+				F67D64231FAC7D9A00E23D16 /* handrail.png in Resources */,
 				F650356A1FAC00A70007979D /* Main.storyboard in Resources */,
+				F67D64251FAC7D9A00E23D16 /* handrail@3x.png in Resources */,
+				F67D64211FAC7D9A00E23D16 /* date_bg@2x.png in Resources */,
 				1F4D75CC1FAC5FF900E6516C /* FMCloudUserTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -674,6 +867,7 @@
 				"${BUILT_PRODUCTS_DIR}/MagicalRecord/MagicalRecord.framework",
 				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
+				"${BUILT_PRODUCTS_DIR}/RTRootNavigationController/RTRootNavigationController.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveObjC/ReactiveObjC.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/YYAsyncLayer/YYAsyncLayer.framework",
@@ -700,6 +894,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MagicalRecord.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RTRootNavigationController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveObjC.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYAsyncLayer.framework",
@@ -725,14 +920,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F4D75C71FAC5EB500E6516C /* GCDAsyncSocket.m in Sources */,
+				F67D643D1FAC7E5600E23D16 /* JYBigImgCell.m in Sources */,
+				F67D64091FAC7D3600E23D16 /* PHPhotoLibrary+JYEXT.m in Sources */,
 				1F4D75AF1FAC4BB800E6516C /* FilesServices.m in Sources */,
 				1F4D75AD1FAC4BB800E6516C /* WBLocalAsset+CoreDataProperties.m in Sources */,
+				F67D64061FAC7D3600E23D16 /* JYAsset.m in Sources */,
+				F67D64081FAC7D3600E23D16 /* PHFetchResult+JYEXT.m in Sources */,
 				1F4D75B01FAC4BB800E6516C /* AssetsServices.m in Sources */,
+				F67D64071FAC7D3600E23D16 /* PHAsset+JYEXT.m in Sources */,
 				F65035671FAC00A60007979D /* ViewController.m in Sources */,
 				1F4D75A61FAC4BB800E6516C /* DGPopUpViewTextView.m in Sources */,
+				F67D64481FAC7E6B00E23D16 /* JYForceTouchPreviewController.m in Sources */,
+				F67D64131FAC7D7F00E23D16 /* FileHash.m in Sources */,
 				1F4D75A81FAC4BB800E6516C /* FMLoginTextField.m in Sources */,
 				1F4D75BF1FAC5E3400E6516C /* ChooseAlertView.m in Sources */,
 				1F4D75A91FAC4BB800E6516C /* FABaseVC.m in Sources */,
+				F67D64111FAC7D7F00E23D16 /* Base64.m in Sources */,
+				F67D644E1FAC84E800E23D16 /* NavViewController.m in Sources */,
+				F67D643A1FAC7E5600E23D16 /* FirstDecorationSectionView.m in Sources */,
 				F65035641FAC00A60007979D /* AppDelegate.m in Sources */,
 				1F4D75A41FAC4BB800E6516C /* UserModel.m in Sources */,
 				1F4D75B41FAC4BB800E6516C /* AppServices.m in Sources */,
@@ -740,14 +945,21 @@
 				1F4D75B31FAC4BB800E6516C /* NetServices.m in Sources */,
 				1F4D759C1FAC4BB800E6516C /* UIButton+EnlargeEdge.m in Sources */,
 				1F4D75CB1FAC5FF900E6516C /* FMCloudUserTableViewCell.m in Sources */,
+				F67D643C1FAC7E5600E23D16 /* FMHeadView.m in Sources */,
 				1F4D75AC1FAC4BB800E6516C /* WBUser+CoreDataClass.m in Sources */,
 				1F4D75A51FAC4BB800E6516C /* FMSerachService.m in Sources */,
 				1F4D759B1FAC4BB800E6516C /* UIImage+GKContact.m in Sources */,
 				1F4D75AE1FAC4BB800E6516C /* WisnucBox.xcdatamodeld in Sources */,
+				F67D644A1FAC7E6B00E23D16 /* JYThumbVC.m in Sources */,
+				F67D64491FAC7E6B00E23D16 /* JYShowBigImgViewController.m in Sources */,
 				1F4D75A21FAC4BB800E6516C /* FMLoginViewController.m in Sources */,
 				1F4D759F1FAC4BB800E6516C /* UIColor+fm_color.m in Sources */,
 				1F4D75C61FAC5EB500E6516C /* GCDAsyncUdpSocket.m in Sources */,
+				F67D64271FAC7D9A00E23D16 /* UIView+JY_ExtendTouchRect.m in Sources */,
+				F67D64401FAC7E5600E23D16 /* TYDecorationSectionLayout.m in Sources */,
+				F67D64261FAC7D9A00E23D16 /* UIScrollView+IndicatorExt.m in Sources */,
 				1F4D75AA1FAC4BB800E6516C /* WBUser+CoreDataProperties.m in Sources */,
+				F67D643F1FAC7E5600E23D16 /* JYProgressHUD.m in Sources */,
 				1F4D75B11FAC4BB800E6516C /* UserServices.m in Sources */,
 				1F4D75D01FAC604100E6516C /* LoginTableViewCell.m in Sources */,
 				1F4D75A01FAC4BB800E6516C /* SXLoadingView.m in Sources */,
@@ -757,7 +969,9 @@
 				1F4D759E1FAC4BB800E6516C /* UIColor+FM_UserHeadImage.m in Sources */,
 				F65035611FAC00A60007979D /* main.m in Sources */,
 				1F4D759D1FAC4BB800E6516C /* UIButton+Universal.m in Sources */,
+				F67D643E1FAC7E5600E23D16 /* JYCollectionViewCell.m in Sources */,
 				1F4D75B21FAC4BB800E6516C /* DBServices.m in Sources */,
+				F67D64121FAC7D7F00E23D16 /* CocoaSecurity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

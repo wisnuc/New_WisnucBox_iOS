@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "WBUser+CoreDataClass.h"
+#import "AppServices.h"
 
 @interface AppDelegate ()
 
@@ -22,6 +23,15 @@
     return YES;
 }
 
+
+- (void) initRootVC {
+    UserServices * services = [AppServices sharedService].userServices;
+    if(services.isUserLogin) {
+        // To TabBar
+    }else{
+        // TO Login VC
+    }
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
