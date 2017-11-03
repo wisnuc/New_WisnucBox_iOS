@@ -275,7 +275,6 @@ WXApiDelegate
 }
 
 - (void)setStationCardView{
-
     if (self.tempDataSource.count ==0) {
         _stationCardView = [[UIView alloc]init];
         _stationCardView.backgroundColor =  UICOLOR_RGB(0x03a9f4);
@@ -306,6 +305,7 @@ WXApiDelegate
             });  
         }
     }
+        
     FMSerachService *serforUser;
     if (_userDataCount > 0) {
       serforUser  = _tempDataSource[_userDataCount];

@@ -301,10 +301,10 @@
 		1F4D75731FAC4BB800E6516C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				1F4D75741FAC4BB800E6516C /* FMSerachService.h */,
-				1F4D75751FAC4BB800E6516C /* UserModel.m */,
-				1F4D75761FAC4BB800E6516C /* FMSerachService.m */,
 				1F4D75771FAC4BB800E6516C /* UserModel.h */,
+				1F4D75751FAC4BB800E6516C /* UserModel.m */,
+				1F4D75741FAC4BB800E6516C /* FMSerachService.h */,
+				1F4D75761FAC4BB800E6516C /* FMSerachService.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
