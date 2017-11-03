@@ -9,5 +9,8 @@
 #ifndef Define_h
 #define Define_h
 
+#define __kWidth [[UIScreen mainScreen]bounds].size.width
+#define __kHeight [[UIScreen mainScreen]bounds].size.height
+
 
 #endif /* Define_h */

@@ -8,6 +8,8 @@
 
 
 #import <UIKit/UIKit.h>
+#import "UserModel.h"
+#import "FMSerachService.h"
 
 @interface FMUserLoginViewController : FABaseVC
 @property (nonatomic) UserModel * user;

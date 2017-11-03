@@ -116,6 +116,8 @@
 		1F4D75981FAC4BB800E6516C /* NetServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetServices.m; sourceTree = "<group>"; };
 		1F4D75991FAC4BB800E6516C /* FilesServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilesServices.h; sourceTree = "<group>"; };
 		1F4D759A1FAC4BB800E6516C /* AppServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppServices.m; sourceTree = "<group>"; };
+		1F4D75B61FAC575300E6516C /* ColorDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorDefine.h; sourceTree = "<group>"; };
+		1F4D75B71FAC5AE700E6516C /* FontDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FontDefine.h; sourceTree = "<group>"; };
 		357873726A4400954BE467E2 /* Pods_WisnucBox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WisnucBox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0D3F6BCD083EB684E36A713 /* Pods-WisnucBox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.release.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.release.xcconfig"; sourceTree = "<group>"; };
 		F650355C1FAC00A60007979D /* WisnucBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WisnucBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -167,6 +169,8 @@
 			children = (
 				1F4D75561FAC4B8800E6516C /* Define.h */,
 				1F4D75571FAC4B8800E6516C /* default.pch */,
+				1F4D75B61FAC575300E6516C /* ColorDefine.h */,
+				1F4D75B71FAC5AE700E6516C /* FontDefine.h */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -252,12 +256,12 @@
 		1F4D756C1FAC4BB800E6516C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				1F4D756D1FAC4BB800E6516C /* FMUserLoginViewController.m */,
-				1F4D756E1FAC4BB800E6516C /* FMLoginViewController.h */,
 				1F4D756F1FAC4BB800E6516C /* FMHandLoginVC.h */,
+				1F4D75721FAC4BB800E6516C /* FMHandLoginVC.m */,
+				1F4D756E1FAC4BB800E6516C /* FMLoginViewController.h */,
 				1F4D75701FAC4BB800E6516C /* FMLoginViewController.m */,
 				1F4D75711FAC4BB800E6516C /* FMUserLoginViewController.h */,
-				1F4D75721FAC4BB800E6516C /* FMHandLoginVC.m */,
+				1F4D756D1FAC4BB800E6516C /* FMUserLoginViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -321,18 +325,18 @@
 		1F4D758D1FAC4BB800E6516C /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				1F4D758E1FAC4BB800E6516C /* UserServices.h */,
-				1F4D758F1FAC4BB800E6516C /* AssetsServices.h */,
-				1F4D75901FAC4BB800E6516C /* DBServices.h */,
-				1F4D75911FAC4BB800E6516C /* FilesServices.m */,
 				1F4D75921FAC4BB800E6516C /* ServiceProtocol.h */,
-				1F4D75931FAC4BB800E6516C /* NetServices.h */,
-				1F4D75941FAC4BB800E6516C /* AppServices.h */,
-				1F4D75951FAC4BB800E6516C /* AssetsServices.m */,
+				1F4D758E1FAC4BB800E6516C /* UserServices.h */,
 				1F4D75961FAC4BB800E6516C /* UserServices.m */,
+				1F4D758F1FAC4BB800E6516C /* AssetsServices.h */,
+				1F4D75951FAC4BB800E6516C /* AssetsServices.m */,
+				1F4D75901FAC4BB800E6516C /* DBServices.h */,
 				1F4D75971FAC4BB800E6516C /* DBServices.m */,
-				1F4D75981FAC4BB800E6516C /* NetServices.m */,
 				1F4D75991FAC4BB800E6516C /* FilesServices.h */,
+				1F4D75911FAC4BB800E6516C /* FilesServices.m */,
+				1F4D75931FAC4BB800E6516C /* NetServices.h */,
+				1F4D75981FAC4BB800E6516C /* NetServices.m */,
+				1F4D75941FAC4BB800E6516C /* AppServices.h */,
 				1F4D759A1FAC4BB800E6516C /* AppServices.m */,
 			);
 			path = Services;
