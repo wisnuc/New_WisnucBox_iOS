@@ -42,6 +42,9 @@
 		1F4D75CC1FAC5FF900E6516C /* FMCloudUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F4D75CA1FAC5FF900E6516C /* FMCloudUserTableViewCell.xib */; };
 		1F4D75D01FAC604100E6516C /* LoginTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75CE1FAC604100E6516C /* LoginTableViewCell.m */; };
 		1F4D75D11FAC604100E6516C /* LoginTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F4D75CF1FAC604100E6516C /* LoginTableViewCell.xib */; };
+		1F61E5301FAC7B05008ACEFB /* WeChat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F61E52D1FAC7B04008ACEFB /* WeChat@2x.png */; };
+		1F61E5311FAC7B05008ACEFB /* WeChat.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F61E52E1FAC7B04008ACEFB /* WeChat.png */; };
+		1F61E5321FAC7B05008ACEFB /* WeChat@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F61E52F1FAC7B05008ACEFB /* WeChat@3x.png */; };
 		2C68507817DCDF432CF88A3F /* Pods_WisnucBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 357873726A4400954BE467E2 /* Pods_WisnucBox.framework */; };
 		F65035611FAC00A60007979D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035601FAC00A60007979D /* main.m */; };
 		F65035641FAC00A60007979D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035631FAC00A60007979D /* AppDelegate.m */; };
@@ -142,6 +145,9 @@
 		1F4D75CD1FAC604100E6516C /* LoginTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTableViewCell.h; sourceTree = "<group>"; };
 		1F4D75CE1FAC604100E6516C /* LoginTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTableViewCell.m; sourceTree = "<group>"; };
 		1F4D75CF1FAC604100E6516C /* LoginTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginTableViewCell.xib; sourceTree = "<group>"; };
+		1F61E52D1FAC7B04008ACEFB /* WeChat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WeChat@2x.png"; sourceTree = "<group>"; };
+		1F61E52E1FAC7B04008ACEFB /* WeChat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WeChat.png; sourceTree = "<group>"; };
+		1F61E52F1FAC7B05008ACEFB /* WeChat@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WeChat@3x.png"; sourceTree = "<group>"; };
 		357873726A4400954BE467E2 /* Pods_WisnucBox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WisnucBox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0D3F6BCD083EB684E36A713 /* Pods-WisnucBox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.release.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.release.xcconfig"; sourceTree = "<group>"; };
 		F650355C1FAC00A60007979D /* WisnucBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WisnucBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -397,6 +403,24 @@
 			path = GCD;
 			sourceTree = "<group>";
 		};
+		1F61E52B1FAC7AE0008ACEFB /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				1F61E52C1FAC7AEB008ACEFB /* Image */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		1F61E52C1FAC7AEB008ACEFB /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				1F61E52E1FAC7B04008ACEFB /* WeChat.png */,
+				1F61E52D1FAC7B04008ACEFB /* WeChat@2x.png */,
+				1F61E52F1FAC7B05008ACEFB /* WeChat@3x.png */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
 		A425D85D003C084CDA92A5DA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -439,6 +463,7 @@
 		F650355E1FAC00A60007979D /* WisnucBox */ = {
 			isa = PBXGroup;
 			children = (
+				1F61E52B1FAC7AE0008ACEFB /* Source */,
 				1F4D75811FAC4BB800E6516C /* CoreData */,
 				1F4D756A1FAC4BB700E6516C /* Modules */,
 				1F4D758D1FAC4BB800E6516C /* Services */,
@@ -601,6 +626,9 @@
 				1F4D75D11FAC604100E6516C /* LoginTableViewCell.xib in Resources */,
 				1F4D75A71FAC4BB800E6516C /* DGPopUpViewTextView.xib in Resources */,
 				F650356A1FAC00A70007979D /* Main.storyboard in Resources */,
+				1F61E5301FAC7B05008ACEFB /* WeChat@2x.png in Resources */,
+				1F61E5321FAC7B05008ACEFB /* WeChat@3x.png in Resources */,
+				1F61E5311FAC7B05008ACEFB /* WeChat.png in Resources */,
 				1F4D75CC1FAC5FF900E6516C /* FMCloudUserTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -915,7 +943,7 @@
 				INFOPLIST_FILE = WisnucBox/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.wisnuc.WisnucBox;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wisnuc.fruit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -931,7 +959,7 @@
 				INFOPLIST_FILE = WisnucBox/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.wisnuc.WisnucBox;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wisnuc.fruit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

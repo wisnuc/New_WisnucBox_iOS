@@ -12,5 +12,6 @@
 #define __kWidth [[UIScreen mainScreen]bounds].size.width
 #define __kHeight [[UIScreen mainScreen]bounds].size.height
 
+#define KWxAppID      @"wx99b54eb728323fe8"
 
 #endif /* Define_h */
