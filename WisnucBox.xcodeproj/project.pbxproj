@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F5FEA351FAC0FA00093963A /* FMLoginTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5FEA341FAC0FA00093963A /* FMLoginTextField.m */; };
+		1F5FEA391FAC15830093963A /* DGPopUpViewTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F5FEA371FAC15820093963A /* DGPopUpViewTextView.xib */; };
+		1F5FEA3A1FAC15830093963A /* DGPopUpViewTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5FEA381FAC15820093963A /* DGPopUpViewTextView.m */; };
 		F65035611FAC00A60007979D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035601FAC00A60007979D /* main.m */; };
 		F65035641FAC00A60007979D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035631FAC00A60007979D /* AppDelegate.m */; };
 		F65035671FAC00A60007979D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035661FAC00A60007979D /* ViewController.m */; };
@@ -38,6 +41,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1F5FEA331FAC0FA00093963A /* FMLoginTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMLoginTextField.h; sourceTree = "<group>"; };
+		1F5FEA341FAC0FA00093963A /* FMLoginTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMLoginTextField.m; sourceTree = "<group>"; };
+		1F5FEA361FAC15820093963A /* DGPopUpViewTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGPopUpViewTextView.h; sourceTree = "<group>"; };
+		1F5FEA371FAC15820093963A /* DGPopUpViewTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DGPopUpViewTextView.xib; sourceTree = "<group>"; };
+		1F5FEA381FAC15820093963A /* DGPopUpViewTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGPopUpViewTextView.m; sourceTree = "<group>"; };
 		F650355C1FAC00A60007979D /* WisnucBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WisnucBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F65035601FAC00A60007979D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F65035621FAC00A60007979D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -87,6 +95,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F5FEA311FAC0F6F0093963A /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				1F5FEA321FAC0F900093963A /* View */,
+				F65035921FAC00FF0007979D /* Controller */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		1F5FEA321FAC0F900093963A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1F5FEA361FAC15820093963A /* DGPopUpViewTextView.h */,
+				1F5FEA381FAC15820093963A /* DGPopUpViewTextView.m */,
+				1F5FEA371FAC15820093963A /* DGPopUpViewTextView.xib */,
+				1F5FEA331FAC0FA00093963A /* FMLoginTextField.h */,
+				1F5FEA341FAC0FA00093963A /* FMLoginTextField.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1F5FEA3B1FAC16250093963A /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
 		F65035531FAC00A60007979D = {
 			isa = PBXGroup;
 			children = (
@@ -110,7 +146,8 @@
 		F650355E1FAC00A60007979D /* WisnucBox */ = {
 			isa = PBXGroup;
 			children = (
-				F65035921FAC00FF0007979D /* Controller */,
+				1F5FEA3B1FAC16250093963A /* Tools */,
+				1F5FEA311FAC0F6F0093963A /* Login */,
 				F65035621FAC00A60007979D /* AppDelegate.h */,
 				F65035631FAC00A60007979D /* AppDelegate.m */,
 				F65035651FAC00A60007979D /* ViewController.h */,
@@ -153,14 +190,6 @@
 		F65035921FAC00FF0007979D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				F65035931FAC00FF0007979D /* Login */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		F65035931FAC00FF0007979D /* Login */ = {
-			isa = PBXGroup;
-			children = (
 				F65035941FAC00FF0007979D /* FMHandLoginVC.h */,
 				F65035951FAC00FF0007979D /* FMHandLoginVC.m */,
 				F65035961FAC00FF0007979D /* FMLoginViewController.h */,
@@ -168,7 +197,7 @@
 				F65035981FAC00FF0007979D /* FMUserLoginViewController.h */,
 				F65035991FAC00FF0007979D /* FMUserLoginViewController.m */,
 			);
-			path = Login;
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -282,6 +311,7 @@
 			files = (
 				F650356F1FAC00A70007979D /* LaunchScreen.storyboard in Resources */,
 				F650356C1FAC00A70007979D /* Assets.xcassets in Resources */,
+				1F5FEA391FAC15830093963A /* DGPopUpViewTextView.xib in Resources */,
 				F650356A1FAC00A70007979D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -309,10 +339,12 @@
 			files = (
 				F65035671FAC00A60007979D /* ViewController.m in Sources */,
 				F65035641FAC00A60007979D /* AppDelegate.m in Sources */,
+				1F5FEA3A1FAC15830093963A /* DGPopUpViewTextView.m in Sources */,
 				F650359A1FAC00FF0007979D /* FMHandLoginVC.m in Sources */,
 				F650359B1FAC00FF0007979D /* FMLoginViewController.m in Sources */,
 				F650359C1FAC00FF0007979D /* FMUserLoginViewController.m in Sources */,
 				F65035611FAC00A60007979D /* main.m in Sources */,
+				1F5FEA351FAC0FA00093963A /* FMLoginTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -552,6 +584,7 @@
 				F650358B1FAC00A70007979D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F650358C1FAC00A70007979D /* Build configuration list for PBXNativeTarget "WisnucBoxTests" */ = {
 			isa = XCConfigurationList;
@@ -560,6 +593,7 @@
 				F650358E1FAC00A70007979D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F650358F1FAC00A70007979D /* Build configuration list for PBXNativeTarget "WisnucBoxUITests" */ = {
 			isa = XCConfigurationList;
@@ -568,6 +602,7 @@
 				F65035911FAC00A70007979D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

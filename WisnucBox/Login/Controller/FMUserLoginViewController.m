@@ -9,9 +9,9 @@
 #import "FMUserLoginViewController.h"
 #import "FMLoginTextField.h"
 #import "UIButton+EnlargeEdge.h"
-#import "FMGetUserInfo.h"
-#import "FMUploadFileAPI.h"
-#import "LoginAPI.h"
+//#import "FMGetUserInfo.h"
+//#import "FMUploadFileAPI.h"
+//#import "LoginAPI.h"
 #define  MainColor  UICOLOR_RGB(0x03a9f4)
 
 @interface FMUserLoginViewController ()<UITextFieldDelegate>
@@ -71,125 +71,9 @@
 }
 
 - (void)loginButtonClick:(UIButton *)sender{
-     FMConfigInstance.isCloud = NO;
-    [FMDBControl asyncLoadPhotoToDB];
-    [self.view endEditing:YES];
-    sender.userInteractionEnabled = NO;
-    [SXLoadingView showProgressHUD:@"正在登录"];
    
-    NSString * UUID = [NSString stringWithFormat:@"%@:%@",_user.uuid,IsNilString(_loginTextField.text)?@"":_loginTextField.text];
-    NSString * basic = [UUID base64EncodedString];
-    [[LoginAPI apiWithServicePath:_service.path AuthorizationBasic:basic]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        [SXLoadingView hideProgressHUD];
-        [self loginToDoWithResponse:request.responseJsonObject];
-        sender.userInteractionEnabled = YES;
-    } failure:^(__kindof JYBaseRequest *request) {
-        [SXLoadingView hideProgressHUD];
-        NSHTTPURLResponse * res = (NSHTTPURLResponse *)request.dataTask.response;
-        [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"登录失败:%ld",(long)res.statusCode] duration:1];
-        sender.userInteractionEnabled = YES;
-        NSLog(@"%@",request.error);
-    }];
-    
-//    AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
-//
-//    [manager.requestSerializer setValue:[NSString stringWithFormat:@"Basic %@",Basic] forHTTPHeaderField:@"Authorization"];
-//    [manager GET:[NSString stringWithFormat:@"%@token",_service.path] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        [SXLoadingView hideProgressHUD];
-//        [self loginToDoWithResponse:responseObject];
-//        sender.userInteractionEnabled = YES;
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        [SXLoadingView hideProgressHUD];
-//        NSHTTPURLResponse * res = (NSHTTPURLResponse *)task.response;
-//        [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"登录失败:%ld",(long)res.statusCode] duration:1];
-//        sender.userInteractionEnabled = YES;
-//        NSLog(@"%@",error);
-//    }];
 }
 
-//登录完成 做的事
--(void)loginToDoWithResponse:(id)response{
-    NSString * token = response[@"token"];
-//    [FMDBControl reloadTables];
-    [[NSUserDefaults standardUserDefaults]setObject:@0 forKey:@"addCount"];
-    [_service.task cancel];
-    NSString * def_token = DEF_Token;
-
-    MyNSLog(@"登录");
-       //判断是否为同一用户退出后登录
-    if (!IsNilString(DEF_UUID) && !IsEquallString(DEF_UUID, _user.uuid) ) {
-    //清除deviceID
-    }
-    FMConfigInstance.userToken = token;
-    FMConfigInstance.userUUID = _user.uuid;
-    //更新图库
-    JYRequestConfig * config = [JYRequestConfig sharedConfig];
-    config.baseURL = self.service.path;
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"uploadImageArr"];
-    if(IsNilString(USER_SHOULD_SYNC_PHOTO) || IsEquallString(USER_SHOULD_SYNC_PHOTO, _user.uuid)){
-        //设置   可备份用户为
-        [[NSUserDefaults standardUserDefaults] setObject:_user.uuid forKey:USER_SHOULD_SYNC_PHOTO_STR];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        //重启photoSyncer
-//        [PhotoManager shareManager].canUpload = YES;
-    }
-    //重置数据
-    [MyAppDelegate resetDatasource];
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        //保存用户信息
-        FMUserLoginInfo * info = [FMUserLoginInfo new];
-        info.userName = _user.username;
-        MyNSLog(@"登录用户:%@",_user.username);
-        info.uuid = _user.uuid;
-        //        info.deviceId = [PhotoManager getUUID];
-        info.jwt_token = token;
-        info.bonjour_name = _service.name;
-        info.sn_address = _service.displayPath;
-//           NSLog(@"%@",_service.hostName);
-        [FMDBControl addUserLoginInfo:info];
-//     NSLog(@"%@",[FMDBControl findUserLoginInfo:_user.uuid]);
-    });
-    //组装UI
-    MyAppDelegate.leftMenu = nil;
-    [MyAppDelegate initLeftMenu];
-    
-    if (def_token.length == 0 ) {
-        UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否自动备份该手机的照片至WISNUC服务器" preferredStyle:UIAlertControllerStyleAlert];
-        // 2.添加取消按钮，block中存放点击了“取消”按钮要执行的操作
-        UIAlertAction *cancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-            NSLog(@"点击了取消按钮");
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                //                [PhotoManager shareManager].canUpload = NO;
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"dontBackUp" object:nil userInfo:nil];
-                NSLog(@"点击了确定按钮");
-            });
-        }];
-        
-        UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"备份" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                //                 [PhotoManager shareManager].canUpload = YES;
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"backUp" object:nil];
-                NSLog(@"点击了确定按钮");
-            });
-        }];
-        // 3.将“取消”和“确定”按钮加入到弹框控制器中
-        [alertVc addAction:cancle];
-        [alertVc addAction:confirm];
-        [self presentViewController:alertVc animated:YES completion:^{
-        }];
-    }
-    MyAppDelegate.window.rootViewController = nil;
-    [MyAppDelegate.window resignKeyWindow];
-    [MyAppDelegate.window removeFromSuperview];
-    MyAppDelegate.sharesTabBar = [[RDVTabBarController alloc]init];
-    [MyAppDelegate initWithTabBar:MyAppDelegate.sharesTabBar];
-    [MyAppDelegate.sharesTabBar setSelectedIndex:0];
-    MyAppDelegate.filesTabBar = nil;
-    [MyAppDelegate resetDatasource];
-
-    [UIApplication sharedApplication].keyWindow.rootViewController = MyAppDelegate.sharesTabBar;
-}
 
 #pragma mark - 验证手机号
 +(BOOL)checkForMobilePhoneNo:(NSString *)mobilePhone{
