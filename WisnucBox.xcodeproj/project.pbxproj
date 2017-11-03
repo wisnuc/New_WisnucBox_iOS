@@ -45,6 +45,12 @@
 		1F61E5301FAC7B05008ACEFB /* WeChat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F61E52D1FAC7B04008ACEFB /* WeChat@2x.png */; };
 		1F61E5311FAC7B05008ACEFB /* WeChat.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F61E52E1FAC7B04008ACEFB /* WeChat.png */; };
 		1F61E5321FAC7B05008ACEFB /* WeChat@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F61E52F1FAC7B05008ACEFB /* WeChat@3x.png */; };
+		1F7CE6301FAC8262004467C8 /* PLUS@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7CE62D1FAC8262004467C8 /* PLUS@3x.png */; };
+		1F7CE6311FAC8262004467C8 /* PLUS@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7CE62E1FAC8262004467C8 /* PLUS@2x.png */; };
+		1F7CE6321FAC8262004467C8 /* PLUS.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7CE62F1FAC8262004467C8 /* PLUS.png */; };
+		1F7CE6361FAC826A004467C8 /* logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7CE6331FAC826A004467C8 /* logo@3x.png */; };
+		1F7CE6371FAC826A004467C8 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7CE6341FAC826A004467C8 /* logo.png */; };
+		1F7CE6381FAC826A004467C8 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7CE6351FAC826A004467C8 /* logo@2x.png */; };
 		2C68507817DCDF432CF88A3F /* Pods_WisnucBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 357873726A4400954BE467E2 /* Pods_WisnucBox.framework */; };
 		F65035611FAC00A60007979D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035601FAC00A60007979D /* main.m */; };
 		F65035641FAC00A60007979D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035631FAC00A60007979D /* AppDelegate.m */; };
@@ -148,6 +154,12 @@
 		1F61E52D1FAC7B04008ACEFB /* WeChat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WeChat@2x.png"; sourceTree = "<group>"; };
 		1F61E52E1FAC7B04008ACEFB /* WeChat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WeChat.png; sourceTree = "<group>"; };
 		1F61E52F1FAC7B05008ACEFB /* WeChat@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WeChat@3x.png"; sourceTree = "<group>"; };
+		1F7CE62D1FAC8262004467C8 /* PLUS@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PLUS@3x.png"; sourceTree = "<group>"; };
+		1F7CE62E1FAC8262004467C8 /* PLUS@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PLUS@2x.png"; sourceTree = "<group>"; };
+		1F7CE62F1FAC8262004467C8 /* PLUS.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PLUS.png; sourceTree = "<group>"; };
+		1F7CE6331FAC826A004467C8 /* logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@3x.png"; sourceTree = "<group>"; };
+		1F7CE6341FAC826A004467C8 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		1F7CE6351FAC826A004467C8 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
 		357873726A4400954BE467E2 /* Pods_WisnucBox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WisnucBox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0D3F6BCD083EB684E36A713 /* Pods-WisnucBox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.release.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.release.xcconfig"; sourceTree = "<group>"; };
 		F650355C1FAC00A60007979D /* WisnucBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WisnucBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -414,9 +426,7 @@
 		1F61E52C1FAC7AEB008ACEFB /* Image */ = {
 			isa = PBXGroup;
 			children = (
-				1F61E52E1FAC7B04008ACEFB /* WeChat.png */,
-				1F61E52D1FAC7B04008ACEFB /* WeChat@2x.png */,
-				1F61E52F1FAC7B05008ACEFB /* WeChat@3x.png */,
+				1F7CE62C1FAC824E004467C8 /* Login */,
 			);
 			path = Image;
 			sourceTree = "<group>";
@@ -426,6 +436,22 @@
 			children = (
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		1F7CE62C1FAC824E004467C8 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				1F7CE6341FAC826A004467C8 /* logo.png */,
+				1F7CE6351FAC826A004467C8 /* logo@2x.png */,
+				1F7CE6331FAC826A004467C8 /* logo@3x.png */,
+				1F7CE62F1FAC8262004467C8 /* PLUS.png */,
+				1F7CE62E1FAC8262004467C8 /* PLUS@2x.png */,
+				1F7CE62D1FAC8262004467C8 /* PLUS@3x.png */,
+				1F61E52E1FAC7B04008ACEFB /* WeChat.png */,
+				1F61E52D1FAC7B04008ACEFB /* WeChat@2x.png */,
+				1F61E52F1FAC7B05008ACEFB /* WeChat@3x.png */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		A425D85D003C084CDA92A5DA /* Frameworks */ = {
@@ -631,12 +657,18 @@
 				F650356F1FAC00A70007979D /* LaunchScreen.storyboard in Resources */,
 				F650356C1FAC00A70007979D /* Assets.xcassets in Resources */,
 				1F4D75C01FAC5E3400E6516C /* ChooseAlertView.xib in Resources */,
+				1F7CE6301FAC8262004467C8 /* PLUS@3x.png in Resources */,
+				1F7CE6311FAC8262004467C8 /* PLUS@2x.png in Resources */,
 				1F4D75D11FAC604100E6516C /* LoginTableViewCell.xib in Resources */,
 				1F4D75A71FAC4BB800E6516C /* DGPopUpViewTextView.xib in Resources */,
 				F650356A1FAC00A70007979D /* Main.storyboard in Resources */,
 				1F61E5301FAC7B05008ACEFB /* WeChat@2x.png in Resources */,
+				1F7CE6381FAC826A004467C8 /* logo@2x.png in Resources */,
 				1F61E5321FAC7B05008ACEFB /* WeChat@3x.png in Resources */,
 				1F61E5311FAC7B05008ACEFB /* WeChat.png in Resources */,
+				1F7CE6371FAC826A004467C8 /* logo.png in Resources */,
+				1F7CE6321FAC8262004467C8 /* PLUS.png in Resources */,
+				1F7CE6361FAC826A004467C8 /* logo@3x.png in Resources */,
 				1F4D75CC1FAC5FF900E6516C /* FMCloudUserTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
