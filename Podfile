@@ -1,3 +1,4 @@
+use_frameworks!
 target :'Wisnuc-iOS' do 
 
 platform :ios,’8.0’
@@ -20,6 +21,7 @@ pod 'BEMCheckBox'
 pod 'ReactiveObjC'
 pod 'MJRefresh'
 pod 'WechatOpenSDK'
+pod "MagicalRecord"
 end
 
 post_install do |installer|

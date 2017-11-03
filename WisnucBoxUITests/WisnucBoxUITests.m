@@ -1,18 +1,18 @@
 //
-//  Wisnuc_iOSUITests.m
-//  Wisnuc-iOSUITests
+//  WisnucBoxUITests.m
+//  WisnucBoxUITests
 //
-//  Created by wisnuc-imac on 2017/11/2.
-//  Copyright © 2017年 wisnuc-imac. All rights reserved.
+//  Created by JackYang on 2017/11/3.
+//  Copyright © 2017年 JackYang. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
 
-@interface Wisnuc_iOSUITests : XCTestCase
+@interface WisnucBoxUITests : XCTestCase
 
 @end
 
-@implementation Wisnuc_iOSUITests
+@implementation WisnucBoxUITests
 
 - (void)setUp {
     [super setUp];
