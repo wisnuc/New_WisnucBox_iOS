@@ -8,6 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
+// userdefault key for login user uuid
+#define WBCURRENTUSER_UUID @"WBCURRENTUSER_UUID"
+
+@class WBUser;
+
 @interface UserServices : NSObject<ServiceProtocol>
+
+@property (nonatomic, copy) WBUser * _Nullable currentUser; // current login user
+
+@property (nonatomic, assign) BOOL isUserLogin; // if someone login , this property should be true, else false
+
+@property (nonatomic, copy) NSString * _Nullable defaultToken; //  Token for login user
+
+- (nullable WBUser *)getUserWithUUID:(NSString * _Nonnull)uuid;
 
 @end

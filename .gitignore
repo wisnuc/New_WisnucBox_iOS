@@ -38,6 +38,7 @@ Pods/
 *.xcworkspace
 !default.xcworkspace
 
+
 # Carthage
 #
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
@@ -64,3 +65,6 @@ fastlane/test_output
 
 iOSInjectionProject/
 .DS_Store
+.gitignore
+Podfile.lock
+

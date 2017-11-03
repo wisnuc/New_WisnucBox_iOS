@@ -7,7 +7,11 @@
 //
 
 #import "AppDelegate.h"
+<<<<<<< HEAD
 #import "FMLoginViewController.h"
+=======
+#import "WBUser+CoreDataClass.h"
+>>>>>>> 66b8c327aa68b58c9159f202061cd52206e50362
 
 @interface AppDelegate () <WXApiDelegate>
 
