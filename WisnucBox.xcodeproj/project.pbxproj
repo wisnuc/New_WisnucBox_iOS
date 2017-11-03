@@ -13,13 +13,35 @@
 		1F1251661FAC3A5400EABF16 /* UIColor+fm_color.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1251621FAC3A5300EABF16 /* UIColor+fm_color.m */; };
 		1F1251671FAC3A5400EABF16 /* UIColor+FM_UserHeadImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1251651FAC3A5400EABF16 /* UIColor+FM_UserHeadImage.m */; };
 		1F12516B1FAC3AC600EABF16 /* SXLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F12516A1FAC3AC600EABF16 /* SXLoadingView.m */; };
-		1F12516F1FAC3B5000EABF16 /* FMSerachService.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F12516D1FAC3B5000EABF16 /* FMSerachService.m */; };
-		1F4D75481FAC3DD500E6516C /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75461FAC3DD500E6516C /* UserModel.m */; };
-		1F5FEA351FAC0FA00093963A /* FMLoginTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5FEA341FAC0FA00093963A /* FMLoginTextField.m */; };
-		1F5FEA391FAC15830093963A /* DGPopUpViewTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F5FEA371FAC15820093963A /* DGPopUpViewTextView.xib */; };
+		1F4D759B1FAC4BB800E6516C /* UIImage+GKContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D755B1FAC4BB700E6516C /* UIImage+GKContact.m */; };
+		1F4D759C1FAC4BB800E6516C /* UIButton+EnlargeEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75601FAC4BB700E6516C /* UIButton+EnlargeEdge.m */; };
+		1F4D759D1FAC4BB800E6516C /* UIButton+Universal.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75611FAC4BB700E6516C /* UIButton+Universal.m */; };
+		1F4D759E1FAC4BB800E6516C /* UIColor+FM_UserHeadImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75631FAC4BB700E6516C /* UIColor+FM_UserHeadImage.m */; };
+		1F4D759F1FAC4BB800E6516C /* UIColor+fm_color.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75641FAC4BB700E6516C /* UIColor+fm_color.m */; };
+		1F4D75A01FAC4BB800E6516C /* SXLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75691FAC4BB700E6516C /* SXLoadingView.m */; };
+		1F4D75A11FAC4BB800E6516C /* FMUserLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D756D1FAC4BB800E6516C /* FMUserLoginViewController.m */; };
+		1F4D75A21FAC4BB800E6516C /* FMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75701FAC4BB800E6516C /* FMLoginViewController.m */; };
+		1F4D75A31FAC4BB800E6516C /* FMHandLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75721FAC4BB800E6516C /* FMHandLoginVC.m */; };
+		1F4D75A41FAC4BB800E6516C /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75751FAC4BB800E6516C /* UserModel.m */; };
+		1F4D75A51FAC4BB800E6516C /* FMSerachService.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75761FAC4BB800E6516C /* FMSerachService.m */; };
+		1F4D75A61FAC4BB800E6516C /* DGPopUpViewTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75791FAC4BB800E6516C /* DGPopUpViewTextView.m */; };
+		1F4D75A71FAC4BB800E6516C /* DGPopUpViewTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F4D757A1FAC4BB800E6516C /* DGPopUpViewTextView.xib */; };
+		1F4D75A81FAC4BB800E6516C /* FMLoginTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D757D1FAC4BB800E6516C /* FMLoginTextField.m */; };
+		1F4D75A91FAC4BB800E6516C /* FABaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75801FAC4BB800E6516C /* FABaseVC.m */; };
+		1F4D75AA1FAC4BB800E6516C /* WBUser+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75831FAC4BB800E6516C /* WBUser+CoreDataProperties.m */; };
+		1F4D75AB1FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75841FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.m */; };
+		1F4D75AC1FAC4BB800E6516C /* WBUser+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75851FAC4BB800E6516C /* WBUser+CoreDataClass.m */; };
+		1F4D75AD1FAC4BB800E6516C /* WBLocalAsset+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D758A1FAC4BB800E6516C /* WBLocalAsset+CoreDataProperties.m */; };
+		1F4D75AE1FAC4BB800E6516C /* WisnucBox.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D758B1FAC4BB800E6516C /* WisnucBox.xcdatamodeld */; };
+		1F4D75AF1FAC4BB800E6516C /* FilesServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75911FAC4BB800E6516C /* FilesServices.m */; };
+		1F4D75B01FAC4BB800E6516C /* AssetsServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75951FAC4BB800E6516C /* AssetsServices.m */; };
+		1F4D75B11FAC4BB800E6516C /* UserServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75961FAC4BB800E6516C /* UserServices.m */; };
+		1F4D75B21FAC4BB800E6516C /* DBServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75971FAC4BB800E6516C /* DBServices.m */; };
+		1F4D75B31FAC4BB800E6516C /* NetServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75981FAC4BB800E6516C /* NetServices.m */; };
+		1F4D75B41FAC4BB800E6516C /* AppServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D759A1FAC4BB800E6516C /* AppServices.m */; };
 		1F5FEA3A1FAC15830093963A /* DGPopUpViewTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5FEA381FAC15820093963A /* DGPopUpViewTextView.m */; };
 		1F5FEA3F1FAC17310093963A /* FABaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5FEA3D1FAC17300093963A /* FABaseVC.m */; };
-		5DE0A5E48BE214173521C303 /* Pods_WisnucBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDB405E0F4B341258F4BE354 /* Pods_WisnucBox.framework */; };
+		2C68507817DCDF432CF88A3F /* Pods_WisnucBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 357873726A4400954BE467E2 /* Pods_WisnucBox.framework */; };
 		F65035611FAC00A60007979D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035601FAC00A60007979D /* main.m */; };
 		F65035641FAC00A60007979D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035631FAC00A60007979D /* AppDelegate.m */; };
 		F65035671FAC00A60007979D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035661FAC00A60007979D /* ViewController.m */; };
@@ -48,36 +70,70 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1F1251571FAC20D200EABF16 /* UIButton+EnlargeEdge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+EnlargeEdge.h"; sourceTree = "<group>"; };
 		1F1251581FAC20D200EABF16 /* UIButton+EnlargeEdge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+EnlargeEdge.m"; sourceTree = "<group>"; };
 		1F12515A1FAC395D00EABF16 /* UIButton+Universal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Universal.m"; sourceTree = "<group>"; };
-		1F12515B1FAC395D00EABF16 /* UIButton+Universal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Universal.h"; sourceTree = "<group>"; };
 		1F12515E1FAC39AB00EABF16 /* UIImage+GKContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GKContact.m"; sourceTree = "<group>"; };
-		1F12515F1FAC39AB00EABF16 /* UIImage+GKContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+GKContact.h"; sourceTree = "<group>"; };
 		1F1251621FAC3A5300EABF16 /* UIColor+fm_color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+fm_color.m"; sourceTree = "<group>"; };
-		1F1251631FAC3A5300EABF16 /* UIColor+FM_UserHeadImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+FM_UserHeadImage.h"; sourceTree = "<group>"; };
-		1F1251641FAC3A5300EABF16 /* UIColor+fm_color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+fm_color.h"; sourceTree = "<group>"; };
 		1F1251651FAC3A5400EABF16 /* UIColor+FM_UserHeadImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+FM_UserHeadImage.m"; sourceTree = "<group>"; };
-		1F1251691FAC3AC600EABF16 /* SXLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SXLoadingView.h; sourceTree = "<group>"; };
 		1F12516A1FAC3AC600EABF16 /* SXLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SXLoadingView.m; sourceTree = "<group>"; };
-		1F12516D1FAC3B5000EABF16 /* FMSerachService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMSerachService.m; sourceTree = "<group>"; };
-		1F12516E1FAC3B5000EABF16 /* FMSerachService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMSerachService.h; sourceTree = "<group>"; };
-		1F4D75461FAC3DD500E6516C /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
-		1F4D75471FAC3DD500E6516C /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
-		1F5FEA331FAC0FA00093963A /* FMLoginTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMLoginTextField.h; sourceTree = "<group>"; };
-		1F5FEA341FAC0FA00093963A /* FMLoginTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMLoginTextField.m; sourceTree = "<group>"; };
-		1F5FEA361FAC15820093963A /* DGPopUpViewTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGPopUpViewTextView.h; sourceTree = "<group>"; };
-		1F5FEA371FAC15820093963A /* DGPopUpViewTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DGPopUpViewTextView.xib; sourceTree = "<group>"; };
+		1F244D9D3BCB4706DAFC363E /* Pods-WisnucBox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.debug.xcconfig"; sourceTree = "<group>"; };
+		1F4D75561FAC4B8800E6516C /* Define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Define.h; sourceTree = "<group>"; };
+		1F4D75571FAC4B8800E6516C /* default.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = default.pch; sourceTree = "<group>"; };
+		1F4D755B1FAC4BB700E6516C /* UIImage+GKContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GKContact.m"; sourceTree = "<group>"; };
+		1F4D755C1FAC4BB700E6516C /* UIImage+GKContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+GKContact.h"; sourceTree = "<group>"; };
+		1F4D755E1FAC4BB700E6516C /* UIButton+Universal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Universal.h"; sourceTree = "<group>"; };
+		1F4D755F1FAC4BB700E6516C /* UIButton+EnlargeEdge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+EnlargeEdge.h"; sourceTree = "<group>"; };
+		1F4D75601FAC4BB700E6516C /* UIButton+EnlargeEdge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+EnlargeEdge.m"; sourceTree = "<group>"; };
+		1F4D75611FAC4BB700E6516C /* UIButton+Universal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Universal.m"; sourceTree = "<group>"; };
+		1F4D75631FAC4BB700E6516C /* UIColor+FM_UserHeadImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+FM_UserHeadImage.m"; sourceTree = "<group>"; };
+		1F4D75641FAC4BB700E6516C /* UIColor+fm_color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+fm_color.m"; sourceTree = "<group>"; };
+		1F4D75651FAC4BB700E6516C /* UIColor+FM_UserHeadImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+FM_UserHeadImage.h"; sourceTree = "<group>"; };
+		1F4D75661FAC4BB700E6516C /* UIColor+fm_color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+fm_color.h"; sourceTree = "<group>"; };
+		1F4D75681FAC4BB700E6516C /* SXLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SXLoadingView.h; sourceTree = "<group>"; };
+		1F4D75691FAC4BB700E6516C /* SXLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SXLoadingView.m; sourceTree = "<group>"; };
+		1F4D756D1FAC4BB800E6516C /* FMUserLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMUserLoginViewController.m; sourceTree = "<group>"; };
+		1F4D756E1FAC4BB800E6516C /* FMLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMLoginViewController.h; sourceTree = "<group>"; };
+		1F4D756F1FAC4BB800E6516C /* FMHandLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMHandLoginVC.h; sourceTree = "<group>"; };
+		1F4D75701FAC4BB800E6516C /* FMLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMLoginViewController.m; sourceTree = "<group>"; };
+		1F4D75711FAC4BB800E6516C /* FMUserLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMUserLoginViewController.h; sourceTree = "<group>"; };
+		1F4D75721FAC4BB800E6516C /* FMHandLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMHandLoginVC.m; sourceTree = "<group>"; };
+		1F4D75741FAC4BB800E6516C /* FMSerachService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMSerachService.h; sourceTree = "<group>"; };
+		1F4D75751FAC4BB800E6516C /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
+		1F4D75761FAC4BB800E6516C /* FMSerachService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMSerachService.m; sourceTree = "<group>"; };
+		1F4D75771FAC4BB800E6516C /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
+		1F4D75791FAC4BB800E6516C /* DGPopUpViewTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGPopUpViewTextView.m; sourceTree = "<group>"; };
+		1F4D757A1FAC4BB800E6516C /* DGPopUpViewTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DGPopUpViewTextView.xib; sourceTree = "<group>"; };
+		1F4D757B1FAC4BB800E6516C /* FMLoginTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMLoginTextField.h; sourceTree = "<group>"; };
+		1F4D757C1FAC4BB800E6516C /* DGPopUpViewTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGPopUpViewTextView.h; sourceTree = "<group>"; };
+		1F4D757D1FAC4BB800E6516C /* FMLoginTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMLoginTextField.m; sourceTree = "<group>"; };
+		1F4D757F1FAC4BB800E6516C /* FABaseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FABaseVC.h; sourceTree = "<group>"; };
+		1F4D75801FAC4BB800E6516C /* FABaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FABaseVC.m; sourceTree = "<group>"; };
+		1F4D75831FAC4BB800E6516C /* WBUser+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WBUser+CoreDataProperties.m"; sourceTree = "<group>"; };
+		1F4D75841FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WBLocalAsset+CoreDataClass.m"; sourceTree = "<group>"; };
+		1F4D75851FAC4BB800E6516C /* WBUser+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WBUser+CoreDataClass.m"; sourceTree = "<group>"; };
+		1F4D75861FAC4BB800E6516C /* WBLocalAsset+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBLocalAsset+CoreDataProperties.h"; sourceTree = "<group>"; };
+		1F4D75871FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBLocalAsset+CoreDataClass.h"; sourceTree = "<group>"; };
+		1F4D75881FAC4BB800E6516C /* WBUser+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBUser+CoreDataProperties.h"; sourceTree = "<group>"; };
+		1F4D75891FAC4BB800E6516C /* WBUser+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBUser+CoreDataClass.h"; sourceTree = "<group>"; };
+		1F4D758A1FAC4BB800E6516C /* WBLocalAsset+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WBLocalAsset+CoreDataProperties.m"; sourceTree = "<group>"; };
+		1F4D758C1FAC4BB800E6516C /* WisnucBox.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WisnucBox.xcdatamodel; sourceTree = "<group>"; };
+		1F4D758E1FAC4BB800E6516C /* UserServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserServices.h; sourceTree = "<group>"; };
+		1F4D758F1FAC4BB800E6516C /* AssetsServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetsServices.h; sourceTree = "<group>"; };
+		1F4D75901FAC4BB800E6516C /* DBServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBServices.h; sourceTree = "<group>"; };
+		1F4D75911FAC4BB800E6516C /* FilesServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilesServices.m; sourceTree = "<group>"; };
+		1F4D75921FAC4BB800E6516C /* ServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceProtocol.h; sourceTree = "<group>"; };
+		1F4D75931FAC4BB800E6516C /* NetServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetServices.h; sourceTree = "<group>"; };
+		1F4D75941FAC4BB800E6516C /* AppServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppServices.h; sourceTree = "<group>"; };
+		1F4D75951FAC4BB800E6516C /* AssetsServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetsServices.m; sourceTree = "<group>"; };
+		1F4D75961FAC4BB800E6516C /* UserServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserServices.m; sourceTree = "<group>"; };
+		1F4D75971FAC4BB800E6516C /* DBServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBServices.m; sourceTree = "<group>"; };
+		1F4D75981FAC4BB800E6516C /* NetServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetServices.m; sourceTree = "<group>"; };
+		1F4D75991FAC4BB800E6516C /* FilesServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilesServices.h; sourceTree = "<group>"; };
+		1F4D759A1FAC4BB800E6516C /* AppServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppServices.m; sourceTree = "<group>"; };
 		1F5FEA381FAC15820093963A /* DGPopUpViewTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGPopUpViewTextView.m; sourceTree = "<group>"; };
 		1F5FEA3D1FAC17300093963A /* FABaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FABaseVC.m; sourceTree = "<group>"; };
-		1F5FEA3E1FAC17310093963A /* FABaseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FABaseVC.h; sourceTree = "<group>"; };
-		1F5FEA411FAC188B0093963A /* FruitMixBlockDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FruitMixBlockDefine.h; sourceTree = "<group>"; };
-		1F5FEA421FAC188B0093963A /* FruitMixDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FruitMixDefine.h; sourceTree = "<group>"; };
-		1F5FEA431FAC188B0093963A /* FMColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMColors.h; sourceTree = "<group>"; };
-		1F5FEA441FAC18CA0093963A /* WisnucBox.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WisnucBox.pch; sourceTree = "<group>"; };
-		C2D8D4B5F409EFFBC1911C0E /* Pods-WisnucBox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.release.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.release.xcconfig"; sourceTree = "<group>"; };
-		EDB405E0F4B341258F4BE354 /* Pods_WisnucBox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WisnucBox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F5FF1872DA4936232A1171B7 /* Pods-WisnucBox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.debug.xcconfig"; sourceTree = "<group>"; };
+		357873726A4400954BE467E2 /* Pods_WisnucBox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WisnucBox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0D3F6BCD083EB684E36A713 /* Pods-WisnucBox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.release.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.release.xcconfig"; sourceTree = "<group>"; };
 		F650355C1FAC00A60007979D /* WisnucBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WisnucBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F65035601FAC00A60007979D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F65035621FAC00A60007979D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -101,7 +157,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CDE948E29C7CB81704A65159 /* Pods_WisnucBox.framework in Frameworks */,
+				2C68507817DCDF432CF88A3F /* Pods_WisnucBox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,63 +178,201 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1F1251561FAC20C700EABF16 /* UIButton */ = {
+		1F4D75491FAC415300E6516C /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				1F1251571FAC20D200EABF16 /* UIButton+EnlargeEdge.h */,
-				1F1251581FAC20D200EABF16 /* UIButton+EnlargeEdge.m */,
-				1F12515B1FAC395D00EABF16 /* UIButton+Universal.h */,
+				1F5FEA3D1FAC17300093963A /* FABaseVC.m */,
+				1F5FEA381FAC15820093963A /* DGPopUpViewTextView.m */,
+				1F12515E1FAC39AB00EABF16 /* UIImage+GKContact.m */,
+				1F12516A1FAC3AC600EABF16 /* SXLoadingView.m */,
+				1F1251651FAC3A5400EABF16 /* UIColor+FM_UserHeadImage.m */,
 				1F12515A1FAC395D00EABF16 /* UIButton+Universal.m */,
+				1F1251621FAC3A5300EABF16 /* UIColor+fm_color.m */,
+				1F1251581FAC20D200EABF16 /* UIButton+EnlargeEdge.m */,
 			);
-			path = UIButton;
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
-		1F12515D1FAC399700EABF16 /* UIIamge */ = {
+		1F4D75551FAC4B8800E6516C /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				1F12515F1FAC39AB00EABF16 /* UIImage+GKContact.h */,
-				1F12515E1FAC39AB00EABF16 /* UIImage+GKContact.m */,
+				1F4D75561FAC4B8800E6516C /* Define.h */,
+				1F4D75571FAC4B8800E6516C /* default.pch */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		1F4D75581FAC4BB700E6516C /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				1F4D75591FAC4BB700E6516C /* Category */,
+				1F4D75671FAC4BB700E6516C /* HUD */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		1F4D75591FAC4BB700E6516C /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				1F4D755A1FAC4BB700E6516C /* UIIamge */,
+				1F4D755D1FAC4BB700E6516C /* UIButton */,
+				1F4D75621FAC4BB700E6516C /* UIColor */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		1F4D755A1FAC4BB700E6516C /* UIIamge */ = {
+			isa = PBXGroup;
+			children = (
+				1F4D755B1FAC4BB700E6516C /* UIImage+GKContact.m */,
+				1F4D755C1FAC4BB700E6516C /* UIImage+GKContact.h */,
 			);
 			path = UIIamge;
 			sourceTree = "<group>";
 		};
-		1F1251611FAC3A3D00EABF16 /* UIColor */ = {
+		1F4D755D1FAC4BB700E6516C /* UIButton */ = {
 			isa = PBXGroup;
 			children = (
-				1F1251641FAC3A5300EABF16 /* UIColor+fm_color.h */,
-				1F1251621FAC3A5300EABF16 /* UIColor+fm_color.m */,
-				1F1251631FAC3A5300EABF16 /* UIColor+FM_UserHeadImage.h */,
-				1F1251651FAC3A5400EABF16 /* UIColor+FM_UserHeadImage.m */,
+				1F4D755E1FAC4BB700E6516C /* UIButton+Universal.h */,
+				1F4D755F1FAC4BB700E6516C /* UIButton+EnlargeEdge.h */,
+				1F4D75601FAC4BB700E6516C /* UIButton+EnlargeEdge.m */,
+				1F4D75611FAC4BB700E6516C /* UIButton+Universal.m */,
+			);
+			path = UIButton;
+			sourceTree = "<group>";
+		};
+		1F4D75621FAC4BB700E6516C /* UIColor */ = {
+			isa = PBXGroup;
+			children = (
+				1F4D75631FAC4BB700E6516C /* UIColor+FM_UserHeadImage.m */,
+				1F4D75641FAC4BB700E6516C /* UIColor+fm_color.m */,
+				1F4D75651FAC4BB700E6516C /* UIColor+FM_UserHeadImage.h */,
+				1F4D75661FAC4BB700E6516C /* UIColor+fm_color.h */,
 			);
 			path = UIColor;
 			sourceTree = "<group>";
 		};
-		1F1251681FAC3ABA00EABF16 /* HUD */ = {
+		1F4D75671FAC4BB700E6516C /* HUD */ = {
 			isa = PBXGroup;
 			children = (
-				1F1251691FAC3AC600EABF16 /* SXLoadingView.h */,
-				1F12516A1FAC3AC600EABF16 /* SXLoadingView.m */,
+				1F4D75681FAC4BB700E6516C /* SXLoadingView.h */,
+				1F4D75691FAC4BB700E6516C /* SXLoadingView.m */,
 			);
 			path = HUD;
 			sourceTree = "<group>";
 		};
-		1F12516C1FAC3B3800EABF16 /* Model */ = {
+		1F4D756A1FAC4BB700E6516C /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				1F4D75471FAC3DD500E6516C /* UserModel.h */,
-				1F4D75461FAC3DD500E6516C /* UserModel.m */,
-				1F12516E1FAC3B5000EABF16 /* FMSerachService.h */,
-				1F12516D1FAC3B5000EABF16 /* FMSerachService.m */,
+				1F4D756B1FAC4BB700E6516C /* Login */,
+				1F4D757E1FAC4BB800E6516C /* Based */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		1F4D756B1FAC4BB700E6516C /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				1F4D756C1FAC4BB800E6516C /* Controller */,
+				1F4D75731FAC4BB800E6516C /* Model */,
+				1F4D75781FAC4BB800E6516C /* View */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		1F4D756C1FAC4BB800E6516C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				1F4D756D1FAC4BB800E6516C /* FMUserLoginViewController.m */,
+				1F4D756E1FAC4BB800E6516C /* FMLoginViewController.h */,
+				1F4D756F1FAC4BB800E6516C /* FMHandLoginVC.h */,
+				1F4D75701FAC4BB800E6516C /* FMLoginViewController.m */,
+				1F4D75711FAC4BB800E6516C /* FMUserLoginViewController.h */,
+				1F4D75721FAC4BB800E6516C /* FMHandLoginVC.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		1F4D75731FAC4BB800E6516C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1F4D75741FAC4BB800E6516C /* FMSerachService.h */,
+				1F4D75751FAC4BB800E6516C /* UserModel.m */,
+				1F4D75761FAC4BB800E6516C /* FMSerachService.m */,
+				1F4D75771FAC4BB800E6516C /* UserModel.h */,
 			);
 			path = Model;
 			sourceTree = "<group>";
 		};
-		1F5FEA311FAC0F6F0093963A /* Login */ = {
+		1F4D75781FAC4BB800E6516C /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1F12516C1FAC3B3800EABF16 /* Model */,
-				1F5FEA321FAC0F900093963A /* View */,
-				F65035921FAC00FF0007979D /* Controller */,
+				1F4D75791FAC4BB800E6516C /* DGPopUpViewTextView.m */,
+				1F4D757A1FAC4BB800E6516C /* DGPopUpViewTextView.xib */,
+				1F4D757B1FAC4BB800E6516C /* FMLoginTextField.h */,
+				1F4D757C1FAC4BB800E6516C /* DGPopUpViewTextView.h */,
+				1F4D757D1FAC4BB800E6516C /* FMLoginTextField.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1F4D757E1FAC4BB800E6516C /* Based */ = {
+			isa = PBXGroup;
+			children = (
+				1F4D757F1FAC4BB800E6516C /* FABaseVC.h */,
+				1F4D75801FAC4BB800E6516C /* FABaseVC.m */,
+			);
+			path = Based;
+			sourceTree = "<group>";
+		};
+		1F4D75811FAC4BB800E6516C /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				1F4D75821FAC4BB800E6516C /* ManagedObjects */,
+				1F4D758B1FAC4BB800E6516C /* WisnucBox.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		1F4D75821FAC4BB800E6516C /* ManagedObjects */ = {
+			isa = PBXGroup;
+			children = (
+				1F4D75831FAC4BB800E6516C /* WBUser+CoreDataProperties.m */,
+				1F4D75841FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.m */,
+				1F4D75851FAC4BB800E6516C /* WBUser+CoreDataClass.m */,
+				1F4D75861FAC4BB800E6516C /* WBLocalAsset+CoreDataProperties.h */,
+				1F4D75871FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.h */,
+				1F4D75881FAC4BB800E6516C /* WBUser+CoreDataProperties.h */,
+				1F4D75891FAC4BB800E6516C /* WBUser+CoreDataClass.h */,
+				1F4D758A1FAC4BB800E6516C /* WBLocalAsset+CoreDataProperties.m */,
+			);
+			path = ManagedObjects;
+			sourceTree = "<group>";
+		};
+		1F4D758D1FAC4BB800E6516C /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				1F4D758E1FAC4BB800E6516C /* UserServices.h */,
+				1F4D758F1FAC4BB800E6516C /* AssetsServices.h */,
+				1F4D75901FAC4BB800E6516C /* DBServices.h */,
+				1F4D75911FAC4BB800E6516C /* FilesServices.m */,
+				1F4D75921FAC4BB800E6516C /* ServiceProtocol.h */,
+				1F4D75931FAC4BB800E6516C /* NetServices.h */,
+				1F4D75941FAC4BB800E6516C /* AppServices.h */,
+				1F4D75951FAC4BB800E6516C /* AssetsServices.m */,
+				1F4D75961FAC4BB800E6516C /* UserServices.m */,
+				1F4D75971FAC4BB800E6516C /* DBServices.m */,
+				1F4D75981FAC4BB800E6516C /* NetServices.m */,
+				1F4D75991FAC4BB800E6516C /* FilesServices.h */,
+				1F4D759A1FAC4BB800E6516C /* AppServices.m */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		A425D85D003C084CDA92A5DA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				357873726A4400954BE467E2 /* Pods_WisnucBox.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -186,129 +380,10 @@
 		D9B3E6DE895EF13E2BDF26E5 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				70582270B9231CEB9A365B9C /* Pods-WisnucBox.debug.xcconfig */,
-				95E29BF9DD638FD32BD8BA2E /* Pods-WisnucBox.release.xcconfig */,
+				1F244D9D3BCB4706DAFC363E /* Pods-WisnucBox.debug.xcconfig */,
+				B0D3F6BCD083EB684E36A713 /* Pods-WisnucBox.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		F6005F541FAC1330003E909D /* CoreData */ = {
-			isa = PBXGroup;
-			children = (
-				1F1251681FAC3ABA00EABF16 /* HUD */,
-				1F5FEA451FAC1A4C0093963A /* Category */,
-			);
-			path = CoreData;
-			sourceTree = "<group>";
-		};
-		F6005F581FAC14FB003E909D /* ManagedObjects */ = {
-			isa = PBXGroup;
-			children = (
-				F6005F651FAC1639003E909D /* WBLocalAsset+CoreDataClass.h */,
-				F6005F661FAC1639003E909D /* WBLocalAsset+CoreDataClass.m */,
-				F6005F671FAC1639003E909D /* WBLocalAsset+CoreDataProperties.h */,
-				F6005F681FAC1639003E909D /* WBLocalAsset+CoreDataProperties.m */,
-				F6005F691FAC1639003E909D /* WBUser+CoreDataClass.h */,
-				F6005F6A1FAC1639003E909D /* WBUser+CoreDataClass.m */,
-				F6005F6B1FAC1639003E909D /* WBUser+CoreDataProperties.h */,
-				F6005F6C1FAC1639003E909D /* WBUser+CoreDataProperties.m */,
-			);
-			path = ManagedObjects;
-			sourceTree = "<group>";
-		};
-		F6005F711FAC18FD003E909D /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				F6005F721FAC1931003E909D /* default.pch */,
-				F6005F731FAC195B003E909D /* Define.h */,
-			);
-			path = Common;
-			sourceTree = "<group>";
-		};
-		1F5FEA401FAC18640093963A /* Defines */ = {
-			isa = PBXGroup;
-			children = (
-				1F5FEA441FAC18CA0093963A /* WisnucBox.pch */,
-				1F5FEA431FAC188B0093963A /* FMColors.h */,
-				1F5FEA411FAC188B0093963A /* FruitMixBlockDefine.h */,
-				1F5FEA421FAC188B0093963A /* FruitMixDefine.h */,
-			);
-			path = Defines;
-			sourceTree = "<group>";
-		};
-		1F5FEA451FAC1A4C0093963A /* Category */ = {
-			isa = PBXGroup;
-			children = (
-				1F1251611FAC3A3D00EABF16 /* UIColor */,
-				1F12515D1FAC399700EABF16 /* UIIamge */,
-				1F1251561FAC20C700EABF16 /* UIButton */,
-			);
-			path = Category;
-			sourceTree = "<group>";
-		};
-		95C9E3076DF87E8DB323CD2A /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				F6005F841FAC2C8B003E909D /* DBServices.h */,
-				F6005F851FAC2C8B003E909D /* DBServices.m */,
-				F6005F7B1FAC2C0E003E909D /* UserServices.h */,
-				F6005F7C1FAC2C0E003E909D /* UserServices.m */,
-				F6005F7E1FAC2C2F003E909D /* AssetsServices.h */,
-				F6005F7F1FAC2C2F003E909D /* AssetsServices.m */,
-				F6005F811FAC2C4F003E909D /* FilesServices.h */,
-				F6005F821FAC2C4F003E909D /* FilesServices.m */,
-				F6005F8A1FAC2FF8003E909D /* NetServices.h */,
-				F6005F8B1FAC2FF8003E909D /* NetServices.m */,
-				F6005F871FAC2CDD003E909D /* AppServices.h */,
-				F6005F881FAC2CDD003E909D /* AppServices.m */,
-				F6005F8D1FAC30F8003E909D /* ServiceProtocol.h */,
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
-		F6005FAF1FAC3D9C003E909D /* Based */ = {
-			isa = PBXGroup;
-			children = (
-				F6005FB01FAC3D9C003E909D /* FABaseVC.h */,
-				F6005FB11FAC3D9C003E909D /* FABaseVC.m */,
-			);
-			name = Based;
-			path = WisnucBox/Modules/Based;
-			sourceTree = SOURCE_ROOT;
-		};
-		F6005FB21FAC3D9C003E909D /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				F6005FB31FAC3D9C003E909D /* Controller */,
-				F6005FBA1FAC3D9C003E909D /* View */,
-			);
-			name = Login;
-			path = WisnucBox/Modules/Login;
-			sourceTree = SOURCE_ROOT;
-		};
-		F6005FB31FAC3D9C003E909D /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				F6005FB41FAC3D9C003E909D /* FMHandLoginVC.h */,
-				F6005FB51FAC3D9C003E909D /* FMHandLoginVC.m */,
-				F6005FB61FAC3D9C003E909D /* FMLoginViewController.h */,
-				F6005FB71FAC3D9C003E909D /* FMLoginViewController.m */,
-				F6005FB81FAC3D9C003E909D /* FMUserLoginViewController.h */,
-				F6005FB91FAC3D9C003E909D /* FMUserLoginViewController.m */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		F6005FBA1FAC3D9C003E909D /* View */ = {
-			isa = PBXGroup;
-			children = (
-				F6005FBB1FAC3D9C003E909D /* DGPopUpViewTextView.h */,
-				F6005FBC1FAC3D9C003E909D /* DGPopUpViewTextView.m */,
-				F6005FBD1FAC3D9C003E909D /* DGPopUpViewTextView.xib */,
-				F6005FBE1FAC3D9C003E909D /* FMLoginTextField.h */,
-				F6005FBF1FAC3D9C003E909D /* FMLoginTextField.m */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		F65035531FAC00A60007979D = {
@@ -319,7 +394,8 @@
 				F65035831FAC00A70007979D /* WisnucBoxUITests */,
 				F650355D1FAC00A60007979D /* Products */,
 				D9B3E6DE895EF13E2BDF26E5 /* Pods */,
-				90744B10E8F94B50660A00D8 /* Frameworks */,
+				1F4D75491FAC415300E6516C /* Recovered References */,
+				A425D85D003C084CDA92A5DA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -336,10 +412,11 @@
 		F650355E1FAC00A60007979D /* WisnucBox */ = {
 			isa = PBXGroup;
 			children = (
-				1F5FEA401FAC18640093963A /* Defines */,
-				1F5FEA3C1FAC17180093963A /* Based */,
-				1F5FEA3B1FAC16250093963A /* Tools */,
-				1F5FEA311FAC0F6F0093963A /* Login */,
+				1F4D75811FAC4BB800E6516C /* CoreData */,
+				1F4D756A1FAC4BB700E6516C /* Modules */,
+				1F4D758D1FAC4BB800E6516C /* Services */,
+				1F4D75581FAC4BB700E6516C /* Tools */,
+				1F4D75551FAC4B8800E6516C /* Common */,
 				F65035621FAC00A60007979D /* AppDelegate.h */,
 				F65035631FAC00A60007979D /* AppDelegate.m */,
 				F65035651FAC00A60007979D /* ViewController.h */,
@@ -377,16 +454,6 @@
 				F65035861FAC00A70007979D /* Info.plist */,
 			);
 			path = WisnucBoxUITests;
-			sourceTree = "<group>";
-		};
-		F65035921FAC00FF0007979D /* Modules */ = {
-			isa = PBXGroup;
-			children = (
-				F6005FAF1FAC3D9C003E909D /* Based */,
-				F6005FB21FAC3D9C003E909D /* Login */,
-			);
-			name = Modules;
-			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -503,7 +570,7 @@
 			files = (
 				F650356F1FAC00A70007979D /* LaunchScreen.storyboard in Resources */,
 				F650356C1FAC00A70007979D /* Assets.xcassets in Resources */,
-				F6005FC51FAC3D9C003E909D /* DGPopUpViewTextView.xib in Resources */,
+				1F4D75A71FAC4BB800E6516C /* DGPopUpViewTextView.xib in Resources */,
 				F650356A1FAC00A70007979D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -627,35 +694,42 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6005FC01FAC3D9C003E909D /* FABaseVC.m in Sources */,
-				F6005F6D1FAC1639003E909D /* WBLocalAsset+CoreDataClass.m in Sources */,
-				F6005FC41FAC3D9C003E909D /* DGPopUpViewTextView.m in Sources */,
-				F6005F701FAC1639003E909D /* WBUser+CoreDataProperties.m in Sources */,
-				F6005F6E1FAC1639003E909D /* WBLocalAsset+CoreDataProperties.m in Sources */,
-				F6005F891FAC2CDD003E909D /* AppServices.m in Sources */,
-				F6005F6F1FAC1639003E909D /* WBUser+CoreDataClass.m in Sources */,
-				F6005F571FAC1340003E909D /* WisnucBox.xcdatamodeld in Sources */,
-				F6005F801FAC2C2F003E909D /* AssetsServices.m in Sources */,
-				F6005FC11FAC3D9C003E909D /* FMHandLoginVC.m in Sources */,
-				F6005FC21FAC3D9C003E909D /* FMLoginViewController.m in Sources */,
+				1F4D75AF1FAC4BB800E6516C /* FilesServices.m in Sources */,
+				1F4D75AD1FAC4BB800E6516C /* WBLocalAsset+CoreDataProperties.m in Sources */,
+				1F4D75B01FAC4BB800E6516C /* AssetsServices.m in Sources */,
 				F65035671FAC00A60007979D /* ViewController.m in Sources */,
-				F6005FC31FAC3D9C003E909D /* FMUserLoginViewController.m in Sources */,
+				1F4D75A61FAC4BB800E6516C /* DGPopUpViewTextView.m in Sources */,
+				1F4D75A81FAC4BB800E6516C /* FMLoginTextField.m in Sources */,
+				1F4D75A91FAC4BB800E6516C /* FABaseVC.m in Sources */,
 				F65035641FAC00A60007979D /* AppDelegate.m in Sources */,
+				1F4D75A41FAC4BB800E6516C /* UserModel.m in Sources */,
+				1F4D75B41FAC4BB800E6516C /* AppServices.m in Sources */,
 				1F5FEA3F1FAC17310093963A /* FABaseVC.m in Sources */,
+				1F4D75AB1FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.m in Sources */,
+				1F4D75B31FAC4BB800E6516C /* NetServices.m in Sources */,
+				1F4D759C1FAC4BB800E6516C /* UIButton+EnlargeEdge.m in Sources */,
+				1F4D75AC1FAC4BB800E6516C /* WBUser+CoreDataClass.m in Sources */,
 				1F5FEA3A1FAC15830093963A /* DGPopUpViewTextView.m in Sources */,
+				1F4D75A51FAC4BB800E6516C /* FMSerachService.m in Sources */,
+				1F4D759B1FAC4BB800E6516C /* UIImage+GKContact.m in Sources */,
+				1F4D75AE1FAC4BB800E6516C /* WisnucBox.xcdatamodeld in Sources */,
+				1F4D75A21FAC4BB800E6516C /* FMLoginViewController.m in Sources */,
+				1F4D759F1FAC4BB800E6516C /* UIColor+fm_color.m in Sources */,
+				1F4D75AA1FAC4BB800E6516C /* WBUser+CoreDataProperties.m in Sources */,
+				1F4D75B11FAC4BB800E6516C /* UserServices.m in Sources */,
 				1F1251601FAC39AC00EABF16 /* UIImage+GKContact.m in Sources */,
-				1F4D75481FAC3DD500E6516C /* UserModel.m in Sources */,
-				F650359A1FAC00FF0007979D /* FMHandLoginVC.m in Sources */,
-				1F12516F1FAC3B5000EABF16 /* FMSerachService.m in Sources */,
-				F650359B1FAC00FF0007979D /* FMLoginViewController.m in Sources */,
+				1F4D75A01FAC4BB800E6516C /* SXLoadingView.m in Sources */,
+				1F4D75A31FAC4BB800E6516C /* FMHandLoginVC.m in Sources */,
 				1F12516B1FAC3AC600EABF16 /* SXLoadingView.m in Sources */,
+				1F4D75A11FAC4BB800E6516C /* FMUserLoginViewController.m in Sources */,
 				1F1251671FAC3A5400EABF16 /* UIColor+FM_UserHeadImage.m in Sources */,
+				1F4D759E1FAC4BB800E6516C /* UIColor+FM_UserHeadImage.m in Sources */,
 				1F12515C1FAC395D00EABF16 /* UIButton+Universal.m in Sources */,
 				1F1251661FAC3A5400EABF16 /* UIColor+fm_color.m in Sources */,
-				F650359C1FAC00FF0007979D /* FMUserLoginViewController.m in Sources */,
 				1F1251591FAC20D300EABF16 /* UIButton+EnlargeEdge.m in Sources */,
 				F65035611FAC00A60007979D /* main.m in Sources */,
-				F6005FC61FAC3D9C003E909D /* FMLoginTextField.m in Sources */,
+				1F4D759D1FAC4BB800E6516C /* UIButton+Universal.m in Sources */,
+				1F4D75B21FAC4BB800E6516C /* DBServices.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -804,7 +878,7 @@
 		};
 		F650358A1FAC00A70007979D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 70582270B9231CEB9A365B9C /* Pods-WisnucBox.debug.xcconfig */;
+			baseConfigurationReference = 1F244D9D3BCB4706DAFC363E /* Pods-WisnucBox.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 8SC32MU7TG;
@@ -819,7 +893,7 @@
 		};
 		F650358B1FAC00A70007979D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 95E29BF9DD638FD32BD8BA2E /* Pods-WisnucBox.release.xcconfig */;
+			baseConfigurationReference = B0D3F6BCD083EB684E36A713 /* Pods-WisnucBox.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 8SC32MU7TG;
@@ -924,12 +998,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		F6005F551FAC1340003E909D /* WisnucBox.xcdatamodeld */ = {
+		1F4D758B1FAC4BB800E6516C /* WisnucBox.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				F6005F561FAC1340003E909D /* WisnucBox.xcdatamodel */,
+				1F4D758C1FAC4BB800E6516C /* WisnucBox.xcdatamodel */,
 			);
-			currentVersion = F6005F561FAC1340003E909D /* WisnucBox.xcdatamodel */;
+			currentVersion = 1F4D758C1FAC4BB800E6516C /* WisnucBox.xcdatamodel */;
 			path = WisnucBox.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
