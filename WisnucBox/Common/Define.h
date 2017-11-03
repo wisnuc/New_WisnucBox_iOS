@@ -12,12 +12,10 @@
 #define __kWidth [[UIScreen mainScreen]bounds].size.width
 #define __kHeight [[UIScreen mainScreen]bounds].size.height
 
-<<<<<<< HEAD
 #define KWxAppID      @"wx99b54eb728323fe8"
-=======
 #define kUserDefaults [NSUserDefaults standardUserDefaults]
 #define kUD_Synchronize [[NSUserDefaults standardUserDefaults] synchronize]
 #define kUD_ObjectForKey(key) [[NSUserDefaults standardUserDefaults] objectForKey:key]
->>>>>>> 66b8c327aa68b58c9159f202061cd52206e50362
+
 
 #endif /* Define_h */
