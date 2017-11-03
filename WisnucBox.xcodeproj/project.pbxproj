@@ -33,6 +33,7 @@
 		1F4D75B21FAC4BB800E6516C /* DBServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75971FAC4BB800E6516C /* DBServices.m */; };
 		1F4D75B31FAC4BB800E6516C /* NetServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75981FAC4BB800E6516C /* NetServices.m */; };
 		1F4D75B41FAC4BB800E6516C /* AppServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D759A1FAC4BB800E6516C /* AppServices.m */; };
+		1F4D75BB1FAC5D2400E6516C /* ServerBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75B91FAC5D2400E6516C /* ServerBrowser.m */; };
 		2C68507817DCDF432CF88A3F /* Pods_WisnucBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 357873726A4400954BE467E2 /* Pods_WisnucBox.framework */; };
 		F65035611FAC00A60007979D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035601FAC00A60007979D /* main.m */; };
 		F65035641FAC00A60007979D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035631FAC00A60007979D /* AppDelegate.m */; };
@@ -118,6 +119,8 @@
 		1F4D759A1FAC4BB800E6516C /* AppServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppServices.m; sourceTree = "<group>"; };
 		1F4D75B61FAC575300E6516C /* ColorDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorDefine.h; sourceTree = "<group>"; };
 		1F4D75B71FAC5AE700E6516C /* FontDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FontDefine.h; sourceTree = "<group>"; };
+		1F4D75B91FAC5D2400E6516C /* ServerBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerBrowser.m; sourceTree = "<group>"; };
+		1F4D75BA1FAC5D2400E6516C /* ServerBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerBrowser.h; sourceTree = "<group>"; };
 		357873726A4400954BE467E2 /* Pods_WisnucBox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WisnucBox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0D3F6BCD083EB684E36A713 /* Pods-WisnucBox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.release.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.release.xcconfig"; sourceTree = "<group>"; };
 		F650355C1FAC00A60007979D /* WisnucBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WisnucBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -178,6 +181,7 @@
 		1F4D75581FAC4BB700E6516C /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				1F4D75B81FAC5D1600E6516C /* ServerBrowser */,
 				1F4D75591FAC4BB700E6516C /* Category */,
 				1F4D75671FAC4BB700E6516C /* HUD */,
 			);
@@ -340,6 +344,15 @@
 				1F4D759A1FAC4BB800E6516C /* AppServices.m */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		1F4D75B81FAC5D1600E6516C /* ServerBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				1F4D75BA1FAC5D2400E6516C /* ServerBrowser.h */,
+				1F4D75B91FAC5D2400E6516C /* ServerBrowser.m */,
+			);
+			path = ServerBrowser;
 			sourceTree = "<group>";
 		};
 		A425D85D003C084CDA92A5DA /* Frameworks */ = {
@@ -689,6 +702,7 @@
 				1F4D75B11FAC4BB800E6516C /* UserServices.m in Sources */,
 				1F4D75A01FAC4BB800E6516C /* SXLoadingView.m in Sources */,
 				1F4D75A31FAC4BB800E6516C /* FMHandLoginVC.m in Sources */,
+				1F4D75BB1FAC5D2400E6516C /* ServerBrowser.m in Sources */,
 				1F4D75A11FAC4BB800E6516C /* FMUserLoginViewController.m in Sources */,
 				1F4D759E1FAC4BB800E6516C /* UIColor+FM_UserHeadImage.m in Sources */,
 				F65035611FAC00A60007979D /* main.m in Sources */,

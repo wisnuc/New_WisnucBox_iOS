@@ -21,6 +21,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import <YYModel/YYModel.h>
 #import <WXApi.h>
+#import <ReactiveObjC/ReactiveObjC.h>
 
 //Base
 #import "FABaseVC.h"

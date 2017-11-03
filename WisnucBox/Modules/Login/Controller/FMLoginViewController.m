@@ -8,6 +8,8 @@
 
 #import "FMLoginViewController.h"
 #import "FMSerachService.h"
+#import "UserModel.h"
+#import "ServerBrowser.h"
 
 @interface FMLoginViewController ()
 <
@@ -15,7 +17,7 @@ UIScrollViewDelegate,
 UITableViewDelegate,
 UITableViewDataSource,
 //ServerBrowserDelegate,
-//WXApiDelegate
+WXApiDelegate
 >
 {
     NSMutableArray *_dataSource;
