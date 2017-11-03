@@ -34,6 +34,10 @@
 		1F4D75B31FAC4BB800E6516C /* NetServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75981FAC4BB800E6516C /* NetServices.m */; };
 		1F4D75B41FAC4BB800E6516C /* AppServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D759A1FAC4BB800E6516C /* AppServices.m */; };
 		1F4D75BB1FAC5D2400E6516C /* ServerBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75B91FAC5D2400E6516C /* ServerBrowser.m */; };
+		1F4D75BF1FAC5E3400E6516C /* ChooseAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75BC1FAC5E3400E6516C /* ChooseAlertView.m */; };
+		1F4D75C01FAC5E3400E6516C /* ChooseAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F4D75BE1FAC5E3400E6516C /* ChooseAlertView.xib */; };
+		1F4D75C61FAC5EB500E6516C /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75C41FAC5EB500E6516C /* GCDAsyncUdpSocket.m */; };
+		1F4D75C71FAC5EB500E6516C /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75C51FAC5EB500E6516C /* GCDAsyncSocket.m */; };
 		2C68507817DCDF432CF88A3F /* Pods_WisnucBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 357873726A4400954BE467E2 /* Pods_WisnucBox.framework */; };
 		F65035611FAC00A60007979D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035601FAC00A60007979D /* main.m */; };
 		F65035641FAC00A60007979D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035631FAC00A60007979D /* AppDelegate.m */; };
@@ -121,6 +125,13 @@
 		1F4D75B71FAC5AE700E6516C /* FontDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FontDefine.h; sourceTree = "<group>"; };
 		1F4D75B91FAC5D2400E6516C /* ServerBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerBrowser.m; sourceTree = "<group>"; };
 		1F4D75BA1FAC5D2400E6516C /* ServerBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerBrowser.h; sourceTree = "<group>"; };
+		1F4D75BC1FAC5E3400E6516C /* ChooseAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseAlertView.m; sourceTree = "<group>"; };
+		1F4D75BD1FAC5E3400E6516C /* ChooseAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseAlertView.h; sourceTree = "<group>"; };
+		1F4D75BE1FAC5E3400E6516C /* ChooseAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseAlertView.xib; sourceTree = "<group>"; };
+		1F4D75C21FAC5EB500E6516C /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
+		1F4D75C31FAC5EB500E6516C /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
+		1F4D75C41FAC5EB500E6516C /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
+		1F4D75C51FAC5EB500E6516C /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		357873726A4400954BE467E2 /* Pods_WisnucBox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WisnucBox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0D3F6BCD083EB684E36A713 /* Pods-WisnucBox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.release.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.release.xcconfig"; sourceTree = "<group>"; };
 		F650355C1FAC00A60007979D /* WisnucBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WisnucBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -181,6 +192,7 @@
 		1F4D75581FAC4BB700E6516C /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				1F4D75C11FAC5E9900E6516C /* GCD */,
 				1F4D75B81FAC5D1600E6516C /* ServerBrowser */,
 				1F4D75591FAC4BB700E6516C /* Category */,
 				1F4D75671FAC4BB700E6516C /* HUD */,
@@ -284,11 +296,14 @@
 		1F4D75781FAC4BB800E6516C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1F4D757C1FAC4BB800E6516C /* DGPopUpViewTextView.h */,
 				1F4D75791FAC4BB800E6516C /* DGPopUpViewTextView.m */,
 				1F4D757A1FAC4BB800E6516C /* DGPopUpViewTextView.xib */,
 				1F4D757B1FAC4BB800E6516C /* FMLoginTextField.h */,
-				1F4D757C1FAC4BB800E6516C /* DGPopUpViewTextView.h */,
 				1F4D757D1FAC4BB800E6516C /* FMLoginTextField.m */,
+				1F4D75BD1FAC5E3400E6516C /* ChooseAlertView.h */,
+				1F4D75BC1FAC5E3400E6516C /* ChooseAlertView.m */,
+				1F4D75BE1FAC5E3400E6516C /* ChooseAlertView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -353,6 +368,17 @@
 				1F4D75B91FAC5D2400E6516C /* ServerBrowser.m */,
 			);
 			path = ServerBrowser;
+			sourceTree = "<group>";
+		};
+		1F4D75C11FAC5E9900E6516C /* GCD */ = {
+			isa = PBXGroup;
+			children = (
+				1F4D75C21FAC5EB500E6516C /* GCDAsyncSocket.h */,
+				1F4D75C51FAC5EB500E6516C /* GCDAsyncSocket.m */,
+				1F4D75C31FAC5EB500E6516C /* GCDAsyncUdpSocket.h */,
+				1F4D75C41FAC5EB500E6516C /* GCDAsyncUdpSocket.m */,
+			);
+			path = GCD;
 			sourceTree = "<group>";
 		};
 		A425D85D003C084CDA92A5DA /* Frameworks */ = {
@@ -555,6 +581,7 @@
 			files = (
 				F650356F1FAC00A70007979D /* LaunchScreen.storyboard in Resources */,
 				F650356C1FAC00A70007979D /* Assets.xcassets in Resources */,
+				1F4D75C01FAC5E3400E6516C /* ChooseAlertView.xib in Resources */,
 				1F4D75A71FAC4BB800E6516C /* DGPopUpViewTextView.xib in Resources */,
 				F650356A1FAC00A70007979D /* Main.storyboard in Resources */,
 			);
@@ -679,12 +706,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F4D75C71FAC5EB500E6516C /* GCDAsyncSocket.m in Sources */,
 				1F4D75AF1FAC4BB800E6516C /* FilesServices.m in Sources */,
 				1F4D75AD1FAC4BB800E6516C /* WBLocalAsset+CoreDataProperties.m in Sources */,
 				1F4D75B01FAC4BB800E6516C /* AssetsServices.m in Sources */,
 				F65035671FAC00A60007979D /* ViewController.m in Sources */,
 				1F4D75A61FAC4BB800E6516C /* DGPopUpViewTextView.m in Sources */,
 				1F4D75A81FAC4BB800E6516C /* FMLoginTextField.m in Sources */,
+				1F4D75BF1FAC5E3400E6516C /* ChooseAlertView.m in Sources */,
 				1F4D75A91FAC4BB800E6516C /* FABaseVC.m in Sources */,
 				F65035641FAC00A60007979D /* AppDelegate.m in Sources */,
 				1F4D75A41FAC4BB800E6516C /* UserModel.m in Sources */,
@@ -698,6 +727,7 @@
 				1F4D75AE1FAC4BB800E6516C /* WisnucBox.xcdatamodeld in Sources */,
 				1F4D75A21FAC4BB800E6516C /* FMLoginViewController.m in Sources */,
 				1F4D759F1FAC4BB800E6516C /* UIColor+fm_color.m in Sources */,
+				1F4D75C61FAC5EB500E6516C /* GCDAsyncUdpSocket.m in Sources */,
 				1F4D75AA1FAC4BB800E6516C /* WBUser+CoreDataProperties.m in Sources */,
 				1F4D75B11FAC4BB800E6516C /* UserServices.m in Sources */,
 				1F4D75A01FAC4BB800E6516C /* SXLoadingView.m in Sources */,

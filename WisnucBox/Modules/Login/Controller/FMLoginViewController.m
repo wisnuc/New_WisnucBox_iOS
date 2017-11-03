@@ -10,13 +10,15 @@
 #import "FMSerachService.h"
 #import "UserModel.h"
 #import "ServerBrowser.h"
+#import "ChooseAlertView.h"
+#import "GCDAsyncSocket.h"
 
 @interface FMLoginViewController ()
 <
 UIScrollViewDelegate,
 UITableViewDelegate,
 UITableViewDataSource,
-//ServerBrowserDelegate,
+ServerBrowserDelegate,
 WXApiDelegate
 >
 {
@@ -31,7 +33,7 @@ WXApiDelegate
 }
 @property (strong, nonatomic) UIScrollView *stationScrollView;
 @property (strong, nonatomic) UIView *stationCardView;
-@property (strong, nonatomic) StationPageControl *stationPageControl;
+@property (strong, nonatomic) UIPageControl *stationPageControl;
 @property (strong, nonatomic) UIButton *infoButton;
 @property (strong, nonatomic) UIImageView *logoImageView;
 @property (strong, nonatomic) UIImageView *stationLogoImageView;
@@ -273,7 +275,7 @@ WXApiDelegate
     if (self.tempDataSource.count ==0) {
         _stationCardView = [[UIView alloc]init];
         _stationCardView.backgroundColor =  UICOLOR_RGB(0x03a9f4);
-        _stationCardView.frame = CGRectMake(32,64,JYSCREEN_WIDTH - 32*2, 166);
+        _stationCardView.frame = CGRectMake(32,64,__kWidth - 32*2, 166);
         _stationCardView.layer.cornerRadius = 8;
         _stationCardView.layer.masksToBounds = YES;
         [self.stationScrollView addSubview:self.stationCardView];
@@ -283,7 +285,7 @@ WXApiDelegate
     for (int i = 0; i<self.tempDataSource.count; i++) {
         _stationCardView = [[UIView alloc]init];
         _stationCardView.backgroundColor =  UICOLOR_RGB(0x03a9f4);
-        _stationCardView.frame = CGRectMake(i*JYSCREEN_WIDTH + 32,64,JYSCREEN_WIDTH - 32*2, 166);
+        _stationCardView.frame = CGRectMake(i*__kWidth + 32,64,__kWidth - 32*2, 166);
         _stationCardView.layer.cornerRadius = 8;
         _stationCardView.layer.masksToBounds = YES;
         [self.stationScrollView addSubview:self.stationCardView];
