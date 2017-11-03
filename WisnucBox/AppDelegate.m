@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "WBUser+CoreDataClass.h"
 
 @interface AppDelegate ()
 

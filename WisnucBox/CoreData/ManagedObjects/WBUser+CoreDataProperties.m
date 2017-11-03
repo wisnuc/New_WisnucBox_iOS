@@ -16,5 +16,6 @@
 
 @dynamic userName;
 @dynamic uuid;
+@dynamic localToken;
 
 @end

@@ -15,10 +15,12 @@
 
 @interface UserServices : NSObject<ServiceProtocol>
 
-@property (nonatomic, strong) WBUser * currentUserUUID; // current login user 
+@property (nonatomic, copy) WBUser * _Nullable currentUser; // current login user
 
 @property (nonatomic, assign) BOOL isUserLogin; // if someone login , this property should be true, else false
 
-@property (nonatomic, strong) NSString * defaultToken; //  Token for login user
+@property (nonatomic, copy) NSString * _Nullable defaultToken; //  Token for login user
+
+- (nullable WBUser *)getUserWithUUID:(NSString * _Nonnull)uuid;
 
 @end
