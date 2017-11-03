@@ -7,7 +7,25 @@
 //
 
 #import "UserServices.h"
+#import "WBUser+CoreDataClass.h"
 
 @implementation UserServices
+
+- (void)abort {
+    
+}
+
+- (instancetype)init {
+    if(self = [super init]) {
+        [self loadData];
+    }
+    return self;
+}
+
+// load Latest User Configuation
+- (void)loadData {
+    
+//    if()
+}
 
 @end

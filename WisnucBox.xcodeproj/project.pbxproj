@@ -352,18 +352,18 @@
 		1F4D758D1FAC4BB800E6516C /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				1F4D758E1FAC4BB800E6516C /* UserServices.h */,
-				1F4D758F1FAC4BB800E6516C /* AssetsServices.h */,
-				1F4D75901FAC4BB800E6516C /* DBServices.h */,
-				1F4D75911FAC4BB800E6516C /* FilesServices.m */,
 				1F4D75921FAC4BB800E6516C /* ServiceProtocol.h */,
-				1F4D75931FAC4BB800E6516C /* NetServices.h */,
-				1F4D75941FAC4BB800E6516C /* AppServices.h */,
-				1F4D75951FAC4BB800E6516C /* AssetsServices.m */,
+				1F4D758E1FAC4BB800E6516C /* UserServices.h */,
 				1F4D75961FAC4BB800E6516C /* UserServices.m */,
+				1F4D758F1FAC4BB800E6516C /* AssetsServices.h */,
+				1F4D75951FAC4BB800E6516C /* AssetsServices.m */,
+				1F4D75901FAC4BB800E6516C /* DBServices.h */,
 				1F4D75971FAC4BB800E6516C /* DBServices.m */,
-				1F4D75981FAC4BB800E6516C /* NetServices.m */,
 				1F4D75991FAC4BB800E6516C /* FilesServices.h */,
+				1F4D75911FAC4BB800E6516C /* FilesServices.m */,
+				1F4D75931FAC4BB800E6516C /* NetServices.h */,
+				1F4D75981FAC4BB800E6516C /* NetServices.m */,
+				1F4D75941FAC4BB800E6516C /* AppServices.h */,
 				1F4D759A1FAC4BB800E6516C /* AppServices.m */,
 			);
 			path = Services;
