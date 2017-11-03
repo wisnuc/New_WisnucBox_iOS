@@ -12,5 +12,8 @@
 #define __kWidth [[UIScreen mainScreen]bounds].size.width
 #define __kHeight [[UIScreen mainScreen]bounds].size.height
 
+#define kUserDefaults = [NSUserDefaults standardUserDefaults]
+#define kUD_Synchronize = [kUserDefaults synchronize]
+#define kUD_ObjectForKey(key) [[NSUserDefaults standardUserDefaults] objectForKey:key]
 
 #endif /* Define_h */

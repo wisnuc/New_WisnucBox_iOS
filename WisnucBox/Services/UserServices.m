@@ -24,8 +24,8 @@
 
 // load Latest User Configuation
 - (void)loadData {
-    
-//    if()
+    if(kUD_ObjectForKey(WBCURRENTUSER_UUID)){}
+//        WBUser 
 }
 
 @end
