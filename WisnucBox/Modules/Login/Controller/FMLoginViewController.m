@@ -14,7 +14,8 @@
 #import "GCDAsyncSocket.h"
 #import "FMHandLoginVC.h"
 #import "FMCloudUserTableViewCell.h"
-
+#import "LoginTableViewCell.h"
+#import "FMUserLoginViewController.h"
 
 @interface FMLoginViewController ()
 <
@@ -172,68 +173,68 @@ WXApiDelegate
 }
 
 -(void)rightBtnClick{
-    FMHandLoginVC * vc = [[FMHandLoginVC alloc]init];
-    @weaky(self)
-    vc.block = ^(FMSerachService * ser){
-        ser.isReadly = YES;
-        [_dataSource addObject:ser];
-        [weak_self refreshDatasource];
-    };
-    [self.navigationController pushViewController:vc animated:YES];
+//    FMHandLoginVC * vc = [[FMHandLoginVC alloc]init];
+//    @weaky(self)
+//    vc.block = ^(FMSerachService * ser){
+//        ser.isReadly = YES;
+//        [_dataSource addObject:ser];
+//        [weak_self refreshDatasource];
+//    };
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 
 - (void)findIpToCheck:(NSString *)addressString andService:(NSNetService *)service{
-    NSString* urlString = [NSString stringWithFormat:@"http://%@:3000/", addressString];
-    NSLog(@"%@", urlString);
-      FMSerachService * ser = [FMSerachService new];
-     RACSubject *subject = [RACSubject subject];
-    [[GetStaionInfoAPI apiWithServicePath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-//        MyNSLog(@"%@",request.responseJsonObject);
-        NSDictionary *rootDic =  request.responseJsonObject;
-        NSString *nameString = [rootDic objectForKey:@"name"];
-        if (nameString.length == 0) {
-            nameString = @"闻上盒子";
-        }
-         [subject sendNext:nameString];
-    } failure:^(__kindof JYBaseRequest *request) {
-        
-    }];
-    
-    [subject subscribeNext:^(id x) {
-        [[GetSystemInformationAPI apiWithServicePath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-            //            MyNSLog(@"%@",request.responseJsonObject);
-            NSDictionary *rootDic =request.responseJsonObject;
-            NSDictionary *dic = [rootDic objectForKey:@"ws215i"];
-            NSString *type;
-            if (dic) {
-                type = @"WS215i";
-            }else{
-                type = @"虚拟机";
-            }
-            ser.name = x;
-            ser.path = urlString;
-            ser.type = type;
-            //            MyNSLog(@"%@",service.type);
-            ser.displayPath = addressString;
-            ser.hostName = service.hostName;
-            _expandCell = ser;
-            BOOL isNew = YES;
-            for (FMSerachService * s in _dataSource) {
-                if (IsEquallString(s.path, ser.path)) {
-                    isNew = NO;
-                    break;
-                }
-            }
-            if (isNew) {
-                [_dataSource addObject:ser];
-                [self refreshDatasource];
-            }
-        } failure:^(__kindof JYBaseRequest *request) {
-            
-        }];
-        
-    }];
+//    NSString* urlString = [NSString stringWithFormat:@"http://%@:3000/", addressString];
+//    NSLog(@"%@", urlString);
+//      FMSerachService * ser = [FMSerachService new];
+//     RACSubject *subject = [RACSubject subject];
+//    [[GetStaionInfoAPI apiWithServicePath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+////        MyNSLog(@"%@",request.responseJsonObject);
+//        NSDictionary *rootDic =  request.responseJsonObject;
+//        NSString *nameString = [rootDic objectForKey:@"name"];
+//        if (nameString.length == 0) {
+//            nameString = @"闻上盒子";
+//        }
+//         [subject sendNext:nameString];
+//    } failure:^(__kindof JYBaseRequest *request) {
+//
+//    }];
+//
+//    [subject subscribeNext:^(id x) {
+//        [[GetSystemInformationAPI apiWithServicePath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+//            //            MyNSLog(@"%@",request.responseJsonObject);
+//            NSDictionary *rootDic =request.responseJsonObject;
+//            NSDictionary *dic = [rootDic objectForKey:@"ws215i"];
+//            NSString *type;
+//            if (dic) {
+//                type = @"WS215i";
+//            }else{
+//                type = @"虚拟机";
+//            }
+//            ser.name = x;
+//            ser.path = urlString;
+//            ser.type = type;
+//            //            MyNSLog(@"%@",service.type);
+//            ser.displayPath = addressString;
+//            ser.hostName = service.hostName;
+//            _expandCell = ser;
+//            BOOL isNew = YES;
+//            for (FMSerachService * s in _dataSource) {
+//                if (IsEquallString(s.path, ser.path)) {
+//                    isNew = NO;
+//                    break;
+//                }
+//            }
+//            if (isNew) {
+//                [_dataSource addObject:ser];
+//                [self refreshDatasource];
+//            }
+//        } failure:^(__kindof JYBaseRequest *request) {
+//
+//        }];
+//
+//    }];
    
 }
 
@@ -269,7 +270,7 @@ WXApiDelegate
 }
 
 - (void)updateInfo{
-    _stationScrollView.contentSize = CGSizeMake(self.tempDataSource.count * JYSCREEN_WIDTH, 0);
+    _stationScrollView.contentSize = CGSizeMake(self.tempDataSource.count * __kWidth, 0);
     _stationPageControl.numberOfPages = self.tempDataSource.count;
 }
 
@@ -442,19 +443,19 @@ WXApiDelegate
 }
 
 - (void)weChatCallBackRespCode:(NSString *)code{
-    @weaky(self)
-    [FMDBControl asyncLoadPhotoToDB];
-    [SXLoadingView showProgressHUD:@"正在登录"];
-    [[WeChetLoginAPI apiWithCode:code] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        MyNSLog(@"%@",request.responseJsonObject);
-        [SXLoadingView hideProgressHUD];
-        [weak_self loginToDoWithResponse:request.responseJsonObject];
-    } failure:^(__kindof JYBaseRequest *request) {
-        [SXLoadingView hideProgressHUD];
-        MyNSLog(@"%@",request.error);
-        NSHTTPURLResponse * res = (NSHTTPURLResponse *)request.dataTask.response;
-        [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"登录失败:%ld",(long)res.statusCode] duration:1];
-    }];
+//    @weaky(self)
+//    [FMDBControl asyncLoadPhotoToDB];
+//    [SXLoadingView showProgressHUD:@"正在登录"];
+//    [[WeChetLoginAPI apiWithCode:code] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+//        MyNSLog(@"%@",request.responseJsonObject);
+//        [SXLoadingView hideProgressHUD];
+//        [weak_self loginToDoWithResponse:request.responseJsonObject];
+//    } failure:^(__kindof JYBaseRequest *request) {
+//        [SXLoadingView hideProgressHUD];
+//        MyNSLog(@"%@",request.error);
+//        NSHTTPURLResponse * res = (NSHTTPURLResponse *)request.dataTask.response;
+//        [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"登录失败:%ld",(long)res.statusCode] duration:1];
+//    }];
 }
 - (void)infoButtonClick:(UIButton *)sender{
     NSLog(@"点击了信息");
@@ -897,7 +898,7 @@ WXApiDelegate
 }
 - (UIScrollView *)stationScrollView{
     if (!_stationScrollView) {
-        _stationScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, JYSCREEN_WIDTH,448/2 + 64)];
+        _stationScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, __kWidth,448/2 + 64)];
         _stationScrollView.backgroundColor = UICOLOR_RGB(0x0288d1);
         _stationScrollView.pagingEnabled = YES;
 //        _stationScrollView.contentSize = CGSizeMake(self.tempDataSource.count * JYSCREEN_WIDTH, 0);
@@ -910,7 +911,7 @@ WXApiDelegate
 
 - (UIPageControl *)stationPageControl{
     if (!_stationPageControl) {
-        _stationPageControl = [[StationPageControl alloc] initWithFrame:CGRectMake(0,self.stationScrollView.frame.size.height - 36 , JYSCREEN_WIDTH, 30)];
+        _stationPageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0,self.stationScrollView.frame.size.height - 36 , __kWidth, 30)];
 //        _stationPageControl.numberOfPages = self.tempDataSource.count;
         _stationPageControl.currentPage = 0;
     }
@@ -929,9 +930,9 @@ WXApiDelegate
 
 -(UIView *)userView{
     if (!_userView) {
-        _userView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.stationScrollView.frame) + 8, JYSCREEN_WIDTH , 40)];
+        _userView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.stationScrollView.frame) + 8, __kWidth , 40)];
         _userView.backgroundColor = [UIColor whiteColor];
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(16, 0, JYSCREEN_WIDTH - 16, 40)];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(16, 0, __kWidth - 16, 40)];
         label.text = @"用户";
         label.font = [UIFont systemFontOfSize:14];
         label.textColor = [UIColor lightGrayColor];
@@ -942,9 +943,9 @@ WXApiDelegate
 
 - (UITableView *)userListTableViwe{
     if (!_userListTableViwe) {
-        _userListTableViwe = [[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.userView.frame), JYSCREEN_WIDTH, JYSCREEN_HEIGHT - _stationScrollView.frame.size.height - 8 - _userView.frame.size.height -48) style:UITableViewStylePlain];
+        _userListTableViwe = [[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.userView.frame), __kWidth, __kHeight - _stationScrollView.frame.size.height - 8 - _userView.frame.size.height -48) style:UITableViewStylePlain];
         if (![WXApi isWXAppInstalled]) {
-            _userListTableViwe.frame = CGRectMake(0, CGRectGetMaxY(self.userView.frame), JYSCREEN_WIDTH, JYSCREEN_HEIGHT - _stationScrollView.frame.size.height - 8 - _userView.frame.size.height);
+            _userListTableViwe.frame = CGRectMake(0, CGRectGetMaxY(self.userView.frame), __kWidth, __kHeight - _stationScrollView.frame.size.height - 8 - _userView.frame.size.height);
         }
         _userListTableViwe.delegate = self;
         _userListTableViwe.dataSource = self;
@@ -955,7 +956,7 @@ WXApiDelegate
 
 - (UIView *)wechatView{
     if (!_wechatView) {
-        _wechatView = [[UIView alloc]initWithFrame:CGRectMake(0, JYSCREEN_HEIGHT - 48, JYSCREEN_WIDTH, 48)];
+        _wechatView = [[UIView alloc]initWithFrame:CGRectMake(0, __kHeight - 48, __kWidth, 48)];
         _wechatView.backgroundColor = [UIColor whiteColor];
         _wechatView.layer.shadowColor = [[UIColor blackColor]CGColor];
         _wechatView.layer.shadowOffset = CGSizeMake(0, 2);
@@ -992,7 +993,7 @@ WXApiDelegate
 
 - (UIButton *)handButton{
     if (!_handButton) {
-        _handButton = [[UIButton alloc]initWithFrame:CGRectMake(JYSCREEN_WIDTH - 16 - 30 , CGRectGetMinY(_logoImageView.frame) - 5, 30, 30)];
+        _handButton = [[UIButton alloc]initWithFrame:CGRectMake(__kWidth - 16 - 30 , CGRectGetMinY(_logoImageView.frame) - 5, 30, 30)];
         [_handButton setImage:[UIImage imageNamed:@"PLUS"] forState:UIControlStateNormal];
         [_handButton addTarget:self action:@selector(rightBtnClick) forControlEvents:UIControlEventTouchUpInside];
         [_handButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
