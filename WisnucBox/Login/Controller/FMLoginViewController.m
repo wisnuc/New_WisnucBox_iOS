@@ -7,25 +7,7 @@
 //
 
 #import "FMLoginViewController.h"
-#import "StationPageControl.h"
-#import "LoginTableViewCell.h"
-#import "FMUserLoginViewController.h"
-#import "ServerBrowser.h"
-#import "GCDAsyncSocket.h"
-#import <AFNetworking/AFNetworkReachabilityManager.h>
-#import "LoginModel.h"
-#import "FMHandLoginVC.h"
-#import "WeChetLoginAPI.h"
-#import "GetStationAPI.h"
-#import "CloudLoginModel.h"
-#import "FMCloudUserModel.h"
-#import "FMGetUsersAPI.h"
-#import "ChooseAlertView.h"
-#import "FMCloudUserTableViewCell.h"
-#import "GetStaionInfoAPI.h"
-#import "GetSystemInformationAPI.h"
 
-#define kCount 3
 @interface FMLoginViewController ()
 <
 UIScrollViewDelegate,

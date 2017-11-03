@@ -268,7 +268,15 @@
 			isa = PBXGroup;
 			children = (
 			);
-			path = Login;
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		FC14E2AAA530CEB2823817F5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EDB405E0F4B341258F4BE354 /* Pods_WisnucBox.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -385,6 +393,7 @@
 			files = (
 				F650356F1FAC00A70007979D /* LaunchScreen.storyboard in Resources */,
 				F650356C1FAC00A70007979D /* Assets.xcassets in Resources */,
+				1F5FEA391FAC15830093963A /* DGPopUpViewTextView.xib in Resources */,
 				F650356A1FAC00A70007979D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -522,6 +531,7 @@
 				F6005F8C1FAC2FF8003E909D /* NetServices.m in Sources */,
 				F6005F7D1FAC2C0E003E909D /* UserServices.m in Sources */,
 				F65035611FAC00A60007979D /* main.m in Sources */,
+				1F5FEA351FAC0FA00093963A /* FMLoginTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

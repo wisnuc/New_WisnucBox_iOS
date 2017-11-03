@@ -8,16 +8,16 @@
 
 #import "FMHandLoginVC.h"
 #import "DGPopUpViewTextView.h"
-#import "NavViewController.h"
-#import "FMShareViewController.h"
-#import "FMAlbumsViewController.h"
-#import "FMPhotosViewController.h"
-#import "FMSlideMenuControllerViewController.h"
-#import "FMSlideMenuController.h"
-#import "TabBarViewController.h"
+//#import "NavViewController.h"
+//#import "FMShareViewController.h"
+//#import "FMAlbumsViewController.h"
+//#import "FMPhotosViewController.h"
+//#import "FMSlideMenuControllerViewController.h"
+//#import "FMSlideMenuController.h"
+//#import "TabBarViewController.h"
 
-#import "RDVTabBarItem.h"
-#import "FMGetJWTAPI.h"
+//#import "RDVTabBarItem.h"
+//#import "FMGetJWTAPI.h"
 
 @interface FMHandLoginVC ()
 

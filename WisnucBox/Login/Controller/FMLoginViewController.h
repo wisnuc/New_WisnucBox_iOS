@@ -6,8 +6,8 @@
 //  Copyright © 2017年 WinSun. All rights reserved.
 //
 
-#import "FABaseVC.h"
+#import <UIKit/UIKit.h>
 
-@interface FMLoginViewController : FABaseVC
--(void)weChatCallBackRespCode:(NSString *)code;
+@interface FMLoginViewController : UIViewController
+
 @end
