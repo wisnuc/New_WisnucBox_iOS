@@ -21,9 +21,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    UIView * redView = [[UIView alloc]initWithFrame:CGRectMake(0, -20, __kWidth, 20)];
-    redView.backgroundColor = StatusBar_Color;
-    [self.navigationController.navigationBar addSubview:redView];
+
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
