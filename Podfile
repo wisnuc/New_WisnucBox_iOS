@@ -1,5 +1,5 @@
 use_frameworks!
-target :'Wisnuc-iOS' do 
+target :’WisnucBox’ do 
 
 platform :ios,’8.0’
 pod 'YYWebImage'
