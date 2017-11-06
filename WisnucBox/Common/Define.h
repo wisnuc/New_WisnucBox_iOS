@@ -13,9 +13,12 @@
 #define __kHeight [[UIScreen mainScreen]bounds].size.height
 
 #define KWxAppID      @"wx99b54eb728323fe8"
+
 #define kUserDefaults [NSUserDefaults standardUserDefaults]
 #define kUD_Synchronize [[NSUserDefaults standardUserDefaults] synchronize]
 #define kUD_ObjectForKey(key) [[NSUserDefaults standardUserDefaults] objectForKey:key]
 
+#define IsNull(__Text) [__Text isKindOfClass:[NSNull class]]
+#define IsEquallString(_Str1,_Str2)  [_Str1 isEqualToString:_Str2]
 
 #endif /* Define_h */
