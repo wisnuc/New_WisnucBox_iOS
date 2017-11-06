@@ -173,7 +173,6 @@ WXApiDelegate
 }
 
 -(void)rightBtnClick{
-//    FMHandLoginVC * vc = [[FMHandLoginVC alloc]init];
 //    @weaky(self)
 //    vc.block = ^(FMSerachService * ser){
 //        ser.isReadly = YES;
@@ -275,11 +274,10 @@ WXApiDelegate
 }
 
 - (void)setStationCardView{
-
     if (self.tempDataSource.count ==0) {
         _stationCardView = [[UIView alloc]init];
         _stationCardView.backgroundColor =  UICOLOR_RGB(0x03a9f4);
-        _stationCardView.frame = CGRectMake(32,64,__kWidth - 32*2, 166);
+        _stationCardView.frame = CGRectMake(32,84,__kWidth - 32*2, 166);
         _stationCardView.layer.cornerRadius = 8;
         _stationCardView.layer.masksToBounds = YES;
         [self.stationScrollView addSubview:self.stationCardView];
@@ -306,6 +304,7 @@ WXApiDelegate
             });  
         }
     }
+        
     FMSerachService *serforUser;
     if (_userDataCount > 0) {
       serforUser  = _tempDataSource[_userDataCount];
@@ -846,6 +845,7 @@ WXApiDelegate
         }
 //        NSLog(@"%@",_cloudLoginStationArray);
        NSDictionary *modelDic = _cloudLoginStationArray[indexPath.row];
+       cell.accessoryType=UITableViewCellAccessoryDetailDisclosureButton;
        cell.userNameLabel.text = [NSString stringWithFormat:@"%@",modelDic[@"username"]];
        cell.stationName.text = [NSString stringWithFormat:@"在%@上",modelDic[@"name"]];
         return cell;
@@ -870,32 +870,32 @@ WXApiDelegate
         userLoginVC.user = model;
         
         [self.navigationController pushViewController:userLoginVC animated:YES];
-        
         [self applicationWillResignActive:nil];
     }else{
+       
         _current=indexPath.row;
         [_alertView.tableView reloadData];
     }
     
 }
 
-- (UITableViewCellAccessoryType)tableView:(UITableView*)tableView accessoryTypeForRowWithIndexPath:(NSIndexPath*)indexPath
-{
-    
-    if(tableView == _alertView.tableView){
-        if(_current==indexPath.row)
-        {
-            return UITableViewCellAccessoryCheckmark;
-        }
-        else
-        {
-            return UITableViewCellAccessoryNone;
-        }
-    }else{
-        return UITableViewCellAccessoryNone;
-    }
-   
-}
+//- (UITableViewCellAccessoryType)tableView:(UITableView*)tableView accessoryTypeForRowWithIndexPath:(NSIndexPath*)indexPath
+//{
+//
+//    if(tableView == _alertView.tableView){
+//        if(_current==indexPath.row)
+//        {
+//            return UITableViewCellAccessoryDetailButton;
+//        }
+//        else
+//        {
+//            return UITableViewCellAccessoryNone;
+//        }
+//    }else{
+//        return UITableViewCellAccessoryNone;
+//    }
+//
+//}
 - (UIScrollView *)stationScrollView{
     if (!_stationScrollView) {
         _stationScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, __kWidth,448/2 + 64)];
