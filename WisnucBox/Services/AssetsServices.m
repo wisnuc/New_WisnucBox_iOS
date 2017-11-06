@@ -12,9 +12,9 @@
 #import <Photos/Photos.h>
 #import "WBLocalAsset+CoreDataClass.h"
 
-@interface AssetsServices ()
+@interface AssetsServices ()<PHPhotoLibraryChangeObserver>
 
-@property (readwrite) NSArray<JYAsset *> *allAssets;
+@property (readwrite) NSMutableArray<JYAsset *> *allAssets;
 
 @end
 
@@ -30,6 +30,8 @@
 - (instancetype)init {
     if (self = [super init]) {
         [self checkAuth];
+        if(_userAuth)
+           [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
     }
     return self;
 }
@@ -63,7 +65,7 @@
             }];
             _lastResult = result;
         }];
-        _allAssets = [NSArray arrayWithArray:all];
+        _allAssets = all;
     }
     return _allAssets;
 }
@@ -82,4 +84,43 @@
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
+- (void)preparePhotos
+{
+    @autoreleasepool {
+        
+        [(NSMutableArray *)self.allAssets removeAllObjects];
+        
+       
+    }
+}
+
+#pragma mark - photolibrary change delegate
+
+- (void)photoLibraryDidChange:(PHChange *)changeInstance
+{
+    PHFetchResult* currentAssets = _lastResult;
+    NSMutableDictionary * tmpDic = [NSMutableDictionary dictionaryWithCapacity:0];
+    for (JYAsset * asset in _allAssets) {
+        [tmpDic setObject:asset forKey:asset.asset.localIdentifier];
+    }
+    
+    BOOL shouldBeReset = NO;
+    
+    if (_lastResult){
+        PHFetchResultChangeDetails* detail = [changeInstance changeDetailsForFetchResult:currentAssets];
+        if (detail && detail.removedIndexes){
+            for (NSUInteger index = detail.removedIndexes.firstIndex;
+                 index != NSNotFound;
+                 index = [detail.removedIndexes indexGreaterThanIndex:index]){
+            }
+        }
+        if (detail && detail.insertedIndexes && !shouldBeReset){
+            for (NSUInteger index = detail.insertedIndexes.firstIndex;
+                 index != NSNotFound;
+                 index = [detail.insertedIndexes indexGreaterThanIndex:index]){
+                
+            }
+        }
+    }
+}
 @end

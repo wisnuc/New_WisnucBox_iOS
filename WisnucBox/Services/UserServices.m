@@ -91,4 +91,8 @@
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
+- (NSArray<WBUser *> *)getAllLoginUser {
+    return [WBUser MR_findAll];
+}
+
 @end

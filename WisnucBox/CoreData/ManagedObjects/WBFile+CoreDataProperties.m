@@ -18,5 +18,6 @@
 @dynamic timeDate;
 @dynamic filePath;
 @dynamic fileName;
+@dynamic fileUUID;
 
 @end
