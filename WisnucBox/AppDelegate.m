@@ -24,7 +24,8 @@
     [MagicalRecord setupCoreDataStack];
     [self configWeChat];
     FMLoginViewController *loginController = [[FMLoginViewController alloc]init];
-    self.window.rootViewController = loginController;
+    UINavigationController *rootNaviController = [[UINavigationController alloc]initWithRootViewController:loginController];
+    self.window.rootViewController = rootNaviController;
     [self.window makeKeyAndVisible];
     return YES;
 }

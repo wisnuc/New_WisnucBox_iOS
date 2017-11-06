@@ -277,7 +277,7 @@ WXApiDelegate
     if (self.tempDataSource.count ==0) {
         _stationCardView = [[UIView alloc]init];
         _stationCardView.backgroundColor =  UICOLOR_RGB(0x03a9f4);
-        _stationCardView.frame = CGRectMake(32,84,__kWidth - 32*2, 166);
+        _stationCardView.frame = CGRectMake(32,64,__kWidth - 32*2, 166);
         _stationCardView.layer.cornerRadius = 8;
         _stationCardView.layer.masksToBounds = YES;
         [self.stationScrollView addSubview:self.stationCardView];
