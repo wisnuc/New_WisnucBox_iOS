@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1F0898DC1FB05FF900B86723 /* eye_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0898DB1FB05FF800B86723 /* eye_off.png */; };
-		1F3F997B1FB00EF500D6CC64 /* CSFileDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F997A1FB00EF500D6CC64 /* CSFileDownloadManager.m */; };
 		1F3F99801FB0312300D6CC64 /* LocalDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F997E1FB0312300D6CC64 /* LocalDownloadViewController.m */; };
 		1F3F99811FB0312300D6CC64 /* LocalDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3F997F1FB0312300D6CC64 /* LocalDownloadViewController.xib */; };
 		1F3F99891FB0353F00D6CC64 /* LocalDownloadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F99871FB0353F00D6CC64 /* LocalDownloadTableViewCell.m */; };
@@ -135,8 +134,6 @@
 /* Begin PBXFileReference section */
 		1F0898DB1FB05FF800B86723 /* eye_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye_off.png; sourceTree = "<group>"; };
 		1F244D9D3BCB4706DAFC363E /* Pods-WisnucBox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.debug.xcconfig"; sourceTree = "<group>"; };
-		1F3F99791FB00EF500D6CC64 /* CSFileDownloadManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSFileDownloadManager.h; sourceTree = "<group>"; };
-		1F3F997A1FB00EF500D6CC64 /* CSFileDownloadManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSFileDownloadManager.m; sourceTree = "<group>"; };
 		1F3F997D1FB0312300D6CC64 /* LocalDownloadViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalDownloadViewController.h; sourceTree = "<group>"; };
 		1F3F997E1FB0312300D6CC64 /* LocalDownloadViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalDownloadViewController.m; sourceTree = "<group>"; };
 		1F3F997F1FB0312300D6CC64 /* LocalDownloadViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocalDownloadViewController.xib; sourceTree = "<group>"; };
@@ -647,20 +644,10 @@
 		1F7CE6601FB002F9004467C8 /* Download */ = {
 			isa = PBXGroup;
 			children = (
-				1FFEADA51FB0663A00CD3068 /* Manage */,
 				1F3F99821FB0348400D6CC64 /* View */,
 				1F3F997C1FB030CC00D6CC64 /* Controller */,
 			);
 			path = Download;
-			sourceTree = "<group>";
-		};
-		1FFEADA51FB0663A00CD3068 /* Manage */ = {
-			isa = PBXGroup;
-			children = (
-				1F3F99791FB00EF500D6CC64 /* CSFileDownloadManager.h */,
-				1F3F997A1FB00EF500D6CC64 /* CSFileDownloadManager.m */,
-			);
-			path = Manage;
 			sourceTree = "<group>";
 		};
 		1FFEADA61FB06EC300CD3068 /* Files */ = {
@@ -1203,7 +1190,6 @@
 				1F4D75B21FAC4BB800E6516C /* DBServices.m in Sources */,
 				1F3F99891FB0353F00D6CC64 /* LocalDownloadTableViewCell.m in Sources */,
 				F67D64121FAC7D7F00E23D16 /* CocoaSecurity.m in Sources */,
-				1F3F997B1FB00EF500D6CC64 /* CSFileDownloadManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
