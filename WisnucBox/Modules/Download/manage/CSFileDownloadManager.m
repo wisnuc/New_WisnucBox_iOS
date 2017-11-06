@@ -127,11 +127,10 @@
 /**
  * 点击按钮 -- 使用AFNetworking断点下载（支持离线）
  */
-- (IBAction)OfflinResumeDownloadBtnClicked:(UIButton *)sender {
+- (void)OfflinResumeDownload:(BOOL)sender {
     // 按钮状态取反
-    sender.selected = !sender.isSelected;
-    
-    if (sender.selected) { // [开始下载/继续下载]
+    sender = !sender;
+    if (sender) { // [开始下载/继续下载]
         // 沙盒文件路径
         NSString *path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"QQ_V5.4.0.dmg"];
         
@@ -162,6 +161,20 @@
         }
     }
     return fileLength;
+}
+
+- (void)removeFiles{
+     NSString *path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"QQ_V5.4.0.dmg"];
+    NSFileManager *fileManager = [[NSFileManager alloc] init]; // default is not thread safe
+    if ([fileManager fileExistsAtPath:path]) {
+        NSError *error = nil;
+        [fileManager removeItemAtPath:path error:&error];
+        if (error) {
+            
+        }else{
+            NSLog(@"删除成功");
+        }
+    }
 }
 
 @end
