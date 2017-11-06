@@ -71,6 +71,7 @@
 		1FD7A1161FB05A51000D4CB3 /* logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A1021FB05A51000D4CB3 /* logo@3x.png */; };
 		1FD7A1171FB05A51000D4CB3 /* key@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A1031FB05A51000D4CB3 /* key@2x.png */; };
 		1FD8ACF11FB05F7500F19F1C /* eye.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD8ACF01FB05F7500F19F1C /* eye.png */; };
+		1FFEADAE1FB087AE00CD3068 /* CSFileDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEADAD1FB087AE00CD3068 /* CSFileDownloadManager.m */; };
 		2C68507817DCDF432CF88A3F /* Pods_WisnucBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 357873726A4400954BE467E2 /* Pods_WisnucBox.framework */; };
 		F65035611FAC00A60007979D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035601FAC00A60007979D /* main.m */; };
 		F65035641FAC00A60007979D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035631FAC00A60007979D /* AppDelegate.m */; };
@@ -232,6 +233,8 @@
 		1FD7A1021FB05A51000D4CB3 /* logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@3x.png"; sourceTree = "<group>"; };
 		1FD7A1031FB05A51000D4CB3 /* key@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "key@2x.png"; sourceTree = "<group>"; };
 		1FD8ACF01FB05F7500F19F1C /* eye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye.png; sourceTree = "<group>"; };
+		1FFEADAC1FB087AE00CD3068 /* CSFileDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSFileDownloadManager.h; sourceTree = "<group>"; };
+		1FFEADAD1FB087AE00CD3068 /* CSFileDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSFileDownloadManager.m; sourceTree = "<group>"; };
 		357873726A4400954BE467E2 /* Pods_WisnucBox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WisnucBox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0D3F6BCD083EB684E36A713 /* Pods-WisnucBox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.release.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.release.xcconfig"; sourceTree = "<group>"; };
 		F650355C1FAC00A60007979D /* WisnucBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WisnucBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -644,6 +647,7 @@
 		1F7CE6601FB002F9004467C8 /* Download */ = {
 			isa = PBXGroup;
 			children = (
+				1FFEADAB1FB087A100CD3068 /* Manage */,
 				1F3F99821FB0348400D6CC64 /* View */,
 				1F3F997C1FB030CC00D6CC64 /* Controller */,
 			);
@@ -655,6 +659,15 @@
 			children = (
 			);
 			path = Files;
+			sourceTree = "<group>";
+		};
+		1FFEADAB1FB087A100CD3068 /* Manage */ = {
+			isa = PBXGroup;
+			children = (
+				1FFEADAC1FB087AE00CD3068 /* CSFileDownloadManager.h */,
+				1FFEADAD1FB087AE00CD3068 /* CSFileDownloadManager.m */,
+			);
+			path = Manage;
 			sourceTree = "<group>";
 		};
 		A425D85D003C084CDA92A5DA /* Frameworks */ = {
@@ -1171,6 +1184,7 @@
 				F67D64271FAC7D9A00E23D16 /* UIView+JY_ExtendTouchRect.m in Sources */,
 				F67D64401FAC7E5600E23D16 /* TYDecorationSectionLayout.m in Sources */,
 				F67D64261FAC7D9A00E23D16 /* UIScrollView+IndicatorExt.m in Sources */,
+				1FFEADAE1FB087AE00CD3068 /* CSFileDownloadManager.m in Sources */,
 				F67D643F1FAC7E5600E23D16 /* JYProgressHUD.m in Sources */,
 				1F4D75B11FAC4BB800E6516C /* UserServices.m in Sources */,
 				1F4D75D01FAC604100E6516C /* LoginTableViewCell.m in Sources */,
