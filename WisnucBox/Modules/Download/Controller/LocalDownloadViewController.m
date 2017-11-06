@@ -39,29 +39,37 @@ UITableViewDataSource
         cell= [[[NSBundle mainBundle] loadNibNamed:@"LocalDownloadTableViewCell" owner:nil options:nil] lastObject];
     }
 //    NSNumber* number = self.array[indexPath.row];
-    cell.fileNameLabel.text = @"11";
+    cell.fileNameLabel.text = @"文件名";
     return cell;
 }
 
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
+         return 2;
+    }else if (section == 1){
          return 3;
     }else{
-         return 5;
+         return 3;
     }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
+    return 3;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    if (section == 0) {
+    if (section == 0)
+    {
+        return @"下载测试section";
+    }else if(section == 1)
+    {
         return @"正在下载";
     }
     else
+    {
         return @"已下载";
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -73,11 +81,14 @@ UITableViewDataSource
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+       
+    }
     
 }
 
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 64;
 }
 
@@ -90,4 +101,5 @@ UITableViewDataSource
     }
     return _tableView;
 }
+
 @end

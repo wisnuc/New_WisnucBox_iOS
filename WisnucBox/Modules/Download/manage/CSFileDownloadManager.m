@@ -9,6 +9,24 @@
 #import "CSFileDownloadManager.h"
 
 @implementation CSFileDownloadManager
+
++(__kindof CSFileDownloadManager *)shareManager{
+    static CSFileDownloadManager * manager = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        manager = [[self alloc]init];
+    });
+    return manager;
+}
+
+- (instancetype)init{
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
+
 /**
  * manager的懒加载
  */
@@ -117,7 +135,7 @@
         // 沙盒文件路径
         NSString *path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"QQ_V5.4.0.dmg"];
         
-        NSInteger currentLength = [self fileLengthForPath:path];
+        long long currentLength = [self fileLengthForPath:path];
         if (currentLength > 0) {  // [继续下载]
             self.currentLength = currentLength;
         }
@@ -133,8 +151,8 @@
 /**
  * 获取已下载的文件大小
  */
-- (NSInteger)fileLengthForPath:(NSString *)path {
-    NSInteger fileLength = 0;
+- (long long)fileLengthForPath:(NSString *)path {
+    long long fileLength = 0;
     NSFileManager *fileManager = [[NSFileManager alloc] init]; // default is not thread safe
     if ([fileManager fileExistsAtPath:path]) {
         NSError *error = nil;

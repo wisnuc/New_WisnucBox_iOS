@@ -646,12 +646,20 @@
 		1F7CE6601FB002F9004467C8 /* Download */ = {
 			isa = PBXGroup;
 			children = (
+				1FFEADA51FB0663A00CD3068 /* manage */,
 				1F3F99821FB0348400D6CC64 /* View */,
 				1F3F997C1FB030CC00D6CC64 /* Controller */,
+			);
+			path = Download;
+			sourceTree = "<group>";
+		};
+		1FFEADA51FB0663A00CD3068 /* manage */ = {
+			isa = PBXGroup;
+			children = (
 				1F3F99791FB00EF500D6CC64 /* CSFileDownloadManager.h */,
 				1F3F997A1FB00EF500D6CC64 /* CSFileDownloadManager.m */,
 			);
-			path = Download;
+			path = manage;
 			sourceTree = "<group>";
 		};
 		A425D85D003C084CDA92A5DA /* Frameworks */ = {
