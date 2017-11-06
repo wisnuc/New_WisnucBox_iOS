@@ -37,6 +37,8 @@ typedef NS_ENUM(NSUInteger, JYAssetType) {
 //图片
 @property (nonatomic, strong) UIImage *image;
 
+@property (nonatomic, copy) NSString * digest;
+
 /**初始化model对象*/
 + (instancetype)modelWithAsset:(PHAsset *)asset type:(JYAssetType)type duration:(NSString *)duration;
 

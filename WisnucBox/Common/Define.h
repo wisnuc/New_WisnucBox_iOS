@@ -21,4 +21,13 @@
 #define IsNull(__Text) [__Text isKindOfClass:[NSNull class]]
 #define IsEquallString(_Str1,_Str2)  [_Str1 isEqualToString:_Str2]
 
+NSString * WB_UUID() {
+    CFUUIDRef   uuid_ref        = CFUUIDCreate(NULL);
+    CFStringRef uuid_string_ref = CFUUIDCreateString(NULL, uuid_ref);
+    CFRelease(uuid_ref);
+    NSString *uuid = [NSString stringWithString:(__bridge NSString*)uuid_string_ref];
+    CFRelease(uuid_string_ref);
+    return [uuid stringByReplacingOccurrencesOfString:@"-" withString:@""];
+}
+
 #endif /* Define_h */
