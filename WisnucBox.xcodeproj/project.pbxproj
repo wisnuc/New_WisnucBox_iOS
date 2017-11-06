@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F0898DC1FB05FF900B86723 /* eye_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0898DB1FB05FF800B86723 /* eye_off.png */; };
 		1F3F997B1FB00EF500D6CC64 /* CSFileDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F997A1FB00EF500D6CC64 /* CSFileDownloadManager.m */; };
 		1F3F99801FB0312300D6CC64 /* LocalDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F997E1FB0312300D6CC64 /* LocalDownloadViewController.m */; };
 		1F3F99811FB0312300D6CC64 /* LocalDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3F997F1FB0312300D6CC64 /* LocalDownloadViewController.xib */; };
@@ -66,11 +67,11 @@
 		1FD7A1101FB05A51000D4CB3 /* eye@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0FC1FB05A50000D4CB3 /* eye@3x.png */; };
 		1FD7A1111FB05A51000D4CB3 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0FD1FB05A50000D4CB3 /* logo.png */; };
 		1FD7A1121FB05A51000D4CB3 /* stationLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0FE1FB05A50000D4CB3 /* stationLogo.png */; };
-		1FD7A1131FB05A51000D4CB3 /* eye.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0FF1FB05A50000D4CB3 /* eye.png */; };
 		1FD7A1141FB05A51000D4CB3 /* key@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A1001FB05A51000D4CB3 /* key@3x.png */; };
 		1FD7A1151FB05A51000D4CB3 /* eye@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A1011FB05A51000D4CB3 /* eye@2x.png */; };
 		1FD7A1161FB05A51000D4CB3 /* logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A1021FB05A51000D4CB3 /* logo@3x.png */; };
 		1FD7A1171FB05A51000D4CB3 /* key@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A1031FB05A51000D4CB3 /* key@2x.png */; };
+		1FD8ACF11FB05F7500F19F1C /* eye.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD8ACF01FB05F7500F19F1C /* eye.png */; };
 		2C68507817DCDF432CF88A3F /* Pods_WisnucBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 357873726A4400954BE467E2 /* Pods_WisnucBox.framework */; };
 		F65035611FAC00A60007979D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035601FAC00A60007979D /* main.m */; };
 		F65035641FAC00A60007979D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035631FAC00A60007979D /* AppDelegate.m */; };
@@ -132,6 +133,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1F0898DB1FB05FF800B86723 /* eye_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye_off.png; sourceTree = "<group>"; };
 		1F244D9D3BCB4706DAFC363E /* Pods-WisnucBox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.debug.xcconfig"; sourceTree = "<group>"; };
 		1F3F99791FB00EF500D6CC64 /* CSFileDownloadManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSFileDownloadManager.h; sourceTree = "<group>"; };
 		1F3F997A1FB00EF500D6CC64 /* CSFileDownloadManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSFileDownloadManager.m; sourceTree = "<group>"; };
@@ -228,11 +230,11 @@
 		1FD7A0FC1FB05A50000D4CB3 /* eye@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eye@3x.png"; sourceTree = "<group>"; };
 		1FD7A0FD1FB05A50000D4CB3 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		1FD7A0FE1FB05A50000D4CB3 /* stationLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stationLogo.png; sourceTree = "<group>"; };
-		1FD7A0FF1FB05A50000D4CB3 /* eye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye.png; sourceTree = "<group>"; };
 		1FD7A1001FB05A51000D4CB3 /* key@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "key@3x.png"; sourceTree = "<group>"; };
 		1FD7A1011FB05A51000D4CB3 /* eye@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eye@2x.png"; sourceTree = "<group>"; };
 		1FD7A1021FB05A51000D4CB3 /* logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@3x.png"; sourceTree = "<group>"; };
 		1FD7A1031FB05A51000D4CB3 /* key@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "key@2x.png"; sourceTree = "<group>"; };
+		1FD8ACF01FB05F7500F19F1C /* eye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye.png; sourceTree = "<group>"; };
 		357873726A4400954BE467E2 /* Pods_WisnucBox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WisnucBox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0D3F6BCD083EB684E36A713 /* Pods-WisnucBox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.release.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.release.xcconfig"; sourceTree = "<group>"; };
 		F650355C1FAC00A60007979D /* WisnucBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WisnucBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -603,9 +605,10 @@
 		1F7CE62C1FAC824E004467C8 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				1F0898DB1FB05FF800B86723 /* eye_off.png */,
 				1FD7A0F51FB05A50000D4CB3 /* eye_off@2x.png */,
 				1FD7A0F41FB05A4F000D4CB3 /* eye_off@3x.png */,
-				1FD7A0FF1FB05A50000D4CB3 /* eye.png */,
+				1FD8ACF01FB05F7500F19F1C /* eye.png */,
 				1FD7A1011FB05A51000D4CB3 /* eye@2x.png */,
 				1FD7A0FC1FB05A50000D4CB3 /* eye@3x.png */,
 				1FD7A0F01FB05A4F000D4CB3 /* key.png */,
@@ -969,9 +972,9 @@
 				1F4D75C01FAC5E3400E6516C /* ChooseAlertView.xib in Resources */,
 				1F4D75D11FAC604100E6516C /* LoginTableViewCell.xib in Resources */,
 				1FD7A0EA1FB05A45000D4CB3 /* back@2x.png in Resources */,
+				1F0898DC1FB05FF900B86723 /* eye_off.png in Resources */,
 				F67D643B1FAC7E5600E23D16 /* FirstDecorationSectionView.xib in Resources */,
 				1FD7A1091FB05A51000D4CB3 /* eye_off@2x.png in Resources */,
-				1FD7A1131FB05A51000D4CB3 /* eye.png in Resources */,
 				1FD7A10F1FB05A51000D4CB3 /* WeChat@3x.png in Resources */,
 				F67D64201FAC7D9A00E23D16 /* date_bg.png in Resources */,
 				1FD7A1051FB05A51000D4CB3 /* logo@2x.png in Resources */,
@@ -987,6 +990,7 @@
 				1FD7A1141FB05A51000D4CB3 /* key@3x.png in Resources */,
 				1FD7A1071FB05A51000D4CB3 /* PLUS@2x.png in Resources */,
 				F67D64231FAC7D9A00E23D16 /* handrail.png in Resources */,
+				1FD8ACF11FB05F7500F19F1C /* eye.png in Resources */,
 				1FD7A1081FB05A51000D4CB3 /* eye_off@3x.png in Resources */,
 				F650356A1FAC00A70007979D /* Main.storyboard in Resources */,
 				F67D64251FAC7D9A00E23D16 /* handrail@3x.png in Resources */,
