@@ -2,7 +2,7 @@
 //  WBUser+CoreDataProperties.m
 //  WisnucBox
 //
-//  Created by JackYang on 2017/11/3.
+//  Created by JackYang on 2017/11/6.
 //  Copyright © 2017年 JackYang. All rights reserved.
 //
 
@@ -14,9 +14,11 @@
 	return [[NSFetchRequest alloc] initWithEntityName:@"WBUser"];
 }
 
+@dynamic localToken;
 @dynamic userName;
 @dynamic uuid;
-@dynamic localToken;
 @dynamic cloudToken;
+@dynamic isFirstUser;
+@dynamic isAdmin;
 
 @end

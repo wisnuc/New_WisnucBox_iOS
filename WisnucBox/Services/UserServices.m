@@ -9,6 +9,12 @@
 #import "UserServices.h"
 #import "WBUser+CoreDataClass.h"
 
+@interface UserServices ()
+
+@property (readwrite) BOOL isUserLogin;
+
+@end
+
 @implementation UserServices
 
 - (void)abort {
@@ -73,6 +79,15 @@
     newUser.userName = user.userName;
     newUser.localToken = user.localToken;
     newUser.cloudToken = user.cloudToken;
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+}
+
+- (void)deleteUserWithUserId:(NSString  *)uuid {
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"uuid = %@", uuid];
+    NSArray<WBUser *> *users = [WBUser MR_findAllWithPredicate:predicate];
+    for (WBUser *user in users) {
+        [user MR_deleteEntity];
+    }
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 

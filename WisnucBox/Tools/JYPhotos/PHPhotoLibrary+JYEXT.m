@@ -196,6 +196,31 @@
     return nil;
 }
 
++ (void)getAllAsset:(void(^)(PHFetchResult<PHAsset *> *result, NSArray<PHAsset *> *assets))block {
+    NSMutableDictionary * tempDic = [NSMutableDictionary dictionaryWithCapacity:0];
+    PHFetchResult<PHAssetCollection *> *collectionResult = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeAny options:nil];
+    for (PHAssetCollection * c in collectionResult) {
+        if(c.assetCollectionSubtype == 100) continue; //屏蔽 我的照片流
+        PHFetchOptions *options = [[PHFetchOptions alloc] init];
+        options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+        // 遍历这个相册中的所有图片
+        PHFetchResult<PHAsset *> *assetResult = [PHAsset fetchAssetsInAssetCollection:c options:options];
+        [assetResult enumerateObjectsUsingBlock:^(PHAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [tempDic setObject:obj forKey:obj.localIdentifier];
+        }];
+    }
+    // fix bug ==> itunes sync merge
+    PHFetchOptions * option = [[PHFetchOptions alloc]init];
+    option.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+    option.includeHiddenAssets = YES;
+    option.includeAssetSourceTypes = PHAssetSourceTypeNone;
+    PHFetchResult<PHAsset *> * lastresult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:option];
+    [lastresult enumerateObjectsUsingBlock:^(PHAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [tempDic setObject:obj forKey:obj.localIdentifier];
+    }];
+    if(block) block(lastresult, [tempDic allValues]);
+}
+
 //get album(collection)
 + (PHAssetCollection *)getDestinationCollection
 {

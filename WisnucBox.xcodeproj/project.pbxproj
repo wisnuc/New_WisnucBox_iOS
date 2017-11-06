@@ -22,9 +22,7 @@
 		1F4D75A71FAC4BB800E6516C /* DGPopUpViewTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F4D757A1FAC4BB800E6516C /* DGPopUpViewTextView.xib */; };
 		1F4D75A81FAC4BB800E6516C /* FMLoginTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D757D1FAC4BB800E6516C /* FMLoginTextField.m */; };
 		1F4D75A91FAC4BB800E6516C /* FABaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75801FAC4BB800E6516C /* FABaseVC.m */; };
-		1F4D75AA1FAC4BB800E6516C /* WBUser+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75831FAC4BB800E6516C /* WBUser+CoreDataProperties.m */; };
 		1F4D75AB1FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75841FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.m */; };
-		1F4D75AC1FAC4BB800E6516C /* WBUser+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75851FAC4BB800E6516C /* WBUser+CoreDataClass.m */; };
 		1F4D75AD1FAC4BB800E6516C /* WBLocalAsset+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D758A1FAC4BB800E6516C /* WBLocalAsset+CoreDataProperties.m */; };
 		1F4D75AE1FAC4BB800E6516C /* WisnucBox.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D758B1FAC4BB800E6516C /* WisnucBox.xcdatamodeld */; };
 		1F4D75AF1FAC4BB800E6516C /* FilesServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75911FAC4BB800E6516C /* FilesServices.m */; };
@@ -78,6 +76,9 @@
 		F650356F1FAC00A70007979D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F650356D1FAC00A70007979D /* LaunchScreen.storyboard */; };
 		F650357A1FAC00A70007979D /* WisnucBoxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035791FAC00A70007979D /* WisnucBoxTests.m */; };
 		F65035851FAC00A70007979D /* WisnucBoxUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035841FAC00A70007979D /* WisnucBoxUITests.m */; };
+		F679336D1FB00D9B00C9A7DC /* WBUser+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = F679336A1FB00D9A00C9A7DC /* WBUser+CoreDataClass.m */; };
+		F679336E1FB00D9B00C9A7DC /* WBUser+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F679336C1FB00D9A00C9A7DC /* WBUser+CoreDataProperties.m */; };
+		F67933711FB0142900C9A7DC /* WBAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = F67933701FB0142900C9A7DC /* WBAsset.m */; };
 		F67D64061FAC7D3600E23D16 /* JYAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D63FF1FAC7D3600E23D16 /* JYAsset.m */; };
 		F67D64071FAC7D3600E23D16 /* PHAsset+JYEXT.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D64011FAC7D3600E23D16 /* PHAsset+JYEXT.m */; };
 		F67D64081FAC7D3600E23D16 /* PHFetchResult+JYEXT.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D64031FAC7D3600E23D16 /* PHFetchResult+JYEXT.m */; };
@@ -105,6 +106,8 @@
 		F67D644A1FAC7E6B00E23D16 /* JYThumbVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D64461FAC7E6B00E23D16 /* JYThumbVC.m */; };
 		F67D644B1FAC7E6B00E23D16 /* JYThumbVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F67D64471FAC7E6B00E23D16 /* JYThumbVC.xib */; };
 		F67D644E1FAC84E800E23D16 /* NavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D644D1FAC84E800E23D16 /* NavViewController.m */; };
+		F6AAD1881FB049E100DEDBDC /* WBFile+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = F6AAD1851FB049E100DEDBDC /* WBFile+CoreDataClass.m */; };
+		F6AAD1891FB049E100DEDBDC /* WBFile+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F6AAD1871FB049E100DEDBDC /* WBFile+CoreDataProperties.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -157,13 +160,9 @@
 		1F4D757D1FAC4BB800E6516C /* FMLoginTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMLoginTextField.m; sourceTree = "<group>"; };
 		1F4D757F1FAC4BB800E6516C /* FABaseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FABaseVC.h; sourceTree = "<group>"; };
 		1F4D75801FAC4BB800E6516C /* FABaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FABaseVC.m; sourceTree = "<group>"; };
-		1F4D75831FAC4BB800E6516C /* WBUser+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WBUser+CoreDataProperties.m"; sourceTree = "<group>"; };
 		1F4D75841FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WBLocalAsset+CoreDataClass.m"; sourceTree = "<group>"; };
-		1F4D75851FAC4BB800E6516C /* WBUser+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WBUser+CoreDataClass.m"; sourceTree = "<group>"; };
 		1F4D75861FAC4BB800E6516C /* WBLocalAsset+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBLocalAsset+CoreDataProperties.h"; sourceTree = "<group>"; };
 		1F4D75871FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBLocalAsset+CoreDataClass.h"; sourceTree = "<group>"; };
-		1F4D75881FAC4BB800E6516C /* WBUser+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBUser+CoreDataProperties.h"; sourceTree = "<group>"; };
-		1F4D75891FAC4BB800E6516C /* WBUser+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBUser+CoreDataClass.h"; sourceTree = "<group>"; };
 		1F4D758A1FAC4BB800E6516C /* WBLocalAsset+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WBLocalAsset+CoreDataProperties.m"; sourceTree = "<group>"; };
 		1F4D758C1FAC4BB800E6516C /* WisnucBox.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WisnucBox.xcdatamodel; sourceTree = "<group>"; };
 		1F4D758E1FAC4BB800E6516C /* UserServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserServices.h; sourceTree = "<group>"; };
@@ -241,6 +240,12 @@
 		F65035801FAC00A70007979D /* WisnucBoxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WisnucBoxUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F65035841FAC00A70007979D /* WisnucBoxUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WisnucBoxUITests.m; sourceTree = "<group>"; };
 		F65035861FAC00A70007979D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F67933691FB00D9A00C9A7DC /* WBUser+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBUser+CoreDataClass.h"; sourceTree = "<group>"; };
+		F679336A1FB00D9A00C9A7DC /* WBUser+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WBUser+CoreDataClass.m"; sourceTree = "<group>"; };
+		F679336B1FB00D9A00C9A7DC /* WBUser+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBUser+CoreDataProperties.h"; sourceTree = "<group>"; };
+		F679336C1FB00D9A00C9A7DC /* WBUser+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WBUser+CoreDataProperties.m"; sourceTree = "<group>"; };
+		F679336F1FB0142900C9A7DC /* WBAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBAsset.h; sourceTree = "<group>"; };
+		F67933701FB0142900C9A7DC /* WBAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBAsset.m; sourceTree = "<group>"; };
 		F67D63FE1FAC7D3600E23D16 /* JYAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYAsset.h; sourceTree = "<group>"; };
 		F67D63FF1FAC7D3600E23D16 /* JYAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYAsset.m; sourceTree = "<group>"; };
 		F67D64001FAC7D3600E23D16 /* PHAsset+JYEXT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PHAsset+JYEXT.h"; sourceTree = "<group>"; };
@@ -288,6 +293,10 @@
 		F67D64471FAC7E6B00E23D16 /* JYThumbVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JYThumbVC.xib; sourceTree = "<group>"; };
 		F67D644C1FAC84E800E23D16 /* NavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavViewController.h; sourceTree = "<group>"; };
 		F67D644D1FAC84E800E23D16 /* NavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavViewController.m; sourceTree = "<group>"; };
+		F6AAD1841FB049E100DEDBDC /* WBFile+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBFile+CoreDataClass.h"; sourceTree = "<group>"; };
+		F6AAD1851FB049E100DEDBDC /* WBFile+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WBFile+CoreDataClass.m"; sourceTree = "<group>"; };
+		F6AAD1861FB049E100DEDBDC /* WBFile+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBFile+CoreDataProperties.h"; sourceTree = "<group>"; };
+		F6AAD1871FB049E100DEDBDC /* WBFile+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WBFile+CoreDataProperties.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -480,13 +489,17 @@
 		1F4D75821FAC4BB800E6516C /* ManagedObjects */ = {
 			isa = PBXGroup;
 			children = (
-				1F4D75831FAC4BB800E6516C /* WBUser+CoreDataProperties.m */,
+				F6AAD1841FB049E100DEDBDC /* WBFile+CoreDataClass.h */,
+				F6AAD1851FB049E100DEDBDC /* WBFile+CoreDataClass.m */,
+				F6AAD1861FB049E100DEDBDC /* WBFile+CoreDataProperties.h */,
+				F6AAD1871FB049E100DEDBDC /* WBFile+CoreDataProperties.m */,
+				F67933691FB00D9A00C9A7DC /* WBUser+CoreDataClass.h */,
+				F679336A1FB00D9A00C9A7DC /* WBUser+CoreDataClass.m */,
+				F679336B1FB00D9A00C9A7DC /* WBUser+CoreDataProperties.h */,
+				F679336C1FB00D9A00C9A7DC /* WBUser+CoreDataProperties.m */,
 				1F4D75841FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.m */,
-				1F4D75851FAC4BB800E6516C /* WBUser+CoreDataClass.m */,
 				1F4D75861FAC4BB800E6516C /* WBLocalAsset+CoreDataProperties.h */,
 				1F4D75871FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.h */,
-				1F4D75881FAC4BB800E6516C /* WBUser+CoreDataProperties.h */,
-				1F4D75891FAC4BB800E6516C /* WBUser+CoreDataClass.h */,
 				1F4D758A1FAC4BB800E6516C /* WBLocalAsset+CoreDataProperties.m */,
 			);
 			path = ManagedObjects;
@@ -772,6 +785,8 @@
 		F67D642A1FAC7DFF00E23D16 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F679336F1FB0142900C9A7DC /* WBAsset.h */,
+				F67933701FB0142900C9A7DC /* WBAsset.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1102,7 +1117,6 @@
 				1F4D759C1FAC4BB800E6516C /* UIButton+EnlargeEdge.m in Sources */,
 				1F4D75CB1FAC5FF900E6516C /* FMCloudUserTableViewCell.m in Sources */,
 				F67D643C1FAC7E5600E23D16 /* FMHeadView.m in Sources */,
-				1F4D75AC1FAC4BB800E6516C /* WBUser+CoreDataClass.m in Sources */,
 				1F4D75A51FAC4BB800E6516C /* FMSerachService.m in Sources */,
 				1F4D759B1FAC4BB800E6516C /* UIImage+GKContact.m in Sources */,
 				1F4D75AE1FAC4BB800E6516C /* WisnucBox.xcdatamodeld in Sources */,
@@ -1114,14 +1128,18 @@
 				F67D64271FAC7D9A00E23D16 /* UIView+JY_ExtendTouchRect.m in Sources */,
 				F67D64401FAC7E5600E23D16 /* TYDecorationSectionLayout.m in Sources */,
 				F67D64261FAC7D9A00E23D16 /* UIScrollView+IndicatorExt.m in Sources */,
-				1F4D75AA1FAC4BB800E6516C /* WBUser+CoreDataProperties.m in Sources */,
 				F67D643F1FAC7E5600E23D16 /* JYProgressHUD.m in Sources */,
 				1F4D75B11FAC4BB800E6516C /* UserServices.m in Sources */,
 				1F4D75D01FAC604100E6516C /* LoginTableViewCell.m in Sources */,
+				F679336D1FB00D9B00C9A7DC /* WBUser+CoreDataClass.m in Sources */,
+				F6AAD1891FB049E100DEDBDC /* WBFile+CoreDataProperties.m in Sources */,
 				1F4D75A01FAC4BB800E6516C /* SXLoadingView.m in Sources */,
+				F67933711FB0142900C9A7DC /* WBAsset.m in Sources */,
 				1F4D75A31FAC4BB800E6516C /* FMHandLoginVC.m in Sources */,
 				1F4D75BB1FAC5D2400E6516C /* ServerBrowser.m in Sources */,
+				F6AAD1881FB049E100DEDBDC /* WBFile+CoreDataClass.m in Sources */,
 				1F4D75A11FAC4BB800E6516C /* FMUserLoginViewController.m in Sources */,
+				F679336E1FB00D9B00C9A7DC /* WBUser+CoreDataProperties.m in Sources */,
 				1F4D759E1FAC4BB800E6516C /* UIColor+FM_UserHeadImage.m in Sources */,
 				F65035611FAC00A60007979D /* main.m in Sources */,
 				1F4D759D1FAC4BB800E6516C /* UIButton+Universal.m in Sources */,

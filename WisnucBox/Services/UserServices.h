@@ -17,13 +17,15 @@
 
 @property (nonatomic, copy) WBUser *  currentUser; // current login user
 
-@property (nonatomic, assign) BOOL isUserLogin; // if someone login , this property should be true, else false
+@property (nonatomic, assign, readonly) BOOL isUserLogin; // if someone login , this property should be true, else false
 
 @property (nonatomic, copy) NSString *  defaultToken; //  Token for login user
 
-- ( WBUser *)getUserWithUUID:(NSString * )uuid;
+- (WBUser *)getUserWithUUID:(NSString * )uuid;
 
 - (void)saveUser:(WBUser *)user;
+
+- (void)deleteUserWithUserId:(NSString  *)uuid;
 
 - (void)logoutUser;
 @end

@@ -20,13 +20,19 @@
  * save image to assetLibrary
  */
 + (void)saveImageToAlbum:(UIImage *)image completion:(void(^)(BOOL, PHAsset *))completion;
-
+// save video
++ (void)saveVideoToAblum:(NSURL *)url completion:(void (^)(BOOL, PHAsset *))completion;
 
 
 /*
  * get gif with data
  */
 + (UIImage *)animatedGIFWithData:(NSData *)data;
+
+/*
+ * get all asset and last fetchresult handle (use for library change)
+ */
++ (void)getAllAsset:(void(^)(PHFetchResult<PHAsset *> *result, NSArray<PHAsset *> *assets))block;
 
 /**
  * @brief 获取相机胶卷相册列表对象

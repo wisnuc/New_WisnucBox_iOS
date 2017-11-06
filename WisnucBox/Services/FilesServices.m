@@ -10,4 +10,8 @@
 
 @implementation FilesServices
 
+- (void)abort {
+    
+}
+
 @end
