@@ -1,5 +1,5 @@
 //
-//  WBUser+CoreDataClass.h
+//  WBFile+CoreDataClass.h
 //  WisnucBox
 //
 //  Created by JackYang on 2017/11/6.
@@ -11,10 +11,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface WBUser : NSManagedObject
+@interface WBFile : NSManagedObject
 
 @end
 
 NS_ASSUME_NONNULL_END
 
-#import "WBUser+CoreDataProperties.h"
+#import "WBFile+CoreDataProperties.h"

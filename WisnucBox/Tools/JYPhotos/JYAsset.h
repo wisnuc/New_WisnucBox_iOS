@@ -16,6 +16,7 @@ typedef NS_ENUM(NSUInteger, JYAssetType) {
     JYAssetTypeVideo,
     JYAssetTypeAudio,
     JYAssetTypeNetImage,
+    JYAssetTypeNetVideo,
     JYAssetTypeUnknown,
 };
 

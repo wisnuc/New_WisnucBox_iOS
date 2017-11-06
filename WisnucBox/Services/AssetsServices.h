@@ -7,7 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WBLocalAsset+CoreDataClass.h"
 
+@class JYAsset;
 @interface AssetsServices : NSObject <ServiceProtocol>
 
+@property (nonatomic, copy, readonly) NSArray<JYAsset *> * allAssets;
+
+- (void)saveAsset:(WBLocalAsset *)asset;
+
+- (WBLocalAsset *)getAssetWithLocalId:(NSString *)localId;
 @end
