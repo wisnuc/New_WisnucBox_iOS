@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSDate *timeDate;
 @property (nullable, nonatomic, copy) NSString *filePath;
 @property (nullable, nonatomic, copy) NSString *fileName;
+@property (nullable, nonatomic, copy) NSString *fileUUID;
 
 @end
 

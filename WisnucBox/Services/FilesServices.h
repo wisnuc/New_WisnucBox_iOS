@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class WBFile;
 @interface FilesServices : NSObject <ServiceProtocol>
 
 @end
