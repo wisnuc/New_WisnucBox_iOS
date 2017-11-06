@@ -436,6 +436,7 @@
 		1F4D756A1FAC4BB700E6516C /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				1FFEADA61FB06EC300CD3068 /* Files */,
 				1F7CE6601FB002F9004467C8 /* Download */,
 				F67D64281FAC7DFE00E23D16 /* Photos */,
 				1F4D756B1FAC4BB700E6516C /* Login */,
@@ -646,20 +647,27 @@
 		1F7CE6601FB002F9004467C8 /* Download */ = {
 			isa = PBXGroup;
 			children = (
-				1FFEADA51FB0663A00CD3068 /* manage */,
+				1FFEADA51FB0663A00CD3068 /* Manage */,
 				1F3F99821FB0348400D6CC64 /* View */,
 				1F3F997C1FB030CC00D6CC64 /* Controller */,
 			);
 			path = Download;
 			sourceTree = "<group>";
 		};
-		1FFEADA51FB0663A00CD3068 /* manage */ = {
+		1FFEADA51FB0663A00CD3068 /* Manage */ = {
 			isa = PBXGroup;
 			children = (
 				1F3F99791FB00EF500D6CC64 /* CSFileDownloadManager.h */,
 				1F3F997A1FB00EF500D6CC64 /* CSFileDownloadManager.m */,
 			);
-			path = manage;
+			path = Manage;
+			sourceTree = "<group>";
+		};
+		1FFEADA61FB06EC300CD3068 /* Files */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Files;
 			sourceTree = "<group>";
 		};
 		A425D85D003C084CDA92A5DA /* Frameworks */ = {

@@ -47,6 +47,7 @@
                 </subviews>
             </tableViewCellContentView>
             <connections>
+                <outlet property="downloadTimeLabel" destination="kEP-Wr-wo2" id="1EJ-4R-69i"/>
                 <outlet property="fileNameLabel" destination="0XN-iL-tK0" id="lda-2E-aUH"/>
             </connections>
             <point key="canvasLocation" x="26" y="61.5"/>

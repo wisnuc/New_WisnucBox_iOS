@@ -29,4 +29,10 @@
 /* AFURLSessionManager */
 @property (nonatomic, strong) AFURLSessionManager *manager;
 
+@property (nonatomic, assign) BOOL isSuspend;
+
+- (void)OfflinResumeDownload:(BOOL)sender;
+
+- (void)removeFiles;
+
 @end
