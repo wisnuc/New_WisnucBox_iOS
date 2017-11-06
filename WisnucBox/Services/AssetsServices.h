@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "WBLocalAsset+CoreDataClass.h"
 
+#define ASSETS_UPDATE_NOTIFY @"ASSETS_UPDATE_NOTIFY"
+
 @class JYAsset;
 @interface AssetsServices : NSObject <ServiceProtocol>
 

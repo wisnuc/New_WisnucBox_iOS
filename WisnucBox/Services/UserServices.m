@@ -71,7 +71,7 @@
     kUD_Synchronize;
 }
 
-- (void)saveUser:(WBUser *)user {
+- (WBUser *)saveUser:(WBUser *)user {
     WBUser * newUser = [self getUserWithUUID:user.uuid];
     if(!newUser)
         newUser = [WBUser MR_createEntityInContext:[NSManagedObjectContext MR_defaultContext]];
@@ -80,6 +80,9 @@
     newUser.localToken = user.localToken;
     newUser.cloudToken = user.cloudToken;
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+    if(newUser.uuid == self.currentUser.uuid)
+        self.currentUser = newUser;
+    return newUser;
 }
 
 - (void)deleteUserWithUserId:(NSString  *)uuid {

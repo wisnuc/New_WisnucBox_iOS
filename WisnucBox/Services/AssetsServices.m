@@ -14,7 +14,7 @@
 
 @interface AssetsServices ()<PHPhotoLibraryChangeObserver>
 
-@property (readwrite) NSMutableArray<JYAsset *> *allAssets;
+@property (readwrite) NSArray<JYAsset *> *allAssets;
 
 @end
 
@@ -25,6 +25,11 @@
 
 - (void)abort{
     
+}
+
+- (void)dealloc {
+    if(_userAuth)
+        [[PHPhotoLibrary sharedPhotoLibrary] unregisterChangeObserver:self];
 }
 
 - (instancetype)init {
@@ -84,43 +89,43 @@
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
-- (void)preparePhotos
-{
-    @autoreleasepool {
-        
-        [(NSMutableArray *)self.allAssets removeAllObjects];
-        
-       
-    }
-}
-
 #pragma mark - photolibrary change delegate
 
 - (void)photoLibraryDidChange:(PHChange *)changeInstance
 {
-    PHFetchResult* currentAssets = _lastResult;
-    NSMutableDictionary * tmpDic = [NSMutableDictionary dictionaryWithCapacity:0];
-    for (JYAsset * asset in _allAssets) {
-        [tmpDic setObject:asset forKey:asset.asset.localIdentifier];
-    }
-    
-    BOOL shouldBeReset = NO;
-    
-    if (_lastResult){
-        PHFetchResultChangeDetails* detail = [changeInstance changeDetailsForFetchResult:currentAssets];
-        if (detail && detail.removedIndexes){
-            for (NSUInteger index = detail.removedIndexes.firstIndex;
-                 index != NSNotFound;
-                 index = [detail.removedIndexes indexGreaterThanIndex:index]){
-            }
+    @autoreleasepool {
+        PHFetchResult* currentAssets = _lastResult;
+        NSMutableDictionary * tmpDic = [NSMutableDictionary dictionaryWithCapacity:0];
+        for (JYAsset * asset in _allAssets) {
+            [tmpDic setObject:asset forKey:asset.asset.localIdentifier];
         }
-        if (detail && detail.insertedIndexes && !shouldBeReset){
-            for (NSUInteger index = detail.insertedIndexes.firstIndex;
-                 index != NSNotFound;
-                 index = [detail.insertedIndexes indexGreaterThanIndex:index]){
-                
+        
+        NSMutableDictionary * changeDic = [NSMutableDictionary dictionaryWithCapacity:0];
+        
+        if (_lastResult){
+            PHFetchResultChangeDetails* detail = [changeInstance changeDetailsForFetchResult:currentAssets];
+            if (detail && detail.removedObjects){
+                [changeDic setObject:detail.removedObjects forKey:@"removeObjects"];
+                [detail.removedObjects enumerateObjectsUsingBlock:^(PHAsset *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if([tmpDic.allKeys containsObject:obj.localIdentifier])
+                        [tmpDic removeObjectForKey:obj.localIdentifier];
+                }];
             }
+            if (detail && detail.insertedObjects){
+                [changeDic setObject:detail.insertedObjects forKey:@"insertedObjects"];
+                [detail.insertedObjects enumerateObjectsUsingBlock:^(PHAsset *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    JYAssetType type = [obj getJYAssetType];
+                    NSString *duration = [obj getDurationString];
+                    [tmpDic setObject:[JYAsset modelWithAsset:obj type:type duration:duration] forKey:obj.localIdentifier];
+                }];
+            }
+            
+            _lastResult = [detail fetchResultAfterChanges]; // record new fetchResult
         }
+        
+        self.allAssets = [tmpDic allValues];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:ASSETS_UPDATE_NOTIFY object:changeDic];
     }
 }
 @end

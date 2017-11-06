@@ -10,4 +10,8 @@
 
 @implementation NetServices
 
+- (void)abort {
+    
+}
+
 @end
