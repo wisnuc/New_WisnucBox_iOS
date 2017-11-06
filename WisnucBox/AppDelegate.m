@@ -10,7 +10,7 @@
 #import "FMLoginViewController.h"
 #import "WBUser+CoreDataClass.h"
 #import "AppServices.h"
-
+#import "LocalDownloadViewController.h"
 
 @interface AppDelegate () <WXApiDelegate>
 
@@ -23,8 +23,9 @@
     // Override point for customization after application launch.
     [MagicalRecord setupCoreDataStack];
     [self configWeChat];
-    FMLoginViewController *loginController = [[FMLoginViewController alloc]init];
-    UINavigationController *rootNaviController = [[UINavigationController alloc]initWithRootViewController:loginController];
+//    FMLoginViewController *loginController = [[FMLoginViewController alloc]init];
+    LocalDownloadViewController *localDownloadViewController = [[LocalDownloadViewController alloc]init];
+    UINavigationController *rootNaviController = [[UINavigationController alloc]initWithRootViewController:localDownloadViewController];
     self.window.rootViewController = rootNaviController;
     [self.window makeKeyAndVisible];
     return YES;
