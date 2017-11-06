@@ -23,7 +23,7 @@
 
 - (WBUser *)getUserWithUUID:(NSString * )uuid;
 
-- (void)saveUser:(WBUser *)user;
+- (WBUser *)saveUser:(WBUser *)user;
 
 - (void)deleteUserWithUserId:(NSString  *)uuid;
 
