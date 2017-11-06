@@ -37,11 +37,11 @@
     }else{
         self.currentUser = nil;
         self.isUserLogin = false;
-        self.defaultToken = false;
+        self.defaultToken = nil;
     }
 }
 
-- (nullable WBUser *)getUserWithUUID:(NSString *)uuid {
+- (WBUser *)getUserWithUUID:(NSString *)uuid {
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"uuid = %@", uuid];
     WBUser * user = [WBUser MR_findFirstWithPredicate:predicate];
     return user;
@@ -59,10 +59,21 @@
     if(!currentUser)
        return [self logoutUser];
     self.defaultToken = currentUser.localToken;
-    self.isUserLogin = false;
+    self.isUserLogin = true;
     _currentUser = currentUser;
     [kUserDefaults setObject:currentUser.uuid forKey:WBCURRENTUSER_UUID];
     kUD_Synchronize;
+}
+
+- (void)saveUser:(WBUser *)user {
+    WBUser * newUser = [self getUserWithUUID:user.uuid];
+    if(!newUser)
+        newUser = [WBUser MR_createEntityInContext:[NSManagedObjectContext MR_defaultContext]];
+    newUser.uuid = user.uuid;
+    newUser.userName = user.userName;
+    newUser.localToken = user.localToken;
+    newUser.cloudToken = user.cloudToken;
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
 @end

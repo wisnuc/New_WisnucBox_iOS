@@ -17,5 +17,6 @@
 @dynamic userName;
 @dynamic uuid;
 @dynamic localToken;
+@dynamic cloudToken;
 
 @end

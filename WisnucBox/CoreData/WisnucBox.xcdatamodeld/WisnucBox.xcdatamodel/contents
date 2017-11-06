@@ -5,12 +5,15 @@
         <attribute name="localId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="WBUser" representedClassName="WBUser" syncable="YES">
+        <attribute name="cloudToken" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isAdmin" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isFirstUser" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="localToken" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uuid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
         <element name="WBLocalAsset" positionX="-63" positionY="-18" width="128" height="75"/>
-        <element name="WBUser" positionX="-54" positionY="9" width="128" height="90"/>
+        <element name="WBUser" positionX="-54" positionY="9" width="128" height="135"/>
     </elements>
 </model>
