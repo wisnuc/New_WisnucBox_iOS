@@ -10,6 +10,8 @@
 		1F3F997B1FB00EF500D6CC64 /* CSFileDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F997A1FB00EF500D6CC64 /* CSFileDownloadManager.m */; };
 		1F3F99801FB0312300D6CC64 /* LocalDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F997E1FB0312300D6CC64 /* LocalDownloadViewController.m */; };
 		1F3F99811FB0312300D6CC64 /* LocalDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3F997F1FB0312300D6CC64 /* LocalDownloadViewController.xib */; };
+		1F3F99891FB0353F00D6CC64 /* LocalDownloadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F99871FB0353F00D6CC64 /* LocalDownloadTableViewCell.m */; };
+		1F3F998A1FB0353F00D6CC64 /* LocalDownloadTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3F99881FB0353F00D6CC64 /* LocalDownloadTableViewCell.xib */; };
 		1F4D759B1FAC4BB800E6516C /* UIImage+GKContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D755B1FAC4BB700E6516C /* UIImage+GKContact.m */; };
 		1F4D759C1FAC4BB800E6516C /* UIButton+EnlargeEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75601FAC4BB700E6516C /* UIButton+EnlargeEdge.m */; };
 		1F4D759D1FAC4BB800E6516C /* UIButton+Universal.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75611FAC4BB700E6516C /* UIButton+Universal.m */; };
@@ -137,6 +139,9 @@
 		1F3F997D1FB0312300D6CC64 /* LocalDownloadViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalDownloadViewController.h; sourceTree = "<group>"; };
 		1F3F997E1FB0312300D6CC64 /* LocalDownloadViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalDownloadViewController.m; sourceTree = "<group>"; };
 		1F3F997F1FB0312300D6CC64 /* LocalDownloadViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocalDownloadViewController.xib; sourceTree = "<group>"; };
+		1F3F99861FB0353F00D6CC64 /* LocalDownloadTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalDownloadTableViewCell.h; sourceTree = "<group>"; };
+		1F3F99871FB0353F00D6CC64 /* LocalDownloadTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalDownloadTableViewCell.m; sourceTree = "<group>"; };
+		1F3F99881FB0353F00D6CC64 /* LocalDownloadTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocalDownloadTableViewCell.xib; sourceTree = "<group>"; };
 		1F4D75561FAC4B8800E6516C /* Define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Define.h; sourceTree = "<group>"; };
 		1F4D75571FAC4B8800E6516C /* default.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = default.pch; sourceTree = "<group>"; };
 		1F4D755B1FAC4BB700E6516C /* UIImage+GKContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GKContact.m"; sourceTree = "<group>"; };
@@ -341,6 +346,16 @@
 				1F3F997F1FB0312300D6CC64 /* LocalDownloadViewController.xib */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		1F3F99821FB0348400D6CC64 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1F3F99861FB0353F00D6CC64 /* LocalDownloadTableViewCell.h */,
+				1F3F99871FB0353F00D6CC64 /* LocalDownloadTableViewCell.m */,
+				1F3F99881FB0353F00D6CC64 /* LocalDownloadTableViewCell.xib */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		1F4D75551FAC4B8800E6516C /* Common */ = {
@@ -631,6 +646,7 @@
 		1F7CE6601FB002F9004467C8 /* Download */ = {
 			isa = PBXGroup;
 			children = (
+				1F3F99821FB0348400D6CC64 /* View */,
 				1F3F997C1FB030CC00D6CC64 /* Controller */,
 				1F3F99791FB00EF500D6CC64 /* CSFileDownloadManager.h */,
 				1F3F997A1FB00EF500D6CC64 /* CSFileDownloadManager.m */,
@@ -986,6 +1002,7 @@
 				1F7CE63E1FAC87F4004467C8 /* stationLogo@3x.png in Resources */,
 				1F7CE6361FAC826A004467C8 /* logo@3x.png in Resources */,
 				1F4D75CC1FAC5FF900E6516C /* FMCloudUserTableViewCell.xib in Resources */,
+				1F3F998A1FB0353F00D6CC64 /* LocalDownloadTableViewCell.xib in Resources */,
 				1F7CE6521FB00239004467C8 /* eye.png in Resources */,
 				1F7CE6441FB00221004467C8 /* key.png in Resources */,
 			);
@@ -1168,6 +1185,7 @@
 				1F4D759D1FAC4BB800E6516C /* UIButton+Universal.m in Sources */,
 				F67D643E1FAC7E5600E23D16 /* JYCollectionViewCell.m in Sources */,
 				1F4D75B21FAC4BB800E6516C /* DBServices.m in Sources */,
+				1F3F99891FB0353F00D6CC64 /* LocalDownloadTableViewCell.m in Sources */,
 				F67D64121FAC7D7F00E23D16 /* CocoaSecurity.m in Sources */,
 				1F3F997B1FB00EF500D6CC64 /* CSFileDownloadManager.m in Sources */,
 			);
@@ -1327,7 +1345,7 @@
 				INFOPLIST_FILE = WisnucBox/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.wisnuc.fruit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wisnuc.wisnucBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1343,7 +1361,7 @@
 				INFOPLIST_FILE = WisnucBox/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.wisnuc.fruit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wisnuc.wisnucBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
