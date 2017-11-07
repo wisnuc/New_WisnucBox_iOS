@@ -39,6 +39,8 @@ typedef NS_ENUM(NSUInteger, JYAssetType) {
 
 @property (nonatomic, copy) NSString * digest;
 
+@property (nonatomic, strong) NSIndexPath *indexPath;
+
 /**初始化model对象*/
 + (instancetype)modelWithAsset:(PHAsset *)asset type:(JYAssetType)type duration:(NSString *)duration;
 

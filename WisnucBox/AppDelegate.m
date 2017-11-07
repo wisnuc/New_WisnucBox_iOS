@@ -12,6 +12,7 @@
 #import "AppServices.h"
 #import "LocalDownloadViewController.h"
 #import "AppServices.h"
+#import "JYThumbVC.h"
 
 @interface AppDelegate () <WXApiDelegate>
 
@@ -25,10 +26,19 @@
     [MagicalRecord setupCoreDataStack];
     [self configWeChat];
 //    FMLoginViewController *loginController = [[FMLoginViewController alloc]init];
-    LocalDownloadViewController *localDownloadViewController = [[LocalDownloadViewController alloc]init];
+//    LocalDownloadViewController *localDownloadViewController = [[LocalDownloadViewController alloc]init];
+//    UINavigationController *rootNaviController = [[UINavigationController alloc]initWithRootViewController:localDownloadViewController];
+//    self.window.rootViewController = rootNaviController;
+//
+     [AppServices sharedService];
+    JYThumbVC *localDownloadViewController = [[JYThumbVC alloc]initWithDataSource:[AppServices sharedService].assetServices.allAssets];
     UINavigationController *rootNaviController = [[UINavigationController alloc]initWithRootViewController:localDownloadViewController];
     self.window.rootViewController = rootNaviController;
-//    [AppServices sharedService];
+    
+   
+    
+    
+    
     [self.window makeKeyAndVisible];
     return YES;
 }

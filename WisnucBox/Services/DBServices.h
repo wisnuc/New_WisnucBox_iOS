@@ -10,4 +10,6 @@
 
 @interface DBServices : NSObject<ServiceProtocol>
 
+@property (nonatomic) dispatch_queue_t saveQueue;
+
 @end

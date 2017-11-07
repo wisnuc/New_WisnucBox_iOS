@@ -148,7 +148,7 @@
     if(self = [super init]) {
         _isdestroing = NO;
         _shouldUpload = NO;
-        _hashLimitCount = 2;
+        _hashLimitCount = 4;
         _uploadLimitCount = 1;
     }
     return self;
@@ -297,7 +297,7 @@
         [asset.asset getSha256:^(NSError *error, NSString *sha256) {
             if(error) return callback(error, NULL);
             //save sha256
-            WBLocalAsset * ass = [WBLocalAsset MR_createEntityInContext:[NSManagedObjectContext MR_defaultContext]];
+            WBLocalAsset * ass = [WBLocalAsset MR_createEntity];
             ass.localId = asset.asset.localIdentifier;
             ass.digest = sha256;
             [[AppServices sharedService].assetServices saveAsset:ass];
@@ -316,15 +316,16 @@
         __weak typeof(self) weakSelf = self;
         dispatch_async([[self class] workingQueue], ^{
             [self asset:asset getSha256:^(NSError *error, NSString *sha256) {
-                NSLog(@"...Success");
-                if (error) {
-                    [weakSelf.hashFailQueue addObject:asset];
-                }else {
-                    asset.digest = sha256;
-                    [weakSelf.uploadPaddingQueue addObject:asset];
-                }
-                [weakSelf.hashWorkingQueue removeObject:asset];
+                NSLog(@"%ld, %ld", self.hashwaitingQueue.count, self.hashWorkingQueue.count);
                 dispatch_async(self.managerQueue, ^{
+                    NSLog(@"...Success");
+                    if (error) {
+                        [weakSelf.hashFailQueue addObject:asset];
+                    }else {
+                        asset.digest = sha256;
+                        [weakSelf.uploadPaddingQueue addObject:asset];
+                    }
+                    [weakSelf.hashWorkingQueue removeObject:asset];
                     [weakSelf schedule];
                 });
             }];

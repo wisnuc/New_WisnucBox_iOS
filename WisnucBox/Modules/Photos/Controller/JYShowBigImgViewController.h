@@ -10,6 +10,15 @@
 #import <Photos/Photos.h>
 
 @class JYAsset;
+@class JYShowBigImgViewController;
+@protocol JYShowBigImgViewControllerDelegate <NSObject>
+
+- (void)photoBrowser:(JYShowBigImgViewController *)browser scrollToIndexPath:(NSIndexPath *)indexPath;
+
+- (UIView *)photoBrowser:(JYShowBigImgViewController *)browser willDismissAtIndexPath:(NSIndexPath *)indexPath;
+
+@end
+
 @interface JYShowBigImgViewController : UIViewController
 
 @property (nonatomic, strong) NSArray<JYAsset *> *models;
@@ -32,4 +41,8 @@
 
 @property (nonatomic) UIView *senderViewForAnimation;
 
+@property (nonatomic, weak) id<JYShowBigImgViewControllerDelegate> delegate;
+
 @end
+
+
