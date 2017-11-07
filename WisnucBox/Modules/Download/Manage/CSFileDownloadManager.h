@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "CSDownloadModel.h"
+
 @interface CSFileDownloadManager : NSObject
 
 +(__kindof CSFileDownloadManager *)shareManager;
@@ -31,6 +33,7 @@
 
 @property (nonatomic, assign) BOOL isSuspend;
 
+- (void)downloadWithDownloadURLString:(NSString *)downloadURLString progress:(DownloadProgressBlock)progress state:(DownloadStateBlock)state;
 - (void)OfflinResumeDownload:(BOOL)sender;
 
 - (void)removeFiles;

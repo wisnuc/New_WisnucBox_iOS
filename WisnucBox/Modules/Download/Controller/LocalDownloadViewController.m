@@ -49,14 +49,6 @@ UITableViewDataSource
 //    NSNumber* number = self.array[indexPath.row];
     if (indexPath.section == 0) {
       cell.downloadTimeLabel.text = [NSString stringWithFormat:@"当前下载进度:%.2f%%",100.0 * _downloadManager.currentLength / _downloadManager.fileLength];
-//        RAC(cell.downloadTimeLabel, text) = self.textField.rac_textSignal;
-//        [RACObserve(cell.downloadTimeLabel, text) subscribeNext:^(id x) {
-//            if (![x isEqualToString:@"当前下载进度:nan%"]) {
-//             [self.tableView reloadData];
-//            }
-//
-//            NSLog(@"====label的文字变了");
-//        }];
     }
     cell.fileNameLabel.text = @"文件名";
     return cell;
@@ -99,7 +91,14 @@ UITableViewDataSource
     if (indexPath.section == 0) {
         [_downloadManager removeFiles];
         [[CSFileDownloadManager shareManager]OfflinResumeDownload:NO];
-           [self.tableView reloadData];
+         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+         LocalDownloadTableViewCell *cell = (LocalDownloadTableViewCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
+        [RACObserve(cell.downloadTimeLabel, text) subscribeNext:^(id x) {
+//            if (![x isEqualToString:@"当前下载进度:nan%"]) {
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//            }
+            NSLog(@"====label的文字变了");
+        }];
     }
 }
 
