@@ -11,6 +11,7 @@
 #import "WBUser+CoreDataClass.h"
 #import "AppServices.h"
 #import "LocalDownloadViewController.h"
+#import "AppServices.h"
 
 @interface AppDelegate () <WXApiDelegate>
 
@@ -27,6 +28,7 @@
     LocalDownloadViewController *localDownloadViewController = [[LocalDownloadViewController alloc]init];
     UINavigationController *rootNaviController = [[UINavigationController alloc]initWithRootViewController:localDownloadViewController];
     self.window.rootViewController = rootNaviController;
+//    [AppServices sharedService];
     [self.window makeKeyAndVisible];
     return YES;
 }

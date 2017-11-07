@@ -104,189 +104,36 @@
         
         if (_lastResult){
             PHFetchResultChangeDetails* detail = [changeInstance changeDetailsForFetchResult:currentAssets];
+            NSMutableArray * removes = [NSMutableArray arrayWithCapacity:0];
+            NSMutableArray * inserts = [NSMutableArray arrayWithCapacity:0];
             if (detail && detail.removedObjects){
-                [changeDic setObject:detail.removedObjects forKey:@"removeObjects"];
                 [detail.removedObjects enumerateObjectsUsingBlock:^(PHAsset *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    if([tmpDic.allKeys containsObject:obj.localIdentifier])
+                    if([tmpDic.allKeys containsObject:obj.localIdentifier]){
+                        [removes addObject:tmpDic[obj.localIdentifier]];
                         [tmpDic removeObjectForKey:obj.localIdentifier];
+                    }
                 }];
             }
+            [changeDic setObject:removes forKey:@"removeObjects"];
             if (detail && detail.insertedObjects){
-                [changeDic setObject:detail.insertedObjects forKey:@"insertedObjects"];
                 [detail.insertedObjects enumerateObjectsUsingBlock:^(PHAsset *obj, NSUInteger idx, BOOL * _Nonnull stop) {
                     JYAssetType type = [obj getJYAssetType];
                     NSString *duration = [obj getDurationString];
-                    [tmpDic setObject:[JYAsset modelWithAsset:obj type:type duration:duration] forKey:obj.localIdentifier];
+                    JYAsset * asset = [JYAsset modelWithAsset:obj type:type duration:duration];
+                    [tmpDic setObject:asset forKey:obj.localIdentifier];
+                    [inserts addObject:asset];
                 }];
             }
-            
+            [changeDic setObject:inserts forKey:@"insertedObjects"];
             _lastResult = [detail fetchResultAfterChanges]; // record new fetchResult
         }
         
         self.allAssets = [tmpDic allValues];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:ASSETS_UPDATE_NOTIFY object:changeDic];
+        [[NSNotificationCenter defaultCenter] postNotificationName:ASSETS_UPDATE_NOTIFY object:0];
+        if(_AssetChangeBlock)
+            _AssetChangeBlock(changeDic[@"removeObjects"], changeDic[@"insertedObjects"]);
     }
 }
-@end
-
-@interface WBUploadManager ()
-{
-    BOOL _isdestroing;
-}
-
-@property (nonatomic, readwrite) NSMutableArray<JYAsset *> *hashwaitingQueue;
-
-@property (nonatomic, readwrite) NSMutableArray<JYAsset *> *hashWorkingQueue;
-
-@property (nonatomic, readwrite) NSMutableArray<JYAsset *> *hashFailQueue;
-
-@property (nonatomic, readwrite) NSMutableArray<JYAsset *> *uploadPaddingQueue;
-
-@property (nonatomic, readwrite) NSMutableArray<WBUploadModel *> *uploadingQueue;
-
-@property (nonatomic, readwrite) NSMutableArray<WBUploadModel *> *uploadedQueue;
-
-@property (nonatomic, readwrite) NSMutableArray<WBUploadModel *> *uploadErrorQueue;
-
-@property (nonatomic, strong) NSMutableArray<JYAsset *> *hashwaitingNetQueue;
-
-@property (nonatomic, readwrite) BOOL isStoped;
-
-@property (nonatomic, readwrite) BOOL isReady;
-
-@end
-
-@implementation WBUploadManager
-
-- (void)dealloc{
-    
-}
-
-- (instancetype)init {
-    if(self = [super init]) {
-        _isdestroing = NO;
-        _shouldUpload = NO;
-        _hashLimitCount = 2;
-        _uploadLimitCount = 1;
-    }
-    return self;
-}
-
--(NSMutableArray<JYAsset *> *)hashwaitingQueue{
-    if (!_hashwaitingQueue) {
-        _hashwaitingQueue= [NSMutableArray arrayWithCapacity:0];
-    }
-    return _hashwaitingQueue;
-}
-
-- (NSMutableArray<JYAsset *> *)hashWorkingQueue{
-    if (!_hashWorkingQueue) {
-        _hashWorkingQueue= [NSMutableArray<JYAsset *> arrayWithCapacity:0];
-    }
-    return _hashWorkingQueue;
-}
-
-- (NSMutableArray *)hashwaitingNetQueue{
-    if (!_hashwaitingNetQueue) {
-        _hashwaitingNetQueue= [NSMutableArray arrayWithCapacity:0];
-    }
-    return _hashwaitingNetQueue;
-}
-
-- (NSMutableArray<WBUploadModel *> *)uploadingQueue{
-    if (!_uploadingQueue) {
-        _uploadingQueue= [NSMutableArray<WBUploadModel *> arrayWithCapacity:0];
-    }
-    return _uploadingQueue;
-}
-
-- (NSMutableArray<JYAsset *> *)uploadPaddingQueue{
-    if (!_uploadPaddingQueue) {
-        _uploadPaddingQueue= [NSMutableArray<JYAsset *> arrayWithCapacity:0];
-    }
-    return _uploadPaddingQueue;
-}
-
-
-
-- (NSMutableArray<WBUploadModel *> *)uploadedQueue{
-    if (!_uploadedQueue) {
-        _uploadedQueue= [NSMutableArray<WBUploadModel *> arrayWithCapacity:0];
-    }
-    return _uploadedQueue;
-}
-- (NSMutableArray<WBUploadModel *> *)uploadErrorQueue{
-    if (!_uploadErrorQueue) {
-        _uploadErrorQueue= [NSMutableArray<WBUploadModel *> arrayWithCapacity:0];
-    }
-    return _uploadErrorQueue;
-}
-
-- (void)startWithLocalAssets:(NSArray<JYAsset *> *)localAssets andNetAssets:(NSArray<JYAsset *> *)netAssets {
-    [self.hashwaitingQueue addObjectsFromArray:localAssets];
-    [self.hashwaitingNetQueue addObjectsFromArray:netAssets];
-    
-}
-
-- (void)schedule {
-    if(_isdestroing) return;
-    while(self.hashWorkingQueue.count < self.hashLimitCount && self.hashwaitingQueue.count > 0) {
-        JYAsset * asset = [self.hashwaitingQueue lastObject];
-        [self.hashwaitingQueue removeLastObject];
-        [self.hashWorkingQueue addObject:asset];
-        [asset.asset getSha256:^(NSError *error, NSString *sha256) {
-            if (error) {
-                [self.hashFailQueue addObject:asset];
-                [self.hashWorkingQueue removeObject:asset];
-            }else {
-                asset.digest = sha256;
-                [self.uploadPaddingQueue addObject:asset];
-            }
-            [self schedule];
-        }];
-    }
-    
-    if(!_shouldUpload) return;
-    
-    while(self.uploadPaddingQueue.count > 0 && self.uploadingQueue.count < self.uploadLimitCount) {
-        JYAsset * asset = [self.uploadPaddingQueue lastObject];
-        [self.uploadPaddingQueue removeLastObject];
-        WBUploadModel * model = [WBUploadModel initWithAsset:asset];
-        [self.uploadingQueue addObject:model];
-        [model startWithCompleteBlock:^(NSError *error, id response) {
-            if (error) {
-                [self.uploadErrorQueue addObject:model];
-                [self.uploadingQueue removeObject:model];
-            }else {
-                [self.uploadedQueue addObject:model];
-            }
-            [self schedule];
-        }];
-    }
-}
-
-- (void)stop {
-    
-}
-
-- (void)destroy {
-    
-}
-
-@end
-
-@implementation WBUploadModel
-
-+ (instancetype)initWithAsset:(JYAsset *)asset {
-    WBUploadModel * model = [WBUploadModel new];
-    model.asset = asset;
-    return model;
-}
-
-- (void)startWithCompleteBlock:(void(^)(NSError * , id))callback {
-    self.callback = callback;
-}
-
 @end
 

@@ -14,4 +14,16 @@
     
 }
 
+- (instancetype)initWithLocalURL:(NSString *)localUrl andCloudURL:(NSString *)cloudUrl andToken:(NSString *)token {
+    if(self = [super init]){
+        self.localUrl = localUrl;
+        self.cloudUrl = cloudUrl;
+        self.token = token;
+        self.isCloud = NO;
+    }
+    return self;
+}
+
+
+
 @end

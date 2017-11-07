@@ -54,9 +54,9 @@
 }
 
 - (void)logoutUser {
-    self.defaultToken = nil;
-    self.isUserLogin = false;
-    self.currentUser = nil;
+    _defaultToken = nil;
+    _isUserLogin = false;
+    _currentUser = nil;
     [kUserDefaults removeObjectForKey:WBCURRENTUSER_UUID];
     kUD_Synchronize;
 }
