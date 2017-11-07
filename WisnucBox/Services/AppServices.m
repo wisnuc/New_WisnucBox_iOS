@@ -8,6 +8,7 @@
 
 #import "AppServices.h"
 #import "PHAsset+JYEXT.h"
+#import <YYDispatchQueuePool/YYDispatchQueuePool.h>
 
 @implementation AppServices
 
@@ -22,14 +23,14 @@
 }
 
 - (void)bootStrap {
-    NSArray * allLocalAsset = [self.assetServices allAssets];
-    if(self.userServices.isUserLogin) {
-//        NSString * userToken = self.userServices.defaultToken;
-//        self.photoUploadManager setNetAssets:
-//        self.photoUploadManager startUploadWithUrl:<#(NSURL *)#> AndToken:<#(NSString *)#>
-    }
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSArray * allLocalAsset = [self.assetServices allAssets];
         [self.photoUploadManager startWithLocalAssets:allLocalAsset andNetAssets:@[]];
+        if(self.userServices.isUserLogin) {
+            //        NSString * userToken = self.userServices.defaultToken;
+            //        self.photoUploadManager setNetAssets:
+            //        self.photoUploadManager startUploadWithUrl:<#(NSURL *)#> AndToken:<#(NSString *)#>
+        }
     });
 }
 
@@ -133,7 +134,7 @@
 
 @property (nonatomic, strong) NSMutableArray<JYAsset *> * uploadedNetQueue;
 
-
+@property (nonatomic) dispatch_queue_t managerQueue;
 
 @end
 
@@ -152,6 +153,26 @@
     }
     return self;
 }
+
+//low等级线程
++ (dispatch_queue_t)workingQueue {
+    static YYDispatchQueuePool * pool;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        pool = [[YYDispatchQueuePool alloc]initWithName:@"com.winsun.fruitmix.backgroundUpload" queueCount:3 qos:NSQualityOfServiceUtility];
+    });
+    return [pool queue];
+}
+
+- (dispatch_queue_t)managerQueue{
+    if(!_managerQueue){
+        _managerQueue = dispatch_queue_create("com.winsun.fruitmix.hot", DISPATCH_QUEUE_SERIAL);
+        dispatch_set_target_queue(_managerQueue, dispatch_get_global_queue(1, 0));
+    }
+    return _managerQueue;
+}
+
+
 
 -(NSMutableArray<JYAsset *> *)hashwaitingQueue{
     if (!_hashwaitingQueue) {
@@ -293,17 +314,21 @@
         [self.hashwaitingQueue removeLastObject];
         [self.hashWorkingQueue addObject:asset];
         __weak typeof(self) weakSelf = self;
-        [self asset:asset getSha256:^(NSError *error, NSString *sha256) {
-            NSLog(@"...Success");
-            if (error) {
-                [weakSelf.hashFailQueue addObject:asset];
-            }else {
-                asset.digest = sha256;
-                [weakSelf.uploadPaddingQueue addObject:asset];
-            }
-            [weakSelf.hashWorkingQueue removeObject:asset];
-            [weakSelf schedule];
-        }];
+        dispatch_async([[self class] workingQueue], ^{
+            [self asset:asset getSha256:^(NSError *error, NSString *sha256) {
+                NSLog(@"...Success");
+                if (error) {
+                    [weakSelf.hashFailQueue addObject:asset];
+                }else {
+                    asset.digest = sha256;
+                    [weakSelf.uploadPaddingQueue addObject:asset];
+                }
+                [weakSelf.hashWorkingQueue removeObject:asset];
+                dispatch_async(self.managerQueue, ^{
+                    [weakSelf schedule];
+                });
+            }];
+        });
     }
     
     if(!_shouldUpload) return;
@@ -321,7 +346,9 @@
             }else {
                 [weakSelf.uploadedQueue addObject:model];
             }
-            [weakSelf schedule];
+            dispatch_async(self.managerQueue, ^{
+                [weakSelf schedule];
+            });
         }];
     }
 }

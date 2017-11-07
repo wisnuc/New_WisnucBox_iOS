@@ -10,4 +10,8 @@
 
 @implementation DBServices
 
+- (void)abort {
+    
+}
+
 @end
