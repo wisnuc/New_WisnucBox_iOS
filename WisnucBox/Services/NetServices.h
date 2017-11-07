@@ -10,4 +10,14 @@
 
 @interface NetServices : NSObject <ServiceProtocol>
 
+@property (nonatomic, assign) BOOL isCloud;
+
+@property (nonatomic, copy) NSString *localUrl;
+
+@property (nonatomic, copy) NSString *cloudUrl;
+
+@property (nonatomic, copy) NSString *token;
+
+- (instancetype)initWithLocalURL:(NSString *)localUrl andCloudURL:(NSString *)cloudUrl andToken:(NSString *)token;
+
 @end

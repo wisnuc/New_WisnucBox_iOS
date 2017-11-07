@@ -20,5 +20,7 @@
 @dynamic cloudToken;
 @dynamic isFirstUser;
 @dynamic isAdmin;
+@dynamic stationId;
+@dynamic localAddr;
 
 @end
