@@ -7,6 +7,10 @@
 //
 
 #import "CSFileDownloadManager.h"
+@interface CSFileDownloadManager()
+
+
+@end
 
 @implementation CSFileDownloadManager
 
@@ -39,6 +43,11 @@
     return _manager;
 }
 
+- (void)downloadWithDownloadURLString:(NSString *)downloadURLString progress:(DownloadProgressBlock)progress state:(DownloadStateBlock)state{
+   
+}
+
+
 /**
  * downloadTask的懒加载
  */
@@ -56,7 +65,7 @@
         
         __weak typeof(self) weakSelf = self;
         _downloadTask = [self.manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
-            NSLog(@"dataTaskWithRequest");
+            NSLog(@"%@",responseObject);
             
             // 清空长度
             weakSelf.currentLength = 0;
