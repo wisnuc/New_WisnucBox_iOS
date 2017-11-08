@@ -27,6 +27,8 @@
 #import <RTRootNavigationController/RTRootNavigationController.h>
 
 //Base
+#import "RDVTabBarController.h"
+#import "RDVTabBarItem.h"
 #import "FABaseVC.h"
 
 //Tools

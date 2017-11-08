@@ -112,6 +112,9 @@
 		F67D644A1FAC7E6B00E23D16 /* JYThumbVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D64461FAC7E6B00E23D16 /* JYThumbVC.m */; };
 		F67D644B1FAC7E6B00E23D16 /* JYThumbVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F67D64471FAC7E6B00E23D16 /* JYThumbVC.xib */; };
 		F67D644E1FAC84E800E23D16 /* NavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D644D1FAC84E800E23D16 /* NavViewController.m */; };
+		F6830EB31FB2FAE0005AC578 /* RDVTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = F6830EAE1FB2FAE0005AC578 /* RDVTabBar.m */; };
+		F6830EB41FB2FAE0005AC578 /* RDVTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6830EB01FB2FAE0005AC578 /* RDVTabBarController.m */; };
+		F6830EB51FB2FAE0005AC578 /* RDVTabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F6830EB21FB2FAE0005AC578 /* RDVTabBarItem.m */; };
 		F6AAD1881FB049E100DEDBDC /* WBFile+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = F6AAD1851FB049E100DEDBDC /* WBFile+CoreDataClass.m */; };
 		F6AAD1891FB049E100DEDBDC /* WBFile+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F6AAD1871FB049E100DEDBDC /* WBFile+CoreDataProperties.m */; };
 /* End PBXBuildFile section */
@@ -309,6 +312,12 @@
 		F67D64471FAC7E6B00E23D16 /* JYThumbVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JYThumbVC.xib; sourceTree = "<group>"; };
 		F67D644C1FAC84E800E23D16 /* NavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavViewController.h; sourceTree = "<group>"; };
 		F67D644D1FAC84E800E23D16 /* NavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavViewController.m; sourceTree = "<group>"; };
+		F6830EAD1FB2FAE0005AC578 /* RDVTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDVTabBar.h; sourceTree = "<group>"; };
+		F6830EAE1FB2FAE0005AC578 /* RDVTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDVTabBar.m; sourceTree = "<group>"; };
+		F6830EAF1FB2FAE0005AC578 /* RDVTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDVTabBarController.h; sourceTree = "<group>"; };
+		F6830EB01FB2FAE0005AC578 /* RDVTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDVTabBarController.m; sourceTree = "<group>"; };
+		F6830EB11FB2FAE0005AC578 /* RDVTabBarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDVTabBarItem.h; sourceTree = "<group>"; };
+		F6830EB21FB2FAE0005AC578 /* RDVTabBarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDVTabBarItem.m; sourceTree = "<group>"; };
 		F6AAD1841FB049E100DEDBDC /* WBFile+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBFile+CoreDataClass.h"; sourceTree = "<group>"; };
 		F6AAD1851FB049E100DEDBDC /* WBFile+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WBFile+CoreDataClass.m"; sourceTree = "<group>"; };
 		F6AAD1861FB049E100DEDBDC /* WBFile+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBFile+CoreDataProperties.h"; sourceTree = "<group>"; };
@@ -375,6 +384,7 @@
 		1F4D75581FAC4BB700E6516C /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				F6830EAC1FB2FAE0005AC578 /* RDV */,
 				F67D64141FAC7D9A00E23D16 /* IndicatorExt */,
 				F67D640A1FAC7D7F00E23D16 /* crypto */,
 				F67D63FD1FAC7D3600E23D16 /* JYPhotos */,
@@ -442,6 +452,7 @@
 				1FFEADA61FB06EC300CD3068 /* Files */,
 				1F7CE6601FB002F9004467C8 /* Download */,
 				F67D64281FAC7DFE00E23D16 /* Photos */,
+				F6830EB61FB2FC40005AC578 /* LeftMenu */,
 				1F4D756B1FAC4BB700E6516C /* Login */,
 				1F4D757E1FAC4BB800E6516C /* Based */,
 			);
@@ -878,6 +889,50 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		F6830EAC1FB2FAE0005AC578 /* RDV */ = {
+			isa = PBXGroup;
+			children = (
+				F6830EAD1FB2FAE0005AC578 /* RDVTabBar.h */,
+				F6830EAE1FB2FAE0005AC578 /* RDVTabBar.m */,
+				F6830EAF1FB2FAE0005AC578 /* RDVTabBarController.h */,
+				F6830EB01FB2FAE0005AC578 /* RDVTabBarController.m */,
+				F6830EB11FB2FAE0005AC578 /* RDVTabBarItem.h */,
+				F6830EB21FB2FAE0005AC578 /* RDVTabBarItem.m */,
+			);
+			path = RDV;
+			sourceTree = "<group>";
+		};
+		F6830EB61FB2FC40005AC578 /* LeftMenu */ = {
+			isa = PBXGroup;
+			children = (
+				F6830EB71FB2FC40005AC578 /* Controller */,
+				F6830EB81FB2FC40005AC578 /* Model */,
+				F6830EB91FB2FC40005AC578 /* View */,
+			);
+			path = LeftMenu;
+			sourceTree = "<group>";
+		};
+		F6830EB71FB2FC40005AC578 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		F6830EB81FB2FC40005AC578 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F6830EB91FB2FC40005AC578 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1178,6 +1233,8 @@
 				F67D644E1FAC84E800E23D16 /* NavViewController.m in Sources */,
 				F67D643A1FAC7E5600E23D16 /* FirstDecorationSectionView.m in Sources */,
 				F65035641FAC00A60007979D /* AppDelegate.m in Sources */,
+				F6830EB51FB2FAE0005AC578 /* RDVTabBarItem.m in Sources */,
+				F6830EB31FB2FAE0005AC578 /* RDVTabBar.m in Sources */,
 				1F4D75A41FAC4BB800E6516C /* UserModel.m in Sources */,
 				1F4D75B41FAC4BB800E6516C /* AppServices.m in Sources */,
 				1F4D75AB1FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.m in Sources */,
@@ -1189,6 +1246,7 @@
 				1F4D75A51FAC4BB800E6516C /* FMSerachService.m in Sources */,
 				1F4D759B1FAC4BB800E6516C /* UIImage+GKContact.m in Sources */,
 				1F4D75AE1FAC4BB800E6516C /* WisnucBox.xcdatamodeld in Sources */,
+				F6830EB41FB2FAE0005AC578 /* RDVTabBarController.m in Sources */,
 				F67D644A1FAC7E6B00E23D16 /* JYThumbVC.m in Sources */,
 				F67D64491FAC7E6B00E23D16 /* JYShowBigImgViewController.m in Sources */,
 				1F4D75A21FAC4BB800E6516C /* FMLoginViewController.m in Sources */,
