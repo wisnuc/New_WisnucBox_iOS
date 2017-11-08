@@ -79,6 +79,8 @@
  */
 + (PHImageRequestID)requestVideoForAsset:(PHAsset *)asset completion:(void (^)(AVPlayerItem *, NSDictionary *))completion;
 
++ (void)requestVideoPathFromPHAsset:(PHAsset *)asset filePath:(NSString *)filePath Complete:(void(^)(NSError  *error, NSString *filePath))result;
+
 #pragma mark - video
 
 /**

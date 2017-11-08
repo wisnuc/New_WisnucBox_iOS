@@ -153,6 +153,36 @@
     }
 }
 
+//save livephoto
++ (void)saveLivePhotoToAlbumWithPhoto:(NSURL *)photoURL video:(NSURL *)videoURL completion:(void (^)(BOOL, PHAsset *))completion {
+    __block PHObjectPlaceholder *placeholderAsset=nil;
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+        PHAssetCreationRequest *request = [PHAssetCreationRequest creationRequestForAsset];
+        [request addResourceWithType:PHAssetResourceTypePhoto
+                             fileURL:photoURL
+                             options:nil];
+        [request addResourceWithType:PHAssetResourceTypePairedVideo
+                             fileURL:videoURL
+                             options:nil];
+        placeholderAsset = request.placeholderForCreatedAsset;
+    } completionHandler:^(BOOL success,
+                          NSError * _Nullable error) {
+        if (!success) {
+            if (completion) completion(NO, nil);
+            return;
+        }
+        PHAsset *asset = [self getAssetFromlocalIdentifier:placeholderAsset.localIdentifier];
+        PHAssetCollection *desCollection = [self getDestinationCollection];
+        if (!desCollection) completion(NO, nil);
+        
+        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+            [[PHAssetCollectionChangeRequest changeRequestForAssetCollection:desCollection] addAssets:@[asset]];
+        } completionHandler:^(BOOL success, NSError * _Nullable error) {
+            if (completion) completion(success, asset);
+        }];
+    }];
+}
+
 // save video
 + (void)saveVideoToAblum:(NSURL *)url completion:(void (^)(BOOL, PHAsset *))completion
 {
@@ -214,7 +244,7 @@
     option.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
     option.includeHiddenAssets = YES;
     option.includeAssetSourceTypes = PHAssetSourceTypeNone;
-    PHFetchResult<PHAsset *> * lastresult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:option];
+    PHFetchResult<PHAsset *> * lastresult = [PHAsset fetchAssetsWithOptions:option];
     [lastresult enumerateObjectsUsingBlock:^(PHAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [tempDic setObject:obj forKey:obj.localIdentifier];
     }];
@@ -352,6 +382,7 @@
     }];
 }
 
+
 + (PHImageRequestID)requestOriginalImageDataForAsset:(PHAsset *)asset completion:(void (^)(NSData *, NSDictionary *))completion
 {
     PHImageRequestOptions *option = [[PHImageRequestOptions alloc]init];
@@ -448,6 +479,36 @@
     }];
 }
 
+
+// more than iOS9
++ (void)requestVideoPathFromPHAsset:(PHAsset *)asset filePath:(NSString *)filePath Complete:(void(^)(NSError  *error, NSString *filePath))result {
+    NSArray *assetResources = [PHAssetResource assetResourcesForAsset:asset];
+    PHAssetResource *resource;
+    
+    for (PHAssetResource *assetRes in assetResources) {
+        if (assetRes.type == PHAssetResourceTypePairedVideo ||
+            assetRes.type == PHAssetResourceTypeVideo) {
+            resource = assetRes;
+        }
+    }
+    if (asset.mediaType == PHAssetMediaTypeVideo || asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive) {
+        PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
+        options.version = PHImageRequestOptionsVersionCurrent;
+        options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+        [[PHAssetResourceManager defaultManager] writeDataForAssetResource:resource
+                                                                    toFile:[NSURL fileURLWithPath:filePath]
+                                                                   options:nil
+                                                         completionHandler:^(NSError * _Nullable error) {
+                                                             if (error) {
+                                                                 result(error, nil);
+                                                             } else {
+                                                                 result(nil, filePath);
+                                                             }
+                                                         }];
+    } else {
+        result([[NSError alloc]initWithDomain:@"not video" code:555 userInfo:nil], nil);
+    }
+}
 
 
 #pragma mark - video 

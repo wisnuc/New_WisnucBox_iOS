@@ -59,6 +59,11 @@
 - (AssetsServices *)assetServices {
     if(!_assetServices) {
         _assetServices = [[AssetsServices alloc]init];
+        __weak typeof(self) weakSelf = self;
+        _assetServices.AssetChangeBlock = ^(NSArray<JYAsset *> *removeObjs, NSArray<JYAsset *> *insertObjs) {
+            [weakSelf.photoUploadManager addTasks:insertObjs];
+            [weakSelf.photoUploadManager removeTasks:removeObjs];
+        };
     }
     return _assetServices;
 }
@@ -136,6 +141,8 @@
 
 @property (nonatomic) dispatch_queue_t managerQueue;
 
+@property (nonatomic) dispatch_queue_t workingQueue;
+
 @end
 
 @implementation WBUploadManager
@@ -155,18 +162,17 @@
 }
 
 //low等级线程
-+ (dispatch_queue_t)workingQueue {
-    static YYDispatchQueuePool * pool;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        pool = [[YYDispatchQueuePool alloc]initWithName:@"com.winsun.fruitmix.backgroundUpload" queueCount:3 qos:NSQualityOfServiceUtility];
-    });
-    return [pool queue];
+- (dispatch_queue_t)workingQueue {
+    if(!_workingQueue){
+        _workingQueue = dispatch_queue_create("com.wisnucbox.uploadmanager.working", DISPATCH_QUEUE_CONCURRENT);
+        dispatch_set_target_queue(_workingQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
+    }
+    return _workingQueue;
 }
 
 - (dispatch_queue_t)managerQueue{
     if(!_managerQueue){
-        _managerQueue = dispatch_queue_create("com.winsun.fruitmix.hot", DISPATCH_QUEUE_SERIAL);
+        _managerQueue = dispatch_queue_create("com.wisnucbox.uploadmanager.main", DISPATCH_QUEUE_SERIAL);
         dispatch_set_target_queue(_managerQueue, dispatch_get_global_queue(1, 0));
     }
     return _managerQueue;
@@ -234,7 +240,8 @@
     [self schedule];
 }
 
-- (void)removeTaskWithLocalId:(NSString *)assetId {
+- (void)removeTask:(JYAsset *)rmAsset {
+    NSString * assetId = rmAsset.asset.localIdentifier;
     __block JYAsset * asset;
     [self.hashwaitingQueue enumerateObjectsUsingBlock:^(JYAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if(IsEquallString(obj.asset.localIdentifier, assetId)){
@@ -264,9 +271,10 @@
     upModel = nil;
 }
 
-- (void)removeTasks:(NSArray<NSString *> *)assetIds {
-    [assetIds enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [self removeTaskWithLocalId:obj];
+- (void)removeTasks:(NSArray<JYAsset *> *)assets {
+    if(!assets || !assets.count)  return;
+    [assets enumerateObjectsUsingBlock:^(JYAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self removeTask:obj];
     }];
 }
 
@@ -314,7 +322,7 @@
         [self.hashwaitingQueue removeLastObject];
         [self.hashWorkingQueue addObject:asset];
         __weak typeof(self) weakSelf = self;
-        dispatch_async([[self class] workingQueue], ^{
+        dispatch_async([self workingQueue], ^{
             [self asset:asset getSha256:^(NSError *error, NSString *sha256) {
                 NSLog(@"%ld, %ld", self.hashwaitingQueue.count, self.hashWorkingQueue.count);
                 dispatch_async(self.managerQueue, ^{

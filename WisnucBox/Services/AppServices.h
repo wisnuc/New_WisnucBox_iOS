@@ -71,9 +71,9 @@
 
 - (void)addTasks:(NSArray<JYAsset *> *)assets;
 
-- (void)removeTaskWithLocalId:(NSString *)assetId;
+- (void)removeTask:(JYAsset *)rmAsset;
 
-- (void)removeTasks:(NSArray<NSString *> *)assetIds;
+- (void)removeTasks:(NSArray<JYAsset *> *)assets;
 
 @end
 
