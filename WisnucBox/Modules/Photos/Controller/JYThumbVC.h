@@ -8,15 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@class JYAssetList;
+@class JYAsset;
 
 @interface JYThumbVC : UIViewController
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
-//相册model
-@property (nonatomic, strong) JYAssetList *albumListModel;
-
 @property (nonatomic, assign) BOOL showIndicator;
+
+- (instancetype)initWithDataSource:(NSArray<JYAsset *> *)assets;
 
 @end

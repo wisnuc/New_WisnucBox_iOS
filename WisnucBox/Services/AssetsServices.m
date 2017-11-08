@@ -16,6 +16,8 @@
 
 @property (readwrite) NSArray<JYAsset *> *allAssets;
 
+@property (nonatomic) NSManagedObjectContext * saveContext;
+
 @end
 
 @implementation AssetsServices{
@@ -37,6 +39,7 @@
         [self checkAuth];
         if(_userAuth)
            [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
+        _saveContext = [NSManagedObjectContext MR_newMainQueueContext];
     }
     return self;
 }
@@ -77,16 +80,19 @@
 
 - (WBLocalAsset *)getAssetWithLocalId:(NSString *)localId {
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"localId = %@", localId];
-    WBLocalAsset * asset = [WBLocalAsset MR_findFirstWithPredicate:predicate];
+    WBLocalAsset * asset = [WBLocalAsset MR_findAllWithPredicate:predicate].firstObject;
     return asset;
 }
 
 - (void)saveAsset:(WBLocalAsset *)asset {
     WBLocalAsset * oldAsset = [self getAssetWithLocalId:asset.localId];
     if(!oldAsset)
-        oldAsset = [WBLocalAsset MR_createEntityInContext:[NSManagedObjectContext MR_context]];
+        oldAsset = [WBLocalAsset MR_createEntity];
     oldAsset.digest = asset.digest;
-    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+    oldAsset.localId = asset.localId;
+    [_saveContext MR_saveToPersistentStoreAndWait];
+   
+    
 }
 
 #pragma mark - photolibrary change delegate

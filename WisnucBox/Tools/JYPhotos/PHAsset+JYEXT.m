@@ -9,6 +9,10 @@
 #import "PHAsset+JYEXT.h"
 #import "PHPhotoLibrary+JYEXT.h"
 #import "CocoaSecurity.h"
+#import "FileHash.h"
+#import <AssetsLibrary/AssetsLibrary.h>
+
+#define JY_TMP_Folder [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]stringByAppendingPathComponent:@"JYTMP"]
 
 @implementation PHAsset (JYEXT)
 
@@ -77,13 +81,104 @@
     
 }
 
+- (NSString *)getTmpPath {
+    NSFileManager * mgr = [NSFileManager defaultManager];
+    NSString * tmp = JY_TMP_Folder;
+    if (![mgr fileExistsAtPath:tmp])
+        [mgr createDirectoryAtPath:tmp withIntermediateDirectories:YES attributes:nil error:NULL];
+    return tmp;
+}
+
 - (PHImageRequestID) getSha256:(void(^)(NSError * error, NSString * sha256))callback
 {
-    return [PHPhotoLibrary requestHighImageDataSyncForAsset:self completion:^(NSError * error, NSData *imageData, NSDictionary *info) {
-        if(imageData)
-            return callback(nil, [CocoaSecurity sha256WithData:imageData].hex);
-        else
-            return callback(error, NULL);
+    return [self getFile:^(NSError *error, NSString *filePath) {
+        if(error) return callback(error, NULL);
+        NSString * hashStr = [FileHash sha256HashOfFileAtPath:filePath];
+        if(!hashStr || !hashStr.length) return callback([NSError errorWithDomain:@"FILE HASH ERROR" code:666 userInfo:nil], NULL);
+        return callback(nil, hashStr);
     }];
 }
+
+- (PHImageRequestID)getFile:(void(^)(NSError *error, NSString *filePath))callback {
+    NSString *fileName = [NSString stringWithFormat:@"tmp_%ld", (long)[[NSDate date] timeIntervalSince1970]];
+    NSString * filePath = [[self getTmpPath] stringByAppendingPathComponent:fileName];
+    //TODO: do something for livephoto
+    
+    if(!self.isVideo) {
+        return [PHPhotoLibrary requestHighImageDataSyncForAsset:self completion:^(NSError * error, NSData *imageData, NSDictionary *info) {
+            if(imageData) {
+                [imageData writeToFile:filePath atomically:YES];
+                return callback(nil, filePath);
+            }
+            else
+                return callback(error, NULL);
+        }];
+    } else { // video
+        // less then iOS9
+        if([[[UIDevice currentDevice] systemVersion]  floatValue] < 9.0) {
+            PHVideoRequestOptions * opt = [[PHVideoRequestOptions alloc] init];
+            opt.networkAccessAllowed = NO; // TODO ??
+            opt.deliveryMode = PHVideoRequestOptionsDeliveryModeHighQualityFormat;
+            //        opt.progressHandler
+            return [[PHImageManager defaultManager] requestExportSessionForVideo:self options:opt exportPreset:AVAssetExportPresetHighestQuality resultHandler:^(AVAssetExportSession * _Nullable exportSession, NSDictionary * _Nullable info) {
+                if(!exportSession)
+                    return callback([[NSError alloc] initWithDomain:@"not found avasset" code:404 userInfo:nil], NULL);
+                else{
+                    //输出URL
+                    exportSession.outputURL = [NSURL fileURLWithPath:filePath];
+                    //优化网络
+                    exportSession.shouldOptimizeForNetworkUse = true;
+                    //                //转换后的格式
+                    //                exportSession.outputFileType = AVFileTypeMPEG4;
+                    //异步导出
+                    [exportSession exportAsynchronouslyWithCompletionHandler:^{
+                        if(exportSession.error) {
+                            return callback(exportSession.error, NULL);
+                        }
+                        if(exportSession.status == AVAssetExportSessionStatusFailed) {
+                            return callback([[NSError alloc] initWithDomain:@"AVAssetExportSessionStatusFailed" code:400 userInfo:nil], NULL);
+                        }
+                        if(exportSession.status == AVAssetExportSessionStatusCancelled) {
+                            return callback([[NSError alloc] initWithDomain:@"AVAssetExportSessionStatusCancelled" code:400 userInfo:nil], NULL);
+                        }
+                        // 如果导出的状态为完成
+                        if ([exportSession status] == AVAssetExportSessionStatusCompleted) {
+                            //                        [self saveVideo:[NSURL fileURLWithPath:path]];
+                            NSLog(@"压缩完毕,压缩后大小 %f MB",[self fileSize:[NSURL fileURLWithPath:filePath]]);
+                            return callback(nil, filePath);
+                        }else{
+                            NSLog(@"当前压缩进度:%f",exportSession.progress);
+                        }
+                    }];
+                }
+            }];
+        }else {
+            [PHPhotoLibrary requestVideoPathFromPHAsset:self filePath:filePath Complete:^(NSError *error, NSString *filePath) {
+                if(error) return callback(error, NULL);
+                return callback(NULL, filePath);
+            }];
+            return false;
+        }
+    }
+    return false;
+}
+
+- (void)saveVideo:(NSURL *)outputFileURL
+{
+    //ALAssetsLibrary提供了我们对iOS设备中的相片、视频的访问。
+//    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+//    [library writeVideoAtPathToSavedPhotosAlbum:outputFileURL completionBlock:^(NSURL *assetURL, NSError *error) {
+//        if (error) {
+//            NSLog(@"保存视频失败:%@",error);
+//        } else {
+//            NSLog(@"保存视频到相册成功");
+//        }
+//    }];
+}
+
+- (CGFloat)fileSize:(NSURL *)path
+{
+    return [[NSData dataWithContentsOfURL:path] length]/1024.00 /1024.00;
+}
+
 @end

@@ -19,7 +19,7 @@
 #import "UIScrollView+IndicatorExt.h"
 #import "TYDecorationSectionLayout.h"
 
-@interface JYThumbVC ()<UICollectionViewDataSource, UICollectionViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIViewControllerPreviewingDelegate> {
+@interface JYThumbVC ()<UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UIViewControllerPreviewingDelegate, JYShowBigImgViewControllerDelegate> {
     NSInteger _currentScale;
 }
 
@@ -33,26 +33,34 @@
 
 @implementation JYThumbVC
 
-- (JYAssetList *)albumListModel
-{
-    if (!_albumListModel) {
-        _albumListModel = [PHPhotoLibrary getCameraRollAlbumList:YES allowSelectImage:YES];
-    }
-    return _albumListModel;
-}
-
 - (NSMutableArray<JYAsset *> *)arrDataSources
 {
     if (!_arrDataSources) {
-        JYProgressHUD *hud = [[JYProgressHUD alloc] init];
-        [hud show];
-        _arrDataSources = [NSMutableArray arrayWithArray:self.albumListModel.models];
-        _arrDataSourcesBackup = [_arrDataSources copy];
-        [self sort];
-        [hud hide];
+//        JYProgressHUD *hud = [[JYProgressHUD alloc] init];
+//        [hud show];
+//        _arrDataSources = [NSMutableArray arrayWithArray:self.albumListModel.models];
+//        _arrDataSourcesBackup = [_arrDataSources copy];
+//        [self sort];
+//        [hud hide];
+        _arrDataSources = [NSMutableArray arrayWithCapacity:0];
     }
     return _arrDataSources;
 }
+
+- (instancetype)initWithDataSource:(NSArray<JYAsset *> *)assets {
+    if(self = [super init]) {
+        [self.arrDataSources addObjectsFromArray:assets];
+    }
+    return self;
+}
+
+-(void)dealloc{
+    if (self.collectionView.indicator) {
+        [self.collectionView.indicator.slider removeObserver:self forKeyPath:@"sliderState"];
+        [self removeObserver:self.collectionView.indicator forKeyPath:@"contentOffset"];
+    }
+}
+
 
 -(void)sort
 {
@@ -67,10 +75,12 @@
         return (NSComparisonResult)NSOrderedSame;
     };
     [self.arrDataSources sortUsingComparator:cmptr];
+    self.arrDataSourcesBackup = [self.arrDataSources copy];
     NSMutableArray * tArr = [NSMutableArray array];//时间组
     NSMutableArray * pGroupArr = [NSMutableArray array];//照片组数组
     if (_arrDataSources.count>0) {
         JYAsset * photo = _arrDataSources[0];
+        photo.indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
         NSMutableArray * photoDateGroup1 = [NSMutableArray array];//第一组照片
         [photoDateGroup1 addObject:photo];
         [pGroupArr addObject:photoDateGroup1];
@@ -82,9 +92,11 @@
                 JYAsset * photo1 =  _arrDataSources[i];
                 JYAsset * photo2 = _arrDataSources[i-1];
                 if ([self isSameDay:[photo1 asset].creationDate date2:[photo2 asset].creationDate]) {
+                    photo1.indexPath = [NSIndexPath indexPathForRow:((NSArray *)pGroupArr[pGroupArr.count - 1]).count inSection:pGroupArr.count - 1];
                     [photoDateGroup2 addObject:photo1];
                 }
                 else{
+                    photo1.indexPath = [NSIndexPath indexPathForRow:0 inSection:pGroupArr.count];
                     [tArr addObject:[photo1 asset].creationDate];
                     photoDateGroup2 = nil;
                     photoDateGroup2 = [NSMutableArray array];
@@ -118,10 +130,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = self.albumListModel.title;
     self.showIndicator = YES;
-
-    [self initNavBtn];
+    [self sort];
     [self initCollectionView];
     [self addPinchGesture];
 }
@@ -209,20 +219,10 @@
     }
 }
 
-- (void)initNavBtn
-{
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    CGFloat width = 40; //
-    btn.frame = CGRectMake(0, 0, width, 44);
-    btn.titleLabel.font = [UIFont systemFontOfSize:16];
-    [btn setTitle:@"取消" forState:UIControlStateNormal];
-    [btn setTitleColor:kNavBar_tintColor forState:UIControlStateNormal];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
-}
-
 - (UIViewController *)getBigImageVCWithData:(NSArray<JYAsset *> *)data index:(NSInteger)index
 {
     JYShowBigImgViewController *vc = [[JYShowBigImgViewController alloc] init];
+    vc.delegate = self;
     vc.models = data.copy;
     vc.selectIndex = index;
     JYCollectionViewCell * cell = (JYCollectionViewCell *)[_collectionView cellForItemAtIndexPath:[_collectionView indexPathsForSelectedItems].firstObject];
@@ -308,7 +308,7 @@
 - (UIViewController *)getMatchVCWithModel:(JYAsset *)model
 {
     
-    NSArray *arr = [PHPhotoLibrary getPhotoInResult:self.albumListModel.result allowSelectVideo:YES allowSelectImage:YES allowSelectGif:YES allowSelectLivePhoto:YES];
+    NSArray *arr = [self.arrDataSourcesBackup copy];
     int i = 0;
     for (JYAsset *m in arr) {
         if ([m.asset.localIdentifier isEqualToString:model.asset.localIdentifier])
@@ -471,11 +471,17 @@ bool isDecelerating = NO;
     }
 }
 
--(void)dealloc{
-    if (self.collectionView.indicator) {
-        [self.collectionView.indicator.slider removeObserver:self forKeyPath:@"sliderState"];
-        [self removeObserver:self.collectionView.indicator forKeyPath:@"contentOffset"];
-    }
+#pragma mark - photobrowser delegate
+
+- (void)photoBrowser:(JYShowBigImgViewController *)browser scrollToIndexPath:(NSIndexPath *)indexPath {
+    [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
+    [self.collectionView layoutIfNeeded];
+    return;
+}
+
+- (UIView *)photoBrowser:(JYShowBigImgViewController *)browser willDismissAtIndexPath:(NSIndexPath *)indexPath {
+    JYCollectionViewCell *cell = (JYCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+    return cell;
 }
 
 @end

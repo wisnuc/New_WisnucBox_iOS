@@ -322,10 +322,12 @@
         if (!m || [_modelIdentifile isEqualToString:m.asset.localIdentifier]) return;
         _modelIdentifile = m.asset.localIdentifier;
         //改变导航标题
+        if(self.delegate)
+           [self.delegate photoBrowser:self scrollToIndexPath:m.indexPath];
         self.title = [NSString stringWithFormat:@"%ld/%ld", _currentPage, self.models.count];
         if (m.type == JYAssetTypeGIF ||
             m.type == JYAssetTypeLivePhoto ||
-            m.type == PHAssetMediaTypeVideo) {
+            m.type == JYAssetTypeVideo) {
             JYBigImgCell *cell = (JYBigImgCell *)[_collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:_currentPage-1 inSection:0]];
             [cell pausePlay];
         }
@@ -466,7 +468,8 @@
     UIWindow * mainWindow = [UIApplication sharedApplication].keyWindow;
     
     CGRect rect = [cell.previewView convertRect:cell.previewView.imageViewFrame toView:self.view];
-
+    
+    _senderViewForAnimation = [_delegate photoBrowser:self willDismissAtIndexPath:cell.model.indexPath];
     UIImage * image = [self getImageFromView:_senderViewForAnimation];
     
     

@@ -8,6 +8,7 @@
 
 #import "AppServices.h"
 #import "PHAsset+JYEXT.h"
+#import <YYDispatchQueuePool/YYDispatchQueuePool.h>
 
 @implementation AppServices
 
@@ -22,14 +23,14 @@
 }
 
 - (void)bootStrap {
-    NSArray * allLocalAsset = [self.assetServices allAssets];
-    if(self.userServices.isUserLogin) {
-//        NSString * userToken = self.userServices.defaultToken;
-//        self.photoUploadManager setNetAssets:
-//        self.photoUploadManager startUploadWithUrl:<#(NSURL *)#> AndToken:<#(NSString *)#>
-    }
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSArray * allLocalAsset = [self.assetServices allAssets];
         [self.photoUploadManager startWithLocalAssets:allLocalAsset andNetAssets:@[]];
+        if(self.userServices.isUserLogin) {
+            //        NSString * userToken = self.userServices.defaultToken;
+            //        self.photoUploadManager setNetAssets:
+            //        self.photoUploadManager startUploadWithUrl:<#(NSURL *)#> AndToken:<#(NSString *)#>
+        }
     });
 }
 
@@ -58,6 +59,11 @@
 - (AssetsServices *)assetServices {
     if(!_assetServices) {
         _assetServices = [[AssetsServices alloc]init];
+        __weak typeof(self) weakSelf = self;
+        _assetServices.AssetChangeBlock = ^(NSArray<JYAsset *> *removeObjs, NSArray<JYAsset *> *insertObjs) {
+            [weakSelf.photoUploadManager addTasks:insertObjs];
+            [weakSelf.photoUploadManager removeTasks:removeObjs];
+        };
     }
     return _assetServices;
 }
@@ -133,7 +139,9 @@
 
 @property (nonatomic, strong) NSMutableArray<JYAsset *> * uploadedNetQueue;
 
+@property (nonatomic) dispatch_queue_t managerQueue;
 
+@property (nonatomic) dispatch_queue_t workingQueue;
 
 @end
 
@@ -147,11 +155,30 @@
     if(self = [super init]) {
         _isdestroing = NO;
         _shouldUpload = NO;
-        _hashLimitCount = 2;
+        _hashLimitCount = 4;
         _uploadLimitCount = 1;
     }
     return self;
 }
+
+//low等级线程
+- (dispatch_queue_t)workingQueue {
+    if(!_workingQueue){
+        _workingQueue = dispatch_queue_create("com.wisnucbox.uploadmanager.working", DISPATCH_QUEUE_CONCURRENT);
+        dispatch_set_target_queue(_workingQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
+    }
+    return _workingQueue;
+}
+
+- (dispatch_queue_t)managerQueue{
+    if(!_managerQueue){
+        _managerQueue = dispatch_queue_create("com.wisnucbox.uploadmanager.main", DISPATCH_QUEUE_SERIAL);
+        dispatch_set_target_queue(_managerQueue, dispatch_get_global_queue(1, 0));
+    }
+    return _managerQueue;
+}
+
+
 
 -(NSMutableArray<JYAsset *> *)hashwaitingQueue{
     if (!_hashwaitingQueue) {
@@ -213,7 +240,8 @@
     [self schedule];
 }
 
-- (void)removeTaskWithLocalId:(NSString *)assetId {
+- (void)removeTask:(JYAsset *)rmAsset {
+    NSString * assetId = rmAsset.asset.localIdentifier;
     __block JYAsset * asset;
     [self.hashwaitingQueue enumerateObjectsUsingBlock:^(JYAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if(IsEquallString(obj.asset.localIdentifier, assetId)){
@@ -243,9 +271,10 @@
     upModel = nil;
 }
 
-- (void)removeTasks:(NSArray<NSString *> *)assetIds {
-    [assetIds enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [self removeTaskWithLocalId:obj];
+- (void)removeTasks:(NSArray<JYAsset *> *)assets {
+    if(!assets || !assets.count)  return;
+    [assets enumerateObjectsUsingBlock:^(JYAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self removeTask:obj];
     }];
 }
 
@@ -276,7 +305,7 @@
         [asset.asset getSha256:^(NSError *error, NSString *sha256) {
             if(error) return callback(error, NULL);
             //save sha256
-            WBLocalAsset * ass = [WBLocalAsset MR_createEntityInContext:[NSManagedObjectContext MR_defaultContext]];
+            WBLocalAsset * ass = [WBLocalAsset MR_createEntity];
             ass.localId = asset.asset.localIdentifier;
             ass.digest = sha256;
             [[AppServices sharedService].assetServices saveAsset:ass];
@@ -293,17 +322,22 @@
         [self.hashwaitingQueue removeLastObject];
         [self.hashWorkingQueue addObject:asset];
         __weak typeof(self) weakSelf = self;
-        [self asset:asset getSha256:^(NSError *error, NSString *sha256) {
-            NSLog(@"...Success");
-            if (error) {
-                [weakSelf.hashFailQueue addObject:asset];
-            }else {
-                asset.digest = sha256;
-                [weakSelf.uploadPaddingQueue addObject:asset];
-            }
-            [weakSelf.hashWorkingQueue removeObject:asset];
-            [weakSelf schedule];
-        }];
+        dispatch_async([self workingQueue], ^{
+            [self asset:asset getSha256:^(NSError *error, NSString *sha256) {
+                NSLog(@"%ld, %ld", self.hashwaitingQueue.count, self.hashWorkingQueue.count);
+                dispatch_async(self.managerQueue, ^{
+                    NSLog(@"...Success");
+                    if (error) {
+                        [weakSelf.hashFailQueue addObject:asset];
+                    }else {
+                        asset.digest = sha256;
+                        [weakSelf.uploadPaddingQueue addObject:asset];
+                    }
+                    [weakSelf.hashWorkingQueue removeObject:asset];
+                    [weakSelf schedule];
+                });
+            }];
+        });
     }
     
     if(!_shouldUpload) return;
@@ -321,7 +355,9 @@
             }else {
                 [weakSelf.uploadedQueue addObject:model];
             }
-            [weakSelf schedule];
+            dispatch_async(self.managerQueue, ^{
+                [weakSelf schedule];
+            });
         }];
     }
 }

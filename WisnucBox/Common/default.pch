@@ -27,6 +27,8 @@
 #import <RTRootNavigationController/RTRootNavigationController.h>
 
 //Base
+#import "RDVTabBarController.h"
+#import "RDVTabBarItem.h"
 #import "FABaseVC.h"
 
 //Tools
@@ -36,5 +38,8 @@
 #import "UIButton+EnlargeEdge.h"
 #import "UIButton+Universal.h"
 #import "UIImage+GKContact.h"
+
+//Services
+#import "AppServices.h"
 
 #endif /* default_pch */
