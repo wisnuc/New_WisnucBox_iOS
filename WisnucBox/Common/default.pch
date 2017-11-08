@@ -21,10 +21,13 @@
 //第三方
 #import <AFNetworking/AFNetworking.h>
 #import <YYModel/YYModel.h>
+#import <YYCache/YYCache.h>
+#import <YYWebImage/YYWebImage.h>
 #import <WXApi.h>
 #import <ReactiveObjC/ReactiveObjC.h>
 #import <Masonry/Masonry.h>
 #import <RTRootNavigationController/RTRootNavigationController.h>
+#import <SDWebImage/SDWebImageManager.h>
 
 //Base
 #import "RDVTabBarController.h"
@@ -38,6 +41,11 @@
 #import "UIButton+EnlargeEdge.h"
 #import "UIButton+Universal.h"
 #import "UIImage+GKContact.h"
+
+//CoreData
+#import "WBFile+CoreDataClass.h"
+#import "WBLocalAsset+CoreDataClass.h"
+#import "WBUser+CoreDataClass.h"
 
 //Services
 #import "AppServices.h"

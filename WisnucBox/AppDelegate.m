@@ -30,15 +30,11 @@
 //    UINavigationController *rootNaviController = [[UINavigationController alloc]initWithRootViewController:localDownloadViewController];
 //    self.window.rootViewController = rootNaviController;
 //
-     [AppServices sharedService];
-    JYThumbVC *localDownloadViewController = [[JYThumbVC alloc]initWithDataSource:[AppServices sharedService].assetServices.allAssets];
-    UINavigationController *rootNaviController = [[UINavigationController alloc]initWithRootViewController:localDownloadViewController];
-    self.window.rootViewController = rootNaviController;
-    
-   
-    
-    
-    
+//    [AppServices sharedService];
+//    JYThumbVC *localDownloadViewController = [[JYThumbVC alloc]initWithDataSource:[AppServices sharedService].assetServices.allAssets];
+//    UINavigationController *rootNaviController = [[UINavigationController alloc]initWithRootViewController:localDownloadViewController];
+//    self.window.rootViewController = rootNaviController;
+
     [self.window makeKeyAndVisible];
     return YES;
 }

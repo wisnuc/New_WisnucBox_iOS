@@ -98,4 +98,8 @@
     return [WBUser MR_findAll];
 }
 
+- (void)synchronizedCurrentUser {
+    [self saveUser:self.currentUser];
+}
+
 @end
