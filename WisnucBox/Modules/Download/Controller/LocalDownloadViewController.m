@@ -84,7 +84,16 @@ UITableViewDataSource
     return 30;
 }
 
-
+-(void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
+{
+//    view.tintColor = [UIColor whiteColor];
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+//    header.contentView.backgroundColor=MainColor;
+//    header.textLabel.textAlignment=NSTextAlignmentCenter;
+    [header.textLabel setTextColor:[UIColor lightGrayColor]];
+    
+    
+}
 #pragma UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
