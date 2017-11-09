@@ -33,6 +33,7 @@
         [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongGesture:)];
         longGesture.minimumPressDuration = 0.5f;
         [self.contentView addGestureRecognizer:longGesture];
+        self.clipsToBounds = YES;
     }
     return self;
 }
@@ -44,7 +45,13 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    self.imageView.frame = self.bounds;
+    [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.contentView.mas_left);
+        make.right.mas_equalTo(self.contentView.mas_right);
+        make.top.mas_equalTo(self.contentView.mas_top);
+        make.bottom.mas_equalTo(self.contentView.mas_bottom);
+    }];
+//    self.imageView.frame = self.bounds;
 //    self.btnSelect.frame = CGRectMake(GetViewWidth(self.contentView)-26, 5, 23, 23);
 //    if (self.showMask) {
 //        self.topView.frame = self.bounds;
@@ -53,20 +60,20 @@
 //    self.videoImageView.frame = CGRectMake(5, 1, 16, 12);
 //    self.liveImageView.frame = CGRectMake(5, -1, 15, 15);
 //    self.timeLabel.frame = CGRectMake(30, 1, GetViewWidth(self)-35, 12);
-    [self.contentView sendSubviewToBack:self.imageView];
+//    [self.contentView sendSubviewToBack:self.imageView];
 }
 
 - (UIImageView *)imageView
 {
     if (!_imageView) {
         _imageView = [[UIImageView alloc] init];
-        _imageView.frame = self.bounds;
         _imageView.contentMode = UIViewContentModeScaleAspectFill;
         _imageView.clipsToBounds = YES;
+        self.contentView.clipsToBounds = YES;
         [self.contentView addSubview:_imageView];
         
-        [self.contentView bringSubviewToFront:_topView];
-        [self.contentView bringSubviewToFront:self.videoBottomView];
+//        [self.contentView bringSubviewToFront:_topView];
+//        [self.contentView bringSubviewToFront:self.videoBottomView];
         [self.contentView bringSubviewToFront:self.btnSelect];
     }
     return _imageView;
@@ -143,11 +150,6 @@
 {
     _model = model;
     
-    if (self.cornerRadio > .0) {
-        self.layer.masksToBounds = YES;
-        self.layer.cornerRadius = self.cornerRadio;
-    }
-    
 //    if (model.type == JYAssetTypeVideo) {
 //        self.videoBottomView.hidden = NO;
 //        self.videoImageView.hidden = NO;
@@ -167,14 +169,10 @@
 //        self.videoBottomView.hidden = YES;
 //    }
     
-    if (self.showMask) {
-        self.topView.backgroundColor = [self.maskColor colorWithAlphaComponent:.2];
-        self.topView.hidden = !model.isSelected;
-    }
-    
-    self.btnSelect.hidden = !self.showSelectBtn;
-    self.btnSelect.enabled = self.showSelectBtn;
-    self.btnSelect.selected = model.isSelected;
+//    if (self.showMask) {
+//        self.topView.backgroundColor = [self.maskColor colorWithAlphaComponent:.2];
+//        self.topView.hidden = !model.isSelected;
+//    }
     
     CGSize size;
     size.width = GetViewWidth(self) * 1.7;
@@ -205,10 +203,8 @@
     if (_isSelect) {
         if(animat) {
             [self.btnSelect.layer addAnimation:GetBtnStatusChangedAnimation() forKey:nil];
-            [UIView animateWithDuration:0.3 animations:^{
-                self.imageView.transform = CGAffineTransformMakeScale(0.8, 0.8);
-            }];
-        } else self.imageView.transform = CGAffineTransformMakeScale(0.8, 0.8);
+        }
+            self.imageView.transform = CGAffineTransformMakeScale(0.8, 0.8);
     }else{
         self.imageView.transform = CGAffineTransformIdentity;
     }
@@ -219,4 +215,5 @@
     [self setIsSelect:!_isSelect animation:YES];
     if(_selectedBlock) _selectedBlock(_isSelect);
 }
+
 @end

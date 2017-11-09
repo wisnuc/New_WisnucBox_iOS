@@ -25,14 +25,12 @@
     // Override point for customization after application launch.
     [MagicalRecord setupCoreDataStack];
     [self configWeChat];
-    
 //    FMLoginViewController *loginController = [[FMLoginViewController alloc]init];
 //    LocalDownloadViewController *localDownloadViewController = [[LocalDownloadViewController alloc]init];
 //    UINavigationController *rootNaviController = [[UINavigationController alloc]initWithRootViewController:localDownloadViewController];
 //    self.window.rootViewController = rootNaviController;
 //
     [AppServices sharedService];
-    NSLog(@"%ld", [[AppServices sharedService].assetServices getAllHashedAsset].count);
     [self initRootVC];
     return YES;
 }

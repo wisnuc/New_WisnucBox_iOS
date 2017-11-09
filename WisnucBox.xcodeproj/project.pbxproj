@@ -82,6 +82,10 @@
 		F650356F1FAC00A70007979D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F650356D1FAC00A70007979D /* LaunchScreen.storyboard */; };
 		F650357A1FAC00A70007979D /* WisnucBoxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035791FAC00A70007979D /* WisnucBoxTests.m */; };
 		F65035851FAC00A70007979D /* WisnucBoxUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035841FAC00A70007979D /* WisnucBoxUITests.m */; };
+		F671F1031FB4B3B50051DF93 /* floatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F671F0FF1FB4B3B50051DF93 /* floatTableViewCell.m */; };
+		F671F1041FB4B3B50051DF93 /* floatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F671F1001FB4B3B50051DF93 /* floatTableViewCell.xib */; };
+		F671F1051FB4B3B50051DF93 /* VCFloatingActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F671F1021FB4B3B50051DF93 /* VCFloatingActionButton.m */; };
+		F671F1081FB4B8820051DF93 /* JYProcessView.m in Sources */ = {isa = PBXBuildFile; fileRef = F671F1071FB4B8820051DF93 /* JYProcessView.m */; };
 		F675614A1FB3428F00E3277F /* MFTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F67561411FB3428F00E3277F /* MFTextField.m */; };
 		F675614B1FB3428F00E3277F /* UIColor+MaterialTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F67561431FB3428F00E3277F /* UIColor+MaterialTextField.m */; };
 		F675614C1FB3428F00E3277F /* UIFont+MaterialTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F67561451FB3428F00E3277F /* UIFont+MaterialTextField.m */; };
@@ -647,6 +651,13 @@
 		F65035801FAC00A70007979D /* WisnucBoxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WisnucBoxUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F65035841FAC00A70007979D /* WisnucBoxUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WisnucBoxUITests.m; sourceTree = "<group>"; };
 		F65035861FAC00A70007979D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F671F0FE1FB4B3B50051DF93 /* floatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = floatTableViewCell.h; sourceTree = "<group>"; };
+		F671F0FF1FB4B3B50051DF93 /* floatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = floatTableViewCell.m; sourceTree = "<group>"; };
+		F671F1001FB4B3B50051DF93 /* floatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = floatTableViewCell.xib; sourceTree = "<group>"; };
+		F671F1011FB4B3B50051DF93 /* VCFloatingActionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCFloatingActionButton.h; sourceTree = "<group>"; };
+		F671F1021FB4B3B50051DF93 /* VCFloatingActionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCFloatingActionButton.m; sourceTree = "<group>"; };
+		F671F1061FB4B8820051DF93 /* JYProcessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYProcessView.h; sourceTree = "<group>"; };
+		F671F1071FB4B8820051DF93 /* JYProcessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYProcessView.m; sourceTree = "<group>"; };
 		F675613F1FB3428F00E3277F /* MaterialTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialTextField.h; sourceTree = "<group>"; };
 		F67561401FB3428F00E3277F /* MFTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFTextField.h; sourceTree = "<group>"; };
 		F67561411FB3428F00E3277F /* MFTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MFTextField.m; sourceTree = "<group>"; };
@@ -1725,6 +1736,13 @@
 		F67D642B1FAC7DFF00E23D16 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F671F1061FB4B8820051DF93 /* JYProcessView.h */,
+				F671F1071FB4B8820051DF93 /* JYProcessView.m */,
+				F671F0FE1FB4B3B50051DF93 /* floatTableViewCell.h */,
+				F671F0FF1FB4B3B50051DF93 /* floatTableViewCell.m */,
+				F671F1001FB4B3B50051DF93 /* floatTableViewCell.xib */,
+				F671F1011FB4B3B50051DF93 /* VCFloatingActionButton.h */,
+				F671F1021FB4B3B50051DF93 /* VCFloatingActionButton.m */,
 				F67D642C1FAC7E5600E23D16 /* FirstDecorationSectionView.h */,
 				F67D642D1FAC7E5600E23D16 /* FirstDecorationSectionView.m */,
 				F67D642E1FAC7E5600E23D16 /* FirstDecorationSectionView.xib */,
@@ -2550,6 +2568,7 @@
 				F68311AB1FB30AAF005AC578 /* transparency_bg@3x.png in Resources */,
 				F67D64241FAC7D9A00E23D16 /* handrail@2x.png in Resources */,
 				F683115A1FB30AAE005AC578 /* photo_placeholder@2x.png in Resources */,
+				F671F1041FB4B3B50051DF93 /* floatTableViewCell.xib in Resources */,
 				F68310F21FB30AAE005AC578 /* ic_account_circle@2x.png in Resources */,
 				F6830F141FB300D2005AC578 /* FMLeftMenu.xib in Resources */,
 				1FD7A0ED1FB05A45000D4CB3 /* back@3x.png in Resources */,
@@ -2912,6 +2931,7 @@
 				1F4D75AD1FAC4BB800E6516C /* WBLocalAsset+CoreDataProperties.m in Sources */,
 				F67D64061FAC7D3600E23D16 /* JYAsset.m in Sources */,
 				F67D64081FAC7D3600E23D16 /* PHFetchResult+JYEXT.m in Sources */,
+				F671F1031FB4B3B50051DF93 /* floatTableViewCell.m in Sources */,
 				1F4D75B01FAC4BB800E6516C /* AssetsServices.m in Sources */,
 				F675614B1FB3428F00E3277F /* UIColor+MaterialTextField.m in Sources */,
 				F68311D61FB311FC005AC578 /* FMUsers.m in Sources */,
@@ -2980,8 +3000,10 @@
 				1F4D75D01FAC604100E6516C /* LoginTableViewCell.m in Sources */,
 				F679336D1FB00D9B00C9A7DC /* WBUser+CoreDataClass.m in Sources */,
 				F6830F041FB2FF8C005AC578 /* FMUserSettingCell.m in Sources */,
+				F671F1081FB4B8820051DF93 /* JYProcessView.m in Sources */,
 				F675614E1FB3428F00E3277F /* UITextField+MFClearButton.m in Sources */,
 				F6AAD1891FB049E100DEDBDC /* WBFile+CoreDataProperties.m in Sources */,
+				F671F1051FB4B3B50051DF93 /* VCFloatingActionButton.m in Sources */,
 				1F4D75A01FAC4BB800E6516C /* SXLoadingView.m in Sources */,
 				F67933711FB0142900C9A7DC /* WBAsset.m in Sources */,
 				1F4D75A31FAC4BB800E6516C /* FMHandLoginVC.m in Sources */,

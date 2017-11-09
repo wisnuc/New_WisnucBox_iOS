@@ -36,6 +36,9 @@
 #import "NavViewController.h"
 #import "FMBaseFirstVC.h"
 
+//model
+#import "WBAsset.h"
+
 //Tools
 #import "SXLoadingView.h"
 
@@ -43,6 +46,7 @@
 #import "UIButton+EnlargeEdge.h"
 #import "UIButton+Universal.h"
 #import "UIImage+GKContact.h"
+#import "UIView+JYExtension.h"
 
 //CoreData
 #import "WBFile+CoreDataClass.h"
