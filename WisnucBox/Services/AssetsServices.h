@@ -18,9 +18,11 @@
 
 @property (nonatomic, copy) void(^AssetChangeBlock)(NSArray<JYAsset *> *removeObjs, NSArray<JYAsset *> *insertObjs);
 
-- (void)saveAsset:(WBLocalAsset *)asset;
-
 - (WBLocalAsset *)getAssetWithLocalId:(NSString *)localId;
+
+- (NSArray<WBLocalAsset *> *)getAllHashedAsset;
+
+- (void)saveAssetWithLocalId:(NSString *)localId digest:(NSString *)digest;
 
 @end
 

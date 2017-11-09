@@ -13,6 +13,8 @@
 #import "FilesServices.h"
 #import "NetServices.h"
 
+#define WB_AppServices [AppServices sharedService]
+
 @class WBUploadManager;
 @interface AppServices : NSObject <ServiceProtocol>
 

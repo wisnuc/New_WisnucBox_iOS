@@ -20,7 +20,7 @@
 //    [self.profileImage setRandomDownloadImage:80 height:80];
 //    [self.backgroundImage setRandomDownloadImage:self.frame.size.width height:160];
     self.nameLb.font = [UIFont fontWithName:DONGQING size:19];
-    self.nameLb.text = [FMConfigInstance getUserNameWithUUID:DEF_UUID];
+    self.nameLb.text = [AppServices sharedService].userServices.currentUser.userName;
 }
 
 @end

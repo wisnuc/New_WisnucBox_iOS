@@ -25,29 +25,66 @@
     // Override point for customization after application launch.
     [MagicalRecord setupCoreDataStack];
     [self configWeChat];
+    
 //    FMLoginViewController *loginController = [[FMLoginViewController alloc]init];
 //    LocalDownloadViewController *localDownloadViewController = [[LocalDownloadViewController alloc]init];
 //    UINavigationController *rootNaviController = [[UINavigationController alloc]initWithRootViewController:localDownloadViewController];
 //    self.window.rootViewController = rootNaviController;
 //
-//    [AppServices sharedService];
-//    JYThumbVC *localDownloadViewController = [[JYThumbVC alloc]initWithDataSource:[AppServices sharedService].assetServices.allAssets];
-//    UINavigationController *rootNaviController = [[UINavigationController alloc]initWithRootViewController:localDownloadViewController];
-//    self.window.rootViewController = rootNaviController;
-
-    [self.window makeKeyAndVisible];
+    [AppServices sharedService];
+    NSLog(@"%ld", [[AppServices sharedService].assetServices getAllHashedAsset].count);
+    [self initRootVC];
     return YES;
 }
 
 
-- (void) initRootVC {
+- (void)initRootVC {
     UserServices * services = [AppServices sharedService].userServices;
-    if(services.isUserLogin) {
+    if(!services.isUserLogin) {
         // To TabBar
+        [self setUpLeftManager];
+        RDVTabBarController * tabbar = [self setUpTabbar];
+        self.window.rootViewController = tabbar;
     }else{
         // TO Login VC
+        FMLoginViewController *loginController = [[FMLoginViewController alloc]init];
+        UINavigationController *rootNaviController = [[UINavigationController alloc]initWithRootViewController:loginController];
+        self.window.rootViewController = rootNaviController;
     }
+    [self.window makeKeyAndVisible];
 }
+
+- (RDVTabBarController *)setUpTabbar {
+    RDVTabBarController * tabbar = [RDVTabBarController new];
+    JYThumbVC * photosVC = [[JYThumbVC alloc] initWithDataSource:[AppServices sharedService].assetServices.allAssets];
+    LocalDownloadViewController *localDownloadViewController = [[LocalDownloadViewController alloc]init];
+    NavViewController *nav1 = [[NavViewController alloc] initWithRootViewController:photosVC];
+    NavViewController *nav2 = [[NavViewController alloc] initWithRootViewController:localDownloadViewController];
+    photosVC.title = @"照片";
+    localDownloadViewController.title = @"文件";
+    
+    NSMutableArray *viewControllersMutArr = [[NSMutableArray alloc] initWithObjects:nav1,nav2,nil];
+    [tabbar setViewControllers:viewControllersMutArr];
+    
+    NSArray *tabBarItemImages = @[ @"photo", @"storage"];
+    NSInteger index = 0;
+    for (RDVTabBarItem *item in [[tabbar tabBar] items]) {
+        UIImage *selectedimage = [UIImage imageNamed:[NSString stringWithFormat:@"%@_select",
+                                                      [tabBarItemImages objectAtIndex:index]]];
+        UIImage *unselectedimage = [UIImage imageNamed:[NSString stringWithFormat:@"%@",
+                                                        [tabBarItemImages objectAtIndex:index]]];
+        [item setFinishedSelectedImage:selectedimage withFinishedUnselectedImage:unselectedimage];
+        index++;
+    }
+    tabbar.selectedIndex = 0;
+    
+    return tabbar;
+}
+
+- (void)setUpLeftManager {
+    self.leftManager = [[FMLeftManager alloc] initLeftMenuWithTitles:@[] andImages:@[]];
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

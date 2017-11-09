@@ -95,6 +95,11 @@
         if(error) return callback(error, NULL);
         NSString * hashStr = [FileHash sha256HashOfFileAtPath:filePath];
         if(!hashStr || !hashStr.length) return callback([NSError errorWithDomain:@"FILE HASH ERROR" code:666 userInfo:nil], NULL);
+        @try {
+            [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+        } @catch (NSException *exception) {
+            NSLog(@"%@", exception);
+        }
         return callback(nil, hashStr);
     }];
 }

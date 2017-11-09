@@ -15,7 +15,6 @@
 @property (nonatomic,strong)UISwitch * switchBtn;
 
 @property (nonatomic,assign)BOOL switchOn;
-@property (nonatomic,assign)NSInteger tag;
 @end
 
 @implementation FMSetting
@@ -29,7 +28,6 @@
     self.navigationController.navigationBar.translucent = NO;
     self.settingTableView.tableFooterView = [UIView new];
     self.displayProgress = NO;
-    [self createNavbtn];
     [self setSwitch];
 }
 
@@ -58,14 +56,6 @@
 - (void)setNotifacation{
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(swichActionForNot) name:@"dontBackUp" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(swichAction) name:@"backUp" object:nil];
-}
-
-+ (void)registNotifacation{
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(swichActionForNot) name:@"dontBackUp" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(swichAction) name:@"backUp" object:nil];
-}
-
--(void)createNavbtn{
 }
 
 - (instancetype)initPrivate {
@@ -193,14 +183,12 @@ else
 }
 
 - (void)swichActionForNot{
-       _tag = 1;
     [AppServices sharedService].userServices.currentUser.autoBackUp = NO;
     [[AppServices sharedService].userServices synchronizedCurrentUser];
     NSLog(@"备份开关关闭");
 }
 
 - (void)swichAction{
-       _tag = 1;
     [AppServices sharedService].userServices.currentUser.autoBackUp = YES;
     [[AppServices sharedService].userServices synchronizedCurrentUser];
 #warning start backup 

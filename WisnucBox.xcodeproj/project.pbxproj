@@ -82,6 +82,14 @@
 		F650356F1FAC00A70007979D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F650356D1FAC00A70007979D /* LaunchScreen.storyboard */; };
 		F650357A1FAC00A70007979D /* WisnucBoxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035791FAC00A70007979D /* WisnucBoxTests.m */; };
 		F65035851FAC00A70007979D /* WisnucBoxUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035841FAC00A70007979D /* WisnucBoxUITests.m */; };
+		F675614A1FB3428F00E3277F /* MFTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F67561411FB3428F00E3277F /* MFTextField.m */; };
+		F675614B1FB3428F00E3277F /* UIColor+MaterialTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F67561431FB3428F00E3277F /* UIColor+MaterialTextField.m */; };
+		F675614C1FB3428F00E3277F /* UIFont+MaterialTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F67561451FB3428F00E3277F /* UIFont+MaterialTextField.m */; };
+		F675614D1FB3428F00E3277F /* UIImage+MFTint.m in Sources */ = {isa = PBXBuildFile; fileRef = F67561471FB3428F00E3277F /* UIImage+MFTint.m */; };
+		F675614E1FB3428F00E3277F /* UITextField+MFClearButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F67561491FB3428F00E3277F /* UITextField+MFClearButton.m */; };
+		F67561561FB342AE00E3277F /* MXParallaxHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = F67561511FB342AE00E3277F /* MXParallaxHeader.m */; };
+		F67561571FB342AE00E3277F /* MXScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F67561531FB342AE00E3277F /* MXScrollView.m */; };
+		F67561581FB342AE00E3277F /* MXScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F67561551FB342AE00E3277F /* MXScrollViewController.m */; };
 		F679336D1FB00D9B00C9A7DC /* WBUser+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = F679336A1FB00D9A00C9A7DC /* WBUser+CoreDataClass.m */; };
 		F679336E1FB00D9B00C9A7DC /* WBUser+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F679336C1FB00D9A00C9A7DC /* WBUser+CoreDataProperties.m */; };
 		F67933711FB0142900C9A7DC /* WBAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = F67933701FB0142900C9A7DC /* WBAsset.m */; };
@@ -120,15 +128,6 @@
 		F6830EC41FB2FD1D005AC578 /* FMUserLoginHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F6830EC01FB2FD1D005AC578 /* FMUserLoginHeaderView.m */; };
 		F6830EC51FB2FD1D005AC578 /* FMUsersLoginMangeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F6830EC21FB2FD1D005AC578 /* FMUsersLoginMangeCell.m */; };
 		F6830EC61FB2FD1D005AC578 /* FMUsersLoginMangeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6830EC31FB2FD1D005AC578 /* FMUsersLoginMangeCell.xib */; };
-		F6830ED31FB2FD4C005AC578 /* FMInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F6830EC81FB2FD4C005AC578 /* FMInfo.m */; };
-		F6830ED41FB2FD4C005AC578 /* FMChooseHeaderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F6830ECA1FB2FD4C005AC578 /* FMChooseHeaderVC.m */; };
-		F6830ED51FB2FD4C005AC578 /* YSHYClipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6830ECC1FB2FD4C005AC578 /* YSHYClipViewController.m */; };
-		F6830ED61FB2FD4C005AC578 /* FMUserEditVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F6830ECE1FB2FD4C005AC578 /* FMUserEditVC.m */; };
-		F6830ED71FB2FD4C005AC578 /* FMUserEditVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6830ECF1FB2FD4C005AC578 /* FMUserEditVC.xib */; };
-		F6830ED81FB2FD4C005AC578 /* FMChangePwdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F6830ED11FB2FD4C005AC578 /* FMChangePwdVC.m */; };
-		F6830ED91FB2FD4C005AC578 /* FMChangePwdVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6830ED21FB2FD4C005AC578 /* FMChangePwdVC.xib */; };
-		F6830EDD1FB2FE42005AC578 /* FMOwnCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = F6830EDB1FB2FE42005AC578 /* FMOwnCloud.m */; };
-		F6830EDE1FB2FE42005AC578 /* FMOwnCloud.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6830EDC1FB2FE42005AC578 /* FMOwnCloud.xib */; };
 		F6830EE61FB2FEC4005AC578 /* FMSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = F6830EE31FB2FEC4005AC578 /* FMSetting.m */; };
 		F6830EE71FB2FEC4005AC578 /* FMSetting.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6830EE51FB2FEC4005AC578 /* FMSetting.xib */; };
 		F6830EEF1FB2FEF3005AC578 /* FMUserAddVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F6830EEA1FB2FEF3005AC578 /* FMUserAddVC.m */; };
@@ -500,6 +499,12 @@
 		F68311DF1FB31369005AC578 /* LCActionSheetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F68311DC1FB31369005AC578 /* LCActionSheetCell.m */; };
 		F6AAD1881FB049E100DEDBDC /* WBFile+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = F6AAD1851FB049E100DEDBDC /* WBFile+CoreDataClass.m */; };
 		F6AAD1891FB049E100DEDBDC /* WBFile+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F6AAD1871FB049E100DEDBDC /* WBFile+CoreDataProperties.m */; };
+		F6D8CC301FB3F91600673824 /* FMLeftManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6D8CC2F1FB3F91600673824 /* FMLeftManager.m */; };
+		F6D8CC391FB402CB00673824 /* FMBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6D8CC361FB402CB00673824 /* FMBaseViewController.m */; };
+		F6D8CC3A1FB402CB00673824 /* FMBaseFirstVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F6D8CC381FB402CB00673824 /* FMBaseFirstVC.m */; };
+		F6D8CC3D1FB42D6500673824 /* UIApplication+JYTopVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F6D8CC3C1FB42D6500673824 /* UIApplication+JYTopVC.m */; };
+		F6D8CC411FB42E1300673824 /* UIView+JYExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F6D8CC401FB42E1300673824 /* UIView+JYExtension.m */; };
+		F6D8CC441FB448B800673824 /* UIImage+imageWithColor.m in Sources */ = {isa = PBXBuildFile; fileRef = F6D8CC431FB448B800673824 /* UIImage+imageWithColor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -642,6 +647,23 @@
 		F65035801FAC00A70007979D /* WisnucBoxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WisnucBoxUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F65035841FAC00A70007979D /* WisnucBoxUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WisnucBoxUITests.m; sourceTree = "<group>"; };
 		F65035861FAC00A70007979D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F675613F1FB3428F00E3277F /* MaterialTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialTextField.h; sourceTree = "<group>"; };
+		F67561401FB3428F00E3277F /* MFTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFTextField.h; sourceTree = "<group>"; };
+		F67561411FB3428F00E3277F /* MFTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MFTextField.m; sourceTree = "<group>"; };
+		F67561421FB3428F00E3277F /* UIColor+MaterialTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MaterialTextField.h"; sourceTree = "<group>"; };
+		F67561431FB3428F00E3277F /* UIColor+MaterialTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MaterialTextField.m"; sourceTree = "<group>"; };
+		F67561441FB3428F00E3277F /* UIFont+MaterialTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+MaterialTextField.h"; sourceTree = "<group>"; };
+		F67561451FB3428F00E3277F /* UIFont+MaterialTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+MaterialTextField.m"; sourceTree = "<group>"; };
+		F67561461FB3428F00E3277F /* UIImage+MFTint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MFTint.h"; sourceTree = "<group>"; };
+		F67561471FB3428F00E3277F /* UIImage+MFTint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MFTint.m"; sourceTree = "<group>"; };
+		F67561481FB3428F00E3277F /* UITextField+MFClearButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+MFClearButton.h"; sourceTree = "<group>"; };
+		F67561491FB3428F00E3277F /* UITextField+MFClearButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+MFClearButton.m"; sourceTree = "<group>"; };
+		F67561501FB342AE00E3277F /* MXParallaxHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXParallaxHeader.h; sourceTree = "<group>"; };
+		F67561511FB342AE00E3277F /* MXParallaxHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXParallaxHeader.m; sourceTree = "<group>"; };
+		F67561521FB342AE00E3277F /* MXScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXScrollView.h; sourceTree = "<group>"; };
+		F67561531FB342AE00E3277F /* MXScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXScrollView.m; sourceTree = "<group>"; };
+		F67561541FB342AE00E3277F /* MXScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXScrollViewController.h; sourceTree = "<group>"; };
+		F67561551FB342AE00E3277F /* MXScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXScrollViewController.m; sourceTree = "<group>"; };
 		F67933691FB00D9A00C9A7DC /* WBUser+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBUser+CoreDataClass.h"; sourceTree = "<group>"; };
 		F679336A1FB00D9A00C9A7DC /* WBUser+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WBUser+CoreDataClass.m"; sourceTree = "<group>"; };
 		F679336B1FB00D9A00C9A7DC /* WBUser+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBUser+CoreDataProperties.h"; sourceTree = "<group>"; };
@@ -709,21 +731,6 @@
 		F6830EC11FB2FD1D005AC578 /* FMUsersLoginMangeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMUsersLoginMangeCell.h; sourceTree = "<group>"; };
 		F6830EC21FB2FD1D005AC578 /* FMUsersLoginMangeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMUsersLoginMangeCell.m; sourceTree = "<group>"; };
 		F6830EC31FB2FD1D005AC578 /* FMUsersLoginMangeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FMUsersLoginMangeCell.xib; sourceTree = "<group>"; };
-		F6830EC71FB2FD4C005AC578 /* FMInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMInfo.h; sourceTree = "<group>"; };
-		F6830EC81FB2FD4C005AC578 /* FMInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMInfo.m; sourceTree = "<group>"; };
-		F6830EC91FB2FD4C005AC578 /* FMChooseHeaderVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMChooseHeaderVC.h; sourceTree = "<group>"; };
-		F6830ECA1FB2FD4C005AC578 /* FMChooseHeaderVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMChooseHeaderVC.m; sourceTree = "<group>"; };
-		F6830ECB1FB2FD4C005AC578 /* YSHYClipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSHYClipViewController.h; sourceTree = "<group>"; };
-		F6830ECC1FB2FD4C005AC578 /* YSHYClipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSHYClipViewController.m; sourceTree = "<group>"; };
-		F6830ECD1FB2FD4C005AC578 /* FMUserEditVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMUserEditVC.h; sourceTree = "<group>"; };
-		F6830ECE1FB2FD4C005AC578 /* FMUserEditVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMUserEditVC.m; sourceTree = "<group>"; };
-		F6830ECF1FB2FD4C005AC578 /* FMUserEditVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FMUserEditVC.xib; sourceTree = "<group>"; };
-		F6830ED01FB2FD4C005AC578 /* FMChangePwdVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMChangePwdVC.h; sourceTree = "<group>"; };
-		F6830ED11FB2FD4C005AC578 /* FMChangePwdVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMChangePwdVC.m; sourceTree = "<group>"; };
-		F6830ED21FB2FD4C005AC578 /* FMChangePwdVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FMChangePwdVC.xib; sourceTree = "<group>"; };
-		F6830EDA1FB2FE42005AC578 /* FMOwnCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMOwnCloud.h; sourceTree = "<group>"; };
-		F6830EDB1FB2FE42005AC578 /* FMOwnCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMOwnCloud.m; sourceTree = "<group>"; };
-		F6830EDC1FB2FE42005AC578 /* FMOwnCloud.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FMOwnCloud.xib; sourceTree = "<group>"; };
 		F6830EE31FB2FEC4005AC578 /* FMSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMSetting.m; sourceTree = "<group>"; };
 		F6830EE41FB2FEC4005AC578 /* FMSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMSetting.h; sourceTree = "<group>"; };
 		F6830EE51FB2FEC4005AC578 /* FMSetting.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FMSetting.xib; sourceTree = "<group>"; };
@@ -1112,6 +1119,18 @@
 		F6AAD1851FB049E100DEDBDC /* WBFile+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WBFile+CoreDataClass.m"; sourceTree = "<group>"; };
 		F6AAD1861FB049E100DEDBDC /* WBFile+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBFile+CoreDataProperties.h"; sourceTree = "<group>"; };
 		F6AAD1871FB049E100DEDBDC /* WBFile+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WBFile+CoreDataProperties.m"; sourceTree = "<group>"; };
+		F6D8CC2E1FB3F91600673824 /* FMLeftManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMLeftManager.h; sourceTree = "<group>"; };
+		F6D8CC2F1FB3F91600673824 /* FMLeftManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMLeftManager.m; sourceTree = "<group>"; };
+		F6D8CC351FB402CB00673824 /* FMBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMBaseViewController.h; sourceTree = "<group>"; };
+		F6D8CC361FB402CB00673824 /* FMBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMBaseViewController.m; sourceTree = "<group>"; };
+		F6D8CC371FB402CB00673824 /* FMBaseFirstVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMBaseFirstVC.h; sourceTree = "<group>"; };
+		F6D8CC381FB402CB00673824 /* FMBaseFirstVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMBaseFirstVC.m; sourceTree = "<group>"; };
+		F6D8CC3B1FB42D6500673824 /* UIApplication+JYTopVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+JYTopVC.h"; sourceTree = "<group>"; };
+		F6D8CC3C1FB42D6500673824 /* UIApplication+JYTopVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+JYTopVC.m"; sourceTree = "<group>"; };
+		F6D8CC3F1FB42E1300673824 /* UIView+JYExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+JYExtension.h"; sourceTree = "<group>"; };
+		F6D8CC401FB42E1300673824 /* UIView+JYExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+JYExtension.m"; sourceTree = "<group>"; };
+		F6D8CC421FB448B800673824 /* UIImage+imageWithColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+imageWithColor.h"; sourceTree = "<group>"; };
+		F6D8CC431FB448B800673824 /* UIImage+imageWithColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+imageWithColor.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1174,6 +1193,8 @@
 		1F4D75581FAC4BB700E6516C /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				F675614F1FB342AE00E3277F /* MXParallaxHeader */,
+				F675613E1FB3428F00E3277F /* MaterialTextField */,
 				F68311D71FB31369005AC578 /* LCActionSheet */,
 				F6830EAC1FB2FAE0005AC578 /* RDV */,
 				F67D64141FAC7D9A00E23D16 /* IndicatorExt */,
@@ -1190,6 +1211,8 @@
 		1F4D75591FAC4BB700E6516C /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				F6D8CC3E1FB42DFF00673824 /* UIView */,
+				F6D8CC311FB401A500673824 /* UIApplication */,
 				F6830F1B1FB308C8005AC578 /* NSString */,
 				1F4D755A1FAC4BB700E6516C /* UIIamge */,
 				1F4D755D1FAC4BB700E6516C /* UIButton */,
@@ -1203,6 +1226,8 @@
 			children = (
 				1F4D755B1FAC4BB700E6516C /* UIImage+GKContact.m */,
 				1F4D755C1FAC4BB700E6516C /* UIImage+GKContact.h */,
+				F6D8CC421FB448B800673824 /* UIImage+imageWithColor.h */,
+				F6D8CC431FB448B800673824 /* UIImage+imageWithColor.m */,
 			);
 			path = UIIamge;
 			sourceTree = "<group>";
@@ -1313,6 +1338,10 @@
 				F67D644D1FAC84E800E23D16 /* NavViewController.m */,
 				1F4D757F1FAC4BB800E6516C /* FABaseVC.h */,
 				1F4D75801FAC4BB800E6516C /* FABaseVC.m */,
+				F6D8CC351FB402CB00673824 /* FMBaseViewController.h */,
+				F6D8CC361FB402CB00673824 /* FMBaseViewController.m */,
+				F6D8CC371FB402CB00673824 /* FMBaseFirstVC.h */,
+				F6D8CC381FB402CB00673824 /* FMBaseFirstVC.m */,
 				F68311D31FB30D46005AC578 /* Models */,
 			);
 			path = Based;
@@ -1576,6 +1605,37 @@
 			path = WisnucBoxUITests;
 			sourceTree = "<group>";
 		};
+		F675613E1FB3428F00E3277F /* MaterialTextField */ = {
+			isa = PBXGroup;
+			children = (
+				F675613F1FB3428F00E3277F /* MaterialTextField.h */,
+				F67561401FB3428F00E3277F /* MFTextField.h */,
+				F67561411FB3428F00E3277F /* MFTextField.m */,
+				F67561421FB3428F00E3277F /* UIColor+MaterialTextField.h */,
+				F67561431FB3428F00E3277F /* UIColor+MaterialTextField.m */,
+				F67561441FB3428F00E3277F /* UIFont+MaterialTextField.h */,
+				F67561451FB3428F00E3277F /* UIFont+MaterialTextField.m */,
+				F67561461FB3428F00E3277F /* UIImage+MFTint.h */,
+				F67561471FB3428F00E3277F /* UIImage+MFTint.m */,
+				F67561481FB3428F00E3277F /* UITextField+MFClearButton.h */,
+				F67561491FB3428F00E3277F /* UITextField+MFClearButton.m */,
+			);
+			path = MaterialTextField;
+			sourceTree = "<group>";
+		};
+		F675614F1FB342AE00E3277F /* MXParallaxHeader */ = {
+			isa = PBXGroup;
+			children = (
+				F67561501FB342AE00E3277F /* MXParallaxHeader.h */,
+				F67561511FB342AE00E3277F /* MXParallaxHeader.m */,
+				F67561521FB342AE00E3277F /* MXScrollView.h */,
+				F67561531FB342AE00E3277F /* MXScrollView.m */,
+				F67561541FB342AE00E3277F /* MXScrollViewController.h */,
+				F67561551FB342AE00E3277F /* MXScrollViewController.m */,
+			);
+			path = MXParallaxHeader;
+			sourceTree = "<group>";
+		};
 		F67D63FD1FAC7D3600E23D16 /* JYPhotos */ = {
 			isa = PBXGroup;
 			children = (
@@ -1699,6 +1759,7 @@
 		F6830EB61FB2FC40005AC578 /* LeftMenu */ = {
 			isa = PBXGroup;
 			children = (
+				F6D8CC2D1FB3F90100673824 /* manage */,
 				F6830EB71FB2FC40005AC578 /* Controller */,
 				F6830EB81FB2FC40005AC578 /* Model */,
 				F6830EB91FB2FC40005AC578 /* View */,
@@ -1712,8 +1773,6 @@
 				F6830EE81FB2FEE0005AC578 /* userMange */,
 				F6830EE21FB2FE9F005AC578 /* setting */,
 				F6830EE11FB2FE77005AC578 /* loginManage */,
-				F6830EE01FB2FE5B005AC578 /* userinfo */,
-				F6830EDF1FB2FE4A005AC578 /* cloud */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1756,35 +1815,6 @@
 				F6830EC31FB2FD1D005AC578 /* FMUsersLoginMangeCell.xib */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		F6830EDF1FB2FE4A005AC578 /* cloud */ = {
-			isa = PBXGroup;
-			children = (
-				F6830EDA1FB2FE42005AC578 /* FMOwnCloud.h */,
-				F6830EDB1FB2FE42005AC578 /* FMOwnCloud.m */,
-				F6830EDC1FB2FE42005AC578 /* FMOwnCloud.xib */,
-			);
-			name = cloud;
-			sourceTree = "<group>";
-		};
-		F6830EE01FB2FE5B005AC578 /* userinfo */ = {
-			isa = PBXGroup;
-			children = (
-				F6830EC71FB2FD4C005AC578 /* FMInfo.h */,
-				F6830EC81FB2FD4C005AC578 /* FMInfo.m */,
-				F6830EC91FB2FD4C005AC578 /* FMChooseHeaderVC.h */,
-				F6830ECA1FB2FD4C005AC578 /* FMChooseHeaderVC.m */,
-				F6830ECB1FB2FD4C005AC578 /* YSHYClipViewController.h */,
-				F6830ECC1FB2FD4C005AC578 /* YSHYClipViewController.m */,
-				F6830ECD1FB2FD4C005AC578 /* FMUserEditVC.h */,
-				F6830ECE1FB2FD4C005AC578 /* FMUserEditVC.m */,
-				F6830ECF1FB2FD4C005AC578 /* FMUserEditVC.xib */,
-				F6830ED01FB2FD4C005AC578 /* FMChangePwdVC.h */,
-				F6830ED11FB2FD4C005AC578 /* FMChangePwdVC.m */,
-				F6830ED21FB2FD4C005AC578 /* FMChangePwdVC.xib */,
-			);
-			name = userinfo;
 			sourceTree = "<group>";
 		};
 		F6830EE11FB2FE77005AC578 /* loginManage */ = {
@@ -2211,6 +2241,33 @@
 			path = LCActionSheet;
 			sourceTree = "<group>";
 		};
+		F6D8CC2D1FB3F90100673824 /* manage */ = {
+			isa = PBXGroup;
+			children = (
+				F6D8CC2E1FB3F91600673824 /* FMLeftManager.h */,
+				F6D8CC2F1FB3F91600673824 /* FMLeftManager.m */,
+			);
+			path = manage;
+			sourceTree = "<group>";
+		};
+		F6D8CC311FB401A500673824 /* UIApplication */ = {
+			isa = PBXGroup;
+			children = (
+				F6D8CC3B1FB42D6500673824 /* UIApplication+JYTopVC.h */,
+				F6D8CC3C1FB42D6500673824 /* UIApplication+JYTopVC.m */,
+			);
+			path = UIApplication;
+			sourceTree = "<group>";
+		};
+		F6D8CC3E1FB42DFF00673824 /* UIView */ = {
+			isa = PBXGroup;
+			children = (
+				F6D8CC3F1FB42E1300673824 /* UIView+JYExtension.h */,
+				F6D8CC401FB42E1300673824 /* UIView+JYExtension.m */,
+			);
+			path = UIView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2385,7 +2442,6 @@
 				F68310E81FB30AAE005AC578 /* hard_select@3x.png in Resources */,
 				F650356C1FAC00A70007979D /* Assets.xcassets in Resources */,
 				F68310991FB30AAE005AC578 /* cancel.png in Resources */,
-				F6830ED71FB2FD4C005AC578 /* FMUserEditVC.xib in Resources */,
 				F68310871FB30AAE005AC578 /* Arrow.png in Resources */,
 				F68311051FB30AAE005AC578 /* ic_person@3x.png in Resources */,
 				F68310811FB30AAE005AC578 /* album_share.png in Resources */,
@@ -2408,7 +2464,6 @@
 				F68311211FB30AAE005AC578 /* lock_line@3x.png in Resources */,
 				F68311411FB30AAE005AC578 /* no_photo.png in Resources */,
 				F68311D01FB30AAF005AC578 /* video.png in Resources */,
-				F6830EDE1FB2FE42005AC578 /* FMOwnCloud.xib in Resources */,
 				F68310D51FB30AAE005AC578 /* folder_icon@2x.png in Resources */,
 				F683108D1FB30AAE005AC578 /* back.png in Resources */,
 				1F4D75C01FAC5E3400E6516C /* ChooseAlertView.xib in Resources */,
@@ -2565,7 +2620,6 @@
 				F68311691FB30AAE005AC578 /* pic_线型@2x.png in Resources */,
 				F68311841FB30AAF005AC578 /* share@2x.png in Resources */,
 				F68311801FB30AAF005AC578 /* set.png in Resources */,
-				F6830ED91FB2FD4C005AC578 /* FMChangePwdVC.xib in Resources */,
 				F68310FB1FB30AAE005AC578 /* ic_https@2x.png in Resources */,
 				F683114A1FB30AAE005AC578 /* person_add.png in Resources */,
 				F68310C21FB30AAE005AC578 /* eye@2x.png in Resources */,
@@ -2852,13 +2906,14 @@
 			files = (
 				1F4D75C71FAC5EB500E6516C /* GCDAsyncSocket.m in Sources */,
 				F67D643D1FAC7E5600E23D16 /* JYBigImgCell.m in Sources */,
-				F6830ED81FB2FD4C005AC578 /* FMChangePwdVC.m in Sources */,
 				F67D64091FAC7D3600E23D16 /* PHPhotoLibrary+JYEXT.m in Sources */,
+				F675614A1FB3428F00E3277F /* MFTextField.m in Sources */,
 				1F4D75AF1FAC4BB800E6516C /* FilesServices.m in Sources */,
 				1F4D75AD1FAC4BB800E6516C /* WBLocalAsset+CoreDataProperties.m in Sources */,
 				F67D64061FAC7D3600E23D16 /* JYAsset.m in Sources */,
 				F67D64081FAC7D3600E23D16 /* PHFetchResult+JYEXT.m in Sources */,
 				1F4D75B01FAC4BB800E6516C /* AssetsServices.m in Sources */,
+				F675614B1FB3428F00E3277F /* UIColor+MaterialTextField.m in Sources */,
 				F68311D61FB311FC005AC578 /* FMUsers.m in Sources */,
 				F67D64071FAC7D3600E23D16 /* PHAsset+JYEXT.m in Sources */,
 				F6830F1A1FB300D2005AC578 /* FMLeftUserFooterView.m in Sources */,
@@ -2866,16 +2921,18 @@
 				1F4D75A61FAC4BB800E6516C /* DGPopUpViewTextView.m in Sources */,
 				F67D64481FAC7E6B00E23D16 /* JYForceTouchPreviewController.m in Sources */,
 				F67D64131FAC7D7F00E23D16 /* FileHash.m in Sources */,
+				F67561571FB342AE00E3277F /* MXScrollView.m in Sources */,
 				1F4D75A81FAC4BB800E6516C /* FMLoginTextField.m in Sources */,
 				1F4D75BF1FAC5E3400E6516C /* ChooseAlertView.m in Sources */,
 				1F4D75A91FAC4BB800E6516C /* FABaseVC.m in Sources */,
+				F67561581FB342AE00E3277F /* MXScrollViewController.m in Sources */,
 				F6830F021FB2FF8C005AC578 /* ImageHeaderView.m in Sources */,
 				F68311DE1FB31369005AC578 /* LCActionSheet.m in Sources */,
-				F6830ED31FB2FD4C005AC578 /* FMInfo.m in Sources */,
 				F67D64111FAC7D7F00E23D16 /* Base64.m in Sources */,
 				F67D644E1FAC84E800E23D16 /* NavViewController.m in Sources */,
 				F67D643A1FAC7E5600E23D16 /* FirstDecorationSectionView.m in Sources */,
 				F6830EBD1FB2FD10005AC578 /* FMUserLoginSettingVC.m in Sources */,
+				F6D8CC3D1FB42D6500673824 /* UIApplication+JYTopVC.m in Sources */,
 				F65035641FAC00A60007979D /* AppDelegate.m in Sources */,
 				F6830F181FB300D2005AC578 /* FMLeftUserCell.m in Sources */,
 				F6830EB51FB2FAE0005AC578 /* RDVTabBarItem.m in Sources */,
@@ -2885,8 +2942,11 @@
 				F6830EE61FB2FEC4005AC578 /* FMSetting.m in Sources */,
 				1F4D75AB1FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.m in Sources */,
 				1F4D75B31FAC4BB800E6516C /* NetServices.m in Sources */,
+				F67561561FB342AE00E3277F /* MXParallaxHeader.m in Sources */,
 				1F4D759C1FAC4BB800E6516C /* UIButton+EnlargeEdge.m in Sources */,
 				1F4D75CB1FAC5FF900E6516C /* FMCloudUserTableViewCell.m in Sources */,
+				F675614D1FB3428F00E3277F /* UIImage+MFTint.m in Sources */,
+				F6D8CC441FB448B800673824 /* UIImage+imageWithColor.m in Sources */,
 				1F3F99801FB0312300D6CC64 /* LocalDownloadViewController.m in Sources */,
 				F6830F131FB300D2005AC578 /* FMLeftMenu.m in Sources */,
 				F68311DF1FB31369005AC578 /* LCActionSheetCell.m in Sources */,
@@ -2900,22 +2960,27 @@
 				F67D644A1FAC7E6B00E23D16 /* JYThumbVC.m in Sources */,
 				F67D64491FAC7E6B00E23D16 /* JYShowBigImgViewController.m in Sources */,
 				1F4D75A21FAC4BB800E6516C /* FMLoginViewController.m in Sources */,
+				F6D8CC411FB42E1300673824 /* UIView+JYExtension.m in Sources */,
 				1F4D759F1FAC4BB800E6516C /* UIColor+fm_color.m in Sources */,
 				1FFEADB51FB1594900CD3068 /* CSDownloadModel.m in Sources */,
 				F6830EC51FB2FD1D005AC578 /* FMUsersLoginMangeCell.m in Sources */,
 				1F4D75C61FAC5EB500E6516C /* GCDAsyncUdpSocket.m in Sources */,
 				F6830F011FB2FF8C005AC578 /* BaseTableViewCell.m in Sources */,
-				F6830ED41FB2FD4C005AC578 /* FMChooseHeaderVC.m in Sources */,
 				F67D64271FAC7D9A00E23D16 /* UIView+JY_ExtendTouchRect.m in Sources */,
+				F675614C1FB3428F00E3277F /* UIFont+MaterialTextField.m in Sources */,
+				F6D8CC301FB3F91600673824 /* FMLeftManager.m in Sources */,
 				F67D64401FAC7E5600E23D16 /* TYDecorationSectionLayout.m in Sources */,
 				F67D64261FAC7D9A00E23D16 /* UIScrollView+IndicatorExt.m in Sources */,
 				1FFEADAE1FB087AE00CD3068 /* CSFileDownloadManager.m in Sources */,
+				F6D8CC391FB402CB00673824 /* FMBaseViewController.m in Sources */,
 				F67D643F1FAC7E5600E23D16 /* JYProgressHUD.m in Sources */,
 				1F4D75B11FAC4BB800E6516C /* UserServices.m in Sources */,
 				F6830EC41FB2FD1D005AC578 /* FMUserLoginHeaderView.m in Sources */,
+				F6D8CC3A1FB402CB00673824 /* FMBaseFirstVC.m in Sources */,
 				1F4D75D01FAC604100E6516C /* LoginTableViewCell.m in Sources */,
 				F679336D1FB00D9B00C9A7DC /* WBUser+CoreDataClass.m in Sources */,
 				F6830F041FB2FF8C005AC578 /* FMUserSettingCell.m in Sources */,
+				F675614E1FB3428F00E3277F /* UITextField+MFClearButton.m in Sources */,
 				F6AAD1891FB049E100DEDBDC /* WBFile+CoreDataProperties.m in Sources */,
 				1F4D75A01FAC4BB800E6516C /* SXLoadingView.m in Sources */,
 				F67933711FB0142900C9A7DC /* WBAsset.m in Sources */,
@@ -2924,18 +2989,15 @@
 				1F4D75BB1FAC5D2400E6516C /* ServerBrowser.m in Sources */,
 				F6AAD1881FB049E100DEDBDC /* WBFile+CoreDataClass.m in Sources */,
 				1F4D75A11FAC4BB800E6516C /* FMUserLoginViewController.m in Sources */,
-				F6830EDD1FB2FE42005AC578 /* FMOwnCloud.m in Sources */,
 				F679336E1FB00D9B00C9A7DC /* WBUser+CoreDataProperties.m in Sources */,
 				F6830F151FB300D2005AC578 /* MenuView.m in Sources */,
 				1F4D759E1FAC4BB800E6516C /* UIColor+FM_UserHeadImage.m in Sources */,
 				F65035611FAC00A60007979D /* main.m in Sources */,
 				1F4D759D1FAC4BB800E6516C /* UIButton+Universal.m in Sources */,
 				F67D643E1FAC7E5600E23D16 /* JYCollectionViewCell.m in Sources */,
-				F6830ED51FB2FD4C005AC578 /* YSHYClipViewController.m in Sources */,
 				F6830EF11FB2FEF3005AC578 /* FMUserSetting.m in Sources */,
 				1F4D75B21FAC4BB800E6516C /* DBServices.m in Sources */,
 				1F3F99891FB0353F00D6CC64 /* LocalDownloadTableViewCell.m in Sources */,
-				F6830ED61FB2FD4C005AC578 /* FMUserEditVC.m in Sources */,
 				F67D64121FAC7D7F00E23D16 /* CocoaSecurity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

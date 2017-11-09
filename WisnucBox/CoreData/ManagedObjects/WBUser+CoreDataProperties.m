@@ -27,5 +27,6 @@
 @dynamic bonjour_name;
 @dynamic backUpInWWAN;
 @dynamic autoBackUp;
+@dynamic avaterURL;
 
 @end

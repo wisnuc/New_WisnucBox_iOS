@@ -80,19 +80,30 @@
 
 - (WBLocalAsset *)getAssetWithLocalId:(NSString *)localId {
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"localId = %@", localId];
-    WBLocalAsset * asset = [WBLocalAsset MR_findAllWithPredicate:predicate].firstObject;
+    WBLocalAsset * asset = [WBLocalAsset MR_findFirstWithPredicate:predicate];
     return asset;
 }
 
-- (void)saveAsset:(WBLocalAsset *)asset {
-    WBLocalAsset * oldAsset = [self getAssetWithLocalId:asset.localId];
-    if(!oldAsset)
-        oldAsset = [WBLocalAsset MR_createEntity];
-    oldAsset.digest = asset.digest;
-    oldAsset.localId = asset.localId;
-    [_saveContext MR_saveToPersistentStoreAndWait];
-   
-    
+- (NSArray<WBLocalAsset *> *)getAllHashedAsset {
+    return [WBLocalAsset MR_findAll];
+}
+
+- (void)saveAssetWithLocalId:(NSString *)localId digest:(NSString *)digest{
+    __block WBLocalAsset * oldAsset = [self getAssetWithLocalId:localId];
+    dispatch_async(WB_AppServices.dbServices.saveQueue, ^{
+        if(!oldAsset) {
+            NSManagedObjectContext * context = [NSManagedObjectContext MR_defaultContext];
+            [context performBlock:^{
+                oldAsset = [WBLocalAsset MR_createEntityInContext:context];
+                oldAsset.localId = localId;
+                oldAsset.digest = digest;
+                [context MR_saveToPersistentStoreAndWait];
+            }];
+        }else {
+            oldAsset.digest = digest;
+            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        }
+    });
 }
 
 #pragma mark - photolibrary change delegate

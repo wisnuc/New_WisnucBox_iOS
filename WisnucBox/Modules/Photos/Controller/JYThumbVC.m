@@ -19,8 +19,9 @@
 #import "UIScrollView+IndicatorExt.h"
 #import "TYDecorationSectionLayout.h"
 
-@interface JYThumbVC ()<UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UIViewControllerPreviewingDelegate, JYShowBigImgViewControllerDelegate> {
+@interface JYThumbVC ()<UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UIViewControllerPreviewingDelegate, JYShowBigImgViewControllerDelegate, FMHeadViewDelegate> {
     NSInteger _currentScale;
+    BOOL _isSelectMode;
 }
 
 @property (nonatomic, strong) NSMutableArray<JYAsset *> *arrDataSourcesBackup;
@@ -28,6 +29,8 @@
 @property (nonatomic, strong) NSMutableArray<JYAsset *> *arrDataSources;
 
 @property (nonatomic, strong) NSMutableArray<NSString *> *timesArr;
+
+@property (nonatomic, strong) NSMutableArray<JYAsset *> *choosePhotos;
 
 @end
 
@@ -47,9 +50,18 @@
     return _arrDataSources;
 }
 
+- (NSMutableArray<JYAsset *> *)choosePhotos {
+    if(!_choosePhotos) {
+        _choosePhotos = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _choosePhotos;
+}
+
+
 - (instancetype)initWithDataSource:(NSArray<JYAsset *> *)assets {
     if(self = [super init]) {
         [self.arrDataSources addObjectsFromArray:assets];
+        _isSelectMode = NO;
     }
     return self;
 }
@@ -60,7 +72,6 @@
         [self removeObserver:self.collectionView.indicator forKeyPath:@"contentOffset"];
     }
 }
-
 
 -(void)sort
 {
@@ -289,7 +300,7 @@
     FMHeadView * headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headView" forIndexPath:indexPath];
     headView.headTitle = [self getDateStringWithPhoto: ((JYAsset *)((NSMutableArray *)_arrDataSources[indexPath.section])[indexPath.row]).asset.creationDate];
     headView.fmIndexPath = indexPath;
-//    headView.fmDelegate = self;
+    headView.fmDelegate = self;
     return headView;
 }
 
@@ -482,6 +493,12 @@ bool isDecelerating = NO;
 - (UIView *)photoBrowser:(JYShowBigImgViewController *)browser willDismissAtIndexPath:(NSIndexPath *)indexPath {
     JYCollectionViewCell *cell = (JYCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
     return cell;
+}
+
+#pragma mark - FMHeadViewDelegate
+
+-(void)FMHeadView:(FMHeadView *)headView isChooseBtn:(BOOL)isChoose {
+    
 }
 
 @end

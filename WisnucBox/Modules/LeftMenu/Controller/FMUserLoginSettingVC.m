@@ -34,9 +34,9 @@
 }
 
 -(void)getDataSource{
-    NSMutableArray * arr = [NSMutableArray arrayWithArray:[FMDBControl getAllUserLoginInfo]];
+    NSMutableArray * arr = [NSMutableArray arrayWithArray:[[AppServices sharedService].userServices getAllLoginUser]];
     NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:0];
-    for (FMUserLoginInfo * info in arr) {
+    for (WBUser * info in arr) {
         if(!info.bonjour_name)info.bonjour_name = @"未知设备,请删除后重新添加";
         if ([[dic allKeys] containsObject:info.bonjour_name]) {
             NSMutableArray * temp = dic[info.bonjour_name];
@@ -61,30 +61,30 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     FMUsersLoginMangeCell * cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FMUsersLoginMangeCell class]) forIndexPath:indexPath];
-    cell.userHeaderIV.image = [UIImage imageForName:((FMUserLoginInfo *)(_dataSource[indexPath.section][indexPath.row])).userName size:cell.userHeaderIV.bounds.size];
-    cell.userNameLb.text = ((FMUserLoginInfo *)(_dataSource[indexPath.section][indexPath.row])).userName;
-    @weaky(MyAppDelegate);
+    cell.userHeaderIV.image = [UIImage imageForName:((WBUser *)(_dataSource[indexPath.section][indexPath.row])).userName size:cell.userHeaderIV.bounds.size];
+    cell.userNameLb.text = ((WBUser *)(_dataSource[indexPath.section][indexPath.row])).userName;
+//    @weaky(MyAppDelegate);
     @weaky(self);
     cell.deleteBtnClick = ^(UIButton * btn){
-       FMUserLoginInfo * info =  (FMUserLoginInfo *)(_dataSource[indexPath.section][indexPath.row]);
+       WBUser * info =  (WBUser *)(_dataSource[indexPath.section][indexPath.row]);
         [SXLoadingView showProgressHUD:@"正在删除数据"];
-        [FMDBControl removeUserLoginInfo:info.uuid];//删除数据
+        [[AppServices sharedService].userServices deleteUserWithUserId:info.uuid];//删除数据
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [SXLoadingView hideProgressHUD];
-//            MyAppDelegate 
-            if (IsEquallString(info.uuid, DEF_UUID)) {
-                [PhotoManager shareManager].canUpload = NO;//停止上传
-                FMConfigInstance.userToken = @"";
-                [weak_MyAppDelegate resetDatasource];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [SXLoadingView hideProgressHUD];
-                    [weak_MyAppDelegate skipToLogin];
-                });
-            }else{
-                [weak_self getDataSource];
-                [tableView reloadData];
-            }
-            [weak_MyAppDelegate reloadLeftUsers];
+#warning user delete should logout
+//            if (IsEquallString(info.uuid, DEF_UUID)) {
+//                [PhotoManager shareManager].canUpload = NO;//停止上传
+//                FMConfigInstance.userToken = @"";
+//                [weak_MyAppDelegate resetDatasource];
+//                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                    [SXLoadingView hideProgressHUD];
+//                    [weak_MyAppDelegate skipToLogin];
+//                });
+//            }else{
+//                [weak_self getDataSource];
+//                [tableView reloadData];
+//            }
+//            [weak_MyAppDelegate reloadLeftUsers];
         });
     };
     return cell;
@@ -105,7 +105,7 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    NSString * str = ((FMUserLoginInfo *)(_dataSource[section][0])).bonjour_name;
+    NSString * str = ((WBUser *)(_dataSource[section][0])).bonjour_name;
     NSArray * tempArr = [str componentsSeparatedByString:@"."];
     if(tempArr.count > 2){
         NSString * str2 = tempArr[0];

@@ -20,6 +20,7 @@
 #import "MenuView.h"
 #import "FMLeftMenu.h"
 #import "UIImage+GKContact.h"
+#import "AppDelegate.h"
 
 @interface MenuView ()<UIGestureRecognizerDelegate>
 
@@ -243,7 +244,7 @@
 
 -(void)openMenuView{
     
-    FMLeftMenu * view = (FMLeftMenu *)self.leftMenuView;
+//    FMLeftMenu * view = (FMLeftMenu *)self.leftMenuView;
 //    if (!KISCLOUD) {
 //        view.nameLabel.text = [FMConfigInstance getUserNameWithUUID:DEF_UUID];
 //        view.userHeaderIV.image = [UIImage imageForName:view.nameLabel.text size:view.userHeaderIV.bounds.size];

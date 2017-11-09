@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSString *stationId;
 @property (nullable, nonatomic, copy) NSString *bonjour_name;
 @property (nullable, nonatomic, copy) NSString *sn_address;
+@property (nullable, nonatomic, copy) NSString *avaterURL;
 @property (nonatomic) BOOL isFirstUser;
 @property (nonatomic) BOOL isAdmin;
 @property (nonatomic) BOOL isCloudLogin;

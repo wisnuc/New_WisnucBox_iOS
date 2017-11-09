@@ -305,10 +305,9 @@
         [asset.asset getSha256:^(NSError *error, NSString *sha256) {
             if(error) return callback(error, NULL);
             //save sha256
-            WBLocalAsset * ass = [WBLocalAsset MR_createEntity];
-            ass.localId = asset.asset.localIdentifier;
-            ass.digest = sha256;
-            [[AppServices sharedService].assetServices saveAsset:ass];
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                [WB_AppServices.assetServices saveAssetWithLocalId:asset.asset.localIdentifier digest:sha256];
+            });
             callback(NULL, sha256);
         }];
 }

@@ -19,12 +19,6 @@
     if(!_contentView){
         _contentView = [[UIView alloc]initWithFrame:CGRectZero];
         _contentView.backgroundColor = [UIColor whiteColor];
-//        _contentView.backgroundColor = UICOLOR_RGB(0xfafafa);
-//        _contentView.layer.shadowColor = [[UIColor blackColor]CGColor];
-//        _contentView.layer.shadowOffset = CGSizeMake(0, -2);
-//        _contentView.layer.shadowRadius = 5.0;
-//        _contentView.layer.shadowOpacity = 0.3;
-        
         _titleLb = [[UILabel alloc]initWithFrame:CGRectMake((20+44+33)/2+8, 10, 100, 20)];
         _titleLb.textColor = [UIColor blackColor];
         _titleLb.font = [UIFont systemFontOfSize:14];
@@ -38,12 +32,12 @@
         [_contentView addSubview:_choosebtn];
         [self addSubview:_contentView];
         
-//        [_contentView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.left.mas_equalTo(self.mas_left).with.offset(-((20+44/2)));
-//            make.right.mas_equalTo(self.mas_right);
-//            make.top.mas_equalTo(self.mas_top);
-//            make.bottom.mas_equalTo(self.mas_bottom);
-//        }];
+        [_contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self.mas_left).with.offset(-((20+44/2)));
+            make.right.mas_equalTo(self.mas_right);
+            make.top.mas_equalTo(self.mas_top);
+            make.bottom.mas_equalTo(self.mas_bottom);
+        }];
     }
 }
 
@@ -59,20 +53,20 @@
      [_choosebtn setBackgroundImage:[UIImage imageNamed:[self getImageWithChoose:_isChoose]] forState:UIControlStateNormal];
 }
 
-//- (void)setFmState:(FMPhotosCollectionViewCellState)fmState{
-//    _fmState = fmState;
-//    if (fmState == FMPhotosCollectionViewCellStateCanChoose) {
-//        [UIView animateWithDuration:0.5 animations:^{
-//            _titleLb.transform = CGAffineTransformMakeTranslation((20+44)/2 - (33-15)/2 +5, 0);
-//            _choosebtn.transform = CGAffineTransformMakeTranslation((20+44)/2 + 5 + 10, 0);
-//        }];
-//    }else{
-//        [UIView animateWithDuration:0.5 animations:^{
-//            _titleLb.transform = CGAffineTransformIdentity;
-//            _choosebtn.transform = CGAffineTransformIdentity;
-//        }];
-//    }
-//}
+- (void)setIsSelectMode:(BOOL)isSelectMode {
+    _isSelectMode = isSelectMode;
+    if (_isSelectMode) {
+        [UIView animateWithDuration:0.5 animations:^{
+            _titleLb.transform = CGAffineTransformMakeTranslation((20+44)/2 - (33-15)/2 +5, 0);
+            _choosebtn.transform = CGAffineTransformMakeTranslation((20+44)/2 + 5 + 10, 0);
+        }];
+    }else{
+        [UIView animateWithDuration:0.5 animations:^{
+            _titleLb.transform = CGAffineTransformIdentity;
+            _choosebtn.transform = CGAffineTransformIdentity;
+        }];
+    }
+}
 
 -(NSString *)getImageWithChoose:(BOOL)isChoose{
     if (isChoose) {

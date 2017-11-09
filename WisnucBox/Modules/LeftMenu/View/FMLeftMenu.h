@@ -14,7 +14,7 @@
 
 -(void)LeftMenuViewClickSettingTable:(NSInteger)tag andTitle:(NSString *)title;
 
--(void)LeftMenuViewClickUserTable:(FMUserLoginInfo *)info;
+-(void)LeftMenuViewClickUserTable:(WBUser *)info;
 
 @end
 

@@ -12,4 +12,8 @@
 
 @property (nonatomic) dispatch_queue_t saveQueue;
 
+@property (nonatomic) NSManagedObjectContext * saveContext;
+
+-(NSManagedObjectContext *)createContext;
+
 @end

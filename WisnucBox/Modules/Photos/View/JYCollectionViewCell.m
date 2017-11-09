@@ -10,6 +10,7 @@
 #import "JYAsset.h"
 #import "PHPhotoLibrary+JYEXT.h"
 #import "JYConst.h"
+#import "UIImage+imageWithColor.h"
 
 @interface JYCollectionViewCell ()
 
@@ -19,6 +20,19 @@
 @end
 
 @implementation JYCollectionViewCell
+
+-(void)prepareForReuse{
+    [super prepareForReuse];
+    self.imageView.backgroundColor =UICOLOR_RGB(0xf5f5f5);
+    self.imageView.image = [UIImage imageWithColor:UICOLOR_RGB(0xf5f5f5)];
+}
+
+- (instancetype)initWithFrame:(CGRect)frame{
+    if(self = [super initWithFrame:frame]) {
+        
+    }
+    return self;
+}
 
 - (void)layoutSubviews
 {
@@ -133,12 +147,12 @@
 //        self.videoImageView.hidden = NO;
 //        self.liveImageView.hidden = YES;
 //        self.timeLabel.text = model.duration;
-//    } else if (model.type == ZLAssetMediaTypeGif) {
+//    } else if (model.type == JYMediaTypeGif) {
 //        self.videoBottomView.hidden = !self.allSelectGif;
 //        self.videoImageView.hidden = YES;
 //        self.liveImageView.hidden = YES;
 //        self.timeLabel.text = @"GIF";
-//    } else if (model.type == ZLAssetMediaTypeLivePhoto) {
+//    } else if (model.type == JYMediaTypeLivePhoto) {
 //        self.videoBottomView.hidden = !self.allSelectLivePhoto;
 //        self.videoImageView.hidden = YES;
 //        self.liveImageView.hidden = NO;

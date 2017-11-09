@@ -22,4 +22,16 @@
     return _saveQueue;
 }
 
+- (NSManagedObjectContext *)saveContext {
+    if(!_saveContext) {
+        _saveContext = [NSManagedObjectContext MR_newMainQueueContext];
+    }
+    return _saveContext;
+}
+
+
+- (NSManagedObjectContext *)createContext {
+    return [NSManagedObjectContext MR_contextWithParent:self.saveContext];
+}
+
 @end

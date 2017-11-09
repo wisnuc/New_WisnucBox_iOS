@@ -21,6 +21,8 @@
 #define IsNull(__Text) [__Text isKindOfClass:[NSNull class]]
 #define IsEquallString(_Str1,_Str2)  [_Str1 isEqualToString:_Str2]
 
+#define MyAppDelegate ((AppDelegate *)[[UIApplication sharedApplication] delegate])
+
 #ifndef weaky
 #if DEBUG
 #if __has_feature(objc_arc)
