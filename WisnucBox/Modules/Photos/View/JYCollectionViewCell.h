@@ -28,5 +28,10 @@
 @property (nonatomic, assign) BOOL showMask;
 
 @property (nonatomic, copy) void (^selectedBlock)(BOOL);
+@property (nonatomic, copy) void (^longPressBlock)();
+
+@property (nonatomic, assign) BOOL isSelect;
+
+- (void)setIsSelect:(BOOL)isSelect animation:(BOOL)animat;
 
 @end

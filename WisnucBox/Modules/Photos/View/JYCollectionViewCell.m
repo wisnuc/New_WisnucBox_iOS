@@ -29,9 +29,16 @@
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if(self = [super initWithFrame:frame]) {
-        
+        UILongPressGestureRecognizer * longGesture =
+        [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongGesture:)];
+        longGesture.minimumPressDuration = 0.5f;
+        [self.contentView addGestureRecognizer:longGesture];
     }
     return self;
+}
+
+- (void)handleLongGesture:(UILongPressGestureRecognizer * )gesture{
+    if (gesture.state == UIGestureRecognizerStateBegan && _longPressBlock) _longPressBlock();
 }
 
 - (void)layoutSubviews
@@ -65,20 +72,19 @@
     return _imageView;
 }
 
-//- (UIButton *)btnSelect
-//{
-//    if (!_btnSelect) {
-//        _btnSelect = [UIButton buttonWithType:UIButtonTypeCustom];
-//        _btnSelect.frame = CGRectMake(GetViewWidth(self.contentView)-26, 5, 23, 23);
-//        [_btnSelect setBackgroundImage:GetImageWithName(@"btn_unselected.png") forState:UIControlStateNormal];
-//        [_btnSelect setBackgroundImage:GetImageWithName(@"btn_selected.png") forState:UIControlStateSelected];
-//        [_btnSelect addTarget:self action:@selector(btnSelectClick:) forControlEvents:UIControlEventTouchUpInside];
-//        //扩大点击区域
-//        [_btnSelect setEnlargeEdgeWithTop:0 right:0 bottom:20 left:20];
-//        [self.contentView addSubview:self.btnSelect];
-//    }
-//    return _btnSelect;
-//}
+- (UIButton *)btnSelect
+{
+    if (!_btnSelect) {
+        _btnSelect = [UIButton buttonWithType:UIButtonTypeCustom];
+        _btnSelect.frame = CGRectMake(GetViewWidth(self.contentView)-26, 5, 23, 23);
+        [_btnSelect setBackgroundImage:ImageWithName(@"select.png") forState:UIControlStateNormal];
+        [_btnSelect addTarget:self action:@selector(btnSelectClick:) forControlEvents:UIControlEventTouchUpInside];
+        //扩大点击区域
+        [_btnSelect setEnlargeEdgeWithTop:0 right:0 bottom:20 left:20];
+        [self.contentView addSubview:self.btnSelect];
+    }
+    return _btnSelect;
+}
 //
 //- (UIImageView *)videoBottomView
 //{
@@ -193,12 +199,24 @@
     }];
 }
 
-//- (void)btnSelectClick:(UIButton *)sender {
-//    if (!self.btnSelect.selected) {
-//        [self.btnSelect.layer addAnimation:GetBtnStatusChangedAnimation() forKey:nil];
-//    }
-//    if (self.selectedBlock) {
-//        self.selectedBlock(self.btnSelect.selected);
-//    }
-//}
+- (void)setIsSelect:(BOOL)isSelect animation:(BOOL)animat {
+    _isSelect = isSelect;
+    self.btnSelect.hidden = !_isSelect;
+    if (_isSelect) {
+        if(animat) {
+            [self.btnSelect.layer addAnimation:GetBtnStatusChangedAnimation() forKey:nil];
+            [UIView animateWithDuration:0.3 animations:^{
+                self.imageView.transform = CGAffineTransformMakeScale(0.8, 0.8);
+            }];
+        } else self.imageView.transform = CGAffineTransformMakeScale(0.8, 0.8);
+    }else{
+        self.imageView.transform = CGAffineTransformIdentity;
+    }
+
+}
+
+- (void)btnSelectClick:(UIButton *)sender {
+    [self setIsSelect:!_isSelect animation:YES];
+    if(_selectedBlock) _selectedBlock(_isSelect);
+}
 @end

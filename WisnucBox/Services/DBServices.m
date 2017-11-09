@@ -17,7 +17,7 @@
 - (dispatch_queue_t)saveQueue{
     if(!_saveQueue){
         _saveQueue = dispatch_queue_create("com.wisnucbox.save", DISPATCH_QUEUE_SERIAL);
-        dispatch_set_target_queue(_saveQueue, dispatch_get_global_queue(1, 0));
+        dispatch_set_target_queue(_saveQueue, dispatch_get_global_queue(0, 0));
     }
     return _saveQueue;
 }

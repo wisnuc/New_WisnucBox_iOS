@@ -21,7 +21,7 @@
 
 @interface JYThumbVC ()<UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UIViewControllerPreviewingDelegate, JYShowBigImgViewControllerDelegate, FMHeadViewDelegate> {
     NSInteger _currentScale;
-    BOOL _isSelectMode;
+    
 }
 
 @property (nonatomic, strong) NSMutableArray<JYAsset *> *arrDataSourcesBackup;
@@ -31,6 +31,8 @@
 @property (nonatomic, strong) NSMutableArray<NSString *> *timesArr;
 
 @property (nonatomic, strong) NSMutableArray<JYAsset *> *choosePhotos;
+
+@property (nonatomic, assign) BOOL isSelectMode;
 
 @end
 
@@ -272,18 +274,27 @@
     JYAsset *model;
     model = ((NSMutableArray *)self.arrDataSources[indexPath.section])[indexPath.row];
     
-//    weakify(self);
-//    __weak typeof(cell) weakCell = cell;
-    
+    jy_weakify(self);
     cell.selectedBlock = ^(BOOL selected) {
-//        strongify(weakSelf);
-//        __strong typeof(weakCell) strongCell = weakCell;
-        
+        jy_strongify(weakSelf);
+        if(!strongSelf.isSelectMode) return;
+        if(selected) {
+            
+        }else {
+            [strongSelf.choosePhotos removeObject:model];
+        }
+    };
+    
+    cell.longPressBlock = ^() {
+        jy_strongify(weakSelf);
+        if(strongSelf.isSelectMode) return;
+        strongSelf.isSelectMode = true;
+        [strongSelf.collectionView reloadData];
     };
     if (collectionView.indicator) {
         collectionView.indicator.slider.timeLabel.text = [self getMouthDateStringWithPhoto:model.asset.creationDate];
     }
-    
+    [cell setIsSelect:[self.choosePhotos containsObject:model] animation:NO];
     cell.allSelectGif = YES;
     cell.allSelectLivePhoto = YES;
     cell.showSelectBtn = NO;
@@ -357,6 +368,7 @@
 
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit
 {
+    if(_isSelectMode) return;
     JYAsset *model = [(JYForceTouchPreviewController *)viewControllerToCommit model];
     
     UIViewController *vc = [self getMatchVCWithModel:model];
