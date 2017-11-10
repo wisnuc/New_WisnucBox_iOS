@@ -31,7 +31,8 @@
     [super viewDidLoad];
     self.title = @"用户管理";
     self.navigationController.navigationBar.translucent = NO;
-    [self createNavbtn];
+    [_backButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
+    
     [self getData];
     [self displayInfomation];
     [self registerTableView];
@@ -48,7 +49,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
-      [super viewWillDisappear:animated];
+    [super viewWillDisappear:animated];
     
 //    self.navigationController.interactivePopGestureRecognizer.delegate = self.navDelegate;
 }
@@ -66,35 +67,28 @@
 }
 
 - (void)getData{
-#warning need api
-//    FMAsyncUsersAPI * usersApi = [FMAsyncUsersAPI new];
-//    [SXLoadingView showProgressHUD:@"正在加载..."];
-//    [usersApi startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-//        NSLog(@"%@",request.responseJsonObject);
-//        NSArray * userArr;
-//        if (KISCLOUD) {
-//            NSDictionary *dic = request.responseJsonObject;
-//            userArr = dic[@"data"];
-//        }else{
-//             userArr = request.responseJsonObject;
-//        }
-//        
-//        NSMutableArray *tempDataSource = [NSMutableArray arrayWithCapacity:0];
-//        for (NSDictionary * dic in userArr) {
-//            FMUsers * model = [FMUsers yy_modelWithJSON:dic];
-//            [tempDataSource addObject:model];
-//        }
-//        //主线程刷新
-//        self.dataSource = tempDataSource;
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [self.usersTableView reloadData];
-//        });
-//        [SXLoadingView hideProgressHUD];
-//    } failure:^(__kindof JYBaseRequest *request) {
-//        [SXLoadingView hideProgressHUD];
-//        NSLog(@"%@",request.error);
-//        NSLog(@"失败");
-//    }];
+    FMAsyncUsersAPI * usersApi = [FMAsyncUsersAPI new];
+    [SXLoadingView showProgressHUD:@"正在加载..."];
+    [usersApi startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSArray * userArr = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"]
+                                : request.responseJsonObject;
+        
+        NSMutableArray *tempDataSource = [NSMutableArray arrayWithCapacity:0];
+        for (NSDictionary * dic in userArr) {
+            FMUsers * model = [FMUsers yy_modelWithJSON:dic];
+            [tempDataSource addObject:model];
+        }
+        self.dataSource = tempDataSource;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.usersTableView reloadData];
+        });
+        [SXLoadingView hideProgressHUD];
+    } failure:^(__kindof JYBaseRequest *request) {
+        [SXLoadingView hideProgressHUD];
+        [SXLoadingView showAlertHUD:@"请求失败" duration:1];
+        NSLog(@"%@",request.error);
+        NSLog(@"FMAsyncUsersAPI 失败");
+    }];
 }
 
 -(NSMutableArray *)dataSource{
@@ -102,18 +96,6 @@
         _dataSource = [NSMutableArray arrayWithCapacity:0];
     }
     return _dataSource;
-}
-
-
--(void)createNavbtn{
-//    UIButton * finishBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 30, 50, 20)];
-//    [finishBtn addTarget:self  action:@selector(backbtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//    finishBtn.titleLabel.font = [UIFont fontWithName:FANGZHENG size:16];
-//    //    [finishBtn setImage:[UIImage imageNamed:@"arrow_back"] forState:UIControlStateNormal];
-//    [finishBtn setTitle:@"完成" forState:UIControlStateNormal];
-//    UIBarButtonItem * item2 = [[UIBarButtonItem alloc]initWithCustomView:finishBtn];
-//    self.navigationItem.rightBarButtonItem = item2;
-    [_backButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
 }
 
 - (IBAction)addBtnClick:(id)sender {

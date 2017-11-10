@@ -105,8 +105,10 @@
 -(void)dealloc{
     if (self.collectionView.indicator) {
         [self.collectionView.indicator.slider removeObserver:self forKeyPath:@"sliderState"];
-        [self removeObserver:self.collectionView.indicator forKeyPath:@"contentOffset"];
+        [self.collectionView removeObserver:self.collectionView.indicator forKeyPath:@"contentOffset"];
     }
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    NSLog(@"JYThumbVC delloc");
 }
 
 -(void)sort
@@ -182,6 +184,17 @@
     [self initCollectionView];
     [self addPinchGesture];
     [self createControlbtn];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userAuthChange:) name:ASSETS_AUTH_CHANGE_NOTIFY object:nil];
+}
+
+- (void)userAuthChange:(NSNotification *)notify {
+    NSMutableArray * allPhotos = [NSMutableArray arrayWithArray:WB_AppServices.assetServices.allAssets];
+    self.arrDataSources = allPhotos;
+    [self sort];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.collectionView reloadData];
+    });
+    
 }
 
 -(void)createControlbtn{
@@ -223,14 +236,6 @@
             [self.collectionView reloadData];
             [self addLeftBtn];
             _addButton.hidden = NO;
-//            if (!_edgeGesture) {
-//                _edgeGesture = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(gesture:)];
-//                // 指定左边缘滑动
-//                _edgeGesture.edges = UIRectEdgeLeft;
-//                [self.view addGestureRecognizer:_edgeGesture];
-//                // 如果ges的手势与collectionView手势都识别的话,指定以下代码,代表是识别传入的手势
-//                [self.collectionView.panGestureRecognizer requireGestureRecognizerToFail:_edgeGesture];
-//            }
         }
     };
     actionSheet.scrolling          = YES;
@@ -246,10 +251,7 @@
         _chooseHeadView.backgroundColor = UICOLOR_RGB(0x03a9f4);
         UIButton * leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 16, 48, 48 )];
         UIImage * backImage = [UIImage imageNamed:@"back"];
-        //        UIImage * backHighlightImage = [UIImage imageNamed:@"back_grayhighlight"];
-        //        [backImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 1, 1) resizingMode:UIImageResizingModeStretch];
         [leftBtn setImage:backImage forState:UIControlStateNormal];
-        //        [leftBtn setImage:backHighlightImage forState:UIControlStateHighlighted];
         [leftBtn addTarget:self action:@selector(leftBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         _leftBtn = leftBtn;
         
@@ -439,43 +441,44 @@
     
     jy_weakify(self);
     cell.selectedBlock = ^(BOOL selected) {
-        jy_strongify(weakSelf);
-        if(!strongSelf.isSelectMode) return;
+        if(!weakSelf.isSelectMode) return;
         BOOL needReload = NO;
         if(selected) {
-            [strongSelf.choosePhotos addObject:model];
+            [weakSelf.choosePhotos addObject:model];
             __block BOOL containAll = YES;
-            [(NSArray *)strongSelf.arrDataSources[indexPath.section] enumerateObjectsUsingBlock:^(JYAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                if(![self.choosePhotos containsObject:obj]) {
+            [(NSArray *)weakSelf.arrDataSources[indexPath.section] enumerateObjectsUsingBlock:^(JYAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if(![weakSelf.choosePhotos containsObject:obj]) {
                     containAll = NO;
                     *stop = YES;
                 }
             }];
-            if(containAll) [self.chooseSection addObject:[NSIndexPath indexPathForRow:0 inSection:indexPath.section]];
+            if(containAll) [weakSelf.chooseSection addObject:[NSIndexPath indexPathForRow:0 inSection:indexPath.section]];
             needReload = containAll;
         }else {
-            [strongSelf.choosePhotos removeObject:model];
+            [weakSelf.choosePhotos removeObject:model];
             NSIndexPath * indexP = [NSIndexPath indexPathForRow:0 inSection:indexPath.section];
-            if([strongSelf.chooseSection containsObject:indexP]){
-                [strongSelf.chooseSection removeObject:indexP];
+            if([weakSelf.chooseSection containsObject:indexP]){
+                [weakSelf.chooseSection removeObject:indexP];
                 needReload = YES;
             }
         }
         if(needReload)
-            [strongSelf.collectionView reloadData];
+            [weakSelf.collectionView reloadData];
     };
     
     cell.longPressBlock = ^() {
-        jy_strongify(weakSelf);
-        if(strongSelf.isSelectMode) return;
-        strongSelf.isSelectMode = true;
-        [strongSelf.collectionView reloadData];
+        if(weakSelf.isSelectMode) return;
+        weakSelf.isSelectMode = true;
+        [weakSelf addLeftBtn];
+        weakSelf.addButton.hidden = NO;
+        [weakSelf.collectionView reloadData];
     };
+    
     if (collectionView.indicator) {
         collectionView.indicator.slider.timeLabel.text = [self getMouthDateStringWithPhoto:model.asset.creationDate];
     }
-    
-    [cell setIsSelect:[self.choosePhotos containsObject:model] animation:NO];
+    cell.isSelectMode = self.isSelectMode;
+    [cell setIsSelect: _isSelectMode ? [self.choosePhotos containsObject:model] : NO animation:NO];
     cell.model = model;
     
     return cell;

@@ -18,11 +18,12 @@
 
 @property (nonatomic) NSManagedObjectContext * saveContext;
 
+@property (nonatomic, readwrite) BOOL userAuth;
+
 @end
 
 @implementation AssetsServices{
     PHFetchResult * _lastResult;
-    BOOL _userAuth;
 }
 
 - (void)abort{
@@ -32,6 +33,7 @@
 - (void)dealloc {
     if(_userAuth)
         [[PHPhotoLibrary sharedPhotoLibrary] unregisterChangeObserver:self];
+    NSLog(@"AssetsServices delloc");
 }
 
 - (instancetype)init {
@@ -45,6 +47,7 @@
 }
 
 - (void)checkAuth {
+    _userAuth = NO;
     PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
     if(status == PHAuthorizationStatusDenied || status == PHAuthorizationStatusRestricted){
         NSLog(@"用户拒绝");
@@ -54,28 +57,29 @@
         _userAuth = YES;
     } else if (status == PHAuthorizationStatusNotDetermined) {
         [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-           if(status == PHAuthorizationStatusAuthorized)
-                _userAuth = YES;
-            else
-                _userAuth = NO;
+            _userAuth = status == PHAuthorizationStatusAuthorized ? YES : NO;
+            if(_userAuth) [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
+            [[NSNotificationCenter defaultCenter] postNotificationName:ASSETS_AUTH_CHANGE_NOTIFY object:@(status)];
         }];
     }
 }
 
 - (NSArray *)allAssets {
-    if (!_allAssets && _userAuth) {
-        NSMutableArray * all = [NSMutableArray arrayWithCapacity:0];
-        [PHPhotoLibrary getAllAsset:^(PHFetchResult<PHAsset *> *result, NSArray<PHAsset *> *assets) {
-            [assets enumerateObjectsUsingBlock:^(PHAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                JYAssetType type = [obj getJYAssetType];
-                NSString *duration = [obj getDurationString];
-                [all addObject:[JYAsset modelWithAsset:obj type:type duration:duration]];
+    @synchronized (self) {
+        if (!_allAssets && _userAuth) {
+            NSMutableArray * all = [NSMutableArray arrayWithCapacity:0];
+            [PHPhotoLibrary getAllAsset:^(PHFetchResult<PHAsset *> *result, NSArray<PHAsset *> *assets) {
+                [assets enumerateObjectsUsingBlock:^(PHAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    JYAssetType type = [obj getJYAssetType];
+                    NSString *duration = [obj getDurationString];
+                    [all addObject:[JYAsset modelWithAsset:obj type:type duration:duration]];
+                }];
+                _lastResult = result;
             }];
-            _lastResult = result;
-        }];
-        _allAssets = all;
+            _allAssets = all;
+        }
+        return _allAssets;
     }
-    return _allAssets;
 }
 
 - (WBLocalAsset *)getAssetWithLocalId:(NSString *)localId {
@@ -147,7 +151,7 @@
         
         self.allAssets = [tmpDic allValues];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:ASSETS_UPDATE_NOTIFY object:0];
+        [[NSNotificationCenter defaultCenter] postNotificationName:ASSETS_UPDATE_NOTIFY object:changeDic];
         if(_AssetChangeBlock)
             _AssetChangeBlock(changeDic[@"removeObjects"], changeDic[@"insertedObjects"]);
     }

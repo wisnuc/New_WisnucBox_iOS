@@ -35,3 +35,7 @@
 - (void)synchronizedCurrentUser;
 
 @end
+
+@interface UserSession : NSObject
+
+@end

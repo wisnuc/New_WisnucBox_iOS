@@ -15,6 +15,10 @@
     
 }
 
+- (void)dealloc {
+    NSLog(@"FilesServices dealloc");
+}
+
 - (void)saveFile:(WBFile *)file{
 //    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"uuid = %@ && fileUUID = %@", file.uuid, file.fileUUID];
 //    WBFile * oldFile = [WBFile MR_findFirstWithPredicate:<#(nullable NSPredicate *)#>]

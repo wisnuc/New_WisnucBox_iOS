@@ -24,7 +24,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
     [_backButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
     self.userNameTF.returnKeyType = UIReturnKeyDone;
     self.userNameTF.delegate = self;
@@ -34,25 +34,18 @@
     self.doubleCheckTF.returnKeyType = UIReturnKeyDone;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES];
     self.navDelegate = self.navigationController.interactivePopGestureRecognizer.delegate;
     self.navigationController.interactivePopGestureRecognizer.delegate = (id)self;
 }
+
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:YES];
     self.navigationController.interactivePopGestureRecognizer.delegate = self.navDelegate;
 }
-
-
 
 - (IBAction)addBtnClick:(id)sender {
     if (![NSString isUserName:_userNameTF.text]) {
@@ -73,20 +66,18 @@
     else if(!IsEquallString(self.passwordTF.text, self.doubleCheckTF.text))
      [SXLoadingView  showProgressHUDText:@"两次密码不一致！" duration:1];
     else{
-#warning need createuser api 
-//        FMCreateUserAPI * api = [FMCreateUserAPI new];
-//        NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:0];
-////         [dic setObject:@"local" forKey:@"type"];
-//        [dic setObject:self.userNameTF.text forKey:@"username"];
-//        [dic setObject:IsNilString(self.passwordTF.text)?@"":self.passwordTF.text forKey:@"password"];
-//        api.param = dic;
-//        [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-//            [MyAppDelegate.notification displayNotificationWithMessage:@"创建用户成功" forDuration:1];
-//            [self.navigationController popViewControllerAnimated:YES];
-//        } failure:^(__kindof JYBaseRequest *request) {
-//            NSLog(@"%@",request.error);
-//            [MyAppDelegate.notification displayNotificationWithMessage:@"创建用户失败" forDuration:1];
-//        }];
+        FMCreateUserAPI * api = [FMCreateUserAPI new];
+        NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:0];
+        [dic setObject:self.userNameTF.text forKey:@"username"];
+        [dic setObject:IsNilString(self.passwordTF.text)?@"":self.passwordTF.text forKey:@"password"];
+        api.param = dic;
+        [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+            [SXLoadingView showAlertHUD:@"创建用户成功" duration:1];
+            [self.navigationController popViewControllerAnimated:YES];
+        } failure:^(__kindof JYBaseRequest *request) {
+            NSLog(@"FMCreateUserAPI %@",request.error);
+            [SXLoadingView showAlertHUD:@"创建用户失败" duration:1];
+        }];
     }
 }
 

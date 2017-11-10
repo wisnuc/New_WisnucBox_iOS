@@ -13,6 +13,7 @@
 #import "UIApplication+JYTopVC.h"
 #import "FMUserLoginSettingVC.h"
 
+
 @interface FMLeftManager ()<FMLeftMenuDelegate>
 
 @end
@@ -27,16 +28,13 @@
         _leftMenu = leftMenu;
         
         leftMenu.delegate = self;
-        leftMenu.menus = [NSMutableArray arrayWithObjects:@"文件下载",@"设置",@"注销",nil];//@"个人信息", @"我的私有云", @"用户管理", @"设置", @"帮助",
-        leftMenu.imageNames = [NSMutableArray arrayWithObjects:@"storage",@"set",@"cancel",nil];//@"personal",@"cloud",@"user",@"set",@"help",
+        leftMenu.menus = LeftMenu_NotAdminTitles;//@"个人信息", @"我的私有云", @"用户管理", @"设置", @"帮助",
+        leftMenu.imageNames = LeftMenu_NotAdminImages;//@"personal",@"cloud",@"user",@"set",@"help",
         //配置Users 列表
         
         leftMenu.usersDatasource = [self getUsersInfo];
         
         [leftMenu.settingTabelView reloadData];
-        _userManagerVC = [[FMUserSetting alloc]init];
-        _settingVC =  [[FMSetting alloc]initPrivate];
-        _loginManager = [[FMLoginViewController alloc]init];
         
         self.menu = [MenuView MenuViewWithDependencyView:MyAppDelegate.window MenuView:leftMenu isShowCoverView:YES];
         self.menu.showBlock = ^() {
@@ -172,7 +170,7 @@
 //            [selectVC  pushViewController:vc animated:YES];
 //        }
     }else if(IsEquallString(title, @"用户管理")){
-        vc = self.userManagerVC;
+        vc = [[FMUserSetting alloc]init];
         if ([selectVC isKindOfClass:[NavViewController class]]) {
             [selectVC  pushViewController:vc animated:YES];
         }
@@ -185,59 +183,16 @@
         
     }
     else if (IsEquallString(title, @"设置")){
-        vc = self.settingVC;
+        vc = [[FMSetting alloc]initPrivate];
         if ([selectVC isKindOfClass:[NavViewController class]]) {
             [selectVC  pushViewController:vc animated:YES];
         }
     }
     else if(IsEquallString(title,@"注销")){
         NSLog(@"注销");
-#warning logout
-//        vc = self.zhuxiao;
-//        [SXLoadingView showProgressHUD:@"正在注销"];
-//        [PhotoManager shareManager].canUpload = NO;//停止上传
-//        FMConfigInstance.userToken = @"";
-//        FMConfigInstance.isCloud = NO;
-//        [self resetDatasource];
-//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"uploadImageArr"];
-//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:PHOTO_ENTRY_UUID_STR];
-//        //        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"uploadImageArr"];
-//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:KSWITHCHON];
-//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"siftPhoto"];
-//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"addCount"];
-//        
-//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:DRIVE_UUID_STR];
-//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:DIR_UUID_STR];
-//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:ENTRY_UUID_STR];
-//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:KSTATIONID_STR];
-//        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-//        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-//        [[PhotoManager shareManager] cleanUploadTask];
-//        [[FMPhotoManager  defaultManager] stop];
-//        [[FMPhotoManager  defaultManager] destroy];
-//        [[TYDownLoadDataManager manager] cleanTask];
-//        //        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"addCountNumber"];
-//        
-//        //        [[NSUserDefaults standardUserDefaults] removeObjectForKey:UUID_STR];
-//        [SXLoadingView hideProgressHUD];
-//        [FMDBControl reloadTables];
-//        [FMDBControl asyncLoadPhotoToDB];
-//        
-//        [[SDImageCache sharedImageCache] setValue:nil forKey:@"memCache"];
-//        [[SDImageCache sharedImageCache] clearDiskOnCompletion:nil];
-//        [[SDImageCache sharedImageCache] clearMemory];
-//        [[YYImageCache sharedCache].diskCache removeAllObjects];
-//        [[YYImageCache sharedCache].memoryCache removeAllObjects];
-//        self.filesTabBar = nil;
-//        self.sharesTabBar = nil;
-//        
-//        _Info = nil;
-//        _OwnCloud = nil;
-//        _UserSetting = nil;
-//        _Setting = nil;
-//        _Help = nil;
-//        //        _zhuxiao = [[FMLoginViewController alloc]init];
-//        _downAndUpLoadManager = nil;
+#warning  logout
+        //!!!!!: logout do something
+        [SXLoadingView showProgressHUD:@"正在注销"];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self skipToLogin];
         });
@@ -249,26 +204,31 @@
     }
 }
 
+- (void)reloadWithTitles:(NSArray *)titles andImages:(NSArray *)imageNames {
+    
+}
+
 -(void)skipToLogin{
     
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        self.window.rootViewController = nil;
-//        [self.window resignKeyWindow];
-//        
-//        for (UIView *view in self.window.subviews) {
-//            [view removeFromSuperview];
-//        }
-//        [self.window removeFromSuperview];
-//        self.UserSetting = nil;
-//        
-//        [self reloadLeftMenuIsAdmin:NO];
-//        FMLoginViewController * vc = [[FMLoginViewController alloc]init];
-//        _zhuxiao = vc;
-//        //        vc.title = @"搜索附近设备";
-//        NavViewController *nav = [[NavViewController alloc] initWithRootViewController:vc];
-//        self.window.rootViewController = nav;
-//        [self.window makeKeyAndVisible];
-//    });
+    dispatch_async(dispatch_get_main_queue(), ^{
+        MyAppDelegate.window.rootViewController = nil;
+        [MyAppDelegate.window resignKeyWindow];
+        
+        [WB_PhotoUploadManager destroy];
+        [WB_UserService logoutUser];
+        [WB_AppServices abort];
+        for (UIView *view in MyAppDelegate.window.subviews) {
+            [view removeFromSuperview];
+        }
+        
+        //reload menu
+        [self reloadWithTitles:LeftMenu_NotAdminTitles andImages:LeftMenu_NotAdminImages];
+        
+        FMLoginViewController * vc = [[FMLoginViewController alloc]init];
+        NavViewController *nav = [[NavViewController alloc] initWithRootViewController:vc];
+        MyAppDelegate.window.rootViewController = nav;
+        [MyAppDelegate.window makeKeyAndVisible];
+    });
 }
 
 

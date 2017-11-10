@@ -17,6 +17,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         appServices = [[AppServices alloc] init];
+        [appServices assetServices];
         [appServices bootStrap];
     });
     return appServices;
@@ -27,9 +28,7 @@
         NSArray * allLocalAsset = [self.assetServices allAssets];
         [self.photoUploadManager startWithLocalAssets:allLocalAsset andNetAssets:@[]];
         if(self.userServices.isUserLogin) {
-            //        NSString * userToken = self.userServices.defaultToken;
-            //        self.photoUploadManager setNetAssets:
-            //        self.photoUploadManager startUploadWithUrl:<#(NSURL *)#> AndToken:<#(NSString *)#>
+            
         }
     });
 }
@@ -299,12 +298,14 @@
 
 - (void)asset:(JYAsset *)asset getSha256:(void(^)(NSError *, NSString *))callback {
     WBLocalAsset * as = [[AppServices sharedService].assetServices getAssetWithLocalId:asset.asset.localIdentifier];
-    if(as)
+    if(as) {
+        asset.digest = as.digest;
         callback(NULL, as.digest);
-    else
+    }else
         [asset.asset getSha256:^(NSError *error, NSString *sha256) {
             if(error) return callback(error, NULL);
             //save sha256
+            asset.digest = sha256;
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
                 [WB_AppServices.assetServices saveAssetWithLocalId:asset.asset.localIdentifier digest:sha256];
             });

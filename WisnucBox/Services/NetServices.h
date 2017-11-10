@@ -16,8 +16,6 @@
 
 @property (nonatomic, copy) NSString *cloudUrl;
 
-@property (nonatomic, copy) NSString *token;
-
-- (instancetype)initWithLocalURL:(NSString *)localUrl andCloudURL:(NSString *)cloudUrl andToken:(NSString *)token;
+- (instancetype)initWithLocalURL:(NSString *)localUrl andCloudURL:(NSString *)cloudUrl;
 
 @end

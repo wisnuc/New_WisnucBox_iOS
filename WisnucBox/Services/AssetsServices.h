@@ -10,6 +10,7 @@
 #import "WBLocalAsset+CoreDataClass.h"
 
 #define ASSETS_UPDATE_NOTIFY @"ASSETS_UPDATE_NOTIFY"
+#define ASSETS_AUTH_CHANGE_NOTIFY @"ASSETS_AUTH_CHANGE_NOTIFY"
 
 @class JYAsset;
 @interface AssetsServices : NSObject <ServiceProtocol>
@@ -17,6 +18,8 @@
 @property (nonatomic, copy, readonly) NSArray<JYAsset *> * allAssets;
 
 @property (nonatomic, copy) void(^AssetChangeBlock)(NSArray<JYAsset *> *removeObjs, NSArray<JYAsset *> *insertObjs);
+
+@property (nonatomic, readonly) BOOL userAuth;
 
 - (WBLocalAsset *)getAssetWithLocalId:(NSString *)localId;
 

@@ -14,6 +14,10 @@
     
 }
 
+- (void)dealloc {
+    NSLog(@"DBServices delloc");
+}
+
 - (dispatch_queue_t)saveQueue{
     if(!_saveQueue){
         _saveQueue = dispatch_queue_create("com.wisnucbox.save", DISPATCH_QUEUE_SERIAL);

@@ -56,4 +56,9 @@
 //Services
 #import "AppServices.h"
 
+//Network
+#import "JYNetworkerHeader.h"
+#import "FMAsyncUsersAPI.h"
+#import "FMCreateUserAPI.h"
+
 #endif /* default_pch */

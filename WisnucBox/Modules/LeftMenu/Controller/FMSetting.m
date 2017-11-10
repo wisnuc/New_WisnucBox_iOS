@@ -19,6 +19,9 @@
 
 @implementation FMSetting
 
+- (void)dealloc{
+    NSLog(@"FMSetting delloc");
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -40,7 +43,8 @@
 }
 
 - (void)setSwitch{
-    _switchOn = [AppServices sharedService].userServices.currentUser.autoBackUp;
+    if(WB_UserService.currentUser)
+        _switchOn = [AppServices sharedService].userServices.currentUser.autoBackUp;
 }
 
 -(void)anySwitch{
@@ -53,14 +57,8 @@
     
 }
 
-- (void)setNotifacation{
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(swichActionForNot) name:@"dontBackUp" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(swichAction) name:@"backUp" object:nil];
-}
-
 - (instancetype)initPrivate {
     self  = [super init];
-    [self setNotifacation];
     return self;
 }
 
@@ -81,9 +79,10 @@
         UISwitch *switchBtn = [[UISwitch alloc]initWithFrame:CGRectMake(__kWidth - 70, 16, 50, 40)];
         switchBtn.on = _switchOn;
         [switchBtn addTarget:self  action:@selector(switchBtnHandleForSync:) forControlEvents:UIControlEventValueChanged];
+        if(!WB_UserService.isUserLogin) switchBtn.enabled = NO;
         [cell.contentView addSubview:switchBtn];
     }
-else
+    else
         if(indexPath.row == 1){
         UILabel * titleLb = [[UILabel alloc] initWithFrame:CGRectMake(16, 23, 200, 17)];
         titleLb.text = @"清除缓存";
@@ -110,30 +109,25 @@ else
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(indexPath.row == 0){
-//        _displayProgress = !_displayProgress;
-//        [self.settingTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    }
-    else if (indexPath.row == 1) {
+    if (indexPath.row == 1) {
         NSUInteger  i = [SDImageCache sharedImageCache].getSize;
        i = i + [[YYImageCache sharedCache].diskCache totalCost];
         if(i>0){
-        LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:@"确认清除缓存"
-                                                                 delegate:self
-                                                        cancelButtonTitle:@"取消"
-                                                    otherButtonTitleArray:@[@"清除"]];
-        actionSheet.scrolling          = YES;
-        actionSheet.buttonHeight       = 60.0f;
-        actionSheet.visibleButtonCount = 3.6f;
-        [actionSheet show];
-    }
+            LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:@"确认清除缓存"
+                                                                     delegate:self
+                                                            cancelButtonTitle:@"取消"
+                                                        otherButtonTitleArray:@[@"清除"]];
+            actionSheet.scrolling          = YES;
+            actionSheet.buttonHeight       = 60.0f;
+            actionSheet.visibleButtonCount = 3.6f;
+            [actionSheet show];
+        }
     }
 }
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 64;
-        
 }
 
 
@@ -169,8 +163,8 @@ else
 }
 
 -(void)switchBtnHandleForSync:(UISwitch *)switchBtn{
-    [AppServices sharedService].userServices.currentUser.backUpInWWAN = switchBtn.isOn;
-    [[AppServices sharedService].userServices synchronizedCurrentUser];
+    WB_UserService.currentUser.backUpInWWAN = switchBtn.isOn;
+    [WB_UserService synchronizedCurrentUser];
 #warning open or close backup
     if (switchBtn.isOn) {
         //MyNSLog(@"备份开关开启");
@@ -202,11 +196,6 @@ else
 
 -(void)backbtnClick:(UIButton *)back{
     [self.navigationController popViewControllerAnimated:YES];
-}
-
--(void)dealloc{
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"dontBackUp" object:nil];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"backUp" object:nil];
 }
 
 @end

@@ -11,13 +11,13 @@
 #import "FMLoginViewController.h"
 #import "MenuView.h"
 
+#define LeftMenu_NotAdminTitles [NSMutableArray arrayWithObjects:@"文件下载",@"设置",@"注销",nil]
+#define LeftMenu_NotAdminImages [NSMutableArray arrayWithObjects:@"storage",@"set",@"cancel",nil]
+
+#define LeftMenu_AdminTitles [NSMutableArray arrayWithObjects:@"文件下载",@"用户管理",@"设置",@"注销",nil]
+#define LeftMenu_AdminImages [NSMutableArray arrayWithObjects:@"storage",@"person_add",@"set",@"cancel",nil]
+
 @interface FMLeftManager : NSObject
-
-@property (nonatomic) UIViewController *userManagerVC;
-
-@property (nonatomic) UIViewController *settingVC;
-
-@property (nonatomic) UIViewController *loginManager;
 
 @property (nonatomic) MenuView * menu;
 
@@ -26,5 +26,7 @@
 
 
 - (instancetype)initLeftMenuWithTitles:(NSArray *)titles andImages:(NSArray *)imageNames;
+
+- (void)reloadWithTitles:(NSArray *)titles andImages:(NSArray *)imageNames;
 
 @end

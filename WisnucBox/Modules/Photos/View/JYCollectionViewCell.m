@@ -208,10 +208,10 @@
     }else{
         self.imageView.transform = CGAffineTransformIdentity;
     }
-
 }
 
 - (void)btnSelectClick:(UIButton *)sender {
+    if(!self.isSelectMode) return;
     [self setIsSelect:!_isSelect animation:YES];
     if(_selectedBlock) _selectedBlock(_isSelect);
 }

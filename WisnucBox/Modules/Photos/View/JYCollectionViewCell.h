@@ -32,6 +32,8 @@
 
 @property (nonatomic, assign) BOOL isSelect;
 
+@property (nonatomic, assign) BOOL isSelectMode;
+
 - (void)setIsSelect:(BOOL)isSelect animation:(BOOL)animat;
 
 @end
