@@ -100,19 +100,19 @@
 //            MyNSLog(@"%@",NSStringFromCGSize(image.size))  ;
         }];
     }
-#warning look up app version
-//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    NSString *urlString = [NSString stringWithFormat:@"https://itunes.apple.com/cn/lookup?id=1132191394"];
-//    [manager.requestSerializer setValue: [NSString stringWithFormat:@"JWT %@", [AppServices sharedService].userServices.defaultToken] forHTTPHeaderField:@"Authorization"];
-//    [manager POST:urlString parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
-//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        NSArray *array = responseObject[@"results"];
-//        NSDictionary *dict = [array lastObject];
-//        NSString *app_Version = dict[@"version"];
-//        self.versionLb.text = [NSString stringWithFormat:@"WISNUC %@",app_Version];
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        
-//    }];
+
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *urlString = [NSString stringWithFormat:@"https://itunes.apple.com/cn/lookup?id=1132191394"];
+    [manager.requestSerializer setValue: [NSString stringWithFormat:@"JWT %@", [AppServices sharedService].userServices.defaultToken] forHTTPHeaderField:@"Authorization"];
+    [manager POST:urlString parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSArray *array = responseObject[@"results"];
+        NSDictionary *dict = [array lastObject];
+        NSString *app_Version = dict[@"version"];
+        self.versionLb.text = [NSString stringWithFormat:@"WISNUC %@",app_Version];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 
     NSNotificationCenter *notiCenter = [NSNotificationCenter defaultCenter];
     [notiCenter addObserver:self selector:@selector(getAllPhotoCount) name:@"backUpProgressChange" object:nil];

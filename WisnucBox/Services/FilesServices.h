@@ -17,4 +17,6 @@
 
 - (BOOL)deleteFilesWithFileUUIDs:(NSArray<NSString *> *)fileuuids andUser:(NSString *)userId;
 
+- (long long)fileSizeAtPath:(NSString*) filePath;
+
 @end

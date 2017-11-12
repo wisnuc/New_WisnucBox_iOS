@@ -28,5 +28,8 @@
 @dynamic backUpInWWAN;
 @dynamic autoBackUp;
 @dynamic avaterURL;
+@dynamic userHome;
+@dynamic backUpDir;
+@dynamic backUpBaseDir;
 
 @end

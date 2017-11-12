@@ -27,6 +27,9 @@
     return self;
 }
 
-
+- (void)getUserUploadDir:(void(^)(NSError *, NSString * entryUUID))callback {
+    if(!WB_UserService.isUserLogin) return callback([NSError errorWithDomain:@"User Not Login" code:NO_USER_LOGIN userInfo:nil], NULL);
+    
+}
 
 @end
