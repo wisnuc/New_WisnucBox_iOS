@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		1F0898DC1FB05FF900B86723 /* eye_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0898DB1FB05FF800B86723 /* eye_off.png */; };
+		1F196F391FB9424A004D5EB7 /* FilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F196F371FB9424A004D5EB7 /* FilesViewController.m */; };
+		1F196F3A1FB9424A004D5EB7 /* FilesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F196F381FB9424A004D5EB7 /* FilesViewController.xib */; };
+		1F1AB9EC1FB968CA006EB1FC /* FLFilesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AB9EA1FB968C9006EB1FC /* FLFilesCell.m */; };
+		1F1AB9ED1FB968CA006EB1FC /* FLFilesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F1AB9EB1FB968C9006EB1FC /* FLFilesCell.xib */; };
+		1F1AB9F21FB97092006EB1FC /* NSObject+KVOBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AB9F11FB97092006EB1FC /* NSObject+KVOBlock.m */; };
+		1F1AB9F61FB971AF006EB1FC /* CSFileUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AB9F51FB971AF006EB1FC /* CSFileUtil.m */; };
+		1F1AB9F91FB9778E006EB1FC /* CSDateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AB9F81FB9778E006EB1FC /* CSDateUtil.m */; };
+		1F1ABA001FB978EB006EB1FC /* CSDownloadTaskQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AB9FF1FB978EB006EB1FC /* CSDownloadTaskQueue.m */; };
+		1F1ABA041FB97A0D006EB1FC /* CSDownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1ABA031FB97A0D006EB1FC /* CSDownloadTask.m */; };
 		1F3F99801FB0312300D6CC64 /* LocalDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F997E1FB0312300D6CC64 /* LocalDownloadViewController.m */; };
 		1F3F99811FB0312300D6CC64 /* LocalDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3F997F1FB0312300D6CC64 /* LocalDownloadViewController.xib */; };
 		1F3F99891FB0353F00D6CC64 /* LocalDownloadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F99871FB0353F00D6CC64 /* LocalDownloadTableViewCell.m */; };
@@ -514,6 +523,25 @@
 
 /* Begin PBXFileReference section */
 		1F0898DB1FB05FF800B86723 /* eye_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye_off.png; sourceTree = "<group>"; };
+		1F196F361FB9424A004D5EB7 /* FilesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilesViewController.h; sourceTree = "<group>"; };
+		1F196F371FB9424A004D5EB7 /* FilesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilesViewController.m; sourceTree = "<group>"; };
+		1F196F381FB9424A004D5EB7 /* FilesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilesViewController.xib; sourceTree = "<group>"; };
+		1F1AB9E91FB968C8006EB1FC /* FLFilesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLFilesCell.h; sourceTree = "<group>"; };
+		1F1AB9EA1FB968C9006EB1FC /* FLFilesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLFilesCell.m; sourceTree = "<group>"; };
+		1F1AB9EB1FB968C9006EB1FC /* FLFilesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FLFilesCell.xib; sourceTree = "<group>"; };
+		1F1AB9F01FB97092006EB1FC /* NSObject+KVOBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+KVOBlock.h"; sourceTree = "<group>"; };
+		1F1AB9F11FB97092006EB1FC /* NSObject+KVOBlock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+KVOBlock.m"; sourceTree = "<group>"; };
+		1F1AB9F41FB971AF006EB1FC /* CSFileUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSFileUtil.h; sourceTree = "<group>"; };
+		1F1AB9F51FB971AF006EB1FC /* CSFileUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSFileUtil.m; sourceTree = "<group>"; };
+		1F1AB9F71FB9778E006EB1FC /* CSDateUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSDateUtil.h; sourceTree = "<group>"; };
+		1F1AB9F81FB9778E006EB1FC /* CSDateUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSDateUtil.m; sourceTree = "<group>"; };
+		1F1AB9FB1FB9780D006EB1FC /* CSSingleDownloadTaskProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSSingleDownloadTaskProtocol.h; sourceTree = "<group>"; };
+		1F1AB9FC1FB97833006EB1FC /* CSDownloadUIBindProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSDownloadUIBindProtocol.h; sourceTree = "<group>"; };
+		1F1AB9FE1FB978EB006EB1FC /* CSDownloadTaskQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSDownloadTaskQueue.h; sourceTree = "<group>"; };
+		1F1AB9FF1FB978EB006EB1FC /* CSDownloadTaskQueue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSDownloadTaskQueue.m; sourceTree = "<group>"; };
+		1F1ABA021FB97A0D006EB1FC /* CSDownloadTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSDownloadTask.h; sourceTree = "<group>"; };
+		1F1ABA031FB97A0D006EB1FC /* CSDownloadTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSDownloadTask.m; sourceTree = "<group>"; };
+		1F1ABA091FB97C67006EB1FC /* CSDownloadEvenHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSDownloadEvenHandler.h; sourceTree = "<group>"; };
 		1F244D9D3BCB4706DAFC363E /* Pods-WisnucBox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.debug.xcconfig"; sourceTree = "<group>"; };
 		1F3F997D1FB0312300D6CC64 /* LocalDownloadViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalDownloadViewController.h; sourceTree = "<group>"; };
 		1F3F997E1FB0312300D6CC64 /* LocalDownloadViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalDownloadViewController.m; sourceTree = "<group>"; };
@@ -654,7 +682,7 @@
 		F650355C1FAC00A60007979D /* WisnucBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WisnucBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F65035601FAC00A60007979D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F65035621FAC00A60007979D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		F65035631FAC00A60007979D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		F65035631FAC00A60007979D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; wrapsLines = 0; };
 		F65035651FAC00A60007979D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		F65035661FAC00A60007979D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		F65035691FAC00A70007979D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -1156,6 +1184,88 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F196F351FB9416A004D5EB7 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				1F196F361FB9424A004D5EB7 /* FilesViewController.h */,
+				1F196F371FB9424A004D5EB7 /* FilesViewController.m */,
+				1F196F381FB9424A004D5EB7 /* FilesViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		1F1AB9E31FB96887006EB1FC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1F1AB9E91FB968C8006EB1FC /* FLFilesCell.h */,
+				1F1AB9EA1FB968C9006EB1FC /* FLFilesCell.m */,
+				1F1AB9EB1FB968C9006EB1FC /* FLFilesCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1F1AB9EE1FB96DEA006EB1FC /* DataSouce */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DataSouce;
+			sourceTree = "<group>";
+		};
+		1F1AB9EF1FB9706A006EB1FC /* NSObject */ = {
+			isa = PBXGroup;
+			children = (
+				1F1AB9F01FB97092006EB1FC /* NSObject+KVOBlock.h */,
+				1F1AB9F11FB97092006EB1FC /* NSObject+KVOBlock.m */,
+			);
+			path = NSObject;
+			sourceTree = "<group>";
+		};
+		1F1AB9F31FB97170006EB1FC /* FileUtil */ = {
+			isa = PBXGroup;
+			children = (
+				1F1AB9F41FB971AF006EB1FC /* CSFileUtil.h */,
+				1F1AB9F51FB971AF006EB1FC /* CSFileUtil.m */,
+				1F1AB9F71FB9778E006EB1FC /* CSDateUtil.h */,
+				1F1AB9F81FB9778E006EB1FC /* CSDateUtil.m */,
+			);
+			path = FileUtil;
+			sourceTree = "<group>";
+		};
+		1F1AB9FA1FB977F0006EB1FC /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				1F1AB9FB1FB9780D006EB1FC /* CSSingleDownloadTaskProtocol.h */,
+				1F1AB9FC1FB97833006EB1FC /* CSDownloadUIBindProtocol.h */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		1F1AB9FD1FB978C8006EB1FC /* Queue */ = {
+			isa = PBXGroup;
+			children = (
+				1F1AB9FE1FB978EB006EB1FC /* CSDownloadTaskQueue.h */,
+				1F1AB9FF1FB978EB006EB1FC /* CSDownloadTaskQueue.m */,
+			);
+			path = Queue;
+			sourceTree = "<group>";
+		};
+		1F1ABA011FB979F6006EB1FC /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				1F1ABA021FB97A0D006EB1FC /* CSDownloadTask.h */,
+				1F1ABA031FB97A0D006EB1FC /* CSDownloadTask.m */,
+			);
+			path = Task;
+			sourceTree = "<group>";
+		};
+		1F1ABA051FB97C1B006EB1FC /* Handler */ = {
+			isa = PBXGroup;
+			children = (
+				1F1ABA091FB97C67006EB1FC /* CSDownloadEvenHandler.h */,
+			);
+			path = Handler;
+			sourceTree = "<group>";
+		};
 		1F3F997C1FB030CC00D6CC64 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -1190,6 +1300,7 @@
 		1F4D75581FAC4BB700E6516C /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				1F1AB9F31FB97170006EB1FC /* FileUtil */,
 				F675614F1FB342AE00E3277F /* MXParallaxHeader */,
 				F675613E1FB3428F00E3277F /* MaterialTextField */,
 				F68311D71FB31369005AC578 /* LCActionSheet */,
@@ -1208,6 +1319,7 @@
 		1F4D75591FAC4BB700E6516C /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				1F1AB9EF1FB9706A006EB1FC /* NSObject */,
 				F6D8CC3E1FB42DFF00673824 /* UIView */,
 				F6D8CC311FB401A500673824 /* UIApplication */,
 				F6830F1B1FB308C8005AC578 /* NSString */,
@@ -1471,6 +1583,10 @@
 		1F7CE6601FB002F9004467C8 /* Download */ = {
 			isa = PBXGroup;
 			children = (
+				1F1ABA051FB97C1B006EB1FC /* Handler */,
+				1F1ABA011FB979F6006EB1FC /* Task */,
+				1F1AB9FD1FB978C8006EB1FC /* Queue */,
+				1F1AB9FA1FB977F0006EB1FC /* Protocol */,
 				1FFEADAF1FB1590A00CD3068 /* Model */,
 				1FFEADAB1FB087A100CD3068 /* Manage */,
 				1F3F99821FB0348400D6CC64 /* View */,
@@ -1569,6 +1685,9 @@
 			isa = PBXGroup;
 			children = (
 				C138D0671FB99B9C000CF518 /* Model */,
+				1F1AB9EE1FB96DEA006EB1FC /* DataSouce */,
+				1F1AB9E31FB96887006EB1FC /* View */,
+				1F196F351FB9416A004D5EB7 /* Controller */,
 			);
 			path = Files;
 			sourceTree = "<group>";
@@ -1757,20 +1876,12 @@
 		F67D64141FAC7D9A00E23D16 /* IndicatorExt */ = {
 			isa = PBXGroup;
 			children = (
-				F67D64151FAC7D9A00E23D16 /* asset */,
 				F67D641C1FAC7D9A00E23D16 /* UIScrollView+IndicatorExt.h */,
 				F67D641D1FAC7D9A00E23D16 /* UIScrollView+IndicatorExt.m */,
 				F67D641E1FAC7D9A00E23D16 /* UIView+JY_ExtendTouchRect.h */,
 				F67D641F1FAC7D9A00E23D16 /* UIView+JY_ExtendTouchRect.m */,
 			);
 			path = IndicatorExt;
-			sourceTree = "<group>";
-		};
-		F67D64151FAC7D9A00E23D16 /* asset */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = asset;
 			sourceTree = "<group>";
 		};
 		F67D64281FAC7DFE00E23D16 /* Photos */ = {
@@ -2636,6 +2747,7 @@
 				F683107C1FB30AAE005AC578 /* About@3x.png in Resources */,
 				F68310C01FB30AAE005AC578 /* download@3x.png in Resources */,
 				F68311231FB30AAE005AC578 /* lock_photo@2x.png in Resources */,
+				1F196F3A1FB9424A004D5EB7 /* FilesViewController.xib in Resources */,
 				1FD7A0EB1FB05A45000D4CB3 /* back.png in Resources */,
 				F683117E1FB30AAF005AC578 /* select@2x.png in Resources */,
 				F68311CA1FB30AAF005AC578 /* send-_select.png in Resources */,
@@ -2758,6 +2870,7 @@
 				F683110B1FB30AAE005AC578 /* icon_del@3x.png in Resources */,
 				F683108A1FB30AAE005AC578 /* Arrow_down.png in Resources */,
 				F683110F1FB30AAE005AC578 /* img_bg.jpg in Resources */,
+				1F1AB9ED1FB968CA006EB1FC /* FLFilesCell.xib in Resources */,
 				F683119F1FB30AAF005AC578 /* storage@2x.png in Resources */,
 				F68311611FB30AAE005AC578 /* photo_plus_open@3x.png in Resources */,
 				F683117D1FB30AAF005AC578 /* select.png in Resources */,
@@ -2941,6 +3054,7 @@
 				F67D64091FAC7D3600E23D16 /* PHPhotoLibrary+JYEXT.m in Sources */,
 				F675614A1FB3428F00E3277F /* MFTextField.m in Sources */,
 				1F4D75AF1FAC4BB800E6516C /* FilesServices.m in Sources */,
+				1F1AB9F61FB971AF006EB1FC /* CSFileUtil.m in Sources */,
 				1F4D75AD1FAC4BB800E6516C /* WBLocalAsset+CoreDataProperties.m in Sources */,
 				F67D64061FAC7D3600E23D16 /* JYAsset.m in Sources */,
 				F67D64081FAC7D3600E23D16 /* PHFetchResult+JYEXT.m in Sources */,
@@ -2959,6 +3073,7 @@
 				1F4D75A81FAC4BB800E6516C /* FMLoginTextField.m in Sources */,
 				1F4D75BF1FAC5E3400E6516C /* ChooseAlertView.m in Sources */,
 				71A3D6691FB57AC30002B8B1 /* JYNetworker.m in Sources */,
+				1F1AB9F91FB9778E006EB1FC /* CSDateUtil.m in Sources */,
 				1F4D75A91FAC4BB800E6516C /* FABaseVC.m in Sources */,
 				F67561581FB342AE00E3277F /* MXScrollViewController.m in Sources */,
 				F6830F021FB2FF8C005AC578 /* ImageHeaderView.m in Sources */,
@@ -2971,7 +3086,9 @@
 				F6D8CC3D1FB42D6500673824 /* UIApplication+JYTopVC.m in Sources */,
 				C138D0571FB94396000CF518 /* FLDrivesAPI.m in Sources */,
 				C138D05A1FB94D8D000CF518 /* FLGetDriveDirAPI.m in Sources */,
+				1F1ABA001FB978EB006EB1FC /* CSDownloadTaskQueue.m in Sources */,
 				F65035641FAC00A60007979D /* AppDelegate.m in Sources */,
+				1F196F391FB9424A004D5EB7 /* FilesViewController.m in Sources */,
 				F6830F181FB300D2005AC578 /* FMLeftUserCell.m in Sources */,
 				F6830EB51FB2FAE0005AC578 /* RDVTabBarItem.m in Sources */,
 				F6830EB31FB2FAE0005AC578 /* RDVTabBar.m in Sources */,
@@ -3007,9 +3124,11 @@
 				1F4D759F1FAC4BB800E6516C /* UIColor+fm_color.m in Sources */,
 				1FFEADB51FB1594900CD3068 /* CSDownloadModel.m in Sources */,
 				F6830EC51FB2FD1D005AC578 /* FMUsersLoginMangeCell.m in Sources */,
+				1F1AB9EC1FB968CA006EB1FC /* FLFilesCell.m in Sources */,
 				1F4D75C61FAC5EB500E6516C /* GCDAsyncUdpSocket.m in Sources */,
 				F6830F011FB2FF8C005AC578 /* BaseTableViewCell.m in Sources */,
 				F67D64271FAC7D9A00E23D16 /* UIView+JY_ExtendTouchRect.m in Sources */,
+				1F1ABA041FB97A0D006EB1FC /* CSDownloadTask.m in Sources */,
 				F675614C1FB3428F00E3277F /* UIFont+MaterialTextField.m in Sources */,
 				F6D8CC301FB3F91600673824 /* FMLeftManager.m in Sources */,
 				F67D64401FAC7E5600E23D16 /* TYDecorationSectionLayout.m in Sources */,
@@ -3036,6 +3155,7 @@
 				1F4D75A31FAC4BB800E6516C /* FMHandLoginVC.m in Sources */,
 				F6830F161FB300D2005AC578 /* FMLeftMenuCell.m in Sources */,
 				1F4D75BB1FAC5D2400E6516C /* ServerBrowser.m in Sources */,
+				1F1AB9F21FB97092006EB1FC /* NSObject+KVOBlock.m in Sources */,
 				F6AAD1881FB049E100DEDBDC /* WBFile+CoreDataClass.m in Sources */,
 				1F4D75A11FAC4BB800E6516C /* FMUserLoginViewController.m in Sources */,
 				F679336E1FB00D9B00C9A7DC /* WBUser+CoreDataProperties.m in Sources */,

@@ -10,4 +10,21 @@
 
 @implementation CSDownloadModel
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        _downloadFileName       = @"";
+        _downloadFileAvatorURL  = @"";
+        _downloadFinishTime     = @"";
+        _downloadFileSize       = [NSNumber numberWithLongLong:0];
+        _downloadFileVersion    = @"";
+        _downloadTaskURL        = @"";
+        _downloadFileSavePath   = @"";
+        _downloadTempSavePath   = @"";
+        _downloadFilePlistURL   = @"";
+    }
+    
+    return self;
+}
 @end

@@ -12,7 +12,7 @@
 #import "AppDelegate.h"
 #import "UIApplication+JYTopVC.h"
 #import "FMUserLoginSettingVC.h"
-
+#import "LocalDownloadViewController.h"
 
 @interface FMLeftManager ()<FMLeftMenuDelegate>
 
@@ -176,11 +176,10 @@
         }
     }
     else if (IsEquallString(title, @"文件下载")){
-//        vc = self.downAndUpLoadManager;
-//        if ([selectVC isKindOfClass:[NavViewController class]]) {
-//            [selectVC  pushViewController:vc animated:YES];
-//        }
-        
+        vc = [[LocalDownloadViewController alloc]init];
+        if ([selectVC isKindOfClass:[NavViewController class]]) {
+            [selectVC  pushViewController:vc animated:YES];
+        }
     }
     else if (IsEquallString(title, @"设置")){
         vc = [[FMSetting alloc]initPrivate];
