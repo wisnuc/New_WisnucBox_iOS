@@ -17,6 +17,8 @@
 
 - (BOOL)deleteFilesWithFileUUIDs:(NSArray<NSString *> *)fileuuids andUser:(NSString *)userId;
 
+- (NSArray<WBFile *> *)findAll;
+
 - (long long)fileSizeAtPath:(NSString*) filePath;
 
 @end
