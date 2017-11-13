@@ -8,6 +8,7 @@
 
 #import "FilesViewController.h"
 #import "FLFilesCell.h"
+#import "CSDownloadHelper.h"
 //test
 #import "TestDataModel.h"
 
@@ -86,8 +87,7 @@
                                                     otherButtonTitleArray:arr];
         actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
              if (buttonIndex == 1) {
-                 
-                 
+                 [[CSDownloadHelper  shareManager] downloadFileWithFileModel:dataModel UUID:@"1"];
              }
         };
         actionSheet.scrolling          = YES;

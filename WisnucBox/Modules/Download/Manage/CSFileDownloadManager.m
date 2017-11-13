@@ -243,11 +243,11 @@
             
             WBFile * wBFile = [WBFile MR_createEntityInContext:[NSManagedObjectContext MR_defaultContext]];
             wBFile.uuid = fileModel.downloadFileUserId;
-            
+            NSLog(@"%@",fileModel.downloadFileSize);
 //            wBFile.fileUUID = file.fileUUID;
             wBFile.fileName = fileModel.downloadFileName;
-            wBFile.fileSize = fileModel.downloadFileSize;
-            wBFile.downloadedFileSize = fileModel.downloadedFileSize;
+            wBFile.fileSize = [NSString stringWithFormat:@"%@",fileModel.downloadFileSize];
+            wBFile.downloadedFileSize = [NSString stringWithFormat:@"%@",fileModel.downloadedFileSize];
             wBFile.filePath = fileModel.downloadFileSavePath;
             wBFile.timeDate = fileModel.downloadFinishTime;
             wBFile.downloadURL = fileModel.downloadTaskURL;

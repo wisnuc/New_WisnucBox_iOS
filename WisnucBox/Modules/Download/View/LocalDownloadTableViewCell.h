@@ -11,5 +11,6 @@
 @interface LocalDownloadTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *fileNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *downloadTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *downloadedSizeLabel;
 
 @end

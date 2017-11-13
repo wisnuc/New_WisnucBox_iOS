@@ -19,8 +19,8 @@
 }
 -(NSDictionary *)requestHeaderFieldValueDictionary{
     
-    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat:@"JWT %@",DEF_Token] forKey:@"Authorization"];
-    return dic;
+//    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat:@"JWT %@",DEF_Token] forKey:@"Authorization"];
+    return nil;
 }
 
 -(NSTimeInterval)requestTimeoutInterval{

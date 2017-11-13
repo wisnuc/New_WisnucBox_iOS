@@ -56,6 +56,8 @@
 		1F4D75CC1FAC5FF900E6516C /* FMCloudUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F4D75CA1FAC5FF900E6516C /* FMCloudUserTableViewCell.xib */; };
 		1F4D75D01FAC604100E6516C /* LoginTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75CE1FAC604100E6516C /* LoginTableViewCell.m */; };
 		1F4D75D11FAC604100E6516C /* LoginTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F4D75CF1FAC604100E6516C /* LoginTableViewCell.xib */; };
+		1F8EAF241FB9A7C100FEED19 /* LocalDownloadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F8EAF211FB9A7C000FEED19 /* LocalDownloadingTableViewCell.xib */; };
+		1F8EAF251FB9A7C100FEED19 /* LocalDownloadingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EAF221FB9A7C000FEED19 /* LocalDownloadingTableViewCell.m */; };
 		1FD7A0EA1FB05A45000D4CB3 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E41FB05A45000D4CB3 /* back@2x.png */; };
 		1FD7A0EB1FB05A45000D4CB3 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E51FB05A45000D4CB3 /* back.png */; };
 		1FD7A0EC1FB05A45000D4CB3 /* back_gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E61FB05A45000D4CB3 /* back_gray@3x.png */; };
@@ -96,9 +98,6 @@
 		C138D05D1FB96100000CF518 /* FLCreateDirAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D05C1FB96100000CF518 /* FLCreateDirAPI.m */; };
 		C138D0601FB970F7000CF518 /* NSString+DeviceName.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D05F1FB970F7000CF518 /* NSString+DeviceName.m */; };
 		C138D0661FB99AF3000CF518 /* FMMediaAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D0651FB99AF3000CF518 /* FMMediaAPI.m */; };
-		C138D06E1FB99B9C000CF518 /* DirectoriesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D0691FB99B9C000CF518 /* DirectoriesModel.m */; };
-		C138D06F1FB99B9C000CF518 /* DriveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D06B1FB99B9C000CF518 /* DriveModel.m */; };
-		C138D0701FB99B9C000CF518 /* EntriesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D06D1FB99B9C000CF518 /* EntriesModel.m */; };
 		C138D0781FB9A4B0000CF518 /* DriveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D0721FB9A4AF000CF518 /* DriveModel.m */; };
 		C138D0791FB9A4B0000CF518 /* EntriesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D0761FB9A4B0000CF518 /* EntriesModel.m */; };
 		C138D07A1FB9A4B0000CF518 /* DirectoriesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D0771FB9A4B0000CF518 /* DirectoriesModel.m */; };
@@ -624,6 +623,9 @@
 		1F4D75CD1FAC604100E6516C /* LoginTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTableViewCell.h; sourceTree = "<group>"; };
 		1F4D75CE1FAC604100E6516C /* LoginTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTableViewCell.m; sourceTree = "<group>"; };
 		1F4D75CF1FAC604100E6516C /* LoginTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginTableViewCell.xib; sourceTree = "<group>"; };
+		1F8EAF211FB9A7C000FEED19 /* LocalDownloadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalDownloadingTableViewCell.xib; sourceTree = "<group>"; };
+		1F8EAF221FB9A7C000FEED19 /* LocalDownloadingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalDownloadingTableViewCell.m; sourceTree = "<group>"; };
+		1F8EAF231FB9A7C000FEED19 /* LocalDownloadingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalDownloadingTableViewCell.h; sourceTree = "<group>"; };
 		1FD7A0E41FB05A45000D4CB3 /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
 		1FD7A0E51FB05A45000D4CB3 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		1FD7A0E61FB05A45000D4CB3 /* back_gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_gray@3x.png"; sourceTree = "<group>"; };
@@ -1308,6 +1310,9 @@
 		1F3F99821FB0348400D6CC64 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1F8EAF231FB9A7C000FEED19 /* LocalDownloadingTableViewCell.h */,
+				1F8EAF221FB9A7C000FEED19 /* LocalDownloadingTableViewCell.m */,
+				1F8EAF211FB9A7C000FEED19 /* LocalDownloadingTableViewCell.xib */,
 				1F3F99861FB0353F00D6CC64 /* LocalDownloadTableViewCell.h */,
 				1F3F99871FB0353F00D6CC64 /* LocalDownloadTableViewCell.m */,
 				1F3F99881FB0353F00D6CC64 /* LocalDownloadTableViewCell.xib */,
@@ -2678,6 +2683,7 @@
 				F68311381FB30AAE005AC578 /* more_highlight@2x.png in Resources */,
 				F68310F91FB30AAE005AC578 /* ic_delete@3x.png in Resources */,
 				F68311871FB30AAF005AC578 /* share_photo@2x.png in Resources */,
+				1F8EAF241FB9A7C100FEED19 /* LocalDownloadingTableViewCell.xib in Resources */,
 				F67D643B1FAC7E5600E23D16 /* FirstDecorationSectionView.xib in Resources */,
 				F68311C91FB30AAF005AC578 /* praise_solid_select@3x.png in Resources */,
 				F68310FC1FB30AAE005AC578 /* ic_https@3x.png in Resources */,
@@ -3077,7 +3083,6 @@
 				1F4D75C71FAC5EB500E6516C /* GCDAsyncSocket.m in Sources */,
 				71A3D6791FB5AD230002B8B1 /* FMGetUsersAPI.m in Sources */,
 				F67D643D1FAC7E5600E23D16 /* JYBigImgCell.m in Sources */,
-				C138D06E1FB99B9C000CF518 /* DirectoriesModel.m in Sources */,
 				F67D64091FAC7D3600E23D16 /* PHPhotoLibrary+JYEXT.m in Sources */,
 				F675614A1FB3428F00E3277F /* MFTextField.m in Sources */,
 				1F4D75AF1FAC4BB800E6516C /* FilesServices.m in Sources */,
@@ -3125,7 +3130,6 @@
 				1F4D75A41FAC4BB800E6516C /* UserModel.m in Sources */,
 				1F4D75B41FAC4BB800E6516C /* AppServices.m in Sources */,
 				F6830EE61FB2FEC4005AC578 /* FMSetting.m in Sources */,
-				C138D06F1FB99B9C000CF518 /* DriveModel.m in Sources */,
 				1F4D75AB1FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.m in Sources */,
 				1F4D75B31FAC4BB800E6516C /* NetServices.m in Sources */,
 				71A3D67A1FB5AD230002B8B1 /* FMAccountUsersAPI.m in Sources */,
@@ -3148,7 +3152,6 @@
 				C138D0661FB99AF3000CF518 /* FMMediaAPI.m in Sources */,
 				F67D644A1FAC7E6B00E23D16 /* JYThumbVC.m in Sources */,
 				F67D64491FAC7E6B00E23D16 /* JYShowBigImgViewController.m in Sources */,
-				C138D0701FB99B9C000CF518 /* EntriesModel.m in Sources */,
 				1F4D75A21FAC4BB800E6516C /* FMLoginViewController.m in Sources */,
 				F6D8CC411FB42E1300673824 /* UIView+JYExtension.m in Sources */,
 				1F4D759F1FAC4BB800E6516C /* UIColor+fm_color.m in Sources */,
@@ -3166,6 +3169,7 @@
 				F67D64261FAC7D9A00E23D16 /* UIScrollView+IndicatorExt.m in Sources */,
 				71A3D6671FB57AC30002B8B1 /* JYBaseRequest.m in Sources */,
 				71A3D6711FB57F830002B8B1 /* FMAsyncUsersAPI.m in Sources */,
+				1F8EAF251FB9A7C100FEED19 /* LocalDownloadingTableViewCell.m in Sources */,
 				1FFEADAE1FB087AE00CD3068 /* CSFileDownloadManager.m in Sources */,
 				F6D8CC391FB402CB00673824 /* FMBaseViewController.m in Sources */,
 				F67D643F1FAC7E5600E23D16 /* JYProgressHUD.m in Sources */,
