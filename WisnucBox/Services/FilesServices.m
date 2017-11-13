@@ -52,4 +52,9 @@
     }
     return 0;
 }
+
+- (NSArray<WBFile *> *)findAll{
+    // TODO: permission
+    return [WBFile MR_findAll];
+}
 @end
