@@ -31,7 +31,6 @@ UITableViewDataSource
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"下载管理";
-    _downloadManager = [CSFileDownloadManager shareManager];
     [self.view addSubview:self.tableView];
    
 }
@@ -48,7 +47,7 @@ UITableViewDataSource
     }
 //    NSNumber* number = self.array[indexPath.row];
     if (indexPath.section == 0) {
-      cell.downloadTimeLabel.text = [NSString stringWithFormat:@"当前下载进度:%.2f%%",100.0 * _downloadManager.currentLength / _downloadManager.fileLength];
+  
     }
     cell.fileNameLabel.text = @"文件名";
     return cell;
@@ -56,9 +55,7 @@ UITableViewDataSource
 
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-         return 2;
-    }else if (section == 1){
+    if (section == 1){
          return self.downloadingArray.count;
     }else{
          return self.downloadedArray.count;
@@ -70,9 +67,7 @@ UITableViewDataSource
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    if (section == 0){
-        return @"下载测试section";
-    }else if(section == 1){
+    if(section == 0){
         return @"正在下载";
     }
     else{
@@ -90,7 +85,7 @@ UITableViewDataSource
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
 //    header.contentView.backgroundColor=MainColor;
 //    header.textLabel.textAlignment=NSTextAlignmentCenter;
-    [header.textLabel setTextColor:[UIColor lightGrayColor]];
+    [header.textLabel setTextColor:[UIColor darkTextColor]];
     
     
 }
@@ -98,16 +93,7 @@ UITableViewDataSource
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        [_downloadManager removeFiles];
-        [[CSFileDownloadManager shareManager]OfflinResumeDownload:NO];
-         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-         LocalDownloadTableViewCell *cell = (LocalDownloadTableViewCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
-        [RACObserve(cell.downloadTimeLabel, text) subscribeNext:^(id x) {
-//            if (![x isEqualToString:@"当前下载进度:nan%"]) {
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//            }
-            NSLog(@"====label的文字变了");
-        }];
+       
     }
 }
 

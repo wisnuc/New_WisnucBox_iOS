@@ -22,7 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createNavBtns];
-    [self.tableView addSubview:self.view];
+    [self.view addSubview:self.tableView];
 }
 
 -(void)createNavBtns{
@@ -44,12 +44,11 @@
     return 64;
 }
 
-- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    FLFilesCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    FLFilesCell *cell  = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FLFilesCell class])];
     if (nil == cell) {
-        cell= (FLFilesCell *)[[[NSBundle  mainBundle]  loadNibNamed:NSStringFromClass([FLFilesCell class]) owner:self options:nil]  lastObject];
+        cell= (FLFilesCell *)[[[NSBundle  mainBundle] loadNibNamed:NSStringFromClass([FLFilesCell class]) owner:self options:nil]  lastObject];
     }
-    
     
     return cell;
 }
@@ -59,8 +58,7 @@
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return _dataSouce.count;
-    return 10;
+    return _dataSouce.count;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

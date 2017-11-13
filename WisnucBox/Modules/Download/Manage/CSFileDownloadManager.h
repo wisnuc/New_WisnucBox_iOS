@@ -7,35 +7,116 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CSDownloadEvenHandler.h"
+#import "CSDownloadTask.h"
 
-#import "CSDownloadModel.h"
-
+/**
+ *  下载客户端类
+ *
+ */
 @interface CSFileDownloadManager : NSObject
 
-+(__kindof CSFileDownloadManager *)shareManager;
-/** 下载进度条 */
-@property (strong, nonatomic)  UIProgressView *progressView;
-/** 下载进度条Label */
-@property (strong, nonatomic)  UILabel *progressLabel;
+/**
+ *  获取单例下载客户端
+ *
+ *  @return
+ */
++ (CSFileDownloadManager*)sharedDownloadManager;
 
-/** AFNetworking断点下载（支持离线）需用到的属性 **********/
-/** 文件的总长度 */
-@property (nonatomic, assign) long long fileLength;
-/** 当前下载长度 */
-@property (nonatomic, assign) long long currentLength;
-/** 文件句柄对象 */
-@property (nonatomic, strong) NSFileHandle *fileHandle;
+/**
+ *  指定最高下载队列容量数
+ */
+@property (nonatomic) int maxDownload;
 
-/** 下载任务 */
-@property (nonatomic, strong) NSURLSessionDataTask *downloadTask;
-/* AFURLSessionManager */
-@property (nonatomic, strong) AFURLSessionManager *manager;
+/**
+ *  指定最高等待队列容量数
+ */
+@property (nonatomic) int maxWaiting;
 
-@property (nonatomic, assign) BOOL isSuspend;
+/**
+ *  指定最高暂停队列容量数
+ */
+@property (nonatomic) int maxPaused;
 
-- (void)downloadWithDownloadURLString:(NSString *)downloadURLString progress:(DownloadProgressBlock)progress state:(DownloadStateBlock)state;
-- (void)OfflinResumeDownload:(BOOL)sender;
+/**
+ *  指定最高重试机会
+ */
+@property (nonatomic) int maxFailureRetryChance;
 
-- (void)removeFiles;
+/**
+ *  已经下载任务列表
+ */
+@property (nonatomic) NSMutableArray *downloadedTasks;
+
+
+@property (nonatomic) NSMutableArray *downloadingTasks;
+/**
+ *  开始一次下载任务（都统一先放进等待队列）
+ *
+ *  @param downloadTask    一条下载任务
+ *  @param begin           下载开始前回调
+ *  @param progress        处理下载中回调
+ *  @param complete        完成回调
+ */
+- (void)downloadDataAsyncWithTask:(CSDownloadTask*)downloadTask
+                            begin:(CSDownloadBeginEventHandler)begin
+                         progress:(CSDownloadingEventHandler)progress
+                         complete:(CSDownloadedEventHandler)complete;
+
+/**
+ *  继续一条下载任务
+ *
+ *  @param downloadTask 指定下载任务
+ */
+- (void)continueOneDownloadTaskWith:(CSDownloadTask*)downloadTask;
+
+/**
+ *  暂停一条下载任务
+ *
+ *  @param downloadTask 指定下载任务
+ */
+- (void)pauseOneDownloadTaskWith:(CSDownloadTask*)downloadTask;
+
+/**
+ *  取消一条下载任务
+ *
+ *  @param downloadTask 指定下载任务
+ */
+- (void)cancelOneDownloadTaskWith:(CSDownloadTask*)downloadTask;
+
+/**
+ *  开始全部下载任务
+ */
+- (void)startAllDownloadTask;
+
+/**
+ *  暂停全部下载任务
+ */
+- (void)pauseAllDownloadTask;
+
+/**
+ *  取消全部下载任务
+ */
+- (void)cancelAllDownloadTask;
+
+/**
+ *  测试队列KVO是否有效
+ */
+- (void)testQueueKVO;
+
+/**
+ *  添加下载任务
+ *
+ *  @param task
+ */
+-(void)addDownloadTask:(CSDownloadTask*)task;
+
+/**
+ *  获取下载任务列表
+ *
+ *  @return
+ */
+-(NSArray*)downloadTasks;
+
 
 @end
