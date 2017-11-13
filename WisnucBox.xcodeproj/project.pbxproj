@@ -10,6 +10,8 @@
 		1F0898DC1FB05FF900B86723 /* eye_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0898DB1FB05FF800B86723 /* eye_off.png */; };
 		1F196F391FB9424A004D5EB7 /* FilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F196F371FB9424A004D5EB7 /* FilesViewController.m */; };
 		1F196F3A1FB9424A004D5EB7 /* FilesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F196F381FB9424A004D5EB7 /* FilesViewController.xib */; };
+		1F1AB9EC1FB968CA006EB1FC /* FLFilesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AB9EA1FB968C9006EB1FC /* FLFilesCell.m */; };
+		1F1AB9ED1FB968CA006EB1FC /* FLFilesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F1AB9EB1FB968C9006EB1FC /* FLFilesCell.xib */; };
 		1F3F99801FB0312300D6CC64 /* LocalDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F997E1FB0312300D6CC64 /* LocalDownloadViewController.m */; };
 		1F3F99811FB0312300D6CC64 /* LocalDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3F997F1FB0312300D6CC64 /* LocalDownloadViewController.xib */; };
 		1F3F99891FB0353F00D6CC64 /* LocalDownloadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F99871FB0353F00D6CC64 /* LocalDownloadTableViewCell.m */; };
@@ -511,6 +513,9 @@
 		1F196F361FB9424A004D5EB7 /* FilesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilesViewController.h; sourceTree = "<group>"; };
 		1F196F371FB9424A004D5EB7 /* FilesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilesViewController.m; sourceTree = "<group>"; };
 		1F196F381FB9424A004D5EB7 /* FilesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilesViewController.xib; sourceTree = "<group>"; };
+		1F1AB9E91FB968C8006EB1FC /* FLFilesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLFilesCell.h; sourceTree = "<group>"; };
+		1F1AB9EA1FB968C9006EB1FC /* FLFilesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLFilesCell.m; sourceTree = "<group>"; };
+		1F1AB9EB1FB968C9006EB1FC /* FLFilesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FLFilesCell.xib; sourceTree = "<group>"; };
 		1F244D9D3BCB4706DAFC363E /* Pods-WisnucBox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.debug.xcconfig"; sourceTree = "<group>"; };
 		1F3F997D1FB0312300D6CC64 /* LocalDownloadViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalDownloadViewController.h; sourceTree = "<group>"; };
 		1F3F997E1FB0312300D6CC64 /* LocalDownloadViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalDownloadViewController.m; sourceTree = "<group>"; };
@@ -1150,6 +1155,9 @@
 		1F1AB9E31FB96887006EB1FC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1F1AB9E91FB968C8006EB1FC /* FLFilesCell.h */,
+				1F1AB9EA1FB968C9006EB1FC /* FLFilesCell.m */,
+				1F1AB9EB1FB968C9006EB1FC /* FLFilesCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2735,6 +2743,7 @@
 				F683110B1FB30AAE005AC578 /* icon_del@3x.png in Resources */,
 				F683108A1FB30AAE005AC578 /* Arrow_down.png in Resources */,
 				F683110F1FB30AAE005AC578 /* img_bg.jpg in Resources */,
+				1F1AB9ED1FB968CA006EB1FC /* FLFilesCell.xib in Resources */,
 				F683119F1FB30AAF005AC578 /* storage@2x.png in Resources */,
 				F68311611FB30AAE005AC578 /* photo_plus_open@3x.png in Resources */,
 				F683117D1FB30AAF005AC578 /* select.png in Resources */,
@@ -2978,6 +2987,7 @@
 				1F4D759F1FAC4BB800E6516C /* UIColor+fm_color.m in Sources */,
 				1FFEADB51FB1594900CD3068 /* CSDownloadModel.m in Sources */,
 				F6830EC51FB2FD1D005AC578 /* FMUsersLoginMangeCell.m in Sources */,
+				1F1AB9EC1FB968CA006EB1FC /* FLFilesCell.m in Sources */,
 				1F4D75C61FAC5EB500E6516C /* GCDAsyncUdpSocket.m in Sources */,
 				F6830F011FB2FF8C005AC578 /* BaseTableViewCell.m in Sources */,
 				F67D64271FAC7D9A00E23D16 /* UIView+JY_ExtendTouchRect.m in Sources */,
