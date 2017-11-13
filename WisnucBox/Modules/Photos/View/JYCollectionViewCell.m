@@ -10,6 +10,7 @@
 #import "JYAsset.h"
 #import "PHPhotoLibrary+JYEXT.h"
 #import "JYConst.h"
+#import "UIImage+imageWithColor.h"
 
 @interface JYCollectionViewCell ()
 
@@ -20,10 +21,37 @@
 
 @implementation JYCollectionViewCell
 
+-(void)prepareForReuse{
+    [super prepareForReuse];
+    self.imageView.backgroundColor =UICOLOR_RGB(0xf5f5f5);
+    self.imageView.image = [UIImage imageWithColor:UICOLOR_RGB(0xf5f5f5)];
+}
+
+- (instancetype)initWithFrame:(CGRect)frame{
+    if(self = [super initWithFrame:frame]) {
+        UILongPressGestureRecognizer * longGesture =
+        [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongGesture:)];
+        longGesture.minimumPressDuration = 0.5f;
+        [self.contentView addGestureRecognizer:longGesture];
+        self.clipsToBounds = YES;
+    }
+    return self;
+}
+
+- (void)handleLongGesture:(UILongPressGestureRecognizer * )gesture{
+    if (gesture.state == UIGestureRecognizerStateBegan && _longPressBlock) _longPressBlock();
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    self.imageView.frame = self.bounds;
+    [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.contentView.mas_left);
+        make.right.mas_equalTo(self.contentView.mas_right);
+        make.top.mas_equalTo(self.contentView.mas_top);
+        make.bottom.mas_equalTo(self.contentView.mas_bottom);
+    }];
+//    self.imageView.frame = self.bounds;
 //    self.btnSelect.frame = CGRectMake(GetViewWidth(self.contentView)-26, 5, 23, 23);
 //    if (self.showMask) {
 //        self.topView.frame = self.bounds;
@@ -32,39 +60,38 @@
 //    self.videoImageView.frame = CGRectMake(5, 1, 16, 12);
 //    self.liveImageView.frame = CGRectMake(5, -1, 15, 15);
 //    self.timeLabel.frame = CGRectMake(30, 1, GetViewWidth(self)-35, 12);
-    [self.contentView sendSubviewToBack:self.imageView];
+//    [self.contentView sendSubviewToBack:self.imageView];
 }
 
 - (UIImageView *)imageView
 {
     if (!_imageView) {
         _imageView = [[UIImageView alloc] init];
-        _imageView.frame = self.bounds;
         _imageView.contentMode = UIViewContentModeScaleAspectFill;
         _imageView.clipsToBounds = YES;
+        self.contentView.clipsToBounds = YES;
         [self.contentView addSubview:_imageView];
         
-        [self.contentView bringSubviewToFront:_topView];
-        [self.contentView bringSubviewToFront:self.videoBottomView];
+//        [self.contentView bringSubviewToFront:_topView];
+//        [self.contentView bringSubviewToFront:self.videoBottomView];
         [self.contentView bringSubviewToFront:self.btnSelect];
     }
     return _imageView;
 }
 
-//- (UIButton *)btnSelect
-//{
-//    if (!_btnSelect) {
-//        _btnSelect = [UIButton buttonWithType:UIButtonTypeCustom];
-//        _btnSelect.frame = CGRectMake(GetViewWidth(self.contentView)-26, 5, 23, 23);
-//        [_btnSelect setBackgroundImage:GetImageWithName(@"btn_unselected.png") forState:UIControlStateNormal];
-//        [_btnSelect setBackgroundImage:GetImageWithName(@"btn_selected.png") forState:UIControlStateSelected];
-//        [_btnSelect addTarget:self action:@selector(btnSelectClick:) forControlEvents:UIControlEventTouchUpInside];
-//        //扩大点击区域
-//        [_btnSelect setEnlargeEdgeWithTop:0 right:0 bottom:20 left:20];
-//        [self.contentView addSubview:self.btnSelect];
-//    }
-//    return _btnSelect;
-//}
+- (UIButton *)btnSelect
+{
+    if (!_btnSelect) {
+        _btnSelect = [UIButton buttonWithType:UIButtonTypeCustom];
+        _btnSelect.frame = CGRectMake(GetViewWidth(self.contentView)-26, 5, 23, 23);
+        [_btnSelect setBackgroundImage:ImageWithName(@"select.png") forState:UIControlStateNormal];
+        [_btnSelect addTarget:self action:@selector(btnSelectClick:) forControlEvents:UIControlEventTouchUpInside];
+        //扩大点击区域
+        [_btnSelect setEnlargeEdgeWithTop:0 right:0 bottom:20 left:20];
+        [self.contentView addSubview:self.btnSelect];
+    }
+    return _btnSelect;
+}
 //
 //- (UIImageView *)videoBottomView
 //{
@@ -123,22 +150,17 @@
 {
     _model = model;
     
-    if (self.cornerRadio > .0) {
-        self.layer.masksToBounds = YES;
-        self.layer.cornerRadius = self.cornerRadio;
-    }
-    
 //    if (model.type == JYAssetTypeVideo) {
 //        self.videoBottomView.hidden = NO;
 //        self.videoImageView.hidden = NO;
 //        self.liveImageView.hidden = YES;
 //        self.timeLabel.text = model.duration;
-//    } else if (model.type == ZLAssetMediaTypeGif) {
+//    } else if (model.type == JYMediaTypeGif) {
 //        self.videoBottomView.hidden = !self.allSelectGif;
 //        self.videoImageView.hidden = YES;
 //        self.liveImageView.hidden = YES;
 //        self.timeLabel.text = @"GIF";
-//    } else if (model.type == ZLAssetMediaTypeLivePhoto) {
+//    } else if (model.type == JYMediaTypeLivePhoto) {
 //        self.videoBottomView.hidden = !self.allSelectLivePhoto;
 //        self.videoImageView.hidden = YES;
 //        self.liveImageView.hidden = NO;
@@ -147,14 +169,10 @@
 //        self.videoBottomView.hidden = YES;
 //    }
     
-    if (self.showMask) {
-        self.topView.backgroundColor = [self.maskColor colorWithAlphaComponent:.2];
-        self.topView.hidden = !model.isSelected;
-    }
-    
-    self.btnSelect.hidden = !self.showSelectBtn;
-    self.btnSelect.enabled = self.showSelectBtn;
-    self.btnSelect.selected = model.isSelected;
+//    if (self.showMask) {
+//        self.topView.backgroundColor = [self.maskColor colorWithAlphaComponent:.2];
+//        self.topView.hidden = !model.isSelected;
+//    }
     
     CGSize size;
     size.width = GetViewWidth(self) * 1.7;
@@ -179,12 +197,23 @@
     }];
 }
 
-//- (void)btnSelectClick:(UIButton *)sender {
-//    if (!self.btnSelect.selected) {
-//        [self.btnSelect.layer addAnimation:GetBtnStatusChangedAnimation() forKey:nil];
-//    }
-//    if (self.selectedBlock) {
-//        self.selectedBlock(self.btnSelect.selected);
-//    }
-//}
+- (void)setIsSelect:(BOOL)isSelect animation:(BOOL)animat {
+    _isSelect = isSelect;
+    self.btnSelect.hidden = !_isSelect;
+    if (_isSelect) {
+        if(animat) {
+            [self.btnSelect.layer addAnimation:GetBtnStatusChangedAnimation() forKey:nil];
+        }
+            self.imageView.transform = CGAffineTransformMakeScale(0.8, 0.8);
+    }else{
+        self.imageView.transform = CGAffineTransformIdentity;
+    }
+}
+
+- (void)btnSelectClick:(UIButton *)sender {
+    if(!self.isSelectMode) return;
+    [self setIsSelect:!_isSelect animation:YES];
+    if(_selectedBlock) _selectedBlock(_isSelect);
+}
+
 @end

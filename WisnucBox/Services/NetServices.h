@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define NO_USER_LOGIN 60001
+
 @interface NetServices : NSObject <ServiceProtocol>
 
 @property (nonatomic, assign) BOOL isCloud;
@@ -16,8 +18,10 @@
 
 @property (nonatomic, copy) NSString *cloudUrl;
 
-@property (nonatomic, copy) NSString *token;
+- (instancetype)initWithLocalURL:(NSString *)localUrl andCloudURL:(NSString *)cloudUrl;
 
-- (instancetype)initWithLocalURL:(NSString *)localUrl andCloudURL:(NSString *)cloudUrl andToken:(NSString *)token;
+- (void)getUserUploadDir:(void(^)(NSError *, NSString * entryUUID))callback;
+
+
 
 @end

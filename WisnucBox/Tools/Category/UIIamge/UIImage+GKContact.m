@@ -216,7 +216,7 @@ static inline NSString *GKContactKey(NSString *initials, CGSize size, UIColor *b
     CGColorSpaceRef colorSpaceInfo = CGImageGetColorSpace(imageRef);
     
     if (bitmapInfo == kCGImageAlphaNone) {
-        bitmapInfo = kCGImageAlphaNoneSkipLast;
+        bitmapInfo = (CGBitmapInfo)kCGImageAlphaNoneSkipLast;
     }
     
     CGContextRef bitmap;

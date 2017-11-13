@@ -25,4 +25,6 @@
 
 @property (nonatomic) BOOL isChoose;//是否选中状态
 
+@property (nonatomic) BOOL isSelectMode;
+
 @end

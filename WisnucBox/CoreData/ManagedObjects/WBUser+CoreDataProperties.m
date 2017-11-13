@@ -22,5 +22,14 @@
 @dynamic isAdmin;
 @dynamic stationId;
 @dynamic localAddr;
+@dynamic isCloudLogin;
+@dynamic sn_address;
+@dynamic bonjour_name;
+@dynamic backUpInWWAN;
+@dynamic autoBackUp;
+@dynamic avaterURL;
+@dynamic userHome;
+@dynamic backUpDir;
+@dynamic backUpBaseDir;
 
 @end

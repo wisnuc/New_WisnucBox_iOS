@@ -21,15 +21,23 @@
 //第三方
 #import <AFNetworking/AFNetworking.h>
 #import <YYModel/YYModel.h>
+#import <YYCache/YYCache.h>
+#import <YYWebImage/YYWebImage.h>
 #import <WXApi.h>
 #import <ReactiveObjC/ReactiveObjC.h>
 #import <Masonry/Masonry.h>
 #import <RTRootNavigationController/RTRootNavigationController.h>
+#import <SDWebImage/SDWebImageManager.h>
 
 //Base
 #import "RDVTabBarController.h"
 #import "RDVTabBarItem.h"
 #import "FABaseVC.h"
+#import "NavViewController.h"
+#import "FMBaseFirstVC.h"
+
+//model
+#import "WBAsset.h"
 
 //Tools
 #import "SXLoadingView.h"
@@ -38,8 +46,19 @@
 #import "UIButton+EnlargeEdge.h"
 #import "UIButton+Universal.h"
 #import "UIImage+GKContact.h"
+#import "UIView+JYExtension.h"
+
+//CoreData
+#import "WBFile+CoreDataClass.h"
+#import "WBLocalAsset+CoreDataClass.h"
+#import "WBUser+CoreDataClass.h"
 
 //Services
 #import "AppServices.h"
+
+//Network
+#import "JYNetworkerHeader.h"
+#import "FMAsyncUsersAPI.h"
+#import "FMCreateUserAPI.h"
 
 #endif /* default_pch */

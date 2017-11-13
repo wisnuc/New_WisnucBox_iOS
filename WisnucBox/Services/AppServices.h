@@ -13,6 +13,13 @@
 #import "FilesServices.h"
 #import "NetServices.h"
 
+#define WB_AppServices [AppServices sharedService]
+#define WB_AssetService [WB_AppServices assetServices]
+#define WB_UserService [WB_AppServices userServices]
+#define WB_FileService [WB_AppServices fileServices]
+#define WB_PhotoUploadManager [WB_AppServices photoUploadManager]
+
+
 @class WBUploadManager;
 @interface AppServices : NSObject <ServiceProtocol>
 

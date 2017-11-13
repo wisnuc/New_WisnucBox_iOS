@@ -18,9 +18,14 @@
 #import "FMHeadView.h"
 #import "UIScrollView+IndicatorExt.h"
 #import "TYDecorationSectionLayout.h"
+#import "LCActionSheet.h"
+#import "VCFloatingActionButton.h"
+#import "JYProcessView.h"
+#import "AppDelegate.h"
 
-@interface JYThumbVC ()<UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UIViewControllerPreviewingDelegate, JYShowBigImgViewControllerDelegate> {
+@interface JYThumbVC ()<UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UIViewControllerPreviewingDelegate, JYShowBigImgViewControllerDelegate, FMHeadViewDelegate, floatMenuDelegate> {
     NSInteger _currentScale;
+    
 }
 
 @property (nonatomic, strong) NSMutableArray<JYAsset *> *arrDataSourcesBackup;
@@ -29,9 +34,29 @@
 
 @property (nonatomic, strong) NSMutableArray<NSString *> *timesArr;
 
+@property (nonatomic, strong) NSMutableArray<JYAsset *> *choosePhotos;
+
+@property (nonatomic, strong) NSMutableArray<NSIndexPath *> *chooseSection;
+
+@property (strong, nonatomic) VCFloatingActionButton * addButton;
+
+@property (strong, nonatomic) JYProcessView * pv;
+
+@property (nonatomic) UIView * chooseHeadView;
+
+@property (nonatomic, assign) BOOL isSelectMode;
+
+@property (nonatomic, assign) BOOL isDownloading;
+
+@property (nonatomic, copy) void(^downloadBlock)(BOOL success ,UIImage *image);
+
 @end
 
-@implementation JYThumbVC
+@implementation JYThumbVC {
+    UIButton * _leftBtn;//导航栏左边按钮
+    UIButton * _rightbtn;//导航栏右边按钮
+    UILabel * _countLb;
+}
 
 - (NSMutableArray<JYAsset *> *)arrDataSources
 {
@@ -47,9 +72,32 @@
     return _arrDataSources;
 }
 
+- (NSMutableArray<JYAsset *> *)choosePhotos {
+    if(!_choosePhotos) {
+        _choosePhotos = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _choosePhotos;
+}
+
+- (NSMutableArray<NSIndexPath *> *)chooseSection {
+    if(!_chooseSection) {
+        _chooseSection = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _chooseSection;
+}
+
+- (void)setIsSelectMode:(BOOL)isSelectMode {
+    _isSelectMode = isSelectMode;
+    if(!isSelectMode){
+        [self.chooseSection removeAllObjects];
+        [self.choosePhotos removeAllObjects];
+    }
+}
+
 - (instancetype)initWithDataSource:(NSArray<JYAsset *> *)assets {
     if(self = [super init]) {
         [self.arrDataSources addObjectsFromArray:assets];
+        _isSelectMode = NO;
     }
     return self;
 }
@@ -57,10 +105,11 @@
 -(void)dealloc{
     if (self.collectionView.indicator) {
         [self.collectionView.indicator.slider removeObserver:self forKeyPath:@"sliderState"];
-        [self removeObserver:self.collectionView.indicator forKeyPath:@"contentOffset"];
+        [self.collectionView removeObserver:self.collectionView.indicator forKeyPath:@"contentOffset"];
     }
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    NSLog(@"JYThumbVC delloc");
 }
-
 
 -(void)sort
 {
@@ -129,11 +178,136 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.showIndicator = YES;
     [self sort];
+    [self addRightBtn];
     [self initCollectionView];
     [self addPinchGesture];
+    [self createControlbtn];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userAuthChange:) name:ASSETS_AUTH_CHANGE_NOTIFY object:nil];
+}
+
+- (void)userAuthChange:(NSNotification *)notify {
+    NSMutableArray * allPhotos = [NSMutableArray arrayWithArray:WB_AppServices.assetServices.allAssets];
+    self.arrDataSources = allPhotos;
+    [self sort];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.collectionView reloadData];
+    });
+    
+}
+
+-(void)createControlbtn{
+    if(!_addButton){
+        CGRect floatFrame = CGRectMake(__kWidth - 80 , __kHeight - 64 - 56 - 88, 56, 56);
+        _addButton = [[VCFloatingActionButton alloc]initWithFrame:floatFrame normalImage:[UIImage imageNamed:@"add_album"] andPressedImage:[UIImage imageNamed:@"icon_close"] withScrollview:_collectionView];
+        _addButton.automaticallyInsets = YES;
+        _addButton.imageArray = @[@"fab_share"];
+        _addButton.labelArray = @[@""];
+        _addButton.delegate = self;
+        _addButton.hidden = YES;
+        [self.view addSubview:_addButton];
+    }
+}
+
+-(void)addRightBtn{
+    
+    
+    UIButton * rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];
+    [rightBtn setImage:[UIImage imageNamed:@"more"] forState:UIControlStateNormal];
+    [rightBtn setImage:[UIImage imageNamed:@"more_highlight"] forState:UIControlStateHighlighted];
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -14;
+    [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:negativeSpacer,rightItem,nil];
+}
+
+-(void)rightBtnClick:(id)sender{
+    LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:nil
+                                                             delegate:nil
+                                                    cancelButtonTitle:@"取消"
+                                                otherButtonTitleArray:@[@"选择照片"]];
+    actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
+        if (buttonIndex == 1) {
+            self.isSelectMode = YES;
+            [self.collectionView reloadData];
+            [self addLeftBtn];
+            _addButton.hidden = NO;
+        }
+    };
+    actionSheet.scrolling          = YES;
+    actionSheet.buttonHeight       = 60.0f;
+    actionSheet.visibleButtonCount = 3.6f;
+    [actionSheet show];
+}
+
+//添加 可选视图 左边按钮
+-(void)addLeftBtn{
+    if (!_chooseHeadView) {
+        _chooseHeadView = [[UIView alloc]initWithFrame:CGRectMake(0, -64, __kWidth, 64)];
+        _chooseHeadView.backgroundColor = UICOLOR_RGB(0x03a9f4);
+        UIButton * leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 16, 48, 48 )];
+        UIImage * backImage = [UIImage imageNamed:@"back"];
+        [leftBtn setImage:backImage forState:UIControlStateNormal];
+        [leftBtn addTarget:self action:@selector(leftBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        _leftBtn = leftBtn;
+        
+        UILabel * countLb = [[UILabel alloc]initWithFrame:CGRectMake(__kWidth/2 - 50, 27, 100, 30)];
+        countLb.textColor = [UIColor whiteColor];
+        countLb.font = [UIFont fontWithName:Helvetica size:17];
+        countLb.textAlignment = NSTextAlignmentCenter;
+        _countLb = countLb;
+        [_chooseHeadView addSubview:countLb];
+        [_chooseHeadView addSubview:leftBtn];
+        [self.navigationController.view addSubview:_chooseHeadView];
+    }
+    //    _countLb.text = @"选择照片";
+    _countLb.font = [UIFont fontWithName:FANGZHENG size:16];
+    [UIView animateWithDuration:0.5 animations:^{
+        _chooseHeadView.transform = CGAffineTransformTranslate(_chooseHeadView.transform, 0, 64);
+    }];
+    [self tabBarAnimationWithHidden:YES];
+}
+
+-(void)leftBtnClick:(id)sender{
+    [UIView animateWithDuration:0.5 animations:^{
+        _chooseHeadView.transform = CGAffineTransformTranslate(_chooseHeadView.transform, 0, -64);
+    }];
+    _rightbtn.userInteractionEnabled = YES;
+    self.isSelectMode = NO;
+    [self.collectionView reloadData];
+    _addButton.hidden = YES;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self tabBarAnimationWithHidden:NO];
+    });
+//    if (_edgeGesture) {
+//        [self.view removeGestureRecognizer:_edgeGesture];
+//        _edgeGesture = nil;
+//    }
+}
+
+//tabbar 动画
+-(void)tabBarAnimationWithHidden:(BOOL)hidden{
+    RDVTabBarController * tabBar = self.rdv_tabBarController;
+    if (hidden) {
+        CGPoint point = self.collectionView.contentOffset;
+        [self.collectionView setContentOffset:point animated:NO];
+        //重置把手位置
+        [tabBar setTabBarHidden:YES animated:YES];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self updateIndicatorFrame];
+        });
+    }else{
+        [tabBar setTabBarHidden:NO animated:YES];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            CGPoint point = self.collectionView.contentOffset;
+            [self.collectionView setContentOffset:point animated:NO];
+            [self updateIndicatorFrame];
+        });
+    }
 }
 
 //增加捏合手势
@@ -210,6 +384,10 @@
     self.collectionView.indicator.frame = CGRectMake(self.collectionView.indicator.frame.origin.x, self.collectionView.indicator.frame.origin.y, self.collectionView.frame.size.width, CGRectGetHeight(self.collectionView.frame) - 2 * kILSDefaultSliderMargin);
 }
 
+- (void)updateIndicatorFrame {
+    self.collectionView.indicator.frame = CGRectMake(self.collectionView.indicator.frame.origin.x, self.collectionView.indicator.frame.origin.y, self.collectionView.frame.size.width, CGRectGetHeight(self.collectionView.frame) - 2 * kILSDefaultSliderMargin);
+}
+
 - (BOOL)forceTouchAvailable
 {
     if ([UIDevice currentDevice].systemVersion.floatValue >= 9.0) {
@@ -261,24 +439,46 @@
     JYAsset *model;
     model = ((NSMutableArray *)self.arrDataSources[indexPath.section])[indexPath.row];
     
-//    weakify(self);
-//    __weak typeof(cell) weakCell = cell;
-    
+    jy_weakify(self);
     cell.selectedBlock = ^(BOOL selected) {
-//        strongify(weakSelf);
-//        __strong typeof(weakCell) strongCell = weakCell;
-        
+        if(!weakSelf.isSelectMode) return;
+        BOOL needReload = NO;
+        if(selected) {
+            [weakSelf.choosePhotos addObject:model];
+            __block BOOL containAll = YES;
+            [(NSArray *)weakSelf.arrDataSources[indexPath.section] enumerateObjectsUsingBlock:^(JYAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if(![weakSelf.choosePhotos containsObject:obj]) {
+                    containAll = NO;
+                    *stop = YES;
+                }
+            }];
+            if(containAll) [weakSelf.chooseSection addObject:[NSIndexPath indexPathForRow:0 inSection:indexPath.section]];
+            needReload = containAll;
+        }else {
+            [weakSelf.choosePhotos removeObject:model];
+            NSIndexPath * indexP = [NSIndexPath indexPathForRow:0 inSection:indexPath.section];
+            if([weakSelf.chooseSection containsObject:indexP]){
+                [weakSelf.chooseSection removeObject:indexP];
+                needReload = YES;
+            }
+        }
+        if(needReload)
+            [weakSelf.collectionView reloadData];
     };
+    
+    cell.longPressBlock = ^() {
+        if(weakSelf.isSelectMode) return;
+        weakSelf.isSelectMode = true;
+        [weakSelf addLeftBtn];
+        weakSelf.addButton.hidden = NO;
+        [weakSelf.collectionView reloadData];
+    };
+    
     if (collectionView.indicator) {
         collectionView.indicator.slider.timeLabel.text = [self getMouthDateStringWithPhoto:model.asset.creationDate];
     }
-    
-    cell.allSelectGif = YES;
-    cell.allSelectLivePhoto = YES;
-    cell.showSelectBtn = NO;
-    cell.cornerRadio = 0;
-    cell.showMask = NO;
-    cell.maskColor = [UIColor blackColor];
+    cell.isSelectMode = self.isSelectMode;
+    [cell setIsSelect: _isSelectMode ? [self.choosePhotos containsObject:model] : NO animation:NO];
     cell.model = model;
     
     return cell;
@@ -289,14 +489,16 @@
     FMHeadView * headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headView" forIndexPath:indexPath];
     headView.headTitle = [self getDateStringWithPhoto: ((JYAsset *)((NSMutableArray *)_arrDataSources[indexPath.section])[indexPath.row]).asset.creationDate];
     headView.fmIndexPath = indexPath;
-//    headView.fmDelegate = self;
+    headView.isSelectMode = _isSelectMode;
+    headView.isChoose = [self.chooseSection containsObject:indexPath];
+    headView.fmDelegate = self;
     return headView;
 }
 
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    if(_isSelectMode) return;
     JYAsset *model = ((NSMutableArray *)self.arrDataSources[indexPath.section])[indexPath.row];
     
     
@@ -329,8 +531,7 @@
     
 //    UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
     
-#warning
-    // 判断cell是否不可3dtouch
+#warning  判断cell是否不可3dtouch
     
     //设置突出区域
     previewingContext.sourceRect = [self.collectionView cellForItemAtIndexPath:indexPath].frame;
@@ -346,6 +547,7 @@
 
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit
 {
+    if(_isSelectMode) return;
     JYAsset *model = [(JYForceTouchPreviewController *)viewControllerToCommit model];
     
     UIViewController *vc = [self getMatchVCWithModel:model];
@@ -482,6 +684,161 @@ bool isDecelerating = NO;
 - (UIView *)photoBrowser:(JYShowBigImgViewController *)browser willDismissAtIndexPath:(NSIndexPath *)indexPath {
     JYCollectionViewCell *cell = (JYCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
     return cell;
+}
+
+#pragma mark - FMHeadViewDelegate
+
+-(void)FMHeadView:(FMHeadView *)headView isChooseBtn:(BOOL)isChoose {
+    if(isChoose) {
+        [self.chooseSection addObject:headView.fmIndexPath];
+        [self.choosePhotos addObjectsFromArray:(NSArray *)self.arrDataSources[headView.fmIndexPath.section]];
+    }else{
+        [self.chooseSection removeObject:headView.fmIndexPath];
+        [self.choosePhotos removeObjectsInArray:(NSArray *)self.arrDataSources[headView.fmIndexPath.section]];
+    }
+    [self.collectionView reloadData];
+}
+
+#pragma mark - floatBtn delegate
+-(void)didSelectMenuOptionAtIndex:(NSInteger)row{
+    NSLog(@"创建Share");
+    [self clickShareBtn];
+}
+
+-(void)clickShareBtn{
+    if (self.choosePhotos.count>0) {
+        [self shareToOtherApp];
+    }
+    else
+        [SXLoadingView showAlertHUD:@"请先选择照片" duration:1];
+}
+
+//其他分享
+-(void)shareToOtherApp{
+    //准备照片
+    @weaky(self);
+    [self clickDownloadWithShare:YES andCompleteBlock:^(NSArray *images) {
+        UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:images applicationActivities:nil];
+        //初始化回调方法
+        UIActivityViewControllerCompletionWithItemsHandler myBlock = ^(NSString *activityType,BOOL completed,NSArray *returnedItems,NSError *activityError)
+        {
+            NSLog(@"activityType :%@", activityType);
+            if (completed)
+            {
+                NSLog(@"share completed");
+            }
+            else
+            {
+                NSLog(@"share cancel");
+            }
+            
+        };
+        
+        // 初始化completionHandler，当post结束之后（无论是done还是cancel）该blog都会被调用
+        activityVC.completionWithItemsHandler = myBlock;
+        
+        //关闭系统的一些activity类型 UIActivityTypeAirDrop 屏蔽aridrop
+        activityVC.excludedActivityTypes = @[];
+        
+        [weak_self presentViewController:activityVC animated:YES completion:nil];
+    }];
+}
+
+-(void)clickDownloadWithShare:(BOOL)share andCompleteBlock:(void(^)(NSArray * images))block{
+    NSArray * chooseItems = [self.choosePhotos copy];
+    if (!_pv)
+        _pv = [JYProcessView processViewWithType:ProcessTypeLine];
+    _pv.descLb.text = share?@"正在准备照片":@"正在下载文件";
+    _pv.subDescLb.text = [NSString stringWithFormat:@"%lu个项目 ",(unsigned long)chooseItems.count];
+    [_pv show];
+    _isDownloading = YES;
+    _pv.cancleBlock = ^(){
+        _isDownloading = NO;
+    };
+    [self downloadItems:chooseItems withShare:share andCompleteBlock:block];
+    [self leftBtnClick:_leftBtn];
+}
+
+-(void)downloadItems:(NSArray *)items withShare:(BOOL)isShare andCompleteBlock:(void(^)(NSArray * images))block{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        @autoreleasepool {
+            __block float complete = 0.f;
+            __block int successCount = 0;
+            __block int finish = 0;
+            __block NSUInteger allCount = items.count;
+            @weaky(self);
+            NSMutableArray * tempDownArr = [NSMutableArray arrayWithCapacity:0];
+            self.downloadBlock = ^(BOOL success ,UIImage *image){
+                complete ++;finish ++;
+                if (successCount) successCount++;
+                CGFloat progress =  complete/allCount;
+                if (image && isShare) [tempDownArr addObject:image];
+                [weak_self.pv setValueForProcess:progress];
+                if (items.count > complete) {
+                    if (weak_self.isDownloading) {
+                        [weak_self downloadItem:items[finish] withShare:isShare withCompleteBlock: weak_self.downloadBlock];
+                    }
+                }else{
+                    _isDownloading = NO;
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [weak_self.pv dismiss];
+                        if (!isShare)
+                            [SXLoadingView showAlertHUD:@"下载完成" duration:1];
+                        if (block) block([tempDownArr copy]);
+                    });
+                }
+            };
+            if (_isDownloading) {
+                [self downloadItem:items[0] withShare:isShare withCompleteBlock:self.downloadBlock];
+            }
+        }
+    });
+}
+
+-(void)downloadItem:(JYAsset *)item withShare:(BOOL)share withCompleteBlock:(void(^)(BOOL isSuccess,UIImage * image))block{
+    if ([item isKindOfClass:[WBAsset class]]) {
+//        [FMGetImage getFullScreenImageWithPhotoHash:[item getPhotoHash]
+//                                   andCompleteBlock:^(UIImage *image, NSString *tag)
+//         {
+//             if (image) {
+//                 if(!share){
+//                     [[PhotoManager shareManager]saveImage:image andCompleteBlock:^(BOOL isSuccess) {
+//                         dispatch_async(dispatch_get_main_queue(), ^{
+//                             block(isSuccess,image);
+//                         });
+//                     }];
+//                 }else{
+//                     dispatch_async(dispatch_get_main_queue(), ^{
+//                         block(YES,image);
+//                     });
+//                 }
+//             }else
+//                 dispatch_async(dispatch_get_main_queue(), ^{
+//                     block(NO,nil);
+//                 });
+//         }];
+    }else{
+//        FMLocalPhotoStore * store = [FMLocalPhotoStore shareStore];
+//        PHAsset * asset = [store checkPhotoIsLocalWithLocalId:[(FMPhotoAsset *)item localId]];
+//        if (asset) {
+//            if (!share) {
+//                [PhotoManager getImageDataWithPHAsset:asset andCompleteBlock:^(NSString *filePath) {
+//                    UIImage * image;
+//                    if (filePath && (image = [UIImage imageWithContentsOfFile:filePath])) {
+//                        [[PhotoManager shareManager]saveImage:image andCompleteBlock:^(BOOL isSuccess) {
+//                            [[NSFileManager defaultManager]removeItemAtPath:filePath error:nil];//删除image
+//                            block(isSuccess,image);
+//                        }];
+//                    }else block(NO,nil);
+//                }];
+//            }else{
+//                [[FMGetImage defaultGetImage] getOriginalImageWithAsset:asset andCompleteBlock:^(UIImage *image, NSString *tag) {
+//                    block(YES,image);
+//                }];
+//                
+//            }
+//        }else block(NO,nil);
+    }
 }
 
 @end

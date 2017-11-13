@@ -18,11 +18,12 @@
 
 @property (nonatomic) NSManagedObjectContext * saveContext;
 
+@property (nonatomic, readwrite) BOOL userAuth;
+
 @end
 
 @implementation AssetsServices{
     PHFetchResult * _lastResult;
-    BOOL _userAuth;
 }
 
 - (void)abort{
@@ -32,6 +33,7 @@
 - (void)dealloc {
     if(_userAuth)
         [[PHPhotoLibrary sharedPhotoLibrary] unregisterChangeObserver:self];
+    NSLog(@"AssetsServices delloc");
 }
 
 - (instancetype)init {
@@ -45,6 +47,7 @@
 }
 
 - (void)checkAuth {
+    _userAuth = NO;
     PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
     if(status == PHAuthorizationStatusDenied || status == PHAuthorizationStatusRestricted){
         NSLog(@"用户拒绝");
@@ -54,45 +57,57 @@
         _userAuth = YES;
     } else if (status == PHAuthorizationStatusNotDetermined) {
         [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-           if(status == PHAuthorizationStatusAuthorized)
-                _userAuth = YES;
-            else
-                _userAuth = NO;
+            _userAuth = status == PHAuthorizationStatusAuthorized ? YES : NO;
+            if(_userAuth) [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
+            [[NSNotificationCenter defaultCenter] postNotificationName:ASSETS_AUTH_CHANGE_NOTIFY object:@(status)];
         }];
     }
 }
 
 - (NSArray *)allAssets {
-    if (!_allAssets && _userAuth) {
-        NSMutableArray * all = [NSMutableArray arrayWithCapacity:0];
-        [PHPhotoLibrary getAllAsset:^(PHFetchResult<PHAsset *> *result, NSArray<PHAsset *> *assets) {
-            [assets enumerateObjectsUsingBlock:^(PHAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                JYAssetType type = [obj getJYAssetType];
-                NSString *duration = [obj getDurationString];
-                [all addObject:[JYAsset modelWithAsset:obj type:type duration:duration]];
+    @synchronized (self) {
+        if (!_allAssets && _userAuth) {
+            NSMutableArray * all = [NSMutableArray arrayWithCapacity:0];
+            [PHPhotoLibrary getAllAsset:^(PHFetchResult<PHAsset *> *result, NSArray<PHAsset *> *assets) {
+                [assets enumerateObjectsUsingBlock:^(PHAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    JYAssetType type = [obj getJYAssetType];
+                    NSString *duration = [obj getDurationString];
+                    [all addObject:[JYAsset modelWithAsset:obj type:type duration:duration]];
+                }];
+                _lastResult = result;
             }];
-            _lastResult = result;
-        }];
-        _allAssets = all;
+            _allAssets = all;
+        }
+        return _allAssets;
     }
-    return _allAssets;
 }
 
 - (WBLocalAsset *)getAssetWithLocalId:(NSString *)localId {
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"localId = %@", localId];
-    WBLocalAsset * asset = [WBLocalAsset MR_findAllWithPredicate:predicate].firstObject;
+    WBLocalAsset * asset = [WBLocalAsset MR_findFirstWithPredicate:predicate];
     return asset;
 }
 
-- (void)saveAsset:(WBLocalAsset *)asset {
-    WBLocalAsset * oldAsset = [self getAssetWithLocalId:asset.localId];
-    if(!oldAsset)
-        oldAsset = [WBLocalAsset MR_createEntity];
-    oldAsset.digest = asset.digest;
-    oldAsset.localId = asset.localId;
-    [_saveContext MR_saveToPersistentStoreAndWait];
-   
-    
+- (NSArray<WBLocalAsset *> *)getAllHashedAsset {
+    return [WBLocalAsset MR_findAll];
+}
+
+- (void)saveAssetWithLocalId:(NSString *)localId digest:(NSString *)digest{
+    __block WBLocalAsset * oldAsset = [self getAssetWithLocalId:localId];
+    dispatch_async(WB_AppServices.dbServices.saveQueue, ^{
+        if(!oldAsset) {
+            NSManagedObjectContext * context = [NSManagedObjectContext MR_defaultContext];
+            [context performBlock:^{
+                oldAsset = [WBLocalAsset MR_createEntityInContext:context];
+                oldAsset.localId = localId;
+                oldAsset.digest = digest;
+                [context MR_saveToPersistentStoreAndWait];
+            }];
+        }else {
+            oldAsset.digest = digest;
+            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        }
+    });
 }
 
 #pragma mark - photolibrary change delegate
@@ -136,7 +151,7 @@
         
         self.allAssets = [tmpDic allValues];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:ASSETS_UPDATE_NOTIFY object:0];
+        [[NSNotificationCenter defaultCenter] postNotificationName:ASSETS_UPDATE_NOTIFY object:changeDic];
         if(_AssetChangeBlock)
             _AssetChangeBlock(changeDic[@"removeObjects"], changeDic[@"insertedObjects"]);
     }

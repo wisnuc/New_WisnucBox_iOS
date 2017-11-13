@@ -21,6 +21,10 @@
     
 }
 
+- (void)dealloc {
+    NSLog(@"UserServices delloc");
+}
+
 - (instancetype)init {
     if(self = [super init]) {
         [self loadData];
@@ -62,7 +66,7 @@
 }
 
 - (void)setCurrentUser:(WBUser *)currentUser {
-    if(!currentUser)
+    if(!currentUser || !currentUser.uuid || IsNilString(currentUser.uuid))
        return [self logoutUser];
     self.defaultToken = currentUser.localToken;
     self.isUserLogin = true;
@@ -72,6 +76,7 @@
 }
 
 - (WBUser *)saveUser:(WBUser *)user {
+    if(!user.uuid || IsNilString(user.uuid)) return nil;
     WBUser * newUser = [self getUserWithUUID:user.uuid];
     if(!newUser)
         newUser = [WBUser MR_createEntityInContext:[NSManagedObjectContext MR_defaultContext]];
@@ -97,5 +102,15 @@
 - (NSArray<WBUser *> *)getAllLoginUser {
     return [WBUser MR_findAll];
 }
+
+- (void)synchronizedCurrentUser {
+    [self saveUser:self.currentUser];
+}
+
+@end
+
+@implementation UserSession
+
+
 
 @end

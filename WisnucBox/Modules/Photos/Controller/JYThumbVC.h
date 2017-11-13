@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FMBaseFirstVC.h"
 
 @class JYAsset;
 
-@interface JYThumbVC : UIViewController
+@interface JYThumbVC : FMBaseFirstVC
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 

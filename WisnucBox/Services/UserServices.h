@@ -15,6 +15,7 @@
 
 @interface UserServices : NSObject<ServiceProtocol>
 
+// if you change currentUser`s any property, you should call -synchronizedCurrentUser to save you change 
 @property (nonatomic, copy) WBUser *  currentUser; // current login user
 
 @property (nonatomic, assign, readonly) BOOL isUserLogin; // if someone login , this property be true, else false
@@ -30,4 +31,11 @@
 - (void)logoutUser;
 
 - (NSArray<WBUser *> *)getAllLoginUser;
+
+- (void)synchronizedCurrentUser;
+
+@end
+
+@interface UserSession : NSObject
+
 @end

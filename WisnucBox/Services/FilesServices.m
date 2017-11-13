@@ -15,6 +15,10 @@
     
 }
 
+- (void)dealloc {
+    NSLog(@"FilesServices dealloc");
+}
+
 - (void)saveFile:(WBFile *)file{
 //    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"uuid = %@ && fileUUID = %@", file.uuid, file.fileUUID];
 //    WBFile * oldFile = [WBFile MR_findFirstWithPredicate:<#(nullable NSPredicate *)#>]
@@ -38,4 +42,14 @@
     return [WBFile MR_deleteAllMatchingPredicate:predicate inContext:[NSManagedObjectContext MR_defaultContext]];
 }
 
+- (long long)fileSizeAtPath:(NSString*) filePath{
+    
+    NSFileManager* manager = [NSFileManager defaultManager];
+    
+    if ([manager fileExistsAtPath:filePath]){
+        
+        return [[manager attributesOfItemAtPath:filePath error:nil] fileSize];
+    }
+    return 0;
+}
 @end
