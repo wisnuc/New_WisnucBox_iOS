@@ -251,8 +251,9 @@
             wBFile.filePath = fileModel.downloadFileSavePath;
             wBFile.timeDate = fileModel.downloadFinishTime;
             wBFile.downloadURL = fileModel.downloadTaskURL;
-            FilesServices *services = [FilesServices new];
-            [services saveFile:wBFile];
+            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+//            FilesServices *services = [FilesServices new];
+//            [services saveFile:wBFile];
             
             [self.downloadedTasks addObject:downloadTask];
             //调用外部回调（比如执行UI更新）
