@@ -18,6 +18,10 @@
 @dynamic timeDate;
 @dynamic filePath;
 @dynamic fileName;
-@dynamic fileUUID;
+@dynamic fileSize;
+@dynamic downloadedFileSize;
+@dynamic downloadURL;
+
+//@dynamic fileUUID;
 
 @end

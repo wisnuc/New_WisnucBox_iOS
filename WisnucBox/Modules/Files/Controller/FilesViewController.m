@@ -8,12 +8,14 @@
 
 #import "FilesViewController.h"
 #import "FLFilesCell.h"
+//test
+#import "TestDataModel.h"
 
 @interface FilesViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (strong, nonatomic) UITableView *tableView;
 
-@property (strong, nonatomic) NSMutableArray *dataSouce;
+@property (strong, nonatomic) NSMutableArray *dataSouceArray;
 
 @end
 
@@ -22,6 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createNavBtns];
+    [self loadData];
     [self.view addSubview:self.tableView];
 }
 
@@ -38,6 +41,25 @@
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:negativeSpacer,rightItem,nil];
 }
 
+- (void)loadData{
+    TestDataModel *dataModel = [TestDataModel new];
+    dataModel.URLstring = @"https://dldir1.qq.com/qqfile/QQforMac/QQ_V6.1.1.dmg";
+    dataModel.fileName = @"QQ for Mac";
+    dataModel.fileUUID = @"1";
+    [self.dataSouceArray addObject:dataModel];
+    
+    TestDataModel *dataModel2 = [TestDataModel new];
+    dataModel2.URLstring = @"http://d1.music.126.net/dmusic/NeteaseMusic_1.5.7_580_web.dmg";
+    dataModel2.fileName = @"NeteaseMusic for Mac";
+    dataModel.fileUUID = @"2";
+    [self.dataSouceArray addObject:dataModel2];
+    
+    TestDataModel *dataModel3 = [TestDataModel new];
+    dataModel3.URLstring = @"https://dldir1.qq.com/foxmail/MacFoxmail/Foxmail_for_Mac_V1.2.0.dmg";
+    dataModel3.fileName = @"Foxmail_for_Mac";
+    dataModel.fileUUID = @"3";
+    [self.dataSouceArray addObject:dataModel3];
+}
 
 #pragma  TableView DataSource
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -49,7 +71,30 @@
     if (nil == cell) {
         cell= (FLFilesCell *)[[[NSBundle  mainBundle] loadNibNamed:NSStringFromClass([FLFilesCell class]) owner:self options:nil]  lastObject];
     }
-    
+    TestDataModel *dataModel = _dataSouceArray[indexPath.row];
+    cell.downBtn.userInteractionEnabled = YES;
+    cell.nameLabel.text = dataModel.fileName;
+    cell.f_ImageView.image = [UIImage imageNamed:@"file_icon"];
+    cell.clickBlock = ^(FLFilesCell * cell){
+        NSString *downloadString  = @"下载该文件";
+//        NSString *openFileString = @"";
+        NSMutableArray * arr = [NSMutableArray arrayWithCapacity:0];
+        [arr addObject:downloadString];
+        LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:nil
+                                                                 delegate:nil
+                                                        cancelButtonTitle:@"取消"
+                                                    otherButtonTitleArray:arr];
+        actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
+             if (buttonIndex == 1) {
+                 
+                 
+             }
+        };
+        actionSheet.scrolling          = YES;
+        actionSheet.buttonHeight       = 60.0f;
+        actionSheet.visibleButtonCount = 3.6f;
+        [actionSheet show];
+    };
     return cell;
 }
 
@@ -58,7 +103,7 @@
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _dataSouce.count;
+    return _dataSouceArray.count;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -74,11 +119,11 @@
     return _tableView;
 }
 
-- (NSMutableArray *)dataSouce{
-    if (!_dataSouce) {
-        _dataSouce = [NSMutableArray arrayWithCapacity:0];
+- (NSMutableArray *)dataSouceArray{
+    if (!_dataSouceArray) {
+        _dataSouceArray = [NSMutableArray arrayWithCapacity:0];
     }
-    return _dataSouce;
+    return _dataSouceArray;
 }
 
 @end

@@ -12,7 +12,7 @@
 #import "CSDateUtil.h"
 #import "NSObject+KVOBlock.h"
 #import "CSDownloadModel.h"
-#import <pthread.h>
+#import "FilesServices.h"
 
 #define DEFAULT_QUEUE_CAPACITY 6        //默认队列容量
 #define DEFAULT_FAITURE_RETRY_CHANCE 6  //默认失败重试机会
@@ -64,9 +64,8 @@
 {
     self = [super init];
     if (self) {
-        // add by zhenwei
+   
         _downloadTasks = [NSMutableArray array];
-        // end
         
         _maxDownload    = DEFAULT_QUEUE_CAPACITY;
         _maxWaiting     = DEFAULT_QUEUE_CAPACITY;
@@ -77,8 +76,7 @@
         _taskDoingQueue     = [[CSDownloadTaskQueue alloc] initWithMaxCapacity:_maxDownload];
         _taskWaitingQueue   = [[CSDownloadTaskQueue alloc] initWithMaxCapacity:_maxWaiting];
         _taskPausedQueue    = [[CSDownloadTaskQueue alloc] initWithMaxCapacity:_maxPaused];
-        
-        //        _subject = [RACSubject subject];
+
         //初始下载中队列容量变化观察
         [self initDownloadTaskDoingQueueObserver];
     }
@@ -211,8 +209,8 @@
             [_taskDoingQueue dequeue];
             [self.downloadingTasks removeObject:downloadTask];
             NSDate* curDate = [NSDate date];
-            NSString* downloadFinishTime = [CSDateUtil stringWithDate:curDate withFormat:@"yyyy-MM-dd HH:mm:ss"];
-            [fileModel setDownloadFinishTime:downloadFinishTime];
+//            NSString* downloadFinishTime = [CSDateUtil stringWithDate:curDate withFormat:@"yyyy-MM-dd HH:mm:ss"];
+            [fileModel setDownloadFinishTime:curDate];
             
             //保存下载完成的文件信息
             NSDictionary* downloadFinishInfo = @{
@@ -220,8 +218,8 @@
                                                  @"downloadFinishTime"     : [fileModel getDownloadFinishTime],
                                                  @"downloadFileSize"       : [fileModel getDownloadFileSize],
                                                  @"downloadFileSavePath"   : [fileModel getDownloadFileSavePath],
-                                                 @"downloadFileAvator"     : [fileModel getDownloadFileAvatorURL],
-                                                 @"downloadFileVersion"    : [fileModel getDownloadFileVersion],
+                                             
+                                                 @"downloadFileUserId"    : [fileModel getDownloadFileUserId],
                                                  @"downloadFileFromURL"    : [fileModel getDownloadTaskURL],
                                                  @"downloadFilePlistURL"   : [fileModel getDownloadFilePlistURL]
                                                  };
@@ -242,6 +240,20 @@
             //移除临时plist
             NSString* tempFilePlist = [[fileModel getDownloadTempSavePath] stringByAppendingPathExtension:@"plist"];
             [CSFileUtil deleteFileAtPath:tempFilePlist];
+            
+            WBFile * wBFile = [WBFile MR_createEntityInContext:[NSManagedObjectContext MR_defaultContext]];
+            wBFile.uuid = fileModel.downloadFileUserId;
+            
+//            wBFile.fileUUID = file.fileUUID;
+            wBFile.fileName = fileModel.downloadFileName;
+            wBFile.fileSize = fileModel.downloadFileSize;
+            wBFile.downloadedFileSize = fileModel.downloadedFileSize;
+            wBFile.filePath = fileModel.downloadFileSavePath;
+            wBFile.timeDate = fileModel.downloadFinishTime;
+            wBFile.downloadURL = fileModel.downloadTaskURL;
+            FilesServices *services = [FilesServices new];
+            [services saveFile:wBFile];
+            
             [self.downloadedTasks addObject:downloadTask];
             //调用外部回调（比如执行UI更新）
             if (complete) {
@@ -282,14 +294,15 @@
         //保存已下载文件大小
         [fileModel setDownloadedFileSize:[NSNumber numberWithLongLong:currentLength]];
         
+        
+        
         NSDictionary* downloadTmpInfo = @{
                                           @"downloadFileName"       : [fileModel getDownloadFileName],
                                           @"downloadFileSize"       : [fileModel getDownloadFileSize],
                                           @"downloadedFileSize"     : [fileModel getDownloadedFileSize],
                                           @"downloadFileSavePath"   : [fileModel getDownloadFileSavePath],
                                           @"downloadFileTempPath"   : [fileModel getDownloadTempSavePath],
-                                          @"downloadFileAvator"     : [fileModel getDownloadFileAvatorURL],
-                                          @"downloadFileVersion"    : [fileModel getDownloadFileVersion]
+                                          @"downloadFileUserId"    : [fileModel getDownloadFileUserId]
                                           };
         
         NSString* tempFilePlist = [[fileModel getDownloadTempSavePath] stringByAppendingPathExtension:@"plist"];

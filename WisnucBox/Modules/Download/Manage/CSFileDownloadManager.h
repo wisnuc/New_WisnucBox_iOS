@@ -118,5 +118,4 @@
  */
 -(NSArray*)downloadTasks;
 
-
 @end

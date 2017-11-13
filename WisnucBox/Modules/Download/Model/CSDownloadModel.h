@@ -12,15 +12,15 @@
 
 @property(nonatomic, strong, getter = getDownloadFileName) NSString* downloadFileName;
 
-@property(nonatomic, strong, getter = getDownloadFileAvatorURL) NSString* downloadFileAvatorURL;
+//@property(nonatomic, strong, getter = getDownloadFileAvatorURL) NSString* downloadFileAvatorURL;
 
-@property(nonatomic, strong, getter = getDownloadFinishTime) NSString* downloadFinishTime;
+@property(nonatomic, strong, getter = getDownloadFinishTime) NSDate* downloadFinishTime;
 
 @property(nonatomic, strong, getter = getDownloadFileSize) NSNumber* downloadFileSize;
 
 @property(nonatomic, strong, getter = getDownloadedFileSize) NSNumber* downloadedFileSize;
 
-@property(nonatomic, strong, getter = getDownloadFileVersion) NSString* downloadFileVersion;
+@property(nonatomic, strong, getter = getDownloadFileUserId) NSString* downloadFileUserId;
 
 @property(nonatomic, strong, getter = getDownloadTaskURL) NSString* downloadTaskURL;
 

@@ -15,10 +15,10 @@
     self = [super init];
     if (self) {
         _downloadFileName       = @"";
-        _downloadFileAvatorURL  = @"";
-        _downloadFinishTime     = @"";
+//        _downloadFileAvatorURL  = @"";
+        _downloadFinishTime     = [NSDate date];
         _downloadFileSize       = [NSNumber numberWithLongLong:0];
-        _downloadFileVersion    = @"";
+        _downloadFileUserId    = @"";
         _downloadTaskURL        = @"";
         _downloadFileSavePath   = @"";
         _downloadTempSavePath   = @"";

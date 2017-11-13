@@ -24,7 +24,7 @@
 //    WBFile * oldFile = [WBFile MR_findFirstWithPredicate:<#(nullable NSPredicate *)#>]
     WBFile * newFile = [WBFile MR_createEntityInContext:[NSManagedObjectContext MR_defaultContext]];
     newFile.uuid = file.uuid;
-    newFile.fileUUID = file.fileUUID;
+//    newFile.fileUUID = file.fileUUID;
     newFile.fileName = file.fileName;
     newFile.filePath = file.filePath;
     newFile.timeDate = file.timeDate;

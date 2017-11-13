@@ -17,6 +17,8 @@
 		1F1AB9F91FB9778E006EB1FC /* CSDateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AB9F81FB9778E006EB1FC /* CSDateUtil.m */; };
 		1F1ABA001FB978EB006EB1FC /* CSDownloadTaskQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AB9FF1FB978EB006EB1FC /* CSDownloadTaskQueue.m */; };
 		1F1ABA041FB97A0D006EB1FC /* CSDownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1ABA031FB97A0D006EB1FC /* CSDownloadTask.m */; };
+		1F1ABA0D1FB9862A006EB1FC /* TestDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1ABA0C1FB9862A006EB1FC /* TestDataModel.m */; };
+		1F1ABA131FB99882006EB1FC /* CSDownloadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1ABA121FB99882006EB1FC /* CSDownloadHelper.m */; };
 		1F3F99801FB0312300D6CC64 /* LocalDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F997E1FB0312300D6CC64 /* LocalDownloadViewController.m */; };
 		1F3F99811FB0312300D6CC64 /* LocalDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3F997F1FB0312300D6CC64 /* LocalDownloadViewController.xib */; };
 		1F3F99891FB0353F00D6CC64 /* LocalDownloadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F99871FB0353F00D6CC64 /* LocalDownloadTableViewCell.m */; };
@@ -534,6 +536,10 @@
 		1F1ABA021FB97A0D006EB1FC /* CSDownloadTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSDownloadTask.h; sourceTree = "<group>"; };
 		1F1ABA031FB97A0D006EB1FC /* CSDownloadTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSDownloadTask.m; sourceTree = "<group>"; };
 		1F1ABA091FB97C67006EB1FC /* CSDownloadEvenHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSDownloadEvenHandler.h; sourceTree = "<group>"; };
+		1F1ABA0B1FB9862A006EB1FC /* TestDataModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestDataModel.h; sourceTree = "<group>"; };
+		1F1ABA0C1FB9862A006EB1FC /* TestDataModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestDataModel.m; sourceTree = "<group>"; };
+		1F1ABA111FB99882006EB1FC /* CSDownloadHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSDownloadHelper.h; sourceTree = "<group>"; };
+		1F1ABA121FB99882006EB1FC /* CSDownloadHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSDownloadHelper.m; sourceTree = "<group>"; };
 		1F244D9D3BCB4706DAFC363E /* Pods-WisnucBox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.debug.xcconfig"; sourceTree = "<group>"; };
 		1F3F997D1FB0312300D6CC64 /* LocalDownloadViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalDownloadViewController.h; sourceTree = "<group>"; };
 		1F3F997E1FB0312300D6CC64 /* LocalDownloadViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalDownloadViewController.m; sourceTree = "<group>"; };
@@ -1238,8 +1244,19 @@
 			isa = PBXGroup;
 			children = (
 				1F1ABA091FB97C67006EB1FC /* CSDownloadEvenHandler.h */,
+				1F1ABA111FB99882006EB1FC /* CSDownloadHelper.h */,
+				1F1ABA121FB99882006EB1FC /* CSDownloadHelper.m */,
 			);
 			path = Handler;
+			sourceTree = "<group>";
+		};
+		1F1ABA0A1FB985FE006EB1FC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1F1ABA0B1FB9862A006EB1FC /* TestDataModel.h */,
+				1F1ABA0C1FB9862A006EB1FC /* TestDataModel.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		1F3F997C1FB030CC00D6CC64 /* Controller */ = {
@@ -1660,6 +1677,7 @@
 		C138D0441FB89F85000CF518 /* Files */ = {
 			isa = PBXGroup;
 			children = (
+				1F1ABA0A1FB985FE006EB1FC /* Model */,
 				1F1AB9EE1FB96DEA006EB1FC /* DataSouce */,
 				1F1AB9E31FB96887006EB1FC /* View */,
 				1F196F351FB9416A004D5EB7 /* Controller */,
@@ -3028,6 +3046,7 @@
 				1F4D75A91FAC4BB800E6516C /* FABaseVC.m in Sources */,
 				F67561581FB342AE00E3277F /* MXScrollViewController.m in Sources */,
 				F6830F021FB2FF8C005AC578 /* ImageHeaderView.m in Sources */,
+				1F1ABA0D1FB9862A006EB1FC /* TestDataModel.m in Sources */,
 				F68311DE1FB31369005AC578 /* LCActionSheet.m in Sources */,
 				F67D64111FAC7D7F00E23D16 /* Base64.m in Sources */,
 				F67D644E1FAC84E800E23D16 /* NavViewController.m in Sources */,
@@ -3067,6 +3086,7 @@
 				1F4D75A21FAC4BB800E6516C /* FMLoginViewController.m in Sources */,
 				F6D8CC411FB42E1300673824 /* UIView+JYExtension.m in Sources */,
 				1F4D759F1FAC4BB800E6516C /* UIColor+fm_color.m in Sources */,
+				1F1ABA131FB99882006EB1FC /* CSDownloadHelper.m in Sources */,
 				1FFEADB51FB1594900CD3068 /* CSDownloadModel.m in Sources */,
 				F6830EC51FB2FD1D005AC578 /* FMUsersLoginMangeCell.m in Sources */,
 				1F1AB9EC1FB968CA006EB1FC /* FLFilesCell.m in Sources */,

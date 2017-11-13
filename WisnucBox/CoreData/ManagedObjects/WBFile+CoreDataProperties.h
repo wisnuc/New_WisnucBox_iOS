@@ -19,7 +19,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSDate *timeDate;
 @property (nullable, nonatomic, copy) NSString *filePath;
 @property (nullable, nonatomic, copy) NSString *fileName;
-@property (nullable, nonatomic, copy) NSString *fileUUID;
+//@property (nullable, nonatomic, copy) NSString *fileUUID;
+@property (nullable, nonatomic, copy) NSNumber *fileSize;
+@property (nullable, nonatomic, copy) NSNumber *downloadedFileSize;
+@property (nullable, nonatomic, copy) NSString *downloadURL;
+
 @end
 
 NS_ASSUME_NONNULL_END
