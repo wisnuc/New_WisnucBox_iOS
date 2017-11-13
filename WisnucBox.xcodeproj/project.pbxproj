@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1F0898DC1FB05FF900B86723 /* eye_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0898DB1FB05FF800B86723 /* eye_off.png */; };
+		1F196F391FB9424A004D5EB7 /* FilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F196F371FB9424A004D5EB7 /* FilesViewController.m */; };
+		1F196F3A1FB9424A004D5EB7 /* FilesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F196F381FB9424A004D5EB7 /* FilesViewController.xib */; };
 		1F3F99801FB0312300D6CC64 /* LocalDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F997E1FB0312300D6CC64 /* LocalDownloadViewController.m */; };
 		1F3F99811FB0312300D6CC64 /* LocalDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3F997F1FB0312300D6CC64 /* LocalDownloadViewController.xib */; };
 		1F3F99891FB0353F00D6CC64 /* LocalDownloadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F99871FB0353F00D6CC64 /* LocalDownloadTableViewCell.m */; };
@@ -506,6 +508,9 @@
 
 /* Begin PBXFileReference section */
 		1F0898DB1FB05FF800B86723 /* eye_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye_off.png; sourceTree = "<group>"; };
+		1F196F361FB9424A004D5EB7 /* FilesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilesViewController.h; sourceTree = "<group>"; };
+		1F196F371FB9424A004D5EB7 /* FilesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilesViewController.m; sourceTree = "<group>"; };
+		1F196F381FB9424A004D5EB7 /* FilesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilesViewController.xib; sourceTree = "<group>"; };
 		1F244D9D3BCB4706DAFC363E /* Pods-WisnucBox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.debug.xcconfig"; sourceTree = "<group>"; };
 		1F3F997D1FB0312300D6CC64 /* LocalDownloadViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalDownloadViewController.h; sourceTree = "<group>"; };
 		1F3F997E1FB0312300D6CC64 /* LocalDownloadViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalDownloadViewController.m; sourceTree = "<group>"; };
@@ -630,7 +635,7 @@
 		F650355C1FAC00A60007979D /* WisnucBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WisnucBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F65035601FAC00A60007979D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F65035621FAC00A60007979D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		F65035631FAC00A60007979D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		F65035631FAC00A60007979D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; wrapsLines = 0; };
 		F65035651FAC00A60007979D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		F65035661FAC00A60007979D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		F65035691FAC00A70007979D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -1132,6 +1137,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F196F351FB9416A004D5EB7 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				1F196F361FB9424A004D5EB7 /* FilesViewController.h */,
+				1F196F371FB9424A004D5EB7 /* FilesViewController.m */,
+				1F196F381FB9424A004D5EB7 /* FilesViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		1F1AB9E31FB96887006EB1FC /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		1F3F997C1FB030CC00D6CC64 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -1544,6 +1566,8 @@
 		C138D0441FB89F85000CF518 /* Files */ = {
 			isa = PBXGroup;
 			children = (
+				1F1AB9E31FB96887006EB1FC /* View */,
+				1F196F351FB9416A004D5EB7 /* Controller */,
 			);
 			path = Files;
 			sourceTree = "<group>";
@@ -2588,6 +2612,7 @@
 				F683107C1FB30AAE005AC578 /* About@3x.png in Resources */,
 				F68310C01FB30AAE005AC578 /* download@3x.png in Resources */,
 				F68311231FB30AAE005AC578 /* lock_photo@2x.png in Resources */,
+				1F196F3A1FB9424A004D5EB7 /* FilesViewController.xib in Resources */,
 				1FD7A0EB1FB05A45000D4CB3 /* back.png in Resources */,
 				F683117E1FB30AAF005AC578 /* select@2x.png in Resources */,
 				F68311CA1FB30AAF005AC578 /* send-_select.png in Resources */,
@@ -2920,6 +2945,7 @@
 				F6830EBD1FB2FD10005AC578 /* FMUserLoginSettingVC.m in Sources */,
 				F6D8CC3D1FB42D6500673824 /* UIApplication+JYTopVC.m in Sources */,
 				F65035641FAC00A60007979D /* AppDelegate.m in Sources */,
+				1F196F391FB9424A004D5EB7 /* FilesViewController.m in Sources */,
 				F6830F181FB300D2005AC578 /* FMLeftUserCell.m in Sources */,
 				F6830EB51FB2FAE0005AC578 /* RDVTabBarItem.m in Sources */,
 				F6830EB31FB2FAE0005AC578 /* RDVTabBar.m in Sources */,

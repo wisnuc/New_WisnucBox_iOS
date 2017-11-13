@@ -10,7 +10,7 @@
 #import "FMLoginViewController.h"
 #import "WBUser+CoreDataClass.h"
 #import "AppServices.h"
-#import "LocalDownloadViewController.h"
+#import "FilesViewController.h"
 #import "AppServices.h"
 #import "JYThumbVC.h"
 
@@ -55,11 +55,11 @@
 - (RDVTabBarController *)setUpTabbar {
     RDVTabBarController * tabbar = [RDVTabBarController new];
     JYThumbVC * photosVC = [[JYThumbVC alloc] initWithDataSource:[AppServices sharedService].assetServices.allAssets];
-    LocalDownloadViewController *localDownloadViewController = [[LocalDownloadViewController alloc]init];
+    FilesViewController *filesViewController = [[FilesViewController alloc]init];
     NavViewController *nav1 = [[NavViewController alloc] initWithRootViewController:photosVC];
-    NavViewController *nav2 = [[NavViewController alloc] initWithRootViewController:localDownloadViewController];
+    NavViewController *nav2 = [[NavViewController alloc] initWithRootViewController:filesViewController];
     photosVC.title = @"照片";
-    localDownloadViewController.title = @"文件";
+    filesViewController.title = @"文件";
     
     NSMutableArray *viewControllersMutArr = [[NSMutableArray alloc] initWithObjects:nav1,nav2,nil];
     [tabbar setViewControllers:viewControllersMutArr];
