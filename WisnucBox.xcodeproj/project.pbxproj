@@ -96,9 +96,6 @@
 		C138D05D1FB96100000CF518 /* FLCreateDirAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D05C1FB96100000CF518 /* FLCreateDirAPI.m */; };
 		C138D0601FB970F7000CF518 /* NSString+DeviceName.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D05F1FB970F7000CF518 /* NSString+DeviceName.m */; };
 		C138D0661FB99AF3000CF518 /* FMMediaAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D0651FB99AF3000CF518 /* FMMediaAPI.m */; };
-		C138D06E1FB99B9C000CF518 /* DirectoriesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D0691FB99B9C000CF518 /* DirectoriesModel.m */; };
-		C138D06F1FB99B9C000CF518 /* DriveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D06B1FB99B9C000CF518 /* DriveModel.m */; };
-		C138D0701FB99B9C000CF518 /* EntriesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D06D1FB99B9C000CF518 /* EntriesModel.m */; };
 		C138D0781FB9A4B0000CF518 /* DriveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D0721FB9A4AF000CF518 /* DriveModel.m */; };
 		C138D0791FB9A4B0000CF518 /* EntriesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D0761FB9A4B0000CF518 /* EntriesModel.m */; };
 		C138D07A1FB9A4B0000CF518 /* DirectoriesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D0771FB9A4B0000CF518 /* DirectoriesModel.m */; };
@@ -682,9 +679,6 @@
 		C138D05F1FB970F7000CF518 /* NSString+DeviceName.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+DeviceName.m"; sourceTree = "<group>"; };
 		C138D0641FB99AF3000CF518 /* FMMediaAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMMediaAPI.h; sourceTree = "<group>"; };
 		C138D0651FB99AF3000CF518 /* FMMediaAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMMediaAPI.m; sourceTree = "<group>"; };
-		C138D0691FB99B9C000CF518 /* DirectoriesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectoriesModel.m; sourceTree = "<group>"; };
-		C138D06B1FB99B9C000CF518 /* DriveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DriveModel.m; sourceTree = "<group>"; };
-		C138D06D1FB99B9C000CF518 /* EntriesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntriesModel.m; sourceTree = "<group>"; };
 		C138D0721FB9A4AF000CF518 /* DriveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DriveModel.m; sourceTree = "<group>"; };
 		C138D0731FB9A4AF000CF518 /* DriveModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DriveModel.h; sourceTree = "<group>"; };
 		C138D0741FB9A4AF000CF518 /* DirectoriesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectoriesModel.h; sourceTree = "<group>"; };
@@ -1216,13 +1210,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		1F1AB9EE1FB96DEA006EB1FC /* DataSouce */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DataSouce;
-			sourceTree = "<group>";
-		};
 		1F1AB9EF1FB9706A006EB1FC /* NSObject */ = {
 			isa = PBXGroup;
 			children = (
@@ -1714,7 +1701,6 @@
 			isa = PBXGroup;
 			children = (
 				1F1ABA0A1FB985FE006EB1FC /* Model */,
-				1F1AB9EE1FB96DEA006EB1FC /* DataSouce */,
 				1F1AB9E31FB96887006EB1FC /* View */,
 				1F196F351FB9416A004D5EB7 /* Controller */,
 			);
@@ -1753,9 +1739,6 @@
 		C138D0711FB9A491000CF518 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				C138D0691FB99B9C000CF518 /* DirectoriesModel.m */,
-				C138D06B1FB99B9C000CF518 /* DriveModel.m */,
-				C138D06D1FB99B9C000CF518 /* EntriesModel.m */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -3077,7 +3060,6 @@
 				1F4D75C71FAC5EB500E6516C /* GCDAsyncSocket.m in Sources */,
 				71A3D6791FB5AD230002B8B1 /* FMGetUsersAPI.m in Sources */,
 				F67D643D1FAC7E5600E23D16 /* JYBigImgCell.m in Sources */,
-				C138D06E1FB99B9C000CF518 /* DirectoriesModel.m in Sources */,
 				F67D64091FAC7D3600E23D16 /* PHPhotoLibrary+JYEXT.m in Sources */,
 				F675614A1FB3428F00E3277F /* MFTextField.m in Sources */,
 				1F4D75AF1FAC4BB800E6516C /* FilesServices.m in Sources */,
@@ -3125,7 +3107,6 @@
 				1F4D75A41FAC4BB800E6516C /* UserModel.m in Sources */,
 				1F4D75B41FAC4BB800E6516C /* AppServices.m in Sources */,
 				F6830EE61FB2FEC4005AC578 /* FMSetting.m in Sources */,
-				C138D06F1FB99B9C000CF518 /* DriveModel.m in Sources */,
 				1F4D75AB1FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.m in Sources */,
 				1F4D75B31FAC4BB800E6516C /* NetServices.m in Sources */,
 				71A3D67A1FB5AD230002B8B1 /* FMAccountUsersAPI.m in Sources */,
@@ -3148,7 +3129,6 @@
 				C138D0661FB99AF3000CF518 /* FMMediaAPI.m in Sources */,
 				F67D644A1FAC7E6B00E23D16 /* JYThumbVC.m in Sources */,
 				F67D64491FAC7E6B00E23D16 /* JYShowBigImgViewController.m in Sources */,
-				C138D0701FB99B9C000CF518 /* EntriesModel.m in Sources */,
 				1F4D75A21FAC4BB800E6516C /* FMLoginViewController.m in Sources */,
 				F6D8CC411FB42E1300673824 /* UIView+JYExtension.m in Sources */,
 				1F4D759F1FAC4BB800E6516C /* UIColor+fm_color.m in Sources */,

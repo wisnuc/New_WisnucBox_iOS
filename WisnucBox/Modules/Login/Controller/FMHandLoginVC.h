@@ -12,5 +12,5 @@
 typedef void(^HandlecompleteBlock)(FMSerachService * service);
 
 @interface FMHandLoginVC : FABaseVC
-@property (nonatomic) HandlecompleteBlock block;
+@property (nonatomic, copy) HandlecompleteBlock block;
 @end

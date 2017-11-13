@@ -13,10 +13,11 @@
 #import "FilesServices.h"
 #import "NetServices.h"
 
-#define WB_AppServices [AppServices sharedService]
+#define WB_AppServices  [AppServices sharedService]
 #define WB_AssetService [WB_AppServices assetServices]
-#define WB_UserService [WB_AppServices userServices]
-#define WB_FileService [WB_AppServices fileServices]
+#define WB_UserService  [WB_AppServices userServices]
+#define WB_FileService  [WB_AppServices fileServices]
+#define WB_NetService   [WB_AppServices netServices]
 #define WB_PhotoUploadManager [WB_AppServices photoUploadManager]
 
 
@@ -38,6 +39,8 @@
 + (instancetype)sharedService;
 
 - (void)bootStrap;
+
+- (void)loginWithBasic:(NSString *)basic userUUID:(NSString *)uuid name:(NSString *)userName addr:(NSString *)addr isWechat:(BOOL)isWechat completeBlock:(void(^)(NSError *error, WBUser *user))callback;
 
 @end
 

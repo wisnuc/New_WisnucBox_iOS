@@ -8,6 +8,8 @@
 
 #import "FMUserLoginViewController.h"
 #import "FMLoginTextField.h"
+#import "Base64.h"
+#import "AppDelegate.h"
 //#import "FMGetUserInfo.h"
 //#import "FMUploadFileAPI.h"
 //#import "LoginAPI.h"
@@ -70,7 +72,23 @@
 }
 
 - (void)loginButtonClick:(UIButton *)sender{
-   
+    [self.view endEditing:YES];
+    sender.userInteractionEnabled = NO;
+    [SXLoadingView showProgressHUD:@"正在登录"];
+    NSString * UUID = [NSString stringWithFormat:@"%@:%@",_user.uuid,IsNilString(_loginTextField.text)?@"":_loginTextField.text];
+    NSString * Basic = [UUID base64EncodedString];
+    [WB_AppServices loginWithBasic:Basic userUUID:UUID name:_user.username addr:_service.path isWechat:NO completeBlock:^(NSError *error, WBUser *user) {
+        [SXLoadingView hideProgressHUD];
+        sender.userInteractionEnabled = YES;
+        if(error || IsNilString(user.userHome)){
+            if(!user) NSLog(@"GET TOKEN ERROR");
+            else NSLog(@"Get User Home Error");
+            NSLog(@"登录失败！%@", error);
+            [SXLoadingView showAlertHUD:@"登录失败" duration:1];
+        }else{
+            [MyAppDelegate initRootVC];
+        }
+    }];
 }
 
 

@@ -15,5 +15,7 @@
 
 @property (nonatomic) FMLeftManager *leftManager;
 
+- (void)initRootVC;
+
 @end
 

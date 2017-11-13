@@ -24,6 +24,8 @@
         [kUserDefaults setObject:data forKey:name]; \
         kUD_Synchronize \
 
+#define GetUserDefaultForKey(key)  kUD_ObjectForKey(key)
+
 @interface NetServices : NSObject <ServiceProtocol>
 
 @property (nonatomic, assign) BOOL isCloud;

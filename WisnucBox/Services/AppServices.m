@@ -33,6 +33,52 @@
     });
 }
 
+// get token
+// create userSession
+// isFirstUser ?
+// config address
+// userHome
+// backupDir
+- (void)loginWithBasic:(NSString *)basic userUUID:(NSString *)uuid name:(NSString *)userName addr:(NSString *)addr isWechat:(BOOL)isWechat completeBlock:(void(^)(NSError *error, WBUser *user))callback {
+    AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setValue:[NSString stringWithFormat:@"Basic %@",basic] forHTTPHeaderField:@"Authorization"];
+    [manager GET:[NSString stringWithFormat:@"%@token",addr] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSString * token = responseObject[@"token"];
+        self.netServices = [[NetServices alloc]initWithLocalURL:addr andCloudURL:nil];
+        WBUser *user = [WBUser MR_createEntityInContext:[NSManagedObjectContext MR_defaultContext]];
+        user.uuid = uuid;
+        user.userName = userName;
+        user.localAddr = addr;
+        user.localToken = token;
+        user.isFirstUser = NO;
+        user.isAdmin = NO;
+        user.isCloudLogin = NO;
+        user.autoBackUp = NO;
+        user.backUpInWWAN = NO;
+        [WB_UserService setCurrentUser:user];
+        [WB_UserService synchronizedCurrentUser];
+        NSLog(@"GET Token Success");
+        [JYRequestConfig sharedConfig].baseURL = addr;
+        [WB_NetService getUserHome:^(NSError *error, NSString *userHome){
+            if(error) return callback(error, user);
+            user.userHome = userHome;
+            [WB_UserService synchronizedCurrentUser];
+            NSLog(@"GET USER HOME SUCCESS");
+            [WB_NetService getUserBackupDir:^(NSError *error, NSString *entryUUID) {
+                if(error) return callback(error, user);
+                user.backUpDir = entryUUID;
+                [WB_UserService synchronizedCurrentUser];
+                NSLog(@"GET BACKUP DIR SUCCESS");
+                return callback(nil, user);
+            }];
+        }];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        callback(error, NULL);
+    }];
+    
+}
+
+
 
 
 // services load
@@ -156,6 +202,8 @@
         _shouldUpload = NO;
         _hashLimitCount = 4;
         _uploadLimitCount = 1;
+        [self workingQueue];
+        [self managerQueue];
     }
     return self;
 }
