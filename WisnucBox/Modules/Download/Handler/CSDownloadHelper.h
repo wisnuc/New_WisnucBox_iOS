@@ -25,7 +25,7 @@
 @property (nonatomic, copy) void(^progressBlock)(long long totalBytesRead, long long totalBytesExpectedToRead, float progress);
 + (CSDownloadHelper *)shareManager;
 
-- (void)downloadFileWithFileModel:(TestDataModel *)dataModel;
+- (void)downloadFileWithFileModel:(TestDataModel *)dataModel UUID:(NSString *)uuid;
 
 - (void)pauseDownloadWithTask:(CSDownloadTask*)downloadTask;
 

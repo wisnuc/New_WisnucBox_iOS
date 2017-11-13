@@ -8,14 +8,26 @@
 
 #import "LocalDownloadViewController.h"
 #import "LocalDownloadTableViewCell.h"
+#import "LocalDownloadingTableViewCell.h"
 #import "CSFileDownloadManager.h"
+#import "CSDownloadTask.h"
+#import "CSDownloadModel.h"
+#import "CSFileUtil.h"
+#import "CSDateUtil.h"
+#import "CSDownloadHelper.h"
+#import "FilesServices.h"
 
 #define TABLEVIEWIDENTIFIER  @"identifier"
 @interface LocalDownloadViewController ()
 <
 UITableViewDelegate,
-UITableViewDataSource
+UITableViewDataSource,
+DownloadHelperDelegate
 >
+{
+    CSFileDownloadManager* _manager;
+    FilesServices *_filesServices;
+}
 
 @property (nonatomic,strong) UITableView *tableView;
 
@@ -31,26 +43,60 @@ UITableViewDataSource
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"下载管理";
+    [CSDownloadHelper shareManager].delegate = self;
+    _manager  = [CSFileDownloadManager sharedDownloadManager];
+    _filesServices = [FilesServices new];
+    [self loadData];
     [self.view addSubview:self.tableView];
-   
 }
 
+- (void)loadData{
+    self.downloadingArray = [NSMutableArray arrayWithArray:_manager.downloadingTasks];
+    self.downloadedArray = [NSMutableArray arrayWithArray: [_filesServices findAll]];
+}
+
+- (void)updateDataWithDownloadTask:(CSDownloadTask *)downloadTask {
+    [self loadData];
+    [self.tableView reloadData];
+}
 
 #pragma UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    LocalDownloadTableViewCell *cell;
-    cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LocalDownloadTableViewCell class])];
-    if (nil == cell) {
-        cell= [[[NSBundle mainBundle] loadNibNamed:@"LocalDownloadTableViewCell" owner:nil options:nil] lastObject];
+    if (indexPath.section==0) {
+        LocalDownloadingTableViewCell *cell;
+        cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LocalDownloadingTableViewCell class])];
+        if (nil == cell) {
+            cell= [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([LocalDownloadingTableViewCell class]) owner:nil options:nil] lastObject];
+        }
+        CSDownloadTask *downloadTask = _downloadingArray[indexPath.row];
+        CSDownloadModel* downloadFileModel = [downloadTask getDownloadFileModel];
+        cell.fileNameLabel.text = downloadFileModel.downloadFileName;
+        cell.progressLabel.text = @"等待下载";
+        downloadTask.progressBlock = ^(long long totalBytesRead, long long totalBytesExpectedToRead, float progress) {
+            NSString *progressString = [NSString stringWithFormat:@"%@/%@",[CSFileUtil calculateUnit:totalBytesRead],[CSFileUtil calculateUnit:totalBytesExpectedToRead]];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                cell.progressLabel.text = progressString;
+            });
+        };
+        
+        return cell;
+    }else{
+        LocalDownloadTableViewCell *cell;
+        cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LocalDownloadTableViewCell class])];
+        if (nil == cell) {
+            cell= [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([LocalDownloadTableViewCell class]) owner:nil options:nil] lastObject];
+        }
+        NSLog(@"%@",_downloadedArray[indexPath.row]);
+        WBFile * data=  _downloadedArray[indexPath.row];
+//        WBFile * data= [WBFile MR_createEntityInContext:[NSManagedObjectContext MR_defaultContext]];
+
+        cell.fileNameLabel.text = data.fileName;
+        cell.downloadTimeLabel.text = [CSDateUtil stringWithDate:data.timeDate withFormat:@"yyyy-MM-dd HH:mm:ss"];
+        cell.downloadedSizeLabel.text = [CSFileUtil calculateUnit:[data.fileSize longLongValue]];
+        return cell;
     }
-//    NSNumber* number = self.array[indexPath.row];
-    if (indexPath.section == 0) {
-  
-    }
-    cell.fileNameLabel.text = @"文件名";
-    return cell;
 }
 
 
@@ -124,5 +170,6 @@ UITableViewDataSource
     }
     return _downloadingArray;
 }
+
 
 @end

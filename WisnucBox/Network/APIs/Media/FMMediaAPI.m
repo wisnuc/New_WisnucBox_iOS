@@ -18,7 +18,6 @@
     return @"media";
 }
 -(NSDictionary *)requestHeaderFieldValueDictionary{
-    
     NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat:@"JWT %@", WB_UserService.defaultToken] forKey:@"Authorization"];
     return dic;
 }
