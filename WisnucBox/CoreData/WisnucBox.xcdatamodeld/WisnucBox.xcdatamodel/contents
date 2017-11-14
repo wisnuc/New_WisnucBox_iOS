@@ -6,6 +6,7 @@
         <attribute name="fileName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="filePath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="fileSize" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fileUUID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timeDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="uuid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -34,7 +35,7 @@
         <attribute name="uuid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="WBFile" positionX="-54" positionY="45" width="128" height="150"/>
+        <element name="WBFile" positionX="-54" positionY="45" width="128" height="165"/>
         <element name="WBLocalAsset" positionX="-63" positionY="-18" width="128" height="75"/>
         <element name="WBUser" positionX="-54" positionY="9" width="128" height="315"/>
     </elements>

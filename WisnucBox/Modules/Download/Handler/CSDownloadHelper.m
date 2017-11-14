@@ -52,6 +52,8 @@
     return self;
 }
 
+
+
 - (void)downloadFileWithFileModel:(TestDataModel *)dataModel UUID:(NSString *)uuid{
     _downdloadCount++;
     NSString* fromUrl = dataModel.URLstring;
@@ -82,7 +84,7 @@
     
     CSDownloadModel* downloadFileModel = [[CSDownloadModel alloc] init];
     [downloadFileModel setDownloadFileName:[NSString stringWithFormat:@"%@",suffixName]];
-
+    [downloadFileModel setGetDownloadFileUUID:dataModel.fileUUID];
     [downloadFileModel setDownloadTaskURL:fromUrl];
     [downloadFileModel setDownloadFileSavePath:saveFile];
     [downloadFileModel setDownloadTempSavePath:tempFile];
@@ -95,7 +97,7 @@
     [downloadTask setDownloadUIBinder:self];
     
     [_manager addDownloadTask:downloadTask];
-    [SXLoadingView showProgressHUDText:[NSString stringWithFormat:@"已有%d个文件加入下载队列",_downdloadCount] duration:1.0];
+//    [SXLoadingView showProgressHUDText:[NSString stringWithFormat:@"已有%d个文件加入下载队列",_downdloadCount] duration:1.0];
     [self startDownloadWithTask:downloadTask];
 }
 

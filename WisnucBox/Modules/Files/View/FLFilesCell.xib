@@ -91,6 +91,7 @@
                 </constraints>
             </tableViewCellContentView>
             <gestureRecognizers/>
+            <inset key="separatorInset" minX="60" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="downBtn" destination="7BD-P2-wb5" id="knh-eN-K2N"/>
                 <outlet property="f_ImageView" destination="8w9-wt-EEo" id="4bx-L4-hq7"/>

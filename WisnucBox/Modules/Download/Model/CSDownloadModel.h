@@ -12,7 +12,7 @@
 
 @property(nonatomic, strong, getter = getDownloadFileName) NSString* downloadFileName;
 
-//@property(nonatomic, strong, getter = getDownloadFileAvatorURL) NSString* downloadFileAvatorURL;
+@property(nonatomic, strong, getter = getDownloadFileUUID) NSString* getDownloadFileUUID;
 
 @property(nonatomic, strong, getter = getDownloadFinishTime) NSDate* downloadFinishTime;
 

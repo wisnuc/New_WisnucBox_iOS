@@ -58,6 +58,7 @@
 		1F4D75D11FAC604100E6516C /* LoginTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F4D75CF1FAC604100E6516C /* LoginTableViewCell.xib */; };
 		1F8EAF241FB9A7C100FEED19 /* LocalDownloadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F8EAF211FB9A7C000FEED19 /* LocalDownloadingTableViewCell.xib */; };
 		1F8EAF251FB9A7C100FEED19 /* LocalDownloadingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EAF221FB9A7C000FEED19 /* LocalDownloadingTableViewCell.m */; };
+		1F8EAF291FBACD5000FEED19 /* FLFIlesHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EAF281FBACD5000FEED19 /* FLFIlesHelper.m */; };
 		1FD7A0EA1FB05A45000D4CB3 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E41FB05A45000D4CB3 /* back@2x.png */; };
 		1FD7A0EB1FB05A45000D4CB3 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E51FB05A45000D4CB3 /* back.png */; };
 		1FD7A0EC1FB05A45000D4CB3 /* back_gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E61FB05A45000D4CB3 /* back_gray@3x.png */; };
@@ -626,6 +627,8 @@
 		1F8EAF211FB9A7C000FEED19 /* LocalDownloadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalDownloadingTableViewCell.xib; sourceTree = "<group>"; };
 		1F8EAF221FB9A7C000FEED19 /* LocalDownloadingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalDownloadingTableViewCell.m; sourceTree = "<group>"; };
 		1F8EAF231FB9A7C000FEED19 /* LocalDownloadingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalDownloadingTableViewCell.h; sourceTree = "<group>"; };
+		1F8EAF271FBACD5000FEED19 /* FLFIlesHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLFIlesHelper.h; sourceTree = "<group>"; };
+		1F8EAF281FBACD5000FEED19 /* FLFIlesHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLFIlesHelper.m; sourceTree = "<group>"; };
 		1FD7A0E41FB05A45000D4CB3 /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
 		1FD7A0E51FB05A45000D4CB3 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		1FD7A0E61FB05A45000D4CB3 /* back_gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_gray@3x.png"; sourceTree = "<group>"; };
@@ -1619,6 +1622,15 @@
 			path = Download;
 			sourceTree = "<group>";
 		};
+		1F8EAF261FBACD2800FEED19 /* Handler */ = {
+			isa = PBXGroup;
+			children = (
+				1F8EAF271FBACD5000FEED19 /* FLFIlesHelper.h */,
+				1F8EAF281FBACD5000FEED19 /* FLFIlesHelper.m */,
+			);
+			path = Handler;
+			sourceTree = "<group>";
+		};
 		1FFEADAB1FB087A100CD3068 /* Manage */ = {
 			isa = PBXGroup;
 			children = (
@@ -1708,6 +1720,7 @@
 		C138D0441FB89F85000CF518 /* Files */ = {
 			isa = PBXGroup;
 			children = (
+				1F8EAF261FBACD2800FEED19 /* Handler */,
 				1F1ABA0A1FB985FE006EB1FC /* Model */,
 				1F1AB9E31FB96887006EB1FC /* View */,
 				1F196F351FB9416A004D5EB7 /* Controller */,
@@ -3171,6 +3184,7 @@
 				F675614E1FB3428F00E3277F /* UITextField+MFClearButton.m in Sources */,
 				F6AAD1891FB049E100DEDBDC /* WBFile+CoreDataProperties.m in Sources */,
 				F671F1051FB4B3B50051DF93 /* VCFloatingActionButton.m in Sources */,
+				1F8EAF291FBACD5000FEED19 /* FLFIlesHelper.m in Sources */,
 				1F4D75A01FAC4BB800E6516C /* SXLoadingView.m in Sources */,
 				F67933711FB0142900C9A7DC /* WBAsset.m in Sources */,
 				1F4D75A31FAC4BB800E6516C /* FMHandLoginVC.m in Sources */,

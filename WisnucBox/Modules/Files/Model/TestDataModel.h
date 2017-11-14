@@ -12,4 +12,5 @@
 @property (nonatomic,strong) NSString *URLstring;
 @property (nonatomic,strong) NSString *fileName;
 @property (nonatomic,strong) NSString *fileUUID;
+@property (nonatomic,strong) NSString *type;
 @end

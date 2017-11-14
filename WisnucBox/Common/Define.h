@@ -26,6 +26,8 @@
 
 #define MyAppDelegate ((AppDelegate *)[[UIApplication sharedApplication] delegate])
 
+#define KDefaultOffset 8
+
 #ifndef weaky
 #if DEBUG
 #if __has_feature(objc_arc)

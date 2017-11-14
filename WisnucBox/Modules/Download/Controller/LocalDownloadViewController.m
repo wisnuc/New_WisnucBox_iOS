@@ -48,6 +48,7 @@ DownloadHelperDelegate
     _filesServices = [FilesServices new];
     [self loadData];
     [self.view addSubview:self.tableView];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)loadData{
@@ -64,6 +65,7 @@ DownloadHelperDelegate
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     if (indexPath.section==0) {
         LocalDownloadingTableViewCell *cell;
         cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LocalDownloadingTableViewCell class])];
@@ -121,20 +123,11 @@ DownloadHelperDelegate
     }
 }
 
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 30;
 }
 
--(void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
-{
-//    view.tintColor = [UIColor whiteColor];
-    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
-//    header.contentView.backgroundColor=MainColor;
-//    header.textLabel.textAlignment=NSTextAlignmentCenter;
-    [header.textLabel setTextColor:[UIColor darkTextColor]];
-    
-    
-}
 #pragma UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -146,6 +139,11 @@ DownloadHelperDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 64;
 }
+
+//- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section{
+//     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+//     header.contentView.backgroundColor = [UIColor lightTextColor];
+//}
 
 //lazy
 - (UITableView *)tableView{

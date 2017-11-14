@@ -21,7 +21,6 @@
 @dynamic fileSize;
 @dynamic downloadedFileSize;
 @dynamic downloadURL;
-
-//@dynamic fileUUID;
+@dynamic fileUUID;
 
 @end
