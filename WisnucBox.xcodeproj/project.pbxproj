@@ -684,9 +684,6 @@
 		C138D05F1FB970F7000CF518 /* NSString+DeviceName.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+DeviceName.m"; sourceTree = "<group>"; };
 		C138D0641FB99AF3000CF518 /* FMMediaAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMMediaAPI.h; sourceTree = "<group>"; };
 		C138D0651FB99AF3000CF518 /* FMMediaAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMMediaAPI.m; sourceTree = "<group>"; };
-		C138D0691FB99B9C000CF518 /* DirectoriesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectoriesModel.m; sourceTree = "<group>"; };
-		C138D06B1FB99B9C000CF518 /* DriveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DriveModel.m; sourceTree = "<group>"; };
-		C138D06D1FB99B9C000CF518 /* EntriesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntriesModel.m; sourceTree = "<group>"; };
 		C138D0721FB9A4AF000CF518 /* DriveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DriveModel.m; sourceTree = "<group>"; };
 		C138D0731FB9A4AF000CF518 /* DriveModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DriveModel.h; sourceTree = "<group>"; };
 		C138D0741FB9A4AF000CF518 /* DirectoriesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectoriesModel.h; sourceTree = "<group>"; };
@@ -1218,13 +1215,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		1F1AB9EE1FB96DEA006EB1FC /* DataSouce */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DataSouce;
-			sourceTree = "<group>";
-		};
 		1F1AB9EF1FB9706A006EB1FC /* NSObject */ = {
 			isa = PBXGroup;
 			children = (
@@ -1719,7 +1709,6 @@
 			isa = PBXGroup;
 			children = (
 				1F1ABA0A1FB985FE006EB1FC /* Model */,
-				1F1AB9EE1FB96DEA006EB1FC /* DataSouce */,
 				1F1AB9E31FB96887006EB1FC /* View */,
 				1F196F351FB9416A004D5EB7 /* Controller */,
 			);
@@ -1758,9 +1747,6 @@
 		C138D0711FB9A491000CF518 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				C138D0691FB99B9C000CF518 /* DirectoriesModel.m */,
-				C138D06B1FB99B9C000CF518 /* DriveModel.m */,
-				C138D06D1FB99B9C000CF518 /* EntriesModel.m */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";

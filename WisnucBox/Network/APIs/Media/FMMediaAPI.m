@@ -18,9 +18,8 @@
     return @"media";
 }
 -(NSDictionary *)requestHeaderFieldValueDictionary{
-    
-//    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat:@"JWT %@",DEF_Token] forKey:@"Authorization"];
-    return nil;
+    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat:@"JWT %@", WB_UserService.defaultToken] forKey:@"Authorization"];
+    return dic;
 }
 
 -(NSTimeInterval)requestTimeoutInterval{

@@ -22,14 +22,8 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
     [MagicalRecord setupCoreDataStack];
     [self configWeChat];
-//    FMLoginViewController *loginController = [[FMLoginViewController alloc]init];
-//    LocalDownloadViewController *localDownloadViewController = [[LocalDownloadViewController alloc]init];
-//    UINavigationController *rootNaviController = [[UINavigationController alloc]initWithRootViewController:localDownloadViewController];
-//    self.window.rootViewController = rootNaviController;
-//
     [AppServices sharedService];
     [self initRootVC];
     return YES;
@@ -37,8 +31,10 @@
 
 
 - (void)initRootVC {
+    self.window.rootViewController = nil;
     UserServices * services = [AppServices sharedService].userServices;
-    if(!services.isUserLogin) {
+    if(services.isUserLogin) {
+        // userHome / backupdir / backupbasedir / token / address
         // To TabBar
         [self setUpLeftManager];
         RDVTabBarController * tabbar = [self setUpTabbar];

@@ -25,8 +25,4 @@
     return self;
 }
 
--(void)setBaseURL:(NSString *)baseURL{
-    _baseURL = baseURL;
-}
-
 @end
