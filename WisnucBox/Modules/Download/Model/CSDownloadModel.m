@@ -15,7 +15,7 @@
     self = [super init];
     if (self) {
         _downloadFileName       = @"";
-//        _downloadFileAvatorURL  = @"";
+        _getDownloadFileUUID  = @"";
         _downloadFinishTime     = [NSDate date];
         _downloadFileSize       = [NSNumber numberWithLongLong:0];
         _downloadFileUserId    = @"";

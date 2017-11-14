@@ -166,7 +166,6 @@
     //    __weak typeof(self) weakSelf = self;
     downloadTask.stream = [NSOutputStream outputStreamToFileAtPath:tempPath append:YES];
     NSURLSessionDataTask * dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
-        
         if (error) {
             NSLog(@"%@",error);
             [downloadTask.stream close];
@@ -249,6 +248,7 @@
             wBFile.fileSize = [NSString stringWithFormat:@"%@",fileModel.downloadFileSize];
             wBFile.downloadedFileSize = [NSString stringWithFormat:@"%@",fileModel.downloadedFileSize];
             wBFile.filePath = fileModel.downloadFileSavePath;
+            wBFile.fileUUID = fileModel.getDownloadFileUUID;
             wBFile.timeDate = fileModel.downloadFinishTime;
             wBFile.downloadURL = fileModel.downloadTaskURL;
             [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];

@@ -52,6 +52,8 @@
     return self;
 }
 
+
+
 - (void)downloadFileWithFileModel:(TestDataModel *)dataModel UUID:(NSString *)uuid{
     _downdloadCount++;
     NSString* fromUrl = dataModel.URLstring;
@@ -82,7 +84,7 @@
     
     CSDownloadModel* downloadFileModel = [[CSDownloadModel alloc] init];
     [downloadFileModel setDownloadFileName:[NSString stringWithFormat:@"%@",suffixName]];
-
+    [downloadFileModel setGetDownloadFileUUID:dataModel.fileUUID];
     [downloadFileModel setDownloadTaskURL:fromUrl];
     [downloadFileModel setDownloadFileSavePath:saveFile];
     [downloadFileModel setDownloadTempSavePath:tempFile];
