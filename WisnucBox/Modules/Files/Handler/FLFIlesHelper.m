@@ -9,6 +9,7 @@
 #import "FLFIlesHelper.h"
 #import "LocalDownloadViewController.h"
 #import "FilesViewController.h"
+#import "CSDownloadHelper.h"
 //#import "FLSecondFilesVC.h"
 
 
@@ -235,10 +236,9 @@
                                                         otherButtonTitleArray:arr];
             actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
                 if (buttonIndex == 1) {
-                   
+                [[CSDownloadHelper  shareManager] downloadFileWithFileModel:model UUID:uuid];
                 
                 }else if(buttonIndex == 2) {
-//                    MyNSLog(@"打开该文件");
                     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
                     NSString *filePath = [[paths objectAtIndex:0]stringByAppendingPathComponent:[NSString stringWithFormat:@"JYDownloadCache/%@",model.fileName]];
                     if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {

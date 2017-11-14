@@ -11,10 +11,19 @@
 #import "CSDownloadHelper.h"
 #import "VCFloatingActionButton.h"
 #import "FLFIlesHelper.h"
+#import "LocalDownloadViewController.h"
+#import "CSFileUtil.h"
 //test
 #import "TestDataModel.h"
 
-@interface FilesViewController ()<UITableViewDelegate,UITableViewDataSource,floatMenuDelegate,LCActionSheetDelegate>
+@interface FilesViewController ()
+<
+UITableViewDelegate,
+UITableViewDataSource,
+floatMenuDelegate,
+LCActionSheetDelegate,
+UIDocumentInteractionControllerDelegate
+>
 {
     UIButton * _leftBtn;
     UILabel * _countLb;
@@ -28,7 +37,11 @@
 
 @property (strong, nonatomic) VCFloatingActionButton * addButton;
 
+@property (strong, nonatomic) UIDocumentInteractionController *documentController;
+
 @property (nonatomic) FLFliesCellStatus cellStatus;
+
+@property (nonatomic, assign) BOOL isSelect;
 
 @end
 
@@ -84,6 +97,14 @@
     dataModel3.fileUUID = @"3";
     dataModel3.type = @"file";
     [self.dataSouceArray addObject:dataModel3];
+    
+    TestDataModel *dataModel4 = [TestDataModel new];
+    dataModel4.URLstring = @"http://www.zcool.com.cn/community/037116d5970d5cba8012193a34315ac.jpg";
+    dataModel4.fileName = @"BackgroudImage";
+    dataModel4.fileUUID = @"4";
+    dataModel4.type = @"file";
+    [self.dataSouceArray addObject:dataModel4];
+   
     [self.tableView reloadData];
     [self.tableView.mj_header endRefreshing];
 }
@@ -92,7 +113,6 @@
     __weak __typeof(self) weakSelf = self;
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        
         [weakSelf loadData];
     }];
     self.tableView.mj_header.ignoredScrollViewContentInsetTop = KDefaultOffset;
@@ -100,18 +120,18 @@
 }
 
 - (void)leftBtnClick:(id)sender{
-//    for (FLFilesModel * model in self.dataSource.dataSource) {
-        if (self.cellStatus == FLFliesCellStatusCanChoose) {
-//            [[FLFIlesHelper helper] removeChooseFile:model];
-            [self.tableView reloadData];
-            [self actionForNormalStatus];
-        }
-//    }
+    //    for (FLFilesModel * model in self.dataSource.dataSource) {
+    if (self.cellStatus == FLFliesCellStatusCanChoose) {
+//        [[FLFIlesHelper helper] removeChooseFile:model];
+        [self.tableView reloadData];
+        [self actionForNormalStatus];
+    }
+    //    }
 }
 
 - (void)rightBtnClick:(UIButton *)btn{
     if (self.cellStatus != FLFliesCellStatusCanChoose) {
-//        @weaky(self);
+        //        @weaky(self);
         [[LCActionSheet sheetWithTitle:@"" cancelButtonTitle:@"取消" clicked:^(LCActionSheet *actionSheet, NSInteger buttonIndex) {
             if (buttonIndex == 1) {
                 [self actionForChooseStatus];
@@ -120,25 +140,34 @@
     }else{
         [[LCActionSheet sheetWithTitle:@"" cancelButtonTitle:@"取消" clicked:^(LCActionSheet *actionSheet, NSInteger buttonIndex) {
             if (buttonIndex == 1) {
-                //                [[FLFIlesHelper helper] removeAllChooseFile];
+                [[FLFIlesHelper helper] removeAllChooseFile];
             }else if ( buttonIndex == 2){
-                //                [[FLFIlesHelper helper] downloadChooseFilesParentUUID:DRIVE_UUID];
+                [[FLFIlesHelper helper] downloadChooseFilesParentUUID:@""];
                 [self.rdv_tabBarController setSelectedIndex:2];
             }
         } otherButtonTitles:@"清除选择",@"下载所选项", nil] show];
     }
 }
 
-
+- (void)presentOptionsMenu
+{
+    
+    BOOL canOpen = [self.documentController presentPreviewAnimated:YES];
+    if (!canOpen) {
+        [SXLoadingView showProgressHUDText:@"文件预览失败" duration:1];
+//        [MyAppDelegate.notification displayNotificationWithMessage:@"文件预览失败" forDuration:1];
+        [_documentController presentOptionsMenuFromRect:self.view.bounds inView:self.view animated:YES];
+    }
+}
 
 - (void)actionForChooseStatus{
     if (self.cellStatus == FLFliesCellStatusCanChoose) {
         return;
     }
-//    if (self.dataSource.dataSource.count == 0) {
-//        [SXLoadingView showAlertHUD:@"您所在的文件夹没有文件可以选择" duration:2];
-//        return;
-//    }
+    //    if (self.dataSource.dataSource.count == 0) {
+    //        [SXLoadingView showAlertHUD:@"您所在的文件夹没有文件可以选择" duration:2];
+    //        return;
+    //    }
     [self.tableView.mj_header setHidden:YES];
     [UIView animateWithDuration:0.5 animations:^{
         _chooseHeadView.transform = CGAffineTransformTranslate(_chooseHeadView.transform, 0, 64);
@@ -177,11 +206,11 @@
             }else{
                 [self actionForNormalStatus];
                 [[FLFIlesHelper helper] downloadChooseFilesParentUUID:@""];
-//                FLLocalFIleVC *downloadVC = [[FLLocalFIleVC alloc]init];
-//                [self.navigationController pushViewController:downloadVC animated:YES];
+                //                 *downloadVC = [[FLLocalFIleVC alloc]init];
+                //                [self.navigationController pushViewController:downloadVC animated:YES];
             }
         }else{
-//            [self shareFiles];
+            //            [self shareFiles];
         }
     }
 }
@@ -198,38 +227,38 @@
     }
     TestDataModel *dataModel = _dataSouceArray[indexPath.row];
     [[FLFIlesHelper helper] configCells:cell withModel:dataModel cellStatus:self.cellStatus viewController:self parentUUID:@""];
-//    cell.downBtn.userInteractionEnabled = YES;
-//    cell.nameLabel.text = dataModel.fileName;
-//    cell.f_ImageView.image = [UIImage imageNamed:@"file_icon"];
-//    cell.clickBlock = ^(FLFilesCell * cell){
-//        NSString *downloadString  = @"下载该文件";
-//        //        NSString *openFileString = @"";
-//        NSMutableArray * arr = [NSMutableArray arrayWithCapacity:0];
-//        [arr addObject:downloadString];
-//        LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:nil
-//                                                                 delegate:nil
-//                                                        cancelButtonTitle:@"取消"
-//                                                    otherButtonTitleArray:arr];
-//        actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
-//            if (buttonIndex == 1) {
-//                [[CSDownloadHelper  shareManager] downloadFileWithFileModel:dataModel UUID:@"1"];
-//            }
-//        };
-//        actionSheet.scrolling          = YES;
-//        actionSheet.buttonHeight       = 60.0f;
-//        actionSheet.visibleButtonCount = 3.6f;
-//        [actionSheet show];
-//    };
-//    
-//    cell.longpressBlock =^(FLFilesCell * cell){
-//        if (cell.status == FLFliesCellStatusNormal) {
-////            if ([model.type isEqualToString:@"file"])
-////                [weak_self addChooseFile:model];
-//        }
-//    };
-//    
-//     cell.status = _cellStatus;
-
+    //    cell.downBtn.userInteractionEnabled = YES;
+    //    cell.nameLabel.text = dataModel.fileName;
+    //    cell.f_ImageView.image = [UIImage imageNamed:@"file_icon"];
+    //    cell.clickBlock = ^(FLFilesCell * cell){
+    //        NSString *downloadString  = @"下载该文件";
+    //        //        NSString *openFileString = @"";
+    //        NSMutableArray * arr = [NSMutableArray arrayWithCapacity:0];
+    //        [arr addObject:downloadString];
+    //        LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:nil
+    //                                                                 delegate:nil
+    //                                                        cancelButtonTitle:@"取消"
+    //                                                    otherButtonTitleArray:arr];
+    //        actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
+    //            if (buttonIndex == 1) {
+    //                [[CSDownloadHelper  shareManager] downloadFileWithFileModel:dataModel UUID:@"1"];
+    //            }
+    //        };
+    //        actionSheet.scrolling          = YES;
+    //        actionSheet.buttonHeight       = 60.0f;
+    //        actionSheet.visibleButtonCount = 3.6f;
+    //        [actionSheet show];
+    //    };
+    //
+    //    cell.longpressBlock =^(FLFilesCell * cell){
+    //        if (cell.status == FLFliesCellStatusNormal) {
+    ////            if ([model.type isEqualToString:@"file"])
+    ////                [weak_self addChooseFile:model];
+    //        }
+    //    };
+    //
+    //     cell.status = _cellStatus;
+    
     return cell;
 }
 
@@ -242,16 +271,31 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (self.cellStatus == FLFliesCellStatusCanChoose) {
-//        if ([[FLFIlesHelper helper].chooseFiles containsObject:model]) {
-//            [[FLFIlesHelper helper] removeChooseFile:model];
-        }else
-//            [[FLFIlesHelper helper] addChooseFile:model];
-//        _countLb.text = [NSString stringWithFormat:@"已选%ld个文件",(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
-        [self.tableView reloadData];
+//    if (self.isSelect == false) {
+//        self.isSelect = true;
+//    }
+    TestDataModel *model = _dataSouceArray[indexPath.row];
+    NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
+    NSString* suffixName = [model.URLstring lastPathComponent];
+    NSString* saveFile = [savePath stringByAppendingPathComponent:suffixName];
+    NSLog(@"%@",saveFile);
+    if ([[NSFileManager defaultManager] fileExistsAtPath:saveFile]) {
+        _documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:saveFile]];
+        _documentController.delegate = self;
+        [self presentOptionsMenu];
+    }else{
+        
     }
+}
 
-//}
+#pragma mark UIDocumentInteractionControllerDelegate
+
+
+- (UIViewController *)documentInteractionControllerViewControllerForPreview:(UIDocumentInteractionController *)controller
+{
+    return self;
+}
+
 
 - (UITableView *)tableView{
     if (!_tableView) {
