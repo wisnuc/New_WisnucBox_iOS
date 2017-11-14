@@ -28,6 +28,7 @@
 #import <Masonry/Masonry.h>
 #import <RTRootNavigationController/RTRootNavigationController.h>
 #import <SDWebImage/SDWebImageManager.h>
+#import <MJRefresh/MJRefresh.h>
 
 //Base
 #import "RDVTabBarController.h"

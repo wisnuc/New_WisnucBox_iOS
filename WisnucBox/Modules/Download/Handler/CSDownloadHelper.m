@@ -97,7 +97,7 @@
     [downloadTask setDownloadUIBinder:self];
     
     [_manager addDownloadTask:downloadTask];
-    [SXLoadingView showProgressHUDText:[NSString stringWithFormat:@"已有%d个文件加入下载队列",_downdloadCount] duration:1.0];
+//    [SXLoadingView showProgressHUDText:[NSString stringWithFormat:@"已有%d个文件加入下载队列",_downdloadCount] duration:1.0];
     [self startDownloadWithTask:downloadTask];
 }
 
