@@ -13,6 +13,7 @@
 #import "FLFIlesHelper.h"
 #import "LocalDownloadViewController.h"
 #import "CSFileUtil.h"
+#import "JYProcessView.h"
 //test
 #import "TestDataModel.h"
 
@@ -42,6 +43,8 @@ UIDocumentInteractionControllerDelegate
 @property (nonatomic) FLFliesCellStatus cellStatus;
 
 @property (nonatomic, assign) BOOL isSelect;
+
+@property (strong, nonatomic) JYProcessView * progressView;
 
 @end
 
@@ -274,17 +277,48 @@ UIDocumentInteractionControllerDelegate
 //    if (self.isSelect == false) {
 //        self.isSelect = true;
 //    }
+    
+    
     TestDataModel *model = _dataSouceArray[indexPath.row];
+
+    if (self.cellStatus == FLFliesCellStatusCanChoose) {
+        if ([[FLFIlesHelper helper].chooseFiles containsObject:model]) {
+            [[FLFIlesHelper helper] removeChooseFile:model];
+        }else
+            [[FLFIlesHelper helper] addChooseFile:model];
+        _countLb.text = [NSString stringWithFormat:@"已选%ld个文件",(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
+        [self.tableView reloadData];
+    }else{
     NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
     NSString* suffixName = [model.URLstring lastPathComponent];
     NSString* saveFile = [savePath stringByAppendingPathComponent:suffixName];
-    NSLog(@"%@",saveFile);
+    NSLog(@"文件位置%@",saveFile);
     if ([[NSFileManager defaultManager] fileExistsAtPath:saveFile]) {
         _documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:saveFile]];
         _documentController.delegate = self;
         [self presentOptionsMenu];
     }else{
-        
+            self.progressView.descLb.text =@"正在下载文件";
+            self.progressView.subDescLb.text = [NSString stringWithFormat:@"1个项目 "];
+            self.progressView.cancleBlock = ^(){
+                [[CSDownloadHelper shareManager] cancleDownload];
+            };
+            [[CSDownloadHelper shareManager] downloadOneFileWithFileModel:model UUID:@"uuid" begin:^{
+                
+            } progress:^(long long totalBytesRead, long long totalBytesExpectedToRead, float progress) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [_progressView setValueForProcess:progress];
+                });
+            } complete:^(CSDownloadTask *downloadTask,NSError *error) {
+                [_progressView dismiss];
+                if (!error) {
+                    _documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:downloadTask.downloadFileModel.downloadFileSavePath]];
+                    _documentController.delegate = self;
+                    [self presentOptionsMenu];
+                }
+            }];
+           [_progressView show];
+      }
     }
 }
 
@@ -350,5 +384,11 @@ UIDocumentInteractionControllerDelegate
     return _addButton;
 }
 
+- (JYProcessView *)progressView{
+    if (!_progressView){
+       _progressView = [JYProcessView processViewWithType:ProcessTypeLine];
+    }
+    return _progressView;
+}
 @end
 
