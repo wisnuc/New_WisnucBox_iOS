@@ -8,9 +8,17 @@
 
 #import "AppServices.h"
 #import "PHAsset+JYEXT.h"
+#import "AppDelegate.h"
 #import <YYDispatchQueuePool/YYDispatchQueuePool.h>
+#import "FMAccountUsersAPI.h"
 
 @implementation AppServices
+
+// init asset
+// init userServices
+// init net if has user (config baseurl)
+// startup photoUploadManager
+// if need upload start backup
 
 + (instancetype)sharedService {
     static AppServices * appServices;
@@ -18,9 +26,19 @@
     dispatch_once(&onceToken, ^{
         appServices = [[AppServices alloc] init];
         [appServices assetServices];
+        if(appServices.userServices.currentUser)
+           [appServices netServices];
         [appServices bootStrap];
     });
     return appServices;
+}
+
+- (void)rebulid {
+    [self abort];
+    [self assetServices];
+    if(self.userServices.currentUser)
+        [self netServices];
+    [self bootStrap];
 }
 
 - (void)bootStrap {
@@ -33,6 +51,7 @@
     });
 }
 
+
 // get token
 // create userSession
 // isFirstUser ?
@@ -40,13 +59,13 @@
 // userHome
 // backupDir
 - (void)loginWithBasic:(NSString *)basic userUUID:(NSString *)uuid name:(NSString *)userName addr:(NSString *)addr isWechat:(BOOL)isWechat completeBlock:(void(^)(NSError *error, WBUser *user))callback {
+    @weaky(self);
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setValue:[NSString stringWithFormat:@"Basic %@",basic] forHTTPHeaderField:@"Authorization"];
     [manager GET:[NSString stringWithFormat:@"%@token",addr] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSString * token = responseObject[@"token"];
         self.netServices = [[NetServices alloc]initWithLocalURL:addr andCloudURL:nil];
-        WBUser *user = [WBUser MR_createEntityInContext:[NSManagedObjectContext MR_defaultContext]];
-        user.uuid = uuid;
+        WBUser *user = [WB_UserService createUserWithUserUUID:uuid];
         user.userName = userName;
         user.localAddr = addr;
         user.localToken = token;
@@ -58,7 +77,6 @@
         [WB_UserService setCurrentUser:user];
         [WB_UserService synchronizedCurrentUser];
         NSLog(@"GET Token Success");
-        [JYRequestConfig sharedConfig].baseURL = addr;
         [WB_NetService getUserHome:^(NSError *error, NSString *userHome){
             if(error) return callback(error, user);
             user.userHome = userHome;
@@ -69,6 +87,13 @@
                 user.backUpDir = entryUUID;
                 [WB_UserService synchronizedCurrentUser];
                 NSLog(@"GET BACKUP DIR SUCCESS");
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [weak_self requestForBackupPhotos:^(BOOL shouldUpload) {
+                        if(shouldUpload) {
+                            
+                        }
+                    }];
+                });
                 return callback(nil, user);
             }];
         }];
@@ -78,7 +103,44 @@
     
 }
 
+- (void)updateCurrentUserInfoWithCompleteBlock:(void(^)(NSError *, BOOL success))callback {
+    [[FMAccountUsersAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSDictionary * dic = request.responseJsonObject;
+        if (IsEquallString(dic[@"uuid"], WB_UserService.currentUser.uuid)) {
+            WB_UserService.currentUser.isAdmin = [dic[@"isAdmin"] boolValue];
+            WB_UserService.currentUser.isFirstUser = [dic[@"isFirstUser"] boolValue];
+            [WB_UserService synchronizedCurrentUser];
+            //notify
+            [[NSNotificationCenter defaultCenter] postNotificationName:UserInfoChangedNotify object:nil];
+        }
+    } failure:^(__kindof JYBaseRequest *request) {
+        NSLog(@"Update user info error : %@", request.error);
+        callback(request.error, NO);
+    }];
+}
 
+- (void)requestForBackupPhotos:(void(^)(BOOL shouldUpload))callback {
+    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否自动备份该手机的照片至WISNUC服务器" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        NSLog(@"点击了取消按钮");
+        WB_UserService.currentUser.autoBackUp = NO;
+        [[NSNotificationCenter defaultCenter] postNotificationName:UserBackUpConfigChangeNotify object:@(0)];
+        [WB_UserService synchronizedCurrentUser];
+        callback(NO);
+    }];
+    
+    UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"备份" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSLog(@"点击了确定按钮");
+        WB_UserService.currentUser.autoBackUp = YES;
+        [[NSNotificationCenter defaultCenter] postNotificationName:UserBackUpConfigChangeNotify object:@(1)];
+        [WB_UserService synchronizedCurrentUser];
+        callback(YES);
+    }];
+    [alertVc addAction:cancle];
+    [alertVc addAction:confirm];
+    [MyAppDelegate.window.rootViewController presentViewController:alertVc animated:YES completion:^{
+    }];
+}
 
 
 // services load
@@ -145,13 +207,15 @@
     _fileServices ? [_fileServices abort] :
     _assetServices ? [_assetServices abort] :
     _netServices ? [_netServices abort] :
-    _dbServices ? [_dbServices abort] : nil;
+    _dbServices ? [_dbServices abort] :
+    _photoUploadManager? [_photoUploadManager destroy] : nil;
     
     _userServices = nil;
     _fileServices = nil;
     _assetServices = nil;
     _netServices = nil;
     _dbServices = nil;
+    _photoUploadManager = nil;
 }
 
 @end

@@ -12,7 +12,6 @@
 #import "AppServices.h"
 #import "FilesViewController.h"
 #import "AppServices.h"
-#import "JYThumbVC.h"
 
 @interface AppDelegate () <WXApiDelegate>
 
@@ -32,8 +31,7 @@
 
 - (void)initRootVC {
     self.window.rootViewController = nil;
-    UserServices * services = [AppServices sharedService].userServices;
-    if(services.isUserLogin) {
+    if(WB_UserService.isUserLogin) {
         // userHome / backupdir / backupbasedir / token / address
         // To TabBar
         [self setUpLeftManager];
@@ -41,6 +39,7 @@
         self.window.rootViewController = tabbar;
     }else{
         // TO Login VC
+        self.leftManager = nil;
         FMLoginViewController *loginController = [[FMLoginViewController alloc]init];
         UINavigationController *rootNaviController = [[UINavigationController alloc]initWithRootViewController:loginController];
         self.window.rootViewController = rootNaviController;

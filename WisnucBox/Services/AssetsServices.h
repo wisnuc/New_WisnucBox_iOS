@@ -15,11 +15,15 @@
 @class JYAsset;
 @interface AssetsServices : NSObject <ServiceProtocol>
 
-@property (nonatomic, copy, readonly) NSArray<JYAsset *> * allAssets;
+@property (nonatomic, copy, readonly) NSArray<JYAsset *> *allAssets;
 
 @property (nonatomic, copy) void(^AssetChangeBlock)(NSArray<JYAsset *> *removeObjs, NSArray<JYAsset *> *insertObjs);
 
 @property (nonatomic, readonly) BOOL userAuth;
+
+@property (nonatomic, copy) NSArray<WBAsset *> *allNetAssets;
+
+- (void)getNetAssets:(void(^)(NSError *, NSArray *))callback;
 
 - (WBLocalAsset *)getAssetWithLocalId:(NSString *)localId;
 

@@ -34,8 +34,9 @@
 
 // load Latest User Configuation
 - (void)loadData {
+    NSLog(@"%@",kUD_ObjectForKey(WBCURRENTUSER_UUID));
     if(kUD_ObjectForKey(WBCURRENTUSER_UUID)) {
-        self.currentUser = [self getUserWithUUID:WBCURRENTUSER_UUID];
+        self.currentUser = [self getUserWithUUID:kUD_ObjectForKey(WBCURRENTUSER_UUID)];
         if(!self.currentUser) {
             self.isUserLogin = false;
             [kUserDefaults removeObjectForKey:WBCURRENTUSER_UUID];
@@ -75,19 +76,20 @@
     kUD_Synchronize;
 }
 
+- (WBUser *)createUserWithUserUUID:(NSString *)uuid {
+    return [WBUser MR_findFirstOrCreateByAttribute:@"uuid" withValue:uuid inContext:[NSManagedObjectContext MR_defaultContext]];
+}
+
 - (WBUser *)saveUser:(WBUser *)user {
-    if(!user.uuid || IsNilString(user.uuid)) return nil;
-    WBUser * newUser = [self getUserWithUUID:user.uuid];
-    if(!newUser)
-        newUser = [WBUser MR_createEntityInContext:[NSManagedObjectContext MR_defaultContext]];
-    newUser.uuid = user.uuid;
-    newUser.userName = user.userName;
-    newUser.localToken = user.localToken;
-    newUser.cloudToken = user.cloudToken;
+    if(!user) return nil;
+    if(!user.uuid || IsNilString(user.uuid)) {
+        [user MR_deleteEntity];
+        return nil;
+    }
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-    if(newUser.uuid == self.currentUser.uuid)
-        self.currentUser = newUser;
-    return newUser;
+    if(user.uuid == self.currentUser.uuid)
+        self.currentUser = user;
+    return user;
 }
 
 - (void)deleteUserWithUserId:(NSString  *)uuid {

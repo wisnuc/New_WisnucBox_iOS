@@ -27,11 +27,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSString *userHome;
 @property (nullable, nonatomic, copy) NSString *backUpBaseDir;
 @property (nullable, nonatomic, copy) NSString *backUpDir;
+@property (nullable, nonatomic, copy) NSString *guid;
 @property (nonatomic) BOOL isFirstUser;
 @property (nonatomic) BOOL isAdmin;
 @property (nonatomic) BOOL isCloudLogin;
 @property (nonatomic) BOOL autoBackUp;
 @property (nonatomic) BOOL backUpInWWAN;
+
 
 @end
 

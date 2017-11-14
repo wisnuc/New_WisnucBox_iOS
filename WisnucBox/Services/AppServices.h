@@ -20,6 +20,8 @@
 #define WB_NetService   [WB_AppServices netServices]
 #define WB_PhotoUploadManager [WB_AppServices photoUploadManager]
 
+#define UserBackUpConfigChangeNotify @"UserBackUpConfigChangeNotify"
+#define UserInfoChangedNotify @"UserInfoChangedNotify"
 
 @class WBUploadManager;
 @interface AppServices : NSObject <ServiceProtocol>
@@ -42,6 +44,9 @@
 
 - (void)loginWithBasic:(NSString *)basic userUUID:(NSString *)uuid name:(NSString *)userName addr:(NSString *)addr isWechat:(BOOL)isWechat completeBlock:(void(^)(NSError *error, WBUser *user))callback;
 
+- (void)updateCurrentUserInfoWithCompleteBlock:(void(^)(NSError *, BOOL success))callback;
+
+- (void)requestForBackupPhotos:(void(^)(BOOL shouldUpload))callback;
 @end
 
 @class WBUploadModel;

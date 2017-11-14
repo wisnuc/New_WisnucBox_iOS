@@ -23,11 +23,23 @@
     NSLog(@"NetServices dealloc");
 }
 
+- (instancetype)init{
+    self = [super init];
+    if(WB_UserService.currentUser) {
+        _localUrl = WB_UserService.currentUser.localAddr;
+        _cloudUrl = nil;
+        [JYRequestConfig sharedConfig].baseURL = _localUrl;
+    }else
+        @throw @"NO User Login Can Not Use init func";
+    return self;
+}
+
 - (instancetype)initWithLocalURL:(NSString *)localUrl andCloudURL:(NSString *)cloudUrl {
     if(self = [super init]){
         self.localUrl = localUrl;
         self.cloudUrl = cloudUrl;
         self.isCloud = NO;
+        [JYRequestConfig sharedConfig].baseURL = localUrl;
     }
     return self;
 }
@@ -91,7 +103,7 @@
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSDictionary * dic = responseObject;
+        NSDictionary * dic = responseObject[0];
         NSArray * arr = [dic objectForKey:@"entries"];
         NSMutableArray * entries = [NSMutableArray arrayWithCapacity:0];
         [arr enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {

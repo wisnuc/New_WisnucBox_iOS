@@ -12,7 +12,8 @@
 
 + (NSDictionary *)modelCustomPropertyMapper {
     return @{@"fmlong" : @"long",
-             @"fmhash": @"hash"
+             @"fmhash": @"hash",
+             @"datetime": @"date"
              };
 }
 

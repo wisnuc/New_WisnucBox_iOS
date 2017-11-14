@@ -12,7 +12,7 @@ typedef BOOL(^shouldShowBlock)(void);
 
 @interface MenuView : UIView
 
-@property (nonatomic) shouldShowBlock showBlock;
+@property (nonatomic, copy) shouldShowBlock showBlock;
 
 
 +(instancetype)MenuViewWithDependencyView:(UIView *)dependencyView MenuView:(UIView *)leftmenuView isShowCoverView:(BOOL)isCover;
