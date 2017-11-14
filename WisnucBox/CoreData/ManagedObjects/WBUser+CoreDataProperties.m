@@ -31,5 +31,6 @@
 @dynamic userHome;
 @dynamic backUpDir;
 @dynamic backUpBaseDir;
+@dynamic guid;
 
 @end

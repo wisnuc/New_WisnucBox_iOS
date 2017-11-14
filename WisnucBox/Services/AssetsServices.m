@@ -11,6 +11,7 @@
 #import "PHAsset+JYEXT.h"
 #import <Photos/Photos.h>
 #import "WBLocalAsset+CoreDataClass.h"
+#import "FMMediaAPI.h"
 
 @interface AssetsServices ()<PHPhotoLibraryChangeObserver>
 
@@ -20,6 +21,8 @@
 
 @property (nonatomic, readwrite) BOOL userAuth;
 
+@property (nonatomic) dispatch_semaphore_t fetchNetAssetLock;
+
 @end
 
 @implementation AssetsServices{
@@ -27,7 +30,7 @@
 }
 
 - (void)abort{
-    
+    self.allNetAssets = nil;
 }
 
 - (void)dealloc {
@@ -42,6 +45,7 @@
         if(_userAuth)
            [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
         _saveContext = [NSManagedObjectContext MR_newMainQueueContext];
+        _fetchNetAssetLock = dispatch_semaphore_create(1);
     }
     return self;
 }
@@ -108,6 +112,27 @@
             [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
         }
     });
+}
+
+- (void)getNetAssets:(void(^)(NSError *, NSArray *))callback {
+//    dispatch_semaphore_wait(self.fetchNetAssetLock, DISPATCH_TIME_FOREVER);
+    @weaky(self);
+    [[FMMediaAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSArray * medias = request.responseJsonObject;
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            NSMutableArray *photoArr = [NSMutableArray arrayWithCapacity:0];
+            [medias enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [photoArr addObject:[WBAsset yy_modelWithJSON:obj]];
+            }];
+            weak_self.allNetAssets = photoArr;
+            callback(nil, photoArr);
+//            dispatch_semaphore_signal(weak_self.fetchNetAssetLock);
+        });
+    } failure:^(__kindof JYBaseRequest *request) {
+        NSLog(@"get net assets error: %@" , request.error);
+        callback(request.error, NULL);
+//        dispatch_semaphore_signal(weak_self.fetchNetAssetLock);
+    }];
 }
 
 #pragma mark - photolibrary change delegate

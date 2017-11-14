@@ -23,7 +23,6 @@
 - (instancetype)initLeftMenuWithTitles:(NSArray *)titles andImages:(NSArray *)imageNames {
     if(self = [super init]) {
         FMLeftMenu * leftMenu = [[[NSBundle mainBundle]loadNibNamed:@"FMLeftMenu" owner:nil options:nil]lastObject];
-        [leftMenu getAllPhoto];
         leftMenu.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width * 0.8, [[UIScreen mainScreen] bounds].size.height);
         _leftMenu = leftMenu;
         
@@ -35,7 +34,8 @@
         leftMenu.usersDatasource = [self getUsersInfo];
         
         [leftMenu.settingTabelView reloadData];
-        
+        //add observer
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userInfoChange) name:UserInfoChangedNotify object:nil];
         self.menu = [MenuView MenuViewWithDependencyView:MyAppDelegate.window MenuView:leftMenu isShowCoverView:YES];
         self.menu.showBlock = ^() {
             
@@ -50,6 +50,23 @@
         };
     }
     return self;
+}
+
+- (void)delloc {
+    NSLog(@"FMLeftManager delloc");
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+// userinfo update
+- (void)userInfoChange {
+    if(WB_UserService.currentUser.isFirstUser || WB_UserService.currentUser.isAdmin) {
+        _leftMenu.menus = LeftMenu_AdminTitles;
+        _leftMenu.imageNames = LeftMenu_AdminImages;
+    }else{
+        _leftMenu.menus = LeftMenu_NotAdminTitles;//@"个人信息", @"我的私有云", @"用户管理", @"设置", @"帮助",
+        _leftMenu.imageNames = LeftMenu_NotAdminImages;
+    }
+    [_leftMenu.settingTabelView reloadData];
 }
 
 - (NSMutableArray *)getUsersInfo {
@@ -212,14 +229,11 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         MyAppDelegate.window.rootViewController = nil;
         [MyAppDelegate.window resignKeyWindow];
-        
-        [WB_PhotoUploadManager destroy];
         [WB_UserService logoutUser];
         [WB_AppServices abort];
         for (UIView *view in MyAppDelegate.window.subviews) {
             [view removeFromSuperview];
         }
-        
         //reload menu
         [self reloadWithTitles:LeftMenu_NotAdminTitles andImages:LeftMenu_NotAdminImages];
         

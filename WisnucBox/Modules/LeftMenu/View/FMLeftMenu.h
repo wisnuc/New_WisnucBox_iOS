@@ -42,7 +42,8 @@
 
 @property (nonatomic) void(^footViewClickBlock)();
 
+- (void)updateProcessWithAllCount:(NSInteger)allcount currentCount:(NSInteger)currentCount;
+
 -(void)checkToStart;
--(void)getAllPhoto;
 
 @end

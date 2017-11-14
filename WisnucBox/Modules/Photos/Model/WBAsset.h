@@ -15,7 +15,7 @@
 @property (nonatomic) NSInteger w;
 @property (nonatomic) NSInteger size;
 @property (nonatomic) NSInteger orient;
-@property (nonatomic) NSString *datetime;
+@property (nonatomic) NSString *date;
 @property (nonatomic) NSString *make;
 @property (nonatomic) NSString *model;
 @property (nonatomic) NSString *lat;
@@ -23,5 +23,6 @@
 @property (nonatomic) NSString *fmlong;
 @property (nonatomic) NSString *longr;
 @property (nonatomic) NSString *fmhash;
-
+@property (nonatomic) NSInteger rot;
+@property (nonatomic) float dur;
 @end

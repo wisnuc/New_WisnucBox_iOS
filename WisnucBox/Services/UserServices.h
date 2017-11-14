@@ -34,6 +34,7 @@
 
 - (void)synchronizedCurrentUser;
 
+- (WBUser *)createUserWithUserUUID:(NSString *)uuid;
 @end
 
 @interface UserSession : NSObject
