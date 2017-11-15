@@ -26,23 +26,20 @@
 
 @property (nonatomic,readonly) NSMutableArray * chooseFiles;
 
-@property (nonatomic) TestDataModel * chooseModel;
+@property (nonatomic) EntriesModel * chooseModel;
 
 +(instancetype)helper;
 
 -(void)downloadChooseFilesParentUUID:(NSString *)uuid;
 
--(void)configCells:(FLFilesCell * )cell withModel:(TestDataModel *)model cellStatus:(FLFliesCellStatus)status viewController:(UIViewController *)viewController parentUUID:(NSString *)uuid;
+-(void)configCells:(FLFilesCell * )cell withModel:(EntriesModel *)model cellStatus:(FLFliesCellStatus)status viewController:(UIViewController *)viewController parentUUID:(NSString *)uuid;
 
--(void)addChooseFile:(TestDataModel *)model;
+-(void)addChooseFile:(EntriesModel *)model;
 
--(void)removeChooseFile:(TestDataModel *)model;
+-(void)removeChooseFile:(EntriesModel *)model;
 
 -(void)removeAllChooseFile;
 
--(void)cancleDownload;
-
-//- (void)downloadAloneFilesWithModel:(TestDataModel *)model parentUUID:(NSString *)uuid Progress:(TYDownloadProgressBlock)progress State:(TYDownloadStateBlock)state;
 //判断该文件是否已经被选择
--(BOOL)containsFile:(TestDataModel *)model;
+-(BOOL)containsFile:(EntriesModel *)model;
 @end

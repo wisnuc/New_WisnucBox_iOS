@@ -40,6 +40,7 @@
 }
 
 -(void)prepareForReuse{
+    [super prepareForReuse];
     self.timeLabel.text = @"";
 }
 

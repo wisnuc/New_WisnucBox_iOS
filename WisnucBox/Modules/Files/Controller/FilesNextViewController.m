@@ -1,11 +1,12 @@
 //
-//  FilesViewController.m
+//  FilesNextViewController.m
 //  WisnucBox
 //
-//  Created by wisnuc-imac on 2017/11/13.
+//  Created by wisnuc-imac on 2017/11/15.
 //  Copyright © 2017年 JackYang. All rights reserved.
 //
 
+#import "FilesNextViewController.h"
 #import "FilesViewController.h"
 #import "FLFilesCell.h"
 #import "CSDownloadHelper.h"
@@ -17,7 +18,7 @@
 #import "FilesNextViewController.h"
 #import "FilesDataSourceManager.h"
 
-@interface FilesViewController ()
+@interface FilesNextViewController ()
 <
 UITableViewDelegate,
 UITableViewDataSource,
@@ -49,7 +50,7 @@ FLDataSourceDelegate
 
 @end
 
-@implementation FilesViewController
+@implementation FilesNextViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -64,6 +65,7 @@ FLDataSourceDelegate
 }
 
 -(void)createNavBtns{
+    self.title = _name;
     UIButton * rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];
     [rightBtn setImage:[UIImage imageNamed:@"more"] forState:UIControlStateNormal];
     [rightBtn setImage:[UIImage imageNamed:@"more_highlight"] forState:UIControlStateHighlighted];
@@ -86,7 +88,7 @@ FLDataSourceDelegate
 
 - (void)loadData{
     [FilesDataSourceManager manager].delegate = self;
-    [[FilesDataSourceManager manager] getFilesWithUUID:WB_UserService.currentUser.userHome];
+    [[FilesDataSourceManager manager] getFilesWithUUID:_parentUUID];
     _cellStatus = FLFliesCellStatusNormal;
     [self.tableView reloadData];
 }
@@ -292,7 +294,7 @@ FLDataSourceDelegate
             }else{
                 NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
                 NSString* suffixName;
-//                [model.URLstring lastPathComponent];
+                //                [model.URLstring lastPathComponent];
                 NSString* saveFile = [savePath stringByAppendingPathComponent:suffixName];
                 NSLog(@"文件位置%@",saveFile);
                 if ([[NSFileManager defaultManager] fileExistsAtPath:saveFile]) {
@@ -317,7 +319,7 @@ FLDataSourceDelegate
                     } progress:^(long long totalBytesRead, long long totalBytesExpectedToRead, float progress) {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [_progressView setValueForProcess:progress];
-
+                            
                         });
                     } complete:^(CSDownloadTask *downloadTask,NSError *error) {
                         [_progressView dismiss];
@@ -402,5 +404,5 @@ FLDataSourceDelegate
     return _progressView;
 }
 
-@end
 
+@end

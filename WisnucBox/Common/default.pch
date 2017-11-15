@@ -39,6 +39,7 @@
 
 //model
 #import "WBAsset.h"
+#import "WBBaseModel.h"
 
 //Tools
 #import "SXLoadingView.h"
@@ -49,6 +50,8 @@
 #import "UIButton+Universal.h"
 #import "UIImage+GKContact.h"
 #import "UIView+JYExtension.h"
+#import "UIViewController+controller.h"
+#import "NSString+Extension.h"
 
 //CoreData
 #import "WBFile+CoreDataClass.h"

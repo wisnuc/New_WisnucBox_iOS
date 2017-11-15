@@ -10,6 +10,7 @@
 #import "CSDownloadTask.h"
 #import "CSDownloadUIBindProtocol.h"
 #import "TestDataModel.h"
+#import "CSFileDownloadManager.h"
 
 @protocol DownloadHelperDelegate <NSObject>
 @required//必须实现的代理方法
@@ -21,14 +22,24 @@
 @end
 @interface CSDownloadHelper : NSObject
 
+typedef void (^HelperDownloadingEventHandler) (BOOL isDownloading);
+
 @property(weak,nonatomic)id<DownloadHelperDelegate> delegate;
 @property (nonatomic, copy) void(^progressBlock)(long long totalBytesRead, long long totalBytesExpectedToRead, float progress);
 + (CSDownloadHelper *)shareManager;
 
-- (void)downloadFileWithFileModel:(TestDataModel *)dataModel UUID:(NSString *)uuid;
+- (void)downloadFileWithFileModel:(EntriesModel *)dataModel UUID:(NSString *)uuid;
+
+- (void)downloadOneFileWithFileModel:(EntriesModel *)dataModel UUID:(NSString *)uuid
+                       IsDownloading:(HelperDownloadingEventHandler)isDownloading
+                               begin:(CSDownloadBeginEventHandler)begin
+                            progress:(CSDownloadingEventHandler)progress
+                            complete:(CSDownloadedEventHandler)complete;
 
 - (void)pauseDownloadWithTask:(CSDownloadTask*)downloadTask;
 
 - (void)continueDownloadWithTask:(CSDownloadTask*)downloadTask;
+
+- (void)cancleDownload;
 
 @end

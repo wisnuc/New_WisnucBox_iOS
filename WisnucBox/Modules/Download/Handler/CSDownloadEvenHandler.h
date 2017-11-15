@@ -5,7 +5,7 @@
 //  Created by wisnuc-imac on 2017/11/13.
 //  Copyright © 2017年 JackYang. All rights reserved.
 //
-
+#import "CSDownloadTask.h"
 #ifndef CSDownloadEvenHandler_h
 #define CSDownloadEvenHandler_h
 /**
@@ -34,7 +34,7 @@ typedef void (^CSDownloadingEventHandler) (long long totalBytesRead, long long t
  *
  *  @return
  */
-typedef void (^CSDownloadedEventHandler) (NSError* error );
+typedef void (^CSDownloadedEventHandler) (CSDownloadTask *downloadTask,NSError* error );
 
 
 #endif /* CSDownloadEvenHandler_h */

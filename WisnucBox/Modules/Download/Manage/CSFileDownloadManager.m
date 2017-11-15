@@ -180,6 +180,13 @@
             if (failureCount <= self.maxFailureRetryChance)
             {
                 NSLog(@"重试中...");
+                if (downloadTask.downloadStatus == CSDownloadStatusCanceled) {
+                    //调用外部回调（比如执行UI更新），通知UI任务已经失败了
+                    if (complete) {
+                        complete(downloadTask,error);
+                    }
+                    return ;
+                }
                 //下载失败重新发起下载请求（即重试）
                 [self beginDownloadTask:downloadTask begin:begin progress:progress complete:complete];
             }
@@ -191,7 +198,7 @@
                 //                [GSFileUtil deleteFileAtPath:tmpPath];
                 //调用外部回调（比如执行UI更新），通知UI任务已经失败了
                 if (complete) {
-                    complete(error);
+                    complete(downloadTask,error);
                 }
             }
         }else{
@@ -258,7 +265,7 @@
             [self.downloadedTasks addObject:downloadTask];
             //调用外部回调（比如执行UI更新）
             if (complete) {
-                complete(nil);
+                complete(downloadTask,nil);
             }
         }
        
