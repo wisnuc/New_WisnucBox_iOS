@@ -15,6 +15,7 @@
 #import "CSFileUtil.h"
 #import "JYProcessView.h"
 #import "FilesNextViewController.h"
+#import "FilesDataSourceManager.h"
 //test
 #import "TestDataModel.h"
 
@@ -24,7 +25,8 @@ UITableViewDelegate,
 UITableViewDataSource,
 floatMenuDelegate,
 LCActionSheetDelegate,
-UIDocumentInteractionControllerDelegate
+UIDocumentInteractionControllerDelegate,
+FLDataSourceDelegate
 >
 {
     UIButton * _leftBtn;
@@ -85,36 +87,10 @@ UIDocumentInteractionControllerDelegate
 }
 
 - (void)loadData{
-    TestDataModel *dataModel = [TestDataModel new];
-    dataModel.URLstring = @"https://dldir1.qq.com/qqfile/QQforMac/QQ_V6.1.1.dmg";
-    dataModel.fileName = @"QQ for Mac";
-    dataModel.fileUUID = @"1";
-    dataModel.type = @"file";
-    [self.dataSouceArray addObject:dataModel];
-    
-    TestDataModel *dataModel2 = [TestDataModel new];
-    dataModel2.URLstring = @"http://d1.music.126.net/dmusic/NeteaseMusic_1.5.7_580_web.dmg";
-    dataModel2.fileName = @"NeteaseMusic for Mac";
-    dataModel2.fileUUID = @"2";
-    dataModel2.type = @"file";
-    [self.dataSouceArray addObject:dataModel2];
-    
-    TestDataModel *dataModel3 = [TestDataModel new];
-    dataModel3.URLstring = @"https://dldir1.qq.com/foxmail/MacFoxmail/Foxmail_for_Mac_V1.2.0.dmg";
-    dataModel3.fileName = @"Foxmail_for_Mac";
-    dataModel3.fileUUID = @"3";
-    dataModel3.type = @"file";
-    [self.dataSouceArray addObject:dataModel3];
-    
-    TestDataModel *dataModel4 = [TestDataModel new];
-    dataModel4.URLstring = @"http://www.zcool.com.cn/community/037116d5970d5cba8012193a34315ac.jpg";
-    dataModel4.fileName = @"BackgroudImage";
-    dataModel4.fileUUID = @"4";
-    dataModel4.type = @"file";
-    [self.dataSouceArray addObject:dataModel4];
-    
+    [FilesDataSourceManager manager].delegate = self;
+    [[FilesDataSourceManager manager] getData];
+    _cellStatus = FLFliesCellStatusNormal;
     [self.tableView reloadData];
-    [self.tableView.mj_header endRefreshing];
 }
 
 - (void)initMjRefresh{
@@ -132,7 +108,7 @@ UIDocumentInteractionControllerDelegate
 }
 
 - (void)leftBtnClick:(id)sender{
-    for (TestDataModel * model in self.dataSouceArray) {
+    for (EntriesModel * model in self.dataSouceArray) {
         if (self.cellStatus == FLFliesCellStatusCanChoose) {
             [[FLFIlesHelper helper] removeChooseFile:model];
             [self.tableView reloadData];
@@ -142,7 +118,6 @@ UIDocumentInteractionControllerDelegate
 
 - (void)rightBtnClick:(UIButton *)btn{
     if (self.cellStatus != FLFliesCellStatusCanChoose) {
-        //        @weaky(self);
         [[LCActionSheet sheetWithTitle:@"" cancelButtonTitle:@"取消" clicked:^(LCActionSheet *actionSheet, NSInteger buttonIndex) {
             if (buttonIndex == 1) {
                 [self actionForChooseStatus];
@@ -160,13 +135,28 @@ UIDocumentInteractionControllerDelegate
     }
 }
 
+- (void)sequenceDataSource{
+    NSMutableArray *isFilesArr = [NSMutableArray arrayWithCapacity:0];
+    NSMutableArray *isNotFilesArr = [NSMutableArray arrayWithCapacity:0];
+    for (EntriesModel * model  in self.dataSouceArray) {
+        if (![model.type isEqualToString:@"file"]) {
+            [isNotFilesArr addObject: model];
+        }
+        else{
+            [isFilesArr addObject: model];
+        }
+    }
+    [self.dataSouceArray removeAllObjects];
+    [self.dataSouceArray addObjectsFromArray:isNotFilesArr];
+    [self.dataSouceArray addObjectsFromArray:isFilesArr];
+}
+
 - (void)presentOptionsMenu
 {
     
     BOOL canOpen = [self.documentController presentPreviewAnimated:YES];
     if (!canOpen) {
         [SXLoadingView showProgressHUDText:@"文件预览失败" duration:1];
-        //        [MyAppDelegate.notification displayNotificationWithMessage:@"文件预览失败" forDuration:1];
         [_documentController presentOptionsMenuFromRect:self.view.bounds inView:self.view animated:YES];
     }
 }
@@ -216,6 +206,17 @@ UIDocumentInteractionControllerDelegate
         }
     }
 }
+#pragma mark - FLDataSourceDelegate
+
+- (void)datasource:(FilesDataSourceManager *)datasource finishLoading:(BOOL)finish{
+    if (datasource == [FilesDataSourceManager manager] && finish) {
+        [self sequenceDataSource];
+        [self.tableView reloadData];
+        [self.tableView.mj_header endRefreshing];
+    }else{
+        [self.tableView.mj_header endRefreshing];
+    }
+}
 
 #pragma mark - floatMenuDelegate
 
@@ -250,10 +251,9 @@ UIDocumentInteractionControllerDelegate
     if (nil == cell) {
         cell= (FLFilesCell *)[[[NSBundle  mainBundle] loadNibNamed:NSStringFromClass([FLFilesCell class]) owner:self options:nil]  lastObject];
     }
-    TestDataModel *dataModel = _dataSouceArray[indexPath.row];
+    EntriesModel *dataModel = _dataSouceArray[indexPath.row];
+    NSLog(@"%@",dataModel.name);
     [[FLFIlesHelper helper] configCells:cell withModel:dataModel cellStatus:self.cellStatus viewController:self parentUUID:@""];
-    
-    
     return cell;
 }
 
@@ -269,7 +269,7 @@ UIDocumentInteractionControllerDelegate
     if (self.isSelect == false) {
         self.isSelect = true;
         [self performSelector:@selector(repeatDelay) withObject:nil afterDelay:0.5f];
-        TestDataModel * model = self.dataSouceArray[indexPath.row];
+        EntriesModel * model = self.dataSouceArray[indexPath.row];
         if (![model.type isEqualToString:@"file"]){
             FilesNextViewController * vc = [FilesNextViewController new];
             //            vc.parentUUID = model.uuid;
@@ -279,7 +279,7 @@ UIDocumentInteractionControllerDelegate
                 [self.navigationController pushViewController:vc animated:YES];
             }
         }else{
-            TestDataModel *model = _dataSouceArray[indexPath.row];
+            EntriesModel *model = _dataSouceArray[indexPath.row];
             
             if (self.cellStatus == FLFliesCellStatusCanChoose) {
                 if ([[FLFIlesHelper helper].chooseFiles containsObject:model]) {
@@ -290,7 +290,8 @@ UIDocumentInteractionControllerDelegate
                 [self.tableView reloadData];
             }else{
                 NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
-                NSString* suffixName = [model.URLstring lastPathComponent];
+                NSString* suffixName;
+//                [model.URLstring lastPathComponent];
                 NSString* saveFile = [savePath stringByAppendingPathComponent:suffixName];
                 NSLog(@"文件位置%@",saveFile);
                 if ([[NSFileManager defaultManager] fileExistsAtPath:saveFile]) {

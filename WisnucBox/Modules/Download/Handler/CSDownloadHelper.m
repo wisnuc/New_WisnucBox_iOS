@@ -54,12 +54,12 @@
     return self;
 }
 
-- (void)downloadOneFileWithFileModel:(TestDataModel *)dataModel UUID:(NSString *)uuid
+- (void)downloadOneFileWithFileModel:(EntriesModel *)dataModel UUID:(NSString *)uuid
                        IsDownloading:(HelperDownloadingEventHandler)isDownloading
                                begin:(CSDownloadBeginEventHandler)begin
                             progress:(CSDownloadingEventHandler)progress
                             complete:(CSDownloadedEventHandler)complete{
-    NSString* fromUrl = dataModel.URLstring;
+    NSString* fromUrl = @"";
     
     NSString* suffixName = [fromUrl lastPathComponent];
     NSString* tmpFileName = [NSString stringWithFormat:@"file-%d.tmp",_downdloadCount];
@@ -87,7 +87,7 @@
     
     CSDownloadModel* downloadFileModel = [[CSDownloadModel alloc] init];
     [downloadFileModel setDownloadFileName:[NSString stringWithFormat:@"%@",suffixName]];
-    [downloadFileModel setGetDownloadFileUUID:dataModel.fileUUID];
+    [downloadFileModel setGetDownloadFileUUID:dataModel.uuid];
     [downloadFileModel setDownloadTaskURL:fromUrl];
     [downloadFileModel setDownloadFileSavePath:saveFile];
     [downloadFileModel setDownloadTempSavePath:tempFile];
@@ -120,9 +120,9 @@
 
 }
 
-- (void)downloadFileWithFileModel:(TestDataModel *)dataModel UUID:(NSString *)uuid{
+- (void)downloadFileWithFileModel:(EntriesModel *)dataModel UUID:(NSString *)uuid{
     _downdloadCount++;
-    NSString* fromUrl = dataModel.URLstring;
+    NSString* fromUrl = @"";
     
     NSString* suffixName = [fromUrl lastPathComponent];
     NSString* tmpFileName = [NSString stringWithFormat:@"file-%d.tmp",_downdloadCount];
@@ -150,7 +150,7 @@
     
     CSDownloadModel* downloadFileModel = [[CSDownloadModel alloc] init];
     [downloadFileModel setDownloadFileName:[NSString stringWithFormat:@"%@",suffixName]];
-    [downloadFileModel setGetDownloadFileUUID:dataModel.fileUUID];
+    [downloadFileModel setGetDownloadFileUUID:dataModel.uuid];
     [downloadFileModel setDownloadTaskURL:fromUrl];
     [downloadFileModel setDownloadFileSavePath:saveFile];
     [downloadFileModel setDownloadTempSavePath:tempFile];

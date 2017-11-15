@@ -17,7 +17,6 @@
 
 @property (nonatomic) NSMutableArray * chooseFiles;
 @property (nonatomic) NSMutableArray * chooseFilesUUID;
-//@property (nonatomic) TYDownloadModel * downloadModel;
 
 
 @end
@@ -33,12 +32,12 @@
     return helper;
 }
 
-- (void)addChooseFile:(TestDataModel *)model{
+- (void)addChooseFile:(EntriesModel *)model{
     @synchronized (self) {
         //当没有选择过文件
         if(![self containsFile:model]){
             [self.chooseFiles addObject:model];
-            [self.chooseFilesUUID addObject:model.fileUUID];
+            [self.chooseFilesUUID addObject:model.uuid];
             if (self.chooseFiles.count == 1) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:FLFilesStatusChangeNotify object:@(1)];
             }
@@ -46,24 +45,24 @@
     }
 }
 
--(void)removeChooseFile:(TestDataModel *)model{
+-(void)removeChooseFile:(EntriesModel *)model{
     @synchronized (self) {
         NSMutableArray * tempArr = [NSMutableArray arrayWithCapacity:0];
-        for (TestDataModel * file in self.chooseFiles) {
-            if (IsEquallString(model.fileUUID, file.fileUUID)) {
+        for (EntriesModel * file in self.chooseFiles) {
+            if (IsEquallString(model.uuid, file.uuid)) {
                 [tempArr  addObject:file];
             }
         }
         [self.chooseFiles removeObjectsInArray:tempArr];
-        [self.chooseFilesUUID removeObject:model.fileUUID];
+        [self.chooseFilesUUID removeObject:model.uuid];
         if (self.chooseFiles.count == 0) {
             [[NSNotificationCenter defaultCenter] postNotificationName:FLFilesStatusChangeNotify object:@(0)];
         }
     }
 }
 
-- (BOOL)containsFile:(TestDataModel *)model{
-    return [self.chooseFilesUUID containsObject:model.fileUUID];
+- (BOOL)containsFile:(EntriesModel *)model{
+    return [self.chooseFilesUUID containsObject:model.uuid];
 }
 
 
@@ -89,7 +88,7 @@
 }
 
 -(void)downloadChooseFilesParentUUID:(NSString *)uuid{
-    for (TestDataModel * model in [FLFIlesHelper helper].chooseFiles) {
+    for (EntriesModel * model in [FLFIlesHelper helper].chooseFiles) {
         if ([model.type isEqualToString:@"file"]) {
             [[CSDownloadHelper shareManager] downloadFileWithFileModel:model UUID:uuid];
         }
@@ -99,17 +98,17 @@
     [[FLFIlesHelper helper] removeAllChooseFile];
 }
 
-- (void)configCells:(FLFilesCell * )cell withModel:(TestDataModel *)model cellStatus:(FLFliesCellStatus)status viewController:(UIViewController *)viewController parentUUID:(NSString *)uuid{
-    cell.nameLabel.text = model.fileName;
-//    cell.sizeLabel.text = [NSString fileSizeWithFLModel:model];
+- (void)configCells:(FLFilesCell * )cell withModel:(EntriesModel *)model cellStatus:(FLFliesCellStatus)status viewController:(UIViewController *)viewController parentUUID:(NSString *)uuid{
+    cell.nameLabel.text = model.name;
+    cell.sizeLabel.text = [NSString fileSizeWithFLModel:model];
 
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if ([model.type isEqualToString:@"file"]) {
         cell.f_ImageView.image = [UIImage imageNamed:@"file_icon"];
-//        cell.timeLabel.text = [self getTimeWithTimeSecond:model.mtime/1000];
+        cell.timeLabel.text = [self getTimeWithTimeSecond:model.mtime/1000];
     }else{
         cell.f_ImageView.image = [UIImage imageNamed:@"folder_icon"];
-//        cell.timeLabel.text = [self getTimeWithTimeSecond:model.mtime/1000];
+        cell.timeLabel.text = [self getTimeWithTimeSecond:model.mtime/1000];
         cell.sizeLabel.hidden = YES;
     }
     cell.downBtn.hidden = ((status == FLFliesCellStatusNormal)?![model.type isEqualToString:@"file"]:YES);
@@ -127,8 +126,7 @@
             cell.layerView.image = [UIImage imageNamed:@"check_circle"];
         }
     }
-    
-   
+
     @weaky(self);
     if ([model.type isEqualToString:@"file"]) {
     
@@ -169,7 +167,7 @@
                 }
                 }else if(buttonIndex == 2) {
                     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                    NSString *filePath = [[paths objectAtIndex:0]stringByAppendingPathComponent:[NSString stringWithFormat:@"JYDownloadCache/%@",model.fileName]];
+                    NSString *filePath = [[paths objectAtIndex:0]stringByAppendingPathComponent:[NSString stringWithFormat:@"JYDownloadCache/%@",model.name]];
                     if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
                         if (_openFilesdelegate && [_openFilesdelegate respondsToSelector:@selector(openTheFileWithFilePath:)]) {
                             [_openFilesdelegate openTheFileWithFilePath:filePath];

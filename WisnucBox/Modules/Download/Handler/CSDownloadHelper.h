@@ -28,9 +28,9 @@ typedef void (^HelperDownloadingEventHandler) (BOOL isDownloading);
 @property (nonatomic, copy) void(^progressBlock)(long long totalBytesRead, long long totalBytesExpectedToRead, float progress);
 + (CSDownloadHelper *)shareManager;
 
-- (void)downloadFileWithFileModel:(TestDataModel *)dataModel UUID:(NSString *)uuid;
+- (void)downloadFileWithFileModel:(EntriesModel *)dataModel UUID:(NSString *)uuid;
 
-- (void)downloadOneFileWithFileModel:(TestDataModel *)dataModel UUID:(NSString *)uuid
+- (void)downloadOneFileWithFileModel:(EntriesModel *)dataModel UUID:(NSString *)uuid
                        IsDownloading:(HelperDownloadingEventHandler)isDownloading
                                begin:(CSDownloadBeginEventHandler)begin
                             progress:(CSDownloadingEventHandler)progress

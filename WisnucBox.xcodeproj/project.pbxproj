@@ -57,9 +57,13 @@
 		1F4D75CC1FAC5FF900E6516C /* FMCloudUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F4D75CA1FAC5FF900E6516C /* FMCloudUserTableViewCell.xib */; };
 		1F4D75D01FAC604100E6516C /* LoginTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75CE1FAC604100E6516C /* LoginTableViewCell.m */; };
 		1F4D75D11FAC604100E6516C /* LoginTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F4D75CF1FAC604100E6516C /* LoginTableViewCell.xib */; };
+		1F5D217D1FBC351A006C65AA /* FilesDataSourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D217C1FBC351A006C65AA /* FilesDataSourceManager.m */; };
+		1F5D21801FBC3CC6006C65AA /* WBBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D217F1FBC3CC6006C65AA /* WBBaseModel.m */; };
+		1F5D21831FBC3DB0006C65AA /* FilesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D21821FBC3DB0006C65AA /* FilesModel.m */; };
 		1F8EAF241FB9A7C100FEED19 /* LocalDownloadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F8EAF211FB9A7C000FEED19 /* LocalDownloadingTableViewCell.xib */; };
 		1F8EAF251FB9A7C100FEED19 /* LocalDownloadingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EAF221FB9A7C000FEED19 /* LocalDownloadingTableViewCell.m */; };
 		1F8EAF291FBACD5000FEED19 /* FLFIlesHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EAF281FBACD5000FEED19 /* FLFIlesHelper.m */; };
+		1FB0900B1FBC519A0020B304 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB090091FBC51990020B304 /* NSString+Extension.m */; };
 		1FD7A0EA1FB05A45000D4CB3 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E41FB05A45000D4CB3 /* back@2x.png */; };
 		1FD7A0EB1FB05A45000D4CB3 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E51FB05A45000D4CB3 /* back.png */; };
 		1FD7A0EC1FB05A45000D4CB3 /* back_gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E61FB05A45000D4CB3 /* back_gray@3x.png */; };
@@ -628,11 +632,19 @@
 		1F4D75CD1FAC604100E6516C /* LoginTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTableViewCell.h; sourceTree = "<group>"; };
 		1F4D75CE1FAC604100E6516C /* LoginTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTableViewCell.m; sourceTree = "<group>"; };
 		1F4D75CF1FAC604100E6516C /* LoginTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginTableViewCell.xib; sourceTree = "<group>"; };
+		1F5D217B1FBC351A006C65AA /* FilesDataSourceManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilesDataSourceManager.h; sourceTree = "<group>"; };
+		1F5D217C1FBC351A006C65AA /* FilesDataSourceManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilesDataSourceManager.m; sourceTree = "<group>"; };
+		1F5D217E1FBC3CC6006C65AA /* WBBaseModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBBaseModel.h; sourceTree = "<group>"; };
+		1F5D217F1FBC3CC6006C65AA /* WBBaseModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBBaseModel.m; sourceTree = "<group>"; };
+		1F5D21811FBC3DB0006C65AA /* FilesModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilesModel.h; sourceTree = "<group>"; };
+		1F5D21821FBC3DB0006C65AA /* FilesModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilesModel.m; sourceTree = "<group>"; };
 		1F8EAF211FB9A7C000FEED19 /* LocalDownloadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalDownloadingTableViewCell.xib; sourceTree = "<group>"; };
 		1F8EAF221FB9A7C000FEED19 /* LocalDownloadingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalDownloadingTableViewCell.m; sourceTree = "<group>"; };
 		1F8EAF231FB9A7C000FEED19 /* LocalDownloadingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalDownloadingTableViewCell.h; sourceTree = "<group>"; };
 		1F8EAF271FBACD5000FEED19 /* FLFIlesHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLFIlesHelper.h; sourceTree = "<group>"; };
 		1F8EAF281FBACD5000FEED19 /* FLFIlesHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLFIlesHelper.m; sourceTree = "<group>"; };
+		1FB090091FBC51990020B304 /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
+		1FB0900A1FBC51990020B304 /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
 		1FD7A0E41FB05A45000D4CB3 /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
 		1FD7A0E51FB05A45000D4CB3 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		1FD7A0E61FB05A45000D4CB3 /* back_gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_gray@3x.png"; sourceTree = "<group>"; };
@@ -1294,6 +1306,8 @@
 				C138D0761FB9A4B0000CF518 /* EntriesModel.m */,
 				1F1ABA0B1FB9862A006EB1FC /* TestDataModel.h */,
 				1F1ABA0C1FB9862A006EB1FC /* TestDataModel.m */,
+				1F5D21811FBC3DB0006C65AA /* FilesModel.h */,
+				1F5D21821FBC3DB0006C65AA /* FilesModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1560,6 +1574,15 @@
 			path = GCD;
 			sourceTree = "<group>";
 		};
+		1F5D217A1FBC34F3006C65AA /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				1F5D217B1FBC351A006C65AA /* FilesDataSourceManager.h */,
+				1F5D217C1FBC351A006C65AA /* FilesDataSourceManager.m */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
 		1F61E52B1FAC7AE0008ACEFB /* Source */ = {
 			isa = PBXGroup;
 			children = (
@@ -1738,6 +1761,7 @@
 		C138D0441FB89F85000CF518 /* Files */ = {
 			isa = PBXGroup;
 			children = (
+				1F5D217A1FBC34F3006C65AA /* DataSource */,
 				1F8EAF261FBACD2800FEED19 /* Handler */,
 				1F1ABA0A1FB985FE006EB1FC /* Model */,
 				1F1AB9E31FB96887006EB1FC /* View */,
@@ -2097,6 +2121,8 @@
 		F6830F1B1FB308C8005AC578 /* NSString */ = {
 			isa = PBXGroup;
 			children = (
+				1FB0900A1FBC51990020B304 /* NSString+Extension.h */,
+				1FB090091FBC51990020B304 /* NSString+Extension.m */,
 				F6830F1C1FB308C8005AC578 /* NSString+Validate.h */,
 				F6830F1D1FB308C8005AC578 /* NSString+Validate.m */,
 				C138D05E1FB970F7000CF518 /* NSString+DeviceName.h */,
@@ -2447,6 +2473,8 @@
 			children = (
 				F68311D41FB311FC005AC578 /* FMUsers.h */,
 				F68311D51FB311FC005AC578 /* FMUsers.m */,
+				1F5D217E1FBC3CC6006C65AA /* WBBaseModel.h */,
+				1F5D217F1FBC3CC6006C65AA /* WBBaseModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3097,6 +3125,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F5D21831FBC3DB0006C65AA /* FilesModel.m in Sources */,
 				1F4D75C71FAC5EB500E6516C /* GCDAsyncSocket.m in Sources */,
 				71A3D6791FB5AD230002B8B1 /* FMGetUsersAPI.m in Sources */,
 				F67D643D1FAC7E5600E23D16 /* JYBigImgCell.m in Sources */,
@@ -3146,6 +3175,7 @@
 				F6830EB51FB2FAE0005AC578 /* RDVTabBarItem.m in Sources */,
 				F6830EB31FB2FAE0005AC578 /* RDVTabBar.m in Sources */,
 				1F4D75A41FAC4BB800E6516C /* UserModel.m in Sources */,
+				1F5D21801FBC3CC6006C65AA /* WBBaseModel.m in Sources */,
 				1F4D75B41FAC4BB800E6516C /* AppServices.m in Sources */,
 				F6830EE61FB2FEC4005AC578 /* FMSetting.m in Sources */,
 				1F4D75AB1FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.m in Sources */,
@@ -3155,6 +3185,7 @@
 				1F4D759C1FAC4BB800E6516C /* UIButton+EnlargeEdge.m in Sources */,
 				1F4D75CB1FAC5FF900E6516C /* FMCloudUserTableViewCell.m in Sources */,
 				F675614D1FB3428F00E3277F /* UIImage+MFTint.m in Sources */,
+				1F5D217D1FBC351A006C65AA /* FilesDataSourceManager.m in Sources */,
 				F6D8CC441FB448B800673824 /* UIImage+imageWithColor.m in Sources */,
 				1F3F99801FB0312300D6CC64 /* LocalDownloadViewController.m in Sources */,
 				F6830F131FB300D2005AC578 /* FMLeftMenu.m in Sources */,
@@ -3209,6 +3240,7 @@
 				1F4D75A31FAC4BB800E6516C /* FMHandLoginVC.m in Sources */,
 				F6830F161FB300D2005AC578 /* FMLeftMenuCell.m in Sources */,
 				1F4D75BB1FAC5D2400E6516C /* ServerBrowser.m in Sources */,
+				1FB0900B1FBC519A0020B304 /* NSString+Extension.m in Sources */,
 				1F1AB9F21FB97092006EB1FC /* NSObject+KVOBlock.m in Sources */,
 				F6AAD1881FB049E100DEDBDC /* WBFile+CoreDataClass.m in Sources */,
 				1F4D75A11FAC4BB800E6516C /* FMUserLoginViewController.m in Sources */,

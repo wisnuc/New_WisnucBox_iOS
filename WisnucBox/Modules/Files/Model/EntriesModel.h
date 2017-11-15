@@ -9,8 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @interface EntriesModel : NSObject
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *type;
-@property (nonatomic, strong) NSString *uuid;
-@property (nonatomic, strong) NSString *photoHash;
+
+@property (nonatomic) NSString *name;
+@property (nonatomic) NSString *type;
+@property (nonatomic) NSString *uuid;
+@property (nonatomic) NSString *photoHash;
+@property (nonatomic) NSNumber *magic;
+@property (nonatomic) long long mtime;
+@property (nonatomic) long long size;
+
 @end
