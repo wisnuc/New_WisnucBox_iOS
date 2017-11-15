@@ -29,8 +29,8 @@
     return self;
 }
 
-- (void)getData{
-    FLGetDriveDirAPI *api = [FLGetDriveDirAPI apiWithDrive:WB_UserService.currentUser.userHome dir:WB_UserService.currentUser.userHome];
+-(void)getFilesWithUUID:(NSString *)uuid{
+    FLGetDriveDirAPI *api = [FLGetDriveDirAPI apiWithDrive:WB_UserService.currentUser.userHome dir:uuid];
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         FilesModel *model = [FilesModel yy_modelWithJSON:request.responseJsonObject ];
         [self.dataArray addObjectsFromArray:model.entries];

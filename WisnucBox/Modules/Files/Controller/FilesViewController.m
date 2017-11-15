@@ -16,8 +16,6 @@
 #import "JYProcessView.h"
 #import "FilesNextViewController.h"
 #import "FilesDataSourceManager.h"
-//test
-#import "TestDataModel.h"
 
 @interface FilesViewController ()
 <
@@ -88,7 +86,7 @@ FLDataSourceDelegate
 
 - (void)loadData{
     [FilesDataSourceManager manager].delegate = self;
-    [[FilesDataSourceManager manager] getData];
+    [[FilesDataSourceManager manager] getFilesWithUUID:WB_UserService.currentUser.userHome];
     _cellStatus = FLFliesCellStatusNormal;
     [self.tableView reloadData];
 }
@@ -139,6 +137,8 @@ FLDataSourceDelegate
     NSMutableArray *isFilesArr = [NSMutableArray arrayWithCapacity:0];
     NSMutableArray *isNotFilesArr = [NSMutableArray arrayWithCapacity:0];
     for (EntriesModel * model  in self.dataSouceArray) {
+        
+        NSLog(@"%@",model);
         if (![model.type isEqualToString:@"file"]) {
             [isNotFilesArr addObject: model];
         }
@@ -146,6 +146,7 @@ FLDataSourceDelegate
             [isFilesArr addObject: model];
         }
     }
+    [[FilesDataSourceManager manager].dataArray removeAllObjects];
     [self.dataSouceArray removeAllObjects];
     [self.dataSouceArray addObjectsFromArray:isNotFilesArr];
     [self.dataSouceArray addObjectsFromArray:isFilesArr];
@@ -210,6 +211,7 @@ FLDataSourceDelegate
 
 - (void)datasource:(FilesDataSourceManager *)datasource finishLoading:(BOOL)finish{
     if (datasource == [FilesDataSourceManager manager] && finish) {
+        [self.dataSouceArray addObjectsFromArray:[FilesDataSourceManager manager].dataArray];
         [self sequenceDataSource];
         [self.tableView reloadData];
         [self.tableView.mj_header endRefreshing];
@@ -252,7 +254,6 @@ FLDataSourceDelegate
         cell= (FLFilesCell *)[[[NSBundle  mainBundle] loadNibNamed:NSStringFromClass([FLFilesCell class]) owner:self options:nil]  lastObject];
     }
     EntriesModel *dataModel = _dataSouceArray[indexPath.row];
-    NSLog(@"%@",dataModel.name);
     [[FLFIlesHelper helper] configCells:cell withModel:dataModel cellStatus:self.cellStatus viewController:self parentUUID:@""];
     return cell;
 }
@@ -272,10 +273,10 @@ FLDataSourceDelegate
         EntriesModel * model = self.dataSouceArray[indexPath.row];
         if (![model.type isEqualToString:@"file"]){
             FilesNextViewController * vc = [FilesNextViewController new];
-            //            vc.parentUUID = model.uuid;
-            //            vc.cellStatus = self.cellStatus;
-            //            vc.name = model.name;
+            vc.parentUUID = model.uuid;
+            vc.name = model.name;
             if (self.cellStatus == FLFliesCellStatusNormal) {
+                [[FilesDataSourceManager manager].dataArray removeAllObjects];
                 [self.navigationController pushViewController:vc animated:YES];
             }
         }else{

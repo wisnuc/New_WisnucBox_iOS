@@ -17,5 +17,5 @@
 @property (nonatomic) NSMutableArray *dataArray;
 @property (nonatomic,weak) id<FLDataSourceDelegate> delegate;
 + (instancetype)manager;
-- (void)getData;
+- (void)getFilesWithUUID:(NSString *)uuid;
 @end
