@@ -94,6 +94,7 @@
 		71A3D6791FB5AD230002B8B1 /* FMGetUsersAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A3D6761FB5AD230002B8B1 /* FMGetUsersAPI.m */; };
 		71A3D67A1FB5AD230002B8B1 /* FMAccountUsersAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A3D6781FB5AD230002B8B1 /* FMAccountUsersAPI.m */; };
 		71A3D67E1FB5ADAA0002B8B1 /* FMGetJWTAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A3D67D1FB5ADAA0002B8B1 /* FMGetJWTAPI.m */; };
+		C127BD611FBC7C5700596112 /* NSString+WBUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = C127BD601FBC7C5700596112 /* NSString+WBUUID.m */; };
 		C138D0571FB94396000CF518 /* FLDrivesAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D0561FB94396000CF518 /* FLDrivesAPI.m */; };
 		C138D05A1FB94D8D000CF518 /* FLGetDriveDirAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D0591FB94D8D000CF518 /* FLGetDriveDirAPI.m */; };
 		C138D05D1FB96100000CF518 /* FLCreateDirAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D05C1FB96100000CF518 /* FLCreateDirAPI.m */; };
@@ -677,6 +678,8 @@
 		71A3D67C1FB5ADAA0002B8B1 /* FMGetJWTAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMGetJWTAPI.h; sourceTree = "<group>"; };
 		71A3D67D1FB5ADAA0002B8B1 /* FMGetJWTAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMGetJWTAPI.m; sourceTree = "<group>"; };
 		B0D3F6BCD083EB684E36A713 /* Pods-WisnucBox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.release.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.release.xcconfig"; sourceTree = "<group>"; };
+		C127BD5F1FBC7C5700596112 /* NSString+WBUUID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+WBUUID.h"; sourceTree = "<group>"; };
+		C127BD601FBC7C5700596112 /* NSString+WBUUID.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+WBUUID.m"; sourceTree = "<group>"; };
 		C138D0551FB94396000CF518 /* FLDrivesAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FLDrivesAPI.h; sourceTree = "<group>"; };
 		C138D0561FB94396000CF518 /* FLDrivesAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FLDrivesAPI.m; sourceTree = "<group>"; };
 		C138D0581FB94D8D000CF518 /* FLGetDriveDirAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FLGetDriveDirAPI.h; sourceTree = "<group>"; };
@@ -2083,6 +2086,8 @@
 				F6830F1D1FB308C8005AC578 /* NSString+Validate.m */,
 				C138D05E1FB970F7000CF518 /* NSString+DeviceName.h */,
 				C138D05F1FB970F7000CF518 /* NSString+DeviceName.m */,
+				C127BD5F1FBC7C5700596112 /* NSString+WBUUID.h */,
+				C127BD601FBC7C5700596112 /* NSString+WBUUID.m */,
 			);
 			path = NSString;
 			sourceTree = "<group>";
@@ -3151,6 +3156,7 @@
 				C138D0661FB99AF3000CF518 /* FMMediaAPI.m in Sources */,
 				F67D644A1FAC7E6B00E23D16 /* JYThumbVC.m in Sources */,
 				F67D64491FAC7E6B00E23D16 /* JYShowBigImgViewController.m in Sources */,
+				C127BD611FBC7C5700596112 /* NSString+WBUUID.m in Sources */,
 				1F4D75A21FAC4BB800E6516C /* FMLoginViewController.m in Sources */,
 				F6D8CC411FB42E1300673824 /* UIView+JYExtension.m in Sources */,
 				1F4D759F1FAC4BB800E6516C /* UIColor+fm_color.m in Sources */,

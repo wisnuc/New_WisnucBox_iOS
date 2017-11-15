@@ -41,29 +41,43 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        [self checkAuth];
-        if(_userAuth)
-           [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
+        [self checkAuthWithComplete:^(BOOL userAuth) {
+            if (_userAuth) [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
+        }];
         _saveContext = [NSManagedObjectContext MR_newMainQueueContext];
         _fetchNetAssetLock = dispatch_semaphore_create(1);
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            if(WB_UserService.currentUser)
+                [self getNetAssets:^(NSError *error, NSArray *netAssets) {
+                    if (error) {
+                        NSLog(@"Fetch NetAssets Error :%@", error);
+                    }else {
+                        self.allNetAssets = [NSMutableArray arrayWithArray:netAssets];
+                        NSLog(@"Fetch NetAssets Success :%@", netAssets);
+                    }
+                }];
+        });
     }
     return self;
 }
 
-- (void)checkAuth {
+- (void)checkAuthWithComplete:(void(^)(BOOL userAuth))callback {
     _userAuth = NO;
     PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
     if(status == PHAuthorizationStatusDenied || status == PHAuthorizationStatusRestricted){
         NSLog(@"用户拒绝");
         _userAuth = NO;
+        callback(_userAuth);
     } else if (status == PHAuthorizationStatusAuthorized) {
         NSLog(@"已取得用户授权");
         _userAuth = YES;
+        callback(_userAuth);
     } else if (status == PHAuthorizationStatusNotDetermined) {
         [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
             _userAuth = status == PHAuthorizationStatusAuthorized ? YES : NO;
             if(_userAuth) [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
             [[NSNotificationCenter defaultCenter] postNotificationName:ASSETS_AUTH_CHANGE_NOTIFY object:@(status)];
+            callback(_userAuth);
         }];
     }
 }

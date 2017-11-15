@@ -13,6 +13,12 @@
 
 #define BackUpBaseDirName @"上传的照片"
 
+@interface NetServices()
+
+@property (nonatomic) AFNetworkReachabilityStatus status;
+
+@end
+
 @implementation NetServices
 
 - (void)abort {
@@ -21,17 +27,8 @@
 
 - (void)dealloc {
     NSLog(@"NetServices dealloc");
-}
-
-- (instancetype)init{
-    self = [super init];
-    if(WB_UserService.currentUser) {
-        _localUrl = WB_UserService.currentUser.localAddr;
-        _cloudUrl = nil;
-        [JYRequestConfig sharedConfig].baseURL = _localUrl;
-    }else
-        @throw @"NO User Login Can Not Use init func";
-    return self;
+    
+    [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
 }
 
 - (instancetype)initWithLocalURL:(NSString *)localUrl andCloudURL:(NSString *)cloudUrl {
@@ -40,8 +37,46 @@
         self.cloudUrl = cloudUrl;
         self.isCloud = NO;
         [JYRequestConfig sharedConfig].baseURL = localUrl;
+        [self checkNetwork];
     }
     return self;
+}
+
+- (void)checkNetwork
+
+{
+    // 如果要检测网络状态的变化,必须用检测管理器的单例的startMonitoring
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    // 检测网络连接的单例,网络变化时的回调方法
+    @weaky(self);
+    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status)
+     {
+         switch (status) {
+             case AFNetworkReachabilityStatusNotReachable:
+             {
+                 NSLog(@"无网络");
+                 break;
+             }
+             case AFNetworkReachabilityStatusReachableViaWiFi:
+                 
+             {
+                 NSLog(@"WiFi网络");
+                 
+                 break;
+             }
+             case AFNetworkReachabilityStatusReachableViaWWAN:
+             {
+                 NSLog(@"手机网络");
+                 break;
+             }
+             default:{
+                 NSLog(@"未知网络");
+                 break;
+             }
+         }
+         [[NSNotificationCenter defaultCenter] postNotificationName:NETWORK_REACHABILITY_CHANGE_NOTIFY object:@(status)];
+         weak_self.status = status;
+     }];
 }
 
 - (NSString *)currentURL {
@@ -89,7 +124,7 @@
     }];
 }
 
-- (void)mkdirInDir:(NSString *)dirUUID andName:(NSString *)name completeBlock:(void(^)(NSError *, NSArray<EntriesModel *> *))completeBlock{
+- (void)mkdirInDir:(NSString *)dirUUID andName:(NSString *)name completeBlock:(void(^)(NSError *, DirectoriesModel *))completeBlock{
     NSString *urlString = [NSString stringWithFormat:@"%@drives/%@/dirs/%@/entries", [self currentURL], WB_UserService.currentUser.userHome, dirUUID];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
@@ -104,14 +139,8 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSDictionary * dic = responseObject[0];
-        NSArray * arr = [dic objectForKey:@"entries"];
-        NSMutableArray * entries = [NSMutableArray arrayWithCapacity:0];
-        [arr enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            EntriesModel *model = [EntriesModel yy_modelWithDictionary:obj];
-            [entries addObject:model];
-        }];
-        completeBlock(NULL, entries);
-        
+        DirectoriesModel * dir = [DirectoriesModel yy_modelWithJSON:dic[@"data"]];
+        completeBlock(nil, dir);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@", error);
         completeBlock(error, nil);
@@ -134,17 +163,9 @@
             }
         }];
         if(!find) {
-            [self mkdirInDir:WB_UserService.currentUser.userHome andName:BackUpBaseDirName completeBlock:^(NSError *error, NSArray<EntriesModel *> *entries) {
+            [self mkdirInDir:WB_UserService.currentUser.userHome andName:BackUpBaseDirName completeBlock:^(NSError *error, DirectoriesModel *entries) {
                 if(error) return callback(error, nil);
-                __block BOOL find = NO;
-                [entries enumerateObjectsUsingBlock:^(EntriesModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    if(IsEquallString(obj.name,  BackUpBaseDirName)){
-                        *stop = YES;
-                        find = YES;
-                        return callback(NULL, obj.uuid);
-                    }
-                }];
-                if(!find) return callback([NSError errorWithDomain:@"create success but notfound" code:60002 userInfo:nil], nil);
+                callback(nil, entries.uuid);
             }];
         }
     } failure:^(__kindof JYBaseRequest *request) {
@@ -170,21 +191,30 @@
             }
         }];
         if(!find) {
-            [self mkdirInDir:baseUUID andName:photoDirName completeBlock:^(NSError *error, NSArray<EntriesModel *> *entries) {
+            [self mkdirInDir:baseUUID andName:photoDirName completeBlock:^(NSError *error, DirectoriesModel *entries) {
                 if(error) return callback(error, nil);
-                __block BOOL find = NO;
-                [entries enumerateObjectsUsingBlock:^(EntriesModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    if(IsEquallString(obj.name,  photoDirName)){
-                        *stop = YES;
-                        find = YES;
-                        return callback(NULL, obj.uuid);
-                    }
-                }];
-                if(!find) return callback([NSError errorWithDomain:@"create success but notfound" code:60002 userInfo:nil], nil);
+                callback(nil, entries.uuid);
             }];
         }
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"get backup base dir error : %@", request.error);
+        callback(request.error, nil);
+    }];
+}
+
+- (void)getEntriesInUserBackupDir:(void(^)(NSError *, NSArray<EntriesModel *> *entries))callback{
+    FLGetDriveDirAPI *api = [FLGetDriveDirAPI apiWithDrive:WB_UserService.currentUser.userHome dir:WB_UserService.currentUser.backUpDir];
+    [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSDictionary * dic = request.responseJsonObject;
+        NSArray * arr = [NSArray arrayWithArray:[dic objectForKey:@"entries"]];
+        NSMutableArray * entries = [NSMutableArray arrayWithCapacity:0];
+        [arr enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            EntriesModel *model = [EntriesModel yy_modelWithDictionary:obj];
+            [entries addObject:model];
+        }];
+        callback(nil, entries);
+    } failure:^(__kindof JYBaseRequest *request) {
+        NSLog(@"get backup dir entries error : %@", request.error);
         callback(request.error, nil);
     }];
 }

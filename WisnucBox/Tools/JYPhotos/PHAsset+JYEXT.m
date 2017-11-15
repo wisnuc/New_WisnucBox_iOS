@@ -11,6 +11,7 @@
 #import "CocoaSecurity.h"
 #import "FileHash.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "NSString+WBUUID.h"
 
 #define JY_TMP_Folder [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]stringByAppendingPathComponent:@"JYTMP"]
 
@@ -105,7 +106,7 @@
 }
 
 - (PHImageRequestID)getFile:(void(^)(NSError *error, NSString *filePath))callback {
-    NSString *fileName = [NSString stringWithFormat:@"tmp_%ld", (long)[[NSDate date] timeIntervalSince1970]];
+    NSString *fileName = [NSString stringWithFormat:@"tmp_%ld_%@", (long)[[NSDate date] timeIntervalSince1970], [NSString WB_UUID]];
     NSString * filePath = [[self getTmpPath] stringByAppendingPathComponent:fileName];
     //TODO: do something for livephoto
     

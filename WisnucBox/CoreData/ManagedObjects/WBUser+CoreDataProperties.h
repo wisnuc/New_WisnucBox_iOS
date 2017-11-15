@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL isCloudLogin;
 @property (nonatomic) BOOL autoBackUp;
 @property (nonatomic) BOOL backUpInWWAN;
-
+@property (nonatomic) BOOL askForBackup;
 
 @end
 

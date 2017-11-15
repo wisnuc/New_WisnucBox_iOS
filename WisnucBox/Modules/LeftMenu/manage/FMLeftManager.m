@@ -36,6 +36,7 @@
         [leftMenu.settingTabelView reloadData];
         //add observer
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userInfoChange) name:UserInfoChangedNotify object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeBackupProgress) name:WBBackupCountChangeNotify object:nil];
         self.menu = [MenuView MenuViewWithDependencyView:MyAppDelegate.window MenuView:leftMenu isShowCoverView:YES];
         self.menu.showBlock = ^() {
             
@@ -50,6 +51,11 @@
         };
     }
     return self;
+}
+
+- (void)changeBackupProgress {
+    NSUInteger allCount = WB_PhotoUploadManager.hashwaitingQueue.count + WB_PhotoUploadManager.hashWorkingQueue.count + WB_PhotoUploadManager.hashFailQueue.count + WB_PhotoUploadManager.uploadPaddingQueue.count + WB_PhotoUploadManager.uploadingQueue.count + WB_PhotoUploadManager.uploadedQueue.count + WB_PhotoUploadManager.uploadErrorQueue.count;
+    [_leftMenu updateProgressWithAllCount:allCount currentCount:WB_PhotoUploadManager.uploadedQueue.count];
 }
 
 - (void)delloc {
@@ -230,7 +236,7 @@
         MyAppDelegate.window.rootViewController = nil;
         [MyAppDelegate.window resignKeyWindow];
         [WB_UserService logoutUser];
-        [WB_AppServices abort];
+        [WB_AppServices rebulid];
         for (UIView *view in MyAppDelegate.window.subviews) {
             [view removeFromSuperview];
         }

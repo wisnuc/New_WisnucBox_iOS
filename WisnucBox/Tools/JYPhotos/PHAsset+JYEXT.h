@@ -29,4 +29,6 @@
 - (NSString *)getDurationString;
 
 - (PHImageRequestID) getSha256:(void(^)(NSError * error, NSString * sha256))callback;
+
+- (PHImageRequestID)getFile:(void(^)(NSError *error, NSString *filePath))callback;
 @end

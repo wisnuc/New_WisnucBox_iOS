@@ -62,11 +62,3 @@
 
 #endif /* Define_h */
 
-//NSString * WB_UUID() {
-//    CFUUIDRef   uuid_ref        = CFUUIDCreate(NULL);
-//    CFStringRef uuid_string_ref = CFUUIDCreateString(NULL, uuid_ref);
-//    CFRelease(uuid_ref);
-//    NSString *uuid = [NSString stringWithString:(__bridge NSString*)uuid_string_ref];
-//    CFRelease(uuid_string_ref);
-//    return [uuid stringByReplacingOccurrencesOfString:@"-" withString:@""];
-//}

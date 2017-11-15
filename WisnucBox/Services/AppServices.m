@@ -25,12 +25,30 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         appServices = [[AppServices alloc] init];
-        [appServices assetServices];
-        if(appServices.userServices.currentUser)
-           [appServices netServices];
-        [appServices bootStrap];
     });
     return appServices;
+}
+- (instancetype)init {
+    self = [super init];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserAuthChange) name:ASSETS_AUTH_CHANGE_NOTIFY object:nil];
+    [self assetServices];
+    if(self.userServices.currentUser)
+        [self netServices];
+    [self bootStrap];
+    return self;
+}
+
+- (void)delloc {
+    NSLog(@"AppServices delloc");
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+// Notification Handle
+- (void)handleUserAuthChange {
+    if(WB_AssetService.userAuth){
+        NSArray * allLocalAsset = [self.assetServices allAssets];
+        [self.photoUploadManager startWithLocalAssets:allLocalAsset andNetAssets:@[]];
+    }
 }
 
 - (void)rebulid {
@@ -43,14 +61,15 @@
 
 - (void)bootStrap {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        NSArray * allLocalAsset = [self.assetServices allAssets];
-        [self.photoUploadManager startWithLocalAssets:allLocalAsset andNetAssets:@[]];
-        if(self.userServices.isUserLogin) {
-            
+        if(WB_AssetService.userAuth) {
+            NSArray * allLocalAsset = [self.assetServices allAssets];
+            [self.photoUploadManager startWithLocalAssets:allLocalAsset andNetAssets:@[]];
+            if(WB_UserService.currentUser.autoBackUp) {
+                [self startUploadAssets:nil];
+            }
         }
     });
 }
-
 
 // get token
 // create userSession
@@ -72,8 +91,6 @@
         user.isFirstUser = NO;
         user.isAdmin = NO;
         user.isCloudLogin = NO;
-        user.autoBackUp = NO;
-        user.backUpInWWAN = NO;
         [WB_UserService setCurrentUser:user];
         [WB_UserService synchronizedCurrentUser];
         NSLog(@"GET Token Success");
@@ -87,13 +104,18 @@
                 user.backUpDir = entryUUID;
                 [WB_UserService synchronizedCurrentUser];
                 NSLog(@"GET BACKUP DIR SUCCESS");
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [weak_self requestForBackupPhotos:^(BOOL shouldUpload) {
-                        if(shouldUpload) {
-                            
-                        }
-                    }];
-                });
+                if(!user.askForBackup)
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [weak_self requestForBackupPhotos:^(BOOL shouldUpload) {
+                            user.askForBackup = YES;
+                            [WB_UserService synchronizedCurrentUser];
+                            if(shouldUpload) {
+                                [weak_self startUploadAssets:nil];
+                            }
+                        }];
+                    });
+                else
+                    [weak_self startUploadAssets:nil];
                 return callback(nil, user);
             }];
         }];
@@ -142,6 +164,17 @@
     }];
 }
 
+- (void)startUploadAssets:(void(^)())complete {
+    [self.netServices getEntriesInUserBackupDir:^(NSError *error, NSArray<EntriesModel *> *entries) {
+        if(error) return NSLog(@"Get BackupDir entries error");
+        NSLog(@"Start Upload ...");
+        NSMutableArray * netEntries = [NSMutableArray arrayWithArray:entries];
+        [self.photoUploadManager setNetAssets:netEntries];
+        [self.photoUploadManager startUpload];
+        if(complete) complete();
+    }];
+}
+
 
 // services load
 
@@ -187,7 +220,12 @@
 - (NetServices *)netServices {
     @synchronized (self) {
         if(!_netServices) {
-            _netServices = [[NetServices alloc] init];
+            if(self.userServices.currentUser)
+                _netServices = [[NetServices alloc] initWithLocalURL:self.userServices.currentUser.localAddr andCloudURL:nil];
+            else{
+                _netServices = [NetServices new];
+                NSLog(@"Not Allow To New A NetService");
+            }
         }
         return _netServices;
     }
@@ -203,6 +241,12 @@
 }
 
 - (void)abort {
+    //destory JYnetEngine
+    [[JYNetEngine sharedInstance] cancleAllRequest];
+    // TODO: maybe one is enough
+    [[SDWebImageManager sharedManager] cancelAll];
+    [[SDWebImageDownloader sharedDownloader] cancelAllDownloads];
+    
     _userServices ? [_userServices abort] :
     _fileServices ? [_fileServices abort] :
     _assetServices ? [_assetServices abort] :
@@ -216,6 +260,7 @@
     _netServices = nil;
     _dbServices = nil;
     _photoUploadManager = nil;
+    
 }
 
 @end
@@ -246,7 +291,9 @@
 
 @property (nonatomic, readwrite) NSMutableArray<WBUploadModel *> *uploadErrorQueue;
 
-@property (nonatomic, strong) NSMutableArray<JYAsset *> * uploadedNetQueue;
+@property (nonatomic, strong) NSMutableArray<EntriesModel *> * uploadedNetQueue;
+
+@property (nonatomic, strong) NSMutableSet<NSString *> * uploadedNetHashSet;
 
 @property (nonatomic) dispatch_queue_t managerQueue;
 
@@ -257,7 +304,7 @@
 @implementation WBUploadManager
 
 - (void)dealloc{
-    
+    NSLog(@"WBUploadManager delloc");
 }
 
 - (instancetype)init {
@@ -265,7 +312,7 @@
         _isdestroing = NO;
         _shouldUpload = NO;
         _hashLimitCount = 4;
-        _uploadLimitCount = 1;
+        _uploadLimitCount = 4;
         [self workingQueue];
         [self managerQueue];
     }
@@ -289,97 +336,122 @@
     return _managerQueue;
 }
 
-
+- (NSMutableSet<NSString *> *)uploadedNetHashSet{
+    @synchronized (self) {
+        if(!_uploadedNetHashSet){
+            _uploadedNetHashSet = [NSMutableSet set];
+        }
+        return _uploadedNetHashSet;
+    }
+}
 
 -(NSMutableArray<JYAsset *> *)hashwaitingQueue{
-    if (!_hashwaitingQueue) {
-        _hashwaitingQueue= [NSMutableArray arrayWithCapacity:0];
+    @synchronized (self) {
+        if (!_hashwaitingQueue) {
+            _hashwaitingQueue= [NSMutableArray arrayWithCapacity:0];
+        }
+        return _hashwaitingQueue;
     }
-    return _hashwaitingQueue;
 }
 
 - (NSMutableArray<JYAsset *> *)hashWorkingQueue{
-    if (!_hashWorkingQueue) {
-        _hashWorkingQueue= [NSMutableArray<JYAsset *> arrayWithCapacity:0];
+    @synchronized (self) {
+        if (!_hashWorkingQueue) {
+            _hashWorkingQueue= [NSMutableArray<JYAsset *> arrayWithCapacity:0];
+        }
+        return _hashWorkingQueue;
     }
-    return _hashWorkingQueue;
 }
 
 - (NSMutableArray *)uploadedNetQueue{
-    if (!_uploadedNetQueue) {
-        _uploadedNetQueue= [NSMutableArray arrayWithCapacity:0];
+    @synchronized (self) {
+        if (!_uploadedNetQueue) {
+            _uploadedNetQueue= [NSMutableArray arrayWithCapacity:0];
+        }
+        return _uploadedNetQueue;
     }
-    return _uploadedNetQueue;
 }
 
 - (NSMutableArray<WBUploadModel *> *)uploadingQueue{
-    if (!_uploadingQueue) {
-        _uploadingQueue= [NSMutableArray<WBUploadModel *> arrayWithCapacity:0];
+    @synchronized (self) {
+        if (!_uploadingQueue) {
+            _uploadingQueue= [NSMutableArray<WBUploadModel *> arrayWithCapacity:0];
+        }
+        return _uploadingQueue;
     }
-    return _uploadingQueue;
 }
 
 - (NSMutableArray<JYAsset *> *)uploadPaddingQueue{
-    if (!_uploadPaddingQueue) {
-        _uploadPaddingQueue= [NSMutableArray<JYAsset *> arrayWithCapacity:0];
+    @synchronized (self) {
+        if (!_uploadPaddingQueue) {
+            _uploadPaddingQueue= [NSMutableArray<JYAsset *> arrayWithCapacity:0];
+        }
+        return _uploadPaddingQueue;
     }
-    return _uploadPaddingQueue;
 }
-
-
 
 - (NSMutableArray<WBUploadModel *> *)uploadedQueue{
-    if (!_uploadedQueue) {
-        _uploadedQueue= [NSMutableArray<WBUploadModel *> arrayWithCapacity:0];
+    @synchronized (self) {
+        if (!_uploadedQueue) {
+            _uploadedQueue= [NSMutableArray<WBUploadModel *> arrayWithCapacity:0];
+        }
+        return _uploadedQueue;
     }
-    return _uploadedQueue;
 }
 - (NSMutableArray<WBUploadModel *> *)uploadErrorQueue{
-    if (!_uploadErrorQueue) {
-        _uploadErrorQueue= [NSMutableArray<WBUploadModel *> arrayWithCapacity:0];
+    @synchronized (self) {
+        if (!_uploadErrorQueue) {
+            _uploadErrorQueue= [NSMutableArray<WBUploadModel *> arrayWithCapacity:0];
+        }
+        return _uploadErrorQueue;
     }
-    return _uploadErrorQueue;
 }
 
 - (void)addTask:(JYAsset *)asset {
-    [self.hashwaitingQueue addObject:asset];
-    [self schedule];
+    dispatch_async(self.managerQueue, ^{
+        [self.hashwaitingQueue addObject:asset];
+        [self schedule];
+    });
 }
 
 - (void)addTasks:(NSArray<JYAsset *> *)assets {
-    [self.hashwaitingQueue addObjectsFromArray:assets];
-    [self schedule];
+    dispatch_async(self.managerQueue, ^{
+        [self.hashwaitingQueue addObjectsFromArray:assets];
+        [self schedule];
+    });
 }
 
 - (void)removeTask:(JYAsset *)rmAsset {
-    NSString * assetId = rmAsset.asset.localIdentifier;
-    __block JYAsset * asset;
-    [self.hashwaitingQueue enumerateObjectsUsingBlock:^(JYAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if(IsEquallString(obj.asset.localIdentifier, assetId)){
-            asset = obj;
-            *stop = YES;
-        }
-    }];
-    if(asset) [self.hashwaitingQueue removeObject:asset];
-    asset = nil;
-    
-    [self.uploadPaddingQueue enumerateObjectsUsingBlock:^(JYAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if(IsEquallString(obj.asset.localIdentifier, assetId)){
-            asset = obj;
-            *stop = YES;
-        }
-    }];
-    if(asset) [self.uploadPaddingQueue removeObject:asset];
-    
-    __block WBUploadModel * upModel;
-    [self.uploadErrorQueue enumerateObjectsUsingBlock:^(WBUploadModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if(IsEquallString(obj.asset.asset.localIdentifier, assetId)){
-            upModel = obj;
-            *stop = YES;
-        }
-    }];
-    if(upModel) [self.uploadErrorQueue removeObject:upModel];
-    upModel = nil;
+    dispatch_async(self.managerQueue, ^{
+        NSString * assetId = rmAsset.asset.localIdentifier;
+        __block JYAsset * asset;
+        [self.hashwaitingQueue enumerateObjectsUsingBlock:^(JYAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if(IsEquallString(obj.asset.localIdentifier, assetId)){
+                asset = obj;
+                *stop = YES;
+            }
+        }];
+        if(asset) [self.hashwaitingQueue removeObject:asset];
+        asset = nil;
+        
+        [self.uploadPaddingQueue enumerateObjectsUsingBlock:^(JYAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if(IsEquallString(obj.asset.localIdentifier, assetId)){
+                asset = obj;
+                *stop = YES;
+            }
+        }];
+        if(asset) [self.uploadPaddingQueue removeObject:asset];
+        
+        __block WBUploadModel * upModel;
+        [self.uploadErrorQueue enumerateObjectsUsingBlock:^(WBUploadModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if(IsEquallString(obj.asset.asset.localIdentifier, assetId)){
+                upModel = obj;
+                *stop = YES;
+            }
+        }];
+        if(upModel) [self.uploadErrorQueue removeObject:upModel];
+        upModel = nil;
+    });
 }
 
 - (void)removeTasks:(NSArray<JYAsset *> *)assets {
@@ -389,23 +461,54 @@
     }];
 }
 
-- (void)startWithLocalAssets:(NSArray<JYAsset *> *)localAssets andNetAssets:(NSArray<JYAsset *> *)netAssets {
-    [self.hashwaitingQueue addObjectsFromArray:localAssets];
-    [self.uploadedNetQueue addObjectsFromArray:netAssets];
-    [self schedule];
+- (void)startWithLocalAssets:(NSArray<JYAsset *> *)localAssets andNetAssets:(NSArray<EntriesModel *> *)netAssets {
+    dispatch_async(self.managerQueue, ^{
+        [self.hashwaitingQueue addObjectsFromArray:localAssets];
+        NSComparator cmptr = ^(JYAsset * photo1, JYAsset * photo2){
+            NSDate * tempDate = [[photo1 asset].creationDate laterDate:[photo2 asset].creationDate];
+            if ([tempDate isEqualToDate:[photo1 asset].creationDate]) {
+                return (NSComparisonResult)NSOrderedDescending;
+            }
+            if ([tempDate isEqualToDate:[photo2 asset].creationDate]) {
+                return (NSComparisonResult)NSOrderedAscending;
+            }
+            return (NSComparisonResult)NSOrderedSame;
+        };
+        [self.hashwaitingQueue sortUsingComparator:cmptr];
+        [self.uploadedNetQueue addObjectsFromArray:netAssets];
+        NSMutableSet * hashSet = [NSMutableSet set];
+        [netAssets enumerateObjectsUsingBlock:^(EntriesModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if(IsEquallString(obj.type, @"file") || !IsNilString(obj.photoHash)){
+                [hashSet addObject:obj.photoHash];
+            }
+        }];
+        self.uploadedNetHashSet = hashSet;
+        [self schedule];
+    });
     
 }
 
-- (void)setNetAssets:(NSArray<JYAsset *> *)netAssets {
-    [self.uploadedNetQueue addObjectsFromArray:netAssets];
-    [self schedule];
+- (void)setNetAssets:(NSArray<EntriesModel *> *)netAssets {
+    dispatch_async(self.managerQueue, ^{
+        [self.uploadedNetQueue addObjectsFromArray:netAssets];
+        NSMutableSet * hashSet = [NSMutableSet set];
+        [netAssets enumerateObjectsUsingBlock:^(EntriesModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if(IsEquallString(obj.type, @"file") || !IsNilString(obj.photoHash)){
+                [hashSet addObject:obj.photoHash];
+            }
+        }];
+        self.uploadedNetHashSet = hashSet;
+        [self schedule];
+    });
 }
 
-- (void)startUploadWithUrl:(NSURL *)url AndToken:(NSString *)token {
-    _uploadURL = url;
-    _token = token;
+- (void)startUpload {
     self.shouldUpload = YES;
-    [self schedule];
+    // notify for start
+    [[NSNotificationCenter defaultCenter] postNotificationName:WBBackupCountChangeNotify object:nil];
+    dispatch_async(self.managerQueue, ^{
+        [self schedule];
+    });
 }
 
 - (void)asset:(JYAsset *)asset getSha256:(void(^)(NSError *, NSString *))callback {
@@ -458,19 +561,27 @@
         JYAsset * asset = [self.uploadPaddingQueue lastObject];
         [self.uploadPaddingQueue removeLastObject];
         WBUploadModel * model = [WBUploadModel initWithAsset:asset];
-        [self.uploadingQueue addObject:model];
-        __weak typeof(self) weakSelf = self;
-        [model startWithCompleteBlock:^(NSError *error, id response) {
-            if (error) {
-                [weakSelf.uploadErrorQueue addObject:model];
-                [weakSelf.uploadingQueue removeObject:model];
-            }else {
-                [weakSelf.uploadedQueue addObject:model];
-            }
-            dispatch_async(self.managerQueue, ^{
-                [weakSelf schedule];
-            });
-        }];
+        if([self.uploadedNetHashSet containsObject:asset.digest]) {
+            [self.uploadedQueue addObject:model];
+            [[NSNotificationCenter defaultCenter] postNotificationName:WBBackupCountChangeNotify object:nil];
+            [self schedule];
+        }else {
+            [self.uploadingQueue addObject:model];
+            __weak typeof(self) weakSelf = self;
+            [model startWithCompleteBlock:^(NSError *error, id response) {
+                dispatch_async(self.managerQueue, ^{
+                    if (error) {
+                        [weakSelf.uploadErrorQueue addObject:model];
+                        [weakSelf.uploadingQueue removeObject:model];
+                    }else{
+                        [weakSelf.uploadingQueue removeObject:model];
+                        [weakSelf.uploadedQueue addObject:model];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:WBBackupCountChangeNotify object:nil];
+                    }
+                    [weakSelf schedule];
+                });
+            }];
+        }
     }
 }
 
@@ -495,11 +606,15 @@
     [self.uploadingQueue removeAllObjects];
     [self.uploadedQueue removeAllObjects];
     [self.uploadErrorQueue removeAllObjects];
+    [self.uploadedNetQueue removeAllObjects];
 }
 
 @end
 
-@implementation WBUploadModel
+@implementation WBUploadModel {
+    PHImageRequestID _requestFileID;
+    NSURLSessionDataTask * _dataTask;
+}
 
 + (instancetype)initWithAsset:(JYAsset *)asset {
     WBUploadModel * model = [WBUploadModel new];
@@ -509,10 +624,72 @@
 
 - (void)startWithCompleteBlock:(void(^)(NSError * , id))callback {
     self.callback = callback;
+    _requestFileID =  [self.asset.asset getFile:^(NSError *error, NSString *filePath) {
+        NSLog(@"==========================开始上传==============================");
+        NSString * hashString = self.asset.digest;
+        NSInteger sizeNumber = (NSInteger)[WB_FileService fileSizeAtPath:filePath];
+        NSString * exestr = [filePath lastPathComponent];
+        NSString * fileName = [PHAssetResource assetResourcesForAsset:self.asset.asset].firstObject.originalFilename;
+        if(IsNilString(fileName)) fileName = exestr;
+        NSLog (@"上传照片POST请求:\n上传照片照片名======>%@\n Hash======>%@\n",exestr,hashString);
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
+        NSString *urlString;
+        NSMutableDictionary * mutableDic = [NSMutableDictionary dictionaryWithCapacity:0];
+        urlString = [NSString stringWithFormat:@"%@drives/%@/dirs/%@/entries/",[JYRequestConfig sharedConfig].baseURL,WB_UserService.currentUser.userHome, WB_UserService.currentUser.backUpDir];
+        mutableDic = nil;
+        [manager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@",WB_UserService.defaultToken] forHTTPHeaderField:@"Authorization"];
+        _dataTask = [manager POST:urlString parameters:mutableDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            NSDictionary *dic = @{@"size":@(sizeNumber),@"sha256":hashString};
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
+            NSString *jsonString =  [[NSString alloc] initWithData:jsonData  encoding:NSUTF8StringEncoding];
+            [formData appendPartWithFileURL:[NSURL fileURLWithPath:filePath] name:fileName fileName:jsonString mimeType:@"image/jpeg" error:nil];
+        }
+        progress:nil
+        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSLog(@"Upload Success -->");
+            [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+            callback(nil, responseObject);
+        }
+        failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"Upload Failure ---> : %@", error);
+            [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil]; // remove tmpFile
+            callback(error, nil);
+        }];
+    }];
 }
 
 - (void)cancel {
-    
+    if(_requestFileID) {
+       [[PHImageManager defaultManager] cancelImageRequest:_requestFileID];
+        _requestFileID = PHInvalidImageRequestID;
+    }
+    if(_dataTask) {
+        [_dataTask cancel];
+    }
 }
 
+
+
+//            NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+//            if(errorData.length >0){
+//                NSMutableArray *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+//                NSDictionary *errorRootDic = serializedData[0];
+//                NSDictionary *errorDic = errorRootDic[@"error"];
+//                NSString *code = errorDic[@"code"];
+//                if ([code isEqualToString:@"EEXIST"]) {
+//                    NSString *formatString = [filePath pathExtension];
+//                    NSDate* date = [NSDate dateWithTimeIntervalSinceNow:0];
+//                    NSTimeInterval a=[date timeIntervalSince1970];
+//                    NSString *fileNameString =[NSString stringWithFormat:@"%0.f", a];
+//                    NSString *uploadName = [NSString stringWithFormat:@"%@.%@",fileNameString,formatString];
+//                    NSLog(@"%@",uploadName);
+//                }else{
+//
+//
+//                }
+//            }else{
+//
+//            }
 @end

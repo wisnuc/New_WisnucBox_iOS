@@ -32,5 +32,6 @@
 @dynamic backUpDir;
 @dynamic backUpBaseDir;
 @dynamic guid;
+@dynamic askForBackup;
 
 @end

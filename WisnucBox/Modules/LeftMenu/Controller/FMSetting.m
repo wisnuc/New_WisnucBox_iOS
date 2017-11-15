@@ -163,31 +163,14 @@
 }
 
 -(void)switchBtnHandleForSync:(UISwitch *)switchBtn{
-    WB_UserService.currentUser.backUpInWWAN = switchBtn.isOn;
+    WB_UserService.currentUser.autoBackUp = switchBtn.isOn;
     [WB_UserService synchronizedCurrentUser];
-#warning open or close backup
     if (switchBtn.isOn) {
-        //MyNSLog(@"备份开关开启");
-//        [[FMPhotoManager defaultManager] start];
         _switchOn = YES;
     }else{
          _switchOn = NO;
 //         [[FMPhotoManager defaultManager] stop];
     }
-}
-
-- (void)swichActionForNot{
-    [AppServices sharedService].userServices.currentUser.autoBackUp = NO;
-    [[AppServices sharedService].userServices synchronizedCurrentUser];
-    NSLog(@"备份开关关闭");
-}
-
-- (void)swichAction{
-    [AppServices sharedService].userServices.currentUser.autoBackUp = YES;
-    [[AppServices sharedService].userServices synchronizedCurrentUser];
-#warning start backup 
-//    [[FMPhotoManager defaultManager] start];
-    NSLog(@"备份开关开启");
 }
 
 - (IBAction)cleanBtnClick:(id)sender {

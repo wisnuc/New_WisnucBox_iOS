@@ -219,7 +219,7 @@
     return [NSString stringWithFormat:@"%@",roundedOunces];
 }
 
-- (void)updateProcessWithAllCount:(NSInteger)allcount currentCount:(NSInteger)currentCount {
+- (void)updateProgressWithAllCount:(NSInteger)allcount currentCount:(NSInteger)currentCount {
     dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         float progress =  currentCount/allcount;
         NSDecimalNumber *progressDecimalNumber = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%@",[self notRounding:progress afterPoint:2]]];

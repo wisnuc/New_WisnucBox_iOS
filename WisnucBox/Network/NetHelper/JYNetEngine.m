@@ -123,7 +123,7 @@
         }
         [request requestFailedFilter];
     }
-    
+    [self removeRecord:request.dataTask];
     [request clearCompletionBlock];
 }
 

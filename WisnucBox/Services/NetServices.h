@@ -26,6 +26,9 @@
 
 #define GetUserDefaultForKey(key)  kUD_ObjectForKey(key)
 
+//notify
+#define NETWORK_REACHABILITY_CHANGE_NOTIFY @"NETWORK_REACHABILITY_CHANGE_NOTIFY"
+
 @interface NetServices : NSObject <ServiceProtocol>
 
 @property (nonatomic, assign) BOOL isCloud;
@@ -34,13 +37,16 @@
 
 @property (nonatomic, copy) NSString *cloudUrl;
 
+@property (nonatomic, readonly) AFNetworkReachabilityStatus status;
+
 - (instancetype)initWithLocalURL:(NSString *)localUrl andCloudURL:(NSString *)cloudUrl;
 
 - (void)getUserBackupDir:(void(^)(NSError *, NSString * entryUUID))callback;
 
 - (void)getUserHome:(void(^)(NSError *, NSString * userHome))callback;
 
-- (void)mkdirInDir:(NSString *)dirUUID andName:(NSString *)name completeBlock:(void(^)(NSError *, NSArray<EntriesModel *> *))completeBlock;
+- (void)mkdirInDir:(NSString *)dirUUID andName:(NSString *)name completeBlock:(void(^)(NSError *, DirectoriesModel *))completeBlock;
 
+- (void)getEntriesInUserBackupDir:(void(^)(NSError *, NSArray<EntriesModel *> *entries))callback;
 
 @end

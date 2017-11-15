@@ -22,6 +22,7 @@
 
 #define UserBackUpConfigChangeNotify @"UserBackUpConfigChangeNotify"
 #define UserInfoChangedNotify @"UserInfoChangedNotify"
+#define WBBackupCountChangeNotify @"BackupCountChangeNotify"
 
 @class WBUploadManager;
 @interface AppServices : NSObject <ServiceProtocol>
@@ -41,6 +42,8 @@
 + (instancetype)sharedService;
 
 - (void)bootStrap;
+
+- (void)rebulid;
 
 - (void)loginWithBasic:(NSString *)basic userUUID:(NSString *)uuid name:(NSString *)userName addr:(NSString *)addr isWechat:(BOOL)isWechat completeBlock:(void(^)(NSError *error, WBUser *user))callback;
 
@@ -72,11 +75,11 @@
 
 @property (nonatomic) BOOL shouldUpload; // default NO
 
-- (void)startWithLocalAssets:(NSArray<JYAsset *> *)localAssets andNetAssets:(NSArray<JYAsset *> *)netAssets;
+- (void)startWithLocalAssets:(NSArray<JYAsset *> *)localAssets andNetAssets:(NSArray<EntriesModel *> *)netAssets;
 
-- (void)startUploadWithUrl:(NSURL *)url AndToken:(NSString *)token;
+- (void)startUpload;
 
-- (void)setNetAssets:(NSArray<JYAsset *> *)netAssets;
+- (void)setNetAssets:(NSArray<EntriesModel *> *)netAssets;
 
 - (void)stop;
 
