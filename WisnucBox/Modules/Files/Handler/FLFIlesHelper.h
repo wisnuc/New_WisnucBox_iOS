@@ -40,9 +40,6 @@
 
 -(void)removeAllChooseFile;
 
--(void)cancleDownload;
-
-//- (void)downloadAloneFilesWithModel:(TestDataModel *)model parentUUID:(NSString *)uuid Progress:(TYDownloadProgressBlock)progress State:(TYDownloadStateBlock)state;
 //判断该文件是否已经被选择
 -(BOOL)containsFile:(TestDataModel *)model;
 @end

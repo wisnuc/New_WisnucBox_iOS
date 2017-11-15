@@ -14,6 +14,7 @@
 #import "LocalDownloadViewController.h"
 #import "CSFileUtil.h"
 #import "JYProcessView.h"
+#import "FilesNextViewController.h"
 //test
 #import "TestDataModel.h"
 
@@ -55,7 +56,11 @@ UIDocumentInteractionControllerDelegate
     [self createNavBtns];
     [self loadData];
     [self initView];
-    
+    [self registerNotifacation];
+}
+
+- (void)dealloc{
+    [KDefaultNotificationCenter removeObserver:self];
 }
 
 -(void)createNavBtns{
@@ -107,7 +112,7 @@ UIDocumentInteractionControllerDelegate
     dataModel4.fileUUID = @"4";
     dataModel4.type = @"file";
     [self.dataSouceArray addObject:dataModel4];
-   
+    
     [self.tableView reloadData];
     [self.tableView.mj_header endRefreshing];
 }
@@ -122,14 +127,17 @@ UIDocumentInteractionControllerDelegate
     //    [self.tableView.mj_header beginRefreshing];
 }
 
+- (void)registerNotifacation{
+    [KDefaultNotificationCenter addObserver:self selector:@selector(handlerStatusChangeNotify:) name:FLFilesStatusChangeNotify object:nil];
+}
+
 - (void)leftBtnClick:(id)sender{
-    //    for (FLFilesModel * model in self.dataSource.dataSource) {
-    if (self.cellStatus == FLFliesCellStatusCanChoose) {
-//        [[FLFIlesHelper helper] removeChooseFile:model];
-        [self.tableView reloadData];
-        [self actionForNormalStatus];
+    for (TestDataModel * model in self.dataSouceArray) {
+        if (self.cellStatus == FLFliesCellStatusCanChoose) {
+            [[FLFIlesHelper helper] removeChooseFile:model];
+            [self.tableView reloadData];
+        }
     }
-    //    }
 }
 
 - (void)rightBtnClick:(UIButton *)btn{
@@ -158,7 +166,7 @@ UIDocumentInteractionControllerDelegate
     BOOL canOpen = [self.documentController presentPreviewAnimated:YES];
     if (!canOpen) {
         [SXLoadingView showProgressHUDText:@"文件预览失败" duration:1];
-//        [MyAppDelegate.notification displayNotificationWithMessage:@"文件预览失败" forDuration:1];
+        //        [MyAppDelegate.notification displayNotificationWithMessage:@"文件预览失败" forDuration:1];
         [_documentController presentOptionsMenuFromRect:self.view.bounds inView:self.view animated:YES];
     }
 }
@@ -167,10 +175,10 @@ UIDocumentInteractionControllerDelegate
     if (self.cellStatus == FLFliesCellStatusCanChoose) {
         return;
     }
-    //    if (self.dataSource.dataSource.count == 0) {
-    //        [SXLoadingView showAlertHUD:@"您所在的文件夹没有文件可以选择" duration:2];
-    //        return;
-    //    }
+    if (self.dataSouceArray.count == 0) {
+        [SXLoadingView showAlertHUD:@"您所在的文件夹没有文件可以选择" duration:2];
+        return;
+    }
     [self.tableView.mj_header setHidden:YES];
     [UIView animateWithDuration:0.5 animations:^{
         _chooseHeadView.transform = CGAffineTransformTranslate(_chooseHeadView.transform, 0, 64);
@@ -199,6 +207,16 @@ UIDocumentInteractionControllerDelegate
     [self.tableView reloadData];
 }
 
+- (void)handlerStatusChangeNotify:(NSNotification *)notify{
+    if (![notify.object boolValue]) {
+        [self actionForNormalStatus];
+    }else{
+        if (self.cellStatus != FLFliesCellStatusCanChoose) {
+            [self actionForChooseStatus];
+        }
+    }
+}
+
 #pragma mark - floatMenuDelegate
 
 - (void)didSelectMenuOptionAtIndex:(NSInteger)row{
@@ -208,14 +226,18 @@ UIDocumentInteractionControllerDelegate
                 [SXLoadingView showAlertHUD:@"请先选择文件" duration:1];
             }else{
                 [self actionForNormalStatus];
-                [[FLFIlesHelper helper] downloadChooseFilesParentUUID:@""];
-                //                 *downloadVC = [[FLLocalFIleVC alloc]init];
-                //                [self.navigationController pushViewController:downloadVC animated:YES];
+                [[FLFIlesHelper helper] downloadChooseFilesParentUUID:@"uuid"];
+                LocalDownloadViewController  *downloadVC = [[LocalDownloadViewController alloc]init];
+                [self.navigationController pushViewController:downloadVC animated:YES];
             }
         }else{
             //            [self shareFiles];
         }
     }
+}
+
+- (void)repeatDelay{
+    self.isSelect = false;
 }
 
 #pragma  TableView DataSource
@@ -230,37 +252,7 @@ UIDocumentInteractionControllerDelegate
     }
     TestDataModel *dataModel = _dataSouceArray[indexPath.row];
     [[FLFIlesHelper helper] configCells:cell withModel:dataModel cellStatus:self.cellStatus viewController:self parentUUID:@""];
-    //    cell.downBtn.userInteractionEnabled = YES;
-    //    cell.nameLabel.text = dataModel.fileName;
-    //    cell.f_ImageView.image = [UIImage imageNamed:@"file_icon"];
-    //    cell.clickBlock = ^(FLFilesCell * cell){
-    //        NSString *downloadString  = @"下载该文件";
-    //        //        NSString *openFileString = @"";
-    //        NSMutableArray * arr = [NSMutableArray arrayWithCapacity:0];
-    //        [arr addObject:downloadString];
-    //        LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:nil
-    //                                                                 delegate:nil
-    //                                                        cancelButtonTitle:@"取消"
-    //                                                    otherButtonTitleArray:arr];
-    //        actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
-    //            if (buttonIndex == 1) {
-    //                [[CSDownloadHelper  shareManager] downloadFileWithFileModel:dataModel UUID:@"1"];
-    //            }
-    //        };
-    //        actionSheet.scrolling          = YES;
-    //        actionSheet.buttonHeight       = 60.0f;
-    //        actionSheet.visibleButtonCount = 3.6f;
-    //        [actionSheet show];
-    //    };
-    //
-    //    cell.longpressBlock =^(FLFilesCell * cell){
-    //        if (cell.status == FLFliesCellStatusNormal) {
-    ////            if ([model.type isEqualToString:@"file"])
-    ////                [weak_self addChooseFile:model];
-    //        }
-    //    };
-    //
-    //     cell.status = _cellStatus;
+    
     
     return cell;
 }
@@ -274,51 +266,61 @@ UIDocumentInteractionControllerDelegate
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    if (self.isSelect == false) {
-//        self.isSelect = true;
-//    }
-    
-    
-    TestDataModel *model = _dataSouceArray[indexPath.row];
-
-    if (self.cellStatus == FLFliesCellStatusCanChoose) {
-        if ([[FLFIlesHelper helper].chooseFiles containsObject:model]) {
-            [[FLFIlesHelper helper] removeChooseFile:model];
-        }else
-            [[FLFIlesHelper helper] addChooseFile:model];
-        _countLb.text = [NSString stringWithFormat:@"已选%ld个文件",(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
-        [self.tableView reloadData];
-    }else{
-    NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
-    NSString* suffixName = [model.URLstring lastPathComponent];
-    NSString* saveFile = [savePath stringByAppendingPathComponent:suffixName];
-    NSLog(@"文件位置%@",saveFile);
-    if ([[NSFileManager defaultManager] fileExistsAtPath:saveFile]) {
-        _documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:saveFile]];
-        _documentController.delegate = self;
-        [self presentOptionsMenu];
-    }else{
-            self.progressView.descLb.text =@"正在下载文件";
-            self.progressView.subDescLb.text = [NSString stringWithFormat:@"1个项目 "];
-            self.progressView.cancleBlock = ^(){
-                [[CSDownloadHelper shareManager] cancleDownload];
-            };
-            [[CSDownloadHelper shareManager] downloadOneFileWithFileModel:model UUID:@"uuid" begin:^{
-                
-            } progress:^(long long totalBytesRead, long long totalBytesExpectedToRead, float progress) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [_progressView setValueForProcess:progress];
-                });
-            } complete:^(CSDownloadTask *downloadTask,NSError *error) {
-                [_progressView dismiss];
-                if (!error) {
-                    _documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:downloadTask.downloadFileModel.downloadFileSavePath]];
+    if (self.isSelect == false) {
+        self.isSelect = true;
+        [self performSelector:@selector(repeatDelay) withObject:nil afterDelay:0.5f];
+        TestDataModel * model = self.dataSouceArray[indexPath.row];
+        if (![model.type isEqualToString:@"file"]){
+            FilesNextViewController * vc = [FilesNextViewController new];
+            //            vc.parentUUID = model.uuid;
+            //            vc.cellStatus = self.cellStatus;
+            //            vc.name = model.name;
+            if (self.cellStatus == FLFliesCellStatusNormal) {
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }else{
+            TestDataModel *model = _dataSouceArray[indexPath.row];
+            
+            if (self.cellStatus == FLFliesCellStatusCanChoose) {
+                if ([[FLFIlesHelper helper].chooseFiles containsObject:model]) {
+                    [[FLFIlesHelper helper] removeChooseFile:model];
+                }else
+                    [[FLFIlesHelper helper] addChooseFile:model];
+                _countLb.text = [NSString stringWithFormat:@"已选%ld个文件",(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
+                [self.tableView reloadData];
+            }else{
+                NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
+                NSString* suffixName = [model.URLstring lastPathComponent];
+                NSString* saveFile = [savePath stringByAppendingPathComponent:suffixName];
+                NSLog(@"文件位置%@",saveFile);
+                if ([[NSFileManager defaultManager] fileExistsAtPath:saveFile]) {
+                    _documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:saveFile]];
                     _documentController.delegate = self;
                     [self presentOptionsMenu];
+                }else{
+                    self.progressView.descLb.text =@"正在下载文件";
+                    self.progressView.subDescLb.text = [NSString stringWithFormat:@"1个项目 "];
+                    self.progressView.cancleBlock = ^(){
+                        [[CSDownloadHelper shareManager] cancleDownload];
+                    };
+                    [[CSDownloadHelper shareManager] downloadOneFileWithFileModel:model UUID:@"uuid" begin:^{
+                        
+                    } progress:^(long long totalBytesRead, long long totalBytesExpectedToRead, float progress) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [_progressView setValueForProcess:progress];
+                        });
+                    } complete:^(CSDownloadTask *downloadTask,NSError *error) {
+                        [_progressView dismiss];
+                        if (!error) {
+                            _documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:downloadTask.downloadFileModel.downloadFileSavePath]];
+                            _documentController.delegate = self;
+                            [self presentOptionsMenu];
+                        }
+                    }];
+                    [_progressView show];
                 }
-            }];
-           [_progressView show];
-      }
+            }
+        }
     }
 }
 
@@ -386,9 +388,10 @@ UIDocumentInteractionControllerDelegate
 
 - (JYProcessView *)progressView{
     if (!_progressView){
-       _progressView = [JYProcessView processViewWithType:ProcessTypeLine];
+        _progressView = [JYProcessView processViewWithType:ProcessTypeLine];
     }
     return _progressView;
 }
+
 @end
 

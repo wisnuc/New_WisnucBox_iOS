@@ -24,7 +24,7 @@
 
 @implementation FLFIlesHelper
 
-+(instancetype)helper{
++ (instancetype)helper{
     static FLFIlesHelper * helper = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -33,7 +33,7 @@
     return helper;
 }
 
--(void)addChooseFile:(TestDataModel *)model{
+- (void)addChooseFile:(TestDataModel *)model{
     @synchronized (self) {
         //当没有选择过文件
         if(![self containsFile:model]){
@@ -45,7 +45,6 @@
         }
     }
 }
-
 
 -(void)removeChooseFile:(TestDataModel *)model{
     @synchronized (self) {
@@ -68,14 +67,14 @@
 }
 
 
--(void)removeAllChooseFile{
+- (void)removeAllChooseFile{
     [self.chooseFiles removeAllObjects];
     [self.chooseFilesUUID removeAllObjects];
     [[NSNotificationCenter defaultCenter] postNotificationName:FLFilesStatusChangeNotify object:@(0)];
     
 }
 
--(NSMutableArray *)chooseFiles{
+- (NSMutableArray *)chooseFiles{
     if (!_chooseFiles) {
         _chooseFiles = [NSMutableArray arrayWithCapacity:0];
     }
@@ -92,86 +91,13 @@
 -(void)downloadChooseFilesParentUUID:(NSString *)uuid{
     for (TestDataModel * model in [FLFIlesHelper helper].chooseFiles) {
         if ([model.type isEqualToString:@"file"]) {
-//            [[FLDownloadManager shareManager] downloadFileWithFileModel:model parentUUID:uuid];
+            [[CSDownloadHelper shareManager] downloadFileWithFileModel:model UUID:uuid];
         }
     }
      NSString * string  = [NSString stringWithFormat:@"%ld个文件已添加到下载",(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
-//    MyNSLog(@"%@",string);
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-//        NSString * string  = [NSString stringWithFormat:@"%ld个文件已添加到下载",(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
-    dispatch_async(dispatch_get_main_queue(), ^{
-//      [MyAppDelegate.notification displayNotificationWithMessage:string forDuration:1];
-    });
-    });
+    [SXLoadingView showProgressHUDText:string duration:1];
     [[FLFIlesHelper helper] removeAllChooseFile];
 }
-
-//- (void)downloadAloneFilesWithModel:(FLFilesModel *)model parentUUID:(NSString *)uuid Progress:(TYDownloadProgressBlock)progress State:(TYDownloadStateBlock)state
-//{
-//    NSLog(@"%@",[JYRequestConfig sharedConfig].baseURL);
-//    NSString * filePath = [NSString stringWithFormat:@"%@/%@",File_DownLoad_DIR,model.name];
-//    NSString * exestr = [filePath lastPathComponent];
-//    NSString *urlString;
-////    /drives/{driveUUID}/dirs/{dirUUID}/entries/{entryUUID}
-//    if (KISCLOUD) {
-//        NSString *sourceUrlString = [NSString stringWithFormat:@"/drives/%@/dirs/%@/entries/%@",DRIVE_UUID,uuid,model.uuid];
-//        NSString *urlStringBase64 = [sourceUrlString base64EncodedString];
-//        urlString= [NSString stringWithFormat:@"%@stations/%@/pipe?resource=%@&method=GET&name=%@",[JYRequestConfig sharedConfig].baseURL,KSTATIONID,urlStringBase64,exestr];
-//    }else{
-//        urlString= [NSString stringWithFormat:@"%@drives/%@/dirs/%@/entries/%@?name=%@",[JYRequestConfig sharedConfig].baseURL,DRIVE_UUID,uuid,model.uuid,exestr];
-//    }
-//    NSString *encodedString = [urlString URLEncodedString];
-//    TYDownloadModel * downloadModel = [[TYDownloadModel alloc] initWithURLString:encodedString filePath:filePath];
-//    _downloadModel = downloadModel;
-//    downloadModel.jy_fileName = model.name;
-//    downloadModel.size = model.size;
-////    NSMutableArray *downloadedArr = [NSMutableArray arrayWithArray:[FMDBControl getAllDownloadFiles]];
-//    TYDownLoadDataManager *manager = [TYDownLoadDataManager manager];
-//    if ([TYDownLoadDataManager manager].isDownloading || downloadModel.state == TYDownloadStateRunning ||[TYDownLoadDataManager manager].downloadingModels.count >0) {
-//         MyNSLog(@"😆");
-//        [[TYDownLoadDataManager manager] suspendWithDownloadModel:[TYDownLoadDataManager manager].downloadingModels.firstObject];
-//        manager.isAlertDownload = YES;
-//
-//    }
-////    else{
-////        [manager startWithDownloadModel:downloadModel progress:progress state:state];
-////        [[NSNotificationCenter defaultCenter] postNotificationName:FLDownloadFileChangeNotify object:nil];
-////        MyNSLog(@"🌶");
-////    }
-//    [manager startWithDownloadModel:downloadModel progress:progress state:state];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:FLDownloadFileChangeNotify object:nil];
-////    for (TYDownloadModel * downloadModelIn in [TYDownLoadDataManager manager].downloadingModels) {
-////        if ([downloadModelIn.downloadURL isEqualToString:downloadModel.downloadURL]) {
-////            [SXLoadingView showProgressHUDText:[NSString stringWithFormat:@"%@正在下载",downloadModel.fileName]  duration:1];
-////            return;
-////        }
-////    }
-////
-////    for (TYDownloadModel * downloadModelIn in [TYDownLoadDataManager manager].waitingDownloadModels) {
-////        if ([downloadModelIn.downloadURL isEqualToString:downloadModel.downloadURL]) {
-////            [SXLoadingView showProgressHUDText:[NSString stringWithFormat:@"%@正在等待下载",downloadModel.fileName]  duration:1];
-////            return;
-////        }
-////    }
-//
-////    for (FLDownload * downloadModelIn in downloadedArr) {
-////        if ([downloadModelIn.name isEqualToString:downloadModel.fileName]) {
-////            [SXLoadingView showProgressHUDText:[NSString stringWithFormat:@"%@已下载完成",downloadModel.fileName] duration:1];
-////            return;
-////        }
-////    }
-//
-//
-//}
-
-
-
-//- (void)cancleDownload{
-//    if (_downloadModel) {
-//         TYDownloadModel * tymodel  = _downloadModel;
-//        [[TYDownLoadDataManager manager] cancleWithDownloadModel:tymodel];
-//    }
-//}
 
 - (void)configCells:(FLFilesCell * )cell withModel:(TestDataModel *)model cellStatus:(FLFliesCellStatus)status viewController:(UIViewController *)viewController parentUUID:(NSString *)uuid{
     cell.nameLabel.text = model.fileName;

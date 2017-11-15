@@ -19,6 +19,7 @@
 		1F1ABA041FB97A0D006EB1FC /* CSDownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1ABA031FB97A0D006EB1FC /* CSDownloadTask.m */; };
 		1F1ABA0D1FB9862A006EB1FC /* TestDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1ABA0C1FB9862A006EB1FC /* TestDataModel.m */; };
 		1F1ABA131FB99882006EB1FC /* CSDownloadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1ABA121FB99882006EB1FC /* CSDownloadHelper.m */; };
+		1F2BE3011FBC129700776DB3 /* FilesNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2BE3001FBC129700776DB3 /* FilesNextViewController.m */; };
 		1F3F99801FB0312300D6CC64 /* LocalDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F997E1FB0312300D6CC64 /* LocalDownloadViewController.m */; };
 		1F3F99811FB0312300D6CC64 /* LocalDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3F997F1FB0312300D6CC64 /* LocalDownloadViewController.xib */; };
 		1F3F99891FB0353F00D6CC64 /* LocalDownloadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F99871FB0353F00D6CC64 /* LocalDownloadTableViewCell.m */; };
@@ -552,6 +553,8 @@
 		1F1ABA111FB99882006EB1FC /* CSDownloadHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSDownloadHelper.h; sourceTree = "<group>"; };
 		1F1ABA121FB99882006EB1FC /* CSDownloadHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSDownloadHelper.m; sourceTree = "<group>"; };
 		1F244D9D3BCB4706DAFC363E /* Pods-WisnucBox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.debug.xcconfig"; sourceTree = "<group>"; };
+		1F2BE2FF1FBC129700776DB3 /* FilesNextViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilesNextViewController.h; sourceTree = "<group>"; };
+		1F2BE3001FBC129700776DB3 /* FilesNextViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilesNextViewController.m; sourceTree = "<group>"; };
 		1F3F997D1FB0312300D6CC64 /* LocalDownloadViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalDownloadViewController.h; sourceTree = "<group>"; };
 		1F3F997E1FB0312300D6CC64 /* LocalDownloadViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalDownloadViewController.m; sourceTree = "<group>"; };
 		1F3F997F1FB0312300D6CC64 /* LocalDownloadViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocalDownloadViewController.xib; sourceTree = "<group>"; };
@@ -1204,6 +1207,8 @@
 				1F196F361FB9424A004D5EB7 /* FilesViewController.h */,
 				1F196F371FB9424A004D5EB7 /* FilesViewController.m */,
 				1F196F381FB9424A004D5EB7 /* FilesViewController.xib */,
+				1F2BE2FF1FBC129700776DB3 /* FilesNextViewController.h */,
+				1F2BE3001FBC129700776DB3 /* FilesNextViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -3089,6 +3094,7 @@
 				1F4D75AD1FAC4BB800E6516C /* WBLocalAsset+CoreDataProperties.m in Sources */,
 				F67D64061FAC7D3600E23D16 /* JYAsset.m in Sources */,
 				F67D64081FAC7D3600E23D16 /* PHFetchResult+JYEXT.m in Sources */,
+				1F2BE3011FBC129700776DB3 /* FilesNextViewController.m in Sources */,
 				F671F1031FB4B3B50051DF93 /* floatTableViewCell.m in Sources */,
 				1F4D75B01FAC4BB800E6516C /* AssetsServices.m in Sources */,
 				F675614B1FB3428F00E3277F /* UIColor+MaterialTextField.m in Sources */,

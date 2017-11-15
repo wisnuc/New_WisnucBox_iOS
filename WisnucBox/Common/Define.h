@@ -18,6 +18,8 @@
 #define kUD_Synchronize [[NSUserDefaults standardUserDefaults] synchronize]
 #define kUD_ObjectForKey(key) [[NSUserDefaults standardUserDefaults] objectForKey:key]
 
+#define KDefaultNotificationCenter [NSNotificationCenter defaultCenter]
+
 #define IsNull(__Text) [__Text isKindOfClass:[NSNull class]]
 #define IsEquallString(_Str1,_Str2)  [_Str1 isEqualToString:_Str2]
 #define IsNilString(__String) (__String==nil || [__String isEqualToString:@""]|| [__String isEqualToString:@"null"])
