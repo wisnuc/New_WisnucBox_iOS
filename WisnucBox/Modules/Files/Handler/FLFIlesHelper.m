@@ -163,7 +163,10 @@
             actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
                 if (buttonIndex == 1) {
                 [[CSDownloadHelper  shareManager] downloadFileWithFileModel:model UUID:uuid];
-                
+                if(viewController){
+	                LocalDownloadViewController * localVC = [[LocalDownloadViewController alloc] init];
+	                [viewController.navigationController pushViewController:localVC animated:true];
+                }
                 }else if(buttonIndex == 2) {
                     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
                     NSString *filePath = [[paths objectAtIndex:0]stringByAppendingPathComponent:[NSString stringWithFormat:@"JYDownloadCache/%@",model.fileName]];

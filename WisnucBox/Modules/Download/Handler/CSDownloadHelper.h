@@ -22,6 +22,8 @@
 @end
 @interface CSDownloadHelper : NSObject
 
+typedef void (^HelperDownloadingEventHandler) (BOOL isDownloading);
+
 @property(weak,nonatomic)id<DownloadHelperDelegate> delegate;
 @property (nonatomic, copy) void(^progressBlock)(long long totalBytesRead, long long totalBytesExpectedToRead, float progress);
 + (CSDownloadHelper *)shareManager;
@@ -29,6 +31,7 @@
 - (void)downloadFileWithFileModel:(TestDataModel *)dataModel UUID:(NSString *)uuid;
 
 - (void)downloadOneFileWithFileModel:(TestDataModel *)dataModel UUID:(NSString *)uuid
+                       IsDownloading:(HelperDownloadingEventHandler)isDownloading
                                begin:(CSDownloadBeginEventHandler)begin
                             progress:(CSDownloadingEventHandler)progress
                             complete:(CSDownloadedEventHandler)complete;

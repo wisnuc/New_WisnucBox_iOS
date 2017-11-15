@@ -95,6 +95,7 @@
 		71A3D6791FB5AD230002B8B1 /* FMGetUsersAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A3D6761FB5AD230002B8B1 /* FMGetUsersAPI.m */; };
 		71A3D67A1FB5AD230002B8B1 /* FMAccountUsersAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A3D6781FB5AD230002B8B1 /* FMAccountUsersAPI.m */; };
 		71A3D67E1FB5ADAA0002B8B1 /* FMGetJWTAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A3D67D1FB5ADAA0002B8B1 /* FMGetJWTAPI.m */; };
+		7EC1F8F7B7661283352336B2 /* UIViewController+controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC1FAE1226D685452156DF9 /* UIViewController+controller.m */; };
 		C138D0571FB94396000CF518 /* FLDrivesAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D0561FB94396000CF518 /* FLDrivesAPI.m */; };
 		C138D05A1FB94D8D000CF518 /* FLGetDriveDirAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D0591FB94D8D000CF518 /* FLGetDriveDirAPI.m */; };
 		C138D05D1FB96100000CF518 /* FLCreateDirAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D05C1FB96100000CF518 /* FLCreateDirAPI.m */; };
@@ -679,6 +680,8 @@
 		71A3D6781FB5AD230002B8B1 /* FMAccountUsersAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMAccountUsersAPI.m; sourceTree = "<group>"; };
 		71A3D67C1FB5ADAA0002B8B1 /* FMGetJWTAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMGetJWTAPI.h; sourceTree = "<group>"; };
 		71A3D67D1FB5ADAA0002B8B1 /* FMGetJWTAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMGetJWTAPI.m; sourceTree = "<group>"; };
+		7EC1F976ED196B15B0370018 /* UIViewController+controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+controller.h"; sourceTree = "<group>"; };
+		7EC1FAE1226D685452156DF9 /* UIViewController+controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+controller.m"; sourceTree = "<group>"; };
 		B0D3F6BCD083EB684E36A713 /* Pods-WisnucBox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.release.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.release.xcconfig"; sourceTree = "<group>"; };
 		C138D0551FB94396000CF518 /* FLDrivesAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FLDrivesAPI.h; sourceTree = "<group>"; };
 		C138D0561FB94396000CF518 /* FLDrivesAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FLDrivesAPI.m; sourceTree = "<group>"; };
@@ -1358,6 +1361,7 @@
 				1F4D755A1FAC4BB700E6516C /* UIIamge */,
 				1F4D755D1FAC4BB700E6516C /* UIButton */,
 				1F4D75621FAC4BB700E6516C /* UIColor */,
+				7EC1F912305062467EF9F8DC /* UIViewController */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1712,6 +1716,15 @@
 				71A3D67D1FB5ADAA0002B8B1 /* FMGetJWTAPI.m */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		7EC1F912305062467EF9F8DC /* UIViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7EC1FAE1226D685452156DF9 /* UIViewController+controller.m */,
+				7EC1F976ED196B15B0370018 /* UIViewController+controller.h */,
+			);
+			path = UIViewController;
 			sourceTree = "<group>";
 		};
 		A425D85D003C084CDA92A5DA /* Frameworks */ = {
@@ -3211,6 +3224,7 @@
 				1F4D75B21FAC4BB800E6516C /* DBServices.m in Sources */,
 				1F3F99891FB0353F00D6CC64 /* LocalDownloadTableViewCell.m in Sources */,
 				F67D64121FAC7D7F00E23D16 /* CocoaSecurity.m in Sources */,
+				7EC1F8F7B7661283352336B2 /* UIViewController+controller.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

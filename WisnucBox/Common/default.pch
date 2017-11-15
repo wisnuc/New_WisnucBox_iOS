@@ -49,6 +49,7 @@
 #import "UIButton+Universal.h"
 #import "UIImage+GKContact.h"
 #import "UIView+JYExtension.h"
+#import "UIViewController+controller.h"
 
 //CoreData
 #import "WBFile+CoreDataClass.h"

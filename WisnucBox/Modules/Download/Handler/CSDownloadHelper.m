@@ -8,6 +8,7 @@
 
 #import "CSDownloadHelper.h"
 #import "CSFileUtil.h"
+#import "LocalDownloadViewController.h"
 
 @interface CSDownloadHelper()<CSDownloadUIBindProtocol>
 {
@@ -54,7 +55,8 @@
 }
 
 - (void)downloadOneFileWithFileModel:(TestDataModel *)dataModel UUID:(NSString *)uuid
-                            begin:(CSDownloadBeginEventHandler)begin
+                       IsDownloading:(HelperDownloadingEventHandler)isDownloading
+                               begin:(CSDownloadBeginEventHandler)begin
                             progress:(CSDownloadingEventHandler)progress
                             complete:(CSDownloadedEventHandler)complete{
     NSString* fromUrl = dataModel.URLstring;
@@ -96,11 +98,26 @@
     [downloadTask setDownloadTaskId:[NSString stringWithFormat:@"%d", _downdloadCount + 1]];
     [downloadTask setDownloadFileModel:downloadFileModel];
     [downloadTask setDownloadUIBinder:self];
-    
-    [_manager addDownloadTask:downloadTask];
-    [_oneDownloadArray addObject:downloadTask];
-    //    [SXLoadingView showProgressHUDText:[NSString stringWithFormat:@"已有%d个文件加入下载队列",_downdloadCount] duration:1.0];
-    [self startOneDownloadWithTask:downloadTask begin:begin progress:progress complete:complete];
+    if(_manager.downloadingTasks.count>0){
+        [_manager.downloadingTasks enumerateObjectsUsingBlock:^(CSDownloadTask * obj, NSUInteger idx, BOOL *stop) {
+            if([obj isEqualToDownloadTask:downloadTask]){
+                * stop = YES;
+            }
+            if (!stop){
+                [_manager addDownloadTask:downloadTask];
+                [_oneDownloadArray addObject:downloadTask];
+                [self startOneDownloadWithTask:downloadTask begin:begin progress:progress complete:complete];
+            } else{
+                isDownloading(YES);
+            }
+
+        }];
+    } else{
+        [_manager addDownloadTask:downloadTask];
+        [_oneDownloadArray addObject:downloadTask];
+        [self startOneDownloadWithTask:downloadTask begin:begin progress:progress complete:complete];
+    }
+
 }
 
 - (void)downloadFileWithFileModel:(TestDataModel *)dataModel UUID:(NSString *)uuid{
@@ -144,18 +161,23 @@
     [downloadTask setDownloadTaskId:[NSString stringWithFormat:@"%d", _downdloadCount]];
     [downloadTask setDownloadFileModel:downloadFileModel];
     [downloadTask setDownloadUIBinder:self];
-    
-    [_manager addDownloadTask:downloadTask];
-    //    [SXLoadingView showProgressHUDText:[NSString stringWithFormat:@"已有%d个文件加入下载队列",_downdloadCount] duration:1.0];
-    [self startDownloadWithTask:downloadTask];
+
+    if(_manager.downloadingTasks.count>0){
+        [_manager.downloadingTasks enumerateObjectsUsingBlock:^(CSDownloadTask * obj, NSUInteger idx, BOOL *stop) {
+            if([obj isEqualToDownloadTask:downloadTask]){
+                * stop = YES;
+            }
+            if (!stop){
+                [_manager addDownloadTask:downloadTask];
+                [self startDownloadWithTask:downloadTask];
+            }
+        }];
+    } else{
+        [_manager addDownloadTask:downloadTask];
+        [self startDownloadWithTask:downloadTask];
+    }
 }
 
-- (void)addDownload
-{
-    NSLog(@"添加下载...");
-    
-    
-}
 
 - (void)startOneDownloadWithTask:(CSDownloadTask*)downloadTask begin:(CSDownloadBeginEventHandler)begin
                         progress:(CSDownloadingEventHandler)progress
@@ -244,6 +266,7 @@
     if ([_delegate respondsToSelector:@selector(updateDataWithDownloadTask:)]) { // 如果协议响应了sendValue:方法
         [_delegate updateDataWithDownloadTask:task]; // 通知执行协议方法
     }
-}
-@end
 
+}
+
+@end

@@ -303,11 +303,19 @@ UIDocumentInteractionControllerDelegate
                     self.progressView.cancleBlock = ^(){
                         [[CSDownloadHelper shareManager] cancleDownload];
                     };
-                    [[CSDownloadHelper shareManager] downloadOneFileWithFileModel:model UUID:@"uuid" begin:^{
+                    [_progressView show];
+                    [[CSDownloadHelper shareManager] downloadOneFileWithFileModel:model UUID:@"uuid" IsDownloading:^(BOOL isDownloading) {
+                        if (isDownloading){
+                            [_progressView dismiss];
+                            LocalDownloadViewController *localDownloadViewController = [[LocalDownloadViewController alloc] init];
+                            [self.navigationController pushViewController:localDownloadViewController animated:YES];
+                        }
+                    } begin:^{
                         
                     } progress:^(long long totalBytesRead, long long totalBytesExpectedToRead, float progress) {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [_progressView setValueForProcess:progress];
+
                         });
                     } complete:^(CSDownloadTask *downloadTask,NSError *error) {
                         [_progressView dismiss];
@@ -317,7 +325,6 @@ UIDocumentInteractionControllerDelegate
                             [self presentOptionsMenu];
                         }
                     }];
-                    [_progressView show];
                 }
             }
         }
