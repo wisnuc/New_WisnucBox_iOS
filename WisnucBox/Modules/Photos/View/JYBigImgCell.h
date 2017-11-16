@@ -90,7 +90,10 @@
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIActivityIndicatorView *indicator;
 @property (nonatomic, strong) PHAsset *asset;
+
 @property (nonatomic, assign) PHImageRequestID imageRequestID;
+@property (nonatomic, assign) id<SDWebImageOperation> operation;
+
 @property (nonatomic, strong) UITapGestureRecognizer *singleTap;
 @property (nonatomic, copy)   void (^singleTapCallBack)(void);
 

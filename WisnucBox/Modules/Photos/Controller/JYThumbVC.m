@@ -27,8 +27,11 @@
     NSInteger _currentScale;
     
 }
+@property (nonatomic, strong) NSMutableArray<JYAsset *> *sortedAssetsBackup;
 
-@property (nonatomic, strong) NSMutableArray<JYAsset *> *arrDataSourcesBackup;
+@property (nonatomic, strong) NSMutableArray<JYAsset *> *localArrDataSourcesBackup;
+
+@property (nonatomic, strong) NSMutableArray<WBAsset *> *netArrDataSourcesBackup;
 
 @property (nonatomic, strong) NSMutableArray<JYAsset *> *arrDataSources;
 
@@ -56,6 +59,19 @@
     UIButton * _leftBtn;//导航栏左边按钮
     UIButton * _rightbtn;//导航栏右边按钮
     UILabel * _countLb;
+}
+
+- (NSMutableArray<WBAsset *> *)netArrDataSourcesBackup {
+    if(!_netArrDataSourcesBackup) {
+        _netArrDataSourcesBackup = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _netArrDataSourcesBackup;
+}
+
+- (NSMutableArray<JYAsset *> *)localArrDataSourcesBackup {
+    if(!_localArrDataSourcesBackup)
+        _localArrDataSourcesBackup = [NSMutableArray arrayWithCapacity:0];
+    return _localArrDataSourcesBackup;
 }
 
 - (NSMutableArray<JYAsset *> *)arrDataSources
@@ -94,12 +110,36 @@
     }
 }
 
-- (instancetype)initWithDataSource:(NSArray<JYAsset *> *)assets {
+- (instancetype)initWithLocalDataSource:(NSArray<JYAsset *> *)assets {
     if(self = [super init]) {
         [self.arrDataSources addObjectsFromArray:assets];
+        self.localArrDataSourcesBackup = [NSMutableArray  arrayWithArray:self.arrDataSources]; // backup
         _isSelectMode = NO;
     }
     return self;
+}
+
+- (void)addNetAssets:(NSArray<WBAsset *> *)assetsArr {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.netArrDataSourcesBackup = [NSMutableArray arrayWithArray: assetsArr];
+        [self sort:[self merge]];
+        [self.collectionView reloadData];
+    });
+}
+
+// merge localAssets and netAssets, delete net same asset which local had
+- (NSArray<JYAsset *> *)merge {
+    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+    [self.localArrDataSourcesBackup enumerateObjectsUsingBlock:^(JYAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if(!IsNilString(obj.digest)){
+            [dic setObject:obj forKey:obj.digest];
+        }
+    }];
+    [self.netArrDataSourcesBackup enumerateObjectsUsingBlock:^(WBAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if(![dic.allKeys containsObject:obj.fmhash])
+            [dic setObject:obj forKey:obj.fmhash];
+    }];
+    return [dic allValues];
 }
 
 -(void)dealloc{
@@ -111,42 +151,43 @@
     NSLog(@"JYThumbVC delloc");
 }
 
--(void)sort
+-(void)sort:(NSArray<JYAsset *> *)assetsArr
 {
+    NSMutableArray * arr = [NSMutableArray arrayWithArray:assetsArr];
     NSComparator cmptr = ^(JYAsset * photo1, JYAsset * photo2){
-        NSDate * tempDate = [[photo1 asset].creationDate laterDate:[photo2 asset].creationDate];
-        if ([tempDate isEqualToDate:[photo1 asset].creationDate]) {
+        NSDate * tempDate = [photo1.createDate laterDate: photo2.createDate];
+        if ([tempDate isEqualToDate:photo1.createDate]) {
             return (NSComparisonResult)NSOrderedAscending;
         }
-        if ([tempDate isEqualToDate:[photo2 asset].creationDate]) {
+        if ([tempDate isEqualToDate: photo2.createDate]) {
             return (NSComparisonResult)NSOrderedDescending;
         }
         return (NSComparisonResult)NSOrderedSame;
     };
-    [self.arrDataSources sortUsingComparator:cmptr];
-    self.arrDataSourcesBackup = [self.arrDataSources copy];
+    [arr sortUsingComparator:cmptr];
+    self.sortedAssetsBackup = [NSMutableArray arrayWithArray:arr];
     NSMutableArray * tArr = [NSMutableArray array];//时间组
     NSMutableArray * pGroupArr = [NSMutableArray array];//照片组数组
-    if (_arrDataSources.count>0) {
-        JYAsset * photo = _arrDataSources[0];
+    if (arr.count>0) {
+        JYAsset * photo = arr[0];
         photo.indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
         NSMutableArray * photoDateGroup1 = [NSMutableArray array];//第一组照片
         [photoDateGroup1 addObject:photo];
         [pGroupArr addObject:photoDateGroup1];
-        [tArr addObject:photo.asset.creationDate];
+        [tArr addObject:photo.createDate];
         
         NSMutableArray * photoDateGroup2 = photoDateGroup1;//最近的一组
-        for (int i = 1 ; i < _arrDataSources.count; i++) {
+        for (int i = 1 ; i < arr.count; i++) {
             @autoreleasepool {
-                JYAsset * photo1 =  _arrDataSources[i];
-                JYAsset * photo2 = _arrDataSources[i-1];
-                if ([self isSameDay:[photo1 asset].creationDate date2:[photo2 asset].creationDate]) {
+                JYAsset * photo1 =  arr[i];
+                JYAsset * photo2 = arr[i-1];
+                if ([self isSameDay:photo1.createDate date2: photo2.createDate]) {
                     photo1.indexPath = [NSIndexPath indexPathForRow:((NSArray *)pGroupArr[pGroupArr.count - 1]).count inSection:pGroupArr.count - 1];
                     [photoDateGroup2 addObject:photo1];
                 }
                 else{
                     photo1.indexPath = [NSIndexPath indexPathForRow:0 inSection:pGroupArr.count];
-                    [tArr addObject:[photo1 asset].creationDate];
+                    [tArr addObject: photo1.createDate];
                     photoDateGroup2 = nil;
                     photoDateGroup2 = [NSMutableArray array];
                     [photoDateGroup2 addObject:photo1];
@@ -179,18 +220,36 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.showIndicator = YES;
-    [self sort];
+    [self sort:self.arrDataSources];
     [self addRightBtn];
     [self initCollectionView];
     [self addPinchGesture];
     [self createControlbtn];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userAuthChange:) name:ASSETS_AUTH_CHANGE_NOTIFY object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(assetDidChangeHandle:) name:ASSETS_UPDATE_NOTIFY object:nil];
 }
 
+//!!!!: ASSETS_UPDATE_NOTIFY Handler
+- (void)assetDidChangeHandle:(NSNotification *)notify {
+    NSLog(@"%@", notify.object);
+    NSDictionary * changeDic = notify.object;
+    NSArray * removeArr = changeDic[ASSETS_REMOVEED_KEY];
+    NSArray * insertArr = changeDic[ASSETS_INSERTSED_KEY];
+    if(removeArr && removeArr.count)
+        [self.localArrDataSourcesBackup removeObjectsInArray:removeArr];
+    if(insertArr && insertArr.count)
+        [self.localArrDataSourcesBackup addObjectsFromArray:insertArr];
+    [self sort:[self merge]];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.collectionView reloadData];
+    });
+}
+
+//!!!!: ASSETS_AUTH_CHANGE_NOTIFY
 - (void)userAuthChange:(NSNotification *)notify {
     NSMutableArray * allPhotos = [NSMutableArray arrayWithArray:WB_AppServices.assetServices.allAssets];
-    self.arrDataSources = allPhotos;
-    [self sort];
+    self.localArrDataSourcesBackup = allPhotos;
+    [self sort:[self merge]];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.collectionView reloadData];
     });
@@ -475,7 +534,7 @@
     };
     
     if (collectionView.indicator) {
-        collectionView.indicator.slider.timeLabel.text = [self getMouthDateStringWithPhoto:model.asset.creationDate];
+        collectionView.indicator.slider.timeLabel.text = [self getMouthDateStringWithPhoto:model.createDate];
     }
     cell.isSelectMode = self.isSelectMode;
     [cell setIsSelect: _isSelectMode ? [self.choosePhotos containsObject:model] : NO animation:NO];
@@ -487,7 +546,7 @@
 //headView
 - (FMHeadView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
     FMHeadView * headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headView" forIndexPath:indexPath];
-    headView.headTitle = [self getDateStringWithPhoto: ((JYAsset *)((NSMutableArray *)_arrDataSources[indexPath.section])[indexPath.row]).asset.creationDate];
+    headView.headTitle = [self getDateStringWithPhoto: ((JYAsset *)((NSMutableArray *)_arrDataSources[indexPath.section])[indexPath.row]).createDate];
     headView.fmIndexPath = indexPath;
     headView.isSelectMode = _isSelectMode;
     headView.isChoose = [self.chooseSection containsObject:indexPath];
@@ -509,15 +568,8 @@
 
 - (UIViewController *)getMatchVCWithModel:(JYAsset *)model
 {
-    
-    NSArray *arr = [self.arrDataSourcesBackup copy];
-    int i = 0;
-    for (JYAsset *m in arr) {
-        if ([m.asset.localIdentifier isEqualToString:model.asset.localIdentifier])
-            break;
-        i++;
-    }
-    return [self getBigImageVCWithData:arr index:i];
+    NSArray *arr = [self.sortedAssetsBackup copy];
+    return [self getBigImageVCWithData:arr index: [arr indexOfObject:model]];
 }
 #pragma mark - UIViewControllerPreviewingDelegate
 //!!!!: 3D Touch
@@ -557,14 +609,22 @@
 }
 
 - (CGSize)getSize:(JYAsset *)model
-{
-    CGFloat w = MIN(model.asset.pixelWidth, kViewWidth);
-    CGFloat h = w * model.asset.pixelHeight / model.asset.pixelWidth;
+{   CGFloat w, h;
+    
+    if(model.asset){
+        w = MIN(model.asset.pixelWidth, kViewWidth);
+        h = w * model.asset.pixelHeight / model.asset.pixelWidth;
+    }else{
+        w = MIN([(WBAsset *)model w], kViewWidth);
+        h = w * [(WBAsset *)model h] / [(WBAsset *)model w];
+    }
+    
     if (isnan(h)) return CGSizeZero;
     
     if (h > kViewHeight || isnan(h)) {
         h = kViewHeight;
-        w = h * model.asset.pixelWidth / model.asset.pixelHeight;
+        w = model.asset ? h * model.asset.pixelWidth / model.asset.pixelHeight
+                        : h * [(WBAsset *)model w]  /  [(WBAsset *)model h];
     }
     
     return CGSizeMake(w, h);
@@ -575,7 +635,7 @@
 -(NSString *)getDateStringWithPhoto:(NSDate *)date{
     NSDateFormatter * formatter1 = [[NSDateFormatter alloc]init];
     formatter1.dateFormat = @"yyyy-MM-dd";
-    [formatter1 setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+//    [formatter1 setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC +8"]];
     NSString * dateString = [formatter1 stringFromDate:date];
     return dateString;
 }
@@ -583,7 +643,7 @@
 -(NSString *)getMouthDateStringWithPhoto:(NSDate *)date{
     NSDateFormatter * formatter1 = [[NSDateFormatter alloc]init];
     formatter1.dateFormat = @"yyyy年MM月";
-    [formatter1 setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+//    [formatter1 setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC +8"]];
     NSString * dateString = [formatter1 stringFromDate:date];
     //    NSLog(@"%@",dateString);
     if ([dateString isEqualToString: @"1970年01月"]) {

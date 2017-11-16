@@ -16,10 +16,14 @@
 
 @property (nonatomic, copy) NSString *identifier;
 @property (nonatomic, assign) PHImageRequestID imageRequestID;
-
+@property (nonatomic, assign) id<SDWebImageOperation> requestOperation;
 @end
 
 @implementation JYCollectionViewCell
+
+- (void)delloc{
+    
+}
 
 -(void)prepareForReuse{
     [super prepareForReuse];
@@ -179,22 +183,25 @@
     size.height = GetViewHeight(self) * 1.7;
     
     jy_weakify(self);
-    if (model.asset && self.imageRequestID >= PHInvalidImageRequestID) {
+    if (self.imageRequestID >= PHInvalidImageRequestID) {
         [[PHCachingImageManager defaultManager] cancelImageRequest:self.imageRequestID];
     }
-    self.identifier = model.asset.localIdentifier;
+    if(model.asset)
+        self.identifier = model.asset.localIdentifier;
+    else
+        self.identifier = [(WBAsset *)model fmhash];
     self.imageView.image = nil;
-    self.imageRequestID = [PHPhotoLibrary requestImageForAsset:model.asset size:size completion:^(UIImage *image, NSDictionary *info) {
-        jy_strongify(weakSelf);
-        
-        if ([strongSelf.identifier isEqualToString:model.asset.localIdentifier]) {
-            strongSelf.imageView.image = image;
-        }
-        
-        if (![[info objectForKey:PHImageResultIsDegradedKey] boolValue]) {
-            strongSelf.imageRequestID = -1;
-        }
-    }];
+    if(model.asset)
+        self.imageRequestID = [PHPhotoLibrary requestImageForAsset:model.asset size:size completion:^(UIImage *image, NSDictionary *info) {
+            if ([weakSelf.identifier isEqualToString:model.asset.localIdentifier]) {
+                weakSelf.imageView.image = image;
+            }
+            if (![[info objectForKey:PHImageResultIsDegradedKey] boolValue]) {
+                weakSelf.imageRequestID = -1;
+            }
+        }];
+//    else
+//        self.requestOperation = [WB_NetService getHighWebImageWithHash:<#(NSString *)#> completeBlock:<#^(NSError *, UIImage *)callback#>]
 }
 
 - (void)setIsSelect:(BOOL)isSelect animation:(BOOL)animat {

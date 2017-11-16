@@ -45,6 +45,8 @@
 
 - (void)rebulid;
 
+- (void)startUploadAssets:(void(^)())complete;
+
 - (void)loginWithBasic:(NSString *)basic userUUID:(NSString *)uuid name:(NSString *)userName addr:(NSString *)addr isWechat:(BOOL)isWechat completeBlock:(void(^)(NSError *error, WBUser *user))callback;
 
 - (void)updateCurrentUserInfoWithCompleteBlock:(void(^)(NSError *, BOOL success))callback;

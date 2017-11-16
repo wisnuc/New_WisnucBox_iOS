@@ -42,7 +42,7 @@
     NSInteger _indexBeforeRotation;
     UICollectionViewFlowLayout *_layout;
     
-    NSString *_modelIdentifile;
+    id _currentModelForRecord;
 }
 
 @end
@@ -319,11 +319,12 @@
 {
     if (scrollView == (UIScrollView *)_collectionView) {
         JYAsset *m = [self getCurrentPageModel];
-        if (!m || [_modelIdentifile isEqualToString:m.asset.localIdentifier]) return;
-        _modelIdentifile = m.asset.localIdentifier;
+        if (!m || _currentModelForRecord == m) return;
+        _currentModelForRecord = m;
         //改变导航标题
         if(self.delegate)
            [self.delegate photoBrowser:self scrollToIndexPath:m.indexPath];
+        //!!!!!: change Title
         self.title = [NSString stringWithFormat:@"%ld/%ld", _currentPage, self.models.count];
         if (m.type == JYAssetTypeGIF ||
             m.type == JYAssetTypeLivePhoto ||
@@ -373,9 +374,9 @@
     if (model.asset) {
         w = [model.asset pixelWidth];
         h = [model.asset pixelHeight];
-    } else if (model.image) {
-        w = model.image.size.width;
-        h = model.image.size.height;
+    } else if ([model isKindOfClass:[WBAsset class]]) {
+        w = [(WBAsset *)model w];
+        h = [(WBAsset *)model h];
     } else {
         w = kViewWidth;
         h = kViewHeight;

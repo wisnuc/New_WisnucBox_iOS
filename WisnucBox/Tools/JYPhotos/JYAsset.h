@@ -34,6 +34,8 @@ typedef NS_ENUM(NSUInteger, JYAssetType) {
 //网络/本地 图片url
 @property (nonatomic, strong) NSURL *url;
 
+@property (nonatomic) NSDate * createDateB;
+
 //图片
 @property (nonatomic, strong) UIImage *image;
 
@@ -43,6 +45,9 @@ typedef NS_ENUM(NSUInteger, JYAssetType) {
 
 /**初始化model对象*/
 + (instancetype)modelWithAsset:(PHAsset *)asset type:(JYAssetType)type duration:(NSString *)duration;
+
+// override
+- (NSDate *)createDate;
 
 @end
 

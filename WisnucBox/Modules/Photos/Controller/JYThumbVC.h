@@ -17,6 +17,7 @@
 
 @property (nonatomic, assign) BOOL showIndicator;
 
-- (instancetype)initWithDataSource:(NSArray<JYAsset *> *)assets;
+- (instancetype)initWithLocalDataSource:(NSArray<JYAsset *> *)assets;
 
+- (void)addNetAssets:(NSArray<WBAsset *> *)assetsArr;
 @end
