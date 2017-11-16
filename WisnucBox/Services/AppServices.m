@@ -261,7 +261,8 @@
     _netServices = nil;
     _dbServices = nil;
     _photoUploadManager = nil;
-    
+    //cancel download
+    [CSFileDownloadManager destroyAll];
 }
 
 @end
@@ -608,8 +609,7 @@
     [self.uploadedQueue removeAllObjects];
     [self.uploadErrorQueue removeAllObjects];
     [self.uploadedNetQueue removeAllObjects];
-    //cancel download
-    [CSFileDownloadManager destroyAll];
+    
 }
 
 @end
