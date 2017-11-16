@@ -59,9 +59,9 @@
                                begin:(CSDownloadBeginEventHandler)begin
                             progress:(CSDownloadingEventHandler)progress
                             complete:(CSDownloadedEventHandler)complete{
-    NSString* fromUrl = @"";
     
-    NSString* suffixName = [fromUrl lastPathComponent];
+    NSString* fromUrl = [NSString stringWithFormat:@"%@drives/%@/dirs/%@/entries/%@?name=%@",[JYRequestConfig sharedConfig].baseURL,WB_UserService.currentUser.userHome,uuid,dataModel.uuid,dataModel.name];
+    NSString* suffixName = dataModel.name;
     NSString* tmpFileName = [NSString stringWithFormat:@"file-%d.tmp",_downdloadCount];
     NSString* saveFileName= [NSString stringWithFormat:@"%@",suffixName];
     
@@ -100,31 +100,30 @@
     [downloadTask setDownloadUIBinder:self];
     if(_manager.downloadingTasks.count>0){
         [_manager.downloadingTasks enumerateObjectsUsingBlock:^(CSDownloadTask * obj, NSUInteger idx, BOOL *stop) {
-            if([obj isEqualToDownloadTask:downloadTask]){
+            if([obj.downloadFileModel.getDownloadFileUUID  isEqualToString:downloadTask.downloadFileModel.getDownloadFileUUID]){
                 * stop = YES;
-            }
-            if (!stop){
+               
+            }else{
                 [_manager addDownloadTask:downloadTask];
                 [_oneDownloadArray addObject:downloadTask];
                 [self startOneDownloadWithTask:downloadTask begin:begin progress:progress complete:complete];
-            } else{
-                isDownloading(YES);
             }
-
+            if (stop){
+               isDownloading(YES);
+            }
         }];
     } else{
         [_manager addDownloadTask:downloadTask];
         [_oneDownloadArray addObject:downloadTask];
         [self startOneDownloadWithTask:downloadTask begin:begin progress:progress complete:complete];
     }
-
 }
 
 - (void)downloadFileWithFileModel:(EntriesModel *)dataModel UUID:(NSString *)uuid{
     _downdloadCount++;
-    NSString* fromUrl = @"";
+     NSString* fromUrl = [NSString stringWithFormat:@"%@drives/%@/dirs/%@/entries/%@?name=%@",[JYRequestConfig sharedConfig].baseURL,WB_UserService.currentUser.userHome,uuid,dataModel.uuid,dataModel.name];;
     
-    NSString* suffixName = [fromUrl lastPathComponent];
+    NSString* suffixName = dataModel.name;
     NSString* tmpFileName = [NSString stringWithFormat:@"file-%d.tmp",_downdloadCount];
     NSString* saveFileName= [NSString stringWithFormat:@"%@",suffixName];
     
@@ -164,10 +163,9 @@
 
     if(_manager.downloadingTasks.count>0){
         [_manager.downloadingTasks enumerateObjectsUsingBlock:^(CSDownloadTask * obj, NSUInteger idx, BOOL *stop) {
-            if([obj isEqualToDownloadTask:downloadTask]){
+            if([obj.downloadFileModel.getDownloadFileUUID  isEqualToString:downloadTask.downloadFileModel.getDownloadFileUUID]){
                 * stop = YES;
-            }
-            if (!stop){
+            }else{
                 [_manager addDownloadTask:downloadTask];
                 [self startDownloadWithTask:downloadTask];
             }
@@ -182,7 +180,14 @@
 - (void)startOneDownloadWithTask:(CSDownloadTask*)downloadTask begin:(CSDownloadBeginEventHandler)begin
                         progress:(CSDownloadingEventHandler)progress
                         complete:(CSDownloadedEventHandler)complete{
-    [_manager downloadDataAsyncWithTask:downloadTask
+    
+    
+    CSFileDownloadManager *oneManager = [[CSFileDownloadManager alloc]init];
+    oneManager.maxDownload = 1;
+    oneManager.maxWaiting = 1;
+    oneManager.maxPaused = 1;
+    oneManager.maxFailureRetryChance = 0;
+    [oneManager downloadDataAsyncWithTask:downloadTask
                                   begin:begin
                                progress:progress
                                complete:^(CSDownloadTask *csdownloadTask,NSError *error) {
@@ -190,6 +195,11 @@
                                    if (error)
                                    {
                                        NSLog(@"下载失败,%@",error);
+                                       NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+                                       if(errorData.length >0){
+                                           NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+                                          NSLog(@"下载失败,%@",serializedData);
+                                       }
                                        downloadTask.downloadStatus = CSDownloadStatusFailure;
                                        [self updateUIWithTask:downloadTask];
                                        complete(csdownloadTask,error);
@@ -201,7 +211,6 @@
                                        [self updateUIWithTask:downloadTask];
                                        complete(csdownloadTask,nil);
                                    }
-                                   
                                }];
 }
 

@@ -19,32 +19,73 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="文件名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GAf-Al-olb">
-                        <rect key="frame" x="16" y="10" width="288" height="21"/>
+                        <rect key="frame" x="60" y="10" width="244" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="下载进度" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="11n-ow-vvH">
-                        <rect key="frame" x="16" y="35" width="288" height="18"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <rect key="frame" x="60" y="38.5" width="244" height="14.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="C6c-QC-NpB" userLabel="layerView">
+                        <rect key="frame" x="10" y="11" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="4zz-rm-Spg"/>
+                            <constraint firstAttribute="width" constant="40" id="dfk-VZ-yLD"/>
+                        </constraints>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="file_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="KHn-bG-kXB">
+                        <rect key="frame" x="15" y="16" width="30" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="N4o-dH-ddT"/>
+                            <constraint firstAttribute="width" constant="30" id="h35-Hv-JSe"/>
+                        </constraints>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NBJ-vJ-ep2">
+                        <rect key="frame" x="284" y="22" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="hCU-Vf-zYK"/>
+                            <constraint firstAttribute="height" constant="20" id="qYN-96-daL"/>
+                        </constraints>
+                        <state key="normal" image="file_more.png"/>
+                        <connections>
+                            <action selector="cancelBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="uLE-4R-2c0"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="11n-ow-vvH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="PdW-58-UnQ"/>
-                    <constraint firstItem="GAf-Al-olb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="RZ7-Fs-hf4"/>
+                    <constraint firstItem="GAf-Al-olb" firstAttribute="leading" secondItem="C6c-QC-NpB" secondAttribute="trailing" constant="10" id="8Ch-Ng-y13"/>
+                    <constraint firstItem="KHn-bG-kXB" firstAttribute="centerY" secondItem="C6c-QC-NpB" secondAttribute="centerY" id="Kfy-9w-DKB"/>
+                    <constraint firstItem="11n-ow-vvH" firstAttribute="leading" secondItem="C6c-QC-NpB" secondAttribute="trailing" constant="10" id="O8w-MK-ZHN"/>
                     <constraint firstAttribute="trailing" secondItem="11n-ow-vvH" secondAttribute="trailing" constant="16" id="SIi-07-URR"/>
                     <constraint firstItem="GAf-Al-olb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="SLn-Cl-AOI"/>
                     <constraint firstAttribute="bottom" secondItem="11n-ow-vvH" secondAttribute="bottom" constant="10" id="TJS-La-pAp"/>
+                    <constraint firstItem="NBJ-vJ-ep2" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="TQ9-5Z-5pn"/>
                     <constraint firstAttribute="trailing" secondItem="GAf-Al-olb" secondAttribute="trailing" constant="16" id="V8o-IR-AXK"/>
+                    <constraint firstItem="KHn-bG-kXB" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="gp3-m8-sra"/>
+                    <constraint firstItem="KHn-bG-kXB" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="jmc-9X-QRb"/>
+                    <constraint firstItem="KHn-bG-kXB" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="nAb-8z-glH"/>
+                    <constraint firstItem="C6c-QC-NpB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="okv-bu-8mS"/>
+                    <constraint firstAttribute="trailing" secondItem="NBJ-vJ-ep2" secondAttribute="trailing" constant="16" id="pa5-fH-I5s"/>
+                    <constraint firstItem="KHn-bG-kXB" firstAttribute="centerX" secondItem="C6c-QC-NpB" secondAttribute="centerX" id="qBf-TU-ds8"/>
+                    <constraint firstItem="C6c-QC-NpB" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="ztD-Qo-sEq"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="cancelButton" destination="NBJ-vJ-ep2" id="4Mu-oC-AJ9"/>
+                <outlet property="f_ImageView" destination="KHn-bG-kXB" id="oOq-4F-oaB"/>
                 <outlet property="fileNameLabel" destination="GAf-Al-olb" id="TU3-PL-nq9"/>
+                <outlet property="layerView" destination="C6c-QC-NpB" id="RSi-b9-aO0"/>
                 <outlet property="progressLabel" destination="11n-ow-vvH" id="g1w-h2-IaC"/>
             </connections>
             <point key="canvasLocation" x="34" y="64"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="file_icon.png" width="36" height="36"/>
+        <image name="file_more.png" width="36" height="36"/>
+    </resources>
 </document>

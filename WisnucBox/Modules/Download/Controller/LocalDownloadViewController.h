@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LocalDownloadViewController : UIViewController
+@interface LocalDownloadViewController : FABaseVC
 
 @end

@@ -84,20 +84,27 @@
     return  self;
 }
 
+
+static dispatch_once_t p = 0;
+__strong static id _sharedObject = nil;
+
 + (CSFileDownloadManager*)sharedDownloadManager
 {
-    //用来标记block是否已经执行过
-    static dispatch_once_t p = 0;
-    
-    //初始化，只有第一次执行到
-    __strong static id _sharedObject = nil;
-    
-    //执行对象初始化，程序生命周期内，只执行一次
+//    static dispatch_once_t p = 0;
+//
+//    __strong static id _sharedObject = nil;
+
     dispatch_once(&p, ^{
         _sharedObject = [[CSFileDownloadManager alloc] init];
     });
     
     return _sharedObject;
+}
+
++ (void)destroyAll{
+    [[CSFileDownloadManager sharedDownloadManager] cancelAllDownloadTask];
+     p = 0;
+    _sharedObject = nil;
 }
 
 - (void)downloadDataAsyncWithTask:(CSDownloadTask*)downloadTask
@@ -127,6 +134,7 @@
     
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+   
     
     //获取文件模型数据
     __block CSDownloadModel* fileModel = [downloadTask getDownloadFileModel];
@@ -147,6 +155,7 @@
     NSString* dataUrl = [fileModel getDownloadTaskURL];
   
     NSMutableURLRequest* urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[dataUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet  URLQueryAllowedCharacterSet]]]];
+     [urlRequest setValue:[NSString stringWithFormat:@"JWT %@",WB_UserService.currentUser.localToken] forHTTPHeaderField:@"Authorization"];
     NSString* tempPath = [fileModel getDownloadTempSavePath];
     NSLog(@"临时下载地:%@",tempPath);
     //获取已下载文件大小，如果不为零，表示可以继续下载

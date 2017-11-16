@@ -24,7 +24,8 @@ UITableViewDataSource,
 floatMenuDelegate,
 LCActionSheetDelegate,
 UIDocumentInteractionControllerDelegate,
-FLDataSourceDelegate
+FLDataSourceDelegate,
+FilesHelperOpenFilesDelegate
 >
 {
     UIButton * _leftBtn;
@@ -56,7 +57,7 @@ FLDataSourceDelegate
     [self createNavBtns];
     [self loadData];
     [self initView];
-    [self registerNotifacation];
+    [self registerNotifacationAndDelegate];
 }
 
 - (void)dealloc{
@@ -101,8 +102,9 @@ FLDataSourceDelegate
     //    [self.tableView.mj_header beginRefreshing];
 }
 
-- (void)registerNotifacation{
+- (void)registerNotifacationAndDelegate{
     [KDefaultNotificationCenter addObserver:self selector:@selector(handlerStatusChangeNotify:) name:FLFilesStatusChangeNotify object:nil];
+    [FLFIlesHelper helper].openFilesdelegate = self;
 }
 
 - (void)leftBtnClick:(id)sender{
@@ -122,23 +124,21 @@ FLDataSourceDelegate
             }
         } otherButtonTitles:@"选择文件", nil] show];
     }else{
-        [[LCActionSheet sheetWithTitle:@"" cancelButtonTitle:@"取消" clicked:^(LCActionSheet *actionSheet, NSInteger buttonIndex) {
-            if (buttonIndex == 1) {
-                [[FLFIlesHelper helper] removeAllChooseFile];
-            }else if ( buttonIndex == 2){
-                [[FLFIlesHelper helper] downloadChooseFilesParentUUID:@""];
-                [self.rdv_tabBarController setSelectedIndex:2];
-            }
-        } otherButtonTitles:@"清除选择",@"下载所选项", nil] show];
+//        [[LCActionSheet sheetWithTitle:@"" cancelButtonTitle:@"取消" clicked:^(LCActionSheet *actionSheet, NSInteger buttonIndex) {
+//            if (buttonIndex == 1) {
+//                [[FLFIlesHelper helper] removeAllChooseFile];
+//            }else if ( buttonIndex == 2){
+//                [[FLFIlesHelper helper] downloadChooseFilesParentUUID:WB_UserService.currentUser.userHome];
+//                [self.rdv_tabBarController setSelectedIndex:2];
+//            }
+//        } otherButtonTitles:@"清除选择",@"下载所选项", nil] show];
     }
 }
 
 - (void)sequenceDataSource{
     NSMutableArray *isFilesArr = [NSMutableArray arrayWithCapacity:0];
     NSMutableArray *isNotFilesArr = [NSMutableArray arrayWithCapacity:0];
-    for (EntriesModel * model  in self.dataSouceArray) {
-        
-        NSLog(@"%@",model);
+    for (EntriesModel * model  in [FilesDataSourceManager manager].dataArray) {
         if (![model.type isEqualToString:@"file"]) {
             [isNotFilesArr addObject: model];
         }
@@ -179,7 +179,6 @@ FLDataSourceDelegate
     self.cellStatus = FLFliesCellStatusCanChoose;
     _countLb.text = [NSString stringWithFormat:@"已选%ld个文件",(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
     [self.tableView reloadData];
-    //     }
 }
 
 - (void)actionForNormalStatus{
@@ -207,11 +206,19 @@ FLDataSourceDelegate
         }
     }
 }
+
+#pragma mark - FilesHelperOpenFilesDelegate
+
+- (void)openTheFileWithFilePath:(NSString *)filePath{
+    _documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:filePath]];
+    _documentController.delegate = self;
+    [self presentOptionsMenu];
+}
+
 #pragma mark - FLDataSourceDelegate
 
 - (void)datasource:(FilesDataSourceManager *)datasource finishLoading:(BOOL)finish{
     if (datasource == [FilesDataSourceManager manager] && finish) {
-        [self.dataSouceArray addObjectsFromArray:[FilesDataSourceManager manager].dataArray];
         [self sequenceDataSource];
         [self.tableView reloadData];
         [self.tableView.mj_header endRefreshing];
@@ -229,7 +236,7 @@ FLDataSourceDelegate
                 [SXLoadingView showAlertHUD:@"请先选择文件" duration:1];
             }else{
                 [self actionForNormalStatus];
-                [[FLFIlesHelper helper] downloadChooseFilesParentUUID:@"uuid"];
+                [[FLFIlesHelper helper] downloadChooseFilesParentUUID:WB_UserService.currentUser.userHome];
                 LocalDownloadViewController  *downloadVC = [[LocalDownloadViewController alloc]init];
                 [self.navigationController pushViewController:downloadVC animated:YES];
             }
@@ -254,7 +261,7 @@ FLDataSourceDelegate
         cell= (FLFilesCell *)[[[NSBundle  mainBundle] loadNibNamed:NSStringFromClass([FLFilesCell class]) owner:self options:nil]  lastObject];
     }
     EntriesModel *dataModel = _dataSouceArray[indexPath.row];
-    [[FLFIlesHelper helper] configCells:cell withModel:dataModel cellStatus:self.cellStatus viewController:self parentUUID:@""];
+    [[FLFIlesHelper helper] configCells:cell withModel:dataModel cellStatus:self.cellStatus viewController:self parentUUID:WB_UserService.currentUser.userHome];
     return cell;
 }
 
@@ -281,7 +288,6 @@ FLDataSourceDelegate
             }
         }else{
             EntriesModel *model = _dataSouceArray[indexPath.row];
-            
             if (self.cellStatus == FLFliesCellStatusCanChoose) {
                 if ([[FLFIlesHelper helper].chooseFiles containsObject:model]) {
                     [[FLFIlesHelper helper] removeChooseFile:model];
@@ -291,8 +297,7 @@ FLDataSourceDelegate
                 [self.tableView reloadData];
             }else{
                 NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
-                NSString* suffixName;
-//                [model.URLstring lastPathComponent];
+                NSString* suffixName = model.name;
                 NSString* saveFile = [savePath stringByAppendingPathComponent:suffixName];
                 NSLog(@"文件位置%@",saveFile);
                 if ([[NSFileManager defaultManager] fileExistsAtPath:saveFile]) {
@@ -306,7 +311,7 @@ FLDataSourceDelegate
                         [[CSDownloadHelper shareManager] cancleDownload];
                     };
                     [_progressView show];
-                    [[CSDownloadHelper shareManager] downloadOneFileWithFileModel:model UUID:@"uuid" IsDownloading:^(BOOL isDownloading) {
+                    [[CSDownloadHelper shareManager] downloadOneFileWithFileModel:model UUID:WB_UserService.currentUser.userHome IsDownloading:^(BOOL isDownloading) {
                         if (isDownloading){
                             [_progressView dismiss];
                             LocalDownloadViewController *localDownloadViewController = [[LocalDownloadViewController alloc] init];
@@ -325,6 +330,8 @@ FLDataSourceDelegate
                             _documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:downloadTask.downloadFileModel.downloadFileSavePath]];
                             _documentController.delegate = self;
                             [self presentOptionsMenu];
+                        }else{
+//                            [SXLoadingView showProgressHUDText:@"下载失败,请重试" duration:1.5];
                         }
                     }];
                 }
