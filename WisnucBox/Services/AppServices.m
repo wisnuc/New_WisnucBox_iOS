@@ -668,6 +668,11 @@
         }
         failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"Upload Failure ---> : %@", error);
+            NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+            if(errorData.length >0){
+                NSMutableArray *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+                NSLog(@"Upload Failure ---> :serializedData %@", serializedData);
+            }
             [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil]; // remove tmpFile
             callback(error, nil);
         }];
