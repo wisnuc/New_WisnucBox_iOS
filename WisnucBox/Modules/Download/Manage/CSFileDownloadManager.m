@@ -90,9 +90,6 @@ __strong static id _sharedObject = nil;
 
 + (CSFileDownloadManager*)sharedDownloadManager
 {
-//    static dispatch_once_t p = 0;
-//
-//    __strong static id _sharedObject = nil;
 
     dispatch_once(&p, ^{
         _sharedObject = [[CSFileDownloadManager alloc] init];

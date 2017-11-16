@@ -14,8 +14,12 @@
 
 @end
 @interface FilesDataSourceManager : NSObject
+
 @property (nonatomic) NSMutableArray *dataArray;
 @property (nonatomic,weak) id<FLDataSourceDelegate> delegate;
+
 + (instancetype)manager;
++ (void)destroyAll;
 - (void)getFilesWithUUID:(NSString *)uuid;
+
 @end

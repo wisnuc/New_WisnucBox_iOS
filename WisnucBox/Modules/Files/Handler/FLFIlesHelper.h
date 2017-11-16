@@ -30,6 +30,8 @@
 
 +(instancetype)helper;
 
++ (void)destroyAll;
+
 -(void)downloadChooseFilesParentUUID:(NSString *)uuid;
 
 -(void)configCells:(FLFilesCell * )cell withModel:(EntriesModel *)model cellStatus:(FLFliesCellStatus)status viewController:(UIViewController *)viewController parentUUID:(NSString *)uuid;

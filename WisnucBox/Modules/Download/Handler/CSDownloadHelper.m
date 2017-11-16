@@ -24,17 +24,20 @@
 - (void)dealloc{
     
 }
-
+static dispatch_once_t p = 0;
+__strong static id _sharedObject = nil;
 + (CSDownloadHelper *)shareManager
 {
-    static dispatch_once_t p = 0;
-    __strong static id _sharedObject = nil;
-    
     dispatch_once(&p, ^{
         _sharedObject = [[CSDownloadHelper alloc] init];
     });
     
     return _sharedObject;
+}
+
++ (void)destroyAll{
+    p = 0;
+    _sharedObject = nil;
 }
 
 - (instancetype)init
