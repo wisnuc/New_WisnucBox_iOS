@@ -118,4 +118,6 @@
  */
 -(NSArray*)downloadTasks;
 
++(void)destroyAll;
+
 @end

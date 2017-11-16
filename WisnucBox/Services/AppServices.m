@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import <YYDispatchQueuePool/YYDispatchQueuePool.h>
 #import "FMAccountUsersAPI.h"
+#import "CSFileDownloadManager.h"
 
 @implementation AppServices
 
@@ -607,6 +608,8 @@
     [self.uploadedQueue removeAllObjects];
     [self.uploadErrorQueue removeAllObjects];
     [self.uploadedNetQueue removeAllObjects];
+    //cancel download
+    [CSFileDownloadManager destroyAll];
 }
 
 @end
