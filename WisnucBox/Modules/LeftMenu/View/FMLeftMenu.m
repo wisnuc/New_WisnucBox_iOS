@@ -86,6 +86,9 @@
             self.userHeaderIV.image = [self imageCirclewithImage:image];
              });
         }];
+    }else{
+        self.nameLabel.text = _userInfo.userName;
+        self.userHeaderIV.image = [UIImage imageForName:self.nameLabel.text size:self.userHeaderIV.bounds.size];
     }
 
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];

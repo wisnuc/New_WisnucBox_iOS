@@ -10,6 +10,10 @@
 
 @implementation JYAsset
 
+- (void)dealloc {
+//    NSLog(@"---- %s ", __FUNCTION__);
+}
+
 + (instancetype)modelWithAsset:(PHAsset *)asset type:(JYAssetType)type duration:(NSString *)duration
 {
     JYAsset *model = [[[self class] alloc] init];

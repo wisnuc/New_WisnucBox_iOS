@@ -92,7 +92,7 @@
 @property (nonatomic, strong) PHAsset *asset;
 
 @property (nonatomic, assign) PHImageRequestID imageRequestID;
-@property (nonatomic, assign) id<SDWebImageOperation> operation;
+@property (nonatomic, weak) id<SDWebImageOperation> operation;
 
 @property (nonatomic, strong) UITapGestureRecognizer *singleTap;
 @property (nonatomic, copy)   void (^singleTapCallBack)(void);

@@ -129,17 +129,20 @@
 
 // merge localAssets and netAssets, delete net same asset which local had
 - (NSArray<JYAsset *> *)merge {
-    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+    NSMutableArray * localHashs = [NSMutableArray arrayWithCapacity:0];
     [self.localArrDataSourcesBackup enumerateObjectsUsingBlock:^(JYAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if(!IsNilString(obj.digest)){
-            [dic setObject:obj forKey:obj.digest];
+            [localHashs addObject:obj.digest];
         }
     }];
+    NSMutableArray * netTmpArr = [NSMutableArray arrayWithCapacity:0];
     [self.netArrDataSourcesBackup enumerateObjectsUsingBlock:^(WBAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if(![dic.allKeys containsObject:obj.fmhash])
-            [dic setObject:obj forKey:obj.fmhash];
+        if(![localHashs containsObject:obj.fmhash])
+            [netTmpArr addObject:obj];
     }];
-    return [dic allValues];
+    NSMutableArray * mergedAssets = [NSMutableArray arrayWithArray:self.localArrDataSourcesBackup];
+    [mergedAssets addObjectsFromArray:netTmpArr];
+    return mergedAssets;
 }
 
 -(void)dealloc{
@@ -148,7 +151,7 @@
         [self.collectionView removeObserver:self.collectionView.indicator forKeyPath:@"contentOffset"];
     }
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    NSLog(@"JYThumbVC delloc");
+    NSLog(@"JYThumbVC dealloc");
 }
 
 -(void)sort:(NSArray<JYAsset *> *)assetsArr

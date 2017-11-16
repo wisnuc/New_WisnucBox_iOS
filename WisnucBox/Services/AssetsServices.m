@@ -128,7 +128,7 @@
     });
 }
 
-- (void)getNetAssets:(void(^)(NSError *, NSArray *))callback {
+- (void)getNetAssets:(void(^)(NSError *, NSArray<WBAsset *> *))callback {
 //    dispatch_semaphore_wait(self.fetchNetAssetLock, DISPATCH_TIME_FOREVER);
     @weaky(self);
     [[FMMediaAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {

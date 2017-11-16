@@ -239,4 +239,23 @@
     }];
 }
 
+
+- (id <SDWebImageOperation>)getThumbnailWithHash:(NSString *)hash complete:(void(^)(NSError *, UIImage *))callback {
+    [SDWebImageManager sharedManager].imageDownloader.headersFilter = ^NSDictionary *(NSURL *url, NSDictionary *headers) {
+        NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:headers];
+        [dic setValue:[NSString stringWithFormat:@"JWT %@",WB_UserService.defaultToken] forKey:@"Authorization"];
+        return dic;
+    };
+    
+    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"%@media/%@?alt=thumbnail&width=200&height=200&modifier=caret&autoOrient=true", [self currentURL], hash]];
+    return [[SDWebImageManager sharedManager] downloadImageWithURL:url options:SDWebImageRetryFailed progress:nil
+                                                         completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                                                             if (image) {
+                                                                 callback(nil, image);
+                                                             }else{
+                                                                 callback(error, nil);
+                                                             }
+                                                         }];
+}
+
 @end

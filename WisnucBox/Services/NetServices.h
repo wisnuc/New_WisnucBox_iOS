@@ -51,4 +51,6 @@
 
 - (id <SDWebImageOperation>)getHighWebImageWithHash:(NSString *)hash completeBlock:(void(^)(NSError *, UIImage *))callback;
 
+- (id <SDWebImageOperation>)getThumbnailWithHash:(NSString *)hash complete:(void(^)(NSError *, UIImage *))callback;
+
 @end

@@ -16,6 +16,10 @@
 
 @implementation JYBigImgCell
 
+- (void)dealloc{
+    NSLog(@"JYBigImgCell delloc");
+}
+
 - (JYPreviewView *)previewView
 {
     if (!_previewView) {
@@ -162,7 +166,7 @@
             break;
         case JYAssetTypeNetImage: {
             [self addSubview:self.imageGifView];
-            [self.imageGifView loadImage:model.image?:model.url];
+            [self.imageGifView loadImage:model];
         }
             break;
         case JYAssetTypeNetVideo : {
@@ -429,6 +433,10 @@
     if (self.asset && self.imageRequestID >= 0) {
         [[PHCachingImageManager defaultManager] cancelImageRequest:self.imageRequestID];
     }
+    if(self.operation){
+        [self.operation cancel];
+        self.operation = nil;
+    }
     self.asset = asset;
     
     [self.indicator startAnimating];
@@ -452,23 +460,30 @@
  */
 - (void)loadImage:(id)obj
 {
-    if ([obj isKindOfClass:UIImage.class]) {
-        self.imageView.image = obj;
-        [self resetSubviewSize:obj];
-    } else { // wbasset.fmhash
-        [self.indicator startAnimating];
-        jy_weakify(self);
-        [WB_NetService getHighWebImageWithHash:obj completeBlock:^(NSError *error, UIImage *img) {
-            [weakSelf.indicator stopAnimating];
-            jy_strongify(weakSelf);
-            if (error) {
-                // TODO: Load Error Image
-            } else {
-                strongSelf->_loadOK = YES;
-                [strongSelf resetSubviewSize:img];
-            }
-        }];
+    self.imageView.image = nil;
+    if (self.asset && self.imageRequestID >= 0) {
+        [[PHCachingImageManager defaultManager] cancelImageRequest:self.imageRequestID];
     }
+    if(self.operation){
+        [self.operation cancel];
+        self.operation = nil;
+    }
+    [self.indicator startAnimating];
+    jy_weakify(self);
+    self.operation =  [WB_NetService getHighWebImageWithHash:[(WBAsset *)obj fmhash] completeBlock:^(NSError *error, UIImage *img) {
+        [weakSelf.indicator stopAnimating];
+        jy_strongify(weakSelf);
+        if(!strongSelf) return;
+        if (error) {
+            // TODO: Load Error Image
+        } else {
+            strongSelf->_loadOK = YES;
+            strongSelf.imageView.image = img;
+            [strongSelf resetSubviewSize:img];
+        }
+        strongSelf.operation = nil;
+    }];
+    
 }
 
 - (void)resetSubviewSize:(id)obj

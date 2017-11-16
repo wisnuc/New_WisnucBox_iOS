@@ -52,7 +52,7 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    //    NSLog(@"---- %s", __FUNCTION__);
+    NSLog(@"---- %s ", __FUNCTION__);
 }
 
 - (instancetype)init
@@ -322,7 +322,7 @@
         if (!m || _currentModelForRecord == m) return;
         _currentModelForRecord = m;
         //改变导航标题
-        if(self.delegate)
+        if(self.delegate && !_isFirstAppear)
            [self.delegate photoBrowser:self scrollToIndexPath:m.indexPath];
         //!!!!!: change Title
         self.title = [NSString stringWithFormat:@"%ld/%ld", _currentPage, self.models.count];

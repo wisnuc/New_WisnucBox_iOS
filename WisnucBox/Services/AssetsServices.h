@@ -29,7 +29,7 @@
 
 @property (nonatomic, copy) NSArray<WBAsset *> *allNetAssets;
 
-- (void)getNetAssets:(void(^)(NSError *, NSArray *))callback;
+- (void)getNetAssets:(void(^)(NSError *, NSArray<WBAsset *> *))callback;
 
 - (WBLocalAsset *)getAssetWithLocalId:(NSString *)localId;
 

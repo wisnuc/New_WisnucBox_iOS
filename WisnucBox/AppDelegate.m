@@ -50,6 +50,13 @@
 - (RDVTabBarController *)setUpTabbar {
     RDVTabBarController * tabbar = [RDVTabBarController new];
     JYThumbVC * photosVC = [[JYThumbVC alloc] initWithLocalDataSource:[AppServices sharedService].assetServices.allAssets];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [WB_AssetService getNetAssets:^(NSError *error, NSArray<WBAsset *> *netAssets) {
+            if(!error)
+                return [photosVC addNetAssets:netAssets];
+            NSLog(@"Fetch Net Assets Error --> : %@", error);
+        }];
+    });
     FilesViewController *filesViewController = [[FilesViewController alloc]init];
     NavViewController *nav1 = [[NavViewController alloc] initWithRootViewController:photosVC];
     NavViewController *nav2 = [[NavViewController alloc] initWithRootViewController:filesViewController];

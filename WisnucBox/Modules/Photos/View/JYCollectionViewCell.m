@@ -16,13 +16,13 @@
 
 @property (nonatomic, copy) NSString *identifier;
 @property (nonatomic, assign) PHImageRequestID imageRequestID;
-@property (nonatomic, assign) id<SDWebImageOperation> requestOperation;
+@property (nonatomic, weak) id<SDWebImageOperation> thumbnailRequestOperation;
 @end
 
 @implementation JYCollectionViewCell
 
-- (void)delloc{
-    
+- (void)dealloc{
+//    NSLog(@"---- %s ", __FUNCTION__);
 }
 
 -(void)prepareForReuse{
@@ -183,9 +183,12 @@
     size.height = GetViewHeight(self) * 1.7;
     
     jy_weakify(self);
-    if (self.imageRequestID >= PHInvalidImageRequestID) {
-        [[PHCachingImageManager defaultManager] cancelImageRequest:self.imageRequestID];
-    }
+    if (self.imageRequestID >= PHInvalidImageRequestID) [[PHCachingImageManager defaultManager] cancelImageRequest:self.imageRequestID];
+    
+    if (self.thumbnailRequestOperation)
+        [self.thumbnailRequestOperation cancel];
+    self.thumbnailRequestOperation = nil;
+    
     if(model.asset)
         self.identifier = model.asset.localIdentifier;
     else
@@ -200,8 +203,17 @@
                 weakSelf.imageRequestID = -1;
             }
         }];
-//    else
-//        self.requestOperation = [WB_NetService getHighWebImageWithHash:<#(NSString *)#> completeBlock:<#^(NSError *, UIImage *)callback#>]
+    else {
+        id <SDWebImageOperation> thumbnailRequestOperation = [WB_NetService getThumbnailWithHash:[(WBAsset *)model fmhash] complete:^(NSError *error, UIImage *img) {
+            if (!error && [weakSelf.identifier isEqualToString:[(WBAsset *)model fmhash]]) {
+                weakSelf.imageView.image = img;
+            }else
+                NSLog(@"get thumbnail error ---> : %@", error);
+            weakSelf.thumbnailRequestOperation = nil;
+        }];
+        NSLog(@"----.......---- %@ ---...%p", [thumbnailRequestOperation class], thumbnailRequestOperation);
+        self.thumbnailRequestOperation = thumbnailRequestOperation;
+    }
 }
 
 - (void)setIsSelect:(BOOL)isSelect animation:(BOOL)animat {
