@@ -25,13 +25,19 @@
 
 @implementation FLFIlesHelper
 
+static FLFIlesHelper * helper = nil;
+static dispatch_once_t onceToken;
+
 + (instancetype)helper{
-    static FLFIlesHelper * helper = nil;
-    static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         helper = [FLFIlesHelper new];
     });
     return helper;
+}
+
++ (void)destroyAll{
+    onceToken = 0;
+    helper = nil;
 }
 
 - (instancetype)init

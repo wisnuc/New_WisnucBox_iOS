@@ -12,6 +12,9 @@
 #import <YYDispatchQueuePool/YYDispatchQueuePool.h>
 #import "FMAccountUsersAPI.h"
 #import "CSFileDownloadManager.h"
+#import "FilesDataSourceManager.h"
+#import "FLFIlesHelper.h"
+#import "CSDownloadHelper.h"
 
 @implementation AppServices
 
@@ -262,6 +265,11 @@
     _netServices = nil;
     _dbServices = nil;
     _photoUploadManager = nil;
+    //cancel download
+    [CSFileDownloadManager destroyAll];
+    [FilesDataSourceManager destroyAll];
+    [FLFIlesHelper destroyAll];
+    [CSDownloadHelper destroyAll];
 }
 
 @end
@@ -610,8 +618,7 @@
     [self.uploadedQueue removeAllObjects];
     [self.uploadErrorQueue removeAllObjects];
     [self.uploadedNetQueue removeAllObjects];
-    //cancel download
-    [CSFileDownloadManager destroyAll];
+    
 }
 
 @end

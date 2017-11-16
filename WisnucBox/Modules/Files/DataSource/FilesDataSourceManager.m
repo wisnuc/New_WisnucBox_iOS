@@ -12,13 +12,19 @@
 
 @implementation FilesDataSourceManager
 
+static FilesDataSourceManager * manager = nil;
+static dispatch_once_t onceToken;
+
 + (instancetype)manager{
-    static FilesDataSourceManager * manager = nil;
-    static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         manager = [FilesDataSourceManager new];
     });
     return manager;
+}
+
++ (void)destroyAll{
+    onceToken = 0;
+    manager = nil;
 }
 
 - (instancetype)init

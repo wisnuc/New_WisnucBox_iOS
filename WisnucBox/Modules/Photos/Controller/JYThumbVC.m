@@ -881,6 +881,7 @@ bool isDecelerating = NO;
 //                 });
 //         }];
     }else{
+        NSLog(@"%@",item.image) ;
 //        FMLocalPhotoStore * store = [FMLocalPhotoStore shareStore];
 //        PHAsset * asset = [store checkPhotoIsLocalWithLocalId:[(FMPhotoAsset *)item localId]];
 //        if (asset) {
