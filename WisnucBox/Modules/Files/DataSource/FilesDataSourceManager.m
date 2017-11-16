@@ -37,7 +37,6 @@
         if (self.delegate && [self.delegate respondsToSelector:@selector(datasource:finishLoading:)]) {
             [self.delegate datasource:self finishLoading:YES];
         }
-        NSLog(@"%@",self.dataArray);
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
         if (self.delegate && [self.delegate respondsToSelector:@selector(datasource:finishLoading:)]) {

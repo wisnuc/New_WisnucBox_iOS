@@ -10,10 +10,12 @@
 #import "LocalDownloadViewController.h"
 #import "FilesViewController.h"
 #import "CSDownloadHelper.h"
-//#import "FLSecondFilesVC.h"
-
+#import "CSFileUtil.h"
 
 @interface FLFIlesHelper ()
+{
+     FilesServices *_filesServices;
+}
 
 @property (nonatomic) NSMutableArray * chooseFiles;
 @property (nonatomic) NSMutableArray * chooseFilesUUID;
@@ -32,6 +34,15 @@
     return helper;
 }
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+       _filesServices = [FilesServices new];
+    }
+    return self;
+}
+
 - (void)addChooseFile:(EntriesModel *)model{
     @synchronized (self) {
         //当没有选择过文件
@@ -45,7 +56,7 @@
     }
 }
 
--(void)removeChooseFile:(EntriesModel *)model{
+- (void)removeChooseFile:(EntriesModel *)model{
     @synchronized (self) {
         NSMutableArray * tempArr = [NSMutableArray arrayWithCapacity:0];
         for (EntriesModel * file in self.chooseFiles) {
@@ -80,16 +91,17 @@
     return _chooseFiles;
 }
 
--(NSMutableArray *)chooseFilesUUID{
+- (NSMutableArray *)chooseFilesUUID{
     if(!_chooseFilesUUID){
         _chooseFilesUUID = [NSMutableArray arrayWithCapacity:0];
     }
     return _chooseFilesUUID;
 }
 
--(void)downloadChooseFilesParentUUID:(NSString *)uuid{
+- (void)downloadChooseFilesParentUUID:(NSString *)uuid{
     for (EntriesModel * model in [FLFIlesHelper helper].chooseFiles) {
         if ([model.type isEqualToString:@"file"]) {
+            NSLog(@"%@",model.type);
             [[CSDownloadHelper shareManager] downloadFileWithFileModel:model UUID:uuid];
         }
     }
@@ -134,15 +146,14 @@
             cell.downBtn.userInteractionEnabled = YES;
             weak_self.chooseModel = model;
             NSString *downloadString  = @"下载该文件";
-//            NSString *openFileString;
-//            NSMutableArray *downloadedArr = [NSMutableArray arrayWithArray:[FMDBControl getAllDownloadFiles]];
-            
-//            for (FLDownload * downloadModelIn in downloadedArr) {
-//                if ([downloadModelIn.name isEqualToString:model.name]) {
-//                    downloadString = @"重新下载";
-//                    openFileString = @"打开该文件";
-//                }
-//            }
+            NSString *openFileString;
+            NSMutableArray *downloadedArr = [NSMutableArray arrayWithArray:[_filesServices findAll]];
+            for (WBFile * fileModel in downloadedArr) {
+                if ([fileModel.fileUUID isEqualToString:model.uuid]) {
+                    downloadString = @"重新下载";
+                    openFileString = @"打开该文件";
+                }
+            }
 
     
             NSMutableArray * arr = [NSMutableArray arrayWithCapacity:0];
@@ -150,9 +161,9 @@
                 [arr addObject:downloadString];
             }
 //
-//            if (openFileString.length>0) {
-//                [arr addObject:openFileString];
-//            }
+            if (openFileString.length>0) {
+                [arr addObject:openFileString];
+            }
             
             LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:nil
                                                                      delegate:nil
@@ -160,17 +171,21 @@
                                                         otherButtonTitleArray:arr];
             actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
                 if (buttonIndex == 1) {
+                if ([downloadString isEqualToString:@"重新下载"]) {
+                    [_filesServices deleteFileWithFileUUID:model.uuid andUser:uuid];
+                }
                 [[CSDownloadHelper  shareManager] downloadFileWithFileModel:model UUID:uuid];
                 if(viewController){
 	                LocalDownloadViewController * localVC = [[LocalDownloadViewController alloc] init];
 	                [viewController.navigationController pushViewController:localVC animated:true];
                 }
                 }else if(buttonIndex == 2) {
-                    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                    NSString *filePath = [[paths objectAtIndex:0]stringByAppendingPathComponent:[NSString stringWithFormat:@"JYDownloadCache/%@",model.name]];
-                    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+                    NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
+                    NSString* suffixName = model.name;
+                    NSString* saveFile = [savePath stringByAppendingPathComponent:suffixName];
+                    if ([[NSFileManager defaultManager] fileExistsAtPath:saveFile]) {
                         if (_openFilesdelegate && [_openFilesdelegate respondsToSelector:@selector(openTheFileWithFilePath:)]) {
-                            [_openFilesdelegate openTheFileWithFilePath:filePath];
+                            [_openFilesdelegate openTheFileWithFilePath:saveFile];
                         }
                     }
 //                    if ([viewController isEqual:[FLFilesVC class]]) {

@@ -127,6 +127,7 @@
     
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+   
     
     //获取文件模型数据
     __block CSDownloadModel* fileModel = [downloadTask getDownloadFileModel];
@@ -147,6 +148,7 @@
     NSString* dataUrl = [fileModel getDownloadTaskURL];
   
     NSMutableURLRequest* urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[dataUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet  URLQueryAllowedCharacterSet]]]];
+     [urlRequest setValue:[NSString stringWithFormat:@"JWT %@",WB_UserService.currentUser.localToken] forHTTPHeaderField:@"Authorization"];
     NSString* tempPath = [fileModel getDownloadTempSavePath];
     NSLog(@"临时下载地:%@",tempPath);
     //获取已下载文件大小，如果不为零，表示可以继续下载
