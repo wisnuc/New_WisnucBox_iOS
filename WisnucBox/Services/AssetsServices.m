@@ -164,6 +164,7 @@
         
         if (_lastResult){
             PHFetchResultChangeDetails* detail = [changeInstance changeDetailsForFetchResult:currentAssets];
+            if(!detail || (!detail.removedObjects.count && !detail.insertedObjects.count)) return;
             NSMutableArray * removes = [NSMutableArray arrayWithCapacity:0];
             NSMutableArray * inserts = [NSMutableArray arrayWithCapacity:0];
             if (detail && detail.removedObjects){
@@ -174,7 +175,7 @@
                     }
                 }];
             }
-            [changeDic setObject:removes forKey:@"removeObjects"];
+            [changeDic setObject:removes forKey:ASSETS_REMOVEED_KEY];
             if (detail && detail.insertedObjects){
                 [detail.insertedObjects enumerateObjectsUsingBlock:^(PHAsset *obj, NSUInteger idx, BOOL * _Nonnull stop) {
                     JYAssetType type = [obj getJYAssetType];
@@ -184,15 +185,19 @@
                     [inserts addObject:asset];
                 }];
             }
-            [changeDic setObject:inserts forKey:@"insertedObjects"];
-            _lastResult = [detail fetchResultAfterChanges]; // record new fetchResult
+            [changeDic setObject:inserts forKey:ASSETS_INSERTSED_KEY];
+            
+            if([detail fetchResultAfterChanges]) // record new fetchResult
+            {
+                _lastResult = [detail fetchResultAfterChanges];
+            }
         }
         
         self.allAssets = [tmpDic allValues];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:ASSETS_UPDATE_NOTIFY object:changeDic];
         if(_AssetChangeBlock)
-            _AssetChangeBlock(changeDic[@"removeObjects"], changeDic[@"insertedObjects"]);
+            _AssetChangeBlock(changeDic[ASSETS_REMOVEED_KEY], changeDic[ASSETS_INSERTSED_KEY]);
     }
 }
 @end

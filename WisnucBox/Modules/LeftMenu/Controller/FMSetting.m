@@ -165,12 +165,11 @@
 -(void)switchBtnHandleForSync:(UISwitch *)switchBtn{
     WB_UserService.currentUser.autoBackUp = switchBtn.isOn;
     [WB_UserService synchronizedCurrentUser];
-    if (switchBtn.isOn) {
-        _switchOn = YES;
-    }else{
-         _switchOn = NO;
-//         [[FMPhotoManager defaultManager] stop];
-    }
+    _switchOn = switchBtn.isOn;
+    if(_switchOn)
+       [WB_AppServices startUploadAssets:nil];
+    else
+        [WB_AppServices.photoUploadManager stop];
 }
 
 - (IBAction)cleanBtnClick:(id)sender {

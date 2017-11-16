@@ -20,6 +20,12 @@
     return model;
 }
 
+- (NSDate *)createDate{
+    if(!self.createDateB)
+        self.createDateB = self.asset.creationDate;
+    return self.createDateB;
+}
+
 @end
 
 @implementation JYAssetList

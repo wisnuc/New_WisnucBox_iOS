@@ -12,6 +12,7 @@
 #import "JYAsset.h"
 #import "JYConst.h"
 #import "PHAsset+JYEXT.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @implementation JYBigImgCell
 
@@ -164,7 +165,11 @@
             [self.imageGifView loadImage:model.image?:model.url];
         }
             break;
-            
+        case JYAssetTypeNetVideo : {
+            [self addSubview:self.videoView];
+            //TODO: load net video
+//            self.videoView loadNormalImage:<#(PHAsset *)#>
+        }
         default:
             break;
     }
@@ -443,26 +448,26 @@
 }
 
 /**
- @param obj UIImage/NSURL
+ @param obj UIImage/fmhash
  */
 - (void)loadImage:(id)obj
 {
     if ([obj isKindOfClass:UIImage.class]) {
         self.imageView.image = obj;
         [self resetSubviewSize:obj];
-    } else {
+    } else { // wbasset.fmhash
         [self.indicator startAnimating];
-//        weakify(self);
-//        [self.imageView sd_setImageWithURL:obj placeholderImage:nil options:SDWebImageProgressiveDownload completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-//            strongify(weakSelf);
-//            [strongSelf.indicator stopAnimating];
-//            if (error) {
-//                
-//            } else {
-//                strongSelf->_loadOK = YES;
-//                [strongSelf resetSubviewSize:image];
-//            }
-//        }];
+        jy_weakify(self);
+        [WB_NetService getHighWebImageWithHash:obj completeBlock:^(NSError *error, UIImage *img) {
+            [weakSelf.indicator stopAnimating];
+            jy_strongify(weakSelf);
+            if (error) {
+                // TODO: Load Error Image
+            } else {
+                strongSelf->_loadOK = YES;
+                [strongSelf resetSubviewSize:img];
+            }
+        }];
     }
 }
 

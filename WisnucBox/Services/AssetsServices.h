@@ -13,6 +13,11 @@
 #define ASSETS_AUTH_CHANGE_NOTIFY @"ASSETS_AUTH_CHANGE_NOTIFY"
 #define ASSETS_NET_CHANGE_NOTIFY @"ASSETS_NET_CHANGE_NOTIFY"
 
+
+//asset change notify keys
+#define ASSETS_REMOVEED_KEY @"removeObjects"
+#define ASSETS_INSERTSED_KEY @"insertedObjects"
+
 @class JYAsset;
 @interface AssetsServices : NSObject <ServiceProtocol>
 

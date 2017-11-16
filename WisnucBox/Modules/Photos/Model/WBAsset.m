@@ -17,4 +17,22 @@
              };
 }
 
+- (instancetype)init{
+    self = [super init];
+    self.type = JYAssetTypeNetImage;
+    return self;
+}
+
+- (NSDate *)createDate{
+    if(!self.createDateB) {
+        if(!IsNilString(self.date)){
+            NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];
+            [dateFormat setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
+            self.createDateB = [dateFormat dateFromString:self.date];
+        }else
+            self.createDateB = [NSDate dateWithTimeIntervalSince1970:0];
+    }
+    return self.createDateB;
+}
+
 @end

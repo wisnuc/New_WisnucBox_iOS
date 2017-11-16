@@ -55,6 +55,7 @@
 
 - (NSArray<WBFile *> *)findAll{
     // TODO: permission
-    return [WBFile MR_findAll];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"uuid = %@ ", WB_UserService.currentUser.uuid];
+    return [WBFile MR_findAllWithPredicate:predicate];
 }
 @end

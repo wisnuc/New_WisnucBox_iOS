@@ -49,7 +49,7 @@
 
 - (RDVTabBarController *)setUpTabbar {
     RDVTabBarController * tabbar = [RDVTabBarController new];
-    JYThumbVC * photosVC = [[JYThumbVC alloc] initWithDataSource:[AppServices sharedService].assetServices.allAssets];
+    JYThumbVC * photosVC = [[JYThumbVC alloc] initWithLocalDataSource:[AppServices sharedService].assetServices.allAssets];
     FilesViewController *filesViewController = [[FilesViewController alloc]init];
     NavViewController *nav1 = [[NavViewController alloc] initWithRootViewController:photosVC];
     NavViewController *nav2 = [[NavViewController alloc] initWithRootViewController:filesViewController];

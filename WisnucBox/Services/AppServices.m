@@ -108,13 +108,14 @@
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         [weak_self requestForBackupPhotos:^(BOOL shouldUpload) {
                             user.askForBackup = YES;
+                            user.autoBackUp = shouldUpload;
                             [WB_UserService synchronizedCurrentUser];
                             if(shouldUpload) {
                                 [weak_self startUploadAssets:nil];
                             }
                         }];
                     });
-                else
+                else if(user.autoBackUp)
                     [weak_self startUploadAssets:nil];
                 return callback(nil, user);
             }];
@@ -260,7 +261,6 @@
     _netServices = nil;
     _dbServices = nil;
     _photoUploadManager = nil;
-    
 }
 
 @end
@@ -417,6 +417,7 @@
 - (void)addTasks:(NSArray<JYAsset *> *)assets {
     dispatch_async(self.managerQueue, ^{
         [self.hashwaitingQueue addObjectsFromArray:assets];
+        [[NSNotificationCenter defaultCenter] postNotificationName:WBBackupCountChangeNotify object:nil];
         [self schedule];
     });
 }
@@ -450,6 +451,7 @@
             }
         }];
         if(upModel) [self.uploadErrorQueue removeObject:upModel];
+        [[NSNotificationCenter defaultCenter] postNotificationName:WBBackupCountChangeNotify object:nil];
         upModel = nil;
     });
 }
@@ -490,7 +492,7 @@
 
 - (void)setNetAssets:(NSArray<EntriesModel *> *)netAssets {
     dispatch_async(self.managerQueue, ^{
-        [self.uploadedNetQueue addObjectsFromArray:netAssets];
+        self.uploadedNetQueue = [NSMutableArray arrayWithArray: netAssets];
         NSMutableSet * hashSet = [NSMutableSet set];
         [netAssets enumerateObjectsUsingBlock:^(EntriesModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if(IsEquallString(obj.type, @"file") || !IsNilString(obj.photoHash)){
@@ -588,7 +590,7 @@
 - (void)stop {
     self.shouldUpload = NO;
     //TODO: hash queue should stop?
-    [self.uploadedQueue enumerateObjectsUsingBlock:^(WBUploadModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.uploadingQueue enumerateObjectsUsingBlock:^(WBUploadModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [obj cancel];
     }];
 }
@@ -625,6 +627,8 @@
 - (void)startWithCompleteBlock:(void(^)(NSError * , id))callback {
     self.callback = callback;
     _requestFileID =  [self.asset.asset getFile:^(NSError *error, NSString *filePath) {
+        if(error)
+            return callback(error, nil);
         NSLog(@"==========================开始上传==============================");
         NSString * hashString = self.asset.digest;
         NSInteger sizeNumber = (NSInteger)[WB_FileService fileSizeAtPath:filePath];
