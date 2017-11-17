@@ -29,6 +29,8 @@
             NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];
             [dateFormat setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
             self.createDateB = [dateFormat dateFromString:self.date];
+            if(!self.createDateB) // fix 0000:00:00 00:00:00
+                self.createDateB = [NSDate dateWithTimeIntervalSince1970:0];
         }else
             self.createDateB = [NSDate dateWithTimeIntervalSince1970:0];
     }
