@@ -35,11 +35,16 @@
 - (instancetype)init {
     self = [super init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserAuthChange) name:ASSETS_AUTH_CHANGE_NOTIFY object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMemoryWarning) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
     [self assetServices];
     if(self.userServices.currentUser)
         [self netServices];
     [self bootStrap];
     return self;
+}
+
+- (void)receiveMemoryWarning {
+    [[SDWebImageManager sharedManager].imageCache clearMemory];
 }
 
 - (void)delloc {
@@ -121,6 +126,7 @@
                     });
                 else if(user.autoBackUp)
                     [weak_self startUploadAssets:nil];
+                
                 return callback(nil, user);
             }];
         }];
@@ -313,7 +319,7 @@
 @implementation WBUploadManager
 
 - (void)dealloc{
-    NSLog(@"WBUploadManager delloc");
+    NSLog(@"WBUploadManager dealloc");
 }
 
 - (instancetype)init {
@@ -645,6 +651,15 @@
         NSString * exestr = [filePath lastPathComponent];
         NSString * fileName = [PHAssetResource assetResourcesForAsset:self.asset.asset].firstObject.originalFilename;
         if(IsNilString(fileName)) fileName = exestr;
+        NSMutableString * tempFileName = [NSMutableString stringWithString:fileName];
+        NSArray * invaildChars = @[@"/", @"?", @"<", @">", @"\\", @":", @"*", @"|", @"\""];
+        for (int i = 0; i < tempFileName.length; i++) {
+            NSLog(@"%@",[fileName substringWithRange:NSMakeRange(i, 1)]);
+            if([invaildChars containsObject: [fileName substringWithRange:NSMakeRange(i, 1)]]){
+                [tempFileName replaceCharactersInRange:NSMakeRange(i, 1) withString:@"_"];
+            }
+        }
+        fileName = tempFileName;
         NSLog (@"上传照片POST请求:\n上传照片照片名======>%@\n Hash======>%@\n",exestr,hashString);
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         manager.requestSerializer = [AFHTTPRequestSerializer serializer];
@@ -668,6 +683,7 @@
         }
         failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"Upload Failure ---> : %@", error);
+            NSLog(@"Upload Failure ---> : %@", fileName);
             NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
             if(errorData.length >0){
                 NSMutableArray *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];

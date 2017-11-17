@@ -179,7 +179,7 @@
 //    }
     
     CGSize size;
-    size.width = GetViewWidth(self) * 1.7;
+    size.width = GetViewWidth(self) * 1.7 ;
     size.height = GetViewHeight(self) * 1.7;
     
     jy_weakify(self);
@@ -211,7 +211,6 @@
                 NSLog(@"get thumbnail error ---> : %@", error);
             weakSelf.thumbnailRequestOperation = nil;
         }];
-        NSLog(@"----.......---- %@ ---...%p", [thumbnailRequestOperation class], thumbnailRequestOperation);
         self.thumbnailRequestOperation = thumbnailRequestOperation;
     }
 }

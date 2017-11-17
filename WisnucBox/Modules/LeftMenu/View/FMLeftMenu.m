@@ -223,7 +223,7 @@
 }
 
 - (void)updateProgressWithAllCount:(NSInteger)allcount currentCount:(NSInteger)currentCount {
-    dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//    dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         float progress =  currentCount/allcount;
         NSDecimalNumber *progressDecimalNumber = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%@",[self notRounding:progress afterPoint:2]]];
         NSDecimalNumber *decimalNumber = [NSDecimalNumber decimalNumberWithString:@"100"];
@@ -242,7 +242,7 @@
             NSLog(@"已上传：%@/本地照片总数:%ld",self.progressLabel.text, allcount);
         });
         
-    });
+//    });
 
 }
 
