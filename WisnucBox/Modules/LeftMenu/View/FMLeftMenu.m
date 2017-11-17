@@ -222,9 +222,9 @@
     return [NSString stringWithFormat:@"%@",roundedOunces];
 }
 
-- (void)updateProgressWithAllCount:(NSInteger)allcount currentCount:(NSInteger)currentCount {
-//    dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        float progress =  currentCount/allcount;
+- (void)updateProgressWithAllCount:(NSInteger)allcount currentCount:(NSInteger)currentCount  complete:(void(^)())callback{
+    
+    float progress =  currentCount/allcount;
         NSDecimalNumber *progressDecimalNumber = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%@",[self notRounding:progress afterPoint:2]]];
         NSDecimalNumber *decimalNumber = [NSDecimalNumber decimalNumberWithString:@"100"];
         
@@ -240,10 +240,8 @@
             self.backUpProgressView.progress = progress;
             self.progressLabel.text = [NSString stringWithFormat:@"%ld/%ld", currentCount, allcount];
             NSLog(@"已上传：%@/本地照片总数:%ld",self.progressLabel.text, allcount);
+            callback();
         });
-        
-//    });
-
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
