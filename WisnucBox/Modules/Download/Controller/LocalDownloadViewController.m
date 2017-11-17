@@ -107,7 +107,7 @@ UIDocumentInteractionControllerDelegate
     for (WBFile * downloadFileModel in array) {
         if ([self.chooseArr containsObject:downloadFileModel.fileUUID]) {
             [self.downloadedArray removeObject:downloadFileModel];
-            [_filesServices deleteFileWithFileUUID:downloadFileModel.fileUUID andUser:WB_UserService.currentUser.uuid];
+            [_filesServices deleteFileWithFileUUID:downloadFileModel.fileUUID];
         }
     }
     [self changeStatus];

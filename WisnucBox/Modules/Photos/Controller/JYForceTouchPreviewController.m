@@ -105,17 +105,24 @@
 }
 
 - (CGSize)getSize
-{
-    CGFloat w = MIN(self.model.asset.pixelWidth, kViewWidth);
-    CGFloat h = w * self.model.asset.pixelHeight / self.model.asset.pixelWidth;
+{   CGFloat w, h;
+    
+    if(self.model.asset){
+        w = MIN(self.model.asset.pixelWidth, kViewWidth);
+        h = w * self.model.asset.pixelHeight / self.model.asset.pixelWidth;
+    }else{
+        w = MIN([(WBAsset *)self.model w], kViewWidth);
+        h = w * [(WBAsset *)self.model h] / [(WBAsset *)self.model w];
+    }
+    
     if (isnan(h)) return CGSizeZero;
     
-    if (h > kViewHeight) {
+    if (h > kViewHeight || isnan(h)) {
         h = kViewHeight;
-        w = h * self.model.asset.pixelWidth / self.model.asset.pixelHeight;
+        w = self.model.asset ? h * self.model.asset.pixelWidth / self.model.asset.pixelHeight
+        : h * [(WBAsset *)self.model w]  /  [(WBAsset *)self.model h];
     }
     
     return CGSizeMake(w, h);
 }
-
 @end

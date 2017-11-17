@@ -440,11 +440,12 @@
     self.asset = asset;
     
     [self.indicator startAnimating];
-    CGFloat scale = 2;
+    CGFloat scale = [UIScreen mainScreen].scale;
     CGFloat width = MIN(kViewWidth, kMaxImageWidth);
     CGSize size = CGSizeMake(width*scale, width*scale*asset.pixelHeight/asset.pixelWidth);
     jy_weakify(self);
     self.imageRequestID = [PHPhotoLibrary requestImageForAsset:asset size:size completion:^(UIImage *image, NSDictionary *info) {
+//        NSLog(@"%@", info);
         jy_strongify(weakSelf);
         strongSelf.imageView.image = image;
         [strongSelf resetSubviewSize:asset];
@@ -684,7 +685,7 @@
     }
     
     [self.indicator startAnimating];
-    CGFloat scale = 2;
+    CGFloat scale = [UIScreen mainScreen].scale;
     CGFloat width = MIN(kViewWidth, kMaxImageWidth);
     CGSize size = CGSizeMake(width*scale, width*scale*asset.pixelHeight/asset.pixelWidth);
     jy_weakify(self);
@@ -702,6 +703,7 @@
     jy_weakify(self);
     [PHPhotoLibrary requestLivePhotoForAsset:asset completion:^(PHLivePhoto *lv, NSDictionary *info) {
         jy_strongify(weakSelf);
+//        NSLog(@"%@", info);
         if (lv) {
             strongSelf.lpView.livePhoto = lv;
             [strongSelf.lpView startPlaybackWithStyle:PHLivePhotoViewPlaybackStyleFull];
@@ -836,7 +838,7 @@
     self.imageView.hidden = NO;
     
     [self.indicator startAnimating];
-    CGFloat scale = 2;
+    CGFloat scale = [UIScreen mainScreen].scale;
     CGFloat width = MIN(kViewWidth, kMaxImageWidth);
     CGSize size = CGSizeMake(width*scale, width*scale*asset.pixelHeight/asset.pixelWidth);
     jy_weakify(self);

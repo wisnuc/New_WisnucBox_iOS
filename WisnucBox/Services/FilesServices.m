@@ -19,27 +19,16 @@
     NSLog(@"FilesServices dealloc");
 }
 
-- (void)saveFile:(WBFile *)file{
-//    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"uuid = %@ && fileUUID = %@", file.uuid, file.fileUUID];
-//    WBFile * oldFile = [WBFile MR_findFirstWithPredicate:<#(nullable NSPredicate *)#>]
-    WBFile * newFile = [WBFile MR_createEntityInContext:[NSManagedObjectContext MR_defaultContext]];
-    newFile.uuid = file.uuid;
-//    newFile.fileUUID = file.fileUUID;
-    newFile.fileName = file.fileName;
-    newFile.filePath = file.filePath;
-    newFile.timeDate = file.timeDate;
+- (void)deleteFileWithFileUUID:(NSString *)fileuuid{
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"uuid = %@ && fileUUID = %@", WB_UserService.currentUser.uuid, fileuuid];
+    [WBFile MR_deleteAllMatchingPredicate:predicate inContext:[NSManagedObjectContext MR_defaultContext]];
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
-- (BOOL)deleteFileWithFileUUID:(NSString *)fileuuid andUser:(NSString *)userId{
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"uuid = %@ && fileUUID = %@", userId, fileuuid];
-    
-    return [WBFile MR_deleteAllMatchingPredicate:predicate inContext:[NSManagedObjectContext MR_defaultContext]];
-}
-
-- (BOOL)deleteFilesWithFileUUIDs:(NSArray<NSString *> *)fileuuids andUser:(NSString *)userId {
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"fileUUID IN %@ AND uuid = %@", fileuuids, userId];
-    return [WBFile MR_deleteAllMatchingPredicate:predicate inContext:[NSManagedObjectContext MR_defaultContext]];
+- (void)deleteFilesWithFileUUIDs:(NSArray<NSString *> *)fileuuids{
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"fileUUID IN %@ AND uuid = %@", fileuuids, WB_UserService.currentUser.uuid];
+    [WBFile MR_deleteAllMatchingPredicate:predicate inContext:[NSManagedObjectContext MR_defaultContext]];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
 - (long long)fileSizeAtPath:(NSString*) filePath{
@@ -54,7 +43,6 @@
 }
 
 - (NSArray<WBFile *> *)findAll{
-    // TODO: permission
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"uuid = %@ ", WB_UserService.currentUser.uuid];
     return [WBFile MR_findAllWithPredicate:predicate];
 }

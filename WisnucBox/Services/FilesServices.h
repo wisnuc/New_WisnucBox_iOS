@@ -11,11 +11,9 @@
 @class WBFile;
 @interface FilesServices : NSObject <ServiceProtocol>
 
-- (void)saveFile:(WBFile *)file;
+- (void)deleteFileWithFileUUID:(NSString *)fileuuid;
 
-- (BOOL)deleteFileWithFileUUID:(NSString *)fileuuid andUser:(NSString *)userId;
-
-- (BOOL)deleteFilesWithFileUUIDs:(NSArray<NSString *> *)fileuuids andUser:(NSString *)userId;
+- (void)deleteFilesWithFileUUIDs:(NSArray<NSString *> *)fileuuids;
 
 - (NSArray<WBFile *> *)findAll;
 
