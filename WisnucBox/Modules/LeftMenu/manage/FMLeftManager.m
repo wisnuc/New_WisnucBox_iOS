@@ -16,6 +16,9 @@
 
 @interface FMLeftManager ()<FMLeftMenuDelegate>
 
+@property (nonatomic) BOOL isUpdateingProgress;
+@property (nonatomic) BOOL needRefrushProgress;
+
 @end
 
 @implementation FMLeftManager
@@ -54,8 +57,22 @@
 }
 
 - (void)changeBackupProgress {
-    NSUInteger allCount = WB_PhotoUploadManager.hashwaitingQueue.count + WB_PhotoUploadManager.hashWorkingQueue.count + WB_PhotoUploadManager.hashFailQueue.count + WB_PhotoUploadManager.uploadPaddingQueue.count + WB_PhotoUploadManager.uploadingQueue.count + WB_PhotoUploadManager.uploadedQueue.count + WB_PhotoUploadManager.uploadErrorQueue.count;
-    [_leftMenu updateProgressWithAllCount:allCount currentCount:WB_PhotoUploadManager.uploadedQueue.count];
+    if(_isUpdateingProgress) {
+        _needRefrushProgress = YES;
+        return;
+    }
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSUInteger allCount = WB_PhotoUploadManager.hashwaitingQueue.count + WB_PhotoUploadManager.hashWorkingQueue.count + WB_PhotoUploadManager.hashFailQueue.count + WB_PhotoUploadManager.uploadPaddingQueue.count + WB_PhotoUploadManager.uploadingQueue.count + WB_PhotoUploadManager.uploadedQueue.count + WB_PhotoUploadManager.uploadErrorQueue.count;
+        self.isUpdateingProgress = YES;
+        self.needRefrushProgress = NO;
+        @weaky(self);
+        [_leftMenu updateProgressWithAllCount:allCount currentCount:WB_PhotoUploadManager.uploadedQueue.count complete:^{
+            weak_self.isUpdateingProgress = NO;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                if(weak_self.needRefrushProgress) [weak_self changeBackupProgress];
+            });
+        }];
+    });
 }
 
 - (void)delloc {

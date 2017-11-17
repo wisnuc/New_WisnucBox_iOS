@@ -42,8 +42,8 @@
 
 @property (nonatomic) void(^footViewClickBlock)();
 
-- (void)updateProgressWithAllCount:(NSInteger)allcount currentCount:(NSInteger)currentCount;
+- (void)updateProgressWithAllCount:(NSInteger)allcount currentCount:(NSInteger)currentCount complete:(void(^)())callback;
 
--(void)checkToStart;
+- (void)checkToStart;
 
 @end
