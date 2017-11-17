@@ -236,7 +236,7 @@ FilesHelperOpenFilesDelegate
                 [SXLoadingView showAlertHUD:@"请先选择文件" duration:1];
             }else{
                 [self actionForNormalStatus];
-                [[FLFIlesHelper helper] downloadChooseFilesParentUUID:WB_UserService.currentUser.userHome];
+                [[FLFIlesHelper helper] downloadChooseFilesParentUUID:WB_UserService.currentUser.uuid];
                 LocalDownloadViewController  *downloadVC = [[LocalDownloadViewController alloc]init];
                 [self.navigationController pushViewController:downloadVC animated:YES];
             }
@@ -261,7 +261,7 @@ FilesHelperOpenFilesDelegate
         cell= (FLFilesCell *)[[[NSBundle  mainBundle] loadNibNamed:NSStringFromClass([FLFilesCell class]) owner:self options:nil]  lastObject];
     }
     EntriesModel *dataModel = _dataSouceArray[indexPath.row];
-    [[FLFIlesHelper helper] configCells:cell withModel:dataModel cellStatus:self.cellStatus viewController:self parentUUID:WB_UserService.currentUser.userHome];
+    [[FLFIlesHelper helper] configCells:cell withModel:dataModel cellStatus:self.cellStatus viewController:self parentUUID:WB_UserService.currentUser.uuid];
     return cell;
 }
 
@@ -284,6 +284,8 @@ FilesHelperOpenFilesDelegate
             vc.name = model.name;
             if (self.cellStatus == FLFliesCellStatusNormal) {
                 [[FilesDataSourceManager manager].dataArray removeAllObjects];
+//                [self.rdv_tabBarController setTabBarHidden:YES animated:YES];
+//                    [self.cyl_tabBarController.tabBar setHidden:YES];
                 [self.navigationController pushViewController:vc animated:YES];
             }
         }else{
@@ -311,7 +313,7 @@ FilesHelperOpenFilesDelegate
                         [[CSDownloadHelper shareManager] cancleDownload];
                     };
                     [_progressView show];
-                    [[CSDownloadHelper shareManager] downloadOneFileWithFileModel:model UUID:WB_UserService.currentUser.userHome IsDownloading:^(BOOL isDownloading) {
+                    [[CSDownloadHelper shareManager] downloadOneFileWithFileModel:model UUID:WB_UserService.currentUser.uuid IsDownloading:^(BOOL isDownloading) {
                         if (isDownloading){
                             [_progressView dismiss];
                             LocalDownloadViewController *localDownloadViewController = [[LocalDownloadViewController alloc] init];

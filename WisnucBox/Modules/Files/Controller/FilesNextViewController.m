@@ -170,7 +170,7 @@ FilesHelperOpenFilesDelegate
         _chooseHeadView.transform = CGAffineTransformTranslate(_chooseHeadView.transform, 0, 64);
     }];
     _addButton.hidden = NO;
-    [self.rdv_tabBarController setTabBarHidden:YES animated:YES];
+    self.tabBarController.tabBar.hidden = YES;
     self.cellStatus = FLFliesCellStatusCanChoose;
     _countLb.text = [NSString stringWithFormat:@"已选%ld个文件",(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
     [self.tableView reloadData];
@@ -187,7 +187,7 @@ FilesHelperOpenFilesDelegate
         _chooseHeadView.transform = CGAffineTransformTranslate(_chooseHeadView.transform, 0, -64);
     }];
     _addButton.hidden = YES;
-    [self.rdv_tabBarController setTabBarHidden:NO animated:YES];
+//    [self.rdv_tabBarController setTabBarHidden:NO animated:YES];
     self.cellStatus = FLFliesCellStatusNormal;
     _countLb.text = [NSString stringWithFormat:@"已选1个文件"];
     [self.tableView reloadData];
@@ -232,7 +232,7 @@ FilesHelperOpenFilesDelegate
                 [SXLoadingView showAlertHUD:@"请先选择文件" duration:1];
             }else{
                 [self actionForNormalStatus];
-                [[FLFIlesHelper helper] downloadChooseFilesParentUUID:_parentUUID];
+                [[FLFIlesHelper helper] downloadChooseFilesParentUUID:WB_UserService.currentUser.uuid];
                 LocalDownloadViewController  *downloadVC = [[LocalDownloadViewController alloc]init];
                 [self.navigationController pushViewController:downloadVC animated:YES];
             }
@@ -257,7 +257,7 @@ FilesHelperOpenFilesDelegate
         cell= (FLFilesCell *)[[[NSBundle  mainBundle] loadNibNamed:NSStringFromClass([FLFilesCell class]) owner:self options:nil]  lastObject];
     }
     EntriesModel *dataModel = _dataSouceArray[indexPath.row];
-    [[FLFIlesHelper helper] configCells:cell withModel:dataModel cellStatus:self.cellStatus viewController:self parentUUID:_parentUUID];
+    [[FLFIlesHelper helper] configCells:cell withModel:dataModel cellStatus:self.cellStatus viewController:self parentUUID:WB_UserService.currentUser.uuid];
     return cell;
 }
 
@@ -308,7 +308,7 @@ FilesHelperOpenFilesDelegate
                         [[CSDownloadHelper shareManager] cancleDownload];
                     };
                     [_progressView show];
-                    [[CSDownloadHelper shareManager] downloadOneFileWithFileModel:model UUID:_parentUUID IsDownloading:^(BOOL isDownloading) {
+                    [[CSDownloadHelper shareManager] downloadOneFileWithFileModel:model UUID:WB_UserService.currentUser.uuid IsDownloading:^(BOOL isDownloading) {
                         if (isDownloading){
                             [_progressView dismiss];
                             LocalDownloadViewController *localDownloadViewController = [[LocalDownloadViewController alloc] init];

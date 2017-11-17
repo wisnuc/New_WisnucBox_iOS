@@ -29,6 +29,7 @@
 #import <RTRootNavigationController/RTRootNavigationController.h>
 #import <SDWebImage/SDWebImageManager.h>
 #import <MJRefresh/MJRefresh.h>
+#import <CYLTabBarController/CYLTabBarController.h>
 
 //Base
 #import "RDVTabBarController.h"

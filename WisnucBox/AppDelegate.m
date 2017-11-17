@@ -35,7 +35,7 @@
         // userHome / backupdir / backupbasedir / token / address
         // To TabBar
         [self setUpLeftManager];
-        RDVTabBarController * tabbar = [self setUpTabbar];
+        CYLTabBarController * tabbar = [self setUpTabbar];
         self.window.rootViewController = tabbar;
     }else{
         // TO Login VC
@@ -47,8 +47,8 @@
     [self.window makeKeyAndVisible];
 }
 
-- (RDVTabBarController *)setUpTabbar {
-    RDVTabBarController * tabbar = [RDVTabBarController new];
+- (CYLTabBarController *)setUpTabbar {
+    CYLTabBarController * tabbar = [CYLTabBarController new];
     JYThumbVC * photosVC = [[JYThumbVC alloc] initWithLocalDataSource:[AppServices sharedService].assetServices.allAssets];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [WB_AssetService getNetAssets:^(NSError *error, NSArray<WBAsset *> *netAssets) {
@@ -62,23 +62,73 @@
     NavViewController *nav2 = [[NavViewController alloc] initWithRootViewController:filesViewController];
     photosVC.title = @"照片";
     filesViewController.title = @"文件";
+    NSDictionary *dict1 = @{
+                            CYLTabBarItemImage : @"photo",
+                            CYLTabBarItemSelectedImage : @"photo_select",
+                            };
+    NSDictionary *dict2 = @{
+                            CYLTabBarItemImage : @"storage",
+                            CYLTabBarItemSelectedImage : @"storage_select",
+                            };
     
+    NSArray *tabBarItemsAttributes = @[ dict1, dict2 ];
+    tabbar.tabBarItemsAttributes = tabBarItemsAttributes;
+    [tabbar.tabBar setBackgroundImage:[UIImage new]];
+    [tabbar.tabBar setShadowImage:[self lineImageWithColor:[UIColor whiteColor]]];
+   
+    tabbar.tabBar.backgroundColor  = [UIColor colorWithRed:245/255.0f green:245/255.0f blue:245/255.0f alpha:1];
     NSMutableArray *viewControllersMutArr = [[NSMutableArray alloc] initWithObjects:nav1,nav2,nil];
     [tabbar setViewControllers:viewControllersMutArr];
     
-    NSArray *tabBarItemImages = @[ @"photo", @"storage"];
-    NSInteger index = 0;
-    for (RDVTabBarItem *item in [[tabbar tabBar] items]) {
-        UIImage *selectedimage = [UIImage imageNamed:[NSString stringWithFormat:@"%@_select",
-                                                      [tabBarItemImages objectAtIndex:index]]];
-        UIImage *unselectedimage = [UIImage imageNamed:[NSString stringWithFormat:@"%@",
-                                                        [tabBarItemImages objectAtIndex:index]]];
-        [item setFinishedSelectedImage:selectedimage withFinishedUnselectedImage:unselectedimage];
-        index++;
-    }
+//    NSArray *tabBarItemImages = @[ @"photo", @"storage"];
+//    NSInteger index = 0;
+    
+    
+   
+//    for (RDVTabBarItem *item in [[tabbar tabBar] items]) {
+//        UIImage *selectedimage = [UIImage imageNamed:[NSString stringWithFormat:@"%@_select",
+//                                                      [tabBarItemImages objectAtIndex:index]]];
+//        UIImage *unselectedimage = [UIImage imageNamed:[NSString stringWithFormat:@"%@",
+//                                                        [tabBarItemImages objectAtIndex:index]]];
+//        [item setFinishedSelectedImage:selectedimage withFinishedUnselectedImage:unselectedimage];
+//        index++;
+//    }
     tabbar.selectedIndex = 0;
     
     return tabbar;
+}
+
+- (UIImage *)lineImageWithColor:(UIColor *)lineColor {
+    CGRect rect = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 0.5);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(ctx, lineColor.CGColor);
+    CGContextFillRect(ctx, rect);
+    UIImage *lineImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return lineImage;
+    
+}
+
+- (void)dropShadowWithTabbarController:(CYLTabBarController *)tabbar Offset:(CGSize)offset
+                                radius:(CGFloat)radius
+                                 color:(UIColor *)color
+                               opacity:(CGFloat)opacity {
+    
+    // Creating shadow path for better performance
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGPathAddRect(path, NULL, tabbar.tabBar.bounds);
+    tabbar.tabBar.layer.shadowPath = path;
+    CGPathCloseSubpath(path);
+    CGPathRelease(path);
+    
+    tabbar.tabBar.layer.shadowColor = color.CGColor;
+    tabbar.tabBar.layer.shadowOffset = offset;
+    tabbar.tabBar.layer.shadowRadius = radius;
+    tabbar.tabBar.layer.shadowOpacity = opacity;
+    
+    // Default clipsToBounds is YES, will clip off the shadow, so we disable it.
+    tabbar.tabBar.clipsToBounds = NO;
 }
 
 - (void)setUpLeftManager {

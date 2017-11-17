@@ -60,6 +60,11 @@ UIDocumentInteractionControllerDelegate
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.rdv_tabBarController setTabBarHidden:YES animated:YES];
+}
+
 - (void)loadData{
     self.downloadingArray = [NSMutableArray arrayWithArray:_manager.downloadingTasks];
     self.downloadedArray = [NSMutableArray arrayWithArray: [_filesServices findAll]];

@@ -36,12 +36,18 @@
     UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     negativeSpacer.width = -16 - 2*([UIScreen mainScreen].scale - 1);//这个数值可以根据情况自由变化
     self.navigationItem.leftBarButtonItems = @[negativeSpacer, leftBarButon];
-    [self.rdv_tabBarController setTabBarHidden:NO animated:YES];
+    [self.cyl_tabBarController.tabBar setHidden:NO];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.cyl_tabBarController.tabBar setHidden:YES];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [UIApplication sharedApplication].statusBarHidden = NO;
+    [self.cyl_tabBarController.tabBar setHidden:NO];
+//    [UIApplication sharedApplication].statusBarHidden = NO;
 }
 
 -(void)showLeftMenu{

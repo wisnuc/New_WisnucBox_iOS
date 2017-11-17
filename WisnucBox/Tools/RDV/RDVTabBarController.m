@@ -63,7 +63,13 @@
 }
 -(void)viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
+    
     [self setTabBarHidden:self.isTabBarHidden animated:NO];
+
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
 
 }
 
@@ -336,5 +342,6 @@
     [tabBarItems replaceObjectAtIndex:index withObject:tabBarItem];
     [tabBar setItems:tabBarItems];
 }
+
 
 @end

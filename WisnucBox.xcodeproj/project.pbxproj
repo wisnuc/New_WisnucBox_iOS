@@ -99,8 +99,8 @@
 		71A3D6791FB5AD230002B8B1 /* FMGetUsersAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A3D6761FB5AD230002B8B1 /* FMGetUsersAPI.m */; };
 		71A3D67A1FB5AD230002B8B1 /* FMAccountUsersAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A3D6781FB5AD230002B8B1 /* FMAccountUsersAPI.m */; };
 		71A3D67E1FB5ADAA0002B8B1 /* FMGetJWTAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A3D67D1FB5ADAA0002B8B1 /* FMGetJWTAPI.m */; };
-		C127BD611FBC7C5700596112 /* NSString+WBUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = C127BD601FBC7C5700596112 /* NSString+WBUUID.m */; };
 		7EC1F8F7B7661283352336B2 /* UIViewController+controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC1FAE1226D685452156DF9 /* UIViewController+controller.m */; };
+		C127BD611FBC7C5700596112 /* NSString+WBUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = C127BD601FBC7C5700596112 /* NSString+WBUUID.m */; };
 		C138D0571FB94396000CF518 /* FLDrivesAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D0561FB94396000CF518 /* FLDrivesAPI.m */; };
 		C138D05A1FB94D8D000CF518 /* FLGetDriveDirAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D0591FB94D8D000CF518 /* FLGetDriveDirAPI.m */; };
 		C138D05D1FB96100000CF518 /* FLCreateDirAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D05C1FB96100000CF518 /* FLCreateDirAPI.m */; };
@@ -3069,6 +3069,7 @@
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/BEMCheckBox/BEMCheckBox.framework",
 				"${BUILT_PRODUCTS_DIR}/CHTCollectionViewWaterfallLayout/CHTCollectionViewWaterfallLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/CYLTabBarController/CYLTabBarController.framework",
 				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
 				"${BUILT_PRODUCTS_DIR}/DACircularProgress/DACircularProgress.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
@@ -3096,6 +3097,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BEMCheckBox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CHTCollectionViewWaterfallLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CYLTabBarController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DACircularProgress.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",

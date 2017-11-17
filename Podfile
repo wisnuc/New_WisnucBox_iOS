@@ -26,7 +26,7 @@ pod 'MJRefresh'
 pod 'WechatOpenSDK'
 pod 'MagicalRecord'
 pod 'RTRootNavigationController'
-#pod 'CYLTabBarController'
+pod 'CYLTabBarController'
 end
 
 #post_install do |installer|
