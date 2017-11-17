@@ -28,7 +28,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.rdv_tabBarController setTabBarHidden:YES animated:YES];
+    [self.cyl_tabBarController.tabBar setHidden:YES];
     [self getDataSource];
     [self.usersLoginTable reloadData];
 }

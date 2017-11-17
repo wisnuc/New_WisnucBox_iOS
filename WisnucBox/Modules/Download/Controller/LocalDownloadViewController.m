@@ -62,7 +62,7 @@ UIDocumentInteractionControllerDelegate
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.rdv_tabBarController setTabBarHidden:YES animated:YES];
+//    [self.cyl_tabBarController.tabBar setHidden:YES];
 }
 
 - (void)loadData{

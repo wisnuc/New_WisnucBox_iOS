@@ -43,7 +43,7 @@
 //    self.navDelegate = self.navigationController.interactivePopGestureRecognizer.delegate;
 //    self.navigationController.interactivePopGestureRecognizer.delegate = (id)self;
     [self.navigationController setNavigationBarHidden:YES];
-    [self.rdv_tabBarController setTabBarHidden:YES animated:YES];
+//     [self.cyl_tabBarController.tabBar setHidden:YES];
 
 //    [self addLeftBarButtonWithImage:[UIImage imageNamed:@"back"] andSEL:@selector(backbtnClick:)];
 }

@@ -175,7 +175,7 @@ FilesHelperOpenFilesDelegate
         _chooseHeadView.transform = CGAffineTransformTranslate(_chooseHeadView.transform, 0, 64);
     }];
     _addButton.hidden = NO;
-    [self.rdv_tabBarController setTabBarHidden:YES animated:YES];
+    [self.cyl_tabBarController.tabBar setHidden:YES];
     self.cellStatus = FLFliesCellStatusCanChoose;
     _countLb.text = [NSString stringWithFormat:@"已选%ld个文件",(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
     [self.tableView reloadData];
@@ -191,7 +191,7 @@ FilesHelperOpenFilesDelegate
         _chooseHeadView.transform = CGAffineTransformTranslate(_chooseHeadView.transform, 0, -64);
     }];
     _addButton.hidden = YES;
-    [self.rdv_tabBarController setTabBarHidden:NO animated:YES];
+    [self.cyl_tabBarController.tabBar setHidden:NO];
     self.cellStatus = FLFliesCellStatusNormal;
     _countLb.text = [NSString stringWithFormat:@"已选1个文件"];
     [self.tableView reloadData];

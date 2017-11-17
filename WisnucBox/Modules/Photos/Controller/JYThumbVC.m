@@ -353,17 +353,17 @@
 
 //tabbar 动画
 -(void)tabBarAnimationWithHidden:(BOOL)hidden{
-    RDVTabBarController * tabBar = self.rdv_tabBarController;
+    CYLTabBarController * tabBar = self.cyl_tabBarController;
     if (hidden) {
         CGPoint point = self.collectionView.contentOffset;
         [self.collectionView setContentOffset:point animated:NO];
         //重置把手位置
-        [tabBar setTabBarHidden:YES animated:YES];
+        [tabBar.tabBar setHidden:YES];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self updateIndicatorFrame];
         });
     }else{
-        [tabBar setTabBarHidden:NO animated:YES];
+        [tabBar.tabBar setHidden:NO];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             CGPoint point = self.collectionView.contentOffset;
             [self.collectionView setContentOffset:point animated:NO];

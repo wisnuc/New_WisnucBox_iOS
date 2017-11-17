@@ -185,7 +185,7 @@
 -(void)LeftMenuViewClickSettingTable:(NSInteger)tag andTitle:(NSString *)title{
     [self _hiddenMenu];
     UIViewController * vc = nil;
-    RDVTabBarController * tVC = (RDVTabBarController *)MyAppDelegate.window.rootViewController;
+    CYLTabBarController * tVC = (CYLTabBarController *)MyAppDelegate.window.rootViewController;
     NavViewController * selectVC = (NavViewController *)tVC.selectedViewController;
     if(IsEquallString(title, @"个人信息")){
 //        vc = self.Info;
