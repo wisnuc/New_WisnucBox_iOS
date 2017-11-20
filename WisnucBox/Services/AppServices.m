@@ -36,6 +36,7 @@
     self = [super init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserAuthChange) name:ASSETS_AUTH_CHANGE_NOTIFY object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMemoryWarning) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNetReachabilityNotify) name:NETWORK_REACHABILITY_CHANGE_NOTIFY object:nil];
     [self assetServices];
     if(self.userServices.currentUser)
         [self netServices];
@@ -48,7 +49,7 @@
 }
 
 - (void)delloc {
-    NSLog(@"AppServices delloc");
+    NSLog(@"AppServices dealloc");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -57,6 +58,18 @@
     if(WB_AssetService.userAuth){
         NSArray * allLocalAsset = [self.assetServices allAssets];
         [self.photoUploadManager startWithLocalAssets:allLocalAsset andNetAssets:@[]];
+    }
+}
+
+- (void)handleNetReachabilityNotify {
+    if(!WB_UserService.currentUser.autoBackUp) return;
+    AFNetworkReachabilityStatus status = self.netServices.status;
+    if(status == AFNetworkReachabilityStatusReachableViaWWAN){
+        if(!WB_UserService.currentUser.backUpInWWAN)
+            [self.photoUploadManager stop];
+    }
+    else if(self.photoUploadManager.shouldUpload == NO) {
+        [self startUploadAssets:nil];
     }
 }
 
@@ -642,6 +655,7 @@
 
 - (void)startWithCompleteBlock:(void(^)(NSError * , id))callback {
     self.callback = callback;
+    @weaky(self);
     _requestFileID =  [self.asset.asset getFile:^(NSError *error, NSString *filePath) {
         if(error)
             return callback(error, nil);
@@ -684,6 +698,7 @@
         failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"Upload Failure ---> : %@", error);
             NSLog(@"Upload Failure ---> : %@", fileName);
+            weak_self.error = error;
             NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
             if(errorData.length >0){
                 NSMutableArray *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
