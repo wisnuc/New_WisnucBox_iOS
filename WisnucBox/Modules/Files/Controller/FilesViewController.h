@@ -8,6 +8,6 @@
 
 #import "FABaseVC.h"
 
-@interface FilesViewController : FMBaseFirstVC
+@interface FilesViewController : FABaseVC
 
 @end

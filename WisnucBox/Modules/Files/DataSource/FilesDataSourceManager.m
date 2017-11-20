@@ -9,6 +9,7 @@
 #import "FilesDataSourceManager.h"
 #import "FLGetDriveDirAPI.h"
 #import "FilesModel.h"
+#import "FLDrivesAPI.h"
 
 @implementation FilesDataSourceManager
 
@@ -35,9 +36,13 @@ static dispatch_once_t onceToken;
     return self;
 }
 
--(void)getFilesWithUUID:(NSString *)uuid{
+
+
+- (void)getFilesWithUUID:(NSString *)uuid{
+    
     FLGetDriveDirAPI *api = [FLGetDriveDirAPI apiWithDrive:WB_UserService.currentUser.userHome dir:uuid];
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.responseJsonObject);
         FilesModel *model = [FilesModel yy_modelWithJSON:request.responseJsonObject ];
         [self.dataArray addObjectsFromArray:model.entries];
         if (self.delegate && [self.delegate respondsToSelector:@selector(datasource:finishLoading:)]) {

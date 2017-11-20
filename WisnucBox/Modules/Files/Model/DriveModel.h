@@ -12,4 +12,6 @@
 @property (nonatomic,copy) NSString *owner;
 @property (nonatomic,copy) NSString *uuid;
 @property (nonatomic,copy) NSString *tag;
+@property (nonatomic,copy) NSArray *writelist;
+@property (nonatomic,copy) NSString *type;
 @end

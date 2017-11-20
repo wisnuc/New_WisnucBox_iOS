@@ -45,6 +45,8 @@
     id _currentModelForRecord;
 }
 
+@property (nonatomic)UILabel *titleLabel;
+
 @end
 
 @implementation JYShowBigImgViewController
@@ -76,14 +78,15 @@
     _isFirstAppear = YES;
     _currentPage = self.selectIndex+1;
     _indexBeforeRotation = self.selectIndex;
-    self.title = [NSString stringWithFormat:@"%ld/%ld", _currentPage, self.models.count];
-    [self initNavBtns];
+//    self.title = [NSString stringWithFormat:@"%ld/%ld", _currentPage, self.models.count];
+
     [self initCollectionView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationChanged:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
     _panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)];
     [_panGesture setMinimumNumberOfTouches:1];
     [_panGesture setMaximumNumberOfTouches:1];
     [self.view addGestureRecognizer:_panGesture];
+    [self initNavBtns];
 }
 
 - (void)back:(id)btn
@@ -237,7 +240,37 @@
 
 - (void)initNavBtns
 {
-    
+//    UIView *naviView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 64)];
+//    naviView.backgroundColor = [UIColor blackColor];
+//
+//    UIButton *leftNaviButton = [[UIButton alloc]init];
+//    [leftNaviButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+//    [leftNaviButton addTarget:self action:@selector(doneButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+//
+//    [naviView addSubview:leftNaviButton];
+//
+//    [leftNaviButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(naviView.mas_centerY);
+//        make.left.equalTo(naviView.mas_left).offset(16);
+//        make.size.mas_equalTo(CGSizeMake(40, 20));
+//    }];
+//
+//    _titleLabel = [[UILabel alloc]init];
+//    _titleLabel.textColor = [UIColor whiteColor];
+//    _titleLabel.text =  [NSString stringWithFormat:@"%ld/%ld", _currentPage, self.models.count];
+//    _titleLabel.textAlignment = NSTextAlignmentCenter;
+//    [naviView addSubview:_titleLabel];
+//
+//
+//    [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.center.equalTo(naviView);
+//        make.left.equalTo(leftNaviButton.mas_right).offset(8);
+//        make.right.equalTo(naviView).offset(-56);
+//
+//    }];
+//    
+//
+//      [self.view addSubview:naviView];
 }
 
 #pragma mark - 初始化CollectionView
@@ -325,7 +358,11 @@
         if(self.delegate && !_isFirstAppear)
            [self.delegate photoBrowser:self scrollToIndexPath:m.indexPath];
         //!!!!!: change Title
-        self.title = [NSString stringWithFormat:@"%ld/%ld", _currentPage, self.models.count];
+        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//
+//        });
+//
         if (m.type == JYAssetTypeGIF ||
             m.type == JYAssetTypeLivePhoto ||
             m.type == JYAssetTypeVideo) {
@@ -337,7 +374,9 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
+//    dispatch_async(dispatch_get_main_queue(), ^{
     
+//    });
     [self reloadCurrentCell];
 }
 
@@ -349,6 +388,7 @@
         JYBigImgCell *cell = (JYBigImgCell *)[_collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:_currentPage-1 inSection:0]];
         [cell reloadGifLivePhoto];
     }
+//     _titleLabel.text = [NSString stringWithFormat:@"%ld/%ld", _currentPage, self.models.count];
 }
 
 - (JYAsset *)getCurrentPageModel

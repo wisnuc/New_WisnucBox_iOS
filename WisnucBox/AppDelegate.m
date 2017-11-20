@@ -12,6 +12,7 @@
 #import "AppServices.h"
 #import "FilesViewController.h"
 #import "AppServices.h"
+#import "FirstFilesViewController.h"
 
 @interface AppDelegate () <WXApiDelegate>
 
@@ -57,7 +58,7 @@
             NSLog(@"Fetch Net Assets Error --> : %@", error);
         }];
     });
-    FilesViewController *filesViewController = [[FilesViewController alloc]init];
+    FirstFilesViewController *filesViewController = [[FirstFilesViewController alloc]init];
     NavViewController *nav1 = [[NavViewController alloc] initWithRootViewController:photosVC];
     NavViewController *nav2 = [[NavViewController alloc] initWithRootViewController:filesViewController];
     photosVC.title = @"照片";
