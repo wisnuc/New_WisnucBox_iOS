@@ -101,6 +101,8 @@
 
 @property (nonatomic) JYAsset * asset;
 
+@property (nonatomic) NSError * error;
+
 @property (nonatomic, copy) void(^callback)(NSError * , id);
 
 + (instancetype)initWithAsset:(JYAsset *)asset;
