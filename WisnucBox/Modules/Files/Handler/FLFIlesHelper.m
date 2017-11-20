@@ -178,7 +178,7 @@ static dispatch_once_t onceToken;
             actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
                 if (buttonIndex == 1) {
                 if ([downloadString isEqualToString:@"重新下载"]) {
-                    [_filesServices deleteFileWithFileUUID:model.uuid];
+                    [_filesServices deleteFileWithFileUUID:model.uuid FileName:model.name];
                 }
                 [[CSDownloadHelper  shareManager] downloadFileWithFileModel:model UUID:uuid];
                 if(viewController){

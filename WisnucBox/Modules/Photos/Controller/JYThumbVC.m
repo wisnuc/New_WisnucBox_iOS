@@ -8,6 +8,7 @@
 
 #import "JYThumbVC.h"
 #import "PHPhotoLibrary+JYEXT.h"
+#import "PHAsset+JYEXT.h"
 #import <Photos/Photos.h>
 #import "JYConst.h"
 #import "JYProgressHUD.h"
@@ -860,6 +861,36 @@ bool isDecelerating = NO;
 
 -(void)downloadItem:(JYAsset *)item withShare:(BOOL)share withCompleteBlock:(void(^)(BOOL isSuccess,UIImage * image))block{
     if ([item isKindOfClass:[WBAsset class]]) {
+        NSLog(@"%lu",(unsigned long)item.type);
+        if (item.type == JYAssetTypeNetImage) {
+        __block id<SDWebImageOperation> operation =  [WB_NetService getHighWebImageWithHash:[(WBAsset *)item fmhash] completeBlock:^(NSError *error, UIImage *img) {
+            if (error) {
+                NSLog(@"%@",error);
+                // TODO: Load Error Image
+                block(NO,nil);
+            } else {
+                if (img) {
+                     if(!share){
+                         [PHPhotoLibrary saveImageToAlbum:img completion:^(BOOL isSuccess, PHAsset * asset) {
+                             dispatch_async(dispatch_get_main_queue(), ^{
+                                 block(isSuccess,img);
+                             });
+                         }];
+                     }else{
+                         dispatch_async(dispatch_get_main_queue(), ^{
+                             block(YES,img);
+                         });
+                     }
+                 }else
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         block(NO,nil);
+                     });
+            NSLog(@"%@",img);
+            }
+            [operation cancel];
+            operation = nil;
+        }];
+        }
 //        [FMGetImage getFullScreenImageWithPhotoHash:[item getPhotoHash]
 //                                   andCompleteBlock:^(UIImage *image, NSString *tag)
 //         {
@@ -881,27 +912,28 @@ bool isDecelerating = NO;
 //                 });
 //         }];
     }else{
-        NSLog(@"%@",item.image) ;
-//        FMLocalPhotoStore * store = [FMLocalPhotoStore shareStore];
-//        PHAsset * asset = [store checkPhotoIsLocalWithLocalId:[(FMPhotoAsset *)item localId]];
-//        if (asset) {
-//            if (!share) {
-//                [PhotoManager getImageDataWithPHAsset:asset andCompleteBlock:^(NSString *filePath) {
-//                    UIImage * image;
-//                    if (filePath && (image = [UIImage imageWithContentsOfFile:filePath])) {
-//                        [[PhotoManager shareManager]saveImage:image andCompleteBlock:^(BOOL isSuccess) {
-//                            [[NSFileManager defaultManager]removeItemAtPath:filePath error:nil];//删除image
-//                            block(isSuccess,image);
-//                        }];
-//                    }else block(NO,nil);
-//                }];
-//            }else{
-//                [[FMGetImage defaultGetImage] getOriginalImageWithAsset:asset andCompleteBlock:^(UIImage *image, NSString *tag) {
-//                    block(YES,image);
-//                }];
-//                
-//            }
-//        }else block(NO,nil);
+        NSLog(@"%@",item.asset) ;
+        if (item.asset) {
+            if (!share) {
+                [item.asset getFile:^(NSError *error, NSString *filePath) {
+                     if (item.asset.mediaType == PHAssetMediaTypeImage && !(item.asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive)) {
+                     UIImage * image;
+                    if (filePath && (image = [UIImage imageWithContentsOfFile:filePath])) {
+                        [PHPhotoLibrary saveImageToAlbum:image completion:^(BOOL isSuccess, PHAsset * asset) {
+                            [[NSFileManager defaultManager]removeItemAtPath:filePath error:nil];//删除image
+                            block(isSuccess,image);
+                        }];
+                    }else block(NO,nil);
+                   }
+                }];
+            }else{
+              if (item.asset.mediaType == PHAssetMediaTypeImage && !(item.asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive)) {
+               [PHPhotoLibrary requestOriginalImageForAsset:item.asset completion:^(UIImage *image, NSDictionary *dic) {
+                      block(YES,image);
+                    }];
+                }
+            }
+        }else block(NO,nil);
     }
 }
 

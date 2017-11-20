@@ -11,13 +11,13 @@
 #import "CSDownloadTask.h"
 
 /**
- *  下载客户端类
+ *  下载管理类
  *
  */
 @interface CSFileDownloadManager : NSObject
 
 /**
- *  获取单例下载客户端
+ *  获取单例下载管理
  *
  *  @return
  */

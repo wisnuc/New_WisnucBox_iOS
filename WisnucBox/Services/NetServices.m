@@ -231,6 +231,7 @@
     NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"%@media/%@?alt=data", [self currentURL], hash]];
     return [[SDWebImageManager sharedManager] downloadImageWithURL:url options:SDWebImageRetryFailed|SDWebImageCacheMemoryOnly progress:nil
                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                    NSLog(@"SDWebImage:Error ==== %@ ==== %@",error,imageURL);
         if (image) {
             callback(nil, image);
         }else{

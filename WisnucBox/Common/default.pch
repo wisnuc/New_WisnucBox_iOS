@@ -45,6 +45,8 @@
 //Tools
 #import "SXLoadingView.h"
 #import "LCActionSheet.h"
+#import "CSFileUtil.h"
+#import "PHPhotoLibrary+JYEXT.h"
 
 //Category
 #import "UIButton+EnlargeEdge.h"
