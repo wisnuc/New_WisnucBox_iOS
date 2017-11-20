@@ -140,6 +140,10 @@
                 else if(user.autoBackUp)
                     [weak_self startUploadAssets:nil];
                 
+                dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                    [weak_self updateCurrentUserInfoWithCompleteBlock:nil];
+                });
+                
                 return callback(nil, user);
             }];
         }];
@@ -159,9 +163,10 @@
             //notify
             [[NSNotificationCenter defaultCenter] postNotificationName:UserInfoChangedNotify object:nil];
         }
+        if(callback) return callback(nil, WB_UserService.currentUser.isAdmin);
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"Update user info error : %@", request.error);
-        callback(request.error, NO);
+        if(callback) return callback(request.error, NO);
     }];
 }
 

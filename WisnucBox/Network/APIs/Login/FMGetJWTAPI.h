@@ -14,6 +14,6 @@
 @property (nonatomic) UserModel * model;
 @property (nonatomic) NSString * passWord;
 
-+ (instancetype)apiWithBaseUrl:(NSString *)url model:(UserModel *)model;
+//+ (instancetype)apiWithBaseUrl:(NSString *)url model:(UserModel *)model;
 
 @end

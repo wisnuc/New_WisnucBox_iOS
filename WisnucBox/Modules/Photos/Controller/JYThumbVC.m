@@ -77,12 +77,6 @@
 - (NSMutableArray<JYAsset *> *)arrDataSources
 {
     if (!_arrDataSources) {
-//        JYProgressHUD *hud = [[JYProgressHUD alloc] init];
-//        [hud show];
-//        _arrDataSources = [NSMutableArray arrayWithArray:self.albumListModel.models];
-//        _arrDataSourcesBackup = [_arrDataSources copy];
-//        [self sort];
-//        [hud hide];
         _arrDataSources = [NSMutableArray arrayWithCapacity:0];
     }
     return _arrDataSources;
@@ -145,7 +139,7 @@
     return mergedAssets;
 }
 
--(void)dealloc{
+-(void)dealloc {
     if (self.collectionView.indicator) {
         [self.collectionView.indicator.slider removeObserver:self forKeyPath:@"sliderState"];
         [self.collectionView removeObserver:self.collectionView.indicator forKeyPath:@"contentOffset"];
@@ -154,8 +148,7 @@
     NSLog(@"JYThumbVC dealloc");
 }
 
--(void)sort:(NSArray<JYAsset *> *)assetsArr
-{
+-(void)sort:(NSArray<JYAsset *> *)assetsArr {
     NSMutableArray * arr = [NSMutableArray arrayWithArray:assetsArr];
     NSComparator cmptr = ^(JYAsset * photo1, JYAsset * photo2){
         NSDate * tempDate = [photo1.createDate laterDate: photo2.createDate];
@@ -203,9 +196,7 @@
     self.timesArr = tArr;
 }
 
-- (BOOL)isSameDay:(NSDate *)date1 date2:(NSDate *)date2
-
-{
+- (BOOL)isSameDay:(NSDate *)date1 date2:(NSDate *)date2 {
     
     NSCalendar *calendar = [NSCalendar currentCalendar];
     
@@ -233,6 +224,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hashCalculateHandle) name:HashCalculateFinishedNotify object:nil];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self updateIndicatorFrame];
+}
+
 //!!!!: ASSETS_UPDATE_NOTIFY Handler
 - (void)assetDidChangeHandle:(NSNotification *)notify {
     NSLog(@"%@", notify.object);
@@ -257,11 +253,10 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.collectionView reloadData];
     });
-    
 }
 
 //!!!!:HashCalculateFinishedNotify
-- (void)hashCalculateHandle{
+- (void)hashCalculateHandle {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [self sort: [self merge]];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -270,7 +265,7 @@
     });
 }
 
--(void)createControlbtn{
+-(void)createControlbtn {
     if(!_addButton){
         CGRect floatFrame = CGRectMake(__kWidth - 80 , __kHeight - 64 - 56 - 88, 56, 56);
         _addButton = [[VCFloatingActionButton alloc]initWithFrame:floatFrame normalImage:[UIImage imageNamed:@"add_album"] andPressedImage:[UIImage imageNamed:@"icon_close"] withScrollview:_collectionView];
@@ -366,20 +361,11 @@
 -(void)tabBarAnimationWithHidden:(BOOL)hidden{
     CYLTabBarController * tabBar = self.cyl_tabBarController;
     if (hidden) {
-        CGPoint point = self.collectionView.contentOffset;
-        [self.collectionView setContentOffset:point animated:NO];
-        //重置把手位置
         [tabBar.tabBar setHidden:YES];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self updateIndicatorFrame];
-        });
+        [self updateIndicatorFrame];
     }else{
         [tabBar.tabBar setHidden:NO];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            CGPoint point = self.collectionView.contentOffset;
-            [self.collectionView setContentOffset:point animated:NO];
-            [self updateIndicatorFrame];
-        });
+        [self updateIndicatorFrame];
     }
 }
 
@@ -454,11 +440,11 @@
 - (void)initIndicator{
     [self.collectionView registerILSIndicator];
     [self.collectionView.indicator.slider addObserver:self forKeyPath:@"sliderState" options:0x01 context:nil];
-    self.collectionView.indicator.frame = CGRectMake(self.collectionView.indicator.frame.origin.x, self.collectionView.indicator.frame.origin.y, self.collectionView.frame.size.width, CGRectGetHeight(self.collectionView.frame) - 2 * kILSDefaultSliderMargin);
+    self.collectionView.indicator.frame = CGRectMake(self.collectionView.indicator.frame.origin.x, self.collectionView.indicator.frame.origin.y, 1, CGRectGetHeight(self.collectionView.frame) - 2 * kILSDefaultSliderMargin);
 }
 
 - (void)updateIndicatorFrame {
-    self.collectionView.indicator.frame = CGRectMake(self.collectionView.indicator.frame.origin.x, self.collectionView.indicator.frame.origin.y, self.collectionView.frame.size.width, CGRectGetHeight(self.collectionView.frame) - 2 * kILSDefaultSliderMargin);
+    self.collectionView.indicator.frame = CGRectMake(self.collectionView.indicator.frame.origin.x, self.collectionView.indicator.frame.origin.y, 1, CGRectGetHeight(self.collectionView.frame) - 2 * kILSDefaultSliderMargin - (self.cyl_tabBarController.tabBar.isHidden ? 0 : 44));
 }
 
 - (BOOL)forceTouchAvailable
