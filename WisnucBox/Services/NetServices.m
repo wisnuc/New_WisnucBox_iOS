@@ -74,8 +74,8 @@
                  break;
              }
          }
-         [[NSNotificationCenter defaultCenter] postNotificationName:NETWORK_REACHABILITY_CHANGE_NOTIFY object:@(status)];
          weak_self.status = status;
+         [[NSNotificationCenter defaultCenter] postNotificationName:NETWORK_REACHABILITY_CHANGE_NOTIFY object:@(status)];
      }];
 }
 
