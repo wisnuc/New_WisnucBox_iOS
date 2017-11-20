@@ -62,7 +62,7 @@
 }
 
 - (void)handleNetReachabilityNotify {
-    if(!WB_UserService.currentUser.autoBackUp) return;
+    if(!WB_UserService.currentUser || !WB_UserService.currentUser.autoBackUp) return;
     AFNetworkReachabilityStatus status = self.netServices.status;
     if(status == AFNetworkReachabilityStatusReachableViaWWAN){
         if(!WB_UserService.currentUser.backUpInWWAN)
@@ -303,6 +303,8 @@
     BOOL _isdestroing;
     NSURL * _uploadURL;
     NSString * _token;
+    NSInteger _lastNotifyCount;
+    BOOL _shouldNotify;
 }
 
 @property (nonatomic, readwrite) NSMutableArray<JYAsset *> *hashwaitingQueue;
@@ -339,6 +341,8 @@
     if(self = [super init]) {
         _isdestroing = NO;
         _shouldUpload = NO;
+        _shouldNotify = NO;
+        _lastNotifyCount = 0;
         _hashLimitCount = 4;
         _uploadLimitCount = 4;
         [self workingQueue];
@@ -437,16 +441,22 @@
 
 - (void)addTask:(JYAsset *)asset {
     dispatch_async(self.managerQueue, ^{
-        [self.hashwaitingQueue addObject:asset];
-        [self schedule];
+        if(asset) {
+            _shouldNotify = YES;
+            [self.hashwaitingQueue addObject:asset];
+            [self schedule];
+        }
     });
 }
 
 - (void)addTasks:(NSArray<JYAsset *> *)assets {
     dispatch_async(self.managerQueue, ^{
-        [self.hashwaitingQueue addObjectsFromArray:assets];
-        [[NSNotificationCenter defaultCenter] postNotificationName:WBBackupCountChangeNotify object:nil];
-        [self schedule];
+        if(assets.count){
+            _shouldNotify = YES;
+            [self.hashwaitingQueue addObjectsFromArray:assets];
+            [[NSNotificationCenter defaultCenter] postNotificationName:WBBackupCountChangeNotify object:nil];
+            [self schedule];
+        }
     });
 }
 
@@ -472,6 +482,19 @@
         if(asset) [self.uploadPaddingQueue removeObject:asset];
         
         __block WBUploadModel * upModel;
+        [self.uploadingQueue enumerateObjectsUsingBlock:^(WBUploadModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if(IsEquallString(obj.asset.asset.localIdentifier, assetId)){
+                obj.isRemoved = YES; // remove
+                [obj cancel]; //  not to uploadErrorQueue or uploadedQueue if removed
+                upModel = obj;
+                *stop = YES;
+            }
+        }];
+        if(upModel) {
+            [self.uploadingQueue removeObject:upModel];
+            [self.uploadErrorQueue removeObject:upModel];
+        }
+        upModel = nil;
         [self.uploadErrorQueue enumerateObjectsUsingBlock:^(WBUploadModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if(IsEquallString(obj.asset.asset.localIdentifier, assetId)){
                 upModel = obj;
@@ -479,6 +502,7 @@
             }
         }];
         if(upModel) [self.uploadErrorQueue removeObject:upModel];
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:WBBackupCountChangeNotify object:nil];
         upModel = nil;
     });
@@ -493,6 +517,7 @@
 
 - (void)startWithLocalAssets:(NSArray<JYAsset *> *)localAssets andNetAssets:(NSArray<EntriesModel *> *)netAssets {
     dispatch_async(self.managerQueue, ^{
+        _shouldNotify = YES;
         [self.hashwaitingQueue addObjectsFromArray:localAssets];
         NSComparator cmptr = ^(JYAsset * photo1, JYAsset * photo2){
             NSDate * tempDate = [[photo1 asset].creationDate laterDate:[photo2 asset].creationDate];
@@ -560,7 +585,13 @@
 
 - (void)schedule {
     if(_isdestroing) return;
-    if(self.hashwaitingQueue.count == 0 && self.hashWorkingQueue.count == 0) NSLog(@"hash calculate finish");
+    if(self.hashwaitingQueue.count == 0 && self.hashWorkingQueue.count == 0) {
+        if(_shouldNotify){
+            _shouldNotify = NO;
+            [[NSNotificationCenter defaultCenter] postNotificationName:HashCalculateFinishedNotify object:nil];
+        }
+        NSLog(@"hash calculate finish");
+    }
     if(self.hashwaitingQueue.count == 0 && self.hashWorkingQueue.count == 0 && self.uploadPaddingQueue.count == 0 && self.uploadingQueue.count == 0) NSLog(@"backup asset finish");
     while(self.hashWorkingQueue.count < self.hashLimitCount && self.hashwaitingQueue.count > 0) {
         JYAsset * asset = [self.hashwaitingQueue lastObject];
@@ -592,20 +623,24 @@
         [self.uploadPaddingQueue removeLastObject];
         WBUploadModel * model = [WBUploadModel initWithAsset:asset];
         if([self.uploadedNetHashSet containsObject:asset.digest]) {
-            [self.uploadedQueue addObject:model];
-            [[NSNotificationCenter defaultCenter] postNotificationName:WBBackupCountChangeNotify object:nil];
-            [self schedule];
+            dispatch_async(self.managerQueue, ^{
+                [self.uploadedQueue addObject:model];
+                [[NSNotificationCenter defaultCenter] postNotificationName:WBBackupCountChangeNotify object:nil];
+                [self schedule];
+            });
         }else {
             [self.uploadingQueue addObject:model];
             __weak typeof(self) weakSelf = self;
             [model startWithCompleteBlock:^(NSError *error, id response) {
                 dispatch_async(self.managerQueue, ^{
                     if (error) {
-                        [weakSelf.uploadErrorQueue addObject:model];
+                        if(!model.isRemoved)
+                            [weakSelf.uploadErrorQueue addObject:model];
                         [weakSelf.uploadingQueue removeObject:model];
                     }else{
                         [weakSelf.uploadingQueue removeObject:model];
-                        [weakSelf.uploadedQueue addObject:model];
+                        if(!model.isRemoved)
+                            [weakSelf.uploadedQueue addObject:model];
                         [[NSNotificationCenter defaultCenter] postNotificationName:WBBackupCountChangeNotify object:nil];
                     }
                     [weakSelf schedule];
@@ -668,7 +703,6 @@
         NSMutableString * tempFileName = [NSMutableString stringWithString:fileName];
         NSArray * invaildChars = @[@"/", @"?", @"<", @">", @"\\", @":", @"*", @"|", @"\""];
         for (int i = 0; i < tempFileName.length; i++) {
-            NSLog(@"%@",[fileName substringWithRange:NSMakeRange(i, 1)]);
             if([invaildChars containsObject: [fileName substringWithRange:NSMakeRange(i, 1)]]){
                 [tempFileName replaceCharactersInRange:NSMakeRange(i, 1) withString:@"_"];
             }
