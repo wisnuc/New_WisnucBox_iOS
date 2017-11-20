@@ -7,6 +7,7 @@
 //
 
 #import "FMAsyncUsersAPI.h"
+#import "Base64.h"
 
 @implementation FMAsyncUsersAPI
 
@@ -16,8 +17,7 @@
 }
 /// 请求的URL
 - (NSString *)requestUrl{
-//    return @"users";
-   return  @"users";
+    return  WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@?resource=%@&method=GET", kCloudAddr, kCloudCommonJsonUrl, [@"users" base64EncodedString]] : @"users";
 }
 
 -(NSDictionary *)requestHeaderFieldValueDictionary{

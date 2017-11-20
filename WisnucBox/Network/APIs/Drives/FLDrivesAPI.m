@@ -16,11 +16,11 @@
 }
 /// 请求的URL
 - (NSString *)requestUrl{
-    return @"drives";
+    return WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@?resource=L2RyaXZlcw==&method=GET",kCloudAddr, kCloudCommonJsonUrl] : @"drives";
 }
 
 -(NSDictionary *)requestHeaderFieldValueDictionary{
-    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat:@"JWT %@", WB_UserService.defaultToken] forKey:@"Authorization"];
+    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithObject:(WB_UserService.currentUser.isCloudLogin ? WB_UserService.currentUser.cloudToken : [NSString stringWithFormat:@"JWT %@", WB_UserService.defaultToken]) forKey:@"Authorization"];
     return dic;
 }
 

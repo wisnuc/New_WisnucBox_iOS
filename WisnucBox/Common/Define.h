@@ -12,6 +12,10 @@
 #define __kWidth [[UIScreen mainScreen]bounds].size.width
 #define __kHeight [[UIScreen mainScreen]bounds].size.height
 
+#define kCloudAddr    @"http://www.siyouqun.org/"
+#define kCloudCommonJsonUrl [NSString stringWithFormat:@"c/v1/stations/%@/json", WB_UserService.currentUser.stationId]
+#define kCloudCommonPipeUrl [NSString stringWithFormat:@"c/v1/stations/%@/pipe", WB_UserService.currentUser.stationId]
+
 #define KWxAppID      @"wx99b54eb728323fe8"
 
 #define kUserDefaults [NSUserDefaults standardUserDefaults]

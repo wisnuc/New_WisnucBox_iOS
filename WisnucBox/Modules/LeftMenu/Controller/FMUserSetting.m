@@ -27,6 +27,10 @@
 
 @implementation FMUserSetting
 
+- (void)dealloc{
+    NSLog(@"----%s----", __FUNCTION__);
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"用户管理";
