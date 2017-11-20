@@ -67,8 +67,8 @@
         self.needRefrushProgress = NO;
         @weaky(self);
         [_leftMenu updateProgressWithAllCount:allCount currentCount:WB_PhotoUploadManager.uploadedQueue.count complete:^{
-            weak_self.isUpdateingProgress = NO;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                weak_self.isUpdateingProgress = NO;
                 if(weak_self.needRefrushProgress) [weak_self changeBackupProgress];
             });
         }];

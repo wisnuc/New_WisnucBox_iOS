@@ -54,6 +54,8 @@
 - (void)requestForBackupPhotos:(void(^)(BOOL shouldUpload))callback;
 @end
 
+#define HashCalculateFinishedNotify @"HashCalculateFinishedNotify"
+
 @class WBUploadModel;
 @interface WBUploadManager : NSObject
 
@@ -102,6 +104,8 @@
 @property (nonatomic) JYAsset * asset;
 
 @property (nonatomic) NSError * error;
+
+@property (nonatomic) BOOL isRemoved;
 
 @property (nonatomic, copy) void(^callback)(NSError * , id);
 

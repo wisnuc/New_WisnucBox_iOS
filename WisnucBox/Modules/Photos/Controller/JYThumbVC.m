@@ -230,6 +230,7 @@
     [self createControlbtn];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userAuthChange:) name:ASSETS_AUTH_CHANGE_NOTIFY object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(assetDidChangeHandle:) name:ASSETS_UPDATE_NOTIFY object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hashCalculateHandle) name:HashCalculateFinishedNotify object:nil];
 }
 
 //!!!!: ASSETS_UPDATE_NOTIFY Handler
@@ -257,6 +258,16 @@
         [self.collectionView reloadData];
     });
     
+}
+
+//!!!!:HashCalculateFinishedNotify
+- (void)hashCalculateHandle{
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [self sort: [self merge]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.collectionView reloadData];
+        });
+    });
 }
 
 -(void)createControlbtn{
