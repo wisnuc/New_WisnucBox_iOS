@@ -94,7 +94,7 @@ __strong static id _sharedObject = nil;
     [downloadFileModel setDownloadTaskURL:fromUrl];
     [downloadFileModel setDownloadFileSavePath:saveFile];
     [downloadFileModel setDownloadTempSavePath:tempFile];
-    [downloadFileModel setDownloadFileUserId:uuid];
+    [downloadFileModel setDownloadFileUserId:WB_UserService.currentUser.uuid];
     [downloadFileModel setDownloadFilePlistURL:@""];
     
     CSDownloadTask* downloadTask = [[CSDownloadTask alloc] init];
@@ -156,7 +156,7 @@ __strong static id _sharedObject = nil;
     [downloadFileModel setDownloadTaskURL:fromUrl];
     [downloadFileModel setDownloadFileSavePath:saveFile];
     [downloadFileModel setDownloadTempSavePath:tempFile];
-    [downloadFileModel setDownloadFileUserId:uuid];
+    [downloadFileModel setDownloadFileUserId:WB_UserService.currentUser.uuid];
     [downloadFileModel setDownloadFilePlistURL:@""];
     
     CSDownloadTask* downloadTask = [[CSDownloadTask alloc] init];
