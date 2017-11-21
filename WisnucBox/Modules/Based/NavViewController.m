@@ -10,7 +10,7 @@
 //#import "UIView+dropshadow.h"
 
 @interface NavViewController ()
-//@property (nonatomic, assign) id currentDelegate;
+@property (nonatomic, assign) id currentDelegate;
 
 @end
 
@@ -22,7 +22,7 @@
     self.navigationBar.backgroundColor = [UIColor whiteColor];
 //    UICOLOR_RGB(0x3f51b5);
     self.navigationBar.titleTextAttributes=@{NSForegroundColorAttributeName:[UIColor darkTextColor]};
-//    self.currentDelegate = self.interactivePopGestureRecognizer.delegate;
+    self.currentDelegate = self.interactivePopGestureRecognizer.delegate;
     self.transferNavigationBarAttributes = YES;
     UIView * redView = [[UIView alloc]initWithFrame:CGRectMake(0, -20, __kWidth, 20)];
     redView.backgroundColor = [UIColor whiteColor];
@@ -121,14 +121,14 @@
 }
 
 
-//- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-//{
-//    if (viewController == self.viewControllers[0]) {
-//        self.interactivePopGestureRecognizer.delegate = self.navigationController.interactivePopGestureRecognizer.delegate;
-//    }else{
-//        self.interactivePopGestureRecognizer.delegate = nil;
-//    }
-//}
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if (viewController == self.viewControllers[0]) {
+        self.interactivePopGestureRecognizer.delegate = self.navigationController.interactivePopGestureRecognizer.delegate;
+    }else{
+        self.interactivePopGestureRecognizer.delegate = nil;
+    }
+}
 
 - (BOOL)shouldAutorotate
 {

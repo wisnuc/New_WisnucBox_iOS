@@ -61,7 +61,6 @@
 - (void)startDownloadTask:(void (^)())bindDoSomething
 {
     [_downloadDataTask resume];
-    NSLog(@"%@",_downloadDataTask);
     if (bindDoSomething)
     {
         bindDoSomething();
@@ -78,15 +77,19 @@
     }
 }
 
-- (void)continueDownloadTask:(void (^)())bindDoSomething
+- (void)continueDownloadTask:(void (^)(BOOL isComplete))bindDoSomething
 {
+    BOOL isComplete;
     if (_downloadDataTask.state == NSURLSessionTaskStateSuspended) {
         [_downloadDataTask resume];
+        isComplete = NO;
+    }else{
+        isComplete = YES;
     }
     
     if (bindDoSomething)
     {
-        bindDoSomething();
+        bindDoSomething(isComplete);
     }
 }
 

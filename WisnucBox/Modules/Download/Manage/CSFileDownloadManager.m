@@ -56,7 +56,7 @@
     
     //    pthread_mutex_t _mutex;
     
-    //    RACSubject *_subject;
+    RACSubject *_subject;
     
 }
 
@@ -76,7 +76,7 @@
         _taskDoingQueue     = [[CSDownloadTaskQueue alloc] initWithMaxCapacity:_maxDownload];
         _taskWaitingQueue   = [[CSDownloadTaskQueue alloc] initWithMaxCapacity:_maxWaiting];
         _taskPausedQueue    = [[CSDownloadTaskQueue alloc] initWithMaxCapacity:_maxPaused];
-
+        _subject = [RACSubject subject];
         //初始下载中队列容量变化观察
         [self initDownloadTaskDoingQueueObserver];
     }
@@ -169,11 +169,14 @@ __strong static id _sharedObject = nil;
         
         isResuming = YES;
     }
-    //    __weak typeof(self) weakSelf = self;
+    __weak typeof(self) weakSelf = self;
     downloadTask.stream = [NSOutputStream outputStreamToFileAtPath:tempPath append:YES];
     NSURLSessionDataTask * dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         if (error) {
             NSLog(@"%@",error);
+            if (error.code == -1005) {
+                return ;
+            }
             [downloadTask.stream close];
             downloadTask.stream = nil;
             [_taskDoingQueue dequeue];
@@ -277,6 +280,8 @@ __strong static id _sharedObject = nil;
        
     }];
     
+   
+    
     [manager setDataTaskDidReceiveResponseBlock:^NSURLSessionResponseDisposition(NSURLSession * _Nonnull session, NSURLSessionDataTask * _Nonnull dataTask, NSURLResponse * _Nonnull response) {
      
         fileLength = response.expectedContentLength + currentLength;
@@ -331,9 +336,19 @@ __strong static id _sharedObject = nil;
             progress(currentLength,fileLength,downloadProgress);
         }
     }];
-
+  
     [downloadTask setDownloadDataTask:dataTask];
     [self startOneDownloadTaskWith:downloadTask];
+    [_subject subscribeNext:^(id x) {
+        [downloadTask.stream close];
+        downloadTask.stream = nil;
+        [_taskDoingQueue dequeue];
+        [self.downloadingTasks removeObject:downloadTask];
+        [downloadTask setDownloadStatus:CSDownloadStatusFailure];
+        [_downloadTasks removeObject:dataTask];
+        [weakSelf beginDownloadTask:downloadTask begin:begin progress:progress complete:complete];
+    }];
+    
 }
 
 
@@ -385,7 +400,10 @@ __strong static id _sharedObject = nil;
         //暂停的直接恢复
         if ([downloadTask getDownloadStatus] == CSDownloadStatusPaused)
         {
-            [downloadTask continueDownloadTask:^(){
+            [downloadTask continueDownloadTask:^(BOOL isComplete) {
+                if (isComplete) {
+                    [_subject sendNext:@"1"];
+                }
                 [downloadTask setDownloadStatus:CSDownloadStatusDownloading];
             }];
         }
@@ -454,6 +472,9 @@ __strong static id _sharedObject = nil;
     //移除临时plist
     NSString* tempFilePlist = [[fileModel getDownloadTempSavePath] stringByAppendingPathExtension:@"plist"];
     [CSFileUtil deleteFileAtPath:tempFilePlist];
+    
+    
+    [self.downloadingTasks removeObject:downloadTask];
 }
 
 - (void)cancelOneDownloadTaskWith:(CSDownloadTask*)downloadTask
@@ -612,7 +633,7 @@ __strong static id _sharedObject = nil;
                 }
                 else if([downloadTask getDownloadStatus] == CSDownloadStatusWaitingForResume) //恢复下载
                 {
-                    [downloadTask continueDownloadTask:^(){
+                    [downloadTask continueDownloadTask:^(BOOL isComplete){
                         [downloadTask setDownloadStatus:CSDownloadStatusDownloading];
                     }];
                 }
