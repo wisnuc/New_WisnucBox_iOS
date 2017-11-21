@@ -16,7 +16,7 @@
 }
 /// 请求的URL
 - (NSString *)requestUrl{
-    return WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@?resouce=%@&method=GET", kCloudAddr, kCloudCommonJsonUrl, [@"media" base64EncodedString]] : @"media";
+    return WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@?resource=%@&method=GET", kCloudAddr, kCloudCommonJsonUrl, [@"media" base64EncodedString]] : @"media";
 }
 
 -(NSDictionary *)requestHeaderFieldValueDictionary{

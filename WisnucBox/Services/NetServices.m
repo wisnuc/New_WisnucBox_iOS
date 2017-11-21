@@ -10,6 +10,8 @@
 #import "NSString+DeviceName.h"
 #import "FLGetDriveDirAPI.h"
 #import "FLDrivesAPI.h"
+#import "WBCloudJsonAPI.h"
+#import "Base64.h"
 
 #define BackUpBaseDirName @"上传的照片"
 
@@ -124,8 +126,10 @@
     }];
 }
 
+// local mkdir
 - (void)mkdirInDir:(NSString *)dirUUID andName:(NSString *)name completeBlock:(void(^)(NSError *, DirectoriesModel *))completeBlock{
-    NSString *urlString = [NSString stringWithFormat:@"%@drives/%@/dirs/%@/entries", [self currentURL], WB_UserService.currentUser.userHome, dirUUID];
+    NSString *resource = [NSString stringWithFormat:@"drives/%@/dirs/%@/entries", WB_UserService.currentUser.userHome, dirUUID];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", [self currentURL], resource];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
@@ -147,10 +151,27 @@
     }];
 }
 
+//cloud api for mkdir
+- (void)cloudMkdirInDir:(NSString *)dirUUID andName:(NSString *)name completeBlock:(void(^)(NSError *, DirectoriesModel *))completeBlock{
+    NSString *resource = [NSString stringWithFormat:@"drives/%@/dirs/%@/entries", WB_UserService.currentUser.userHome, dirUUID];
+    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    [dic setObject:[resource base64EncodedString] forKey:kCloudBodyResource];
+    [dic setObject:@"POST" forKey:kCloudBodyMethod];
+    [dic setObject:@"mkdir" forKey:kCloudBodyOp];
+    [dic setObject:name forKey:kCloudBodyToName];
+    WBCloudJsonAPI * api = [WBCloudJsonAPI apiWithBody:dic];
+    [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSLog(@"---------> cloud response <---------- \n %@", request.responseJsonObject);
+    } failure:^(__kindof JYBaseRequest *request) {
+        NSLog(@" ------>  cloud mkdir error  <------ \n %@", request.error);
+    }];
+}
+
+// 获取 名为 “上传的照片” 的文件夹， 没有就创建
 - (void)getUserBackupBaseDir:(void(^)(NSError *, NSString * dirUUID))callback {
     FLGetDriveDirAPI * api = [FLGetDriveDirAPI apiWithDrive:WB_UserService.currentUser.userHome dir:WB_UserService.currentUser.userHome];
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        NSDictionary * dic = request.responseJsonObject;
+        NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
         NSArray * arr = [NSArray arrayWithArray:[dic objectForKey:@"entries"]];
         //FIXME: file name equal backup base name
         __block BOOL find = NO;
@@ -163,10 +184,13 @@
             }
         }];
         if(!find) {
-            [self mkdirInDir:WB_UserService.currentUser.userHome andName:BackUpBaseDirName completeBlock:^(NSError *error, DirectoriesModel *entries) {
+            id block = ^(NSError *error, DirectoriesModel *entries) {
                 if(error) return callback(error, nil);
                 callback(nil, entries.uuid);
-            }];
+            };
+            WB_UserService.currentUser.isCloudLogin ?
+            [self cloudMkdirInDir:WB_UserService.currentUser.userHome andName:BackUpBaseDirName completeBlock:block] :
+            [self mkdirInDir:WB_UserService.currentUser.userHome andName:BackUpBaseDirName completeBlock:block];
         }
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"get root error : %@", request.error);
@@ -174,11 +198,13 @@
     }];
 }
 
+// 获取backup 目录 ，如果没有就创建
+// backupBaseDir 就是 “上传的图片” 文件夹 , backupDir 就是 “来自xxx” 文件夹
 - (void)getUserBackupDirWithBackUpBaseDir:(NSString *)baseUUID complete:(void(^)(NSError *, NSString *backupDirUUID))callback {
     FLGetDriveDirAPI * api = [FLGetDriveDirAPI apiWithDrive:WB_UserService.currentUser.userHome dir:baseUUID];
     NSString *photoDirName = [NSString stringWithFormat:@"来自%@",[NSString deviceName]];
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        NSDictionary * dic = request.responseJsonObject;
+        NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
         NSArray * arr = [NSArray arrayWithArray:[dic objectForKey:@"entries"]];
         //FIXME: file name equal backup base name
         __block BOOL find = NO;
@@ -191,10 +217,13 @@
             }
         }];
         if(!find) {
-            [self mkdirInDir:baseUUID andName:photoDirName completeBlock:^(NSError *error, DirectoriesModel *entries) {
+            id block = ^(NSError *error, DirectoriesModel *entries) {
                 if(error) return callback(error, nil);
                 callback(nil, entries.uuid);
-            }];
+            };
+            WB_UserService.currentUser.isCloudLogin ?
+            [self mkdirInDir:baseUUID andName:photoDirName completeBlock:block] :
+            [self mkdirInDir:baseUUID andName:photoDirName completeBlock:block];
         }
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"get backup base dir error : %@", request.error);
@@ -202,10 +231,11 @@
     }];
 }
 
+// 获取backup目录下的所有文件
 - (void)getEntriesInUserBackupDir:(void(^)(NSError *, NSArray<EntriesModel *> *entries))callback{
     FLGetDriveDirAPI *api = [FLGetDriveDirAPI apiWithDrive:WB_UserService.currentUser.userHome dir:WB_UserService.currentUser.backUpDir];
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        NSDictionary * dic = request.responseJsonObject;
+        NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
         NSArray * arr = [NSArray arrayWithArray:[dic objectForKey:@"entries"]];
         NSMutableArray * entries = [NSMutableArray arrayWithCapacity:0];
         [arr enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -219,9 +249,9 @@
     }];
 }
 
+#pragma mark - Get nas origin image or thumbnail image
+
 - (id <SDWebImageOperation>)getHighWebImageWithHash:(NSString *)hash completeBlock:(void(^)(NSError *, UIImage *))callback {
-//    [[SDImageCache sharedImageCache] setShouldDecompressImages:NO];
-//    [[SDWebImageDownloader sharedDownloader] setShouldDecompressImages:NO];
     [SDWebImageManager sharedManager].imageDownloader.headersFilter = ^NSDictionary *(NSURL *url, NSDictionary *headers) {
         NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:headers];
         [dic setValue:[NSString stringWithFormat:@"JWT %@",WB_UserService.defaultToken] forKey:@"Authorization"];

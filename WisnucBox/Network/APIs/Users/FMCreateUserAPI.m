@@ -22,8 +22,8 @@
 -(id)requestArgument{
     NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:_param];
     return WB_UserService.currentUser.isCloudLogin ? ({
-        [dic setObject:[@"users" base64EncodedString] forKey:@"resource"];
-        [dic setObject:@"POST" forKey:@"method"];
+        [dic setObject:[@"users" base64EncodedString] forKey:kCloudBodyResource];
+        [dic setObject:@"POST" forKey:kCloudBodyMethod];
         dic;
     }) : self.param;
 }

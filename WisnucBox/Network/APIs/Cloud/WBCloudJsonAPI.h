@@ -1,5 +1,5 @@
 //
-//  WBCloudAPI.h
+//  WBCloudJsonAPI.h
 //  WisnucBox
 //
 //  Created by 杨勇 on 2017/11/21.
@@ -8,6 +8,10 @@
 
 #import "JYBaseRequest.h"
 
-@interface WBCloudAPI : JYBaseRequest
+@interface WBCloudJsonAPI : JYBaseRequest
+
+@property (nonatomic) id body;
+
++ (instancetype)apiWithBody:(id)args;
 
 @end

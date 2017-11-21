@@ -18,6 +18,13 @@
 
 #define KWxAppID      @"wx99b54eb728323fe8"
 
+//Cloud Body Keys
+#define kCloudBodyResource @"resource"
+#define kCloudBodyOp       @"op"
+#define kCloudBodyMethod   @"method"
+#define kCloudBodyToName   @"toName"
+#define kCloudBodyFromName @"fromName"
+
 #define kUserDefaults [NSUserDefaults standardUserDefaults]
 #define kUD_Synchronize [[NSUserDefaults standardUserDefaults] synchronize]
 #define kUD_ObjectForKey(key) [[NSUserDefaults standardUserDefaults] objectForKey:key]

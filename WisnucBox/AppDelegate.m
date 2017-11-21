@@ -24,6 +24,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [MagicalRecord setupCoreDataStack];
     [self configWeChat];
+    [self redirectNSlogToDocumentFolder];
     [AppServices sharedService];
     [self initRootVC];
     return YES;
@@ -97,6 +98,22 @@
     tabbar.selectedIndex = 0;
     
     return tabbar;
+}
+
+// 将NSlog打印信息保存到Document目录下的文件中
+- (void)redirectNSlogToDocumentFolder
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths objectAtIndex:0];
+    NSString *fileName = [NSString stringWithFormat:@"winsun.log"];// 注意不是NSData!
+    NSString *logFilePath = [documentDirectory stringByAppendingPathComponent:fileName];
+    // 先删除已经存在的文件
+    //    NSFileManager *defaultManager = [NSFileManager defaultManager];
+    //    [defaultManager removeItemAtPath:logFilePath error:nil];
+    
+    // 将log输入到文件
+    freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding], "a+", stdout);
+    freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding], "a+", stderr);
 }
 
 - (UIImage *)lineImageWithColor:(UIColor *)lineColor {
