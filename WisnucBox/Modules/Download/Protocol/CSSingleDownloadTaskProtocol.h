@@ -59,7 +59,7 @@ typedef enum
  *
  *  @param bindDoSomething
  */
-- (void)continueDownloadTask:(void (^)())bindDoSomething;
+- (void)continueDownloadTask:(void (^)(BOOL isComplete))bindDoSomething;
 
 /**
  *  取消一条下载任务
