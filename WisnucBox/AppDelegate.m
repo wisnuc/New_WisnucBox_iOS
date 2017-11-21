@@ -10,8 +10,6 @@
 #import "FMLoginViewController.h"
 #import "WBUser+CoreDataClass.h"
 #import "AppServices.h"
-#import "FilesViewController.h"
-#import "AppServices.h"
 #import "FirstFilesViewController.h"
 
 @interface AppDelegate () <WXApiDelegate>

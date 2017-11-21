@@ -89,7 +89,7 @@ FilesHelperOpenFilesDelegate
 
 - (void)loadData{
     [FilesDataSourceManager manager].delegate = self;
-    [[FilesDataSourceManager manager] getFilesWithUUID:_parentUUID];
+    [[FilesDataSourceManager manager] getFilesWithDriveUUID:_driveUUID DirUUID:_parentUUID];
     _cellStatus = FLFliesCellStatusNormal;
     [self.tableView reloadData];
 }
@@ -232,7 +232,7 @@ FilesHelperOpenFilesDelegate
                 [SXLoadingView showAlertHUD:@"请先选择文件" duration:1];
             }else{
                 [self actionForNormalStatus];
-                [[FLFIlesHelper helper] downloadChooseFilesParentUUID:_parentUUID];
+                [[FLFIlesHelper helper] downloadChooseFilesParentUUID:_parentUUID RootUUID:_driveUUID];
                 LocalDownloadViewController  *downloadVC = [[LocalDownloadViewController alloc]init];
                 [self.navigationController pushViewController:downloadVC animated:YES];
             }
@@ -257,7 +257,7 @@ FilesHelperOpenFilesDelegate
         cell= (FLFilesCell *)[[[NSBundle  mainBundle] loadNibNamed:NSStringFromClass([FLFilesCell class]) owner:self options:nil]  lastObject];
     }
     EntriesModel *dataModel = _dataSouceArray[indexPath.row];
-    [[FLFIlesHelper helper] configCells:cell withModel:dataModel cellStatus:self.cellStatus viewController:self parentUUID:_parentUUID];
+    [[FLFIlesHelper helper] configCells:cell withModel:dataModel cellStatus:self.cellStatus viewController:self parentUUID:_parentUUID RootUUID:_driveUUID];
     return cell;
 }
 
@@ -277,6 +277,7 @@ FilesHelperOpenFilesDelegate
         if (![model.type isEqualToString:@"file"]){
             FilesNextViewController * vc = [FilesNextViewController new];
             vc.parentUUID = model.uuid;
+            vc.driveUUID = _driveUUID;
             vc.name = model.name;
             if (self.cellStatus == FLFliesCellStatusNormal) {
                 [[FilesDataSourceManager manager].dataArray removeAllObjects];
@@ -308,7 +309,7 @@ FilesHelperOpenFilesDelegate
                         [[CSDownloadHelper shareManager] cancleDownload];
                     };
                     [_progressView show];
-                    [[CSDownloadHelper shareManager] downloadOneFileWithFileModel:model UUID:_parentUUID IsDownloading:^(BOOL isDownloading) {
+                    [[CSDownloadHelper shareManager] downloadOneFileWithFileModel:model RootUUID:_driveUUID  UUID:_parentUUID IsDownloading:^(BOOL isDownloading) {
                         if (isDownloading){
                             [_progressView dismiss];
                             LocalDownloadViewController *localDownloadViewController = [[LocalDownloadViewController alloc] init];

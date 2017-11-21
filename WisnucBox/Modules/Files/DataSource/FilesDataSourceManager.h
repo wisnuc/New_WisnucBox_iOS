@@ -20,6 +20,6 @@
 
 + (instancetype)manager;
 + (void)destroyAll;
-- (void)getFilesWithUUID:(NSString *)uuid;
+- (void)getFilesWithDriveUUID:(NSString *)driveUUID DirUUID:(NSString *)uuid;
 
 @end

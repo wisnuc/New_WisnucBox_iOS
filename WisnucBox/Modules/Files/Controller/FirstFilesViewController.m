@@ -10,6 +10,10 @@
 #import "FirstFilesViewController.h"
 #import "FLDrivesAPI.h"
 #import "FLFilesCell.h"
+#import "FilesNextViewController.h"
+#import "FilesViewController.h"
+#import "FilesShareViewController.h"
+
 
 @interface FirstFilesViewController ()
 <
@@ -17,6 +21,7 @@ UITableViewDelegate,
 UITableViewDataSource
 >
 @property (nonatomic,strong) NSMutableArray *dataSouceArray;
+@property (nonatomic,strong) NSMutableArray *shareDataArray;
 @property (strong, nonatomic) UITableView *tableView;
 @end
 
@@ -46,39 +51,62 @@ UITableViewDataSource
     //    [self.tableView.mj_header beginRefreshing];
 }
 
+- (void)sequenceDataSouce{
+    NSComparator cmptr = ^(FirstFilesModel * model1, FirstFilesModel * model2){
+        
+        if (model1.type > model2.type) {
+            return (NSComparisonResult)NSOrderedDescending;
+        }
+        return (NSComparisonResult)NSOrderedSame;
+    };
+    [_dataSouceArray sortUsingComparator:cmptr];
+    [_tableView reloadData];
+}
+
 - (void)loadData{
+    [self.dataSouceArray removeAllObjects];
     [[FLDrivesAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSArray * responseArr = request.responseJsonObject;
         NSLog(@"%@",request.responseJsonObject);
+        __block NSInteger i = 0;
         [responseArr enumerateObjectsUsingBlock:^(NSDictionary * obj, NSUInteger idx, BOOL * _Nonnull stop) {
             DriveModel *model = [DriveModel yy_modelWithJSON:obj];
-            NSLog(@"writelist: %@| uuid: %@",model.writelist, WB_UserService.currentUser.uuid);
+//            NSLog(@"writelist: %@| uuid: %@",model.writelist, WB_UserService.currentUser.uuid);
             if(IsEquallString(model.tag, @"home")){
-                *stop = YES;
+                FirstFilesModel *filesModel =  [FirstFilesModel new];
+                filesModel.type = WBFilesFirstDirectoryMyFiles;
+                filesModel.name = @"我的文件";
+                [self.dataSouceArray addObject:filesModel];
             }else{
-                NSString *string =WB_UserService.currentUser.uuid;
-                NSRange range = [string rangeOfString:@":"];//匹配得到的下标
-                NSLog(@"rang:%@",NSStringFromRange(range));
-                string = [string substringWithRange:range];//截取范围内的字符串
-                NSLog(@"截取的值为：%@",string);
+                NSString *string = WB_UserService.currentUser.uuid;
+                //                NSRange iStart = [string rangeOfString: @":" options:NSCaseInsensitiveSearch];
+                //                NSString *subStr;
+                //                if (iStart.length > 0){
+                //                    //获取从escapedPath开始位置到iStart.location-1长度的子字符串
+                //                 subStr  = [string  substringToIndex:iStart.location];
+                //                }
                 
-    
                 for (NSString *containUUID in model.writelist) {
-                    if ([WB_UserService.currentUser.uuid isEqualToString:containUUID]) {
-                        
+                    if ([string isEqualToString:containUUID]) {
+                        i++;
+                        if (i == 1) {
+                            FirstFilesModel *shareModel =  [FirstFilesModel new];
+                            shareModel.type = WBFilesFirstDirectoryShare;
+                            shareModel.name = @"共享盘";
+                            [self.dataSouceArray addObject:shareModel];
+                        }
+                        [self.shareDataArray addObject:model];
                     }
                 }
             }
-            
-            if (stop) {
-               
-            }
-             [self.tableView.mj_header endRefreshing];
+            [self sequenceDataSouce];
+            [self.tableView.mj_header endRefreshing];
         }];
     } failure:^(__kindof JYBaseRequest *request) {
         [self.tableView.mj_header endRefreshing];
     }];
 }
+
 
 #pragma  TableView DataSource
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -90,8 +118,13 @@ UITableViewDataSource
     if (nil == cell) {
         cell= (FLFilesCell *)[[[NSBundle  mainBundle] loadNibNamed:NSStringFromClass([FLFilesCell class]) owner:self options:nil]  lastObject];
     }
-    EntriesModel *dataModel = _dataSouceArray[indexPath.row];
-   
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    FirstFilesModel *model = _dataSouceArray[indexPath.row];
+    cell.nameLabel.text = model.name;
+    cell.downBtn.hidden = YES;
+    if (model.type == WBFilesFirstDirectoryShare) {
+        cell.f_ImageView.image = [UIImage imageNamed:@"share"];
+    }
     return cell;
 }
 
@@ -104,7 +137,20 @@ UITableViewDataSource
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-   
+    FirstFilesModel *model = _dataSouceArray[indexPath.row];
+    if (model.type == WBFilesFirstDirectoryMyFiles) {
+        FilesNextViewController *filesVC = [[FilesNextViewController alloc]init];
+        filesVC.name = model.name;
+        filesVC.parentUUID = WB_UserService.currentUser.userHome;
+        filesVC.driveUUID = WB_UserService.currentUser.userHome;
+        [self.navigationController pushViewController:filesVC animated:YES];
+    }else{
+        FilesShareViewController * filesVC = [[FilesShareViewController alloc]init];
+        filesVC.title = model.name;
+        filesVC.dataSouceArray = _shareDataArray;
+//        [filesVC setDataSouceArrayWith:self.shareDataArray];
+        [self.navigationController pushViewController:filesVC animated:YES];
+    }
 }
 
 
@@ -125,5 +171,17 @@ UITableViewDataSource
     return _dataSouceArray;
 }
 
+- (NSMutableArray *)shareDataArray{
+    if (!_shareDataArray) {
+        _shareDataArray = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _shareDataArray;
+}
+
 
 @end
+
+@implementation FirstFilesModel
+
+@end
+

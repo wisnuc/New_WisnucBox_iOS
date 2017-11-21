@@ -57,13 +57,15 @@ __strong static id _sharedObject = nil;
     return self;
 }
 
-- (void)downloadOneFileWithFileModel:(EntriesModel *)dataModel UUID:(NSString *)uuid
+- (void)downloadOneFileWithFileModel:(EntriesModel *)dataModel
+                            RootUUID:(NSString *)rootUUID
+                                UUID:(NSString *)uuid
                        IsDownloading:(HelperDownloadingEventHandler)isDownloading
                                begin:(CSDownloadBeginEventHandler)begin
                             progress:(CSDownloadingEventHandler)progress
                             complete:(CSDownloadedEventHandler)complete{
     
-    NSString* fromUrl = [NSString stringWithFormat:@"%@drives/%@/dirs/%@/entries/%@?name=%@",[JYRequestConfig sharedConfig].baseURL,WB_UserService.currentUser.userHome,uuid,dataModel.uuid,dataModel.name];
+    NSString* fromUrl = [NSString stringWithFormat:@"%@drives/%@/dirs/%@/entries/%@?name=%@",[JYRequestConfig sharedConfig].baseURL,rootUUID,uuid,dataModel.uuid,dataModel.name];
     NSString* suffixName = dataModel.name;
     NSString* tmpFileName = [NSString stringWithFormat:@"file-%d.tmp",_downdloadCount];
     NSString* saveFileName= [NSString stringWithFormat:@"%@",suffixName];
@@ -122,9 +124,9 @@ __strong static id _sharedObject = nil;
     }
 }
 
-- (void)downloadFileWithFileModel:(EntriesModel *)dataModel UUID:(NSString *)uuid{
+- (void)downloadFileWithFileModel:(EntriesModel *)dataModel RootUUID:(NSString *)rootUUID UUID:(NSString *)uuid{
     _downdloadCount++;
-     NSString* fromUrl = [NSString stringWithFormat:@"%@drives/%@/dirs/%@/entries/%@?name=%@",[JYRequestConfig sharedConfig].baseURL,WB_UserService.currentUser.userHome,uuid,dataModel.uuid,dataModel.name];;
+     NSString* fromUrl = [NSString stringWithFormat:@"%@drives/%@/dirs/%@/entries/%@?name=%@",[JYRequestConfig sharedConfig].baseURL,rootUUID,uuid,dataModel.uuid,dataModel.name];;
     
     NSString* suffixName = dataModel.name;
     NSString* tmpFileName = [NSString stringWithFormat:@"file-%d.tmp",_downdloadCount];

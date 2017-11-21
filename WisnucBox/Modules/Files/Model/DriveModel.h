@@ -14,4 +14,5 @@
 @property (nonatomic,copy) NSString *tag;
 @property (nonatomic,copy) NSArray *writelist;
 @property (nonatomic,copy) NSString *type;
+@property (nonatomic,copy) NSString *label;
 @end

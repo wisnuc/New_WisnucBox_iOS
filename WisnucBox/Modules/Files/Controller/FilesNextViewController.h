@@ -10,5 +10,6 @@
 
 @interface FilesNextViewController : FABaseVC
 @property (nonatomic) NSString * parentUUID;
+@property (nonatomic) NSString * driveUUID;
 @property (nonatomic, strong) NSString *name;
 @end
