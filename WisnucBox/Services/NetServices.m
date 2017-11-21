@@ -10,6 +10,7 @@
 #import "NSString+DeviceName.h"
 #import "FLGetDriveDirAPI.h"
 #import "FLDrivesAPI.h"
+#import "CSFileDownloadManager.h"
 
 #define BackUpBaseDirName @"上传的照片"
 
@@ -45,6 +46,7 @@
 - (void)checkNetwork
 
 {
+    __block BOOL networkisLost;
     // 如果要检测网络状态的变化,必须用检测管理器的单例的startMonitoring
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     // 检测网络连接的单例,网络变化时的回调方法
@@ -55,17 +57,30 @@
              case AFNetworkReachabilityStatusNotReachable:
              {
                  NSLog(@"无网络");
+                 [SXLoadingView showProgressHUDText:@"网络已断开" duration:1];
+                 if ([CSFileDownloadManager sharedDownloadManager].downloadingTasks.count >0) {
+                     [[CSFileDownloadManager sharedDownloadManager] pauseAllDownloadTask];
+                 }
+                 networkisLost = YES;
                  break;
              }
              case AFNetworkReachabilityStatusReachableViaWiFi:
                  
              {
                  NSLog(@"WiFi网络");
+                 [SXLoadingView showProgressHUDText:@"正在使用WIFI" duration:1];
+                 if (networkisLost) {
+                     if ([CSFileDownloadManager sharedDownloadManager].downloadingTasks.count >0) {
+                         [[CSFileDownloadManager sharedDownloadManager] startAllDownloadTask];
+                     }
+                      networkisLost = NO;
+                 }
                  
                  break;
              }
              case AFNetworkReachabilityStatusReachableViaWWAN:
              {
+                [SXLoadingView showProgressHUDText:@"正在使用手机流量" duration:1];
                  NSLog(@"手机网络");
                  break;
              }
