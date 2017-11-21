@@ -94,7 +94,6 @@
     return YES;
 }
 
-
 -(void)initView{
     
     if(self.isShowCoverView){

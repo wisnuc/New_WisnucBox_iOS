@@ -9,7 +9,7 @@
 #import "NavViewController.h"
 //#import "UIView+dropshadow.h"
 
-@interface NavViewController ()
+@interface NavViewController ()<UINavigationBarDelegate>
 @property (nonatomic, assign) id currentDelegate;
 
 @end
@@ -18,20 +18,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationBar.backgroundColor = [UIColor whiteColor];
-//    UICOLOR_RGB(0x3f51b5);
     self.navigationBar.titleTextAttributes=@{NSForegroundColorAttributeName:[UIColor darkTextColor]};
     self.currentDelegate = self.interactivePopGestureRecognizer.delegate;
-    self.transferNavigationBarAttributes = YES;
-    UIView * redView = [[UIView alloc]initWithFrame:CGRectMake(0, -20, __kWidth, 20)];
-    redView.backgroundColor = [UIColor whiteColor];
+//    self.transferNavigationBarAttributes = YES;
+    self.delegate = self;
     self.navigationBar.translucent = NO;
-    [self.navigationBar addSubview:redView];
     [self useClipsToBoundsRemoveBlackLine];
-    
-    
 }
+
+
 -(void)useClipsToBoundsRemoveBlackLine
 {
     if ([self.navigationController.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)])
@@ -60,19 +56,6 @@
     //设置移除黑线
 //    [self.navigationController.navigationBar setShadowImage:[UIImage new]]; 
 }
-//- (void)_commonInit
-//{
-//    self.navigationBar.barTintColor = UICOLOR_RGB(0x3f51b5);
-//    self.navigationBar.backgroundColor = UICOLOR_RGB(0x3f51b5);
-//    self.navigationBar.titleTextAttributes=@{NSForegroundColorAttributeName:[UIColor whiteColor]};
-//    //    self.currentDelegate = self.interactivePopGestureRecognizer.delegate;
-////    self.transferNavigationBarAttributes = YES;
-//    UIView * redView = [[UIView alloc]initWithFrame:CGRectMake(0, -20, __kWidth, 20)];
-//    redView.backgroundColor = StatusBar_Color;
-//    self.navigationBar.translucent = NO;
-//    [self.navigationBar addSubview:redView];
-//    [self.navigationBar dropShadowWithOffset:CGSizeMake(0, 8) radius:8 color:[UIColor blackColor] opacity:0.5];
-//}
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
@@ -81,13 +64,8 @@
             [self addBackItemWith:viewController];
             NSLog(@"需要");
         }
-        
-        //        viewController.hidesBottomBarWhenPushed = YES;
-        
     }
-    
-    
-    
+    self.interactivePopGestureRecognizer.delegate = nil;
     [super pushViewController:viewController animated:animated];
     
 }
@@ -98,8 +76,7 @@
 }
 
 - (void)addBackItemWith:(UIViewController *)viewController
-{//14 28
-    
+{
     //左按钮
     UIButton *leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 52, 52)];
     [leftBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];//设置按钮点击事件
@@ -112,21 +89,14 @@
     negativeSpacer.width = -16 - 2*([UIScreen mainScreen].scale - 1);//这个数值可以根据情况自由变化
     viewController.navigationItem.leftBarButtonItems = @[negativeSpacer, leftBarButon];
     viewController.navigationItem.leftBarButtonItem.tintColor = [UIColor redColor];
-//    viewController.navigationItem.leftBarButtonItem.tintColor = [UIColor darkGrayColor];
-//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-//    button.frame = CGRectMake(0, 0,25, 25);
-//    [button setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
-//    [button addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
-//    viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
 }
-
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    if (viewController == self.viewControllers[0]) {
-        self.interactivePopGestureRecognizer.delegate = self.navigationController.interactivePopGestureRecognizer.delegate;
-    }else{
+    if (viewController != self.viewControllers[0]) {
         self.interactivePopGestureRecognizer.delegate = nil;
+    }else{
+        self.interactivePopGestureRecognizer.delegate = self.currentDelegate;
     }
 }
 

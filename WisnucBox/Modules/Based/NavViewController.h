@@ -8,6 +8,5 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NavViewController : RTRootNavigationController
-
+@interface NavViewController : UINavigationController
 @end

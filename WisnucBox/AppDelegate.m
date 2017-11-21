@@ -21,8 +21,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [MagicalRecord setupCoreDataStack];
+    [MagicalRecord setLoggingLevel:MagicalRecordLoggingLevelWarn];
     [self configWeChat];
-    [self redirectNSlogToDocumentFolder];
+//    [self redirectNSlogToDocumentFolder];
     [AppServices sharedService];
     [self initRootVC];
     return YES;
