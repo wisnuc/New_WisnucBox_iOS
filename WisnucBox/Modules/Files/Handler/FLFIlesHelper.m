@@ -8,7 +8,6 @@
 
 #import "FLFIlesHelper.h"
 #import "LocalDownloadViewController.h"
-#import "FilesViewController.h"
 #import "CSDownloadHelper.h"
 #import "CSFileUtil.h"
 
@@ -104,11 +103,11 @@ static dispatch_once_t onceToken;
     return _chooseFilesUUID;
 }
 
-- (void)downloadChooseFilesParentUUID:(NSString *)uuid{
+- (void)downloadChooseFilesParentUUID:(NSString *)uuid RootUUID:(NSString *)rootUUID{
     for (EntriesModel * model in [FLFIlesHelper helper].chooseFiles) {
         if ([model.type isEqualToString:@"file"]) {
-            NSLog(@"%@",model.type);
-            [[CSDownloadHelper shareManager] downloadFileWithFileModel:model UUID:uuid];
+//            NSLog(@"%@",model.type);
+            [[CSDownloadHelper shareManager] downloadFileWithFileModel:model RootUUID:rootUUID UUID:uuid];
         }
     }
      NSString * string  = [NSString stringWithFormat:@"%ld个文件已添加到下载",(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
@@ -116,7 +115,7 @@ static dispatch_once_t onceToken;
     [[FLFIlesHelper helper] removeAllChooseFile];
 }
 
-- (void)configCells:(FLFilesCell * )cell withModel:(EntriesModel *)model cellStatus:(FLFliesCellStatus)status viewController:(UIViewController *)viewController parentUUID:(NSString *)uuid{
+- (void)configCells:(FLFilesCell * )cell withModel:(EntriesModel *)model cellStatus:(FLFliesCellStatus)status viewController:(UIViewController *)viewController parentUUID:(NSString *)uuid RootUUID:(NSString *)rootUUID{
     cell.nameLabel.text = model.name;
     cell.sizeLabel.text = [NSString fileSizeWithFLModel:model];
 
@@ -180,7 +179,7 @@ static dispatch_once_t onceToken;
                 if ([downloadString isEqualToString:@"重新下载"]) {
                     [_filesServices deleteFileWithFileUUID:model.uuid FileName:model.name];
                 }
-                [[CSDownloadHelper  shareManager] downloadFileWithFileModel:model UUID:uuid];
+                [[CSDownloadHelper  shareManager] downloadFileWithFileModel:model RootUUID:rootUUID UUID:uuid ];
                 if(viewController){
 	                LocalDownloadViewController * localVC = [[LocalDownloadViewController alloc] init];
 	                [viewController.navigationController pushViewController:localVC animated:true];

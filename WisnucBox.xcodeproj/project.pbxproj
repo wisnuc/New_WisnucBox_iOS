@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1F0898DC1FB05FF900B86723 /* eye_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0898DB1FB05FF800B86723 /* eye_off.png */; };
-		1F196F391FB9424A004D5EB7 /* FilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F196F371FB9424A004D5EB7 /* FilesViewController.m */; };
-		1F196F3A1FB9424A004D5EB7 /* FilesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F196F381FB9424A004D5EB7 /* FilesViewController.xib */; };
 		1F1AB9EC1FB968CA006EB1FC /* FLFilesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AB9EA1FB968C9006EB1FC /* FLFilesCell.m */; };
 		1F1AB9ED1FB968CA006EB1FC /* FLFilesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F1AB9EB1FB968C9006EB1FC /* FLFilesCell.xib */; };
 		1F1AB9F21FB97092006EB1FC /* NSObject+KVOBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AB9F11FB97092006EB1FC /* NSObject+KVOBlock.m */; };
@@ -540,9 +538,6 @@
 
 /* Begin PBXFileReference section */
 		1F0898DB1FB05FF800B86723 /* eye_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye_off.png; sourceTree = "<group>"; };
-		1F196F361FB9424A004D5EB7 /* FilesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilesViewController.h; sourceTree = "<group>"; };
-		1F196F371FB9424A004D5EB7 /* FilesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilesViewController.m; sourceTree = "<group>"; };
-		1F196F381FB9424A004D5EB7 /* FilesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilesViewController.xib; sourceTree = "<group>"; };
 		1F1AB9E91FB968C8006EB1FC /* FLFilesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLFilesCell.h; sourceTree = "<group>"; };
 		1F1AB9EA1FB968C9006EB1FC /* FLFilesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLFilesCell.m; sourceTree = "<group>"; };
 		1F1AB9EB1FB968C9006EB1FC /* FLFilesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FLFilesCell.xib; sourceTree = "<group>"; };
@@ -1236,9 +1231,6 @@
 			children = (
 				1F1FA37C1FC2EDCD00272347 /* FirstFilesViewController.h */,
 				1F1FA37D1FC2EDCD00272347 /* FirstFilesViewController.m */,
-				1F196F361FB9424A004D5EB7 /* FilesViewController.h */,
-				1F196F371FB9424A004D5EB7 /* FilesViewController.m */,
-				1F196F381FB9424A004D5EB7 /* FilesViewController.xib */,
 				1F2BE2FF1FBC129700776DB3 /* FilesNextViewController.h */,
 				1F2BE3001FBC129700776DB3 /* FilesNextViewController.m */,
 				1F1FA3851FC3F38200272347 /* FilesShareViewController.h */,
@@ -2851,7 +2843,6 @@
 				F683107C1FB30AAE005AC578 /* About@3x.png in Resources */,
 				F68310C01FB30AAE005AC578 /* download@3x.png in Resources */,
 				F68311231FB30AAE005AC578 /* lock_photo@2x.png in Resources */,
-				1F196F3A1FB9424A004D5EB7 /* FilesViewController.xib in Resources */,
 				1FD7A0EB1FB05A45000D4CB3 /* back.png in Resources */,
 				F683117E1FB30AAF005AC578 /* select@2x.png in Resources */,
 				F68311CA1FB30AAF005AC578 /* send-_select.png in Resources */,
@@ -3198,7 +3189,6 @@
 				C138D05A1FB94D8D000CF518 /* FLGetDriveDirAPI.m in Sources */,
 				1F1ABA001FB978EB006EB1FC /* CSDownloadTaskQueue.m in Sources */,
 				F65035641FAC00A60007979D /* AppDelegate.m in Sources */,
-				1F196F391FB9424A004D5EB7 /* FilesViewController.m in Sources */,
 				C138D07A1FB9A4B0000CF518 /* DirectoriesModel.m in Sources */,
 				C138D0781FB9A4B0000CF518 /* DriveModel.m in Sources */,
 				F6830F181FB300D2005AC578 /* FMLeftUserCell.m in Sources */,

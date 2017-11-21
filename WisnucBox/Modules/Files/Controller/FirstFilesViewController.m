@@ -68,11 +68,11 @@ UITableViewDataSource
     [[FLDrivesAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSArray * responseArr = request.responseJsonObject;
         NSLog(@"%@",request.responseJsonObject);
+        __block NSInteger i = 0;
         [responseArr enumerateObjectsUsingBlock:^(NSDictionary * obj, NSUInteger idx, BOOL * _Nonnull stop) {
             DriveModel *model = [DriveModel yy_modelWithJSON:obj];
-            NSLog(@"writelist: %@| uuid: %@",model.writelist, WB_UserService.currentUser.uuid);
+//            NSLog(@"writelist: %@| uuid: %@",model.writelist, WB_UserService.currentUser.uuid);
             if(IsEquallString(model.tag, @"home")){
-                *stop = YES;
                 FirstFilesModel *filesModel =  [FirstFilesModel new];
                 filesModel.type = WBFilesFirstDirectoryMyFiles;
                 filesModel.name = @"我的文件";
@@ -88,10 +88,13 @@ UITableViewDataSource
                 
                 for (NSString *containUUID in model.writelist) {
                     if ([string isEqualToString:containUUID]) {
-                        FirstFilesModel *shareModel =  [FirstFilesModel new];
-                        shareModel.type = WBFilesFirstDirectoryShare;
-                        shareModel.name = @"共享盘";
-                        [self.dataSouceArray addObject:shareModel];
+                        i++;
+                        if (i == 1) {
+                            FirstFilesModel *shareModel =  [FirstFilesModel new];
+                            shareModel.type = WBFilesFirstDirectoryShare;
+                            shareModel.name = @"共享盘";
+                            [self.dataSouceArray addObject:shareModel];
+                        }
                         [self.shareDataArray addObject:model];
                     }
                 }
@@ -139,6 +142,7 @@ UITableViewDataSource
         FilesNextViewController *filesVC = [[FilesNextViewController alloc]init];
         filesVC.name = model.name;
         filesVC.parentUUID = WB_UserService.currentUser.userHome;
+        filesVC.driveUUID = WB_UserService.currentUser.userHome;
         [self.navigationController pushViewController:filesVC animated:YES];
     }else{
         FilesShareViewController * filesVC = [[FilesShareViewController alloc]init];

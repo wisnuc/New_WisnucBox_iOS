@@ -32,9 +32,9 @@
 
 + (void)destroyAll;
 
--(void)downloadChooseFilesParentUUID:(NSString *)uuid;
+- (void)downloadChooseFilesParentUUID:(NSString *)uuid RootUUID:(NSString *)rootUUID;
 
--(void)configCells:(FLFilesCell * )cell withModel:(EntriesModel *)model cellStatus:(FLFliesCellStatus)status viewController:(UIViewController *)viewController parentUUID:(NSString *)uuid;
+- (void)configCells:(FLFilesCell * )cell withModel:(EntriesModel *)model cellStatus:(FLFliesCellStatus)status viewController:(UIViewController *)viewController parentUUID:(NSString *)uuid RootUUID:(NSString *)rootUUID;
 
 -(void)addChooseFile:(EntriesModel *)model;
 

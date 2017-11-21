@@ -87,7 +87,7 @@ FilesHelperOpenFilesDelegate
 
 - (void)loadData{
     [FilesDataSourceManager manager].delegate = self;
-    [[FilesDataSourceManager manager] getFilesWithUUID:WB_UserService.currentUser.userHome];
+    [[FilesDataSourceManager manager] getFilesWithDriveUUID:WB_UserService.currentUser.userHome DirUUID:WB_UserService.currentUser.userHome];
     _cellStatus = FLFliesCellStatusNormal;
     [self.tableView reloadData];
 }
@@ -282,6 +282,7 @@ FilesHelperOpenFilesDelegate
             FilesNextViewController * vc = [FilesNextViewController new];
             vc.parentUUID = model.uuid;
             vc.name = model.name;
+            vc.driveUUID = WB_UserService.currentUser.userHome;
             if (self.cellStatus == FLFliesCellStatusNormal) {
                 [[FilesDataSourceManager manager].dataArray removeAllObjects];
 //                [self.rdv_tabBarController setTabBarHidden:YES animated:YES];
@@ -313,7 +314,7 @@ FilesHelperOpenFilesDelegate
                         [[CSDownloadHelper shareManager] cancleDownload];
                     };
                     [_progressView show];
-                    [[CSDownloadHelper shareManager] downloadOneFileWithFileModel:model UUID:WB_UserService.currentUser.userHome IsDownloading:^(BOOL isDownloading) {
+                    [[CSDownloadHelper shareManager] downloadOneFileWithFileModel:model  UUID:WB_UserService.currentUser.userHome IsDownloading:^(BOOL isDownloading) {
                         if (isDownloading){
                             [_progressView dismiss];
                             LocalDownloadViewController *localDownloadViewController = [[LocalDownloadViewController alloc] init];

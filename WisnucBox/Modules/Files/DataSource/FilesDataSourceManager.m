@@ -38,9 +38,9 @@ static dispatch_once_t onceToken;
 
 
 
-- (void)getFilesWithUUID:(NSString *)uuid{
-    
-    FLGetDriveDirAPI *api = [FLGetDriveDirAPI apiWithDrive:WB_UserService.currentUser.userHome dir:uuid];
+- (void)getFilesWithDriveUUID:(NSString *)driveUUID DirUUID:(NSString *)uuid{
+    FLGetDriveDirAPI *api = [FLGetDriveDirAPI apiWithDrive:driveUUID dir:uuid];
+//     NSLog(@"%@",api.requestUrl);
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
         FilesModel *model = [FilesModel yy_modelWithJSON:request.responseJsonObject ];

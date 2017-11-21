@@ -67,7 +67,6 @@ UITableViewDataSource
         cell= (FLFilesCell *)[[[NSBundle  mainBundle] loadNibNamed:NSStringFromClass([FLFilesCell class]) owner:self options:nil]  lastObject];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    NSLog(@"%@",self.dataSouceArray);
     ShareFilesModel *model = self.dataSouceArray[indexPath.row];
     cell.nameLabel.text = model.label;
     cell.downBtn.hidden = YES;
@@ -85,16 +84,12 @@ UITableViewDataSource
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    FirstFilesModel *model = _dataSouceArray[indexPath.row];
-//    if (model.type == WBFilesFirstDirectoryMyFiles) {
-//        FilesNextViewController *filesVC = [[FilesNextViewController alloc]init];
-//        filesVC.name = model.name;
-//        filesVC.parentUUID = WB_UserService.currentUser.userHome;
-//        [self.navigationController pushViewController:filesVC animated:YES];
-//    }else{
-//        FilesViewController * filesVC = [[FilesViewController alloc]init];
-//        [self.navigationController pushViewController:filesVC animated:YES];
-//    }
+    ShareFilesModel *model = _dataSouceArray[indexPath.row];
+    FilesNextViewController *filesVC = [[FilesNextViewController alloc]init];
+    filesVC.name = model.label;
+    filesVC.parentUUID = model.uuid;
+    filesVC.driveUUID = model.uuid;
+    [self.navigationController pushViewController:filesVC animated:YES];
 }
 
 
