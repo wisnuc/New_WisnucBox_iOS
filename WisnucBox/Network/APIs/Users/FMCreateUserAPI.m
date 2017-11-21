@@ -7,6 +7,7 @@
 //
 
 #import "FMCreateUserAPI.h"
+#import "Base64.h"
 
 @implementation FMCreateUserAPI
 
@@ -15,12 +16,16 @@
 }
 /// 请求的URL
 - (NSString *)requestUrl{
-    return @"users";
+    return WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@", kCloudAddr, kCloudCommonJsonUrl] : @"users";
 }
 
 -(id)requestArgument{
-    NSLog(@"%@",_param);
-    return self.param;
+    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:_param];
+    return WB_UserService.currentUser.isCloudLogin ? ({
+        [dic setObject:[@"users" base64EncodedString] forKey:@"resource"];
+        [dic setObject:@"POST" forKey:@"method"];
+        dic;
+    }) : self.param;
 }
 
 -(NSDictionary *)requestHeaderFieldValueDictionary{
