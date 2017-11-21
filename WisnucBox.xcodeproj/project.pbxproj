@@ -20,6 +20,10 @@
 		1F1ABA0D1FB9862A006EB1FC /* TestDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1ABA0C1FB9862A006EB1FC /* TestDataModel.m */; };
 		1F1ABA131FB99882006EB1FC /* CSDownloadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1ABA121FB99882006EB1FC /* CSDownloadHelper.m */; };
 		1F1FA37E1FC2EDCD00272347 /* FirstFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1FA37D1FC2EDCD00272347 /* FirstFilesViewController.m */; };
+		1F1FA3821FC3D6DA00272347 /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F1FA37F1FC3D6D800272347 /* share.png */; };
+		1F1FA3831FC3D6DA00272347 /* share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F1FA3801FC3D6D900272347 /* share@2x.png */; };
+		1F1FA3841FC3D6DA00272347 /* share@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F1FA3811FC3D6D900272347 /* share@3x.png */; };
+		1F1FA3871FC3F38200272347 /* FilesShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1FA3861FC3F38200272347 /* FilesShareViewController.m */; };
 		1F2BE3011FBC129700776DB3 /* FilesNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2BE3001FBC129700776DB3 /* FilesNextViewController.m */; };
 		1F3F99801FB0312300D6CC64 /* LocalDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F997E1FB0312300D6CC64 /* LocalDownloadViewController.m */; };
 		1F3F99811FB0312300D6CC64 /* LocalDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3F997F1FB0312300D6CC64 /* LocalDownloadViewController.xib */; };
@@ -561,6 +565,11 @@
 		1F1ABA121FB99882006EB1FC /* CSDownloadHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSDownloadHelper.m; sourceTree = "<group>"; };
 		1F1FA37C1FC2EDCD00272347 /* FirstFilesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstFilesViewController.h; sourceTree = "<group>"; };
 		1F1FA37D1FC2EDCD00272347 /* FirstFilesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstFilesViewController.m; sourceTree = "<group>"; };
+		1F1FA37F1FC3D6D800272347 /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
+		1F1FA3801FC3D6D900272347 /* share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share@2x.png"; sourceTree = "<group>"; };
+		1F1FA3811FC3D6D900272347 /* share@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share@3x.png"; sourceTree = "<group>"; };
+		1F1FA3851FC3F38200272347 /* FilesShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilesShareViewController.h; sourceTree = "<group>"; };
+		1F1FA3861FC3F38200272347 /* FilesShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilesShareViewController.m; sourceTree = "<group>"; };
 		1F244D9D3BCB4706DAFC363E /* Pods-WisnucBox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.debug.xcconfig"; sourceTree = "<group>"; };
 		1F2BE2FF1FBC129700776DB3 /* FilesNextViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilesNextViewController.h; sourceTree = "<group>"; };
 		1F2BE3001FBC129700776DB3 /* FilesNextViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilesNextViewController.m; sourceTree = "<group>"; };
@@ -1232,6 +1241,8 @@
 				1F196F381FB9424A004D5EB7 /* FilesViewController.xib */,
 				1F2BE2FF1FBC129700776DB3 /* FilesNextViewController.h */,
 				1F2BE3001FBC129700776DB3 /* FilesNextViewController.m */,
+				1F1FA3851FC3F38200272347 /* FilesShareViewController.h */,
+				1F1FA3861FC3F38200272347 /* FilesShareViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1637,6 +1648,9 @@
 		1F7CE6531FB0028C004467C8 /* Based */ = {
 			isa = PBXGroup;
 			children = (
+				1F1FA37F1FC3D6D800272347 /* share.png */,
+				1F1FA3801FC3D6D900272347 /* share@2x.png */,
+				1F1FA3811FC3D6D900272347 /* share@3x.png */,
 				1FD7A0E91FB05A45000D4CB3 /* back_gray.png */,
 				1FD7A0E81FB05A45000D4CB3 /* back_gray@2x.png */,
 				1FD7A0E61FB05A45000D4CB3 /* back_gray@3x.png */,
@@ -2707,6 +2721,7 @@
 				F68310F11FB30AAE005AC578 /* ic_account_circle.png in Resources */,
 				F68311641FB30AAE005AC578 /* photo_select@3x.png in Resources */,
 				F68310FE1FB30AAE005AC578 /* ic_lock_outline@2x.png in Resources */,
+				1F1FA3821FC3D6DA00272347 /* share.png in Resources */,
 				F683113C1FB30AAE005AC578 /* nav_left_close@3x.png in Resources */,
 				F68311591FB30AAE005AC578 /* photo_placeholder.png in Resources */,
 				F683114B1FB30AAE005AC578 /* person_add@2x.png in Resources */,
@@ -2794,6 +2809,7 @@
 				F68311921FB30AAF005AC578 /* small_0.png in Resources */,
 				1F4D75A71FAC4BB800E6516C /* DGPopUpViewTextView.xib in Resources */,
 				F68311AF1FB30AAF005AC578 /* up.png in Resources */,
+				1F1FA3841FC3D6DA00272347 /* share@3x.png in Resources */,
 				F68311AB1FB30AAF005AC578 /* transparency_bg@3x.png in Resources */,
 				F683115A1FB30AAE005AC578 /* photo_placeholder@2x.png in Resources */,
 				F671F1041FB4B3B50051DF93 /* floatTableViewCell.xib in Resources */,
@@ -2988,6 +3004,7 @@
 				F68311C21FB30AAF005AC578 /* circle@2x.png in Resources */,
 				F68311071FB30AAE005AC578 /* icon_close@2x.png in Resources */,
 				F68311931FB30AAF005AC578 /* small_0@2x.png in Resources */,
+				1F1FA3831FC3D6DA00272347 /* share@2x.png in Resources */,
 				F68311731FB30AAE005AC578 /* praise_share@3x.png in Resources */,
 				F68311C41FB30AAF005AC578 /* praise_line.png in Resources */,
 				F68311811FB30AAF005AC578 /* set@2x.png in Resources */,
@@ -3269,6 +3286,7 @@
 				F6830EF11FB2FEF3005AC578 /* FMUserSetting.m in Sources */,
 				1F4D75B21FAC4BB800E6516C /* DBServices.m in Sources */,
 				1F3F99891FB0353F00D6CC64 /* LocalDownloadTableViewCell.m in Sources */,
+				1F1FA3871FC3F38200272347 /* FilesShareViewController.m in Sources */,
 				F67D64121FAC7D7F00E23D16 /* CocoaSecurity.m in Sources */,
 				7EC1F8F7B7661283352336B2 /* UIViewController+controller.m in Sources */,
 			);
