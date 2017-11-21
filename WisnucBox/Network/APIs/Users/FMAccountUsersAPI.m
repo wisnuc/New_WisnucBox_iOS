@@ -18,7 +18,7 @@
 /// 请求的URL
 - (NSString *)requestUrl{
     NSString * resouce = [NSString stringWithFormat:@"users/%@", WB_UserService.currentUser.uuid];
-    return WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@json?resource=%@&method=GET", kCloudAddr, kCloudCommonJsonUrl, [resouce base64EncodedString]] : resouce;
+    return WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@?resource=%@&method=GET", kCloudAddr, kCloudCommonJsonUrl, [resouce base64EncodedString]] : resouce;
 }
 
 -(NSDictionary *)requestHeaderFieldValueDictionary{
