@@ -12,7 +12,7 @@
     UILabel * _label;
 }
 
-+(FMLeftUserFooterView *)footerViewWithTouchBlock:(void(^)())block{
++(FMLeftUserFooterView *)footerViewWithTouchBlock:(void(^)(void))block{
     FMLeftUserFooterView * view = [[FMLeftUserFooterView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 64)];
     [view setUpViews];
     view.touchBlock = block;

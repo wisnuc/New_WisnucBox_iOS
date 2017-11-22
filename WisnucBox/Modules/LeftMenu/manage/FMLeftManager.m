@@ -61,11 +61,11 @@
         _needRefrushProgress = YES;
         return;
     }
+    @weaky(self);
     [WB_PhotoUploadManager getAllCount:^(NSInteger allCount) {
-        self.isUpdateingProgress = YES;
-        self.needRefrushProgress = NO;
-        @weaky(self);
-        [_leftMenu updateProgressWithAllCount:allCount currentCount:WB_PhotoUploadManager.uploadedQueue.count complete:^{
+        weak_self.isUpdateingProgress = YES;
+        weak_self.needRefrushProgress = NO;
+        [weak_self.leftMenu updateProgressWithAllCount:allCount currentCount:WB_PhotoUploadManager.uploadedQueue.count complete:^{
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 weak_self.isUpdateingProgress = NO;
                 if(weak_self.needRefrushProgress) [weak_self changeBackupProgress];

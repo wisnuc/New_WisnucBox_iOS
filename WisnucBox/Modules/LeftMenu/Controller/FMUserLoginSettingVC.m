@@ -64,7 +64,7 @@
     cell.userHeaderIV.image = [UIImage imageForName:((WBUser *)(_dataSource[indexPath.section][indexPath.row])).userName size:cell.userHeaderIV.bounds.size];
     cell.userNameLb.text = ((WBUser *)(_dataSource[indexPath.section][indexPath.row])).userName;
 //    @weaky(MyAppDelegate);
-    @weaky(self);
+//    @weaky(self);
     cell.deleteBtnClick = ^(UIButton * btn){
        WBUser * info =  (WBUser *)(_dataSource[indexPath.section][indexPath.row]);
         [SXLoadingView showProgressHUD:@"正在删除数据"];

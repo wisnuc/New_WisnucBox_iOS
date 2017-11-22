@@ -9,7 +9,7 @@
 #import "NavViewController.h"
 //#import "UIView+dropshadow.h"
 
-@interface NavViewController ()<UINavigationBarDelegate>
+@interface NavViewController ()
 @property (nonatomic, assign) id currentDelegate;
 
 @end
@@ -22,7 +22,7 @@
     self.navigationBar.titleTextAttributes=@{NSForegroundColorAttributeName:[UIColor darkTextColor]};
     self.currentDelegate = self.interactivePopGestureRecognizer.delegate;
 //    self.transferNavigationBarAttributes = YES;
-    self.delegate = self;
+    self.delegate = (id<UINavigationControllerDelegate>)self;
     self.navigationBar.translucent = NO;
     [self useClipsToBoundsRemoveBlackLine];
 }

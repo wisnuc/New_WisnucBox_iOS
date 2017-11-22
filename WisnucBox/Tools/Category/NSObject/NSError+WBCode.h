@@ -10,6 +10,8 @@
 
 @interface NSError (WBCode)
 
+#define WBUndefindError  -1
+
 @property (nonatomic, assign) NSInteger wbCode;
 
 @end

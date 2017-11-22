@@ -46,7 +46,7 @@
 
 - (void)rebulid;
 
-- (void)startUploadAssets:(void(^)())complete;
+- (void)startUploadAssets:(void(^)(void))complete;
 
 - (void)loginWithBasic:(NSString *)basic userUUID:(NSString *)uuid name:(NSString *)userName addr:(NSString *)addr isWechat:(BOOL)isWechat completeBlock:(void(^)(NSError *error, WBUser *user))callback;
 
@@ -59,6 +59,7 @@
 @end
 
 #define HashCalculateFinishedNotify @"HashCalculateFinishedNotify"
+#define WBUploadManagerDestroyedNotify @"WBUploadManagerDestroyedNotify"
 
 @class WBUploadModel;
 @interface WBUploadManager : NSObject
@@ -104,6 +105,10 @@
 - (void)removeTasks:(NSArray<JYAsset *> *)assets;
 
 @end
+
+// error code
+#define WBUploadDirNotFound   10011
+#define WBUploadFileExist     10012
 
 @interface WBUploadModel : NSObject
 

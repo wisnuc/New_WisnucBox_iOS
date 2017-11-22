@@ -71,14 +71,14 @@
     
     NSInteger duration = (NSInteger)round(self.duration);
     
-    if (duration < 60) return [NSString stringWithFormat:@"00:%02ld", duration];
+    if (duration < 60) return [NSString stringWithFormat:@"00:%02ld", (long)duration];
     
     else if (duration < 3600) return [NSString stringWithFormat:@"%02ld:%02ld", duration / 60, duration % 60];
     
         NSInteger h = duration / 3600;
         NSInteger m = (duration % 3600) / 60;
         NSInteger s = duration % 60;
-        return [NSString stringWithFormat:@"%02ld:%02ld:%02ld", h, m, s];
+    return [NSString stringWithFormat:@"%02ld:%02ld:%02ld", (long)h, (long)m, (long)s];
     
 }
 

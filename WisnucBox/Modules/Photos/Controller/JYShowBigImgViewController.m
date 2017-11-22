@@ -480,7 +480,7 @@
 //    //jy
 //    //    _senderViewForAnimation.hidden = YES;
 //    
-    void (^completion)() = ^() {
+    void (^completion)(void) = ^() {
         self.view.alpha = 1.0f;
         _collectionView.alpha = 1.0f;
         resizableImageView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
@@ -530,7 +530,7 @@
     [mainWindow addSubview:resizableImageView];
     self.view.hidden = YES;
     
-    void (^completion)() = ^() {
+    void (^completion)(void) = ^() {
         _senderViewForAnimation.hidden = NO;
         _senderViewForAnimation = nil;
         _scaleImage = nil;

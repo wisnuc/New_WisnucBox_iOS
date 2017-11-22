@@ -40,9 +40,9 @@
 
 @property (nonatomic) NSMutableArray * usersDatasource;
 
-@property (nonatomic) void(^footViewClickBlock)();
+@property (nonatomic) void(^footViewClickBlock)(void);
 
-- (void)updateProgressWithAllCount:(NSInteger)allcount currentCount:(NSInteger)currentCount complete:(void(^)())callback;
+- (void)updateProgressWithAllCount:(NSInteger)allcount currentCount:(NSInteger)currentCount complete:(void(^)(void))callback;
 
 - (void)checkToStart;
 

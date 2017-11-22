@@ -12,6 +12,7 @@
 #import "FLDrivesAPI.h"
 #import "WBCloudJsonAPI.h"
 #import "Base64.h"
+#import "NSError+WBCode.h"
 #import "CSFileDownloadManager.h"
 
 #define BackUpBaseDirName @"上传的照片"
@@ -253,6 +254,8 @@
         }];
         callback(nil, entries);
     } failure:^(__kindof JYBaseRequest *request) {
+        if(request.responseStatusCode == 404)
+            request.error.wbCode = WBUploadDirNotFound;
         NSLog(@"get backup dir entries error : %@", request.error);
         callback(request.error, nil);
     }];

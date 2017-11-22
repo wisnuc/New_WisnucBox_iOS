@@ -17,7 +17,9 @@
 #import "CSDownloadHelper.h"
 #import "NSError+WBCode.h"
 
-@implementation AppServices
+@implementation AppServices {
+    BOOL _isRebuildingPhotoUploader;
+}
 
 // init asset
 // init userServices
@@ -72,6 +74,28 @@
     else if(self.photoUploadManager.shouldUpload == NO) {
         [self startUploadAssets:nil];
     }
+}
+
+//need destroy photoUploadManager and rebulid if currentuser`s backupdir notfound,
+- (void)rebulidUploadManager{
+    if (_isRebuildingPhotoUploader)  return;
+    _isRebuildingPhotoUploader = YES;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if(_photoUploadManager)
+            [_photoUploadManager destroy];
+        _photoUploadManager = nil;
+        NSLog(@"PhotoUploadManager destroy Success!");
+        @weaky(self);
+        [self updateUserBackupDir:^(NSError *error, WBUser *user) {
+            _isRebuildingPhotoUploader = false;
+            if(!error) {
+                [weak_self.photoUploadManager startWithLocalAssets:[self.assetServices allAssets] andNetAssets:@[]];
+                [weak_self startUploadAssets:nil];
+            } else
+                NSLog(@"--------->> Update User BackUp Dir Error <<------------- \n error: %@", error);
+            
+        }];
+    });
 }
 
 - (void)rebulid {
@@ -225,6 +249,22 @@
     }];
 }
 
+- (void)updateUserBackupDir:(void(^)(NSError *, WBUser *))callback {
+    [WB_NetService getUserHome:^(NSError *error, NSString *userHome){
+        if(error) return callback(({error.wbCode = 10002; error;}), WB_UserService.currentUser);
+        WB_UserService.currentUser.userHome = userHome;
+        [WB_UserService synchronizedCurrentUser];
+        NSLog(@"GET USER HOME SUCCESS");
+        [WB_NetService getUserBackupDir:^(NSError *error, NSString *entryUUID) {
+            if(error) return callback(({error.wbCode = 10003; error;}), WB_UserService.currentUser);
+            WB_UserService.currentUser.backUpDir = entryUUID;
+            [WB_UserService synchronizedCurrentUser];
+            NSLog(@"GET BACKUP DIR SUCCESS");
+            return callback(nil, WB_UserService.currentUser);
+        }];
+    }];
+}
+
 - (void)requestForBackupPhotos:(void(^)(BOOL shouldUpload))callback {
     UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否自动备份该手机的照片至WISNUC服务器" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
@@ -248,9 +288,14 @@
     }];
 }
 
-- (void)startUploadAssets:(void(^)())complete {
+- (void)startUploadAssets:(void(^)(void))complete {
+    @weaky(self);
     [self.netServices getEntriesInUserBackupDir:^(NSError *error, NSArray<EntriesModel *> *entries) {
-        if(error) return NSLog(@"Get BackupDir entries error");
+        if(error) {
+            if(error.wbCode == WBUploadDirNotFound)
+                [weak_self rebulidUploadManager];
+            return NSLog(@"Get BackupDir entries error");
+        }
         NSLog(@"Start Upload ...");
         NSMutableArray * netEntries = [NSMutableArray arrayWithArray:entries];
         [self.photoUploadManager setNetAssets:netEntries];
@@ -258,7 +303,6 @@
         if(complete) complete();
     }];
 }
-
 
 // services load
 
@@ -385,6 +429,8 @@
 
 @property (nonatomic, strong) NSMutableSet<NSString *> * uploadedNetHashSet;
 
+@property (nonatomic, strong) NSMutableSet<NSString *> *uploadedLocalHashSet;
+
 @property (nonatomic) dispatch_queue_t managerQueue;
 
 @property (nonatomic) dispatch_queue_t workingQueue;
@@ -434,6 +480,15 @@
             _uploadedNetHashSet = [NSMutableSet set];
         }
         return _uploadedNetHashSet;
+    }
+}
+
+- (NSMutableSet<NSString *> *)uploadedLocalHashSet {
+    @synchronized (self) {
+        if(!_uploadedLocalHashSet){
+            _uploadedLocalHashSet = [NSMutableSet set];
+        }
+        return _uploadedLocalHashSet;
     }
 }
 
@@ -665,9 +720,9 @@
             _shouldNotify = NO;
             [[NSNotificationCenter defaultCenter] postNotificationName:HashCalculateFinishedNotify object:nil];
         }
-        NSLog(@"hash calculate finish. uploadPaddingQueue:%ld", self.uploadPaddingQueue.count);
+        NSLog(@"hash calculate finish. uploadPaddingQueue:%lu", (unsigned long)self.uploadPaddingQueue.count);
     }
-    if(self.hashwaitingQueue.count == 0 && self.hashWorkingQueue.count == 0 && self.uploadPaddingQueue.count == 0 && self.uploadingQueue.count == 0) NSLog(@"backup asset finish ----=======>>>><<<<<<<<====-----  errorCount:%ld  finishedCount:%ld", _uploadErrorQueue.count, _uploadedQueue.count);
+    if(self.hashwaitingQueue.count == 0 && self.hashWorkingQueue.count == 0 && self.uploadPaddingQueue.count == 0 && self.uploadingQueue.count == 0) NSLog(@"backup asset finish ----=======>>>><<<<<<<<====-----  errorCount:%lu  finishedCount:%lu", (unsigned long)_uploadErrorQueue.count, (unsigned long)_uploadedQueue.count);
     while(self.hashWorkingQueue.count < self.hashLimitCount && self.hashwaitingQueue.count > 0) {
         JYAsset * asset = [self.hashwaitingQueue lastObject];
         [self.hashwaitingQueue removeLastObject];
@@ -676,7 +731,6 @@
         dispatch_async([self workingQueue], ^{
             [self asset:asset getSha256:^(NSError *error, NSString *sha256) {
                 dispatch_async(self.managerQueue, ^{
-                    NSLog(@"Hash...Success");
                     if (error) {
                         [weakSelf.hashFailQueue addObject:asset];
                     }else {
@@ -696,29 +750,42 @@
         JYAsset * asset = [self.uploadPaddingQueue lastObject];
         [self.uploadPaddingQueue removeLastObject];
         WBUploadModel * model = [WBUploadModel initWithAsset:asset];
-        if([self.uploadedNetHashSet containsObject:asset.digest]) {
+        if([self.uploadedNetHashSet containsObject:asset.digest] || [self.uploadedLocalHashSet containsObject:asset.digest]) {
             dispatch_async(self.managerQueue, ^{
                 [self.uploadedQueue addObject:model];
-                NSLog(@"发现一个已上传的，直接跳过, error: %ld  finish:%ld", _uploadErrorQueue.count, _uploadedQueue.count);
+                NSLog(@"发现一个已上传的，直接跳过, error: %lu  finish:%lu", (unsigned long)_uploadErrorQueue.count, (unsigned long)_uploadedQueue.count);
                 [[NSNotificationCenter defaultCenter] postNotificationName:WBBackupCountChangeNotify object:nil];
                 [self schedule];
             });
         }else {
             [self.uploadingQueue addObject:model];
             __weak typeof(self) weakSelf = self;
+            __weak typeof(WB_AppServices) weak_AppService = WB_AppServices;
             [model startWithCompleteBlock:^(NSError *error, id response) {
-                dispatch_async(self.managerQueue, ^{
+                if(!weakSelf) return;
+                dispatch_async(weakSelf.managerQueue, ^{
                     if (error) {
-                        if(!model.isRemoved)
-                            [weakSelf.uploadErrorQueue addObject:model];
-                        [weakSelf.uploadingQueue removeObject:model];
-                        NSLog(@"上传失败 , error: %ld  finish:%ld", _uploadErrorQueue.count, _uploadedQueue.count);
-                    }else{
+                        if (error.wbCode == WBUploadDirNotFound) {
+                            [weakSelf stop];   // stop
+                            // need rebuild
+                            [weakSelf destroy];
+                            [weak_AppService rebulidUploadManager];
+                        }else if (error.wbCode == WBUploadFileExist) {
+                            // rename then retry
+
+                        }else {
+                            if(!model.isRemoved)
+                                [weakSelf.uploadErrorQueue addObject:model];
+                            [weakSelf.uploadingQueue removeObject:model];
+                            NSLog(@"上传失败 , error: %lu  finish:%lu", (unsigned long)weakSelf.uploadErrorQueue.count, (unsigned long)weakSelf.uploadedQueue.count);
+                        }
+                    }else{  // success
                         if(!model.isRemoved)
                             [weakSelf.uploadedQueue addObject:model];
                         [weakSelf.uploadingQueue removeObject:model];
+                        [weakSelf.uploadedLocalHashSet addObject:model.asset.digest]; // record for skip equal-hash asset
                         [[NSNotificationCenter defaultCenter] postNotificationName:WBBackupCountChangeNotify object:nil];
-                        NSLog(@"上传成功 , error: %ld  finish:%ld", _uploadErrorQueue.count, _uploadedQueue.count);
+                        NSLog(@"上传成功 , error: %lu  finish:%lu", (unsigned long)weakSelf.uploadErrorQueue.count, (unsigned long)weakSelf.uploadedQueue.count);
                     }
                     [weakSelf schedule];
                 });
@@ -749,7 +816,7 @@
     [self.uploadedQueue removeAllObjects];
     [self.uploadErrorQueue removeAllObjects];
     [self.uploadedNetQueue removeAllObjects];
-    
+    [self.uploadedLocalHashSet removeAllObjects];
 }
 
 @end
@@ -772,10 +839,10 @@
         if(error)
             return callback(error, nil);
         NSLog(@"==========================开始上传==============================");
-        NSString * hashString = self.asset.digest;
+        NSString * hashString = weak_self.asset.digest;
         NSInteger sizeNumber = (NSInteger)[WB_FileService fileSizeAtPath:filePath];
         NSString * exestr = [filePath lastPathComponent];
-        NSString * fileName = [PHAssetResource assetResourcesForAsset:self.asset.asset].firstObject.originalFilename;
+        NSString * fileName = [PHAssetResource assetResourcesForAsset:weak_self.asset.asset].firstObject.originalFilename;
         if(IsNilString(fileName)) fileName = exestr;
         NSMutableString * tempFileName = [NSMutableString stringWithString:fileName];
         NSArray * invaildChars = @[@"/", @"?", @"<", @">", @"\\", @":", @"*", @"|", @"\""];
@@ -804,19 +871,35 @@
         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSLog(@"Upload Success -->");
             [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
-            callback(nil, responseObject);
+            if(!weak_self) return;
+            if(weak_self.callback) weak_self.callback(nil, responseObject);
+            NSLog(@"....???...");
         }
         failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"Upload Failure ---> : %@", error);
-            NSLog(@"Upload Failure ---> : %@", fileName);
-            weak_self.error = error;
+            NSLog(@"Upload Failure ---> : %@  ----> : %ld", fileName, (long)((NSHTTPURLResponse *)task.response).statusCode);
             NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
-            if(errorData.length >0){
+            if(errorData.length >0 && ((NSHTTPURLResponse *)task.response).statusCode == 403){
                 NSMutableArray *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
                 NSLog(@"Upload Failure ---> :serializedData %@", serializedData);
+                @try {
+                    NSDictionary *errorRootDic = serializedData[0];
+                    NSDictionary *errorDic = errorRootDic[@"error"];
+                    NSString *code = errorDic[@"code"];
+                    NSInteger status = [errorDic[@"status"] integerValue];
+                    if ([code isEqualToString:@"EEXIST"])
+                        error.wbCode = WBUploadFileExist;
+                    if(status == 404)
+                        error.wbCode = WBUploadDirNotFound;
+                } @catch (NSException *exception) {
+                    NSLog(@"%@", exception);
+                }
             }
             [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil]; // remove tmpFile
-            callback(error, nil);
+            
+            if (!weak_self) return;
+            weak_self.error = error;
+            if (weak_self.callback) weak_self.callback(error, nil);
         }];
     }];
 }

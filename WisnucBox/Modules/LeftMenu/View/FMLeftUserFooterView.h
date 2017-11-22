@@ -10,8 +10,8 @@
 
 @interface FMLeftUserFooterView : UIView
 
-@property (nonatomic,copy) void (^touchBlock)() ;
+@property (nonatomic,copy) void (^touchBlock)(void) ;
 
-+(FMLeftUserFooterView *)footerViewWithTouchBlock:(void(^)())block;
++(FMLeftUserFooterView *)footerViewWithTouchBlock:(void(^)(void))block;
 
 @end

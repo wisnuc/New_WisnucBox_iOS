@@ -266,7 +266,7 @@ typedef void(^LCActionSheetDidDismissHandle)(LCActionSheet *actionSheet, NSInteg
  *  Initialize an instance of LCActionSheet with title array (Block).
  *
  *  @param title                 title
- *  @param delegate              delegate
+ *  @param cancelButtonTitle
  *  @param clickedHandle          clickedHandle
  *  @param otherButtonTitleArray otherButtonTitleArray
  *
@@ -296,7 +296,7 @@ typedef void(^LCActionSheetDidDismissHandle)(LCActionSheet *actionSheet, NSInteg
  *  Initialize an instance of LCActionSheet with title array (Block).
  *
  *  @param title                 title
- *  @param delegate              delegate
+ *  @param cancelButtonTitle              
  *  @param clickedHandle          clickedHandle
  *  @param otherButtonTitleArray otherButtonTitleArray
  *
