@@ -38,8 +38,13 @@
     if(self = [super init]){
         self.localUrl = localUrl;
         self.cloudUrl = cloudUrl;
-        self.isCloud = NO;
-        [JYRequestConfig sharedConfig].baseURL = localUrl;
+        if (self.localUrl.length>0  && self.cloudUrl.length == 0) {
+            self.isCloud = NO;
+            [JYRequestConfig sharedConfig].baseURL = localUrl;
+        }else if (self.localUrl.length == 0 && self.cloudUrl.length > 0){
+            self.isCloud = YES;
+            [JYRequestConfig sharedConfig].baseURL = cloudUrl;
+        }
         [self checkNetwork];
     }
     return self;
@@ -237,8 +242,9 @@
                 callback(nil, entries.uuid);
             };
             WB_UserService.currentUser.isCloudLogin ?
-            [self mkdirInDir:baseUUID andName:photoDirName completeBlock:block] :
-            [self mkdirInDir:baseUUID andName:photoDirName completeBlock:block];
+             [self cloudMkdirInDir:baseUUID andName:photoDirName completeBlock:block] :
+            [self mkdirInDir:baseUUID andName:photoDirName completeBlock:block] 
+          ;
         }
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"get backup base dir error : %@", request.error);

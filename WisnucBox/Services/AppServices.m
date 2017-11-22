@@ -159,8 +159,53 @@
     }];
 }
 
-- (void)wechatLoginWithCode:(NSInteger)code completeBlock:(void(^)(NSError *error, WBUser *user))callback {
-    
+- (void)wechatLoginWithUserModel:(CloudModelForUser *)cloudUserModel Token:(NSString *)cloudToken AvatarUrl:(NSString *)avatarUrl addr:(NSString *)addr completeBlock:(void(^)(NSError *error, WBUser *user))callback{
+    @weaky(self);
+    self.netServices = [[NetServices alloc]initWithLocalURL:nil andCloudURL:addr];
+    WBUser *user = [WB_UserService createUserWithUserUUID:cloudUserModel.uuid];
+    user.userName = cloudUserModel.username;
+    user.localAddr = nil;
+    user.stationId = cloudUserModel.stationId;
+    user.cloudToken = cloudToken;
+    user.localToken = nil;
+    user.isFirstUser = [cloudUserModel.isFirstUser boolValue];
+    user.isAdmin = [cloudUserModel.isAdmin boolValue];
+    user.isCloudLogin = YES;
+    user.avaterURL = avatarUrl;
+    [WB_UserService setCurrentUser:user];
+    [WB_UserService synchronizedCurrentUser];
+    NSLog(@"GET Token Success");
+    [WB_NetService getUserHome:^(NSError *error, NSString *userHome){
+        if(error) return callback(({error.wbCode = 10002; error;}), user);
+        user.userHome = userHome;
+        [WB_UserService synchronizedCurrentUser];
+        NSLog(@"GET USER HOME SUCCESS");
+        [WB_NetService getUserBackupDir:^(NSError *error, NSString *entryUUID) {
+            if(error) return callback(({error.wbCode = 10003; error;}), user);
+            user.backUpDir = entryUUID;
+            [WB_UserService synchronizedCurrentUser];
+            NSLog(@"GET BACKUP DIR SUCCESS");
+            if(!user.askForBackup)
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [weak_self requestForBackupPhotos:^(BOOL shouldUpload) {
+                        user.askForBackup = YES;
+                        user.autoBackUp = shouldUpload;
+                        [WB_UserService synchronizedCurrentUser];
+                        if(shouldUpload) {
+                            [weak_self startUploadAssets:nil];
+                        }
+                    }];
+                });
+            else if(user.autoBackUp)
+                [weak_self startUploadAssets:nil];
+            
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                [weak_self updateCurrentUserInfoWithCompleteBlock:nil];
+            });
+            
+            return callback(nil, user);
+        }];
+    }];
 }
 
 - (void)updateCurrentUserInfoWithCompleteBlock:(void(^)(NSError *, BOOL success))callback {

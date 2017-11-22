@@ -12,6 +12,7 @@
 #import "AssetsServices.h"
 #import "FilesServices.h"
 #import "NetServices.h"
+#import "FMLoginViewController.h"
 
 #define WB_AppServices  [AppServices sharedService]
 #define WB_AssetService [WB_AppServices assetServices]
@@ -50,7 +51,7 @@
 - (void)loginWithBasic:(NSString *)basic userUUID:(NSString *)uuid name:(NSString *)userName addr:(NSString *)addr isWechat:(BOOL)isWechat completeBlock:(void(^)(NSError *error, WBUser *user))callback;
 
 // wechat login with wechat code
-- (void)wechatLoginWithCode:(NSInteger)code completeBlock:(void(^)(NSError *error, WBUser *user))callback;
+- (void)wechatLoginWithUserModel:(CloudModelForUser *)cloudUserModel Token:(NSString *)cloudToken AvatarUrl:(NSString *)avatarUrl addr:(NSString *)addr completeBlock:(void(^)(NSError *error, WBUser *user))callback;
 
 - (void)updateCurrentUserInfoWithCompleteBlock:(void(^)(NSError *, BOOL success))callback;
 

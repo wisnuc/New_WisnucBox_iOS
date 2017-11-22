@@ -25,6 +25,8 @@
 #define kCloudBodyToName   @"toName"
 #define kCloudBodyFromName @"fromName"
 
+#define WX_BASE_URL   @"http://www.siyouqun.org/c/v1/"
+
 #define kUserDefaults [NSUserDefaults standardUserDefaults]
 #define kUD_Synchronize [[NSUserDefaults standardUserDefaults] synchronize]
 #define kUD_ObjectForKey(key) [[NSUserDefaults standardUserDefaults] objectForKey:key]

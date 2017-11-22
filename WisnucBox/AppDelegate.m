@@ -13,7 +13,7 @@
 #import "FirstFilesViewController.h"
 
 @interface AppDelegate () <WXApiDelegate>
-
+@property (nonatomic,strong) FMLoginViewController *loginController;
 @end
 
 @implementation AppDelegate
@@ -42,6 +42,7 @@
         // TO Login VC
         self.leftManager = nil;
         FMLoginViewController *loginController = [[FMLoginViewController alloc]init];
+        _loginController = loginController;
         UINavigationController *rootNaviController = [[UINavigationController alloc]initWithRootViewController:loginController];
         self.window.rootViewController = rootNaviController;
     }
@@ -196,8 +197,8 @@
     switch (resp.errCode) {
         case WXSuccess://用户同意
         {
-//            SendAuthResp *aresp = (SendAuthResp *)resp;
-//            [_zhuxiao weChatCallBackRespCode:aresp.code];
+            SendAuthResp *aresp = (SendAuthResp *)resp;
+            [_loginController weChatCallBackRespCode:aresp.code];
         }
             break;
         case WXErrCodeAuthDeny://用户拒绝授权
