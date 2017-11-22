@@ -16,6 +16,11 @@
 #import "FMCloudUserTableViewCell.h"
 #import "LoginTableViewCell.h"
 #import "FMUserLoginViewController.h"
+#import "WBCloudLoginAPI.h"
+#import "CloudLoginModel.h"
+#import "WBCloudGetStationsAPI.h"
+#import "FMGetUsersAPI.h"
+#import "AppDelegate.h"
 
 @interface FMLoginViewController ()
 <
@@ -119,6 +124,7 @@ WXApiDelegate
      [self.view addSubview:self.wechatView];
     }
     [self firstbeginSearching];
+    [self setChooseView];
 }
 
 - (void)beginSearching {
@@ -394,34 +400,35 @@ WXApiDelegate
 }
 
 - (void)weChatCallBackRespCode:(NSString *)code{
-//    @weaky(self)
-//    [FMDBControl asyncLoadPhotoToDB];
-//    [SXLoadingView showProgressHUD:@"正在登录"];
-//    [[WeChetLoginAPI apiWithCode:code] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-//        MyNSLog(@"%@",request.responseJsonObject);
-//        [SXLoadingView hideProgressHUD];
-//        [weak_self loginToDoWithResponse:request.responseJsonObject];
-//    } failure:^(__kindof JYBaseRequest *request) {
-//        [SXLoadingView hideProgressHUD];
-//        MyNSLog(@"%@",request.error);
-//        NSHTTPURLResponse * res = (NSHTTPURLResponse *)request.dataTask.response;
-//        [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"登录失败:%ld",(long)res.statusCode] duration:1];
-//    }];
+    @weaky(self)
+    [SXLoadingView showProgressHUD:@"正在登录"];
+    [[WBCloudLoginAPI apiWithCode:code] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+//        NSLog(@"%@",request.responseJsonObject);
+        [SXLoadingView hideProgressHUD];
+        [weak_self loginToDoWithResponse:request.responseJsonObject];
+    } failure:^(__kindof JYBaseRequest *request) {
+        [SXLoadingView hideProgressHUD];
+        NSLog(@"%@",request.error);
+        NSHTTPURLResponse * res = (NSHTTPURLResponse *)request.dataTask.response;
+        [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"登录失败:%ld",(long)res.statusCode] duration:1];
+    }];
 }
 - (void)infoButtonClick:(UIButton *)sender{
     NSLog(@"点击了信息");
 }
 
 -(void)loginToDoWithResponse:(id)response{
-//    @weaky(self)
-////    CloudLoginModel * model = [CloudLoginModel yy_modelWithJSON:response];
+    @weaky(self)
+    CloudLoginModel * model = [CloudLoginModel yy_modelWithJSON:response];
 //    NSDictionary *dic = response;
 //    NSDictionary *dataDic = dic[@"data"];
 //    NSString *token = dataDic[@"token"];
-//    _token = token;
-////    FMCloudUserModel *userModel = [FMCloudUserModel yy_modelWithDictionary:dataDic];
+
+//    FMCloudUserModel *userModel = [FMCloudUserModel yy_modelWithDictionary:dataDic];
 //    NSDictionary *userDic = dataDic[@"user"];
-//    NSString *GUID = userDic[@"id"];
+    
+//    NSLog(@"%@",model.data.user.userId);
+//    NSString *GUID = model.data.user.userId;
 //    _guid = GUID;
 //    _nickName = userDic[@"nickName"];
 //    NSString *avatarString = userDic[@"avatarUrl"];
@@ -431,41 +438,47 @@ WXApiDelegate
 //    FMConfigInstance.userUUID = userDic[@"id"];
 //    JYRequestConfig * config = [JYRequestConfig sharedConfig];
 //    config.baseURL = WX_BASE_URL;
-//    [weak_self getStationWithGUID:GUID userDic:userDic];
+    [weak_self getStationWithModel:model];
 }
 
-- (void)getStationWithGUID:(NSString *)Guid userDic:(NSDictionary *)userDic{
-//    @weaky(self)
-//    [[GetStationAPI apiWithGUID:Guid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-//        MyNSLog(@"%@",request.responseJsonObject);
-//        NSDictionary *rootDic = request.responseJsonObject;
+- (void)getStationWithModel:(CloudLoginModel *)model{
+    @weaky(self)
+    _token = model.data.token;
+    _avatarUrl = model.data.user.avatarUrl;
+    [[WBCloudGetStationsAPI apiWithGuid:model.data.user.userId andToken:model.data.token]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+//        NSLog(@"%@",request.responseJsonObject);
+        NSDictionary *rootDic = request.responseJsonObject;
+        self.cloudLoginStationArray=[NSMutableArray arrayWithCapacity:0];
 //        _cloudOriginStationArray = [NSMutableArray arrayWithCapacity:0];
-//        if([rootDic[@"data"] isEqual:[NSNull null]]||rootDic[@"data"] ==nil) {
-//            [SXLoadingView showProgressHUDText:@"您的微信尚未绑定任何设备" duration:1];
+        NSMutableArray *dataArray = [NSMutableArray arrayWithArray:[rootDic objectForKey:@"data"]];
+        NSMutableArray *onlineArray = [NSMutableArray arrayWithCapacity:0];
+        if([rootDic[@"data"] isEqual:[NSNull null]]||rootDic[@"data"] == nil ||dataArray.count == 0) {
+            [SXLoadingView showProgressHUDText:@"您的微信尚未绑定任何设备" duration:1];
 //            FMConfigInstance.userToken = nil;
 //            JYRequestConfig * config = [JYRequestConfig sharedConfig];
 //            config.baseURL = nil;
-//        }else{
+        }else{
 //            NSMutableArray *dataArray = [NSMutableArray arrayWithArray:[rootDic objectForKey:@"data"]];
 //            [_expandCell.task cancel];
 //            [_reachabilityTimer invalidate];
 //            _reachabilityTimer = nil;
 //            [_browser stopServer];
-//             self.cloudLoginStationArray=[NSMutableArray arrayWithCapacity:0];
+
 //            _subject = [RACSubject subject];
 //            [weak_self setChooseView];
 ////            __block BOOL fresh = false;
-////            [dataArray enumerateObjectsUsingBlock:^(NSDictionary *dic, NSUInteger idx, BOOL * _Nonnull stop) {
-////                 NSNumber * isOnlineNumber = dic[@"isOnline"];
-////                 BOOL isOnline =  [isOnlineNumber boolValue];
-////                if (isOnline) {
+            [dataArray enumerateObjectsUsingBlock:^(NSDictionary *dic, NSUInteger idx, BOOL * _Nonnull stop) {
+                 NSNumber * isOnlineNumber = dic[@"isOnline"];
+                 BOOL isOnline =  [isOnlineNumber boolValue];
+                 if (isOnline) {
+                     [onlineArray addObject:dic];
 ////                    FMConfigInstance.isCloud = YES;
 ////                    //常规登录
 ////                    //[self LoginActionWithUserDic:userDic StationDic:dic];
-////                    [weak_self getUsersWithStationDic:dic completeBlock:^(NSMutableDictionary *mutableDic) {
-////                        _alertView.hidden = NO;
-////                        [_subject sendNext:@"1"];
-////                    }];
+                     [weak_self getUsersWithStationDic:dic Model:model completeBlock:^(NSMutableDictionary *mutableDic) {
+                        _alertView.hidden = NO;
+//                        [_subject sendNext:@"1"];
+                    }];
 ////                    *stop = YES;
 //                      FMConfigInstance.isCloud = NO;
 //
@@ -481,14 +494,14 @@ WXApiDelegate
 //                                  _alertView.hidden = NO;
 //                                [_subject sendNext:@"1"];
 //                            }];
-//                        }
-////                            else{
+                        }
+                            else{
 ////                          [SXLoadingView showProgressHUDText:@"没有在线设备或未绑定设备" duration:1];
-////                        }
+                        }
 //                    }
 //
 ////                }
-////            }];
+            }];
 //
 //            [_subject subscribeNext:^(id x) {
 //                if (self.cloudLoginStationArray.count == 0) {
@@ -504,41 +517,44 @@ WXApiDelegate
 ////            if (self.cloudLoginStationArray.count == 1) {
 ////                [self loginButtonClick:nil];
 ////            }else
-//        }
-//    } failure:^(__kindof JYBaseRequest *request) {
-//         NSLog(@"%@",request.error);
-//    }];
+        }
+        if (onlineArray.count == 0) {
+           [SXLoadingView showProgressHUDText:@"没有在线设备或未绑定设备" duration:1];
+        }
+    } failure:^(__kindof JYBaseRequest *request) {
+         NSLog(@"%@",request.error);
+    }];
 //
 }
 
-- (void)getUsersWithStationDic:(NSDictionary *)stationDic completeBlock:(void(^)(NSMutableDictionary *mutableDic))block{
-//     NSString *stationId = stationDic[@"id"];
-//    FMGetUsersAPI *api = [FMGetUsersAPI apiWithStationId:stationId];
-//    [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-//         MyNSLog(@"%@",request.responseJsonObject);
-//        NSDictionary *rootDic = request.responseJsonObject;
-//        NSMutableArray *arr = rootDic[@"data"];
-//        NSMutableDictionary *mutableDic;
-//        for (int i = 0; i<arr.count; i++) {
-//            NSDictionary *dic = arr[i];
-//            if (dic[@"global"]!=nil && dic[@"global"]!=[NSNull null]) {
-//                NSDictionary *globalDic = dic[@"global"];
-//                NSString * idString =  globalDic[@"id"];
-//                if ([_guid isEqualToString:idString]) {
-//                     mutableDic = [NSMutableDictionary dictionaryWithDictionary:dic];
-//                    [mutableDic addEntriesFromDictionary:stationDic];
-//                    NSLog(@"%@",mutableDic);
-//                    [_cloudLoginStationArray addObject:mutableDic];
-//
-//                    block(mutableDic);
-//                }
-//                   [_alertView.tableView reloadData];
-//            }
-//        }
-//
-//    } failure:^(__kindof JYBaseRequest *request) {
-//        NSLog(@"%@",request.error);
-//    }];
+- (void)getUsersWithStationDic:(NSDictionary *)stationDic Model:(CloudLoginModel *)model completeBlock:(void(^)(NSMutableDictionary *mutableDic))block{
+     NSString *stationId = stationDic[@"id"];
+    FMGetUsersAPI *api = [FMGetUsersAPI apiWithStationId:stationId Token:model.data.token];
+    [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+//        NSLog(@"%@",request.responseJsonObject);
+        NSDictionary *rootDic = request.responseJsonObject;
+        NSMutableArray *arr = rootDic[@"data"];
+        NSMutableDictionary *mutableDic;
+        for (int i = 0; i<arr.count; i++) {
+            NSDictionary *dic = arr[i];
+            if (dic[@"global"]!=nil && dic[@"global"]!=[NSNull null]) {
+                NSDictionary *globalDic = dic[@"global"];
+                NSString * idString =  globalDic[@"id"];
+                if ([model.data.user.userId isEqualToString:idString]) {
+                     mutableDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+                    [mutableDic addEntriesFromDictionary:stationDic];
+                     NSLog(@"%@",mutableDic);
+                    CloudModelForUser *userModel = [CloudModelForUser yy_modelWithDictionary:mutableDic];
+                    [_cloudLoginStationArray addObject:userModel];
+                    block(mutableDic);
+                }
+                   [_alertView.tableView reloadData];
+            }
+        }
+
+    } failure:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.error);
+    }];
 }
 
 - (void)setChooseView{
@@ -552,14 +568,29 @@ WXApiDelegate
 }
 
 - (void)loginButtonClick:(UIButton *)sender{
-//    [_alertView removeFromSuperview];
-//    _alertView =nil;
-//
-//    NSMutableDictionary *mutableDic;
-//    if (_cloudLoginStationArray.count!=0) {
-//     mutableDic  = _cloudLoginStationArray[_current];
-//
-//    }else{
+    [_alertView removeFromSuperview];
+    _alertView =nil;
+    CloudModelForUser *userModel;
+    if (_cloudLoginStationArray.count!=0) {
+    userModel  = _cloudLoginStationArray[_current];
+    }
+    
+    [WB_AppServices wechatLoginWithUserModel:userModel Token:_token AvatarUrl:_avatarUrl addr:WX_BASE_URL completeBlock:^(NSError *error, WBUser *user) {
+        [SXLoadingView hideProgressHUD];
+        sender.userInteractionEnabled = YES;
+        if(error || IsNilString(user.userHome)){
+            if(!user) NSLog(@"GET TOKEN ERROR");
+            else NSLog(@"Get User Home Error");
+            [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"登录失败！ code: %ld", error.wbCode] duration:1];
+        }else{
+            [MyAppDelegate initRootVC];
+        }
+    }];
+    
+    
+    
+    
+//        else{
 //        FMConfigInstance.userToken = nil;
 //        FMConfigInstance.isCloud = NO;
 //        [SXLoadingView showProgressHUDText:@"没有在线设备或未绑定设备" duration:1];
@@ -795,11 +826,12 @@ WXApiDelegate
         if (!cell) {
             cell= [[[NSBundle mainBundle] loadNibNamed:@"FMCloudUserTableViewCell" owner:nil options:nil] lastObject];
         }
-//        NSLog(@"%@",_cloudLoginStationArray);
-       NSDictionary *modelDic = _cloudLoginStationArray[indexPath.row];
-       cell.accessoryType=UITableViewCellAccessoryDetailDisclosureButton;
-       cell.userNameLabel.text = [NSString stringWithFormat:@"%@",modelDic[@"username"]];
-       cell.stationName.text = [NSString stringWithFormat:@"在%@上",modelDic[@"name"]];
+     
+       CloudModelForUser *model = _cloudLoginStationArray[indexPath.row];
+       NSLog(@"%@",model);
+       cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+       cell.userNameLabel.text = [NSString stringWithFormat:@"%@",model.username];
+       cell.stationName.text = [NSString stringWithFormat:@"在%@上",model.name];
         return cell;
     }
     
@@ -831,23 +863,23 @@ WXApiDelegate
     
 }
 
-//- (UITableViewCellAccessoryType)tableView:(UITableView*)tableView accessoryTypeForRowWithIndexPath:(NSIndexPath*)indexPath
-//{
-//
-//    if(tableView == _alertView.tableView){
-//        if(_current==indexPath.row)
-//        {
-//            return UITableViewCellAccessoryDetailButton;
-//        }
-//        else
-//        {
-//            return UITableViewCellAccessoryNone;
-//        }
-//    }else{
-//        return UITableViewCellAccessoryNone;
-//    }
-//
-//}
+- (UITableViewCellAccessoryType)tableView:(UITableView*)tableView accessoryTypeForRowWithIndexPath:(NSIndexPath*)indexPath
+{
+
+    if(tableView == _alertView.tableView){
+        if(_current==indexPath.row)
+        {
+            return UITableViewCellAccessoryCheckmark;
+        }
+        else
+        {
+            return UITableViewCellAccessoryNone;
+        }
+    }else{
+        return UITableViewCellAccessoryNone;
+    }
+
+}
 - (UIScrollView *)stationScrollView{
     if (!_stationScrollView) {
         _stationScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, __kWidth,448/2 + 64)];
@@ -951,5 +983,13 @@ WXApiDelegate
         [_handButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
       }
     return _handButton;
+}
+@end
+
+@implementation CloudModelForUser
++ (NSDictionary *)modelCustomPropertyMapper {
+    return @{
+             @"stationId" : @"id",
+             };
 }
 @end

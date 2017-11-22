@@ -127,9 +127,9 @@ __strong static id _sharedObject = nil;
 {
     
     
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+   __block NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     
-    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    __block AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
    
     
@@ -151,7 +151,7 @@ __strong static id _sharedObject = nil;
     
     NSString* dataUrl = [fileModel getDownloadTaskURL];
   
-    NSMutableURLRequest* urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[dataUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet  URLQueryAllowedCharacterSet]]]];
+    __block  NSMutableURLRequest* urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[dataUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet  URLQueryAllowedCharacterSet]]]];
      [urlRequest setValue:[NSString stringWithFormat:@"JWT %@",WB_UserService.currentUser.localToken] forHTTPHeaderField:@"Authorization"];
     NSString* tempPath = [fileModel getDownloadTempSavePath];
     NSLog(@"临时下载地:%@",tempPath);
@@ -171,7 +171,7 @@ __strong static id _sharedObject = nil;
     }
     __weak typeof(self) weakSelf = self;
     downloadTask.stream = [NSOutputStream outputStreamToFileAtPath:tempPath append:YES];
-    NSURLSessionDataTask * dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+    __block NSURLSessionDataTask * dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         if (error) {
             NSLog(@"%@",error);
             if (error.code == -1005) {
@@ -340,13 +340,22 @@ __strong static id _sharedObject = nil;
     [downloadTask setDownloadDataTask:dataTask];
     [self startOneDownloadTaskWith:downloadTask];
     [_subject subscribeNext:^(id x) {
-        [downloadTask.stream close];
-        downloadTask.stream = nil;
+        CSDownloadTask *task = x;
+        [task.stream close];
+        task.stream = nil;
         [_taskDoingQueue dequeue];
-        [self.downloadingTasks removeObject:downloadTask];
-        [downloadTask setDownloadStatus:CSDownloadStatusFailure];
-        [_downloadTasks removeObject:dataTask];
-        [weakSelf beginDownloadTask:downloadTask begin:begin progress:progress complete:complete];
+        [self.downloadingTasks removeObject:task];
+//        [downloadTask setDownloadStatus:CSDownloadStatusFailure];
+//        [_downloadTasks removeObject:task];
+        configuration = nil;
+        urlRequest = nil;
+        [task setDownloadDataTask:nil];
+        [manager.operationQueue cancelAllOperations];
+        [manager invalidateSessionCancelingTasks:YES];
+        manager = nil;
+        [dataTask cancel];
+        dataTask = nil;
+        [weakSelf beginDownloadTask:task begin:begin progress:progress complete:complete];
     }];
     
 }
@@ -402,7 +411,7 @@ __strong static id _sharedObject = nil;
         {
             [downloadTask continueDownloadTask:^(BOOL isComplete) {
                 if (isComplete) {
-                    [_subject sendNext:@"1"];
+                    [_subject sendNext:downloadTask];
                 }
                 [downloadTask setDownloadStatus:CSDownloadStatusDownloading];
             }];
@@ -475,6 +484,7 @@ __strong static id _sharedObject = nil;
     
     
     [self.downloadingTasks removeObject:downloadTask];
+    [_downloadTasks removeObject:downloadTask];
 }
 
 - (void)cancelOneDownloadTaskWith:(CSDownloadTask*)downloadTask

@@ -67,6 +67,8 @@
 		1F8EAF251FB9A7C100FEED19 /* LocalDownloadingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EAF221FB9A7C000FEED19 /* LocalDownloadingTableViewCell.m */; };
 		1F8EAF291FBACD5000FEED19 /* FLFIlesHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EAF281FBACD5000FEED19 /* FLFIlesHelper.m */; };
 		1FB0900B1FBC519A0020B304 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB090091FBC51990020B304 /* NSString+Extension.m */; };
+		1FC2AFEF1FC5299300E8C9DE /* WBCloudLoginAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2AFEE1FC5299300E8C9DE /* WBCloudLoginAPI.m */; };
+		1FC2AFF21FC52B4800E8C9DE /* CloudLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2AFF11FC52B4800E8C9DE /* CloudLoginModel.m */; };
 		1FD7A0EA1FB05A45000D4CB3 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E41FB05A45000D4CB3 /* back@2x.png */; };
 		1FD7A0EB1FB05A45000D4CB3 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E51FB05A45000D4CB3 /* back.png */; };
 		1FD7A0EC1FB05A45000D4CB3 /* back_gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E61FB05A45000D4CB3 /* back_gray@3x.png */; };
@@ -657,6 +659,10 @@
 		1F8EAF281FBACD5000FEED19 /* FLFIlesHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLFIlesHelper.m; sourceTree = "<group>"; };
 		1FB090091FBC51990020B304 /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
 		1FB0900A1FBC51990020B304 /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
+		1FC2AFED1FC5299300E8C9DE /* WBCloudLoginAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBCloudLoginAPI.h; sourceTree = "<group>"; };
+		1FC2AFEE1FC5299300E8C9DE /* WBCloudLoginAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBCloudLoginAPI.m; sourceTree = "<group>"; };
+		1FC2AFF01FC52B4800E8C9DE /* CloudLoginModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudLoginModel.h; sourceTree = "<group>"; };
+		1FC2AFF11FC52B4800E8C9DE /* CloudLoginModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudLoginModel.m; sourceTree = "<group>"; };
 		1FD7A0E41FB05A45000D4CB3 /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
 		1FD7A0E51FB05A45000D4CB3 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		1FD7A0E61FB05A45000D4CB3 /* back_gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_gray@3x.png"; sourceTree = "<group>"; };
@@ -1490,6 +1496,8 @@
 				1F4D75751FAC4BB800E6516C /* UserModel.m */,
 				1F4D75741FAC4BB800E6516C /* FMSerachService.h */,
 				1F4D75761FAC4BB800E6516C /* FMSerachService.m */,
+				1FC2AFF01FC52B4800E8C9DE /* CloudLoginModel.h */,
+				1FC2AFF11FC52B4800E8C9DE /* CloudLoginModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1749,8 +1757,6 @@
 		71A3D66E1FB57F720002B8B1 /* Users */ = {
 			isa = PBXGroup;
 			children = (
-				71A3D6751FB5AD230002B8B1 /* FMGetUsersAPI.h */,
-				71A3D6761FB5AD230002B8B1 /* FMGetUsersAPI.m */,
 				71A3D6771FB5AD230002B8B1 /* FMAccountUsersAPI.h */,
 				71A3D6781FB5AD230002B8B1 /* FMAccountUsersAPI.m */,
 				71A3D6721FB584360002B8B1 /* FMCreateUserAPI.h */,
@@ -1790,12 +1796,16 @@
 		C1196BB81FC3BFC100E96973 /* Cloud */ = {
 			isa = PBXGroup;
 			children = (
+				71A3D6751FB5AD230002B8B1 /* FMGetUsersAPI.h */,
+				71A3D6761FB5AD230002B8B1 /* FMGetUsersAPI.m */,
 				C11EAB201FC4066A007C9BA7 /* WBCloudJsonAPI.h */,
 				C11EAB211FC4066A007C9BA7 /* WBCloudJsonAPI.m */,
 				C11EAB291FC42AF1007C9BA7 /* WBCloudTokenAPI.h */,
 				C11EAB2A1FC42AF1007C9BA7 /* WBCloudTokenAPI.m */,
 				C11EAB2C1FC43611007C9BA7 /* WBCloudGetStationsAPI.h */,
 				C11EAB2D1FC43611007C9BA7 /* WBCloudGetStationsAPI.m */,
+				1FC2AFED1FC5299300E8C9DE /* WBCloudLoginAPI.h */,
+				1FC2AFEE1FC5299300E8C9DE /* WBCloudLoginAPI.m */,
 			);
 			path = Cloud;
 			sourceTree = "<group>";
@@ -3234,6 +3244,7 @@
 				71A3D67A1FB5AD230002B8B1 /* FMAccountUsersAPI.m in Sources */,
 				F67561561FB342AE00E3277F /* MXParallaxHeader.m in Sources */,
 				1F4D759C1FAC4BB800E6516C /* UIButton+EnlargeEdge.m in Sources */,
+				1FC2AFF21FC52B4800E8C9DE /* CloudLoginModel.m in Sources */,
 				1F4D75CB1FAC5FF900E6516C /* FMCloudUserTableViewCell.m in Sources */,
 				F675614D1FB3428F00E3277F /* UIImage+MFTint.m in Sources */,
 				1F5D217D1FBC351A006C65AA /* FilesDataSourceManager.m in Sources */,
@@ -3262,6 +3273,7 @@
 				1F1AB9EC1FB968CA006EB1FC /* FLFilesCell.m in Sources */,
 				1F4D75C61FAC5EB500E6516C /* GCDAsyncUdpSocket.m in Sources */,
 				F6830F011FB2FF8C005AC578 /* BaseTableViewCell.m in Sources */,
+				1FC2AFEF1FC5299300E8C9DE /* WBCloudLoginAPI.m in Sources */,
 				F67D64271FAC7D9A00E23D16 /* UIView+JY_ExtendTouchRect.m in Sources */,
 				1F1ABA041FB97A0D006EB1FC /* CSDownloadTask.m in Sources */,
 				F675614C1FB3428F00E3277F /* UIFont+MaterialTextField.m in Sources */,
@@ -3481,7 +3493,7 @@
 				INFOPLIST_FILE = WisnucBox/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.wisnuc.wisnucBox;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wisnuc.fruit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3498,7 +3510,7 @@
 				INFOPLIST_FILE = WisnucBox/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.wisnuc.wisnucBox;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wisnuc.fruit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

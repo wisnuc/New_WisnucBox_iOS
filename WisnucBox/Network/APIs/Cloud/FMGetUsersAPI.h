@@ -9,5 +9,7 @@
 #import "JYBaseRequest.h"
 
 @interface FMGetUsersAPI : JYBaseRequest<JYRequestDelegate>
-
++ (instancetype)apiWithStationId:(NSString *)stationId Token:(NSString *)token;
+@property (nonatomic,strong)NSString *stationId;
+@property (nonatomic,strong)NSString *cloudToken;
 @end

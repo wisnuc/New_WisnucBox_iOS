@@ -47,6 +47,7 @@
 #import "LCActionSheet.h"
 #import "CSFileUtil.h"
 #import "PHPhotoLibrary+JYEXT.h"
+#import "Base64.h"
 
 //Category
 #import "UIButton+EnlargeEdge.h"
