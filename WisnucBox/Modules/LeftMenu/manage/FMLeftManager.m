@@ -61,8 +61,7 @@
         _needRefrushProgress = YES;
         return;
     }
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        NSUInteger allCount = WB_PhotoUploadManager.hashwaitingQueue.count + WB_PhotoUploadManager.hashWorkingQueue.count + WB_PhotoUploadManager.hashFailQueue.count + WB_PhotoUploadManager.uploadPaddingQueue.count + WB_PhotoUploadManager.uploadingQueue.count + WB_PhotoUploadManager.uploadedQueue.count + WB_PhotoUploadManager.uploadErrorQueue.count;
+    [WB_PhotoUploadManager getAllCount:^(NSInteger allCount) {
         self.isUpdateingProgress = YES;
         self.needRefrushProgress = NO;
         @weaky(self);
@@ -72,7 +71,7 @@
                 if(weak_self.needRefrushProgress) [weak_self changeBackupProgress];
             });
         }];
-    });
+    }];
 }
 
 - (void)delloc {

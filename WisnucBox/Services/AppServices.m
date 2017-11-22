@@ -15,6 +15,7 @@
 #import "FilesDataSourceManager.h"
 #import "FLFIlesHelper.h"
 #import "CSDownloadHelper.h"
+#import "NSError+WBCode.h"
 
 @implementation AppServices
 
@@ -61,12 +62,12 @@
     }
 }
 
+// Net Reachability
 - (void)handleNetReachabilityNotify {
     if(!WB_UserService.currentUser || !WB_UserService.currentUser.autoBackUp) return;
     AFNetworkReachabilityStatus status = self.netServices.status;
-    if(status == AFNetworkReachabilityStatusReachableViaWWAN){
-        if(!WB_UserService.currentUser.backUpInWWAN)
-            [self.photoUploadManager stop];
+    if(status != AFNetworkReachabilityStatusReachableViaWiFi && !WB_UserService.currentUser.backUpInWWAN){
+        [self.photoUploadManager stop];
     }
     else if(self.photoUploadManager.shouldUpload == NO) {
         [self startUploadAssets:nil];
@@ -99,6 +100,11 @@
 // config address
 // userHome
 // backupDir
+
+// error.wbCode
+// 10001 : get token error
+// 10002 : get userHome error
+// 10003 : get userBackupDir error
 - (void)loginWithBasic:(NSString *)basic userUUID:(NSString *)uuid name:(NSString *)userName addr:(NSString *)addr isWechat:(BOOL)isWechat completeBlock:(void(^)(NSError *error, WBUser *user))callback {
     @weaky(self);
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
@@ -117,12 +123,12 @@
         [WB_UserService synchronizedCurrentUser];
         NSLog(@"GET Token Success");
         [WB_NetService getUserHome:^(NSError *error, NSString *userHome){
-            if(error) return callback(error, user);
+            if(error) return callback(({error.wbCode = 10002; error;}), user);
             user.userHome = userHome;
             [WB_UserService synchronizedCurrentUser];
             NSLog(@"GET USER HOME SUCCESS");
             [WB_NetService getUserBackupDir:^(NSError *error, NSString *entryUUID) {
-                if(error) return callback(error, user);
+                if(error) return callback(({error.wbCode = 10003; error;}), user);
                 user.backUpDir = entryUUID;
                 [WB_UserService synchronizedCurrentUser];
                 NSLog(@"GET BACKUP DIR SUCCESS");
@@ -148,14 +154,18 @@
             }];
         }];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        error.wbCode = 10001;
         callback(error, NULL);
     }];
+}
+
+- (void)wechatLoginWithCode:(NSInteger)code completeBlock:(void(^)(NSError *error, WBUser *user))callback {
     
 }
 
 - (void)updateCurrentUserInfoWithCompleteBlock:(void(^)(NSError *, BOOL success))callback {
     [[FMAccountUsersAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        NSDictionary * dic = request.responseJsonObject;
+        NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
         if (IsEquallString(dic[@"uuid"], WB_UserService.currentUser.uuid)) {
             WB_UserService.currentUser.isAdmin = [dic[@"isAdmin"] boolValue];
             WB_UserService.currentUser.isFirstUser = [dic[@"isFirstUser"] boolValue];
@@ -520,6 +530,15 @@
     }];
 }
 
+- (void)getAllCount:(void(^)(NSInteger allCount))callback {
+    dispatch_async(self.managerQueue, ^{
+        NSInteger allCount =  self.hashwaitingQueue.count + self.hashWorkingQueue.count + self.hashFailQueue.count
+        + self.uploadPaddingQueue.count + self.uploadingQueue.count
+        + self.uploadedQueue.count + self.uploadErrorQueue.count;
+        callback(allCount);
+    });
+}
+
 - (void)startWithLocalAssets:(NSArray<JYAsset *> *)localAssets andNetAssets:(NSArray<EntriesModel *> *)netAssets {
     dispatch_async(self.managerQueue, ^{
         _shouldNotify = YES;
@@ -545,7 +564,6 @@
         self.uploadedNetHashSet = hashSet;
         [self schedule];
     });
-    
 }
 
 - (void)setNetAssets:(NSArray<EntriesModel *> *)netAssets {
@@ -562,11 +580,18 @@
     });
 }
 
+// clean error queue
+// insert to uploadpending queue for retry
 - (void)startUpload {
-    self.shouldUpload = YES;
+    self.shouldUpload = NO;
     // notify for start
     [[NSNotificationCenter defaultCenter] postNotificationName:WBBackupCountChangeNotify object:nil];
     dispatch_async(self.managerQueue, ^{
+        [self.uploadErrorQueue enumerateObjectsUsingBlock:^(WBUploadModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [self.uploadPaddingQueue addObject:obj.asset];
+        }];
+        [self.uploadErrorQueue removeAllObjects]; //clean error queue
+        self.shouldUpload = YES;
         [self schedule];
     });
 }
@@ -595,9 +620,9 @@
             _shouldNotify = NO;
             [[NSNotificationCenter defaultCenter] postNotificationName:HashCalculateFinishedNotify object:nil];
         }
-        NSLog(@"hash calculate finish");
+        NSLog(@"hash calculate finish. uploadPaddingQueue:%ld", self.uploadPaddingQueue.count);
     }
-    if(self.hashwaitingQueue.count == 0 && self.hashWorkingQueue.count == 0 && self.uploadPaddingQueue.count == 0 && self.uploadingQueue.count == 0) NSLog(@"backup asset finish");
+    if(self.hashwaitingQueue.count == 0 && self.hashWorkingQueue.count == 0 && self.uploadPaddingQueue.count == 0 && self.uploadingQueue.count == 0) NSLog(@"backup asset finish ----=======>>>><<<<<<<<====-----  errorCount:%ld  finishedCount:%ld", _uploadErrorQueue.count, _uploadedQueue.count);
     while(self.hashWorkingQueue.count < self.hashLimitCount && self.hashwaitingQueue.count > 0) {
         JYAsset * asset = [self.hashwaitingQueue lastObject];
         [self.hashwaitingQueue removeLastObject];
@@ -605,9 +630,8 @@
         __weak typeof(self) weakSelf = self;
         dispatch_async([self workingQueue], ^{
             [self asset:asset getSha256:^(NSError *error, NSString *sha256) {
-                NSLog(@"%ld, %ld", self.hashwaitingQueue.count, self.hashWorkingQueue.count);
                 dispatch_async(self.managerQueue, ^{
-                    NSLog(@"...Success");
+                    NSLog(@"Hash...Success");
                     if (error) {
                         [weakSelf.hashFailQueue addObject:asset];
                     }else {
@@ -630,6 +654,7 @@
         if([self.uploadedNetHashSet containsObject:asset.digest]) {
             dispatch_async(self.managerQueue, ^{
                 [self.uploadedQueue addObject:model];
+                NSLog(@"发现一个已上传的，直接跳过, error: %ld  finish:%ld", _uploadErrorQueue.count, _uploadedQueue.count);
                 [[NSNotificationCenter defaultCenter] postNotificationName:WBBackupCountChangeNotify object:nil];
                 [self schedule];
             });
@@ -642,11 +667,13 @@
                         if(!model.isRemoved)
                             [weakSelf.uploadErrorQueue addObject:model];
                         [weakSelf.uploadingQueue removeObject:model];
+                        NSLog(@"上传失败 , error: %ld  finish:%ld", _uploadErrorQueue.count, _uploadedQueue.count);
                     }else{
-                        [weakSelf.uploadingQueue removeObject:model];
                         if(!model.isRemoved)
                             [weakSelf.uploadedQueue addObject:model];
+                        [weakSelf.uploadingQueue removeObject:model];
                         [[NSNotificationCenter defaultCenter] postNotificationName:WBBackupCountChangeNotify object:nil];
+                        NSLog(@"上传成功 , error: %ld  finish:%ld", _uploadErrorQueue.count, _uploadedQueue.count);
                     }
                     [weakSelf schedule];
                 });
@@ -713,7 +740,7 @@
             }
         }
         fileName = tempFileName;
-        NSLog (@"上传照片POST请求:\n上传照片照片名======>%@\n Hash======>%@\n",exestr,hashString);
+       // NSLog (@"上传照片POST请求:\n上传照片照片名======>%@\n Hash======>%@\n",exestr,hashString);
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         manager.requestSerializer = [AFHTTPRequestSerializer serializer];
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
@@ -758,8 +785,6 @@
         [_dataTask cancel];
     }
 }
-
-
 
 //            NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
 //            if(errorData.length >0){

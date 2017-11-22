@@ -28,6 +28,8 @@
     NSInteger _currentScale;
     
 }
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionViewHConstraint;
 @property (nonatomic, strong) NSMutableArray<JYAsset *> *sortedAssetsBackup;
 
 @property (nonatomic, strong) NSMutableArray<JYAsset *> *localArrDataSourcesBackup;
@@ -251,9 +253,6 @@
     NSMutableArray * allPhotos = [NSMutableArray arrayWithArray:WB_AppServices.assetServices.allAssets];
     self.localArrDataSourcesBackup = allPhotos;
     [self sort:[self merge]];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.collectionView reloadData];
-    });
 }
 
 //!!!!:HashCalculateFinishedNotify
@@ -360,13 +359,21 @@
 
 //tabbar 动画
 -(void)tabBarAnimationWithHidden:(BOOL)hidden{
+    NSLog(@"%f", CGRectGetHeight(self.collectionView.frame));
     CYLTabBarController * tabBar = self.cyl_tabBarController;
     if (hidden) {
         [tabBar.tabBar setHidden:YES];
-        [self updateIndicatorFrame];
+        self.collectionViewHConstraint.constant += 44;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self updateIndicatorFrame];
+        });
     }else{
         [tabBar.tabBar setHidden:NO];
-        [self updateIndicatorFrame];
+        self.collectionViewHConstraint.constant -= 44;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self updateIndicatorFrame];
+        });
+
     }
 }
 
@@ -445,7 +452,7 @@
 }
 
 - (void)updateIndicatorFrame {
-    self.collectionView.indicator.frame = CGRectMake(self.collectionView.indicator.frame.origin.x, self.collectionView.indicator.frame.origin.y, 1, CGRectGetHeight(self.collectionView.frame) - 2 * kILSDefaultSliderMargin - (self.cyl_tabBarController.tabBar.isHidden ? 0 : 44));
+    self.collectionView.indicator.frame = CGRectMake(self.collectionView.indicator.frame.origin.x, self.collectionView.indicator.frame.origin.y, 1, CGRectGetHeight(self.collectionView.frame));
 }
 
 - (BOOL)forceTouchAvailable
@@ -560,11 +567,8 @@
 {
     if(_isSelectMode) return;
     JYAsset *model = ((NSMutableArray *)self.arrDataSources[indexPath.section])[indexPath.row];
-    
-    
     UIViewController *vc = [self getMatchVCWithModel:model];
     if (vc) [self presentViewController:vc animated:YES completion:nil];
-    
 }
 
 - (UIViewController *)getMatchVCWithModel:(JYAsset *)model
@@ -636,7 +640,6 @@
 -(NSString *)getDateStringWithPhoto:(NSDate *)date{
     NSDateFormatter * formatter1 = [[NSDateFormatter alloc]init];
     formatter1.dateFormat = @"yyyy-MM-dd";
-//    [formatter1 setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC +8"]];
     NSString * dateString = [formatter1 stringFromDate:date];
     return dateString;
 }
@@ -644,16 +647,12 @@
 -(NSString *)getMouthDateStringWithPhoto:(NSDate *)date{
     NSDateFormatter * formatter1 = [[NSDateFormatter alloc]init];
     formatter1.dateFormat = @"yyyy年MM月";
-//    [formatter1 setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC +8"]];
     NSString * dateString = [formatter1 stringFromDate:date];
-    //    NSLog(@"%@",dateString);
     if ([dateString isEqualToString: @"1970年01月"]) {
         dateString = @"未知时间";
     }
     return dateString;
 }
-
-
 #pragma mark - Add Indicator
 
 bool isAnimation = NO;

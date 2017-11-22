@@ -49,6 +49,9 @@
 
 - (void)loginWithBasic:(NSString *)basic userUUID:(NSString *)uuid name:(NSString *)userName addr:(NSString *)addr isWechat:(BOOL)isWechat completeBlock:(void(^)(NSError *error, WBUser *user))callback;
 
+// wechat login with wechat code
+- (void)wechatLoginWithCode:(NSInteger)code completeBlock:(void(^)(NSError *error, WBUser *user))callback;
+
 - (void)updateCurrentUserInfoWithCompleteBlock:(void(^)(NSError *, BOOL success))callback;
 
 - (void)requestForBackupPhotos:(void(^)(BOOL shouldUpload))callback;
@@ -78,6 +81,8 @@
 @property (nonatomic) NSInteger uploadLimitCount; // default 1
 
 @property (nonatomic) BOOL shouldUpload; // default NO
+
+- (void)getAllCount:(void(^)(NSInteger allCount))callback;
 
 - (void)startWithLocalAssets:(NSArray<JYAsset *> *)localAssets andNetAssets:(NSArray<EntriesModel *> *)netAssets;
 

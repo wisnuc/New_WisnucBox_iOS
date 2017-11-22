@@ -83,8 +83,7 @@
         if(error || IsNilString(user.userHome)){
             if(!user) NSLog(@"GET TOKEN ERROR");
             else NSLog(@"Get User Home Error");
-            NSLog(@"登录失败！%@", error);
-            [SXLoadingView showAlertHUD:@"登录失败" duration:1];
+            [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"登录失败！ code: %ld", error.wbCode] duration:1];
         }else{
             [MyAppDelegate initRootVC];
         }
