@@ -66,7 +66,7 @@ UITableViewDataSource
 - (void)loadData{
     [self.dataSouceArray removeAllObjects];
     [[FLDrivesAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        NSArray * responseArr = request.responseJsonObject;
+    NSArray * responseArr = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
         NSLog(@"%@",request.responseJsonObject);
         __block NSInteger i = 0;
         [responseArr enumerateObjectsUsingBlock:^(NSDictionary * obj, NSUInteger idx, BOOL * _Nonnull stop) {
