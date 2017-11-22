@@ -8,5 +8,5 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NavViewController : UINavigationController
+@interface NavViewController : UINavigationController<UINavigationBarDelegate>
 @end

@@ -96,10 +96,10 @@
         [cleanBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             NSUInteger  i = [SDImageCache sharedImageCache].getSize;
-            NSLog(@"%ld",[[YYImageCache sharedCache].diskCache totalCost]);
+            NSLog(@"%ld",(long)[[YYImageCache sharedCache].diskCache totalCost]);
             i = i + [[YYImageCache sharedCache].diskCache totalCost];
             dispatch_async(dispatch_get_main_queue(), ^{
-                [cleanBtn setTitle:[NSString stringWithFormat:@"%luM",i/(1024*1024)] forState:UIControlStateNormal];
+                [cleanBtn setTitle:[NSString stringWithFormat:@"%luM",(unsigned long)i/(1024*1024)] forState:UIControlStateNormal];
             });
         });        
         cell.accessoryView = cleanBtn;
