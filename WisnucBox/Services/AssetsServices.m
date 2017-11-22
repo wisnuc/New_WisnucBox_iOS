@@ -132,7 +132,7 @@
 //    dispatch_semaphore_wait(self.fetchNetAssetLock, DISPATCH_TIME_FOREVER);
     @weaky(self);
     [[FMMediaAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        NSArray * medias = request.responseJsonObject;
+        NSArray * medias = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             NSMutableArray *photoArr = [NSMutableArray arrayWithCapacity:0];
             [medias enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
