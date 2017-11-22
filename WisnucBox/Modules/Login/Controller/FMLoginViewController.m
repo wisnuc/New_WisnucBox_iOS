@@ -572,7 +572,7 @@ WXApiDelegate
     _alertView =nil;
     CloudModelForUser *userModel;
     if (_cloudLoginStationArray.count!=0) {
-    userModel  = _cloudLoginStationArray[_current];
+        userModel  = _cloudLoginStationArray[_current];
     }
     
     [WB_AppServices wechatLoginWithUserModel:userModel Token:_token AvatarUrl:_avatarUrl addr:WX_BASE_URL completeBlock:^(NSError *error, WBUser *user) {

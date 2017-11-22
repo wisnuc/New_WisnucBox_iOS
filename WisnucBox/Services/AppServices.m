@@ -873,7 +873,6 @@
             [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
             if(!weak_self) return;
             if(weak_self.callback) weak_self.callback(nil, responseObject);
-            NSLog(@"....???...");
         }
         failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"Upload Failure ---> : %@", error);
@@ -914,24 +913,4 @@
     }
 }
 
-//            NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
-//            if(errorData.length >0){
-//                NSMutableArray *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
-//                NSDictionary *errorRootDic = serializedData[0];
-//                NSDictionary *errorDic = errorRootDic[@"error"];
-//                NSString *code = errorDic[@"code"];
-//                if ([code isEqualToString:@"EEXIST"]) {
-//                    NSString *formatString = [filePath pathExtension];
-//                    NSDate* date = [NSDate dateWithTimeIntervalSinceNow:0];
-//                    NSTimeInterval a=[date timeIntervalSince1970];
-//                    NSString *fileNameString =[NSString stringWithFormat:@"%0.f", a];
-//                    NSString *uploadName = [NSString stringWithFormat:@"%@.%@",fileNameString,formatString];
-//                    NSLog(@"%@",uploadName);
-//                }else{
-//
-//
-//                }
-//            }else{
-//
-//            }
 @end
