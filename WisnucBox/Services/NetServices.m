@@ -53,7 +53,6 @@
 - (void)checkNetwork
 
 {
-    __block BOOL networkisLost;
     // 如果要检测网络状态的变化,必须用检测管理器的单例的startMonitoring
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     // 检测网络连接的单例,网络变化时的回调方法
@@ -64,10 +63,6 @@
              case AFNetworkReachabilityStatusNotReachable:
              {
                  NSLog(@"无网络");
-                 if ([CSFileDownloadManager sharedDownloadManager].downloadingTasks.count >0) {
-                     [[CSFileDownloadManager sharedDownloadManager] pauseAllDownloadTask];
-                 }
-                 networkisLost = YES;
                 [SXLoadingView showProgressHUDText:@"网络已断开" duration:1];
                  break;
              }
@@ -76,13 +71,6 @@
              {
                  NSLog(@"WiFi网络");
                  [SXLoadingView showProgressHUDText:@"正在使用WIFI" duration:1];
-                 if (networkisLost) {
-                     if ([CSFileDownloadManager sharedDownloadManager].downloadingTasks.count >0) {
-                         [[CSFileDownloadManager sharedDownloadManager] startAllDownloadTask];
-                     }
-                      networkisLost = NO;
-                 }
-                 
                  break;
              }
              case AFNetworkReachabilityStatusReachableViaWWAN:
