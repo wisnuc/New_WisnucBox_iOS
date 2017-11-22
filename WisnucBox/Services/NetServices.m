@@ -59,7 +59,6 @@
                  NSLog(@"无网络");
                  if ([CSFileDownloadManager sharedDownloadManager].downloadingTasks.count >0) {
                      [[CSFileDownloadManager sharedDownloadManager] pauseAllDownloadTask];
-                     
                  }
                  networkisLost = YES;
                 [SXLoadingView showProgressHUDText:@"网络已断开" duration:1];
