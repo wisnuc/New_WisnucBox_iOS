@@ -8,6 +8,11 @@
 
 #import "FABaseVC.h"
 @class CloudModelForUser;
+@class GlobalModel;
+
+@interface GlobalModel : NSObject
+@property(nonatomic,copy) NSString *guid;
+@end
 
 @interface CloudModelForUser : NSObject
 @property(nonatomic,copy) NSNumber *isAdmin;
@@ -16,6 +21,7 @@
 @property(nonatomic,copy) NSString *uuid;
 @property(nonatomic,copy) NSNumber *isFirstUser;
 @property(nonatomic,copy) NSString *stationId;
+@property(nonatomic) GlobalModel *global;
 @end
 
 @interface FMLoginViewController : FABaseVC

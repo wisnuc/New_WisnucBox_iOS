@@ -198,7 +198,11 @@
         case WXSuccess://用户同意
         {
             SendAuthResp *aresp = (SendAuthResp *)resp;
-            [_loginController weChatCallBackRespCode:aresp.code];
+            NSLog(@"%@",NSStringFromClass([[UIViewController getCurrentVC] class]));
+            if ([[UIViewController getCurrentVC] isKindOfClass:[FMLoginViewController class]]) {
+               [(FMLoginViewController *)[UIViewController getCurrentVC] weChatCallBackRespCode:aresp.code];
+            }
+            
         }
             break;
         case WXErrCodeAuthDeny://用户拒绝授权

@@ -188,14 +188,15 @@
     self.netServices = [[NetServices alloc]initWithLocalURL:nil andCloudURL:addr];
     WBUser *user = [WB_UserService createUserWithUserUUID:cloudUserModel.uuid];
     user.userName = cloudUserModel.username;
-    user.localAddr = nil;
+//    user.localAddr = nil;
     user.stationId = cloudUserModel.stationId;
     user.cloudToken = cloudToken;
-    user.localToken = nil;
+//    user.localToken = nil;
     user.isFirstUser = [cloudUserModel.isFirstUser boolValue];
     user.isAdmin = [cloudUserModel.isAdmin boolValue];
     user.isCloudLogin = YES;
     user.avaterURL = avatarUrl;
+    user.guid = cloudUserModel.global.guid;
     [WB_UserService setCurrentUser:user];
     [WB_UserService synchronizedCurrentUser];
     NSLog(@"GET Token Success");
