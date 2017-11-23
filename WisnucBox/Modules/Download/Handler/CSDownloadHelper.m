@@ -65,7 +65,13 @@ __strong static id _sharedObject = nil;
                             progress:(CSDownloadingEventHandler)progress
                             complete:(CSDownloadedEventHandler)complete{
     
-    NSString* fromUrl = [NSString stringWithFormat:@"%@drives/%@/dirs/%@/entries/%@?name=%@",[JYRequestConfig sharedConfig].baseURL,rootUUID,uuid,dataModel.uuid,dataModel.name];
+    NSString *resource = [NSString stringWithFormat:@"/drives/%@/dirs/%@/entries/%@",rootUUID,uuid,dataModel.uuid];
+    
+    NSString *loaclFormUrl = [NSString stringWithFormat:@"%@drives/%@/dirs/%@/entries/%@?name=%@",[JYRequestConfig sharedConfig].baseURL,rootUUID,uuid,dataModel.uuid,dataModel.name];
+    
+    NSString* fromUrl = WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@?resource=%@&method=GET&name=%@", kCloudAddr, kCloudCommonPipeUrl, [resource base64EncodedString],dataModel.name] :loaclFormUrl;
+    
+//    NSLog(@"%@",fromUrl);
     NSString* suffixName = dataModel.name;
     NSString* tmpFileName = [NSString stringWithFormat:@"file-%d.tmp",_downdloadCount];
     NSString* saveFileName= [NSString stringWithFormat:@"%@",suffixName];
@@ -98,25 +104,30 @@ __strong static id _sharedObject = nil;
     [downloadFileModel setDownloadTempSavePath:tempFile];
     [downloadFileModel setDownloadFileUserId:WB_UserService.currentUser.uuid];
     [downloadFileModel setDownloadFilePlistURL:@""];
+    NSNumber* fileSize = [NSNumber numberWithLongLong:dataModel.size];
+    [downloadFileModel setDownloadFileSize:fileSize];
     
     CSDownloadTask* downloadTask = [[CSDownloadTask alloc] init];
     [downloadTask setDownloadTaskId:[NSString stringWithFormat:@"%d", _downdloadCount + 1]];
     [downloadTask setDownloadFileModel:downloadFileModel];
     [downloadTask setDownloadUIBinder:self];
     if(_manager.downloadingTasks.count>0){
+        __block BOOL find = NO;
         [_manager.downloadingTasks enumerateObjectsUsingBlock:^(CSDownloadTask * obj, NSUInteger idx, BOOL *stop) {
             if([obj.downloadFileModel.getDownloadFileUUID  isEqualToString:downloadTask.downloadFileModel.getDownloadFileUUID]){
                 * stop = YES;
-               
-            }else{
-                [_manager addDownloadTask:downloadTask];
-                [_oneDownloadArray addObject:downloadTask];
-                [self startOneDownloadWithTask:downloadTask begin:begin progress:progress complete:complete];
             }
             if (stop){
                isDownloading(YES);
             }
         }];
+        
+        if (!find) {
+            [_manager addDownloadTask:downloadTask];
+            [_oneDownloadArray addObject:downloadTask];
+            [self startOneDownloadWithTask:downloadTask begin:begin progress:progress complete:complete];
+        }
+     
     } else{
         [_manager addDownloadTask:downloadTask];
         [_oneDownloadArray addObject:downloadTask];
@@ -126,8 +137,12 @@ __strong static id _sharedObject = nil;
 
 - (void)downloadFileWithFileModel:(EntriesModel *)dataModel RootUUID:(NSString *)rootUUID UUID:(NSString *)uuid{
     _downdloadCount++;
-     NSString* fromUrl = [NSString stringWithFormat:@"%@drives/%@/dirs/%@/entries/%@?name=%@",[JYRequestConfig sharedConfig].baseURL,rootUUID,uuid,dataModel.uuid,dataModel.name];;
+    NSString *resource = [NSString stringWithFormat:@"/drives/%@/dirs/%@/entries/%@",rootUUID,uuid,dataModel.uuid];
     
+    NSString *loaclFormUrl = [NSString stringWithFormat:@"%@drives/%@/dirs/%@/entries/%@?name=%@",[JYRequestConfig sharedConfig].baseURL,rootUUID,uuid,dataModel.uuid,dataModel.name];
+    
+    NSString* fromUrl = WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@?resource=%@&method=GET&name=%@", kCloudAddr, kCloudCommonPipeUrl, [resource base64EncodedString],dataModel.name] :loaclFormUrl;;
+
     NSString* suffixName = dataModel.name;
     NSString* tmpFileName = [NSString stringWithFormat:@"file-%d.tmp",_downdloadCount];
     NSString* saveFileName= [NSString stringWithFormat:@"%@",suffixName];
@@ -160,6 +175,8 @@ __strong static id _sharedObject = nil;
     [downloadFileModel setDownloadTempSavePath:tempFile];
     [downloadFileModel setDownloadFileUserId:WB_UserService.currentUser.uuid];
     [downloadFileModel setDownloadFilePlistURL:@""];
+    NSNumber* fileSize = [NSNumber numberWithLongLong:dataModel.size];
+    [downloadFileModel setDownloadFileSize:fileSize];
     
     CSDownloadTask* downloadTask = [[CSDownloadTask alloc] init];
     [downloadTask setDownloadTaskId:[NSString stringWithFormat:@"%d", _downdloadCount]];
@@ -167,14 +184,18 @@ __strong static id _sharedObject = nil;
     [downloadTask setDownloadUIBinder:self];
 
     if(_manager.downloadingTasks.count>0){
-        [_manager.downloadingTasks enumerateObjectsUsingBlock:^(CSDownloadTask * obj, NSUInteger idx, BOOL *stop) {
-            if([obj.downloadFileModel.getDownloadFileUUID  isEqualToString:downloadTask.downloadFileModel.getDownloadFileUUID]){
-                * stop = YES;
-            }else{
-                [_manager addDownloadTask:downloadTask];
-                [self startDownloadWithTask:downloadTask];
-            }
-        }];
+      __block BOOL find = NO;
+    [_manager.downloadingTasks enumerateObjectsUsingBlock:^(CSDownloadTask * obj, NSUInteger idx, BOOL *stop) {
+        if([obj.downloadFileModel.getDownloadFileUUID  isEqualToString:downloadTask.downloadFileModel.getDownloadFileUUID]){
+            * stop = YES;
+            find = YES;
+        }
+    }];
+        if (!find) {
+            [_manager addDownloadTask:downloadTask];
+            [self startDownloadWithTask:downloadTask];
+        }
+      
     } else{
         [_manager addDownloadTask:downloadTask];
         [self startDownloadWithTask:downloadTask];

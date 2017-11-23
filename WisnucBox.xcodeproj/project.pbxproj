@@ -69,6 +69,8 @@
 		1FB0900B1FBC519A0020B304 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB090091FBC51990020B304 /* NSString+Extension.m */; };
 		1FC2AFEF1FC5299300E8C9DE /* WBCloudLoginAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2AFEE1FC5299300E8C9DE /* WBCloudLoginAPI.m */; };
 		1FC2AFF21FC52B4800E8C9DE /* CloudLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2AFF11FC52B4800E8C9DE /* CloudLoginModel.m */; };
+		1FC2AFF81FC6684100E8C9DE /* WBgetStationInfoAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2AFF71FC6684000E8C9DE /* WBgetStationInfoAPI.m */; };
+		1FC2AFFB1FC6692D00E8C9DE /* WBGetSystemInformationAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2AFFA1FC6692D00E8C9DE /* WBGetSystemInformationAPI.m */; };
 		1FD7A0EA1FB05A45000D4CB3 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E41FB05A45000D4CB3 /* back@2x.png */; };
 		1FD7A0EB1FB05A45000D4CB3 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E51FB05A45000D4CB3 /* back.png */; };
 		1FD7A0EC1FB05A45000D4CB3 /* back_gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E61FB05A45000D4CB3 /* back_gray@3x.png */; };
@@ -664,6 +666,10 @@
 		1FC2AFEE1FC5299300E8C9DE /* WBCloudLoginAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBCloudLoginAPI.m; sourceTree = "<group>"; };
 		1FC2AFF01FC52B4800E8C9DE /* CloudLoginModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudLoginModel.h; sourceTree = "<group>"; };
 		1FC2AFF11FC52B4800E8C9DE /* CloudLoginModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudLoginModel.m; sourceTree = "<group>"; };
+		1FC2AFF61FC6684000E8C9DE /* WBgetStationInfoAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBgetStationInfoAPI.h; sourceTree = "<group>"; };
+		1FC2AFF71FC6684000E8C9DE /* WBgetStationInfoAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBgetStationInfoAPI.m; sourceTree = "<group>"; };
+		1FC2AFF91FC6692D00E8C9DE /* WBGetSystemInformationAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBGetSystemInformationAPI.h; sourceTree = "<group>"; };
+		1FC2AFFA1FC6692D00E8C9DE /* WBGetSystemInformationAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBGetSystemInformationAPI.m; sourceTree = "<group>"; };
 		1FD7A0E41FB05A45000D4CB3 /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
 		1FD7A0E51FB05A45000D4CB3 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		1FD7A0E61FB05A45000D4CB3 /* back_gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_gray@3x.png"; sourceTree = "<group>"; };
@@ -1775,6 +1781,10 @@
 			children = (
 				71A3D67C1FB5ADAA0002B8B1 /* FMGetJWTAPI.h */,
 				71A3D67D1FB5ADAA0002B8B1 /* FMGetJWTAPI.m */,
+				1FC2AFF61FC6684000E8C9DE /* WBgetStationInfoAPI.h */,
+				1FC2AFF71FC6684000E8C9DE /* WBgetStationInfoAPI.m */,
+				1FC2AFF91FC6692D00E8C9DE /* WBGetSystemInformationAPI.h */,
+				1FC2AFFA1FC6692D00E8C9DE /* WBGetSystemInformationAPI.m */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -3242,6 +3252,7 @@
 				F6830EB51FB2FAE0005AC578 /* RDVTabBarItem.m in Sources */,
 				F6830EB31FB2FAE0005AC578 /* RDVTabBar.m in Sources */,
 				1F4D75A41FAC4BB800E6516C /* UserModel.m in Sources */,
+				1FC2AFF81FC6684100E8C9DE /* WBgetStationInfoAPI.m in Sources */,
 				1F5D21801FBC3CC6006C65AA /* WBBaseModel.m in Sources */,
 				1F4D75B41FAC4BB800E6516C /* AppServices.m in Sources */,
 				F6830EE61FB2FEC4005AC578 /* FMSetting.m in Sources */,
@@ -3298,6 +3309,7 @@
 				F6D8CC3A1FB402CB00673824 /* FMBaseFirstVC.m in Sources */,
 				1F4D75D01FAC604100E6516C /* LoginTableViewCell.m in Sources */,
 				F679336D1FB00D9B00C9A7DC /* WBUser+CoreDataClass.m in Sources */,
+				1FC2AFFB1FC6692D00E8C9DE /* WBGetSystemInformationAPI.m in Sources */,
 				F6830F041FB2FF8C005AC578 /* FMUserSettingCell.m in Sources */,
 				F671F1081FB4B8820051DF93 /* JYProcessView.m in Sources */,
 				C138D0601FB970F7000CF518 /* NSString+DeviceName.m in Sources */,

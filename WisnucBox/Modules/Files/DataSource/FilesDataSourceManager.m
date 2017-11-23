@@ -43,7 +43,8 @@ static dispatch_once_t onceToken;
 //     NSLog(@"%@",api.requestUrl);
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
-        FilesModel *model = [FilesModel yy_modelWithJSON:request.responseJsonObject ];
+        NSDictionary * responseDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+        FilesModel *model = [FilesModel yy_modelWithJSON:responseDic];
         [self.dataArray addObjectsFromArray:model.entries];
         if (self.delegate && [self.delegate respondsToSelector:@selector(datasource:finishLoading:)]) {
             [self.delegate datasource:self finishLoading:YES];

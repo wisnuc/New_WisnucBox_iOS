@@ -152,7 +152,7 @@ __strong static id _sharedObject = nil;
     NSString* dataUrl = [fileModel getDownloadTaskURL];
   
     __block  NSMutableURLRequest* urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[dataUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet  URLQueryAllowedCharacterSet]]]];
-     [urlRequest setValue:[NSString stringWithFormat:@"JWT %@",WB_UserService.currentUser.localToken] forHTTPHeaderField:@"Authorization"];
+     [urlRequest setValue:WB_UserService.currentUser.isCloudLogin ? WB_UserService.currentUser.cloudToken : [NSString stringWithFormat:@"JWT %@", WB_UserService.defaultToken] forHTTPHeaderField:@"Authorization"];
     NSString* tempPath = [fileModel getDownloadTempSavePath];
     NSLog(@"临时下载地:%@",tempPath);
     //获取已下载文件大小，如果不为零，表示可以继续下载
@@ -285,8 +285,6 @@ __strong static id _sharedObject = nil;
     [manager setDataTaskDidReceiveResponseBlock:^NSURLSessionResponseDisposition(NSURLSession * _Nonnull session, NSURLSessionDataTask * _Nonnull dataTask, NSURLResponse * _Nonnull response) {
      
         fileLength = response.expectedContentLength + currentLength;
-        NSNumber* fileSize = [NSNumber numberWithLongLong:fileLength];
-        [fileModel setDownloadFileSize:fileSize];
         NSString *path = [fileModel getDownloadTempSavePath];
         NSLog(@"%@",path);
     
@@ -321,7 +319,7 @@ __strong static id _sharedObject = nil;
                                           @"downloadedFileSize"     : [fileModel getDownloadedFileSize],
                                           @"downloadFileSavePath"   : [fileModel getDownloadFileSavePath],
                                           @"downloadFileTempPath"   : [fileModel getDownloadTempSavePath],
-                                          @"downloadFileUserId"    : [fileModel getDownloadFileUserId]
+                                          @"downloadFileUserId"     : [fileModel getDownloadFileUserId]
                                           };
         
         NSString* tempFilePlist = [[fileModel getDownloadTempSavePath] stringByAppendingPathExtension:@"plist"];
@@ -331,9 +329,16 @@ __strong static id _sharedObject = nil;
         //更新临时文件信息
         
         if (progress) {
-            float downloadProgress = (float)currentLength/(float)fileLength;
-            NSLog(@"%lld/%lld",currentLength,fileLength);
-            progress(currentLength,fileLength,downloadProgress);
+            float downloadProgress;
+            if (WB_UserService.currentUser.isCloudLogin) {
+                downloadProgress = (float)currentLength/[downloadTask.downloadFileModel.downloadFileSize floatValue];
+                NSLog(@"%lld/%@",currentLength,downloadTask.downloadFileModel.downloadFileSize);
+                progress(currentLength,[downloadTask.downloadFileModel.downloadFileSize longLongValue],downloadProgress);
+            }else{
+                downloadProgress  = (float)currentLength/(float)fileLength;
+                NSLog(@"%lld/%lld",currentLength,fileLength);
+                progress(currentLength,fileLength,downloadProgress);
+            }
         }
     }];
   

@@ -61,6 +61,13 @@ FilesHelperOpenFilesDelegate
     [self registerNotifacationAndDelegate];
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    if (self.cellStatus == FLFliesCellStatusCanChoose) {
+        [self actionForNormalStatus];
+    }
+}
+
 - (void)dealloc{
     [KDefaultNotificationCenter removeObserver:self];
 }
@@ -312,6 +319,9 @@ FilesHelperOpenFilesDelegate
                     [[CSDownloadHelper shareManager] downloadOneFileWithFileModel:model RootUUID:_driveUUID  UUID:_parentUUID IsDownloading:^(BOOL isDownloading) {
                         if (isDownloading){
                             [_progressView dismiss];
+                            if (self.cellStatus == FLFliesCellStatusCanChoose) {
+                                [self actionForNormalStatus];
+                            }
                             LocalDownloadViewController *localDownloadViewController = [[LocalDownloadViewController alloc] init];
                             [self.navigationController pushViewController:localDownloadViewController animated:YES];
                         }
