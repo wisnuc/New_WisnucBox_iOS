@@ -67,7 +67,7 @@ UIDocumentInteractionControllerDelegate
 }
 
 - (void)loadData{
-    self.downloadingArray = [NSMutableArray arrayWithArray:_manager.downloadingTasks];
+    self.downloadingArray = [NSMutableArray arrayWithArray:_manager.downloadTasks];
     self.downloadedArray = [NSMutableArray arrayWithArray: [_filesServices findAll]];
 }
 
@@ -82,6 +82,7 @@ UIDocumentInteractionControllerDelegate
 
 - (void)updateDataWithDownloadTask:(CSDownloadTask *)downloadTask {
     [self loadData];
+    NSLog(@"%@",_downloadingArray);
     [self.tableView reloadData];
 }
 
@@ -152,19 +153,26 @@ UIDocumentInteractionControllerDelegate
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     if (indexPath.section==0) {
       LocalDownloadingTableViewCell *cell;
-       cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LocalDownloadingTableViewCell class])];
-        if (nil == cell) {
+       cell = [tableView  cellForRowAtIndexPath:indexPath];
+        if (!cell) {
             cell= [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([LocalDownloadingTableViewCell class]) owner:nil options:nil] lastObject];
         }
         CSDownloadTask *downloadTask = _downloadingArray[indexPath.row];
+        NSLog(@"%@",_downloadingArray);
+        NSLog(@"%@",downloadTask);
         CSDownloadModel* downloadFileModel = [downloadTask getDownloadFileModel];
         cell.fileNameLabel.text = downloadFileModel.downloadFileName;
         cell.progressLabel.text = @"等待下载";
         downloadTask.progressBlock = ^(long long totalBytesRead, long long totalBytesExpectedToRead, float progress) {
             NSString *progressString = [NSString stringWithFormat:@"%@/%@",[CSFileUtil calculateUnit:totalBytesRead],[CSFileUtil calculateUnit:totalBytesExpectedToRead]];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                cell.progressLabel.text = progressString;
-            });
+              if ([NSThread isMainThread] ) {
+                     cell.progressLabel.text = progressString;
+              }else{
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      cell.progressLabel.text = progressString;
+                  });
+              }
+            
         };
         if ([self.chooseArr containsObject:downloadFileModel.getDownloadFileUUID]) {
             cell.f_ImageView.hidden = YES;

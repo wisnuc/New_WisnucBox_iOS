@@ -85,6 +85,7 @@
         isComplete = NO;
     }else{
         isComplete = YES;
+        
     }
     
     if (bindDoSomething)

@@ -13,6 +13,7 @@
 #import "NSObject+KVOBlock.h"
 #import "CSDownloadModel.h"
 #import "FilesServices.h"
+#import "CSDownloadHelper.h"
 
 #define DEFAULT_QUEUE_CAPACITY 6        //默认队列容量
 #define DEFAULT_FAITURE_RETRY_CHANCE 6  //默认失败重试机会
@@ -58,6 +59,8 @@
     
     RACSubject *_subject;
     
+    NSInteger _excuteCount;
+    
 }
 
 - (id)init
@@ -77,6 +80,7 @@
         _taskWaitingQueue   = [[CSDownloadTaskQueue alloc] initWithMaxCapacity:_maxWaiting];
         _taskPausedQueue    = [[CSDownloadTaskQueue alloc] initWithMaxCapacity:_maxPaused];
         _subject = [RACSubject subject];
+        _excuteCount = 0;
         //初始下载中队列容量变化观察
         [self initDownloadTaskDoingQueueObserver];
     }
@@ -126,8 +130,8 @@ __strong static id _sharedObject = nil;
                  complete:(CSDownloadedEventHandler)complete
 {
     
-    
-   __block NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    _excuteCount ++;
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     
     __block AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -151,7 +155,7 @@ __strong static id _sharedObject = nil;
     
     NSString* dataUrl = [fileModel getDownloadTaskURL];
   
-    __block  NSMutableURLRequest* urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[dataUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet  URLQueryAllowedCharacterSet]]]];
+     NSMutableURLRequest* urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[dataUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet  URLQueryAllowedCharacterSet]]]];
      [urlRequest setValue:WB_UserService.currentUser.isCloudLogin ? WB_UserService.currentUser.cloudToken : [NSString stringWithFormat:@"JWT %@", WB_UserService.defaultToken] forHTTPHeaderField:@"Authorization"];
     NSString* tempPath = [fileModel getDownloadTempSavePath];
     NSLog(@"临时下载地:%@",tempPath);
@@ -174,11 +178,12 @@ __strong static id _sharedObject = nil;
     __block NSURLSessionDataTask * dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         if (error) {
             NSLog(@"%@",error);
+            [downloadTask.stream close];
+            downloadTask.stream = nil;
             if (error.code == -1005) {
                 return ;
             }
-            [downloadTask.stream close];
-            downloadTask.stream = nil;
+         
             [_taskDoingQueue dequeue];
             [self.downloadingTasks removeObject:downloadTask];
             int failureCount = [downloadTask increaseFailureCount];
@@ -204,6 +209,7 @@ __strong static id _sharedObject = nil;
                 NSLog(@"宣告失败...");
                 
                 [downloadTask setDownloadStatus:CSDownloadStatusFailure];
+                [_downloadTasks removeObject:downloadTask];
                 //                [GSFileUtil deleteFileAtPath:tmpPath];
                 //调用外部回调（比如执行UI更新），通知UI任务已经失败了
                 if (complete) {
@@ -270,7 +276,7 @@ __strong static id _sharedObject = nil;
             [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 //            FilesServices *services = [FilesServices new];
 //            [services saveFile:wBFile];
-            
+            [_downloadTasks removeObject:downloadTask];
             [self.downloadedTasks addObject:downloadTask];
             //调用外部回调（比如执行UI更新）
             if (complete) {
@@ -283,17 +289,17 @@ __strong static id _sharedObject = nil;
    
     
     [manager setDataTaskDidReceiveResponseBlock:^NSURLSessionResponseDisposition(NSURLSession * _Nonnull session, NSURLSessionDataTask * _Nonnull dataTask, NSURLResponse * _Nonnull response) {
-     
+//        NSLog(@"%@",manager);
         fileLength = response.expectedContentLength + currentLength;
         NSString *path = [fileModel getDownloadTempSavePath];
         NSLog(@"%@",path);
     
         // 创建一个空的文件到沙盒中
-        NSFileManager *manager = [NSFileManager defaultManager];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
         
-        if (![manager fileExistsAtPath:path]) {
+        if (![fileManager fileExistsAtPath:path]) {
             // 如果没有下载文件的话，就创建一个文件。如果有下载文件的话，则不用重新创建(不然会覆盖掉之前的文件)
-            [manager createFileAtPath:path contents:nil attributes:nil];
+            [fileManager createFileAtPath:path contents:nil attributes:nil];
         }
         
         // 创建文件句柄
@@ -344,25 +350,35 @@ __strong static id _sharedObject = nil;
   
     [downloadTask setDownloadDataTask:dataTask];
     [self startOneDownloadTaskWith:downloadTask];
-    [_subject subscribeNext:^(id x) {
+    if (_excuteCount>1) {
+        return;
+    }
+    [_subject subscribeNext:^(id  _Nullable x) {
+        NSLog(@"%@",x);
         CSDownloadTask *task = x;
-        [task.stream close];
-        task.stream = nil;
-        [_taskDoingQueue dequeue];
         [self.downloadingTasks removeObject:task];
-//        [downloadTask setDownloadStatus:CSDownloadStatusFailure];
-//        [_downloadTasks removeObject:task];
-        configuration = nil;
-        urlRequest = nil;
-        [task setDownloadDataTask:nil];
+        
+        //        [task.stream close];
+        //        task.stream = nil;
+        //        [_taskDoingQueue dequeue];
+        //        [self.downloadingTasks removeObject:task];
+        ////        [downloadTask setDownloadStatus:CSDownloadStatusFailure];
+        ////        [_downloadTasks removeObject:task];
+        //        configuration = nil;
+        //        urlRequest = nil;
+        //        [task setDownloadDataTask:nil];
         [manager.operationQueue cancelAllOperations];
         [manager invalidateSessionCancelingTasks:YES];
         manager = nil;
-        [dataTask cancel];
-        dataTask = nil;
-        [weakSelf beginDownloadTask:task begin:begin progress:progress complete:complete];
+        //        [task setDownloadStatus:CSDownloadStatusFailure];
+        NSLog(@"%@",manager);
+        //        manager = nil;
+        //        [dataTask cancel];
+        //        dataTask = nil;
+//        [weakSelf beginDownloadTask:task begin:begin progress:progress complete:complete];
+        [[CSDownloadHelper shareManager] startDownloadWithTask:task];
+//         [self.downloadingTasks removeObject:downloadTask];
     }];
-    
 }
 
 
@@ -410,26 +426,24 @@ __strong static id _sharedObject = nil;
     else //将任务推入下载队列，并恢复下载
     {
         [_taskDoingQueue enqueue:downloadTask];
-        
         //暂停的直接恢复
         if ([downloadTask getDownloadStatus] == CSDownloadStatusPaused)
         {
             [downloadTask continueDownloadTask:^(BOOL isComplete) {
+                [downloadTask setDownloadStatus:CSDownloadStatusDownloading];
                 if (isComplete) {
                     [_subject sendNext:downloadTask];
                 }
-                [downloadTask setDownloadStatus:CSDownloadStatusDownloading];
             }];
         }
         //还未启动的需要启动
         else if([downloadTask getDownloadStatus] == CSDownloadStatusWaitingForStart)
         {
             [downloadTask startDownloadTask:^(){
-                //                 [_subject sendNext:downloadTask];
+//                [_subject sendNext:downloadTask];
                 [downloadTask setDownloadStatus:CSDownloadStatusDownloading];
             }];
         }
-        
     }
     
 }
@@ -510,7 +524,7 @@ __strong static id _sharedObject = nil;
 - (void)startAllDownloadTask
 {
     int taskCount = [_taskPausedQueue queueCount];
-    
+       NSLog(@"%d",taskCount);
     for (int i = 0; i < taskCount; i++)
     {
         CSDownloadTask* downloadTask = [_taskPausedQueue peekAtIndex:i];
@@ -525,6 +539,7 @@ __strong static id _sharedObject = nil;
 {
     
     int doingTaskCount = [_taskDoingQueue queueCount];
+//    NSLog(@"%d",doingTaskCount);
     for (int i = 0; i < doingTaskCount; i++)
     {
         CSDownloadTask* downloadTask = [_taskDoingQueue peekAtIndex:i];

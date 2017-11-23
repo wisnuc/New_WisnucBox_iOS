@@ -19,6 +19,7 @@
 
 @implementation AppServices {
     BOOL _isRebuildingPhotoUploader;
+    NSInteger _notiNumber;
 }
 
 // init asset
@@ -39,7 +40,8 @@
     self = [super init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserAuthChange) name:ASSETS_AUTH_CHANGE_NOTIFY object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMemoryWarning) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNetReachabilityNotify) name:NETWORK_REACHABILITY_CHANGE_NOTIFY object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNetReachabilityNotify:) name:NETWORK_REACHABILITY_CHANGE_NOTIFY object:nil];
+    _notiNumber = 0;
     [self assetServices];
     if(self.userServices.currentUser)
         [self netServices];
@@ -65,15 +67,33 @@
 }
 
 // Net Reachability
-- (void)handleNetReachabilityNotify {
-    if(!WB_UserService.currentUser || !WB_UserService.currentUser.autoBackUp) return;
+
+- (void)handleNetReachabilityNotify:(NSNotification *)noti {
+    _notiNumber ++;
     AFNetworkReachabilityStatus status = self.netServices.status;
+    if (_notiNumber>0) {
+        if (status != AFNetworkReachabilityStatusReachableViaWiFi) {
+            if ([CSFileDownloadManager sharedDownloadManager].downloadingTasks.count >0) {
+                [[CSFileDownloadManager sharedDownloadManager] pauseAllDownloadTask];
+            }
+        }else{
+            if ([CSFileDownloadManager sharedDownloadManager].downloadingTasks.count >0) {
+                [[CSFileDownloadManager sharedDownloadManager] startAllDownloadTask];
+            }
+        }
+    }
+  
+    if(!WB_UserService.currentUser || !WB_UserService.currentUser.autoBackUp) return;
+    
     if(status != AFNetworkReachabilityStatusReachableViaWiFi && !WB_UserService.currentUser.backUpInWWAN){
         [self.photoUploadManager stop];
+       
     }
     else if(self.photoUploadManager.shouldUpload == NO) {
         [self startUploadAssets:nil];
+
     }
+ 
 }
 
 //need destroy photoUploadManager and rebulid if currentuser`s backupdir notfound,

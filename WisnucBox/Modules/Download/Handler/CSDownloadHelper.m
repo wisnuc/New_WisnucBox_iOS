@@ -244,7 +244,7 @@ __strong static id _sharedObject = nil;
 {
     [_manager downloadDataAsyncWithTask:downloadTask
                                   begin:^{
-                                      
+                                      [self updateUIWithTask:downloadTask];
                                       NSLog(@"准备开始下载...");
                                   }
                                progress:^(long long totalBytesRead, long long totalBytesExpectedToRead, float progress) {
