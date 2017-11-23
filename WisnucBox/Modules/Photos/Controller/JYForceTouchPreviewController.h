@@ -14,5 +14,6 @@
 @property (nonatomic, assign) BOOL allowSelectGif;
 @property (nonatomic, assign) BOOL allowSelectLivePhoto;
 @property (nonatomic, strong) JYAsset *model;
+@property (nonatomic) UIImage * placeHolder;
 
 @end

@@ -89,7 +89,7 @@
 
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIActivityIndicatorView *indicator;
-@property (nonatomic, strong) PHAsset *asset;
+@property (nonatomic, strong) JYAsset *jyAsset;
 
 @property (nonatomic, assign) PHImageRequestID imageRequestID;
 @property (nonatomic, weak) id<SDWebImageOperation> operation;
@@ -99,7 +99,7 @@
 
 - (void)singleTapAction;
 
-- (void)loadNormalImage:(PHAsset *)asset;
+- (void)loadNormalImage:(JYAsset *)asset;
 
 - (void)resetScale;
 
@@ -113,7 +113,7 @@
 @property (nonatomic, strong) UIView *containerView;
 @property (nonatomic, strong) UIScrollView *scrollView;
 
-- (void)loadGifImage:(PHAsset *)asset;
+- (void)loadGifImage:(JYAsset *)asset;
 - (void)loadImage:(id)obj;
 
 - (void)resumeGif;
@@ -127,7 +127,7 @@
 
 @property (nonatomic, strong) PHLivePhotoView *lpView;
 
-- (void)loadLivePhoto:(PHAsset *)asset;
+- (void)loadLivePhoto:(JYAsset *)asset;
 
 - (void)stopPlayLivePhoto;
 
@@ -144,5 +144,7 @@
 - (BOOL)haveLoadVideo;
 
 - (void)stopPlayVideo;
+
+- (void)loadNetNormalImage:(JYAsset *)asset;
 
 @end

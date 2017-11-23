@@ -120,6 +120,7 @@
 		C138D0781FB9A4B0000CF518 /* DriveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D0721FB9A4AF000CF518 /* DriveModel.m */; };
 		C138D0791FB9A4B0000CF518 /* EntriesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D0761FB9A4B0000CF518 /* EntriesModel.m */; };
 		C138D07A1FB9A4B0000CF518 /* DirectoriesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D0771FB9A4B0000CF518 /* DirectoriesModel.m */; };
+		C139DFBE1FC6B9F3007098E5 /* FMMediaRamdomKeyAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C139DFBD1FC6B9F3007098E5 /* FMMediaRamdomKeyAPI.m */; };
 		F65035611FAC00A60007979D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035601FAC00A60007979D /* main.m */; };
 		F65035641FAC00A60007979D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035631FAC00A60007979D /* AppDelegate.m */; };
 		F65035671FAC00A60007979D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035661FAC00A60007979D /* ViewController.m */; };
@@ -745,6 +746,8 @@
 		C138D0751FB9A4B0000CF518 /* EntriesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntriesModel.h; sourceTree = "<group>"; };
 		C138D0761FB9A4B0000CF518 /* EntriesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntriesModel.m; sourceTree = "<group>"; };
 		C138D0771FB9A4B0000CF518 /* DirectoriesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectoriesModel.m; sourceTree = "<group>"; };
+		C139DFBC1FC6B9F3007098E5 /* FMMediaRamdomKeyAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FMMediaRamdomKeyAPI.h; sourceTree = "<group>"; };
+		C139DFBD1FC6B9F3007098E5 /* FMMediaRamdomKeyAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FMMediaRamdomKeyAPI.m; sourceTree = "<group>"; };
 		F650355C1FAC00A60007979D /* WisnucBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WisnucBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F65035601FAC00A60007979D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F65035621FAC00A60007979D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -1857,6 +1860,8 @@
 			children = (
 				C138D0641FB99AF3000CF518 /* FMMediaAPI.h */,
 				C138D0651FB99AF3000CF518 /* FMMediaAPI.m */,
+				C139DFBC1FC6B9F3007098E5 /* FMMediaRamdomKeyAPI.h */,
+				C139DFBD1FC6B9F3007098E5 /* FMMediaRamdomKeyAPI.m */,
 			);
 			path = Media;
 			sourceTree = "<group>";
@@ -3193,6 +3198,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C139DFBE1FC6B9F3007098E5 /* FMMediaRamdomKeyAPI.m in Sources */,
 				1F5D21831FBC3DB0006C65AA /* FilesModel.m in Sources */,
 				1F4D75C71FAC5EB500E6516C /* GCDAsyncSocket.m in Sources */,
 				71A3D6791FB5AD230002B8B1 /* FMGetUsersAPI.m in Sources */,

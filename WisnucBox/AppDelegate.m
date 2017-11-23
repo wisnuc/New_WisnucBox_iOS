@@ -23,6 +23,7 @@
     [MagicalRecord setupCoreDataStack];
     [MagicalRecord setLoggingLevel:MagicalRecordLoggingLevelWarn];
     [self configWeChat];
+    
 //    [self redirectNSlogToDocumentFolder];
     [AppServices sharedService];
     [self initRootVC];

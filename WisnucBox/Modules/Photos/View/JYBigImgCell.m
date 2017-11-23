@@ -85,7 +85,7 @@
         self.imageGifView.frame = self.bounds;
     } else if (self.model.type == JYAssetTypeLivePhoto) {
         self.livePhotoView.frame = self.bounds;
-    } else if (self.model.type == JYAssetTypeVideo) {
+    } else if (self.model.type == JYAssetTypeVideo || self.model.type == JYAssetTypeNetVideo) {
         self.videoView.frame = self.bounds;
     }
 }
@@ -99,7 +99,7 @@
         return self.imageGifView.containerView.frame;
     } else if (self.model.type == JYAssetTypeLivePhoto) {
         return self.livePhotoView.lpView.frame;
-    } else if (self.model.type == JYAssetTypeVideo) {
+    } else if (self.model.type == JYAssetTypeVideo || self.model.type == JYAssetTypeNetVideo) {
         return self.videoView.playLayer.frame;
     }
     return CGRectZero;
@@ -141,27 +141,27 @@
     switch (model.type) {
         case JYAssetTypeImage: {
             [self addSubview:self.imageGifView];
-            [self.imageGifView loadNormalImage:model.asset];
+            [self.imageGifView loadNormalImage:model];
         }
             break;
         case JYAssetTypeGIF: {
             [self addSubview:self.imageGifView];
-            [self.imageGifView loadNormalImage:model.asset];
+            [self.imageGifView loadNormalImage:model];
         }
             break;
         case JYAssetTypeLivePhoto: {
             if (self.showLivePhoto) {
                 [self addSubview:self.livePhotoView];
-                [self.livePhotoView loadNormalImage:model.asset];
+                [self.livePhotoView loadNormalImage:model];
             } else {
                 [self addSubview:self.imageGifView];
-                [self.imageGifView loadNormalImage:model.asset];
+                [self.imageGifView loadNormalImage:model];
             }
         }
             break;
         case JYAssetTypeVideo: {
             [self addSubview:self.videoView];
-            [self.videoView loadNormalImage:model.asset];
+            [self.videoView loadNormalImage:model];
         }
             break;
         case JYAssetTypeNetImage: {
@@ -171,9 +171,12 @@
             break;
         case JYAssetTypeNetVideo : {
             [self addSubview:self.videoView];
+            [(JYPreviewVideo *)self.videoView loadNetNormalImage:model];
             //TODO: load net video
+            
 //            self.videoView loadNormalImage:<#(PHAsset *)#>
         }
+            break;
         default:
             break;
     }
@@ -183,10 +186,10 @@
 {
     if (self.showGif &&
         self.model.type == JYAssetTypeGIF) {
-        [self.imageGifView loadGifImage:self.model.asset];
+        [self.imageGifView loadGifImage:self.model];
     } else if (self.showLivePhoto &&
                self.model.type == JYAssetTypeLivePhoto) {
-        [self.livePhotoView loadLivePhoto:self.model.asset];
+        [self.livePhotoView loadLivePhoto:self.model];
     }
 }
 
@@ -212,11 +215,11 @@
 {
     if (self.model.type == JYAssetTypeGIF) {
         if ([self.imageGifView.imageView.image isKindOfClass:NSClassFromString(@"_UIAnimatedImage")]) {
-            [self.imageGifView loadNormalImage:self.model.asset];
+            [self.imageGifView loadNormalImage:self.model];
         }
     } else if (self.model.type == JYAssetTypeVideo) {
         if ([self.videoView haveLoadVideo]) {
-            [self.videoView loadNormalImage:self.model.asset];
+            [self.videoView loadNormalImage:self.model];
         }
     }
 }
@@ -283,7 +286,7 @@
     return self.imageView.image;
 }
 
-- (void)loadNormalImage:(PHAsset *)asset
+- (void)loadNormalImage:(JYAsset *)asset
 {
     //子类重写
 }
@@ -319,7 +322,7 @@
     self.scrollView.frame = self.bounds;
     [self.scrollView setZoomScale:1.0];
     if (_loadOK) {
-        [self resetSubviewSize:self.asset?:self.imageView.image];
+        [self resetSubviewSize:self.jyAsset.asset?self.jyAsset.asset:self.imageView.image];
     }
 }
 
@@ -412,12 +415,12 @@
     layer.timeOffset = pausedTime;
 }
 
-- (void)loadGifImage:(PHAsset *)asset
+- (void)loadGifImage:(JYAsset *)asset
 {
     [self.indicator startAnimating];
     jy_weakify(self);
     
-    [PHPhotoLibrary requestOriginalImageDataForAsset:asset completion:^(NSData *data, NSDictionary *info) {
+    [PHPhotoLibrary requestOriginalImageDataForAsset:asset.asset completion:^(NSData *data, NSDictionary *info) {
         jy_strongify(weakSelf);
         if (![[info objectForKey:PHImageResultIsDegradedKey] boolValue]) {
             strongSelf.imageView.image = [PHPhotoLibrary animatedGIFWithData:data];
@@ -428,23 +431,25 @@
     }];
 }
 
-- (void)loadNormalImage:(PHAsset *)asset
+- (void)loadNormalImage:(JYAsset *)asset
 {
-    if (self.asset && self.imageRequestID >= 0) {
+    if (self.jyAsset.asset && self.imageRequestID >= 0) {
         [[PHCachingImageManager defaultManager] cancelImageRequest:self.imageRequestID];
     }
     if(self.operation){
         [self.operation cancel];
         self.operation = nil;
     }
-    self.asset = asset;
+    self.jyAsset = asset;
     
     [self.indicator startAnimating];
     CGFloat scale = [UIScreen mainScreen].scale;
     CGFloat width = MIN(kViewWidth, kMaxImageWidth);
-    CGSize size = CGSizeMake(width*scale, width*scale*asset.pixelHeight/asset.pixelWidth);
+    CGSize size = CGSizeZero;
+    if(self.jyAsset.asset)
+        size = CGSizeMake(width*scale, width*scale*asset.asset.pixelHeight/asset.asset.pixelWidth);
     jy_weakify(self);
-    self.imageRequestID = [PHPhotoLibrary requestImageForAsset:asset size:size completion:^(UIImage *image, NSDictionary *info) {
+    self.imageRequestID = [PHPhotoLibrary requestImageForAsset:asset.asset size:size completion:^(UIImage *image, NSDictionary *info) {
 //        NSLog(@"%@", info);
         jy_strongify(weakSelf);
         strongSelf.imageView.image = image;
@@ -459,19 +464,20 @@
 /**
  @param obj UIImage/fmhash
  */
-- (void)loadImage:(id)obj
+- (void)loadImage:(JYAsset *)asset
 {
     self.imageView.image = nil;
-    if (self.asset && self.imageRequestID >= 0) {
+    if (self.jyAsset.asset && self.imageRequestID >= 0) {
         [[PHCachingImageManager defaultManager] cancelImageRequest:self.imageRequestID];
     }
     if(self.operation){
         [self.operation cancel];
         self.operation = nil;
     }
+    self.jyAsset = asset;
     [self.indicator startAnimating];
     jy_weakify(self);
-    self.operation =  [WB_NetService getHighWebImageWithHash:[(WBAsset *)obj fmhash] completeBlock:^(NSError *error, UIImage *img) {
+    self.operation =  [WB_NetService getHighWebImageWithHash:[(WBAsset *)asset fmhash] completeBlock:^(NSError *error, UIImage *img) {
         [weakSelf.indicator stopAnimating];
         jy_strongify(weakSelf);
         if(!strongSelf) return;
@@ -496,9 +502,9 @@
     UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
     
     CGFloat w, h;
-    if ([obj isKindOfClass:PHAsset.class]) {
-        w = [(PHAsset *)obj pixelWidth];
-        h = [(PHAsset *)obj pixelHeight];
+    if ([obj isKindOfClass:JYAsset.class]) {
+        w = [((JYAsset *)obj).asset pixelWidth];
+        h = [((JYAsset *)obj).asset pixelHeight];
     } else {
         w = ((UIImage *)obj).size.width;
         h = ((UIImage *)obj).size.height;
@@ -672,12 +678,12 @@
     [self addSubview:self.indicator];
 }
 
-- (void)loadNormalImage:(PHAsset *)asset
+- (void)loadNormalImage:(JYAsset *)asset
 {
-    if (self.asset && self.imageRequestID >= 0) {
+    if (self.jyAsset.asset && self.imageRequestID >= 0) {
         [[PHCachingImageManager defaultManager] cancelImageRequest:self.imageRequestID];
     }
-    self.asset = asset;
+    self.jyAsset = asset;
     
     if (_lpView) {
         [_lpView removeFromSuperview];
@@ -687,9 +693,9 @@
     [self.indicator startAnimating];
     CGFloat scale = [UIScreen mainScreen].scale;
     CGFloat width = MIN(kViewWidth, kMaxImageWidth);
-    CGSize size = CGSizeMake(width*scale, width*scale*asset.pixelHeight/asset.pixelWidth);
+    CGSize size = CGSizeMake(width*scale, width*scale*asset.asset.pixelHeight/asset.asset.pixelWidth);
     jy_weakify(self);
-    self.imageRequestID = [PHPhotoLibrary requestImageForAsset:asset size:size completion:^(UIImage *image, NSDictionary *info) {
+    self.imageRequestID = [PHPhotoLibrary requestImageForAsset:asset.asset size:size completion:^(UIImage *image, NSDictionary *info) {
         jy_strongify(weakSelf);
         strongSelf.imageView.image = image;
         if (![[info objectForKey:PHImageResultIsDegradedKey] boolValue]) {
@@ -698,10 +704,10 @@
     }];
 }
 
-- (void)loadLivePhoto:(PHAsset *)asset
+- (void)loadLivePhoto:(JYAsset *)asset
 {
     jy_weakify(self);
-    [PHPhotoLibrary requestLivePhotoForAsset:asset completion:^(PHLivePhoto *lv, NSDictionary *info) {
+    [PHPhotoLibrary requestLivePhotoForAsset:asset.asset completion:^(PHLivePhoto *lv, NSDictionary *info) {
         jy_strongify(weakSelf);
 //        NSLog(@"%@", info);
         if (lv) {
@@ -754,7 +760,7 @@
 {
     if (!_playBtn) {
         _playBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//        [_playBtn setBackgroundImage: GetImageWithName(@"playVideo") forState:UIControlStateNormal];
+        [_playBtn setBackgroundImage:[UIImage imageNamed:@"share"] forState:UIControlStateNormal];
         _playBtn.frame = CGRectMake(0, 0, 80, 80);
         _playBtn.center = self.center;
         [_playBtn addTarget:self action:@selector(playBtnClick) forControlEvents:UIControlEventTouchUpInside];
@@ -811,12 +817,12 @@
     [self addSubview:self.indicator];
 }
 
-- (void)loadNormalImage:(PHAsset *)asset
+- (void)loadNormalImage:(JYAsset *)asset
 {
-    if (self.asset && self.imageRequestID >= 0) {
+    if (self.jyAsset.asset && self.imageRequestID >= 0) {
         [[PHCachingImageManager defaultManager] cancelImageRequest:self.imageRequestID];
     }
-    self.asset = asset;
+    self.jyAsset = asset;
     
     if (_playLayer) {
         _playLayer.player = nil;
@@ -828,7 +834,7 @@
     
     self.imageView.image = nil;
     
-    if (![asset isLocal]) {
+    if (![asset.asset isLocal]) {
         [self initVideoLoadFailedFromiCloudUI];
         return;
     }
@@ -840,14 +846,60 @@
     [self.indicator startAnimating];
     CGFloat scale = [UIScreen mainScreen].scale;
     CGFloat width = MIN(kViewWidth, kMaxImageWidth);
-    CGSize size = CGSizeMake(width*scale, width*scale*asset.pixelHeight/asset.pixelWidth);
+    CGSize size = CGSizeMake(width*scale, width*scale*asset.asset.pixelHeight/asset.asset.pixelWidth);
     jy_weakify(self);
-    self.imageRequestID = [PHPhotoLibrary requestImageForAsset:asset size:size completion:^(UIImage *image, NSDictionary *info) {
+    self.imageRequestID = [PHPhotoLibrary requestImageForAsset:asset.asset size:size completion:^(UIImage *image, NSDictionary *info) {
         jy_strongify(weakSelf);
         strongSelf.imageView.image = image;
         if (![[info objectForKey:PHImageResultIsDegradedKey] boolValue]) {
             [strongSelf.indicator stopAnimating];
         }
+    }];
+}
+
+- (void)loadNetNormalImage:(JYAsset *)asset
+{
+    if (self.jyAsset.asset && self.imageRequestID >= 0) {
+        [[PHCachingImageManager defaultManager] cancelImageRequest:self.imageRequestID];
+    }
+    self.jyAsset = asset;
+    if (_playLayer) {
+        _playLayer.player = nil;
+        [_playLayer removeFromSuperlayer];
+        [_playLayer removeObserver:self forKeyPath:@"status"];
+        _hasObserverStatus = NO;
+        _playLayer = nil;
+    }
+    
+    self.imageView.image = nil;
+    
+    self.playBtn.enabled = YES;
+    self.icloudLoadFailedLabel.hidden = YES;
+    self.imageView.hidden = NO;
+    
+    [self.indicator startAnimating];
+    
+    jy_weakify(self);
+    [[FMMediaRamdomKeyAPI apiWithHash:[(WBAsset *)self.jyAsset fmhash]] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@media/random/%@", [JYRequestConfig sharedConfig].baseURL, request.responseJsonObject[@"key"]]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            jy_strongify(weakSelf);
+            if (!request.responseJsonObject) {
+                [strongSelf initVideoLoadFailedFromiCloudUI];
+                return;
+            }
+            AVPlayer *player = [AVPlayer playerWithURL:url];
+            [strongSelf.layer addSublayer:strongSelf.playLayer];
+            strongSelf.playLayer.player = player;
+            [strongSelf switchVideoStatus];
+            [strongSelf.playLayer addObserver:strongSelf forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
+            _hasObserverStatus = YES;
+            [[NSNotificationCenter defaultCenter] addObserver:strongSelf selector:@selector(playFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:player.currentItem];
+            [strongSelf.indicator stopAnimating];
+        });
+    } failure:^(__kindof JYBaseRequest *request) {
+        [SXLoadingView showAlertHUD:@"播放失败" duration:1];
+        [weakSelf.indicator stopAnimating];
     }];
 }
 
@@ -878,25 +930,27 @@
 - (void)singleTapAction
 {
     [super singleTapAction];
-    
     if (!_playLayer) {
-        jy_weakify(self);
-        [PHPhotoLibrary requestVideoForAsset:self.asset completion:^(AVPlayerItem *item, NSDictionary *info) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                jy_strongify(weakSelf);
-                if (!item) {
-                    [strongSelf initVideoLoadFailedFromiCloudUI];
-                    return;
-                }
-                AVPlayer *player = [AVPlayer playerWithPlayerItem:item];
-                [strongSelf.layer addSublayer:strongSelf.playLayer];
-                strongSelf.playLayer.player = player;
-                [strongSelf switchVideoStatus];
-                [strongSelf.playLayer addObserver:strongSelf forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
-                _hasObserverStatus = YES;
-                [[NSNotificationCenter defaultCenter] addObserver:strongSelf selector:@selector(playFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:player.currentItem];
-            });
-        }];
+        if(self.jyAsset.type == JYAssetTypeVideo){
+            jy_weakify(self);
+            [PHPhotoLibrary requestVideoForAsset:self.jyAsset.asset completion:^(AVPlayerItem *item, NSDictionary *info) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    jy_strongify(weakSelf);
+                    if (!item) {
+                        [strongSelf initVideoLoadFailedFromiCloudUI];
+                        return;
+                    }
+                    AVPlayer *player = [AVPlayer playerWithPlayerItem:item];
+                    [strongSelf.layer addSublayer:strongSelf.playLayer];
+                    strongSelf.playLayer.player = player;
+                    [strongSelf switchVideoStatus];
+                    [strongSelf.playLayer addObserver:strongSelf forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
+                    _hasObserverStatus = YES;
+                    [[NSNotificationCenter defaultCenter] addObserver:strongSelf selector:@selector(playFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:player.currentItem];
+                });
+            }];
+        }else
+            return;
     } else {
         [self switchVideoStatus];
     }

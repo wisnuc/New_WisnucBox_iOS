@@ -488,6 +488,10 @@
         [resizableImageView removeFromSuperview];
         
     };
+    // FIXME: net video animation error!
+    if([self getCurrentPageModel].type == JYAssetTypeNetVideo )
+        return completion();
+    
     [UIView animateWithDuration:0.3 animations:^{
         fadeView.backgroundColor =  [UIColor blackColor];
     } completion:nil];

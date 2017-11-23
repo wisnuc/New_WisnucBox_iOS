@@ -638,6 +638,14 @@
             }
         }];
         if(upModel) [self.uploadErrorQueue removeObject:upModel];
+        upModel = nil;
+        [self.uploadedQueue enumerateObjectsUsingBlock:^(WBUploadModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if(IsEquallString(obj.asset.asset.localIdentifier, assetId)){
+                upModel = obj;
+                *stop = YES;
+            }
+        }];
+        if(upModel) [self.uploadedQueue removeObject:upModel];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:WBBackupCountChangeNotify object:nil];
         upModel = nil;
@@ -780,39 +788,44 @@
             });
         }else {
             [self.uploadingQueue addObject:model];
-            __weak typeof(self) weakSelf = self;
-            __weak typeof(WB_AppServices) weak_AppService = WB_AppServices;
-            [model startWithCompleteBlock:^(NSError *error, id response) {
-                if(!weakSelf) return;
-                dispatch_async(weakSelf.managerQueue, ^{
-                    if (error) {
-                        if (error.wbCode == WBUploadDirNotFound) {
-                            [weakSelf stop];   // stop
-                            // need rebuild
-                            [weakSelf destroy];
-                            [weak_AppService rebulidUploadManager];
-                        }else if (error.wbCode == WBUploadFileExist) {
-                            // rename then retry
-
-                        }else {
-                            if(!model.isRemoved)
-                                [weakSelf.uploadErrorQueue addObject:model];
-                            [weakSelf.uploadingQueue removeObject:model];
-                            NSLog(@"上传失败 , error: %lu  finish:%lu", (unsigned long)weakSelf.uploadErrorQueue.count, (unsigned long)weakSelf.uploadedQueue.count);
-                        }
-                    }else{  // success
-                        if(!model.isRemoved)
-                            [weakSelf.uploadedQueue addObject:model];
-                        [weakSelf.uploadingQueue removeObject:model];
-                        [weakSelf.uploadedLocalHashSet addObject:model.asset.digest]; // record for skip equal-hash asset
-                        [[NSNotificationCenter defaultCenter] postNotificationName:WBBackupCountChangeNotify object:nil];
-                        NSLog(@"上传成功 , error: %lu  finish:%lu", (unsigned long)weakSelf.uploadErrorQueue.count, (unsigned long)weakSelf.uploadedQueue.count);
-                    }
-                    [weakSelf schedule];
-                });
-            }];
+            [self scheduleForUpload:model andUseTimeStamp:NO];
         }
     }
+}
+
+// retry if eexist
+- (void)scheduleForUpload:(WBUploadModel *)model andUseTimeStamp:(BOOL)yesOrNo {
+    __weak typeof(self) weakSelf = self;
+    __weak typeof(WB_AppServices) weak_AppService = WB_AppServices;
+    [model startUseTimeStamp:yesOrNo completeBlock:^(NSError *error, id response) {
+        if(!weakSelf) return;
+        dispatch_async(weakSelf.managerQueue, ^{
+            if (error) {
+                if (error.wbCode == WBUploadDirNotFound) {
+                    [weakSelf stop];   // stop
+                    // need rebuild
+                    [weakSelf destroy];
+                    [weak_AppService rebulidUploadManager];
+                }else if (error.wbCode == WBUploadFileExist) {
+                    // rename then retry
+                    [weakSelf scheduleForUpload:model andUseTimeStamp:YES];
+                }else {
+                    if(!model.isRemoved)
+                        [weakSelf.uploadErrorQueue addObject:model];
+                    [weakSelf.uploadingQueue removeObject:model];
+                    NSLog(@"上传失败 , error: %lu  finish:%lu", (unsigned long)weakSelf.uploadErrorQueue.count, (unsigned long)weakSelf.uploadedQueue.count);
+                }
+            }else{  // success
+                if(!model.isRemoved)
+                    [weakSelf.uploadedQueue addObject:model];
+                [weakSelf.uploadingQueue removeObject:model];
+                [weakSelf.uploadedLocalHashSet addObject:model.asset.digest]; // record for skip equal-hash asset
+                [[NSNotificationCenter defaultCenter] postNotificationName:WBBackupCountChangeNotify object:nil];
+                NSLog(@"上传成功 , error: %lu  finish:%lu", (unsigned long)weakSelf.uploadErrorQueue.count, (unsigned long)weakSelf.uploadedQueue.count);
+            }
+            [weakSelf schedule];
+        });
+    }];
 }
 
 - (void)stop {
@@ -853,8 +866,10 @@
     return model;
 }
 
-- (void)startWithCompleteBlock:(void(^)(NSError * , id))callback {
+static NSArray * invaildChars;
+- (void)startUseTimeStamp:(BOOL)yesOrNo completeBlock:(void(^)(NSError * , id))callback {
     self.callback = callback;
+    invaildChars = [NSArray arrayWithObjects:@"/", @"?", @"<", @">", @"\\", @":", @"*", @"|", @"\"", nil];
     @weaky(self);
     _requestFileID =  [self.asset.asset getFile:^(NSError *error, NSString *filePath) {
         if(error)
@@ -866,27 +881,48 @@
         NSString * fileName = [PHAssetResource assetResourcesForAsset:weak_self.asset.asset].firstObject.originalFilename;
         if(IsNilString(fileName)) fileName = exestr;
         NSMutableString * tempFileName = [NSMutableString stringWithString:fileName];
-        NSArray * invaildChars = @[@"/", @"?", @"<", @">", @"\\", @":", @"*", @"|", @"\""];
         for (int i = 0; i < tempFileName.length; i++) {
             if([invaildChars containsObject: [fileName substringWithRange:NSMakeRange(i, 1)]]){
                 [tempFileName replaceCharactersInRange:NSMakeRange(i, 1) withString:@"_"];
             }
         }
         fileName = tempFileName;
-       // NSLog (@"上传照片POST请求:\n上传照片照片名======>%@\n Hash======>%@\n",exestr,hashString);
+        if(yesOrNo) fileName = [NSString stringWithFormat:@"%@_%f", fileName, [[NSDate date] timeIntervalSince1970]];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         manager.requestSerializer = [AFHTTPRequestSerializer serializer];
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
         NSString *urlString;
         NSMutableDictionary * mutableDic = [NSMutableDictionary dictionaryWithCapacity:0];
-        urlString = [NSString stringWithFormat:@"%@drives/%@/dirs/%@/entries/",[JYRequestConfig sharedConfig].baseURL,WB_UserService.currentUser.userHome, WB_UserService.currentUser.backUpDir];
-        mutableDic = nil;
-        [manager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@",WB_UserService.defaultToken] forHTTPHeaderField:@"Authorization"];
+        if (WB_UserService.currentUser.isCloudLogin) {
+            urlString = [NSString stringWithFormat:@"%@%@", kCloudAddr, kCloudCommonPipeUrl];
+            NSString *requestUrl = [NSString stringWithFormat:@"/drives/%@/dirs/%@/entries", WB_UserService.currentUser.userHome,  WB_UserService.currentUser.backUpDir];
+            NSString *resource =[requestUrl base64EncodedString] ;
+            NSMutableDictionary *manifestDic  = [NSMutableDictionary dictionaryWithCapacity:0];
+            [manifestDic setObject:@"newfile" forKey:kCloudBodyOp];
+            [manifestDic setObject:@"POST" forKey:kCloudBodyMethod];
+            [manifestDic setObject:fileName forKey:kCloudBodyToName];
+            [manifestDic setObject:resource forKey:kCloudBodyResource];
+            [manifestDic setObject:hashString forKey:@"sha256"];
+            [manifestDic setObject:@(sizeNumber) forKey:@"size"];
+            NSData *josnData = [NSJSONSerialization dataWithJSONObject:manifestDic options:NSJSONWritingPrettyPrinted error:nil];
+            NSString *result = [[NSString alloc] initWithData:josnData  encoding:NSUTF8StringEncoding];
+            [mutableDic setObject:result forKey:@"manifest"];
+            [manager.requestSerializer setValue:[NSString stringWithFormat:@"%@", WB_UserService.currentUser.cloudToken] forHTTPHeaderField:@"Authorization"];
+            manager.requestSerializer.timeoutInterval = 60;
+        }else {
+            urlString = [NSString stringWithFormat:@"%@drives/%@/dirs/%@/entries/",[JYRequestConfig sharedConfig].baseURL,WB_UserService.currentUser.userHome, WB_UserService.currentUser.backUpDir];
+            mutableDic = nil;
+            [manager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@",WB_UserService.defaultToken] forHTTPHeaderField:@"Authorization"];
+        }
         _dataTask = [manager POST:urlString parameters:mutableDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-            NSDictionary *dic = @{@"size":@(sizeNumber),@"sha256":hashString};
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
-            NSString *jsonString =  [[NSString alloc] initWithData:jsonData  encoding:NSUTF8StringEncoding];
-            [formData appendPartWithFileURL:[NSURL fileURLWithPath:filePath] name:fileName fileName:jsonString mimeType:@"image/jpeg" error:nil];
+            if(WB_UserService.currentUser.isCloudLogin) {
+                [formData appendPartWithFileURL:[NSURL fileURLWithPath:filePath] name:fileName fileName:fileName mimeType:@"image/jpeg" error:nil];
+            }else {
+                NSDictionary *dic = @{@"size":@(sizeNumber),@"sha256":hashString};
+                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
+                NSString *jsonString =  [[NSString alloc] initWithData:jsonData  encoding:NSUTF8StringEncoding];
+                [formData appendPartWithFileURL:[NSURL fileURLWithPath:filePath] name:fileName fileName:jsonString mimeType:@"image/jpeg" error:nil];
+            }
         }
         progress:nil
         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

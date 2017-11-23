@@ -45,6 +45,14 @@
             [self loadVideo];
             break;
             
+        case JYAssetTypeNetImage:
+            [self loadNetImage];
+            break;
+            
+        case JYAssetTypeNetVideo:
+            [self loadNetVideo];
+            break;
+            
         default:
             break;
     }
@@ -76,6 +84,21 @@
     }];
 }
 
+- (void)loadNetImage {
+    UIImageView *imageView = [[UIImageView alloc] init];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    imageView.frame = (CGRect){CGPointZero, [self getSize]};
+    imageView.image = _placeHolder;
+    [self.view addSubview:imageView];
+    
+    [WB_NetService getHighWebImageWithHash:[(WBAsset *)_model fmhash] completeBlock:^(NSError *error, UIImage *img) {
+        if(error) {
+            NSLog(@"......high for ForceTouch view..... %@", error);
+        }else
+            imageView.image = img;
+    }];
+}
+
 - (void)loadLivePhoto
 {
     PHLivePhotoView *lpView = [[PHLivePhotoView alloc] init];
@@ -102,6 +125,10 @@
             [player play];
         });
     }];
+}
+
+- (void)loadNetVideo {
+    
 }
 
 - (CGSize)getSize
