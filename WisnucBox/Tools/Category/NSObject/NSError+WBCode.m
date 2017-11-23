@@ -13,7 +13,7 @@
 const char kErrorWBCode;
 
 - (void)setWbCode:(NSInteger)wbCode {
-    objc_setAssociatedObject(self, &kErrorWBCode, [NSNumber numberWithInteger:wbCode], OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, &kErrorWBCode, [NSNumber numberWithInteger:wbCode], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSInteger)wbCode {
