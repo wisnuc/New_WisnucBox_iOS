@@ -420,24 +420,6 @@ WXApiDelegate
 -(void)loginToDoWithResponse:(id)response{
     @weaky(self)
     CloudLoginModel * model = [CloudLoginModel yy_modelWithJSON:response];
-//    NSDictionary *dic = response;
-//    NSDictionary *dataDic = dic[@"data"];
-//    NSString *token = dataDic[@"token"];
-
-//    FMCloudUserModel *userModel = [FMCloudUserModel yy_modelWithDictionary:dataDic];
-//    NSDictionary *userDic = dataDic[@"user"];
-    
-//    NSLog(@"%@",model.data.user.userId);
-//    NSString *GUID = model.data.user.userId;
-//
-//    _nickName = userDic[@"nickName"];
-//    NSString *avatarString = userDic[@"avatarUrl"];
-//    _avatarUrl = avatarString;
-//    MyNSLog(@"Cloud登录");
-//    FMConfigInstance.userToken = token;
-//    FMConfigInstance.userUUID = userDic[@"id"];
-//    JYRequestConfig * config = [JYRequestConfig sharedConfig];
-//    config.baseURL = WX_BASE_URL;
     [weak_self getStationWithModel:model];
 }
 
@@ -602,7 +584,7 @@ WXApiDelegate
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         UserModel *model = _userDataSource[indexPath.row];
         
-        //    NSLog(@"%@======%lu",model.username,(unsigned long)_userDataSource.count);
+        NSLog(@"%@======%lu",model.username,(unsigned long)_userDataSource.count);
         cell.userNameLabel.text = model.username;
         cell.userNameImageView.image = [UIImage imageForName:model.username size:cell.userNameImageView.bounds.size];
         
