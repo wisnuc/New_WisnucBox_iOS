@@ -224,24 +224,24 @@
 
 - (void)updateProgressWithAllCount:(NSInteger)allcount currentCount:(NSInteger)currentCount  complete:(void(^)(void))callback{
     
-    float progress =  currentCount/allcount;
-        NSDecimalNumber *progressDecimalNumber = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%@",[self notRounding:progress afterPoint:2]]];
-        NSDecimalNumber *decimalNumber = [NSDecimalNumber decimalNumberWithString:@"100"];
-        
-        NSDecimalNumber *mutiplyDecimal;
-        if ([progressDecimalNumber compare:[NSDecimalNumber zero]] == NSOrderedSame || [[NSDecimalNumber notANumber] isEqualToNumber:progressDecimalNumber]) {
-            mutiplyDecimal = [NSDecimalNumber zero];
-        }else{
-            mutiplyDecimal = [progressDecimalNumber decimalNumberByMultiplyingBy:decimalNumber];
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.backupLabel.text = [NSString stringWithFormat:@"已备份%@%%",mutiplyDecimal];
-            self.backUpProgressView.progress = progress;
-            self.progressLabel.text = [NSString stringWithFormat:@"%lu/%lu", (unsigned long)currentCount, (unsigned long)allcount];
-            NSLog(@"已上传：%@/本地照片总数:%lu",self.progressLabel.text, (unsigned long)allcount);
-            callback();
-        });
+    float progress =  (float)currentCount/(float)allcount;
+    NSDecimalNumber *progressDecimalNumber = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%@",[self notRounding:progress afterPoint:2]]];
+    NSDecimalNumber *decimalNumber = [NSDecimalNumber decimalNumberWithString:@"100"];
+    
+    NSDecimalNumber *mutiplyDecimal;
+    if ([progressDecimalNumber compare:[NSDecimalNumber zero]] == NSOrderedSame || [[NSDecimalNumber notANumber] isEqualToNumber:progressDecimalNumber]) {
+        mutiplyDecimal = [NSDecimalNumber zero];
+    }else{
+        mutiplyDecimal = [progressDecimalNumber decimalNumberByMultiplyingBy:decimalNumber];
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.backupLabel.text = [NSString stringWithFormat:@"已备份%@%%",mutiplyDecimal];
+        self.backUpProgressView.progress = progress;
+        self.progressLabel.text = [NSString stringWithFormat:@"%lu/%lu", (unsigned long)currentCount, (unsigned long)allcount];
+        NSLog(@"已上传：%@/本地照片总数:%lu",self.progressLabel.text, (unsigned long)allcount);
+        callback();
+    });
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{

@@ -266,11 +266,13 @@
 - (id <SDWebImageOperation>)getHighWebImageWithHash:(NSString *)hash completeBlock:(void(^)(NSError *, UIImage *))callback {
     [SDWebImageManager sharedManager].imageDownloader.headersFilter = ^NSDictionary *(NSURL *url, NSDictionary *headers) {
         NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:headers];
-        [dic setValue:[NSString stringWithFormat:@"JWT %@",WB_UserService.defaultToken] forKey:@"Authorization"];
+        [dic setValue:WB_UserService.currentUser.isCloudLogin ? WB_UserService.currentUser.cloudToken : [NSString stringWithFormat:@"JWT %@",WB_UserService.defaultToken] forKey:@"Authorization"];
         return dic;
     };
-    
+    [SDWebImageManager sharedManager].imageDownloader.downloadTimeout = 60;
     NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"%@media/%@?alt=data", [self currentURL], hash]];
+    if(WB_UserService.currentUser.isCloudLogin)
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resource=%@&method=GET&alt=data", kCloudAddr, kCloudCommonPipeUrl, [[NSString stringWithFormat:@"media/%@", hash] base64EncodedString]]];
     return [[SDWebImageManager sharedManager] downloadImageWithURL:url options:SDWebImageRetryFailed|SDWebImageCacheMemoryOnly progress:nil
                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
                     NSLog(@"SDWebImage:Error ==== %@ ==== %@",error,imageURL);
@@ -286,11 +288,13 @@
 - (id <SDWebImageOperation>)getThumbnailWithHash:(NSString *)hash complete:(void(^)(NSError *, UIImage *))callback {
     [SDWebImageManager sharedManager].imageDownloader.headersFilter = ^NSDictionary *(NSURL *url, NSDictionary *headers) {
         NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:headers];
-        [dic setValue:[NSString stringWithFormat:@"JWT %@",WB_UserService.defaultToken] forKey:@"Authorization"];
+        [dic setValue:WB_UserService.currentUser.isCloudLogin ? WB_UserService.currentUser.cloudToken : [NSString stringWithFormat:@"JWT %@",WB_UserService.defaultToken] forKey:@"Authorization"];
         return dic;
     };
-    
+    [SDWebImageManager sharedManager].imageDownloader.downloadTimeout = 60;
     NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"%@media/%@?alt=thumbnail&width=200&height=200&modifier=caret&autoOrient=true", [self currentURL], hash]];
+    if(WB_UserService.currentUser.isCloudLogin)
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resource=%@&method=GET&alt=thumbnail&width=200&height=200&modifier=caret&autoOrient=true", kCloudAddr, kCloudCommonPipeUrl, [[NSString stringWithFormat:@"media/%@", hash] base64EncodedString]]];
     return [[SDWebImageManager sharedManager] downloadImageWithURL:url options:SDWebImageRetryFailed progress:nil
                                                          completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
                                                              if (image) {

@@ -23,6 +23,13 @@
     return self;
 }
 
+- (JYAssetType)type {
+    if(!IsNilString(self.m) && [kVideoTypes containsObject:self.m]){
+        return JYAssetTypeNetVideo;
+    }
+    return JYAssetTypeNetImage;
+}
+
 - (NSDate *)createDate{
     if(!self.createDateB) {
         if(!IsNilString(self.date)){

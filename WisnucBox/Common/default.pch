@@ -70,5 +70,6 @@
 #import "JYNetworkerHeader.h"
 #import "FMAsyncUsersAPI.h"
 #import "FMCreateUserAPI.h"
+#import "FMMediaRamdomKeyAPI.h"
 
 #endif /* default_pch */

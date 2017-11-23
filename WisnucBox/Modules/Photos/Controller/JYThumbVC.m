@@ -586,15 +586,14 @@
         return nil;
     }
     
-//    UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-    
-#warning  判断cell是否不可3dtouch
+    UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
     
     //设置突出区域
     previewingContext.sourceRect = [self.collectionView cellForItemAtIndexPath:indexPath].frame;
     JYForceTouchPreviewController *vc = [[JYForceTouchPreviewController alloc] init];
     JYAsset *model = ((NSMutableArray *)self.arrDataSources[indexPath.section])[indexPath.row];
     vc.model = model;
+    vc.placeHolder = [(JYCollectionViewCell *)cell imageView].image;
     vc.allowSelectGif = YES;
     vc.allowSelectLivePhoto = YES;
     vc.preferredContentSize = [self getSize:model];

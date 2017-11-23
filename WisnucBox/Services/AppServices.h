@@ -122,7 +122,7 @@
 
 + (instancetype)initWithAsset:(JYAsset *)asset;
 
-- (void)startWithCompleteBlock:(void(^)(NSError * , id))callback;
+- (void)startUseTimeStamp:(BOOL)yesOrNo completeBlock:(void(^)(NSError * , id))callback;
 
 // must call callback EABORT
 - (void)cancel;
