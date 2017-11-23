@@ -10,6 +10,7 @@
 #import "LocalDownloadViewController.h"
 #import "CSDownloadHelper.h"
 #import "CSFileUtil.h"
+#import "FilesNextViewController.h"
 
 @interface FLFIlesHelper ()
 {
