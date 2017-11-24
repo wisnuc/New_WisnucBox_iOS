@@ -13,6 +13,7 @@
 #import "FilesServices.h"
 #import "NetServices.h"
 #import "FMLoginViewController.h"
+#import "JYProcessView.h"
 
 #define WB_AppServices  [AppServices sharedService]
 #define WB_AssetService [WB_AppServices assetServices]
@@ -40,6 +41,8 @@
 
 @property (nonatomic, strong) WBUploadManager * photoUploadManager;
 
+@property (strong, nonatomic) JYProcessView * progressView;
+
 + (instancetype)sharedService;
 
 - (void)bootStrap;
@@ -56,6 +59,8 @@
 - (void)updateCurrentUserInfoWithCompleteBlock:(void(^)(NSError *, BOOL success))callback;
 
 - (void)requestForBackupPhotos:(void(^)(BOOL shouldUpload))callback;
+
+- (void)readyUploadFilesWithFilePath:(NSString *)filePath Callback:(void(^)(NSError *filesError))callback;
 @end
 
 #define HashCalculateFinishedNotify @"HashCalculateFinishedNotify"
@@ -123,6 +128,8 @@
 + (instancetype)initWithAsset:(JYAsset *)asset;
 
 - (void)startUseTimeStamp:(BOOL)yesOrNo completeBlock:(void(^)(NSError * , id))callback;
+
+- (void)uploadFilesWithFilePath:(NSString *)filePath;
 
 // must call callback EABORT
 - (void)cancel;

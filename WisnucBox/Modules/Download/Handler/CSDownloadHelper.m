@@ -76,7 +76,8 @@ __strong static id _sharedObject = nil;
     
 //    NSLog(@"%@",fromUrl);
     NSString* suffixName = dataModel.name;
-    NSString* tmpFileName = [NSString stringWithFormat:@"file-%d.tmp",_downdloadCount];
+    NSDate* datenow = [NSDate date];
+    NSString* tmpFileName = [NSString stringWithFormat:@"file-%@%@.tmp",suffixName,datenow];
     NSString* saveFileName= [NSString stringWithFormat:@"%@",suffixName];
     
     NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:YES];
@@ -296,6 +297,14 @@ __strong static id _sharedObject = nil;
                                    
                                }];
     
+}
+
+- (void)startAllDownloadTask{
+   [_manager startAllDownloadTask];
+}
+
+- (void)pauseAllDownloadTask{
+    [_manager pauseAllDownloadTask];
 }
 
 - (void)pauseDownloadWithTask:(CSDownloadTask*)downloadTask

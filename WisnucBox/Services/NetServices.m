@@ -15,7 +15,6 @@
 #import "NSError+WBCode.h"
 #import "CSFileDownloadManager.h"
 
-#define BackUpBaseDirName @"上传的照片"
 
 @interface NetServices()
 
@@ -98,9 +97,9 @@
     return WB_UserService.currentUser.isCloudLogin ? WB_UserService.currentUser.cloudToken : WB_UserService.currentUser.localToken;
 }
 
-- (void)getUserBackupDir:(void(^)(NSError *, NSString * entryUUID))callback {
+- (void)getUserBackupDirName:(NSString *)name BackupDir:(void(^)(NSError *, NSString * entryUUID))callback {
     if(!WB_UserService.isUserLogin) return callback([NSError errorWithDomain:@"User Not Login" code:NO_USER_LOGIN userInfo:nil], NULL);
-    [self getUserBackupBaseDir:^(NSError *error, NSString *dirUUID) {
+    [self getUserBackupDirName:name BaseDir:^(NSError *error, NSString *dirUUID) {
         if(error) return callback(error, NULL);
         SaveToUserDefault(Current_Backup_Base_Entry, dirUUID);
         [self getUserBackupDirWithBackUpBaseDir:dirUUID complete:^(NSError *err, NSString *backupDirUUID) {
@@ -177,7 +176,7 @@
 }
 
 // 获取 名为 “上传的照片” 的文件夹， 没有就创建
-- (void)getUserBackupBaseDir:(void(^)(NSError *, NSString * dirUUID))callback {
+- (void)getUserBackupDirName:(NSString *)name BaseDir:(void(^)(NSError *, NSString * dirUUID))callback {
     FLGetDriveDirAPI * api = [FLGetDriveDirAPI apiWithDrive:WB_UserService.currentUser.userHome dir:WB_UserService.currentUser.userHome];
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
@@ -186,7 +185,7 @@
         __block BOOL find = NO;
         [arr enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             EntriesModel *model = [EntriesModel yy_modelWithDictionary:obj];
-            if(IsEquallString(model.name, BackUpBaseDirName) && IsEquallString(model.type, @"directory")) {
+            if(IsEquallString(model.name, name) && IsEquallString(model.type, @"directory")) {
                 *stop = YES;
                 find = YES;
                 return callback(NULL, model.uuid);
@@ -198,8 +197,8 @@
                 callback(nil, entries.uuid);
             };
             WB_UserService.currentUser.isCloudLogin ?
-            [self cloudMkdirInDir:WB_UserService.currentUser.userHome andName:BackUpBaseDirName completeBlock:block] :
-            [self mkdirInDir:WB_UserService.currentUser.userHome andName:BackUpBaseDirName completeBlock:block];
+            [self cloudMkdirInDir:WB_UserService.currentUser.userHome andName:name completeBlock:block] :
+            [self mkdirInDir:WB_UserService.currentUser.userHome andName:name completeBlock:block];
         }
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"get root error : %@", request.error);

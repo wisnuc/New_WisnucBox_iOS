@@ -16,6 +16,8 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
+	<key>CFBundleTypeName</key>
+	<string>com.myapp.common-data</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -29,30 +31,28 @@
 			</array>
 		</dict>
 	</array>
-    <key>CFBundleTypeName</key>
-    <string>com.myapp.common-data</string>
-    <key>LSItemContentTypes</key>
-    <array>
-        <string>com.microsoft.powerpoint.ppt</string>
-        <string>public.item</string>
-        <string>com.microsoft.word.doc</string>
-        <string>com.adobe.pdf</string>
-        <string>com.microsoft.excel.xls</string>
-        <string>public.image</string>
-        <string>public.content</string>
-        <string>public.composite-content</string>
-        <string>public.archive</string>
-        <string>public.audio</string>
-        <string>public.movie</string>
-        <string>public.text</string>
-        <string>public.data</string>
-    </array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>weixin</string>
 		<string>wechat</string>
+	</array>
+	<key>LSItemContentTypes</key>
+	<array>
+		<string>com.microsoft.powerpoint.ppt</string>
+		<string>public.item</string>
+		<string>com.microsoft.word.doc</string>
+		<string>com.adobe.pdf</string>
+		<string>com.microsoft.excel.xls</string>
+		<string>public.image</string>
+		<string>public.content</string>
+		<string>public.composite-content</string>
+		<string>public.archive</string>
+		<string>public.audio</string>
+		<string>public.movie</string>
+		<string>public.text</string>
+		<string>public.data</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -73,6 +73,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIRequiresFullScreen</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

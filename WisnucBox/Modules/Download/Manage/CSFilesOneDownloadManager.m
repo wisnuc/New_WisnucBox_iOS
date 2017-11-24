@@ -68,7 +68,7 @@ __strong static id _sharedObject = nil;
         begin();
     }
     
-    BOOL isResuming = NO;
+//    BOOL isResuming = NO;
     
     NSString* dataUrl = [fileModel getDownloadTaskURL];
     
@@ -83,14 +83,14 @@ __strong static id _sharedObject = nil;
     NSLog(@"已下载文件大小:%lld",currentLength);
     
     //断点续传
-    if (currentLength > 0)
-    {
-        
-        NSString *requestRange = [NSString stringWithFormat:@"bytes=%zd-", currentLength];
-        [urlRequest setValue:requestRange forHTTPHeaderField:@"Range"];
-        
-        isResuming = YES;
-    }
+//    if (currentLength > 0)
+//    {
+//
+//        NSString *requestRange = [NSString stringWithFormat:@"bytes=%zd-", currentLength];
+//        [urlRequest setValue:requestRange forHTTPHeaderField:@"Range"];
+//
+//        isResuming = YES;
+//    }
     downloadTask.stream = [NSOutputStream outputStreamToFileAtPath:tempPath append:YES];
     NSURLSessionDataTask * dataTask = [self.manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         if (error) {
@@ -177,7 +177,7 @@ __strong static id _sharedObject = nil;
     
     
     [self.manager setDataTaskDidReceiveResponseBlock:^NSURLSessionResponseDisposition(NSURLSession * _Nonnull session, NSURLSessionDataTask * _Nonnull dataTask, NSURLResponse * _Nonnull response) {
-        //        NSLog(@"%@",manager);
+        NSLog(@"%@",dataTask);
         fileLength = response.expectedContentLength + currentLength;
         NSString *path = [fileModel getDownloadTempSavePath];
         NSLog(@"%@",path);
@@ -198,6 +198,7 @@ __strong static id _sharedObject = nil;
     }];
     
     [self.manager setDataTaskDidReceiveDataBlock:^(NSURLSession * _Nonnull session, NSURLSessionDataTask * _Nonnull dataTask, NSData * _Nonnull data) {
+        
         // 拼接文件总长度
         [downloadTask.stream write:data.bytes maxLength:data.length];
         currentLength += data.length;
@@ -241,6 +242,9 @@ __strong static id _sharedObject = nil;
 }
 
 - (void)cancelOneDownloadTaskWith:(CSDownloadTask*)downloadTask{
+    [downloadTask cancelDownloadTask:^(){
+        [downloadTask setDownloadStatus:CSDownloadStatusCanceled];
+    }];
     
     CSDownloadModel* fileModel = [downloadTask getDownloadFileModel];
     

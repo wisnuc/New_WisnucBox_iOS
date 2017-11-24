@@ -48,4 +48,8 @@ typedef void (^HelperDownloadingEventHandler) (BOOL isDownloading);
 
 - (void)startDownloadWithTask:(CSDownloadTask*)downloadTask;
 
+- (void)startAllDownloadTask;
+
+- (void)pauseAllDownloadTask;
+
 @end
