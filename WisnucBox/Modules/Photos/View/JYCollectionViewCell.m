@@ -57,13 +57,22 @@
     }];
     _btnSelect.frame = CGRectMake(GetViewWidth(self.contentView)-26, 5, 23, 23);
     self.contentView.backgroundColor = UICOLOR_RGB(0xf5f5f5);
-//    [self.btnSelect mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.right.equalTo(self.imageView.mas_right);
-//        make.top.equalTo(self.imageView.mas_top);
-//        make.size.mas_equalTo(CGSizeMake(23, 23));
-//    }];
-//    self.imageView.frame = self.bounds;
-//    self.btnSelect.frame = CGRectMake(GetViewWidth(self.contentView)-26, 5, 23, 23);
+
+    _videoBottomView.frame = CGRectMake(0, GetViewHeight(self.contentView)-20, GetViewWidth(self.contentView), 20);
+    [self.videoBottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.contentView.mas_left);
+        make.right.mas_equalTo(self.contentView.mas_right);
+        make.top.mas_equalTo(self.contentView.mas_bottom).offset(-20);
+        make.bottom.mas_equalTo(self.contentView.mas_bottom);
+    }];
+    
+    [self.videoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.videoBottomView.mas_left).offset(5);
+        make.top.mas_equalTo(self.videoBottomView.mas_top).offset(2);
+        make.size.mas_equalTo(CGSizeMake(16, 16));
+    }];
+    
+    _timeLabel.frame = CGRectMake(30, 4, GetViewWidth(self.contentView)-35, 12);
 //    if (self.showMask) {
 //        self.topView.frame = self.bounds;
 //    }
@@ -85,7 +94,7 @@
         [self.contentView addSubview:_imageView];
         
 //        [self.contentView bringSubviewToFront:_topView];
-//        [self.contentView bringSubviewToFront:self.videoBottomView];
+        [self.contentView bringSubviewToFront:self.videoBottomView];
         [self.contentView bringSubviewToFront:self.btnSelect];
     }
     return _imageView;
@@ -104,27 +113,27 @@
     }
     return _btnSelect;
 }
-//
-//- (UIImageView *)videoBottomView
-//{
-//    if (!_videoBottomView) {
-//        _videoBottomView = [[UIImageView alloc] initWithImage:GetImageWithName(@"videoView")];
-//        _videoBottomView.frame = CGRectMake(0, GetViewHeight(self)-15, GetViewWidth(self), 15);
-//        [self.contentView addSubview:_videoBottomView];
-//    }
-//    return _videoBottomView;
-//}
-//
-//- (UIImageView *)videoImageView
-//{
-//    if (!_videoImageView) {
-//        _videoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 1, 16, 12)];
-//        _videoImageView.image = GetImageWithName(@"video");
-//        [self.videoBottomView addSubview:_videoImageView];
-//    }
-//    return _videoImageView;
-//}
-//
+
+- (UIImageView *)videoBottomView
+{
+    if (!_videoBottomView) {
+        _videoBottomView = [[UIImageView alloc] initWithImage:nil];
+        _videoBottomView.frame = CGRectMake(0, GetViewHeight(self)-20, GetViewWidth(self), 20);
+        [self.contentView addSubview:_videoBottomView];
+    }
+    return _videoBottomView;
+}
+
+- (UIImageView *)videoImageView
+{
+    if (!_videoImageView) {
+        _videoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 2, 16, 16)];
+        _videoImageView.image = [UIImage imageNamed:@"ic_play"];
+        [self.videoBottomView addSubview:_videoImageView];
+    }
+    return _videoImageView;
+}
+
 //- (UIImageView *)liveImageView
 //{
 //    if (!_liveImageView) {
@@ -134,18 +143,18 @@
 //    }
 //    return _liveImageView;
 //}
-//
-//- (UILabel *)timeLabel
-//{
-//    if (!_timeLabel) {
-//        _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 1, GetViewWidth(self)-35, 12)];
-//        _timeLabel.textAlignment = NSTextAlignmentRight;
-//        _timeLabel.font = [UIFont systemFontOfSize:13];
-//        _timeLabel.textColor = [UIColor whiteColor];
-//        [self.videoBottomView addSubview:_timeLabel];
-//    }
-//    return _timeLabel;
-//}
+
+- (UILabel *)timeLabel
+{
+    if (!_timeLabel) {
+        _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 4, GetViewWidth(self)-35, 12)];
+        _timeLabel.textAlignment = NSTextAlignmentRight;
+        _timeLabel.font = [UIFont systemFontOfSize:13];
+        _timeLabel.textColor = [UIColor whiteColor];
+        [self.videoBottomView addSubview:_timeLabel];
+    }
+    return _timeLabel;
+}
 
 - (UIView *)topView
 {
@@ -162,12 +171,22 @@
 {
     _model = model;
     
-//    if (model.type == JYAssetTypeVideo) {
-//        self.videoBottomView.hidden = NO;
-//        self.videoImageView.hidden = NO;
+    if (model.type == JYAssetTypeVideo) {
+        self.videoBottomView.hidden = NO;
+        self.videoImageView.hidden = NO;
 //        self.liveImageView.hidden = YES;
-//        self.timeLabel.text = model.duration;
-//    } else if (model.type == JYMediaTypeGif) {
+        self.timeLabel.text = model.duration;
+    }
+    else if(model.type == JYAssetTypeNetVideo) {
+        self.videoBottomView.hidden = NO;
+        self.videoImageView.hidden = NO;
+        //        self.liveImageView.hidden = YES;
+        self.timeLabel.text = model.duration;
+    }else {
+        self.videoImageView.hidden = YES;
+        self.videoBottomView.hidden = YES;
+    }
+//    else if (model.type == JYMediaTypeGif) {
 //        self.videoBottomView.hidden = !self.allSelectGif;
 //        self.videoImageView.hidden = YES;
 //        self.liveImageView.hidden = YES;

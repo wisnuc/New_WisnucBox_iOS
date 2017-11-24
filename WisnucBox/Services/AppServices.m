@@ -480,7 +480,7 @@
  *
  */
 
-@interface WBUploadManager ()
+@interface WBUploadManager ()<CLLocationManagerDelegate>
 {
     BOOL _isdestroing;
     NSURL * _uploadURL;
@@ -514,6 +514,8 @@
 
 @property (nonatomic) dispatch_queue_t workingQueue;
 
+@property (nonatomic) CLLocationManager * locationManager;
+
 @end
 
 @implementation WBUploadManager
@@ -531,6 +533,18 @@
         _lastNotifyCount = 0;
         _hashLimitCount = 4;
         _uploadLimitCount = 4;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            _locationManager = [[CLLocationManager alloc]init];
+            self.locationManager.delegate = self;
+            [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+            if ([[UIDevice currentDevice].systemVersion floatValue] > 8)
+                [self.locationManager requestAlwaysAuthorization];
+            
+            if ([[UIDevice currentDevice].systemVersion floatValue] > 9)
+                [self.locationManager setAllowsBackgroundLocationUpdates:YES];
+            [self.locationManager startUpdatingLocation];
+        });
+        
         [self workingQueue];
         [self managerQueue];
     }
@@ -929,6 +943,15 @@
     [self.uploadErrorQueue removeAllObjects];
     [self.uploadedNetQueue removeAllObjects];
     [self.uploadedLocalHashSet removeAllObjects];
+}
+
+#pragma mark -  定位代理方法
+- (void)locationManager:(CLLocationManager *)manager
+     didUpdateLocations:(NSArray<CLLocation *> *)locations
+{
+    CLLocation *loc = [locations objectAtIndex:0];
+    
+    NSLog(@"经纬度  %f  %f ",loc.coordinate.latitude,loc.coordinate.longitude);
 }
 
 @end

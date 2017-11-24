@@ -60,6 +60,8 @@
                 return [photosVC addNetAssets:netAssets];
             NSLog(@"Fetch Net Assets Error --> : %@", error);
         }];
+        
+        [WB_AppServices updateCurrentUserInfoWithCompleteBlock:nil];
     });
     FirstFilesViewController *filesViewController = [[FirstFilesViewController alloc]init];
     NavViewController *nav1 = [[NavViewController alloc] initWithRootViewController:photosVC];
