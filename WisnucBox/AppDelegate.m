@@ -192,7 +192,9 @@
                 NSLog(@"%@写入失败",saveFile);
             }else{
                 [WB_AppServices readyUploadFilesWithFilePath:saveFile Complete:^(NSError *error) {
+                    if (!error) {
                     
+                    }
                 }];
                 NSLog(@"%@写入成功",saveFile);
                 

@@ -77,9 +77,9 @@ __strong static id _sharedObject = nil;
     NSLog(@"临时下载地:%@",tempPath);
     NSLog(@"%@", urlRequest.URL) ;
     //获取已下载文件大小，如果不为零，表示可以继续下载
-    __block long long currentLength = [CSFileUtil fileSizeForPath:tempPath];
+//    __block long long currentLength = [CSFileUtil fileSizeForPath:tempPath];
     __block long long fileLength;
-    NSLog(@"已下载文件大小:%lld",currentLength);
+//    NSLog(@"已下载文件大小:%lld",currentLength);
     
     //断点续传
     //    if (currentLength > 0)
@@ -92,18 +92,15 @@ __strong static id _sharedObject = nil;
     //    }
     
     
-    NSURLSessionDataTask * dataTask= [self.manager downloadTaskWithRequest:urlRequest progress:^(NSProgress * _Nonnull downloadProgress) {
+    NSURLSessionDownloadTask * dataTask= [self.manager downloadTaskWithRequest:urlRequest progress:^(NSProgress * _Nonnull downloadProgress) {
         if (progress) {
             progress(downloadProgress);
         }
         NSLog(@"%f",downloadProgress.fractionCompleted);
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
-        NSLog(@"%@",targetPath);
-        if ([[NSFileManager defaultManager] fileExistsAtPath:[targetPath absoluteString]]) {
-            
-        }
+       
         NSString *path = [fileModel getDownloadFileSavePath];
-        NSLog(@"%@",path);
+
         return [NSURL fileURLWithPath:path];
         
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {

@@ -174,7 +174,7 @@ __strong static id _sharedObject = nil;
         isResuming = YES;
     }
     
-   NSURLSessionDataTask * dataTask= [manager downloadTaskWithRequest:urlRequest progress:^(NSProgress * _Nonnull downloadProgress) {
+   NSURLSessionDownloadTask * dataTask= [manager downloadTaskWithRequest:urlRequest progress:^(NSProgress * _Nonnull downloadProgress) {
         if (progress) {
             progress(downloadProgress);
         }

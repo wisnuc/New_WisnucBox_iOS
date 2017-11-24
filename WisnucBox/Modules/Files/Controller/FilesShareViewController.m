@@ -72,7 +72,7 @@ UITableViewDataSource
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     ShareFilesModel *model = self.dataSouceArray[indexPath.row];
     cell.nameLabel.text = model.label;
-    cell.f_ImageView.image = [UIImage imageNamed:@"share"];
+    cell.f_ImageView.image = [UIImage imageNamed:@"share_files"];
 
     return cell;
 }

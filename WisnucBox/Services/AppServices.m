@@ -350,15 +350,16 @@
         
             self.progressView.descLb.text =@"正在上传文件";
             self.progressView.subDescLb.text = [NSString stringWithFormat:@"1个项目 "];
+            [self.progressView show];
             self.progressView.cancleBlock = ^(){
                 [weak_self cancelFilesUplod];
             };
-            [self.progressView show];
+        
         [weak_self startUploadFilesWithFilePath:filePath Progress:^(NSProgress *uploadProgress) {
-             [_progressView setValueForProcess:uploadProgress.fractionCompleted];
+             [self.progressView setValueForProcess:uploadProgress.fractionCompleted];
         } Complete:^(NSError *error) {
              callback(error);
-             [_progressView dismiss];
+             [self.progressView dismiss];
             if (!error) {
                   [SXLoadingView showProgressHUDText:@"上传成功" duration:1.2];
             }else{
@@ -1096,7 +1097,7 @@ static NSArray * invaildChars;
         [manager.requestSerializer setValue:[NSString stringWithFormat:@"%@", WB_UserService.currentUser.cloudToken] forHTTPHeaderField:@"Authorization"];
         manager.requestSerializer.timeoutInterval = 60;
     }else {
-        urlString = [NSString stringWithFormat:@"%@drives/%@/dirs/%@/entries/",[JYRequestConfig sharedConfig].baseURL,WB_UserService.currentUser.userHome, WB_UserService.currentUser.backUpDir];
+        urlString = [NSString stringWithFormat:@"%@drives/%@/dirs/%@/entries/",[JYRequestConfig sharedConfig].baseURL,WB_UserService.currentUser.userHome, WB_UserService.currentUser.uploadFileDir];
         mutableDic = nil;
         [manager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@",WB_UserService.defaultToken] forHTTPHeaderField:@"Authorization"];
     }

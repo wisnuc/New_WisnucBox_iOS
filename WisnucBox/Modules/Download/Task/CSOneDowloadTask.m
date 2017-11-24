@@ -11,7 +11,7 @@
 
 @implementation CSOneDowloadTask
 {
-    NSURLSessionDataTask *_downloadDataTask;
+    NSURLSessionDownloadTask *_downloadDataTask;
     
 }
 
@@ -37,8 +37,11 @@
     return self;
 }
 
-- (void)setDownloadDataTask:(NSURLSessionDataTask *)downloadDataTask{
+- (void)setDownloadDataTask:(NSURLSessionDownloadTask *)downloadDataTask{
     _downloadDataTask = downloadDataTask;
 }
+
+
+
 
 @end

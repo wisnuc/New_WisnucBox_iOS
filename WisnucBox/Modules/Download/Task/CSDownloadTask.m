@@ -11,7 +11,7 @@
 
 @implementation CSDownloadTask
 {
-    NSURLSessionDataTask *_downloadDataTask;
+    NSURLSessionDownloadTask *_downloadDataTask;
     
     int _failureCount;
     
@@ -53,7 +53,7 @@
 
 #pragma mark - GSSingleDownloadTaskProtocol
 
-- (void)setDownloadDataTask:(NSURLSessionDataTask *)downloadDataTask{
+- (void)setDownloadDataTask:(NSURLSessionDownloadTask *)downloadDataTask{
     _downloadDataTask = downloadDataTask;
 }
 

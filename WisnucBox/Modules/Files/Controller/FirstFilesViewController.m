@@ -123,7 +123,7 @@ UITableViewDataSource
     FirstFilesModel *model = _dataSouceArray[indexPath.row];
     cell.nameLabel.text = model.name;
     if (model.type == WBFilesFirstDirectoryShare) {
-        cell.f_ImageView.image = [UIImage imageNamed:@"share"];
+        cell.f_ImageView.image = [UIImage imageNamed:@"share_files"];
     }else{
         cell.f_ImageView.image = [UIImage imageNamed:@"folder_icon"];
     }
