@@ -198,6 +198,7 @@
     switch (resp.errCode) {
         case WXSuccess://用户同意
         {
+            [SXLoadingView showProgressHUDText:@"授权成功" duration:1.5];
             SendAuthResp *aresp = (SendAuthResp *)resp;
             NSLog(@"%@",NSStringFromClass([[UIViewController getCurrentVC] class]));
             if ([[UIViewController getCurrentVC] isKindOfClass:[FMLoginViewController class]]) {

@@ -133,7 +133,7 @@ __strong static id _sharedObject = nil;
     _excuteCount ++;
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     
-    __block AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
    
     
@@ -175,7 +175,7 @@ __strong static id _sharedObject = nil;
     }
     __weak typeof(self) weakSelf = self;
     downloadTask.stream = [NSOutputStream outputStreamToFileAtPath:tempPath append:YES];
-    __block NSURLSessionDataTask * dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+    NSURLSessionDataTask * dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         if (error) {
             NSLog(@"%@",error);
             [downloadTask.stream close];
@@ -276,11 +276,13 @@ __strong static id _sharedObject = nil;
             [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 //            FilesServices *services = [FilesServices new];
 //            [services saveFile:wBFile];
-            [_downloadTasks removeObject:downloadTask];
+        
             [self.downloadedTasks addObject:downloadTask];
             //调用外部回调（比如执行UI更新）
             if (complete) {
                 complete(downloadTask,nil);
+                [_downloadTasks removeObject:downloadTask];
+                NSLog(@"%@",_downloadTasks);
             }
         }
        
@@ -350,14 +352,14 @@ __strong static id _sharedObject = nil;
   
     [downloadTask setDownloadDataTask:dataTask];
     [self startOneDownloadTaskWith:downloadTask];
-    if (_excuteCount>1) {
-        return;
-    }
-    [_subject subscribeNext:^(id  _Nullable x) {
-        NSLog(@"%@",x);
-        CSDownloadTask *task = x;
-        [self.downloadingTasks removeObject:task];
-        
+//    if (_excuteCount>1) {
+//        return;
+//    }
+//    [_subject subscribeNext:^(id  _Nullable x) {
+//        NSLog(@"%@",x);
+//        CSDownloadTask *task = x;
+//        [self.downloadingTasks removeObject:task];
+    
         //        [task.stream close];
         //        task.stream = nil;
         //        [_taskDoingQueue dequeue];
@@ -367,18 +369,16 @@ __strong static id _sharedObject = nil;
         //        configuration = nil;
         //        urlRequest = nil;
         //        [task setDownloadDataTask:nil];
-        [manager.operationQueue cancelAllOperations];
-        [manager invalidateSessionCancelingTasks:YES];
-        manager = nil;
+ //        manager = nil;
         //        [task setDownloadStatus:CSDownloadStatusFailure];
-        NSLog(@"%@",manager);
+//        NSLog(@"%@",manager);
         //        manager = nil;
         //        [dataTask cancel];
         //        dataTask = nil;
 //        [weakSelf beginDownloadTask:task begin:begin progress:progress complete:complete];
-        [[CSDownloadHelper shareManager] startDownloadWithTask:task];
+//        [[CSDownloadHelper shareManager] startDownloadWithTask:task];
 //         [self.downloadingTasks removeObject:downloadTask];
-    }];
+//    }];
 }
 
 
@@ -427,12 +427,14 @@ __strong static id _sharedObject = nil;
     {
         [_taskDoingQueue enqueue:downloadTask];
         //暂停的直接恢复
+        NSLog(@"%u",[downloadTask getDownloadStatus]);
         if ([downloadTask getDownloadStatus] == CSDownloadStatusPaused)
         {
             [downloadTask continueDownloadTask:^(BOOL isComplete) {
                 [downloadTask setDownloadStatus:CSDownloadStatusDownloading];
                 if (isComplete) {
-                    [_subject sendNext:downloadTask];
+//                    [_subject sendNext:downloadTask];
+                      [[CSDownloadHelper shareManager] startDownloadWithTask:downloadTask];
                 }
             }];
         }

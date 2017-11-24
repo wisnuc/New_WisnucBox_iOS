@@ -113,23 +113,22 @@ __strong static id _sharedObject = nil;
     [downloadTask setDownloadUIBinder:self];
     if(_manager.downloadingTasks.count>0){
         __block BOOL find = NO;
-        [_manager.downloadingTasks enumerateObjectsUsingBlock:^(CSDownloadTask * obj, NSUInteger idx, BOOL *stop) {
+        [_manager.downloadTasks enumerateObjectsUsingBlock:^(CSDownloadTask * obj, NSUInteger idx, BOOL *stop) {
+            NSLog(@"%@", downloadTask.downloadFileModel.getDownloadFileUUID);
+            NSLog(@"%@",obj.downloadFileModel.getDownloadFileUUID);
             if([obj.downloadFileModel.getDownloadFileUUID  isEqualToString:downloadTask.downloadFileModel.getDownloadFileUUID]){
                 * stop = YES;
-            }
-            if (stop){
-               isDownloading(YES);
+                isDownloading(YES);
             }
         }];
         
         if (!find) {
-            [_manager addDownloadTask:downloadTask];
             [_oneDownloadArray addObject:downloadTask];
             [self startOneDownloadWithTask:downloadTask begin:begin progress:progress complete:complete];
         }
      
     } else{
-        [_manager addDownloadTask:downloadTask];
+        
         [_oneDownloadArray addObject:downloadTask];
         [self startOneDownloadWithTask:downloadTask begin:begin progress:progress complete:complete];
     }
@@ -185,7 +184,7 @@ __strong static id _sharedObject = nil;
 
     if(_manager.downloadingTasks.count>0){
       __block BOOL find = NO;
-    [_manager.downloadingTasks enumerateObjectsUsingBlock:^(CSDownloadTask * obj, NSUInteger idx, BOOL *stop) {
+    [_manager.downloadTasks enumerateObjectsUsingBlock:^(CSDownloadTask * obj, NSUInteger idx, BOOL *stop) {
         if([obj.downloadFileModel.getDownloadFileUUID  isEqualToString:downloadTask.downloadFileModel.getDownloadFileUUID]){
             * stop = YES;
             find = YES;
@@ -213,6 +212,7 @@ __strong static id _sharedObject = nil;
     oneManager.maxWaiting = 1;
     oneManager.maxPaused = 1;
     oneManager.maxFailureRetryChance = 0;
+    [oneManager addDownloadTask:downloadTask];
     [oneManager downloadDataAsyncWithTask:downloadTask
                                   begin:begin
                                progress:progress
