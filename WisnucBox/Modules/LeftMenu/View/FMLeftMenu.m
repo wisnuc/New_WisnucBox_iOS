@@ -73,7 +73,8 @@
         make.centerY.equalTo(_backupLabel.mas_centerY);
         make.right.equalTo(_progressLabel.mas_left).offset(-6);
     }];
-
+    _backUpProgressView.hidden = YES;
+    
     [self getUserInfo];
     WBUser * currentUser = [AppServices sharedService].userServices.currentUser;
     if (currentUser.isCloudLogin) {
@@ -227,7 +228,9 @@
 }
 
 - (void)updateProgressWithAllCount:(NSInteger)allcount currentCount:(NSInteger)currentCount  complete:(void(^)(void))callback{
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        _backUpProgressView.hidden = NO;
+    });
     float progress =  (float)currentCount/(float)allcount;
     NSDecimalNumber *progressDecimalNumber = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%@",[self notRounding:progress afterPoint:2]]];
     NSDecimalNumber *decimalNumber = [NSDecimalNumber decimalNumberWithString:@"100"];

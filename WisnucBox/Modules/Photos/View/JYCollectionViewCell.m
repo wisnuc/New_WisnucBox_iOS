@@ -73,6 +73,7 @@
     }];
     
     _timeLabel.frame = CGRectMake(30, 4, GetViewWidth(self.contentView)-35, 12);
+    _liveImageView.frame = CGRectMake(5, 2, 16, 16);
 //    if (self.showMask) {
 //        self.topView.frame = self.bounds;
 //    }
@@ -134,15 +135,15 @@
     return _videoImageView;
 }
 
-//- (UIImageView *)liveImageView
-//{
-//    if (!_liveImageView) {
-//        _liveImageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, -1, 15, 15)];
-//        _liveImageView.image = GetImageWithName(@"livePhoto");
-//        [self.videoBottomView addSubview:_liveImageView];
-//    }
-//    return _liveImageView;
-//}
+- (UIImageView *)liveImageView
+{
+    if (!_liveImageView) {
+        _liveImageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 2, 16, 16)];
+        _liveImageView.image = [UIImage imageNamed:@"livePhoto"];
+        [self.videoBottomView addSubview:_liveImageView];
+    }
+    return _liveImageView;
+}
 
 - (UILabel *)timeLabel
 {
@@ -174,17 +175,23 @@
     if (model.type == JYAssetTypeVideo) {
         self.videoBottomView.hidden = NO;
         self.videoImageView.hidden = NO;
-//        self.liveImageView.hidden = YES;
+        self.liveImageView.hidden = YES;
         self.timeLabel.text = model.duration;
     }
     else if(model.type == JYAssetTypeNetVideo) {
         self.videoBottomView.hidden = NO;
         self.videoImageView.hidden = NO;
-        //        self.liveImageView.hidden = YES;
+        self.liveImageView.hidden = YES;
         self.timeLabel.text = model.duration;
-    }else {
+    }else if (model.type == JYAssetTypeLivePhoto) {
+        self.videoBottomView.hidden = NO;
+        self.videoImageView.hidden = YES;
+        self.liveImageView.hidden = NO;
+        self.timeLabel.text = @"Live";
+    } else{
         self.videoImageView.hidden = YES;
         self.videoBottomView.hidden = YES;
+        self.liveImageView.hidden = YES;
     }
 //    else if (model.type == JYMediaTypeGif) {
 //        self.videoBottomView.hidden = !self.allSelectGif;
