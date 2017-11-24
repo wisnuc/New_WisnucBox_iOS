@@ -172,7 +172,7 @@
             user.userHome = userHome;
             [WB_UserService synchronizedCurrentUser];
             NSLog(@"GET USER HOME SUCCESS");
-            [WB_NetService getUserBackupDir:^(NSError *error, NSString *entryUUID) {
+            [WB_NetService getUserBackupDirName:BackUpAssetDirName BackupDir:^(NSError *error, NSString *entryUUID) {
                 if(error) return callback(({error.wbCode = 10003; error;}), user);
                 user.backUpDir = entryUUID;
                 [WB_UserService synchronizedCurrentUser];
@@ -226,7 +226,7 @@
         user.userHome = userHome;
         [WB_UserService synchronizedCurrentUser];
         NSLog(@"GET USER HOME SUCCESS");
-        [WB_NetService getUserBackupDir:^(NSError *error, NSString *entryUUID) {
+        [WB_NetService getUserBackupDirName:BackUpAssetDirName BackupDir:^(NSError *error, NSString *entryUUID) {
             if(error) return callback(({error.wbCode = 10003; error;}), user);
             user.backUpDir = entryUUID;
             [WB_UserService synchronizedCurrentUser];
@@ -277,7 +277,7 @@
         WB_UserService.currentUser.userHome = userHome;
         [WB_UserService synchronizedCurrentUser];
         NSLog(@"GET USER HOME SUCCESS");
-        [WB_NetService getUserBackupDir:^(NSError *error, NSString *entryUUID) {
+        [WB_NetService getUserBackupDirName:BackUpAssetDirName BackupDir:^(NSError *error, NSString *entryUUID) {
             if(error) return callback(({error.wbCode = 10003; error;}), WB_UserService.currentUser);
             WB_UserService.currentUser.backUpDir = entryUUID;
             [WB_UserService synchronizedCurrentUser];
@@ -323,6 +323,39 @@
         [self.photoUploadManager setNetAssets:netEntries];
         [self.photoUploadManager startUpload];
         if(complete) complete();
+    }];
+}
+
+- (void)startUploadFilesWithFilePath:(NSString *)filePath Complete:(void(^)(void))complete {
+    @weaky(self);
+    [self.netServices getEntriesInUserBackupDir:^(NSError *error, NSArray<EntriesModel *> *entries) {
+        if(error) {
+            if(error.wbCode == WBUploadDirNotFound)
+                [weak_self rebulidUploadManager];
+            return NSLog(@"Get BackupDir entries error");
+        }
+        NSLog(@"Start Upload ...");
+         WBUploadModel * model = [WBUploadModel new];
+        [model uploadFilesWithFilePath:filePath];
+        if(complete) complete();
+    }];
+}
+
+- (void)readyUploadFilesWithFilePath:(NSString *)filePath Callback:(void(^)(NSError *filesError))callback{
+    @weaky(self)
+    [WB_NetService getUserBackupDirName:BackUpFilesDirName BackupDir:^(NSError *error, NSString *entryUUID) {
+        if(error) return callback(({error.wbCode = 10003; error;}));
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+            self.progressView.descLb.text =@"正在下载文件";
+            self.progressView.subDescLb.text = [NSString stringWithFormat:@"1个项目 "];
+            self.progressView.cancleBlock = ^(){
+                [[CSDownloadHelper shareManager] cancleDownload];
+            };
+            [_progressView show];
+//              [_progressView setValueForProcess:progress];
+        [weak_self startUploadFilesWithFilePath:filePath Complete:^{
+        }];
     }];
 }
 
@@ -388,6 +421,13 @@
         }
         return _dbServices;
     }
+}
+
+- (JYProcessView *)progressView{
+    if (!_progressView){
+        _progressView = [JYProcessView processViewWithType:ProcessTypeLine];
+    }
+    return _progressView;
 }
 
 - (void)abort {
@@ -908,6 +948,7 @@
 @implementation WBUploadModel {
     PHImageRequestID _requestFileID;
     NSURLSessionDataTask * _dataTask;
+    NSURLSessionDataTask * _fileDataTask;
 }
 
 + (instancetype)initWithAsset:(JYAsset *)asset {
@@ -1012,6 +1053,96 @@ static NSArray * invaildChars;
             if (weak_self.callback) weak_self.callback(error, nil);
         }];
     }];
+}
+
+
+- (void)uploadFilesWithFilePath:(NSString *)filePath {
+    @weaky(self)
+    NSString * hashString  = [FileHash sha256HashOfFileAtPath:filePath];
+    NSInteger sizeNumber = (NSInteger)[WB_FileService fileSizeAtPath:filePath];
+    //            NSString * exestr = [filePath lastPathComponent];
+    NSString * fileName = [filePath lastPathComponent];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
+    NSString *urlString;
+    NSMutableDictionary * mutableDic = [NSMutableDictionary dictionaryWithCapacity:0];
+    if (WB_UserService.currentUser.isCloudLogin) {
+        urlString = [NSString stringWithFormat:@"%@%@", kCloudAddr, kCloudCommonPipeUrl];
+        NSString *requestUrl = [NSString stringWithFormat:@"/drives/%@/dirs/%@/entries", WB_UserService.currentUser.userHome,  WB_UserService.currentUser.backUpDir];
+        NSString *resource =[requestUrl base64EncodedString] ;
+        NSMutableDictionary *manifestDic  = [NSMutableDictionary dictionaryWithCapacity:0];
+        [manifestDic setObject:@"newfile" forKey:kCloudBodyOp];
+        [manifestDic setObject:@"POST" forKey:kCloudBodyMethod];
+        [manifestDic setObject:fileName forKey:kCloudBodyToName];
+        [manifestDic setObject:resource forKey:kCloudBodyResource];
+        [manifestDic setObject:hashString forKey:@"sha256"];
+        [manifestDic setObject:@(sizeNumber) forKey:@"size"];
+        NSData *josnData = [NSJSONSerialization dataWithJSONObject:manifestDic options:NSJSONWritingPrettyPrinted error:nil];
+        NSString *result = [[NSString alloc] initWithData:josnData  encoding:NSUTF8StringEncoding];
+        [mutableDic setObject:result forKey:@"manifest"];
+        [manager.requestSerializer setValue:[NSString stringWithFormat:@"%@", WB_UserService.currentUser.cloudToken] forHTTPHeaderField:@"Authorization"];
+        manager.requestSerializer.timeoutInterval = 60;
+    }else {
+        urlString = [NSString stringWithFormat:@"%@drives/%@/dirs/%@/entries/",[JYRequestConfig sharedConfig].baseURL,WB_UserService.currentUser.userHome, WB_UserService.currentUser.backUpDir];
+        mutableDic = nil;
+        [manager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@",WB_UserService.defaultToken] forHTTPHeaderField:@"Authorization"];
+    }
+    _fileDataTask = [manager POST:urlString parameters:mutableDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        if(WB_UserService.currentUser.isCloudLogin) {
+            [formData appendPartWithFileURL:[NSURL fileURLWithPath:filePath] name:fileName fileName:fileName mimeType:@"image/jpeg" error:nil];
+        }else {
+            NSDictionary *dic = @{@"size":@(sizeNumber),@"sha256":hashString};
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
+            NSString *jsonString =  [[NSString alloc] initWithData:jsonData  encoding:NSUTF8StringEncoding];
+            [formData appendPartWithFileURL:[NSURL fileURLWithPath:filePath] name:fileName fileName:jsonString mimeType:@"image/jpeg" error:nil];
+        }
+    }
+                         progress:^(NSProgress * _Nonnull uploadProgress) {
+                             NSLog(@"%f",uploadProgress.fractionCompleted);
+                           
+                         }
+                          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                              NSLog(@"Upload Success -->");
+                              [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+                              if(!weak_self) return;
+                              if(weak_self.callback) weak_self.callback(nil, responseObject);
+                          }
+                          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                              NSLog(@"Upload Failure ---> : %@", error);
+                              NSLog(@"Upload Failure ---> : %@  ----> : %ld", fileName, (long)((NSHTTPURLResponse *)task.response).statusCode);
+                              NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+                              if(errorData.length >0 && ((NSHTTPURLResponse *)task.response).statusCode == 403){
+                                  NSMutableArray *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+                                  NSLog(@"Upload Failure ---> :serializedData %@", serializedData);
+                                  if([serializedData isKindOfClass:[NSArray class]]) {
+                                      @try {
+                                          NSDictionary *errorRootDic = serializedData[0];
+                                          NSDictionary *errorDic = errorRootDic[@"error"];
+                                          NSString *code = errorDic[@"code"];
+                                          NSInteger status = [errorDic[@"status"] integerValue];
+                                          if ([code isEqualToString:@"EEXIST"])
+                                              error.wbCode = WBUploadFileExist;
+                                          if(status == 404)
+                                              error.wbCode = WBUploadDirNotFound;
+                                      } @catch (NSException *exception) {
+                                          NSLog(@"%@", exception);
+                                      }
+                                  }
+                              }
+                              [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil]; // remove tmpFile
+                              
+                              if (!weak_self) return;
+                              weak_self.error = error;
+                              //                          if (weak_self.callback) weak_self.callback(error, nil);
+                          }];
+    [_fileDataTask resume];
+}
+
+- (void)cancelUplodFiles {
+    if(_fileDataTask) {
+        [_fileDataTask cancel];
+    }
 }
 
 - (void)cancel {

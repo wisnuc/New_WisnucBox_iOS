@@ -41,7 +41,7 @@
 
 - (instancetype)initWithLocalURL:(NSString *)localUrl andCloudURL:(NSString *)cloudUrl;
 
-- (void)getUserBackupDir:(void(^)(NSError *, NSString * entryUUID))callback;
+- (void)getUserBackupDirName:(NSString *)name BackupDir:(void(^)(NSError *, NSString * entryUUID))callback;
 
 - (void)getUserHome:(void(^)(NSError *, NSString * userHome))callback;
 

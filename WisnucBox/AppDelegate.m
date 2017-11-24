@@ -11,9 +11,11 @@
 #import "WBUser+CoreDataClass.h"
 #import "AppServices.h"
 #import "FirstFilesViewController.h"
+#import "JYProcessView.h"
 
 @interface AppDelegate () <WXApiDelegate>
 @property (nonatomic,strong) FMLoginViewController *loginController;
+@property (strong, nonatomic) JYProcessView * progressView;
 @end
 
 @implementation AppDelegate
@@ -23,13 +25,12 @@
     [MagicalRecord setupCoreDataStack];
     [MagicalRecord setLoggingLevel:MagicalRecordLoggingLevelWarn];
     [self configWeChat];
-    if(WB_IS_DEBUG)
-        [self redirectNSlogToDocumentFolder];
+//    if(WB_IS_DEBUG)
+//        [self redirectNSlogToDocumentFolder];
     [AppServices sharedService];
     [self initRootVC];
     return YES;
 }
-
 
 - (void)initRootVC {
     self.window.rootViewController = nil;
@@ -178,6 +179,28 @@
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+    
+    if (self.window) {
+        if (url) {
+            NSString *fileNameStr = [url lastPathComponent];
+            NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:[NSString stringWithFormat:@"Upload/%@",WB_UserService.currentUser.uuid] createIfNotExist:YES];
+            NSString* saveFile = [savePath stringByAppendingPathComponent:fileNameStr];
+            NSData *data = [NSData dataWithContentsOfURL:url];
+            if (![data writeToFile:saveFile atomically:YES])
+            {
+                NSLog(@"%@写入失败",saveFile);
+            }else{
+                [WB_AppServices readyUploadFilesWithFilePath:saveFile Callback:^(NSError *filesError) {
+                    
+                }];
+                NSLog(@"%@写入成功",saveFile);
+                
+            }
+        }
+    }
+   return [WXApi handleOpenURL:url delegate:self];
+}
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     [MagicalRecord cleanUp];

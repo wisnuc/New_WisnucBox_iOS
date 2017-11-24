@@ -48,6 +48,7 @@
 #import "CSFileUtil.h"
 #import "PHPhotoLibrary+JYEXT.h"
 #import "Base64.h"
+#import "FileHash.h"
 
 //Category
 #import "UIButton+EnlargeEdge.h"
