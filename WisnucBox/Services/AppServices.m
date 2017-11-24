@@ -824,9 +824,11 @@
                     [weakSelf stop];   // stop
                     // need rebuild
                     [weakSelf destroy];
+                    NSLog(@"文件上传目录丢失 开始重建");
                     [weak_AppService rebulidUploadManager];
                 }else if (error.wbCode == WBUploadFileExist) {
                     // rename then retry
+                    NSLog(@"文件 EExist,  重命名 再次尝试！");
                     [weakSelf scheduleForUpload:model andUseTimeStamp:YES];
                 }else {
                     if(!model.isRemoved)
@@ -906,7 +908,9 @@ static NSArray * invaildChars;
             }
         }
         fileName = tempFileName;
-        if(yesOrNo) fileName = [NSString stringWithFormat:@"%@_%f", fileName, [[NSDate date] timeIntervalSince1970]];
+        if(yesOrNo) {
+            fileName = [NSString stringWithFormat:@"%@_%f", fileName, [[NSDate date] timeIntervalSince1970]];
+        }
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         manager.requestSerializer = [AFHTTPRequestSerializer serializer];
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
@@ -957,7 +961,7 @@ static NSArray * invaildChars;
             if(errorData.length >0 && ((NSHTTPURLResponse *)task.response).statusCode == 403){
                 NSMutableArray *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
                 NSLog(@"Upload Failure ---> :serializedData %@", serializedData);
-                if([serializedData isMemberOfClass:[NSArray class]]) {
+                if([serializedData isKindOfClass:[NSArray class]]) {
                     @try {
                         NSDictionary *errorRootDic = serializedData[0];
                         NSDictionary *errorDic = errorRootDic[@"error"];

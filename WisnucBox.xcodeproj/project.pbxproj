@@ -66,9 +66,6 @@
 		1F8EAF241FB9A7C100FEED19 /* LocalDownloadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F8EAF211FB9A7C000FEED19 /* LocalDownloadingTableViewCell.xib */; };
 		1F8EAF251FB9A7C100FEED19 /* LocalDownloadingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EAF221FB9A7C000FEED19 /* LocalDownloadingTableViewCell.m */; };
 		1F8EAF291FBACD5000FEED19 /* FLFIlesHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EAF281FBACD5000FEED19 /* FLFIlesHelper.m */; };
-		1F922E4E1FC7F2C100A7614B /* lauchScreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E4B1FC7F2BF00A7614B /* lauchScreen@2x.png */; };
-		1F922E4F1FC7F2C100A7614B /* lauchScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E4C1FC7F2C000A7614B /* lauchScreen.png */; };
-		1F922E501FC7F2C100A7614B /* lauchScreen@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E4D1FC7F2C000A7614B /* lauchScreen@3x.png */; };
 		1FB0900B1FBC519A0020B304 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB090091FBC51990020B304 /* NSString+Extension.m */; };
 		1FC2AFEF1FC5299300E8C9DE /* WBCloudLoginAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2AFEE1FC5299300E8C9DE /* WBCloudLoginAPI.m */; };
 		1FC2AFF21FC52B4800E8C9DE /* CloudLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2AFF11FC52B4800E8C9DE /* CloudLoginModel.m */; };
@@ -673,9 +670,6 @@
 		1F8EAF231FB9A7C000FEED19 /* LocalDownloadingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalDownloadingTableViewCell.h; sourceTree = "<group>"; };
 		1F8EAF271FBACD5000FEED19 /* FLFIlesHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLFIlesHelper.h; sourceTree = "<group>"; };
 		1F8EAF281FBACD5000FEED19 /* FLFIlesHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLFIlesHelper.m; sourceTree = "<group>"; };
-		1F922E4B1FC7F2BF00A7614B /* lauchScreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "lauchScreen@2x.png"; path = "../../../../../../Downloads/引导页/lauchScreen@2x.png"; sourceTree = "<group>"; };
-		1F922E4C1FC7F2C000A7614B /* lauchScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lauchScreen.png; path = "../../../../../../Downloads/引导页/lauchScreen.png"; sourceTree = "<group>"; };
-		1F922E4D1FC7F2C000A7614B /* lauchScreen@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "lauchScreen@3x.png"; path = "../../../../../../Downloads/引导页/lauchScreen@3x.png"; sourceTree = "<group>"; };
 		1FB090091FBC51990020B304 /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
 		1FB0900A1FBC51990020B304 /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
 		1FC2AFED1FC5299300E8C9DE /* WBCloudLoginAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBCloudLoginAPI.h; sourceTree = "<group>"; };
@@ -2247,9 +2241,6 @@
 		F6830F1F1FB30AAD005AC578 /* LeftMenu */ = {
 			isa = PBXGroup;
 			children = (
-				1F922E4C1FC7F2C000A7614B /* lauchScreen.png */,
-				1F922E4B1FC7F2BF00A7614B /* lauchScreen@2x.png */,
-				1F922E4D1FC7F2C000A7614B /* lauchScreen@3x.png */,
 				F6830F201FB30AAD005AC578 /* About.png */,
 				F6830F211FB30AAD005AC578 /* About@2x.png */,
 				F6830F221FB30AAD005AC578 /* About@3x.png */,
@@ -2922,7 +2913,6 @@
 				F68310DA1FB30AAE005AC578 /* good_red.png in Resources */,
 				F683111C1FB30AAE005AC578 /* local_select.png in Resources */,
 				F683114E1FB30AAE005AC578 /* personal@2x.png in Resources */,
-				1F922E4F1FC7F2C100A7614B /* lauchScreen.png in Resources */,
 				F68310DB1FB30AAE005AC578 /* good_red@2x.png in Resources */,
 				C139DFCF1FC7DFC7007098E5 /* ic_play.png in Resources */,
 				F68310AA1FB30AAE005AC578 /* comment@3x.png in Resources */,
@@ -2998,7 +2988,6 @@
 				1FD7A1081FB05A51000D4CB3 /* eye_off@3x.png in Resources */,
 				F68310951FB30AAE005AC578 /* back_grayhighlight@3x.png in Resources */,
 				F68310BF1FB30AAE005AC578 /* download@2x.png in Resources */,
-				1F922E501FC7F2C100A7614B /* lauchScreen@3x.png in Resources */,
 				F68311091FB30AAE005AC578 /* icon_del.png in Resources */,
 				F650356A1FAC00A70007979D /* Main.storyboard in Resources */,
 				F68310F61FB30AAE005AC578 /* ic_arrow_drop_down@3x.png in Resources */,
@@ -3054,7 +3043,6 @@
 				F683109F1FB30AAE005AC578 /* check-box_select.png in Resources */,
 				F683109D1FB30AAE005AC578 /* check-box@2x.png in Resources */,
 				F683114F1FB30AAE005AC578 /* personal@3x.png in Resources */,
-				1F922E4E1FC7F2C100A7614B /* lauchScreen@2x.png in Resources */,
 				F68311C11FB30AAF005AC578 /* circle.png in Resources */,
 				F68310C81FB30AAE005AC578 /* fab_share@2x.png in Resources */,
 				F683119D1FB30AAF005AC578 /* stationLogo@3x.png in Resources */,
