@@ -37,7 +37,6 @@ WXApiDelegate
     AFNetworkReachabilityManager * _manager;
     NSTimer* _reachabilityTimer;
     NSMutableArray *_userDataSource;
-    ChooseAlertView *_alertView;
     RACSubject *_subject;
     NSString * _avatarUrl;
 }
@@ -65,6 +64,7 @@ WXApiDelegate
 @property (nonatomic) NSString *token;
 @property (nonatomic) NSString *nickName;
 @property (nonatomic) ServerBrowser* browser;
+@property (nonatomic) ChooseAlertView *alertView;
 
 @end
 
@@ -92,14 +92,14 @@ WXApiDelegate
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_reachabilityTimer invalidate];
     _reachabilityTimer = nil;
-//    self.browser.delegate = nil;
+    self.browser.delegate = nil;
     [self.browser stopServer];
 }
 
 -(void)dealloc{
     [_reachabilityTimer invalidate];
     _reachabilityTimer = nil;
-//    self.browser.delegate = nil;
+    self.browser.delegate = nil;
     [self.browser stopServer];
 }
 
@@ -125,15 +125,15 @@ WXApiDelegate
      [self.view addSubview:self.wechatView];
     }
     [self firstbeginSearching];
-    [self setChooseView];
+    [self.view addSubview:self.alertView];
 }
 
 - (void)beginSearching {
-//    [self.browser createServer];
+   
     double delayInSeconds = 2;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        NSLog(@"发现 %lu 台设备",(unsigned long)self.browser.discoveredServers.count);
+        NSLog(@"发现 %lu 台设备",(unsigned long)_browser.discoveredServers.count);
 //          [self viewOfSeaching:NO];
     });
 }
@@ -490,7 +490,7 @@ WXApiDelegate
                 if (isOnline) {
                     [onlineArray addObject:dic];
                     [weak_self getUsersWithStationDic:dic Model:model completeBlock:^(NSMutableDictionary *mutableDic) {
-                        _alertView.hidden = NO;
+                        self.alertView.hidden = NO;
                     }];
                 }
             }];
@@ -525,7 +525,7 @@ WXApiDelegate
                     [_cloudLoginStationArray addObject:userModel];
                     block(mutableDic);
                 }
-                   [_alertView.tableView reloadData];
+                   [self.alertView.tableView reloadData];
             }
         }
 
@@ -534,19 +534,9 @@ WXApiDelegate
     }];
 }
 
-- (void)setChooseView{
-    _alertView = [[[NSBundle mainBundle] loadNibNamed:@"ChooseAlertView" owner:self options:nil] lastObject];
-    _alertView.frame = CGRectMake(0, 0, __kWidth, __kHeight);
-    _alertView.tableView.delegate = self;
-    _alertView.tableView.dataSource = self;
-    [_alertView.loginButton addTarget:self action:@selector(loginButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-   [self.view addSubview:_alertView];
-    _alertView.hidden = YES;
-}
-
 - (void)loginButtonClick:(UIButton *)sender{
-    [_alertView removeFromSuperview];
-    _alertView =nil;
+    [SXLoadingView showProgressHUD:@"正在登录"];
+    [self.alertView setHidden:YES];
     CloudModelForUser *userModel;
     if (_cloudLoginStationArray.count!=0) {
         userModel  = _cloudLoginStationArray[_current];
@@ -559,6 +549,7 @@ WXApiDelegate
             else NSLog(@"Get User Home Error");
             [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"登录失败！ code: %ld", error.wbCode] duration:1];
         }else{
+            [SXLoadingView hideProgressHUD];
             [MyAppDelegate initRootVC];
         }
     }];
@@ -608,7 +599,7 @@ WXApiDelegate
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (tableView == _alertView.tableView) {
+    if (tableView == self.alertView.tableView) {
         return _cloudLoginStationArray.count;
     }else{
         return _userDataSource.count;
@@ -637,7 +628,6 @@ WXApiDelegate
         
         return cell;
     }else{
-     _alertView.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
       FMCloudUserTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FMCloudUserTableViewCell class])];
         if (!cell) {
             cell= [[[NSBundle mainBundle] loadNibNamed:@"FMCloudUserTableViewCell" owner:nil options:nil] lastObject];
@@ -674,7 +664,7 @@ WXApiDelegate
     }else{
        
         _current=indexPath.row;
-        [_alertView.tableView reloadData];
+        [self.alertView.tableView reloadData];
     }
     
 }
@@ -682,7 +672,7 @@ WXApiDelegate
 - (UITableViewCellAccessoryType)tableView:(UITableView*)tableView accessoryTypeForRowWithIndexPath:(NSIndexPath*)indexPath
 {
 
-    if(tableView == _alertView.tableView){
+    if(tableView == self.alertView.tableView){
         if(_current==indexPath.row)
         {
             return UITableViewCellAccessoryCheckmark;
@@ -807,6 +797,19 @@ WXApiDelegate
         _browser.delegate = self;
     }
     return _browser;
+}
+
+- (ChooseAlertView *)alertView{
+    if (!_alertView) {
+        _alertView = [[[NSBundle mainBundle] loadNibNamed:@"ChooseAlertView" owner:self options:nil] lastObject];
+        _alertView.frame = CGRectMake(0, 0, __kWidth, __kHeight);
+        _alertView.tableView.delegate = self;
+        _alertView.tableView.dataSource = self;
+        [_alertView.loginButton addTarget:self action:@selector(loginButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        _alertView.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _alertView.hidden = YES;
+    }
+    return _alertView;
 }
 
 @end

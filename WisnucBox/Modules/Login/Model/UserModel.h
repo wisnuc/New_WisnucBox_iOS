@@ -16,5 +16,6 @@
 //用户头像url
 @property (nonatomic) NSString * avatar;
 
+@property (nonatomic) NSNumber * disabled;
 
 @end
