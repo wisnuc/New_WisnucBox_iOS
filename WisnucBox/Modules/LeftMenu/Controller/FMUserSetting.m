@@ -44,18 +44,12 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-//    self.navDelegate = self.navigationController.interactivePopGestureRecognizer.delegate;
-//    self.navigationController.interactivePopGestureRecognizer.delegate = (id)self;
     [self.navigationController setNavigationBarHidden:YES];
-//     [self.cyl_tabBarController.tabBar setHidden:YES];
-
-//    [self addLeftBarButtonWithImage:[UIImage imageNamed:@"back"] andSEL:@selector(backbtnClick:)];
 }
 
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    
-//    self.navigationController.interactivePopGestureRecognizer.delegate = self.navDelegate;
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO];
 }
 
 - (void)registerTableView{

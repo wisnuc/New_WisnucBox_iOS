@@ -16,6 +16,8 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
+	<key>CFBundleTypeName</key>
+	<string>com.myapp.common-data</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -29,30 +31,28 @@
 			</array>
 		</dict>
 	</array>
-    <key>CFBundleTypeName</key>
-    <string>com.myapp.common-data</string>
-    <key>LSItemContentTypes</key>
-    <array>
-        <string>com.microsoft.powerpoint.ppt</string>
-        <string>public.item</string>
-        <string>com.microsoft.word.doc</string>
-        <string>com.adobe.pdf</string>
-        <string>com.microsoft.excel.xls</string>
-        <string>public.image</string>
-        <string>public.content</string>
-        <string>public.composite-content</string>
-        <string>public.archive</string>
-        <string>public.audio</string>
-        <string>public.movie</string>
-        <string>public.text</string>
-        <string>public.data</string>
-    </array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>weixin</string>
 		<string>wechat</string>
+	</array>
+	<key>LSItemContentTypes</key>
+	<array>
+		<string>com.microsoft.powerpoint.ppt</string>
+		<string>public.item</string>
+		<string>com.microsoft.word.doc</string>
+		<string>com.adobe.pdf</string>
+		<string>com.microsoft.excel.xls</string>
+		<string>public.image</string>
+		<string>public.content</string>
+		<string>public.composite-content</string>
+		<string>public.archive</string>
+		<string>public.audio</string>
+		<string>public.movie</string>
+		<string>public.text</string>
+		<string>public.data</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -63,6 +63,11 @@
 	</dict>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>WISNUC 需要访问你的相册用以备份</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>location</string>
+	</array>
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
@@ -80,9 +85,14 @@
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>WISNUC 需要定位保持活跃，用以上传你的照片</string>
+	<key>NSLocationUsageDescription</key>
+	<string>WISNUC 需要定位保持活跃，用以上传你的照片</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>WISNUC 需要定位保持活跃，用以上传你的照片</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>WISNUC 需要定位保持活跃，用以上传你的照片</string>
 </dict>
 </plist>

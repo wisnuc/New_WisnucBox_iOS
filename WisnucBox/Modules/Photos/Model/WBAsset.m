@@ -30,6 +30,23 @@
     return JYAssetTypeNetImage;
 }
 
+-(NSString *)duration
+{
+    if (self.type != JYAssetTypeNetVideo || self.dur == 0) return @"00:00";
+    
+    NSInteger duration = (NSInteger)round(self.dur);
+    
+    if (duration < 60) return [NSString stringWithFormat:@"00:%02ld", (long)duration];
+    
+    else if (duration < 3600) return [NSString stringWithFormat:@"%02ld:%02ld", duration / 60, duration % 60];
+    
+    NSInteger h = duration / 3600;
+    NSInteger m = (duration % 3600) / 60;
+    NSInteger s = duration % 60;
+    return [NSString stringWithFormat:@"%02ld:%02ld:%02ld", (long)h, (long)m, (long)s];
+    
+}
+
 - (NSDate *)createDate{
     if(!self.createDateB) {
         if(!IsNilString(self.date)){
