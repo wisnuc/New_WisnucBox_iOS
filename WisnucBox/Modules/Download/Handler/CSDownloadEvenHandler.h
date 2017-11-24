@@ -6,6 +6,7 @@
 //  Copyright © 2017年 JackYang. All rights reserved.
 //
 #import "CSDownloadTask.h"
+#import "CSOneDowloadTask.h"
 #ifndef CSDownloadEvenHandler_h
 #define CSDownloadEvenHandler_h
 /**
@@ -25,7 +26,7 @@ typedef void (^CSDownloadBeginEventHandler) ();
  *
  *  @return
  */
-typedef void (^CSDownloadingEventHandler) (long long totalBytesRead, long long totalBytesExpectedToRead, float progress);
+typedef void (^CSDownloadingEventHandler) (NSProgress* downloadProgress);
 
 /**
  *  异步下载结束后，执行自定义的事件
@@ -36,5 +37,7 @@ typedef void (^CSDownloadingEventHandler) (long long totalBytesRead, long long t
  */
 typedef void (^CSDownloadedEventHandler) (CSDownloadTask *downloadTask,NSError* error );
 
+
+typedef void (^CSOneDownloadedEventHandler) (CSOneDowloadTask *downloadTask,NSError* error );
 
 #endif /* CSDownloadEvenHandler_h */

@@ -1,23 +1,17 @@
 //
-//  CSDownloadTask.h
+//  CSOneDowloadTask.h
 //  WisnucBox
 //
-//  Created by wisnuc-imac on 2017/11/13.
+//  Created by wisnuc-imac on 2017/11/24.
 //  Copyright © 2017年 JackYang. All rights reserved.
 //
-
 
 #import <Foundation/Foundation.h>
 #import "CSSingleDownloadTaskProtocol.h"
 #import "CSDownloadModel.h"
 #import "CSDownloadUIBindProtocol.h"
 
-/**
- *  实现下载任务（依赖GSSingleDownloadTaskProtocol协议）
- *  外部使用前，需要指定下载文件模型(实现GSDownloadFileModelProtocol接口)和关联的UI对象(实现GSDownloadUIBindProtocol)
- */
-@interface CSDownloadTask : NSObject <CSSingleDownloadTaskProtocol>
-
+@interface CSOneDowloadTask : NSObject <CSSingleDownloadTaskProtocol>
 @property (nonatomic,getter = getDownloadStatus) CSDownloadStatus downloadStatus;
 
 // add by zhenwei
@@ -42,6 +36,4 @@
 @property (nonatomic, copy) void(^progressBlock)(NSProgress *downloadProgress);
 // end
 
-- (BOOL)isEqualToDownloadTask:(CSDownloadTask*)downloadTask;
-//@property (nonatomic,strong)NSURLSessionDataTask *downloadDataTask;
 @end

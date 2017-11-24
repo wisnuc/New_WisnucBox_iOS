@@ -16,7 +16,6 @@
 @implementation CSFilesOneDownloadManager
 static dispatch_once_t p = 0;
 __strong static id _sharedObject = nil;
-
 + (CSFilesOneDownloadManager*)shareManager
 {
     
@@ -31,7 +30,7 @@ __strong static id _sharedObject = nil;
 {
     self = [super init];
     if (self) {
-        _souceArray = [NSMutableArray arrayWithCapacity:0];
+        
     }
     return self;
 }
@@ -52,10 +51,10 @@ __strong static id _sharedObject = nil;
     return _manager;
 }
 
-- (void)beginDownloadTask:(CSDownloadTask*)downloadTask
+- (void)beginDownloadTask:(CSOneDowloadTask*)downloadTask
                     begin:(CSDownloadBeginEventHandler)begin
                  progress:(CSDownloadingEventHandler)progress
-                 complete:(CSDownloadedEventHandler)complete{
+                 complete:(CSOneDownloadedEventHandler)complete{
     CSDownloadModel* fileModel = [downloadTask getDownloadFileModel];
     if (![self validateFileMetaData:fileModel])
     {
@@ -64,11 +63,11 @@ __strong static id _sharedObject = nil;
     
     if (begin)
     {
-        [_souceArray addObject:downloadTask];
+        
         begin();
     }
     
-//    BOOL isResuming = NO;
+    //    BOOL isResuming = NO;
     
     NSString* dataUrl = [fileModel getDownloadTaskURL];
     
@@ -83,42 +82,54 @@ __strong static id _sharedObject = nil;
     NSLog(@"已下载文件大小:%lld",currentLength);
     
     //断点续传
-//    if (currentLength > 0)
-//    {
-//
-//        NSString *requestRange = [NSString stringWithFormat:@"bytes=%zd-", currentLength];
-//        [urlRequest setValue:requestRange forHTTPHeaderField:@"Range"];
-//
-//        isResuming = YES;
-//    }
-    downloadTask.stream = [NSOutputStream outputStreamToFileAtPath:tempPath append:YES];
-    NSURLSessionDataTask * dataTask = [self.manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+    //    if (currentLength > 0)
+    //    {
+    //
+    //        NSString *requestRange = [NSString stringWithFormat:@"bytes=%zd-", currentLength];
+    //        [urlRequest setValue:requestRange forHTTPHeaderField:@"Range"];
+    //
+    //        isResuming = YES;
+    //    }
+    
+    
+    NSURLSessionDataTask * dataTask= [self.manager downloadTaskWithRequest:urlRequest progress:^(NSProgress * _Nonnull downloadProgress) {
+        if (progress) {
+            progress(downloadProgress);
+        }
+        NSLog(@"%f",downloadProgress.fractionCompleted);
+    } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+        NSLog(@"%@",targetPath);
+        if ([[NSFileManager defaultManager] fileExistsAtPath:[targetPath absoluteString]]) {
+            
+        }
+        NSString *path = [fileModel getDownloadFileSavePath];
+        NSLog(@"%@",path);
+        return [NSURL fileURLWithPath:path];
+        
+    } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+        NSLog(@"%@",filePath);
+        fileModel.downloadFileSavePath = filePath.path;
         if (error) {
             NSLog(@"%@",error);
-            [downloadTask.stream close];
-            downloadTask.stream = nil;
-                NSLog(@"宣告失败...");
-                
-                [downloadTask setDownloadStatus:CSDownloadStatusFailure];
-                [_souceArray removeObject:downloadTask];
-                //                [GSFileUtil deleteFileAtPath:tmpPath];
-                //调用外部回调（比如执行UI更新），通知UI任务已经失败了
-                if (complete) {
-                    complete(downloadTask,error);
-                }
-//            }
+            
+            NSLog(@"宣告失败...");
+            
+            [downloadTask setDownloadStatus:CSDownloadStatusFailure];
+            if (self.souceArray.count>0) {
+                [self.souceArray removeObject:downloadTask];
+            }
+            
+            //                [GSFileUtil deleteFileAtPath:tmpPath];
+            //调用外部回调（比如执行UI更新），通知UI任务已经失败了
+            if (complete) {
+                complete(downloadTask,error);
+            }
         }else{
             
-            // 清空长度
-            currentLength = 0;
-            fileLength = 0;
             
-            // 关闭fileHandle
-            [downloadTask.stream close];
-            downloadTask.stream = nil;
             [downloadTask setDownloadStatus:CSDownloadStatusSuccess];
             //从请求队列中移除
-         
+            
             NSDate* curDate = [NSDate date];
             //            NSString* downloadFinishTime = [CSDateUtil stringWithDate:curDate withFormat:@"yyyy-MM-dd HH:mm:ss"];
             [fileModel setDownloadFinishTime:curDate];
@@ -144,9 +155,9 @@ __strong static id _sharedObject = nil;
             }
             
             //将文件从临时目录内剪切到下载目录
-            NSString* tempFile = [fileModel getDownloadTempSavePath];
-            NSString* saveFile = [fileModel getDownloadFileSavePath];
-            [CSFileUtil cutFileAtPath:tempFile toPath:saveFile];
+            //                        NSString* tempFile = [fileModel getDownloadTempSavePath];
+            //                        NSString* saveFile = [fileModel getDownloadFileSavePath];
+            //                        [CSFileUtil cutFileAtPath:tempFile toPath:saveFile];
             
             //移除临时plist
             NSString* tempFilePlist = [[fileModel getDownloadTempSavePath] stringByAppendingPathExtension:@"plist"];
@@ -164,81 +175,166 @@ __strong static id _sharedObject = nil;
             wBFile.timeDate = fileModel.downloadFinishTime;
             wBFile.downloadURL = fileModel.downloadTaskURL;
             [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-            [_souceArray removeObject:downloadTask];
+            [self.souceArray removeObject:downloadTask];
             //调用外部回调（比如执行UI更新）
             if (complete) {
                 complete(downloadTask,nil);
-
+                
             }
         }
         
     }];
-    
-    
-    
-    [self.manager setDataTaskDidReceiveResponseBlock:^NSURLSessionResponseDisposition(NSURLSession * _Nonnull session, NSURLSessionDataTask * _Nonnull dataTask, NSURLResponse * _Nonnull response) {
-        NSLog(@"%@",dataTask);
-        fileLength = response.expectedContentLength + currentLength;
-        NSString *path = [fileModel getDownloadTempSavePath];
-        NSLog(@"%@",path);
-        
-        // 创建一个空的文件到沙盒中
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        
-        if (![fileManager fileExistsAtPath:path]) {
-            // 如果没有下载文件的话，就创建一个文件。如果有下载文件的话，则不用重新创建(不然会覆盖掉之前的文件)
-            [fileManager createFileAtPath:path contents:nil attributes:nil];
-        }
-        
-        // 创建文件句柄
-        
-        [downloadTask.stream open];
-        // 允许处理服务器的响应，才会继续接收服务器返回的数据
-        return NSURLSessionResponseAllow;
-    }];
-    
-    [self.manager setDataTaskDidReceiveDataBlock:^(NSURLSession * _Nonnull session, NSURLSessionDataTask * _Nonnull dataTask, NSData * _Nonnull data) {
-        
-        // 拼接文件总长度
-        [downloadTask.stream write:data.bytes maxLength:data.length];
-        currentLength += data.length;
-        
-        //保存已下载文件大小
-        [fileModel setDownloadedFileSize:[NSNumber numberWithLongLong:currentLength]];
-        
-        
-        
-        NSDictionary* downloadTmpInfo = @{
-                                          @"downloadFileName"       : [fileModel getDownloadFileName],
-                                          @"downloadFileSize"       : [fileModel getDownloadFileSize],
-                                          @"downloadedFileSize"     : [fileModel getDownloadedFileSize],
-                                          @"downloadFileSavePath"   : [fileModel getDownloadFileSavePath],
-                                          @"downloadFileTempPath"   : [fileModel getDownloadTempSavePath],
-                                          @"downloadFileUserId"     : [fileModel getDownloadFileUserId]
-                                          };
-        
-        NSString* tempFilePlist = [[fileModel getDownloadTempSavePath] stringByAppendingPathExtension:@"plist"];
-        if (![downloadTmpInfo writeToFile:tempFilePlist atomically:YES]) {
-            NSLog(@"%@写入失败",tempFilePlist);
-        }
-        //更新临时文件信息
-        
-        if (progress) {
-            float downloadProgress;
-            if (WB_UserService.currentUser.isCloudLogin) {
-                downloadProgress = (float)currentLength/[downloadTask.downloadFileModel.downloadFileSize floatValue];
-                NSLog(@"%lld/%@",currentLength,downloadTask.downloadFileModel.downloadFileSize);
-                progress(currentLength,[downloadTask.downloadFileModel.downloadFileSize longLongValue],downloadProgress);
-            }else{
-                downloadProgress  = (float)currentLength/(float)fileLength;
-                NSLog(@"%lld/%lld",currentLength,fileLength);
-                progress(currentLength,fileLength,downloadProgress);
-            }
-        }
-    }];
-    
-    [downloadTask setDownloadDataTask:dataTask];
     [dataTask resume];
+    [downloadTask setDownloadDataTask:dataTask];
+    [self.souceArray addObject:downloadTask];
+    NSLog(@"%@",self.souceArray);
+    //    downloadTask.stream = [NSOutputStream outputStreamToFileAtPath:tempPath append:YES];
+    //    NSURLSessionDataTask * dataTask = [self.manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+    //        if (error) {
+    //            NSLog(@"%@",error);
+    //            [downloadTask.stream close];
+    //            downloadTask.stream = nil;
+    //                NSLog(@"宣告失败...");
+    //
+    //                [downloadTask setDownloadStatus:CSDownloadStatusFailure];
+    //                [_souceArray removeObject:downloadTask];
+    //                //                [GSFileUtil deleteFileAtPath:tmpPath];
+    //                //调用外部回调（比如执行UI更新），通知UI任务已经失败了
+    //                if (complete) {
+    //                    complete(downloadTask,error);
+    //                }
+    ////            }
+    //        }else{
+    //
+    //            // 清空长度
+    //            currentLength = 0;
+    //            fileLength = 0;
+    //
+    //            // 关闭fileHandle
+    //            [downloadTask.stream close];
+    //            downloadTask.stream = nil;
+    //            [downloadTask setDownloadStatus:CSDownloadStatusSuccess];
+    //            //从请求队列中移除
+    //
+    //            NSDate* curDate = [NSDate date];
+    //            //            NSString* downloadFinishTime = [CSDateUtil stringWithDate:curDate withFormat:@"yyyy-MM-dd HH:mm:ss"];
+    //            [fileModel setDownloadFinishTime:curDate];
+    //
+    //            //保存下载完成的文件信息
+    //            NSDictionary* downloadFinishInfo = @{
+    //                                                 @"downloadFileName"       : [fileModel getDownloadFileName],
+    //                                                 @"downloadFinishTime"     : [fileModel getDownloadFinishTime],
+    //                                                 @"downloadFileSize"       : [fileModel getDownloadFileSize],
+    //                                                 @"downloadFileSavePath"   : [fileModel getDownloadFileSavePath],
+    //
+    //                                                 @"downloadFileUserId"    : [fileModel getDownloadFileUserId],
+    //                                                 @"downloadFileFromURL"    : [fileModel getDownloadTaskURL],
+    //                                                 @"downloadFilePlistURL"   : [fileModel getDownloadFilePlistURL]
+    //                                                 };
+    //
+    //            NSString* finishPlist = [[fileModel getDownloadFileSavePath] stringByAppendingPathExtension:@"plist"];
+    //            if (![downloadFinishInfo writeToFile:finishPlist atomically:YES])
+    //            {
+    //                NSLog(@"%@写入失败",finishPlist);
+    //            }else{
+    //                NSLog(@"%@写入成功",finishPlist);
+    //            }
+    //
+    //            //将文件从临时目录内剪切到下载目录
+    //            NSString* tempFile = [fileModel getDownloadTempSavePath];
+    //            NSString* saveFile = [fileModel getDownloadFileSavePath];
+    //            [CSFileUtil cutFileAtPath:tempFile toPath:saveFile];
+    //
+    //            //移除临时plist
+    //            NSString* tempFilePlist = [[fileModel getDownloadTempSavePath] stringByAppendingPathExtension:@"plist"];
+    //            [CSFileUtil deleteFileAtPath:tempFilePlist];
+    //
+    //            WBFile * wBFile = [WBFile MR_createEntityInContext:[NSManagedObjectContext MR_defaultContext]];
+    //            wBFile.uuid = fileModel.downloadFileUserId;
+    //            NSLog(@"%@",fileModel.downloadFileSize);
+    //            //            wBFile.fileUUID = file.fileUUID;
+    //            wBFile.fileName = fileModel.downloadFileName;
+    //            wBFile.fileSize = [NSString stringWithFormat:@"%@",fileModel.downloadFileSize];
+    //            wBFile.downloadedFileSize = [NSString stringWithFormat:@"%@",fileModel.downloadedFileSize];
+    //            wBFile.filePath = fileModel.downloadFileSavePath;
+    //            wBFile.fileUUID = fileModel.getDownloadFileUUID;
+    //            wBFile.timeDate = fileModel.downloadFinishTime;
+    //            wBFile.downloadURL = fileModel.downloadTaskURL;
+    //            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+    //            [_souceArray removeObject:downloadTask];
+    //            //调用外部回调（比如执行UI更新）
+    //            if (complete) {
+    //                complete(downloadTask,nil);
+    //
+    //            }
+    //        }
+    //
+    //    }];
+    //
+    //
+    //
+    //    [self.manager setDataTaskDidReceiveResponseBlock:^NSURLSessionResponseDisposition(NSURLSession * _Nonnull session, NSURLSessionDataTask * _Nonnull dataTask, NSURLResponse * _Nonnull response) {
+    //        NSLog(@"%@",dataTask);
+    //        fileLength = response.expectedContentLength + currentLength;
+    //        NSString *path = [fileModel getDownloadTempSavePath];
+    //        NSLog(@"%@",path);
+    //
+    //        // 创建一个空的文件到沙盒中
+    //        NSFileManager *fileManager = [NSFileManager defaultManager];
+    //
+    //        if (![fileManager fileExistsAtPath:path]) {
+    //            // 如果没有下载文件的话，就创建一个文件。如果有下载文件的话，则不用重新创建(不然会覆盖掉之前的文件)
+    //            [fileManager createFileAtPath:path contents:nil attributes:nil];
+    //        }
+    //
+    //        // 创建文件句柄
+    //
+    //        [downloadTask.stream open];
+    //        // 允许处理服务器的响应，才会继续接收服务器返回的数据
+    //        return NSURLSessionResponseAllow;
+    //    }];
+    //
+    //    [self.manager setDataTaskDidReceiveDataBlock:^(NSURLSession * _Nonnull session, NSURLSessionDataTask * _Nonnull dataTask, NSData * _Nonnull data) {
+    //
+    //        // 拼接文件总长度
+    //        [downloadTask.stream write:data.bytes maxLength:data.length];
+    //        currentLength += data.length;
+    //
+    //        //保存已下载文件大小
+    //        [fileModel setDownloadedFileSize:[NSNumber numberWithLongLong:currentLength]];
+    //
+    //
+    //
+    //        NSDictionary* downloadTmpInfo = @{
+    //                                          @"downloadFileName"       : [fileModel getDownloadFileName],
+    //                                          @"downloadFileSize"       : [fileModel getDownloadFileSize],
+    //                                          @"downloadedFileSize"     : [fileModel getDownloadedFileSize],
+    //                                          @"downloadFileSavePath"   : [fileModel getDownloadFileSavePath],
+    //                                          @"downloadFileTempPath"   : [fileModel getDownloadTempSavePath],
+    //                                          @"downloadFileUserId"     : [fileModel getDownloadFileUserId]
+    //                                          };
+    //
+    //        NSString* tempFilePlist = [[fileModel getDownloadTempSavePath] stringByAppendingPathExtension:@"plist"];
+    //        if (![downloadTmpInfo writeToFile:tempFilePlist atomically:YES]) {
+    //            NSLog(@"%@写入失败",tempFilePlist);
+    //        }
+    //        //更新临时文件信息
+    //
+    //        if (progress) {
+    //            float downloadProgress;
+    //            if (WB_UserService.currentUser.isCloudLogin) {
+    //                downloadProgress = (float)currentLength/[downloadTask.downloadFileModel.downloadFileSize floatValue];
+    //                NSLog(@"%lld/%@",currentLength,downloadTask.downloadFileModel.downloadFileSize);
+    //                progress(currentLength,[downloadTask.downloadFileModel.downloadFileSize longLongValue],downloadProgress);
+    //            }else{
+    //                downloadProgress  = (float)currentLength/(float)fileLength;
+    //                NSLog(@"%lld/%lld",currentLength,fileLength);
+    //                progress(currentLength,fileLength,downloadProgress);
+    //            }
+    //        }
+    //    }];
+    
+    
 }
 
 - (void)cancelOneDownloadTaskWith:(CSDownloadTask*)downloadTask{
@@ -260,15 +356,22 @@ __strong static id _sharedObject = nil;
 
 - (void)cancelAllDownloadTask{
     @weaky(self)
-    [_souceArray enumerateObjectsUsingBlock:^(CSDownloadTask *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    NSLog(@"%@",self.souceArray);
+    [self.souceArray enumerateObjectsUsingBlock:^(CSDownloadTask *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [weak_self cancelOneDownloadTaskWith:obj];
     }];
-    [_souceArray removeAllObjects];
+    [self.souceArray removeAllObjects];
 }
-
+- (NSMutableArray *)souceArray{
+    if (!_souceArray) {
+        _souceArray = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _souceArray;
+}
 - (BOOL)validateFileMetaData:(CSDownloadModel*)fileModel
 {
     // TODO
     return YES;
 }
 @end
+

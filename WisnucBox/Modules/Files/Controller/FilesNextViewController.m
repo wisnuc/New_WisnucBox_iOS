@@ -17,6 +17,7 @@
 #import "JYProcessView.h"
 #import "FilesNextViewController.h"
 #import "FilesDataSourceManager.h"
+#import "CSFilesOneDownloadManager.h"
 
 @interface FilesNextViewController ()
 <
@@ -65,6 +66,9 @@ FilesHelperOpenFilesDelegate
     [super viewWillDisappear:animated];
     if (self.cellStatus == FLFliesCellStatusCanChoose) {
         [self actionForNormalStatus];
+    }
+    if (!_chooseHeadView.hidden) {
+        [_chooseHeadView setHidden:YES];
     }
 }
 
@@ -176,6 +180,7 @@ FilesHelperOpenFilesDelegate
     [UIView animateWithDuration:0.5 animations:^{
         _chooseHeadView.transform = CGAffineTransformTranslate(_chooseHeadView.transform, 0, 64);
     }];
+    [_chooseHeadView setHidden:NO];
     _addButton.hidden = NO;
     self.tabBarController.tabBar.hidden = YES;
     self.cellStatus = FLFliesCellStatusCanChoose;
@@ -193,6 +198,7 @@ FilesHelperOpenFilesDelegate
     [UIView animateWithDuration:0.5 animations:^{
         _chooseHeadView.transform = CGAffineTransformTranslate(_chooseHeadView.transform, 0, -64);
     }];
+    [_chooseHeadView setHidden:YES];
     _addButton.hidden = YES;
 //    [self.rdv_tabBarController setTabBarHidden:NO animated:YES];
     self.cellStatus = FLFliesCellStatusNormal;
@@ -313,7 +319,7 @@ FilesHelperOpenFilesDelegate
                     self.progressView.descLb.text =@"正在下载文件";
                     self.progressView.subDescLb.text = [NSString stringWithFormat:@"1个项目 "];
                     self.progressView.cancleBlock = ^(){
-                        [[CSDownloadHelper shareManager] cancleDownload];
+                        [[CSFilesOneDownloadManager shareManager] cancelAllDownloadTask];
                     };
                     [_progressView show];
                     [[CSDownloadHelper shareManager] downloadOneFileWithFileModel:model RootUUID:_driveUUID  UUID:_parentUUID IsDownloading:^(BOOL isDownloading) {
@@ -327,12 +333,12 @@ FilesHelperOpenFilesDelegate
                         }
                     } begin:^{
                         
-                    } progress:^(long long totalBytesRead, long long totalBytesExpectedToRead, float progress) {
+                    } progress:^(NSProgress *downloadProgress) {
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            [_progressView setValueForProcess:progress];
+                            [_progressView setValueForProcess:downloadProgress.fractionCompleted];
                             
                         });
-                    } complete:^(CSDownloadTask *downloadTask,NSError *error) {
+                    } complete:^(CSOneDowloadTask *downloadTask,NSError *error) {
                         [_progressView dismiss];
                         if (!error) {
                             _documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:downloadTask.downloadFileModel.downloadFileSavePath]];
@@ -393,6 +399,7 @@ FilesHelperOpenFilesDelegate
         [_chooseHeadView addSubview:leftBtn];
         _countLb.text = @"选择文件";
         _countLb.font = [UIFont fontWithName:FANGZHENG size:16];
+        [_chooseHeadView setHidden:YES];
     }
     return _chooseHeadView;
 }

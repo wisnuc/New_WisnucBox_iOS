@@ -343,6 +343,7 @@
     @weaky(self)
     [WB_NetService getUserBackupDirName:BackUpFilesDirName BackupDir:^(NSError *error, NSString *entryUUID) {
         if(error) return callback(({error.wbCode = 10003; error;}));
+        WB_UserService.currentUser.uploadFileDir = entryUUID;
 //            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
             self.progressView.descLb.text =@"正在上传文件";
@@ -350,8 +351,7 @@
             self.progressView.cancleBlock = ^(){
                 [weak_self cancelFilesUplod];
             };
-            [_progressView show];
-//
+            [self.progressView show];
         [weak_self startUploadFilesWithFilePath:filePath Progress:^(NSProgress *uploadProgress) {
              [_progressView setValueForProcess:uploadProgress.fractionCompleted];
         } Complete:^(NSError *error) {
@@ -1082,7 +1082,7 @@ static NSArray * invaildChars;
     NSMutableDictionary * mutableDic = [NSMutableDictionary dictionaryWithCapacity:0];
     if (WB_UserService.currentUser.isCloudLogin) {
         urlString = [NSString stringWithFormat:@"%@%@", kCloudAddr, kCloudCommonPipeUrl];
-        NSString *requestUrl = [NSString stringWithFormat:@"/drives/%@/dirs/%@/entries", WB_UserService.currentUser.userHome,  WB_UserService.currentUser.backUpDir];
+        NSString *requestUrl = [NSString stringWithFormat:@"/drives/%@/dirs/%@/entries", WB_UserService.currentUser.userHome,   WB_UserService.currentUser.uploadFileDir];
         NSString *resource =[requestUrl base64EncodedString] ;
         NSMutableDictionary *manifestDic  = [NSMutableDictionary dictionaryWithCapacity:0];
         [manifestDic setObject:@"newfile" forKey:kCloudBodyOp];

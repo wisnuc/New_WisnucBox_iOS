@@ -38,7 +38,7 @@ typedef void (^HelperDownloadingEventHandler) (BOOL isDownloading);
                        IsDownloading:(HelperDownloadingEventHandler)isDownloading
                                begin:(CSDownloadBeginEventHandler)begin
                             progress:(CSDownloadingEventHandler)progress
-                            complete:(CSDownloadedEventHandler)complete;
+                            complete:(CSOneDownloadedEventHandler)complete;
 
 - (void)pauseDownloadWithTask:(CSDownloadTask*)downloadTask;
 
