@@ -8,7 +8,7 @@
 
 #import "FilesShareViewController.h"
 #import "FilesNextViewController.h"
-#import "FLFilesCell.h"
+#import "FirstFilesTableViewCell.h"
 
 @interface FilesShareViewController ()
 <
@@ -52,6 +52,9 @@ UITableViewDataSource
 }
 
 - (void)setDataSouceArrayWith:(NSMutableArray *)array{
+    if (self.dataSouceArray) {
+        [self.dataSouceArray removeAllObjects];
+    }
     [self.dataSouceArray addObjectsFromArray:array];
     [self.tableView reloadData];
 }
@@ -62,14 +65,13 @@ UITableViewDataSource
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    FLFilesCell *cell  = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FLFilesCell class])];
+    FirstFilesTableViewCell *cell  = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FirstFilesTableViewCell class])];
     if (nil == cell) {
-        cell= (FLFilesCell *)[[[NSBundle  mainBundle] loadNibNamed:NSStringFromClass([FLFilesCell class]) owner:self options:nil]  lastObject];
+        cell= (FirstFilesTableViewCell *)[[[NSBundle  mainBundle] loadNibNamed:NSStringFromClass([FirstFilesTableViewCell class]) owner:self options:nil]  lastObject];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     ShareFilesModel *model = self.dataSouceArray[indexPath.row];
     cell.nameLabel.text = model.label;
-    cell.downBtn.hidden = YES;
     cell.f_ImageView.image = [UIImage imageNamed:@"share"];
 
     return cell;

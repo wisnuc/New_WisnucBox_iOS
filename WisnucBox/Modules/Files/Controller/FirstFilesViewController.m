@@ -9,7 +9,7 @@
 
 #import "FirstFilesViewController.h"
 #import "FLDrivesAPI.h"
-#import "FLFilesCell.h"
+#import "FirstFilesTableViewCell.h"
 #import "FilesNextViewController.h"
 #import "FilesViewController.h"
 #import "FilesShareViewController.h"
@@ -65,6 +65,7 @@ UITableViewDataSource
 
 - (void)loadData{
     [self.dataSouceArray removeAllObjects];
+    [self.shareDataArray removeAllObjects];
     [[FLDrivesAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
     NSArray * responseArr = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
         NSLog(@"%@",request.responseJsonObject);
@@ -85,7 +86,7 @@ UITableViewDataSource
                 //                    //获取从escapedPath开始位置到iStart.location-1长度的子字符串
                 //                 subStr  = [string  substringToIndex:iStart.location];
                 //                }
-                
+                 
                 for (NSString *containUUID in model.writelist) {
                     if ([string isEqualToString:containUUID]) {
                         i++;
@@ -114,16 +115,17 @@ UITableViewDataSource
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    FLFilesCell *cell  = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FLFilesCell class])];
+    FirstFilesTableViewCell *cell  = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FirstFilesTableViewCell class])];
     if (nil == cell) {
-        cell= (FLFilesCell *)[[[NSBundle  mainBundle] loadNibNamed:NSStringFromClass([FLFilesCell class]) owner:self options:nil]  lastObject];
+        cell= (FirstFilesTableViewCell *)[[[NSBundle  mainBundle] loadNibNamed:NSStringFromClass([FirstFilesTableViewCell class]) owner:self options:nil]  lastObject];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     FirstFilesModel *model = _dataSouceArray[indexPath.row];
     cell.nameLabel.text = model.name;
-    cell.downBtn.hidden = YES;
     if (model.type == WBFilesFirstDirectoryShare) {
         cell.f_ImageView.image = [UIImage imageNamed:@"share"];
+    }else{
+        cell.f_ImageView.image = [UIImage imageNamed:@"folder_icon"];
     }
     return cell;
 }

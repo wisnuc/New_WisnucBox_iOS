@@ -99,7 +99,7 @@
 }
 - (void) setlayout {
     
-    self.textView.frame = CGRectMake((__kWidth- 300)/2, 60, 300, 60);
+    self.textView.frame = CGRectMake((__kWidth- 300)/2, 64+60, 300, 60);
 //    self.textView_2.frame = CGRectMake((__kWidth- 300)/2, 140, 300, 60);
 //    self.textView_3.frame = CGRectMake((__kWidth- 300)/2, 220, 300, 60);
     
@@ -108,10 +108,12 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+      [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 @end
