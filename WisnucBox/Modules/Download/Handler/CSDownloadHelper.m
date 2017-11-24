@@ -79,10 +79,10 @@ __strong static id _sharedObject = nil;
     NSString* suffixName = dataModel.name;
     NSDate* datenow = [NSDate date];
     NSString* tmpFileName = [NSString stringWithFormat:@"file-%@%@.tmp",suffixName,datenow];
-    NSString* saveFileName= [NSString stringWithFormat:@"%@",suffixName];
-    
+    NSString* saveFileName= [NSString stringWithFormat:@"%@",dataModel.uuid];
+    NSString *extensionstring = [suffixName pathExtension];
     NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:YES];
-    NSString* saveFile = [savePath stringByAppendingPathComponent:saveFileName];
+    NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",saveFileName,extensionstring]];
     NSFileManager *manager = [NSFileManager defaultManager];
     
     if ([manager fileExistsAtPath:saveFile]) {
@@ -149,10 +149,11 @@ __strong static id _sharedObject = nil;
 
     NSString* suffixName = dataModel.name;
     NSString* tmpFileName = [NSString stringWithFormat:@"file-%d.tmp",_downdloadCount];
-    NSString* saveFileName= [NSString stringWithFormat:@"%@",suffixName];
+    NSString* saveFileName= [NSString stringWithFormat:@"%@",dataModel.uuid];
     
+    NSString *extensionstring = [suffixName pathExtension];
     NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:YES];
-    NSString* saveFile = [savePath stringByAppendingPathComponent:saveFileName];
+    NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",saveFileName,extensionstring]];
     NSFileManager *manager = [NSFileManager defaultManager];
     
     if ([manager fileExistsAtPath:saveFile]) {

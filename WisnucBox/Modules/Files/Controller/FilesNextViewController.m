@@ -308,8 +308,10 @@ FilesHelperOpenFilesDelegate
                 [self.tableView reloadData];
             }else{
                 NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
-                NSString* suffixName = model.name;
-                NSString* saveFile = [savePath stringByAppendingPathComponent:suffixName];
+                NSString* suffixName = model.uuid;
+                NSString *fileName = model.name;
+                NSString *extensionstring = [fileName pathExtension];
+                NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",suffixName,extensionstring]];
                 NSLog(@"文件位置%@",saveFile);
                 if ([[NSFileManager defaultManager] fileExistsAtPath:saveFile]) {
                     _documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:saveFile]];

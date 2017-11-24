@@ -105,7 +105,6 @@ __strong static id _sharedObject = nil;
         
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
         NSLog(@"%@",filePath);
-        fileModel.downloadFileSavePath = filePath.path;
         if (error) {
             NSLog(@"%@",error);
             

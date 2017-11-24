@@ -187,8 +187,11 @@ static dispatch_once_t onceToken;
                 }
                 }else if(buttonIndex == 2) {
                     NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
-                    NSString* suffixName = model.name;
-                    NSString* saveFile = [savePath stringByAppendingPathComponent:suffixName];
+                    NSString* suffixName = model.uuid;
+                    NSString *fileName = model.name;
+                    NSString *extensionstring = [fileName pathExtension];
+                    NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",suffixName,extensionstring]];
+            
                     if ([[NSFileManager defaultManager] fileExistsAtPath:saveFile]) {
                         if (_openFilesdelegate && [_openFilesdelegate respondsToSelector:@selector(openTheFileWithFilePath:)]) {
                             [_openFilesdelegate openTheFileWithFilePath:saveFile];

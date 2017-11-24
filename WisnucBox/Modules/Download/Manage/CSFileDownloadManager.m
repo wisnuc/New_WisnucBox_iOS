@@ -181,11 +181,13 @@ __strong static id _sharedObject = nil;
         NSLog(@"%f",downloadProgress.fractionCompleted);
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         NSString *path = [fileModel getDownloadFileSavePath];
-        NSURL *url = [NSURL URLWithString:path];
+        NSLog(@"%@",path);
+        NSURL *url = [NSURL fileURLWithPath:path];
         return url;
 
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
         NSLog(@"%@",error);
+//         fileModel setDownloadFileSavePath:
         if (error) {
                     if (error.code == -1005) {
                         return ;

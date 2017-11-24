@@ -20,7 +20,7 @@
 }
 
 - (void)deleteFileWithFileUUID:(NSString *)fileuuid FileName:(NSString *)fileName{
-    [self removeFileWithFileName:fileName];
+    [self removeFileWithFileName:fileName UUID:fileuuid];
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"uuid = %@ && fileUUID = %@", WB_UserService.currentUser.uuid, fileuuid];
     [WBFile MR_deleteAllMatchingPredicate:predicate inContext:[NSManagedObjectContext MR_defaultContext]];
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
@@ -32,10 +32,12 @@
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
-- (void)removeFileWithFileName:(NSString *)fileName{
+- (void)removeFileWithFileName:(NSString *)fileName UUID:(NSString *)uuid{
     NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
-    NSString* suffixName = fileName;
-    NSString* saveFile = [savePath stringByAppendingPathComponent:suffixName];
+    NSString* suffixName = uuid;
+    NSString *fileNameString = fileName;
+    NSString *extensionstring = [fileNameString pathExtension];
+    NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",suffixName,extensionstring]];
     NSLog(@"文件位置%@",saveFile);
     if ([[NSFileManager defaultManager] fileExistsAtPath:saveFile]) {
         NSError *error = nil;

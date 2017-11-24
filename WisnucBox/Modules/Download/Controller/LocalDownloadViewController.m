@@ -309,10 +309,13 @@ UIDocumentInteractionControllerDelegate
         if (indexPath.section == 1) {
             WBFile *downloadedFileModel = _downloadedArray[indexPath.row];
             NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
-            NSString* suffixName = downloadedFileModel.fileName;
-            NSString* saveFile = [savePath stringByAppendingPathComponent:suffixName];
+            NSString* suffixName = downloadedFileModel.fileUUID;
+            NSString *fileName = downloadedFileModel.fileName;
+            NSString *extensionstring = [fileName pathExtension];
+            NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",suffixName,extensionstring]];
+//            NSURL *url = [NSURL fileURLWithPath:saveFile];
             NSLog(@"文件位置%@",saveFile);
-            if ([[NSFileManager defaultManager] fileExistsAtPath:saveFile]) {
+            if ([[NSFileManager defaultManager] fileExistsAtPath:saveFile] ) {
                 _documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:saveFile]];
                 _documentController.delegate = self;
                 [self presentOptionsMenu];
