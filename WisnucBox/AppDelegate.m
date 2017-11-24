@@ -223,13 +223,15 @@
     switch (resp.errCode) {
         case WXSuccess://用户同意
         {
-            [SXLoadingView showProgressHUDText:@"授权成功" duration:1.5];
             SendAuthResp *aresp = (SendAuthResp *)resp;
             NSLog(@"%@",NSStringFromClass([[UIViewController getCurrentVC] class]));
             if ([[UIViewController getCurrentVC] isKindOfClass:[FMLoginViewController class]]) {
-               [(FMLoginViewController *)[UIViewController getCurrentVC] weChatCallBackRespCode:aresp.code];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [(FMLoginViewController *)[UIViewController getCurrentVC] weChatCallBackRespCode:aresp.code];
+                });
+            }else {
+                [SXLoadingView hideProgressHUD];
             }
-            
         }
             break;
         case WXErrCodeAuthDeny://用户拒绝授权
