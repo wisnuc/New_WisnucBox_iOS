@@ -312,6 +312,7 @@
 
 - (void)startUploadAssets:(void(^)(void))complete {
     @weaky(self);
+    if(self.netServices.status != AFNetworkReachabilityStatusReachableViaWiFi) return;
     [self.netServices getEntriesInUserBackupDir:^(NSError *error, NSArray<EntriesModel *> *entries) {
         if(error) {
             if(error.wbCode == WBUploadDirNotFound)

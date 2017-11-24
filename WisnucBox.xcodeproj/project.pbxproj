@@ -138,6 +138,8 @@
 		C139DFD11FC7DFC7007098E5 /* ic_play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C139DFC81FC7DFC7007098E5 /* ic_play@2x.png */; };
 		C139DFD21FC7DFC7007098E5 /* play2.png in Resources */ = {isa = PBXBuildFile; fileRef = C139DFC91FC7DFC7007098E5 /* play2.png */; };
 		C139DFD41FC7F76C007098E5 /* F5F5F5.png in Resources */ = {isa = PBXBuildFile; fileRef = C139DFD31FC7F76C007098E5 /* F5F5F5.png */; };
+		C1D2D6C91FC8587000EE1C46 /* livePhoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1D2D6C71FC8587000EE1C46 /* livePhoto@2x.png */; };
+		C1D2D6CA1FC8587000EE1C46 /* livePhoto@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1D2D6C81FC8587000EE1C46 /* livePhoto@3x.png */; };
 		F65035611FAC00A60007979D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035601FAC00A60007979D /* main.m */; };
 		F65035641FAC00A60007979D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035631FAC00A60007979D /* AppDelegate.m */; };
 		F65035671FAC00A60007979D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035661FAC00A60007979D /* ViewController.m */; };
@@ -785,6 +787,8 @@
 		C139DFC81FC7DFC7007098E5 /* ic_play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_play@2x.png"; sourceTree = "<group>"; };
 		C139DFC91FC7DFC7007098E5 /* play2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play2.png; sourceTree = "<group>"; };
 		C139DFD31FC7F76C007098E5 /* F5F5F5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = F5F5F5.png; sourceTree = "<group>"; };
+		C1D2D6C71FC8587000EE1C46 /* livePhoto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "livePhoto@2x.png"; sourceTree = "<group>"; };
+		C1D2D6C81FC8587000EE1C46 /* livePhoto@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "livePhoto@3x.png"; sourceTree = "<group>"; };
 		F650355C1FAC00A60007979D /* WisnucBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WisnucBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F65035601FAC00A60007979D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F65035621FAC00A60007979D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -1922,6 +1926,8 @@
 		C139DFC01FC7DFC7007098E5 /* photo */ = {
 			isa = PBXGroup;
 			children = (
+				C1D2D6C71FC8587000EE1C46 /* livePhoto@2x.png */,
+				C1D2D6C81FC8587000EE1C46 /* livePhoto@3x.png */,
 				C139DFC11FC7DFC7007098E5 /* ic_pause.png */,
 				C139DFC21FC7DFC7007098E5 /* ic_pause@2x.png */,
 				C139DFC31FC7DFC7007098E5 /* play2@2x.png */,
@@ -2826,6 +2832,7 @@
 				F68310CB1FB30AAE005AC578 /* file_icon.png in Resources */,
 				F68311951FB30AAF005AC578 /* small_1.png in Resources */,
 				F68310B01FB30AAE005AC578 /* date_bg@3x.png in Resources */,
+				C1D2D6C91FC8587000EE1C46 /* livePhoto@2x.png in Resources */,
 				F68310E81FB30AAE005AC578 /* hard_select@3x.png in Resources */,
 				F650356C1FAC00A70007979D /* Assets.xcassets in Resources */,
 				F68310991FB30AAE005AC578 /* cancel.png in Resources */,
@@ -2985,6 +2992,7 @@
 				F68310961FB30AAE005AC578 /* bg_pic.jpg in Resources */,
 				F68311991FB30AAF005AC578 /* small_3@2x.png in Resources */,
 				F68310841FB30AAE005AC578 /* all.png in Resources */,
+				C1D2D6CA1FC8587000EE1C46 /* livePhoto@3x.png in Resources */,
 				1FD7A1061FB05A51000D4CB3 /* WeChat@2x.png in Resources */,
 				F683118C1FB30AAF005AC578 /* share_red_select.png in Resources */,
 				F683114D1FB30AAE005AC578 /* personal.png in Resources */,

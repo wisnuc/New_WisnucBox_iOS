@@ -23,6 +23,7 @@
 #import "AppDelegate.h"
 #import "WBgetStationInfoAPI.h"
 #import "WBGetSystemInformationAPI.h"
+#import "NSError+WBCode.h"
 
 @interface FMLoginViewController ()
 <
@@ -38,7 +39,6 @@ WXApiDelegate
     NSTimer* _reachabilityTimer;
     NSMutableArray *_userDataSource;
     RACSubject *_subject;
-    NSString * _avatarUrl;
 }
 @property (strong, nonatomic) UIScrollView *stationScrollView;
 @property (strong, nonatomic) UIView *stationCardView;
@@ -65,6 +65,7 @@ WXApiDelegate
 @property (nonatomic) NSString *nickName;
 @property (nonatomic) ServerBrowser* browser;
 @property (nonatomic) ChooseAlertView *alertView;
+@property (nonatomic) NSString *avatarUrl;
 
 @end
 
@@ -150,11 +151,16 @@ WXApiDelegate
     });
 }
 
+static BOOL needHide = YES;
 -(void)viewOfSeaching:(BOOL)seaching{
     if(seaching){
         [SXLoadingView showProgressHUD:@"正在搜索..."];
     }else{
-        [SXLoadingView hideProgressHUD];
+        if(needHide) {
+            needHide = NO;
+            NSLog(@"=============>>>>>>>          _____>>>>");
+            [SXLoadingView hideProgressHUD];
+        }
     }
 }
 
@@ -448,11 +454,37 @@ WXApiDelegate
 
 - (void)weChatCallBackRespCode:(NSString *)code{
     @weaky(self)
-    [SXLoadingView showProgressHUD:@"正在登录"];
+    [SXLoadingView showProgressHUD:@"正在远程登录"];
+    self.cloudLoginStationArray=[NSMutableArray arrayWithCapacity:0];
     [[WBCloudLoginAPI apiWithCode:code] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-//        NSLog(@"%@",request.responseJsonObject);
-        [SXLoadingView hideProgressHUD];
-        [weak_self loginToDoWithResponse:request.responseJsonObject];
+        [SXLoadingView updateProgressHUD:@"正在获取设备列表"];
+        CloudLoginModel * model = [CloudLoginModel yy_modelWithJSON:request.responseJsonObject];
+        weak_self.token = model.data.token;
+        weak_self.avatarUrl = model.data.user.avatarUrl;
+        [weak_self getStationWithModel:model completeBlock:^(NSError *error, NSArray<NSDictionary *> *stations) {
+            if(error) {
+                [SXLoadingView hideProgressHUD];
+                NSLog(@"%@", error);
+                if(error.wbCode == 50001)
+                    [SXLoadingView showAlertHUD:@"您的微信尚未绑定任何设备" duration:1];
+                if(error.wbCode == 50002)
+                    [SXLoadingView showAlertHUD:@"尚无在线设备" duration:1];
+                else
+                    [SXLoadingView showAlertHUD:@"网络错误,拉取列表失败" duration:1];
+            }else {
+                _alertView.hidden = NO;
+                [stations enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    [weak_self getUsersWithStationDic:obj Model:model completeBlock:^(NSError *err, CloudModelForUser *user) {
+                        [SXLoadingView hideProgressHUD];
+                        if(err) {
+                            return [SXLoadingView showAlertHUD:@"一台设备获取用户信息失败" duration:1];
+                        }
+                        [weak_self.cloudLoginStationArray addObject:user];
+                        [weak_self.alertView.tableView reloadData];
+                    }];
+                }];
+            }
+        }];
     } failure:^(__kindof JYBaseRequest *request) {
         [SXLoadingView hideProgressHUD];
         NSLog(@"%@",request.error);
@@ -464,56 +496,40 @@ WXApiDelegate
     NSLog(@"点击了信息");
 }
 
--(void)loginToDoWithResponse:(id)response{
-    @weaky(self)
-    CloudLoginModel * model = [CloudLoginModel yy_modelWithJSON:response];
-    [weak_self getStationWithModel:model];
-}
-
-- (void)getStationWithModel:(CloudLoginModel *)model{
-    @weaky(self)
-    _token = model.data.token;
-    _avatarUrl = model.data.user.avatarUrl;
-    [SXLoadingView showProgressHUD:@"正在拉取列表..."];
+// wberror: 50001 --> 未绑定设备
+// 50002  --->  无在线设备
+// 50003  --->
+- (void)getStationWithModel:(CloudLoginModel *)model completeBlock:(void(^)(NSError *, NSArray<NSDictionary *> *))callback {
     [[WBCloudGetStationsAPI apiWithGuid:model.data.user.userId andToken:model.data.token]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        //        NSLog(@"%@",request.responseJsonObject);
         NSDictionary *rootDic = request.responseJsonObject;
-        self.cloudLoginStationArray=[NSMutableArray arrayWithCapacity:0];
         NSMutableArray *dataArray = [NSMutableArray arrayWithArray:[rootDic objectForKey:@"data"]];
         NSMutableArray *onlineArray = [NSMutableArray arrayWithCapacity:0];
         if([rootDic[@"data"] isEqual:[NSNull null]]||rootDic[@"data"] == nil ||dataArray.count == 0) {
-            [SXLoadingView showProgressHUDText:@"您的微信尚未绑定任何设备" duration:1];
-            
+            NSError * err = [NSError errorWithDomain:@"no station had bind" code:50001 userInfo:nil];
+            err.wbCode = 50001;
+            return callback(err, nil);
         }else{
-            [SXLoadingView updateProgressHUD:@"正在获取用户信息"];
             [dataArray enumerateObjectsUsingBlock:^(NSDictionary *dic, NSUInteger idx, BOOL * _Nonnull stop) {
                 NSNumber * isOnlineNumber = dic[@"isOnline"];
-                BOOL isOnline =  [isOnlineNumber boolValue];
-                if (isOnline) {
+                if ([isOnlineNumber boolValue])
                     [onlineArray addObject:dic];
-                    [weak_self getUsersWithStationDic:dic Model:model completeBlock:^(NSMutableDictionary *mutableDic) {
-                        [SXLoadingView hideProgressHUD];
-                        self.alertView.hidden = NO;
-                    }];
-                }
             }];
-            
-        }
-        if (onlineArray.count == 0) {
-            [SXLoadingView showProgressHUDText:@"没有在线设备或未绑定设备" duration:1];
+            if (onlineArray.count == 0) {
+                NSError * err = [NSError errorWithDomain:@"no station on line" code:50001 userInfo:nil];
+                err.wbCode = 50002;
+                return callback(err, nil);
+            }else
+                return callback(nil, onlineArray);
         }
     } failure:^(__kindof JYBaseRequest *request) {
-        NSLog(@"%@",request.error);
-        [SXLoadingView hideProgressHUD];
+        return callback(request.error, nil);
     }];
 }
 
-- (void)getUsersWithStationDic:(NSDictionary *)stationDic Model:(CloudLoginModel *)model completeBlock:(void(^)(NSMutableDictionary *mutableDic))block{
+- (void)getUsersWithStationDic:(NSDictionary *)stationDic Model:(CloudLoginModel *)model completeBlock:(void(^)(NSError *, CloudModelForUser *user))block{
      NSString *stationId = stationDic[@"id"];
     FMGetUsersAPI *api = [FMGetUsersAPI apiWithStationId:stationId Token:model.data.token];
-    
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-//        NSLog(@"%@",request.responseJsonObject);
         NSDictionary *rootDic = request.responseJsonObject;
         NSMutableArray *arr = rootDic[@"data"];
         NSMutableDictionary *mutableDic;
@@ -527,16 +543,17 @@ WXApiDelegate
                     [mutableDic addEntriesFromDictionary:stationDic];
                      NSLog(@"%@",model.data.user.userId);
                     CloudModelForUser *userModel = [CloudModelForUser yy_modelWithDictionary:mutableDic];
-                    [_cloudLoginStationArray addObject:userModel];
-                    block(mutableDic);
+                    return block(nil, userModel);
                 }
-                   [self.alertView.tableView reloadData];
             }
         }
-
+        
+        NSLog(@"FUCK FOR NO USER!");
+        NSError * e = [NSError errorWithDomain:@"No this User" code:50003 userInfo:nil];
+        return block(e, nil);
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
-        [SXLoadingView hideProgressHUD];
+        return block(request.error, nil);
     }];
 }
 
