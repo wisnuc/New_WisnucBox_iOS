@@ -88,11 +88,9 @@
     
     if(status != AFNetworkReachabilityStatusReachableViaWiFi && !WB_UserService.currentUser.backUpInWWAN){
         [self.photoUploadManager stop];
-       
     }
     else if(self.photoUploadManager.shouldUpload == NO) {
         [self startUploadAssets:nil];
-
     }
  
 }
@@ -132,9 +130,9 @@
         if(WB_AssetService.userAuth) {
             NSArray * allLocalAsset = [self.assetServices allAssets];
             [self.photoUploadManager startWithLocalAssets:allLocalAsset andNetAssets:@[]];
-            if(WB_UserService.currentUser.autoBackUp) {
-                [self startUploadAssets:nil];
-            }
+//            if(WB_UserService.currentUser.autoBackUp) {
+//                [self startUploadAssets:nil];
+//            }
         }
     });
 }
@@ -312,7 +310,7 @@
 
 - (void)startUploadAssets:(void(^)(void))complete {
     @weaky(self);
-    if(self.netServices.status != AFNetworkReachabilityStatusReachableViaWiFi) return;
+    if(self.netServices.status != AFNetworkReachabilityStatusReachableViaWiFi) return [SXLoadingView showAlertHUD:@"非wifi环境, 停止上传" duration:1];
     [self.netServices getEntriesInUserBackupDir:^(NSError *error, NSArray<EntriesModel *> *entries) {
         if(error) {
             if(error.wbCode == WBUploadDirNotFound)
@@ -841,84 +839,87 @@
             }
         });
     }
-    while(self.hashWorkingQueue.count < self.hashLimitCount && self.hashwaitingQueue.count > 0) {
-        JYAsset * asset = [self.hashwaitingQueue lastObject];
-        [self.hashwaitingQueue removeLastObject];
-        [self.hashWorkingQueue addObject:asset];
-        __weak typeof(self) weakSelf = self;
-        dispatch_async([self workingQueue], ^{
-            [self asset:asset getSha256:^(NSError *error, NSString *sha256) {
-                dispatch_async(self.managerQueue, ^{
-                    if (error) {
-                        [weakSelf.hashFailQueue addObject:asset];
-                    }else {
-                        asset.digest = sha256;
-                        [weakSelf.uploadPaddingQueue addObject:asset];
-                    }
-                    [weakSelf.hashWorkingQueue removeObject:asset];
-                    [weakSelf schedule];
-                });
-            }];
-        });
-    }
-    
-    if(!_shouldUpload) return;
-    
-    while(self.uploadPaddingQueue.count > 0 && self.uploadingQueue.count < self.uploadLimitCount) {
-        JYAsset * asset = [self.uploadPaddingQueue lastObject];
-        [self.uploadPaddingQueue removeLastObject];
-        WBUploadModel * model = [WBUploadModel initWithAsset:asset];
-        if([self.uploadedNetHashSet containsObject:asset.digest] || [self.uploadedLocalHashSet containsObject:asset.digest]) {
-            dispatch_async(self.managerQueue, ^{
+    dispatch_async(self.managerQueue, ^{
+        while(self.hashWorkingQueue.count < self.hashLimitCount && self.hashwaitingQueue.count > 0) {
+            JYAsset * asset = [self.hashwaitingQueue lastObject];
+            [self.hashwaitingQueue removeLastObject];
+            [self.hashWorkingQueue addObject:asset];
+            __weak typeof(self) weakSelf = self;
+            dispatch_async([self workingQueue], ^{
+                [self asset:asset getSha256:^(NSError *error, NSString *sha256) {
+                    dispatch_async(self.managerQueue, ^{
+                        if (error) {
+                            [weakSelf.hashFailQueue addObject:asset];
+                        }else {
+                            asset.digest = sha256;
+                            [weakSelf.uploadPaddingQueue addObject:asset];
+                        }
+                        [weakSelf.hashWorkingQueue removeObject:asset];
+                        [weakSelf schedule];
+                    });
+                }];
+            });
+        }
+        
+        if(!_shouldUpload) return;
+        
+        while(self.uploadPaddingQueue.count > 0 && self.uploadingQueue.count < self.uploadLimitCount) {
+            JYAsset * asset = [self.uploadPaddingQueue lastObject];
+            [self.uploadPaddingQueue removeLastObject];
+            WBUploadModel * model = [WBUploadModel initWithAsset:asset];
+            if([self.uploadedNetHashSet containsObject:asset.digest] || [self.uploadedLocalHashSet containsObject:asset.digest]) {
                 [self.uploadedQueue addObject:model];
                 NSLog(@"发现一个已上传的，直接跳过, error: %lu  finish:%lu", (unsigned long)_uploadErrorQueue.count, (unsigned long)_uploadedQueue.count);
                 [[NSNotificationCenter defaultCenter] postNotificationName:WBBackupCountChangeNotify object:nil];
                 [self schedule];
-            });
-        }else {
-            [self.uploadingQueue addObject:model];
-            dispatch_async(self.workingQueue, ^{
-                [self scheduleForUpload:model andUseTimeStamp:NO];
-            });
+                
+            }else {
+                [self.uploadingQueue addObject:model];
+                dispatch_async(self.workingQueue, ^{
+                    [self scheduleForUpload:model andUseTimeStamp:NO];
+                });
+            }
         }
-    }
+    });
 }
 
 // retry if eexist
 - (void)scheduleForUpload:(WBUploadModel *)model andUseTimeStamp:(BOOL)yesOrNo {
     __weak typeof(self) weakSelf = self;
     __weak typeof(WB_AppServices) weak_AppService = WB_AppServices;
-    [model startUseTimeStamp:yesOrNo completeBlock:^(NSError *error, id response) {
-        if(!weakSelf) return;
-        dispatch_async(weakSelf.managerQueue, ^{
-            if (error) {
-                if (error.wbCode == WBUploadDirNotFound) {
-                    [weakSelf stop];   // stop
-                    // need rebuild
-                    [weakSelf destroy];
-                    NSLog(@"文件上传目录丢失 开始重建");
-                    [weak_AppService rebulidUploadManager];
-                }else if (error.wbCode == WBUploadFileExist) {
-                    // rename then retry
-                    NSLog(@"文件 EExist,  重命名 再次尝试！");
-                    [weakSelf scheduleForUpload:model andUseTimeStamp:YES];
-                }else {
+    dispatch_async(self.workingQueue, ^{
+        [model startUseTimeStamp:yesOrNo completeBlock:^(NSError *error, id response) {
+            if(!weakSelf) return;
+            dispatch_async(weakSelf.managerQueue, ^{
+                if (error) {
+                    if (error.wbCode == WBUploadDirNotFound) {
+                        [weakSelf stop];   // stop
+                        // need rebuild
+                        [weakSelf destroy];
+                        NSLog(@"文件上传目录丢失 开始重建");
+                        [weak_AppService rebulidUploadManager];
+                    }else if (error.wbCode == WBUploadFileExist) {
+                        // rename then retry
+                        NSLog(@"文件 EExist,  重命名 再次尝试！");
+                        [weakSelf scheduleForUpload:model andUseTimeStamp:YES];
+                    }else {
+                        if(!model.isRemoved)
+                            [weakSelf.uploadErrorQueue addObject:model];
+                        [weakSelf.uploadingQueue removeObject:model];
+                        NSLog(@"上传失败 , error: %lu  finish:%lu", (unsigned long)weakSelf.uploadErrorQueue.count, (unsigned long)weakSelf.uploadedQueue.count);
+                    }
+                }else{  // success
                     if(!model.isRemoved)
-                        [weakSelf.uploadErrorQueue addObject:model];
+                        [weakSelf.uploadedQueue addObject:model];
                     [weakSelf.uploadingQueue removeObject:model];
-                    NSLog(@"上传失败 , error: %lu  finish:%lu", (unsigned long)weakSelf.uploadErrorQueue.count, (unsigned long)weakSelf.uploadedQueue.count);
+                    [weakSelf.uploadedLocalHashSet addObject:model.asset.digest]; // record for skip equal-hash asset
+                    [[NSNotificationCenter defaultCenter] postNotificationName:WBBackupCountChangeNotify object:nil];
+                    NSLog(@"上传成功 , error: %lu  finish:%lu", (unsigned long)weakSelf.uploadErrorQueue.count, (unsigned long)weakSelf.uploadedQueue.count);
                 }
-            }else{  // success
-                if(!model.isRemoved)
-                    [weakSelf.uploadedQueue addObject:model];
-                [weakSelf.uploadingQueue removeObject:model];
-                [weakSelf.uploadedLocalHashSet addObject:model.asset.digest]; // record for skip equal-hash asset
-                [[NSNotificationCenter defaultCenter] postNotificationName:WBBackupCountChangeNotify object:nil];
-                NSLog(@"上传成功 , error: %lu  finish:%lu", (unsigned long)weakSelf.uploadErrorQueue.count, (unsigned long)weakSelf.uploadedQueue.count);
-            }
-            [weakSelf schedule];
-        });
-    }];
+                [weakSelf schedule];
+            });
+        }];
+    });
 }
 
 - (void)stop {
