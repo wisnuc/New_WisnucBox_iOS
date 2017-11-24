@@ -9,12 +9,14 @@
 #import "CSDownloadHelper.h"
 #import "CSFileUtil.h"
 #import "LocalDownloadViewController.h"
+#import "CSFilesOneDownloadManager.h"
 
 @interface CSDownloadHelper()<CSDownloadUIBindProtocol>
 {
     CSFileDownloadManager* _manager;
     int _downdloadCount;
     NSMutableArray * _oneDownloadArray;
+    CSFilesOneDownloadManager* _oneManager;
 }
 @end
 
@@ -45,6 +47,7 @@ __strong static id _sharedObject = nil;
     self = [super init];
     if (self) {
         _manager = [CSFileDownloadManager sharedDownloadManager];
+        _oneManager = [CSFilesOneDownloadManager shareManager];
         _manager.maxDownload = 3;
         _manager.maxWaiting = 3;
         _manager.maxPaused = 3;
@@ -113,7 +116,7 @@ __strong static id _sharedObject = nil;
     [downloadTask setDownloadUIBinder:self];
     if(_manager.downloadingTasks.count>0){
         __block BOOL find = NO;
-        [_manager.downloadTasks enumerateObjectsUsingBlock:^(CSDownloadTask * obj, NSUInteger idx, BOOL *stop) {
+        [_manager.downloadingTasks enumerateObjectsUsingBlock:^(CSDownloadTask * obj, NSUInteger idx, BOOL *stop) {
             NSLog(@"%@", downloadTask.downloadFileModel.getDownloadFileUUID);
             NSLog(@"%@",obj.downloadFileModel.getDownloadFileUUID);
             if([obj.downloadFileModel.getDownloadFileUUID  isEqualToString:downloadTask.downloadFileModel.getDownloadFileUUID]){
@@ -184,7 +187,7 @@ __strong static id _sharedObject = nil;
 
     if(_manager.downloadingTasks.count>0){
       __block BOOL find = NO;
-    [_manager.downloadTasks enumerateObjectsUsingBlock:^(CSDownloadTask * obj, NSUInteger idx, BOOL *stop) {
+    [_manager.downloadingTasks enumerateObjectsUsingBlock:^(CSDownloadTask * obj, NSUInteger idx, BOOL *stop) {
         if([obj.downloadFileModel.getDownloadFileUUID  isEqualToString:downloadTask.downloadFileModel.getDownloadFileUUID]){
             * stop = YES;
             find = YES;
@@ -207,37 +210,55 @@ __strong static id _sharedObject = nil;
                         complete:(CSDownloadedEventHandler)complete{
     
     
-    CSFileDownloadManager *oneManager = [[CSFileDownloadManager alloc]init];
-    oneManager.maxDownload = 1;
-    oneManager.maxWaiting = 1;
-    oneManager.maxPaused = 1;
-    oneManager.maxFailureRetryChance = 0;
-    [oneManager addDownloadTask:downloadTask];
-    [oneManager downloadDataAsyncWithTask:downloadTask
-                                  begin:begin
-                               progress:progress
-                               complete:^(CSDownloadTask *csdownloadTask,NSError *error) {
-                                   [_oneDownloadArray removeAllObjects];
-                                   if (error)
-                                   {
-                                       NSLog(@"下载失败,%@",error);
-                                       NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
-                                       if(errorData.length >0){
-                                           NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
-                                          NSLog(@"下载失败,%@",serializedData);
-                                       }
-                                       downloadTask.downloadStatus = CSDownloadStatusFailure;
-                                       [self updateUIWithTask:downloadTask];
-                                       complete(csdownloadTask,error);
-                                   }
-                                   else
-                                   {
-                                       NSLog(@"下载成功");
-                                       downloadTask.downloadStatus = CSDownloadStatusSuccess;
-                                       [self updateUIWithTask:downloadTask];
-                                       complete(csdownloadTask,nil);
-                                   }
-                               }];
+    CSFilesOneDownloadManager *oneManager = [[CSFilesOneDownloadManager alloc]init];
+
+    [oneManager beginDownloadTask:downloadTask begin:begin  progress: progress complete:^(CSDownloadTask *csdownloadTask, NSError *error) {
+        [_oneDownloadArray removeAllObjects];
+        if (error)
+        {
+            NSLog(@"下载失败,%@",error);
+            NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+            if(errorData.length >0){
+                NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+                NSLog(@"下载失败,%@",serializedData);
+            }
+            downloadTask.downloadStatus = CSDownloadStatusFailure;
+            [self updateUIWithTask:downloadTask];
+            complete(csdownloadTask,error);
+        }
+        else
+        {
+            NSLog(@"下载成功");
+            downloadTask.downloadStatus = CSDownloadStatusSuccess;
+            [self updateUIWithTask:downloadTask];
+            complete(csdownloadTask,nil);
+        }
+    }];
+//    [oneManager downloadDataAsyncWithTask:downloadTask
+//                                  begin:begin
+//                               progress:progress
+//                               complete:^(CSDownloadTask *csdownloadTask,NSError *error) {
+//                                   [_oneDownloadArray removeAllObjects];
+//                                   if (error)
+//                                   {
+//                                       NSLog(@"下载失败,%@",error);
+//                                       NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+//                                       if(errorData.length >0){
+//                                           NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+//                                          NSLog(@"下载失败,%@",serializedData);
+//                                       }
+//                                       downloadTask.downloadStatus = CSDownloadStatusFailure;
+//                                       [self updateUIWithTask:downloadTask];
+//                                       complete(csdownloadTask,error);
+//                                   }
+//                                   else
+//                                   {
+//                                       NSLog(@"下载成功");
+//                                       downloadTask.downloadStatus = CSDownloadStatusSuccess;
+//                                       [self updateUIWithTask:downloadTask];
+//                                       complete(csdownloadTask,nil);
+//                                   }
+//                               }];
 }
 
 - (void)startDownloadWithTask:(CSDownloadTask*)downloadTask
@@ -289,8 +310,8 @@ __strong static id _sharedObject = nil;
 
 - (void)cancleDownload{
     if (_oneDownloadArray.count>0) {
-        [_oneDownloadArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [_manager cancelOneDownloadTaskWith:(CSDownloadTask *)obj];
+        [_oneDownloadArray enumerateObjectsUsingBlock:^(CSDownloadTask* obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [_oneManager cancelOneDownloadTaskWith:obj];
             [_oneDownloadArray removeAllObjects];
         }];
     }

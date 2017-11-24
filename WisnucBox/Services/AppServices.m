@@ -16,6 +16,7 @@
 #import "FLFIlesHelper.h"
 #import "CSDownloadHelper.h"
 #import "NSError+WBCode.h"
+#import "CSFilesOneDownloadManager.h"
 
 @implementation AppServices {
     BOOL _isRebuildingPhotoUploader;
@@ -414,6 +415,7 @@
     [FilesDataSourceManager destroyAll];
     [FLFIlesHelper destroyAll];
     [CSDownloadHelper destroyAll];
+    [CSFilesOneDownloadManager destroyAll];
 }
 
 @end

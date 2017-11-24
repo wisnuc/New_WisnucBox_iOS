@@ -173,7 +173,7 @@ __strong static id _sharedObject = nil;
         
         isResuming = YES;
     }
-    __weak typeof(self) weakSelf = self;
+//    __weak typeof(self) weakSelf = self;
     downloadTask.stream = [NSOutputStream outputStreamToFileAtPath:tempPath append:YES];
     NSURLSessionDataTask * dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         if (error) {
@@ -434,6 +434,7 @@ __strong static id _sharedObject = nil;
                 [downloadTask setDownloadStatus:CSDownloadStatusDownloading];
                 if (isComplete) {
 //                    [_subject sendNext:downloadTask];
+                      [self.downloadingTasks removeObject:downloadTask];
                       [[CSDownloadHelper shareManager] startDownloadWithTask:downloadTask];
                 }
             }];

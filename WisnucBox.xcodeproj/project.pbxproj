@@ -69,6 +69,7 @@
 		1F922E4E1FC7F2C100A7614B /* lauchScreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E4B1FC7F2BF00A7614B /* lauchScreen@2x.png */; };
 		1F922E4F1FC7F2C100A7614B /* lauchScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E4C1FC7F2C000A7614B /* lauchScreen.png */; };
 		1F922E501FC7F2C100A7614B /* lauchScreen@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E4D1FC7F2C000A7614B /* lauchScreen@3x.png */; };
+		1F922E531FC7FB3600A7614B /* CSFilesOneDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F922E521FC7FB3600A7614B /* CSFilesOneDownloadManager.m */; };
 		1FB0900B1FBC519A0020B304 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB090091FBC51990020B304 /* NSString+Extension.m */; };
 		1FC2AFEF1FC5299300E8C9DE /* WBCloudLoginAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2AFEE1FC5299300E8C9DE /* WBCloudLoginAPI.m */; };
 		1FC2AFF21FC52B4800E8C9DE /* CloudLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2AFF11FC52B4800E8C9DE /* CloudLoginModel.m */; };
@@ -666,6 +667,8 @@
 		1F922E4B1FC7F2BF00A7614B /* lauchScreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "lauchScreen@2x.png"; path = "../../../../../../Downloads/引导页/lauchScreen@2x.png"; sourceTree = "<group>"; };
 		1F922E4C1FC7F2C000A7614B /* lauchScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lauchScreen.png; path = "../../../../../../Downloads/引导页/lauchScreen.png"; sourceTree = "<group>"; };
 		1F922E4D1FC7F2C000A7614B /* lauchScreen@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "lauchScreen@3x.png"; path = "../../../../../../Downloads/引导页/lauchScreen@3x.png"; sourceTree = "<group>"; };
+		1F922E511FC7FB3600A7614B /* CSFilesOneDownloadManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSFilesOneDownloadManager.h; sourceTree = "<group>"; };
+		1F922E521FC7FB3600A7614B /* CSFilesOneDownloadManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSFilesOneDownloadManager.m; sourceTree = "<group>"; };
 		1FB090091FBC51990020B304 /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
 		1FB0900A1FBC51990020B304 /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
 		1FC2AFED1FC5299300E8C9DE /* WBCloudLoginAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBCloudLoginAPI.h; sourceTree = "<group>"; };
@@ -1719,6 +1722,8 @@
 			children = (
 				1FFEADAC1FB087AE00CD3068 /* CSFileDownloadManager.h */,
 				1FFEADAD1FB087AE00CD3068 /* CSFileDownloadManager.m */,
+				1F922E511FC7FB3600A7614B /* CSFilesOneDownloadManager.h */,
+				1F922E521FC7FB3600A7614B /* CSFilesOneDownloadManager.m */,
 			);
 			path = Manage;
 			sourceTree = "<group>";
@@ -3310,6 +3315,7 @@
 				F67D64401FAC7E5600E23D16 /* TYDecorationSectionLayout.m in Sources */,
 				F67D64261FAC7D9A00E23D16 /* UIScrollView+IndicatorExt.m in Sources */,
 				71A3D6671FB57AC30002B8B1 /* JYBaseRequest.m in Sources */,
+				1F922E531FC7FB3600A7614B /* CSFilesOneDownloadManager.m in Sources */,
 				71A3D6711FB57F830002B8B1 /* FMAsyncUsersAPI.m in Sources */,
 				1F8EAF251FB9A7C100FEED19 /* LocalDownloadingTableViewCell.m in Sources */,
 				1FFEADAE1FB087AE00CD3068 /* CSFileDownloadManager.m in Sources */,

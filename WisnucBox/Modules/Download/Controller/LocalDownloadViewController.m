@@ -67,7 +67,7 @@ UIDocumentInteractionControllerDelegate
 }
 
 - (void)loadData{
-    self.downloadingArray = [NSMutableArray arrayWithArray:_manager.downloadTasks];
+    self.downloadingArray = [NSMutableArray arrayWithArray:_manager.downloadingTasks];
     self.downloadedArray = [NSMutableArray arrayWithArray: [_filesServices findAll]];
 }
 
