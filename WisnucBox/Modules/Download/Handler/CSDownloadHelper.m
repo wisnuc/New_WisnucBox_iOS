@@ -10,6 +10,7 @@
 #import "CSFileUtil.h"
 #import "LocalDownloadViewController.h"
 #import "CSFilesOneDownloadManager.h"
+#import "CSOneDowloadTask.h"
 
 @interface CSDownloadHelper()<CSDownloadUIBindProtocol>
 {
@@ -66,7 +67,7 @@ __strong static id _sharedObject = nil;
                        IsDownloading:(HelperDownloadingEventHandler)isDownloading
                                begin:(CSDownloadBeginEventHandler)begin
                             progress:(CSDownloadingEventHandler)progress
-                            complete:(CSDownloadedEventHandler)complete{
+                            complete:(CSOneDownloadedEventHandler)complete{
     
     NSString *resource = [NSString stringWithFormat:@"/drives/%@/dirs/%@/entries/%@",rootUUID,uuid,dataModel.uuid];
     
@@ -111,7 +112,7 @@ __strong static id _sharedObject = nil;
     NSNumber* fileSize = [NSNumber numberWithLongLong:dataModel.size];
     [downloadFileModel setDownloadFileSize:fileSize];
     
-    CSDownloadTask* downloadTask = [[CSDownloadTask alloc] init];
+    CSOneDowloadTask* downloadTask = [[CSOneDowloadTask alloc] init];
     [downloadTask setDownloadTaskId:[NSString stringWithFormat:@"%d", _downdloadCount + 1]];
     [downloadTask setDownloadFileModel:downloadFileModel];
     [downloadTask setDownloadUIBinder:self];
@@ -206,14 +207,14 @@ __strong static id _sharedObject = nil;
 }
 
 
-- (void)startOneDownloadWithTask:(CSDownloadTask*)downloadTask begin:(CSDownloadBeginEventHandler)begin
+- (void)startOneDownloadWithTask:(CSOneDowloadTask*)downloadTask begin:(CSDownloadBeginEventHandler)begin
                         progress:(CSDownloadingEventHandler)progress
-                        complete:(CSDownloadedEventHandler)complete{
+                        complete:(CSOneDownloadedEventHandler)complete{
     
     
-    CSFilesOneDownloadManager *oneManager = [[CSFilesOneDownloadManager alloc]init];
+    CSFilesOneDownloadManager *oneManager = [CSFilesOneDownloadManager shareManager];
 
-    [oneManager beginDownloadTask:downloadTask begin:begin  progress: progress complete:^(CSDownloadTask *csdownloadTask, NSError *error) {
+    [oneManager beginDownloadTask:downloadTask begin:begin  progress: progress complete:^(CSOneDowloadTask *csdownloadTask, NSError *error) {
         [_oneDownloadArray removeAllObjects];
         if (error)
         {
@@ -223,14 +224,14 @@ __strong static id _sharedObject = nil;
                 NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
                 NSLog(@"下载失败,%@",serializedData);
             }
-            downloadTask.downloadStatus = CSDownloadStatusFailure;
+//            downloadTask.downloadStatus = CSDownloadStatusFailure;
             [self updateUIWithTask:downloadTask];
             complete(csdownloadTask,error);
         }
         else
         {
             NSLog(@"下载成功");
-            downloadTask.downloadStatus = CSDownloadStatusSuccess;
+//            downloadTask.downloadStatus = CSDownloadStatusSuccess;
             [self updateUIWithTask:downloadTask];
             complete(csdownloadTask,nil);
         }
@@ -269,13 +270,13 @@ __strong static id _sharedObject = nil;
                                       [self updateUIWithTask:downloadTask];
                                       NSLog(@"准备开始下载...");
                                   }
-                               progress:^(long long totalBytesRead, long long totalBytesExpectedToRead, float progress) {
-                                   downloadTask.totalBytesRead = totalBytesRead;
-                                   downloadTask.totalBytesExpectedToRead = totalBytesExpectedToRead;
-                                   downloadTask.progress = progress;
+                               progress:^(NSProgress *downloadProgress) {
+//                                   downloadTask.totalBytesRead = totalBytesRead;
+//                                   downloadTask.totalBytesExpectedToRead = totalBytesExpectedToRead;
+//                                   downloadTask.progress = downloadProgress;
                                    //                                  dispatch_async(dispatch_get_main_queue(), ^{
                                    if (downloadTask.progressBlock) {
-                                       downloadTask.progressBlock(totalBytesRead, totalBytesExpectedToRead, progress);
+                                       downloadTask.progressBlock(downloadProgress);
                                    }
                                    //                                  });
                                    

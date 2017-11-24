@@ -72,6 +72,7 @@
 		1F922E5C1FC80F3400A7614B /* lauchScreen@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E591FC80F3300A7614B /* lauchScreen@3x.png */; };
 		1F922E631FC8438C00A7614B /* FirstFilesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F922E611FC8438C00A7614B /* FirstFilesTableViewCell.m */; };
 		1F922E641FC8438C00A7614B /* FirstFilesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E621FC8438C00A7614B /* FirstFilesTableViewCell.xib */; };
+		1F922E671FC8706200A7614B /* CSOneDowloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F922E661FC8706200A7614B /* CSOneDowloadTask.m */; };
 		1FB0900B1FBC519A0020B304 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB090091FBC51990020B304 /* NSString+Extension.m */; };
 		1FC2AFEF1FC5299300E8C9DE /* WBCloudLoginAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2AFEE1FC5299300E8C9DE /* WBCloudLoginAPI.m */; };
 		1FC2AFF21FC52B4800E8C9DE /* CloudLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2AFF11FC52B4800E8C9DE /* CloudLoginModel.m */; };
@@ -684,6 +685,8 @@
 		1F922E601FC8438C00A7614B /* FirstFilesTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstFilesTableViewCell.h; sourceTree = "<group>"; };
 		1F922E611FC8438C00A7614B /* FirstFilesTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstFilesTableViewCell.m; sourceTree = "<group>"; };
 		1F922E621FC8438C00A7614B /* FirstFilesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FirstFilesTableViewCell.xib; sourceTree = "<group>"; };
+		1F922E651FC8706200A7614B /* CSOneDowloadTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSOneDowloadTask.h; sourceTree = "<group>"; };
+		1F922E661FC8706200A7614B /* CSOneDowloadTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSOneDowloadTask.m; sourceTree = "<group>"; };
 		1FB090091FBC51990020B304 /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
 		1FB0900A1FBC51990020B304 /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
 		1FC2AFED1FC5299300E8C9DE /* WBCloudLoginAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBCloudLoginAPI.h; sourceTree = "<group>"; };
@@ -1358,6 +1361,8 @@
 			children = (
 				1F1ABA021FB97A0D006EB1FC /* CSDownloadTask.h */,
 				1F1ABA031FB97A0D006EB1FC /* CSDownloadTask.m */,
+				1F922E651FC8706200A7614B /* CSOneDowloadTask.h */,
+				1F922E661FC8706200A7614B /* CSOneDowloadTask.m */,
 			);
 			path = Task;
 			sourceTree = "<group>";
@@ -3367,6 +3372,7 @@
 				1FFEADB51FB1594900CD3068 /* CSDownloadModel.m in Sources */,
 				F6830EC51FB2FD1D005AC578 /* FMUsersLoginMangeCell.m in Sources */,
 				1F1AB9EC1FB968CA006EB1FC /* FLFilesCell.m in Sources */,
+				1F922E671FC8706200A7614B /* CSOneDowloadTask.m in Sources */,
 				1F4D75C61FAC5EB500E6516C /* GCDAsyncUdpSocket.m in Sources */,
 				F6830F011FB2FF8C005AC578 /* BaseTableViewCell.m in Sources */,
 				1FC2AFEF1FC5299300E8C9DE /* WBCloudLoginAPI.m in Sources */,

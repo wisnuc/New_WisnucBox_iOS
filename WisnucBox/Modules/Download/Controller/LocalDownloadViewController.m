@@ -163,8 +163,10 @@ UIDocumentInteractionControllerDelegate
         CSDownloadModel* downloadFileModel = [downloadTask getDownloadFileModel];
         cell.fileNameLabel.text = downloadFileModel.downloadFileName;
         cell.progressLabel.text = @"等待下载";
-        downloadTask.progressBlock = ^(long long totalBytesRead, long long totalBytesExpectedToRead, float progress) {
-            NSString *progressString = [NSString stringWithFormat:@"%@/%@",[CSFileUtil calculateUnit:totalBytesRead],[CSFileUtil calculateUnit:totalBytesExpectedToRead]];
+        downloadTask.progressBlock = ^(NSProgress *downloadProgress) {
+            NSString *progressString = [NSString stringWithFormat:@"%@/%@",[CSFileUtil calculateUnit:downloadProgress.completedUnitCount],[CSFileUtil calculateUnit:downloadProgress.totalUnitCount]];
+        
+//            NSString *progressString = [NSString stringWithFormat:@"%@/%@",[CSFileUtil calculateUnit:downloadProgress.],[CSFileUtil calculateUnit:totalBytesExpectedToRead]];
               if ([NSThread isMainThread] ) {
                      cell.progressLabel.text = progressString;
               }else{

@@ -15,6 +15,7 @@
 - (void)beginDownloadTask:(CSDownloadTask*)downloadTask
                     begin:(CSDownloadBeginEventHandler)begin
                  progress:(CSDownloadingEventHandler)progress
-                 complete:(CSDownloadedEventHandler)complete;
+                 complete:(CSOneDownloadedEventHandler)complete;
 - (void)cancelOneDownloadTaskWith:(CSDownloadTask*)downloadTask;
+- (void)cancelAllDownloadTask;
 @end

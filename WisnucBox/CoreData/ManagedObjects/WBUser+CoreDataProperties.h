@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSString *userHome;
 @property (nullable, nonatomic, copy) NSString *backUpBaseDir;
 @property (nullable, nonatomic, copy) NSString *backUpDir;
+@property (nullable, nonatomic, copy) NSString *uploadFileDir;
 @property (nullable, nonatomic, copy) NSString *guid;
 @property (nonatomic) BOOL isFirstUser;
 @property (nonatomic) BOOL isAdmin;
