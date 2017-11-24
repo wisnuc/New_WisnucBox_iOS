@@ -64,12 +64,18 @@ FilesHelperOpenFilesDelegate
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    if (self.cellStatus == FLFliesCellStatusCanChoose) {
+    if (self.cellStatus != FLFliesCellStatusCanChoose) {
         [self actionForNormalStatus];
     }
-    if (!_chooseHeadView.hidden) {
-        [_chooseHeadView setHidden:YES];
+    if (!self.chooseHeadView.hidden) {
+        [self.chooseHeadView setHidden:YES];
     }
+    [self.chooseHeadView removeFromSuperview];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController.view addSubview:self.chooseHeadView];
 }
 
 - (void)dealloc{
@@ -88,7 +94,7 @@ FilesHelperOpenFilesDelegate
     [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:negativeSpacer,rightItem,nil];
-    [self.navigationController.view addSubview:self.chooseHeadView];
+ 
 }
 
 - (void)initView{
@@ -178,9 +184,9 @@ FilesHelperOpenFilesDelegate
     }
     [self.tableView.mj_header setHidden:YES];
     [UIView animateWithDuration:0.5 animations:^{
-        _chooseHeadView.transform = CGAffineTransformTranslate(_chooseHeadView.transform, 0, 64);
+        self.chooseHeadView.transform = CGAffineTransformTranslate(self.chooseHeadView.transform, 0, 64);
     }];
-    [_chooseHeadView setHidden:NO];
+    [self.chooseHeadView setHidden:NO];
     _addButton.hidden = NO;
     self.tabBarController.tabBar.hidden = YES;
     self.cellStatus = FLFliesCellStatusCanChoose;
@@ -196,9 +202,9 @@ FilesHelperOpenFilesDelegate
     
     [self.tableView.mj_header setHidden:NO];
     [UIView animateWithDuration:0.5 animations:^{
-        _chooseHeadView.transform = CGAffineTransformTranslate(_chooseHeadView.transform, 0, -64);
+        self.chooseHeadView.transform = CGAffineTransformTranslate(self.chooseHeadView.transform, 0, -64);
     }];
-    [_chooseHeadView setHidden:YES];
+    [self.chooseHeadView setHidden:YES];
     _addButton.hidden = YES;
 //    [self.rdv_tabBarController setTabBarHidden:NO animated:YES];
     self.cellStatus = FLFliesCellStatusNormal;
@@ -208,10 +214,23 @@ FilesHelperOpenFilesDelegate
 
 - (void)handlerStatusChangeNotify:(NSNotification *)notify{
     if (![notify.object boolValue]) {
-        [self actionForNormalStatus];
+        if ([NSThread isMainThread] ) {
+           [self actionForNormalStatus];
+        }else{
+            dispatch_async(dispatch_get_main_queue(), ^{
+               [self actionForNormalStatus];
+            });
+        }
+       
     }else{
         if (self.cellStatus != FLFliesCellStatusCanChoose) {
-            [self actionForChooseStatus];
+            if ([NSThread isMainThread] ) {
+                  [self actionForChooseStatus];
+            }else{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self actionForChooseStatus];;
+                });
+            }
         }
     }
 }

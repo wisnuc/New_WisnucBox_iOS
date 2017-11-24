@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>WISNUC</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -86,6 +88,14 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>WISNUC 需要定位保持活跃，用以上传你的照片</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>WISNUC 需要定位保持活跃，用以上传你的照片</string>
+	<key>NSLocationUsageDescription</key>
+	<string>WISNUC 需要定位保持活跃，用以上传你的照片</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>WISNUC 需要定位保持活跃，用以上传你的照片</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>WISNUC 需要访问你的相册用以备份</string>
 	<key>UIBackgroundModes</key>
@@ -113,13 +123,5 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>WISNUC 需要定位保持活跃，用以上传你的照片</string>
-	<key>NSLocationUsageDescription</key>
-	<string>WISNUC 需要定位保持活跃，用以上传你的照片</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>WISNUC 需要定位保持活跃，用以上传你的照片</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>WISNUC 需要定位保持活跃，用以上传你的照片</string>
 </dict>
 </plist>
