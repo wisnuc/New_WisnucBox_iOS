@@ -195,6 +195,10 @@
 }
 
 - (void)tapHeader:(id)sender {
+    if(WB_IS_DEBUG) {
+        NSString * s = [NSString stringWithFormat:@"当前已上传：%ld张, 错误：%ld 张， 正在上传：%ld 张， 正在等待：%ld 张", WB_PhotoUploadManager.uploadedQueue.count, WB_PhotoUploadManager.uploadErrorQueue.count, WB_PhotoUploadManager.uploadingQueue.count, WB_PhotoUploadManager.uploadPaddingQueue.count];
+        [SXLoadingView showAlertHUD:s duration:2];
+    }
 //    if(self.delegate){
 //        [self.delegate LeftMenuViewClick:10 andTitle:@"个人信息"];
 //    }

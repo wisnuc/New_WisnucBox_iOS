@@ -410,6 +410,7 @@
     
     layout.itemSize = CGSizeMake((kViewWidth- 2*(_currentScale-1))/_currentScale, (kViewWidth- 2*(_currentScale-1))/_currentScale);
     [self.collectionView setCollectionViewLayout:layout animated:YES];
+//    [self.collectionView reloadData];
 }
 
 
@@ -565,10 +566,16 @@
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(_isSelectMode) return;
-    JYAsset *model = ((NSMutableArray *)self.arrDataSources[indexPath.section])[indexPath.row];
-    UIViewController *vc = [self getMatchVCWithModel:model];
-    if (vc) [self presentViewController:vc animated:YES completion:nil];
+    if(_isSelectMode) {
+        JYCollectionViewCell * cell = (JYCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+        if(cell){
+            [cell btnSelectClick:nil];
+        }
+    }else{
+        JYAsset *model = ((NSMutableArray *)self.arrDataSources[indexPath.section])[indexPath.row];
+        UIViewController *vc = [self getMatchVCWithModel:model];
+        if (vc) [self presentViewController:vc animated:YES completion:nil];
+    }
 }
 
 - (UIViewController *)getMatchVCWithModel:(JYAsset *)model
@@ -886,26 +893,6 @@ bool isDecelerating = NO;
             operation = nil;
         }];
         }
-//        [FMGetImage getFullScreenImageWithPhotoHash:[item getPhotoHash]
-//                                   andCompleteBlock:^(UIImage *image, NSString *tag)
-//         {
-//             if (image) {
-//                 if(!share){
-//                     [[PhotoManager shareManager]saveImage:image andCompleteBlock:^(BOOL isSuccess) {
-//                         dispatch_async(dispatch_get_main_queue(), ^{
-//                             block(isSuccess,image);
-//                         });
-//                     }];
-//                 }else{
-//                     dispatch_async(dispatch_get_main_queue(), ^{
-//                         block(YES,image);
-//                     });
-//                 }
-//             }else
-//                 dispatch_async(dispatch_get_main_queue(), ^{
-//                     block(NO,nil);
-//                 });
-//         }];
     }else{
         NSLog(@"%@",item.asset) ;
         if (item.asset) {

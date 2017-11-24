@@ -45,7 +45,9 @@
     id _currentModelForRecord;
 }
 
-@property (nonatomic)UILabel *titleLabel;
+@property (nonatomic) UILabel *titleLabel;
+
+@property (nonatomic) UIView *navView;
 
 @end
 
@@ -78,8 +80,6 @@
     _isFirstAppear = YES;
     _currentPage = self.selectIndex+1;
     _indexBeforeRotation = self.selectIndex;
-//    self.title = [NSString stringWithFormat:@"%ld/%ld", _currentPage, self.models.count];
-
     [self initCollectionView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationChanged:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
     _panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)];
@@ -119,19 +119,19 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    _layout.minimumLineSpacing = kItemMargin;
-    _layout.sectionInset = UIEdgeInsetsMake(0, kItemMargin/2, 0, kItemMargin/2);
-    _layout.itemSize = self.view.bounds.size;
-    [_collectionView setCollectionViewLayout:_layout];
+//    _layout.minimumLineSpacing = kItemMargin;
+//    _layout.sectionInset = UIEdgeInsetsMake(0, kItemMargin/2, 0, kItemMargin/2);
+//    _layout.itemSize = self.view.bounds.size;
+//    [_collectionView setCollectionViewLayout:_layout];
+//
+//    _collectionView.frame = CGRectMake(-kItemMargin/2, 0, kViewWidth+kItemMargin, kViewHeight);
+//    // TODO: rotation
+//    [_collectionView setContentOffset:CGPointMake((kViewWidth+kItemMargin)*_indexBeforeRotation, 0)];
     
-    _collectionView.frame = CGRectMake(-kItemMargin/2, 0, kViewWidth+kItemMargin, kViewHeight);
-    
-    [_collectionView setContentOffset:CGPointMake((kViewWidth+kItemMargin)*_indexBeforeRotation, 0)];
-    
-    CGRect frame = _hideNavBar?CGRectMake(0, kViewHeight, kViewWidth, 44):CGRectMake(0, kViewHeight-44, kViewWidth, 44);
-    _bottomView.frame = frame;
-    _btnEdit.frame = CGRectMake(kViewWidth/2-30, 7, 60, 30);
-    _btnDone.frame = CGRectMake(kViewWidth - 82, 7, 70, 30);
+//    CGRect frame = _hideNavBar?CGRectMake(0, kViewHeight, kViewWidth, 44):CGRectMake(0, kViewHeight-44, kViewWidth, 44);
+//    _bottomView.frame = frame;
+//    _btnEdit.frame = CGRectMake(kViewWidth/2-30, 7, 60, 30);
+//    _btnDone.frame = CGRectMake(kViewWidth - 82, 7, 70, 30);
 }
 
 #pragma mark - panGesture Handler
@@ -240,37 +240,64 @@
 
 - (void)initNavBtns
 {
-//    UIView *naviView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 64)];
-//    naviView.backgroundColor = [UIColor blackColor];
+//    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
 //
-//    UIButton *leftNaviButton = [[UIButton alloc]init];
-//    [leftNaviButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-//    [leftNaviButton addTarget:self action:@selector(doneButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-//
-//    [naviView addSubview:leftNaviButton];
-//
-//    [leftNaviButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerY.equalTo(naviView.mas_centerY);
-//        make.left.equalTo(naviView.mas_left).offset(16);
-//        make.size.mas_equalTo(CGSizeMake(40, 20));
-//    }];
-//
-//    _titleLabel = [[UILabel alloc]init];
-//    _titleLabel.textColor = [UIColor whiteColor];
-//    _titleLabel.text =  [NSString stringWithFormat:@"%ld/%ld", _currentPage, self.models.count];
-//    _titleLabel.textAlignment = NSTextAlignmentCenter;
-//    [naviView addSubview:_titleLabel];
-//
-//
-//    [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.center.equalTo(naviView);
-//        make.left.equalTo(leftNaviButton.mas_right).offset(8);
-//        make.right.equalTo(naviView).offset(-56);
-//
-//    }];
-//    
-//
-//      [self.view addSubview:naviView];
+//    UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+//    effectView.frame = CGRectMake(0, 0, __kWidth, 64);
+    UIView *naviView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 64)];
+    naviView.backgroundColor = [UIColor clearColor];
+    
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    
+    UIVisualEffectView * btnEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+//    effectView.frame = CGRectMake(0, 0, __kWidth, 64);
+
+    UIButton *leftNaviButton = [[UIButton alloc]init];
+    [leftNaviButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    [leftNaviButton addTarget:self action:@selector(doneButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+
+    [naviView addSubview:btnEffectView];
+    [naviView addSubview:leftNaviButton];
+    
+    [btnEffectView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(leftNaviButton);
+        make.size.mas_equalTo(CGSizeMake(30, 30));
+    }];
+    btnEffectView.layer.cornerRadius = 15;
+    btnEffectView.layer.masksToBounds = YES;
+
+    [leftNaviButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(naviView.mas_centerY).offset(10);
+        make.left.equalTo(naviView.mas_left).offset(16);
+        make.size.mas_equalTo(CGSizeMake(40, 20));
+    }];
+
+    _titleLabel = [[UILabel alloc]init];
+    _titleLabel.textColor = [UIColor whiteColor];
+    _titleLabel.text =  [NSString stringWithFormat:@"%ld/%ld", _currentPage, self.models.count];
+    _titleLabel.textAlignment = NSTextAlignmentCenter;
+     UIVisualEffectView * titleEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    [naviView addSubview:titleEffectView];
+    [naviView addSubview:_titleLabel];
+
+    [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(naviView.mas_centerX);
+        make.centerY.equalTo(naviView.mas_centerY).offset(10);
+    }];
+    
+    [titleEffectView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(_titleLabel);
+        make.height.equalTo(_titleLabel.mas_height).offset(5);
+        make.width.equalTo(_titleLabel.mas_width).offset(40);
+    }];
+    
+    self.navView = naviView;
+
+    [self.view addSubview:naviView];
+}
+
+- (void)doneButtonPressed:(UIButton *)btn {
+    [self performDismissAnimation];
 }
 
 #pragma mark - 初始化CollectionView
@@ -285,6 +312,14 @@
     _collectionView.delegate = self;
     _collectionView.pagingEnabled = YES;
     _collectionView.backgroundColor = [UIColor clearColor];
+    _layout.minimumLineSpacing = kItemMargin;
+    _layout.sectionInset = UIEdgeInsetsMake(0, kItemMargin/2, 0, kItemMargin/2);
+    _layout.itemSize = self.view.bounds.size;
+    [_collectionView setCollectionViewLayout:_layout];
+    
+    _collectionView.frame = CGRectMake(-kItemMargin/2, 0, kViewWidth+kItemMargin, kViewHeight);
+    // TODO: rotation
+    [_collectionView setContentOffset:CGPointMake((kViewWidth+kItemMargin)*_indexBeforeRotation, 0)];
     [self.view addSubview:_collectionView];
 }
 
@@ -293,17 +328,23 @@
     
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return _hideNavBar;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 
 - (void)handlerSingleTap
 {
     _hideNavBar = !_hideNavBar;
     
-    [self.navigationController setNavigationBarHidden:_hideNavBar animated:YES];
-    [[UIApplication sharedApplication] setStatusBarHidden:_hideNavBar withAnimation:UIStatusBarAnimationSlide];
+    [self setNeedsStatusBarAppearanceUpdate];
     
-    CGRect frame = _hideNavBar?CGRectMake(0, kViewHeight, kViewWidth, 44):CGRectMake(0, kViewHeight-44, kViewWidth, 44);
+    CGRect frame = _hideNavBar?CGRectMake(0, -64, kViewWidth, 64):CGRectMake(0, 0, kViewWidth, 64);
     [UIView animateWithDuration:0.3 animations:^{
-        _bottomView.frame = frame;
+        _navView.frame = frame;
     }];
 }
 
@@ -358,14 +399,10 @@
         if(self.delegate && !_isFirstAppear)
            [self.delegate photoBrowser:self scrollToIndexPath:m.indexPath];
         //!!!!!: change Title
-        
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//
-//        });
-//
+        _titleLabel.text = [NSString stringWithFormat:@"%ld/%ld", _currentPage, self.models.count];
         if (m.type == JYAssetTypeGIF ||
             m.type == JYAssetTypeLivePhoto ||
-            m.type == JYAssetTypeVideo) {
+            m.type == JYAssetTypeVideo || m.type == JYAssetTypeNetVideo) {
             JYBigImgCell *cell = (JYBigImgCell *)[_collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:_currentPage-1 inSection:0]];
             [cell pausePlay];
         }
@@ -374,9 +411,7 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-//    dispatch_async(dispatch_get_main_queue(), ^{
-    
-//    });
+
     [self reloadCurrentCell];
 }
 
@@ -388,7 +423,6 @@
         JYBigImgCell *cell = (JYBigImgCell *)[_collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:_currentPage-1 inSection:0]];
         [cell reloadGifLivePhoto];
     }
-//     _titleLabel.text = [NSString stringWithFormat:@"%ld/%ld", _currentPage, self.models.count];
 }
 
 - (JYAsset *)getCurrentPageModel
@@ -396,7 +430,7 @@
     CGPoint offset = _collectionView.contentOffset;
     
     CGFloat page = offset.x/(kViewWidth+kItemMargin);
-    if (ceilf(page) >= self.models.count) {
+    if (ceilf(page) >= self.models.count || page < 0) {
         return nil;
     }
     NSString *str = [NSString stringWithFormat:@"%.0f", page];

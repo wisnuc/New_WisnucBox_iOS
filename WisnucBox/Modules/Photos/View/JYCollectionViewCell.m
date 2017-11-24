@@ -27,8 +27,8 @@
 
 -(void)prepareForReuse{
     [super prepareForReuse];
-    self.imageView.backgroundColor =UICOLOR_RGB(0xf5f5f5);
-    self.imageView.image = [UIImage imageWithColor:UICOLOR_RGB(0xf5f5f5)];
+    self.imageView.backgroundColor = UICOLOR_RGB(0xf5f5f5);
+    self.imageView.image = [UIImage imageNamed:@"F5F5F5.png"];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -55,6 +55,13 @@
         make.top.mas_equalTo(self.contentView.mas_top);
         make.bottom.mas_equalTo(self.contentView.mas_bottom);
     }];
+    _btnSelect.frame = CGRectMake(GetViewWidth(self.contentView)-26, 5, 23, 23);
+    self.contentView.backgroundColor = UICOLOR_RGB(0xf5f5f5);
+//    [self.btnSelect mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(self.imageView.mas_right);
+//        make.top.equalTo(self.imageView.mas_top);
+//        make.size.mas_equalTo(CGSizeMake(23, 23));
+//    }];
 //    self.imageView.frame = self.bounds;
 //    self.btnSelect.frame = CGRectMake(GetViewWidth(self.contentView)-26, 5, 23, 23);
 //    if (self.showMask) {
@@ -73,6 +80,7 @@
         _imageView = [[UIImageView alloc] init];
         _imageView.contentMode = UIViewContentModeScaleAspectFill;
         _imageView.clipsToBounds = YES;
+        _imageView.image = [UIImage imageNamed:@"F5F5F5.png"];
         self.contentView.clipsToBounds = YES;
         [self.contentView addSubview:_imageView];
         
@@ -226,6 +234,7 @@
     }else{
         self.imageView.transform = CGAffineTransformIdentity;
     }
+    
 }
 
 - (void)btnSelectClick:(UIButton *)sender {

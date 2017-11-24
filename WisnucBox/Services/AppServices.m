@@ -432,6 +432,7 @@
     NSString * _token;
     NSInteger _lastNotifyCount;
     BOOL _shouldNotify;
+    BOOL _needRetry;
 }
 
 @property (nonatomic, readwrite) NSMutableArray<JYAsset *> *hashwaitingQueue;
@@ -471,6 +472,7 @@
         _isdestroing = NO;
         _shouldUpload = NO;
         _shouldNotify = NO;
+        _needRetry = YES;
         _lastNotifyCount = 0;
         _hashLimitCount = 4;
         _uploadLimitCount = 4;
@@ -581,6 +583,7 @@
     dispatch_async(self.managerQueue, ^{
         if(asset) {
             _shouldNotify = YES;
+            _needRetry = YES;
             [self.hashwaitingQueue addObject:asset];
             [self schedule];
         }
@@ -591,6 +594,7 @@
     dispatch_async(self.managerQueue, ^{
         if(assets.count){
             _shouldNotify = YES;
+            _needRetry = YES;
             [self.hashwaitingQueue addObjectsFromArray:assets];
             [[NSNotificationCenter defaultCenter] postNotificationName:WBBackupCountChangeNotify object:nil];
             [self schedule];
@@ -673,6 +677,7 @@
 - (void)startWithLocalAssets:(NSArray<JYAsset *> *)localAssets andNetAssets:(NSArray<EntriesModel *> *)netAssets {
     dispatch_async(self.managerQueue, ^{
         _shouldNotify = YES;
+        _needRetry = YES;
         [self.hashwaitingQueue addObjectsFromArray:localAssets];
         NSComparator cmptr = ^(JYAsset * photo1, JYAsset * photo2){
             NSDate * tempDate = [[photo1 asset].creationDate laterDate:[photo2 asset].creationDate];
@@ -723,6 +728,7 @@
         }];
         [self.uploadErrorQueue removeAllObjects]; //clean error queue
         self.shouldUpload = YES;
+        _needRetry = YES;
         [self schedule];
     });
 }
@@ -753,7 +759,18 @@
         }
         NSLog(@"hash calculate finish. uploadPaddingQueue:%lu", (unsigned long)self.uploadPaddingQueue.count);
     }
-    if(self.hashwaitingQueue.count == 0 && self.hashWorkingQueue.count == 0 && self.uploadPaddingQueue.count == 0 && self.uploadingQueue.count == 0) NSLog(@"backup asset finish ----=======>>>><<<<<<<<====-----  errorCount:%lu  finishedCount:%lu", (unsigned long)_uploadErrorQueue.count, (unsigned long)_uploadedQueue.count);
+    if(self.hashwaitingQueue.count == 0 && self.hashWorkingQueue.count == 0 && self.uploadPaddingQueue.count == 0 && self.uploadingQueue.count == 0){ NSLog(@"backup asset finish ----=======>>>><<<<<<<<====-----  errorCount:%lu  finishedCount:%lu", (unsigned long)_uploadErrorQueue.count, (unsigned long)_uploadedQueue.count);
+        dispatch_async(self.managerQueue, ^{
+            if(self.uploadErrorQueue.count) { // retry
+                _needRetry = NO;
+                [self.uploadErrorQueue enumerateObjectsUsingBlock:^(WBUploadModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    [self.uploadPaddingQueue addObject:obj.asset];
+                }];
+                [self.uploadErrorQueue removeAllObjects];
+                [self schedule];
+            }
+        });
+    }
     while(self.hashWorkingQueue.count < self.hashLimitCount && self.hashwaitingQueue.count > 0) {
         JYAsset * asset = [self.hashwaitingQueue lastObject];
         [self.hashwaitingQueue removeLastObject];
@@ -790,7 +807,9 @@
             });
         }else {
             [self.uploadingQueue addObject:model];
-            [self scheduleForUpload:model andUseTimeStamp:NO];
+            dispatch_async(self.workingQueue, ^{
+                [self scheduleForUpload:model andUseTimeStamp:NO];
+            });
         }
     }
 }
@@ -807,9 +826,11 @@
                     [weakSelf stop];   // stop
                     // need rebuild
                     [weakSelf destroy];
+                    NSLog(@"文件上传目录丢失 开始重建");
                     [weak_AppService rebulidUploadManager];
                 }else if (error.wbCode == WBUploadFileExist) {
                     // rename then retry
+                    NSLog(@"文件 EExist,  重命名 再次尝试！");
                     [weakSelf scheduleForUpload:model andUseTimeStamp:YES];
                 }else {
                     if(!model.isRemoved)
@@ -889,7 +910,9 @@ static NSArray * invaildChars;
             }
         }
         fileName = tempFileName;
-        if(yesOrNo) fileName = [NSString stringWithFormat:@"%@_%f", fileName, [[NSDate date] timeIntervalSince1970]];
+        if(yesOrNo) {
+            fileName = [NSString stringWithFormat:@"%@_%f", fileName, [[NSDate date] timeIntervalSince1970]];
+        }
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         manager.requestSerializer = [AFHTTPRequestSerializer serializer];
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
@@ -940,17 +963,19 @@ static NSArray * invaildChars;
             if(errorData.length >0 && ((NSHTTPURLResponse *)task.response).statusCode == 403){
                 NSMutableArray *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
                 NSLog(@"Upload Failure ---> :serializedData %@", serializedData);
-                @try {
-                    NSDictionary *errorRootDic = serializedData[0];
-                    NSDictionary *errorDic = errorRootDic[@"error"];
-                    NSString *code = errorDic[@"code"];
-                    NSInteger status = [errorDic[@"status"] integerValue];
-                    if ([code isEqualToString:@"EEXIST"])
-                        error.wbCode = WBUploadFileExist;
-                    if(status == 404)
-                        error.wbCode = WBUploadDirNotFound;
-                } @catch (NSException *exception) {
-                    NSLog(@"%@", exception);
+                if([serializedData isKindOfClass:[NSArray class]]) {
+                    @try {
+                        NSDictionary *errorRootDic = serializedData[0];
+                        NSDictionary *errorDic = errorRootDic[@"error"];
+                        NSString *code = errorDic[@"code"];
+                        NSInteger status = [errorDic[@"status"] integerValue];
+                        if ([code isEqualToString:@"EEXIST"])
+                            error.wbCode = WBUploadFileExist;
+                        if(status == 404)
+                            error.wbCode = WBUploadDirNotFound;
+                    } @catch (NSException *exception) {
+                        NSLog(@"%@", exception);
+                    }
                 }
             }
             [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil]; // remove tmpFile
