@@ -63,7 +63,17 @@
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self.cyl_tabBarController.tabBar setHidden:NO];
-//    [UIApplication sharedApplication].statusBarHidden = NO;
+    [self setNeedsStatusBarAppearanceUpdate];
+}
+
+
+
+- (BOOL)prefersStatusBarHidden {
+    return NO;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleDefault;
 }
 
 -(void)showLeftMenu{

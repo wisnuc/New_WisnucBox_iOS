@@ -206,7 +206,7 @@
         [self.imageGifView pauseGif];
     } else if (self.model.type == JYAssetTypeLivePhoto) {
         [self.livePhotoView stopPlayLivePhoto];
-    } else if (self.model.type == JYAssetTypeVideo) {
+    } else if (self.model.type == JYAssetTypeVideo || self.model.type == JYAssetTypeNetVideo) {
         [self.videoView stopPlayVideo];
     }
 }
@@ -760,7 +760,7 @@
 {
     if (!_playBtn) {
         _playBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_playBtn setBackgroundImage:[UIImage imageNamed:@"share"] forState:UIControlStateNormal];
+        [_playBtn setBackgroundImage:[UIImage imageNamed:@"play2"] forState:UIControlStateNormal];
         _playBtn.frame = CGRectMake(0, 0, 80, 80);
         _playBtn.center = self.center;
         [_playBtn addTarget:self action:@selector(playBtnClick) forControlEvents:UIControlEventTouchUpInside];
@@ -840,6 +840,7 @@
     }
     
     self.playBtn.enabled = YES;
+    self.playBtn.hidden = NO;
     self.icloudLoadFailedLabel.hidden = YES;
     self.imageView.hidden = NO;
     
@@ -874,14 +875,18 @@
     self.imageView.image = nil;
     
     self.playBtn.enabled = YES;
+    self.playBtn.hidden = NO;
     self.icloudLoadFailedLabel.hidden = YES;
     self.imageView.hidden = NO;
+    
+    if(WB_UserService.currentUser.isCloudLogin) return [SXLoadingView showAlertHUD:@"外网环境，暂不支持播放" duration:1];
     
     [self.indicator startAnimating];
     
     jy_weakify(self);
     [[FMMediaRamdomKeyAPI apiWithHash:[(WBAsset *)self.jyAsset fmhash]] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@media/random/%@", [JYRequestConfig sharedConfig].baseURL, request.responseJsonObject[@"key"]]];
+        if(!weakSelf) return;
         dispatch_async(dispatch_get_main_queue(), ^{
             jy_strongify(weakSelf);
             if (!request.responseJsonObject) {
@@ -949,8 +954,10 @@
                     [[NSNotificationCenter defaultCenter] addObserver:strongSelf selector:@selector(playFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:player.currentItem];
                 });
             }];
-        }else
+        }else {
+            if(WB_UserService.currentUser.isCloudLogin) return [SXLoadingView showAlertHUD:@"外网环境，暂不支持播放" duration:1];
             return;
+        }
     } else {
         [self switchVideoStatus];
     }

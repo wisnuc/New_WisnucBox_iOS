@@ -32,6 +32,10 @@
     return self;
 }
 
+- (NSString *)defaultToken {
+    return self.currentUser ? (self.currentUser.isCloudLogin ? self.currentUser.cloudToken : self.currentUser.localToken) : nil;
+}
+
 // load Latest User Configuation
 - (void)loadData {
     NSLog(@"%@",kUD_ObjectForKey(WBCURRENTUSER_UUID));
@@ -44,7 +48,7 @@
             return ;
         }
         self.isUserLogin = true;
-        self.defaultToken = self.currentUser.localToken;
+//        self.defaultToken = selgself.currentUser.localToken;
     }else{
         self.currentUser = nil;
         self.isUserLogin = false;

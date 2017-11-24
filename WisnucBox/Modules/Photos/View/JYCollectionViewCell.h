@@ -36,4 +36,5 @@
 
 - (void)setIsSelect:(BOOL)isSelect animation:(BOOL)animat;
 
+- (void)btnSelectClick:(UIButton *)sender;
 @end

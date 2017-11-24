@@ -474,6 +474,7 @@ WXApiDelegate
     @weaky(self)
     _token = model.data.token;
     _avatarUrl = model.data.user.avatarUrl;
+    [SXLoadingView showProgressHUD:@"正在拉取列表..."];
     [[WBCloudGetStationsAPI apiWithGuid:model.data.user.userId andToken:model.data.token]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         //        NSLog(@"%@",request.responseJsonObject);
         NSDictionary *rootDic = request.responseJsonObject;
@@ -484,12 +485,14 @@ WXApiDelegate
             [SXLoadingView showProgressHUDText:@"您的微信尚未绑定任何设备" duration:1];
             
         }else{
+            [SXLoadingView updateProgressHUD:@"正在获取用户信息"];
             [dataArray enumerateObjectsUsingBlock:^(NSDictionary *dic, NSUInteger idx, BOOL * _Nonnull stop) {
                 NSNumber * isOnlineNumber = dic[@"isOnline"];
                 BOOL isOnline =  [isOnlineNumber boolValue];
                 if (isOnline) {
                     [onlineArray addObject:dic];
                     [weak_self getUsersWithStationDic:dic Model:model completeBlock:^(NSMutableDictionary *mutableDic) {
+                        [SXLoadingView hideProgressHUD];
                         _alertView.hidden = NO;
                     }];
                 }
@@ -501,12 +504,14 @@ WXApiDelegate
         }
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
+        [SXLoadingView hideProgressHUD];
     }];
 }
 
 - (void)getUsersWithStationDic:(NSDictionary *)stationDic Model:(CloudLoginModel *)model completeBlock:(void(^)(NSMutableDictionary *mutableDic))block{
      NSString *stationId = stationDic[@"id"];
     FMGetUsersAPI *api = [FMGetUsersAPI apiWithStationId:stationId Token:model.data.token];
+    
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
 //        NSLog(@"%@",request.responseJsonObject);
         NSDictionary *rootDic = request.responseJsonObject;
@@ -531,6 +536,7 @@ WXApiDelegate
 
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
+        [SXLoadingView hideProgressHUD];
     }];
 }
 
