@@ -518,21 +518,17 @@
         _lastNotifyCount = 0;
         _hashLimitCount = 4;
         _uploadLimitCount = 4;
-        _locationManager = [[CLLocationManager alloc]init];
-        self.locationManager.delegate = self;
-        
-        [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
-        
-        if ([[UIDevice currentDevice].systemVersion floatValue] > 8)
-        {
-            [self.locationManager requestAlwaysAuthorization];
-        }
-        
-        if ([[UIDevice currentDevice].systemVersion floatValue] > 9)
-        {
-            [self.locationManager setAllowsBackgroundLocationUpdates:YES];
-        }
-        [self.locationManager startUpdatingLocation];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            _locationManager = [[CLLocationManager alloc]init];
+            self.locationManager.delegate = self;
+            [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+            if ([[UIDevice currentDevice].systemVersion floatValue] > 8)
+                [self.locationManager requestAlwaysAuthorization];
+            
+            if ([[UIDevice currentDevice].systemVersion floatValue] > 9)
+                [self.locationManager setAllowsBackgroundLocationUpdates:YES];
+            [self.locationManager startUpdatingLocation];
+        });
         
         [self workingQueue];
         [self managerQueue];
