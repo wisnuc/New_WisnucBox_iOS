@@ -326,7 +326,7 @@
     }];
 }
 
-- (void)startUploadFilesWithFilePath:(NSString *)filePath Complete:(void(^)(void))complete {
+- (void)startUploadFilesWithFilePath:(NSString *)filePath Progress:(void (^)(NSProgress *))progress Complete:(void(^)(NSError *))callback {
     @weaky(self);
     [self.netServices getEntriesInUserBackupDir:^(NSError *error, NSArray<EntriesModel *> *entries) {
         if(error) {
@@ -336,27 +336,42 @@
         }
         NSLog(@"Start Upload ...");
          WBUploadModel * model = [WBUploadModel new];
-        [model uploadFilesWithFilePath:filePath];
-        if(complete) complete();
+        [model uploadFilesWithFilePath:filePath Progress:progress Complete:callback];
     }];
 }
 
-- (void)readyUploadFilesWithFilePath:(NSString *)filePath Callback:(void(^)(NSError *filesError))callback{
+- (void)readyUploadFilesWithFilePath:(NSString *)filePath Complete:(void(^)(NSError *))callback{
     @weaky(self)
     [WB_NetService getUserBackupDirName:BackUpFilesDirName BackupDir:^(NSError *error, NSString *entryUUID) {
         if(error) return callback(({error.wbCode = 10003; error;}));
 //            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
-            self.progressView.descLb.text =@"正在下载文件";
+            self.progressView.descLb.text =@"正在上传文件";
             self.progressView.subDescLb.text = [NSString stringWithFormat:@"1个项目 "];
             self.progressView.cancleBlock = ^(){
-                [[CSDownloadHelper shareManager] cancleDownload];
+                [weak_self cancelFilesUplod];
             };
             [_progressView show];
-//              [_progressView setValueForProcess:progress];
-        [weak_self startUploadFilesWithFilePath:filePath Complete:^{
+//
+        [weak_self startUploadFilesWithFilePath:filePath Progress:^(NSProgress *uploadProgress) {
+             [_progressView setValueForProcess:uploadProgress.fractionCompleted];
+        } Complete:^(NSError *error) {
+             callback(error);
+             [_progressView dismiss];
+            if (!error) {
+                  [SXLoadingView showProgressHUDText:@"上传成功" duration:1.2];
+            }else{
+                NSLog(@"%@",error);
+            }
+          
         }];
     }];
+}
+
+- (void)cancelFilesUplod{
+    WBUploadModel * model = [WBUploadModel new];
+    [model cancel];
+    model = nil;
 }
 
 // services load
@@ -1029,8 +1044,8 @@ static NSArray * invaildChars;
 }
 
 
-- (void)uploadFilesWithFilePath:(NSString *)filePath {
-    @weaky(self)
+- (void)uploadFilesWithFilePath:(NSString *)filePath Progress:(void (^)(NSProgress *))progress Complete:(void(^)(NSError *))callback{
+//    @weaky(self)
     NSString * hashString  = [FileHash sha256HashOfFileAtPath:filePath];
     NSInteger sizeNumber = (NSInteger)[WB_FileService fileSizeAtPath:filePath];
     //            NSString * exestr = [filePath lastPathComponent];
@@ -1071,15 +1086,12 @@ static NSArray * invaildChars;
             [formData appendPartWithFileURL:[NSURL fileURLWithPath:filePath] name:fileName fileName:jsonString mimeType:@"image/jpeg" error:nil];
         }
     }
-                         progress:^(NSProgress * _Nonnull uploadProgress) {
-                             NSLog(@"%f",uploadProgress.fractionCompleted);
-                           
-                         }
+                         progress:progress
                           success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                               NSLog(@"Upload Success -->");
+                              NSLog(@"%@",responseObject);
                               [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
-                              if(!weak_self) return;
-                              if(weak_self.callback) weak_self.callback(nil, responseObject);
+                               callback(nil);
                           }
                           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                               NSLog(@"Upload Failure ---> : %@", error);
@@ -1103,16 +1115,16 @@ static NSArray * invaildChars;
                                       }
                                   }
                               }
+                              if (error) {
+                                  callback(error);
+                              }
                               [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil]; // remove tmpFile
-                              
-                              if (!weak_self) return;
-                              weak_self.error = error;
-                              //                          if (weak_self.callback) weak_self.callback(error, nil);
+
                           }];
     [_fileDataTask resume];
 }
 
-- (void)cancelUplodFiles {
+- (void)cancelUplodFiles{
     if(_fileDataTask) {
         [_fileDataTask cancel];
     }

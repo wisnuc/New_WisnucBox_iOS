@@ -818,6 +818,14 @@ WXApiDelegate
     return _alertView;
 }
 
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    if (_alertView && [touches anyObject].view == _alertView) {
+        // 判断点击的区域如果不是菜单按钮_btnMenu, 则关闭菜单
+        [_alertView setHidden:YES];
+    }
+}
+
 @end
 
 @implementation CloudModelForUser
