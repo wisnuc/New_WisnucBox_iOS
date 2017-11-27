@@ -59,7 +59,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>3</string>
+	<string>4</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>weixin</string>
@@ -89,13 +89,13 @@
 		<true/>
 	</dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>WISNUC 需要定位保持活跃，用以上传你的照片</string>
+	<string>WIFI下我们会根据你的位置变化后台自动备份照片，建议始终允许</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>WISNUC 需要定位保持活跃，用以上传你的照片</string>
+	<string>WIFI下我们会根据你的位置变化后台自动备份照片，建议始终允许</string>
 	<key>NSLocationUsageDescription</key>
-	<string>WISNUC 需要定位保持活跃，用以上传你的照片</string>
+	<string>WIFI下我们会根据你的位置变化后台自动备份照片，建议始终允许</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>WISNUC 需要定位保持活跃，用以上传你的照片</string>
+	<string>WIFI下我们会根据你的位置变化后台自动备份照片，建议始终允许</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>WISNUC 需要访问你的相册用以备份</string>
 	<key>UIBackgroundModes</key>
