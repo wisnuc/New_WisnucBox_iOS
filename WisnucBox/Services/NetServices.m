@@ -150,6 +150,7 @@
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//        NSLog(@"%@",responseObject);
         NSDictionary * dic = responseObject[0];
         DirectoriesModel * dir = [DirectoriesModel yy_modelWithJSON:dic[@"data"]];
         completeBlock(nil, dir);
@@ -169,9 +170,12 @@
     [dic setObject:name forKey:kCloudBodyToName];
     WBCloudJsonAPI * api = [WBCloudJsonAPI apiWithBody:dic];
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        DirectoriesModel *model = [DirectoriesModel yy_modelWithJSON: request.responseJsonObject[@"data"]];
         NSLog(@"---------> cloud response <---------- \n %@", request.responseJsonObject);
+        completeBlock(nil,model);
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@" ------>  cloud mkdir error  <------ \n %@", request.error);
+        completeBlock(request.error,nil);
     }];
 }
 

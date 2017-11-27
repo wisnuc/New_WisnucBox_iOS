@@ -178,7 +178,7 @@ __strong static id _sharedObject = nil;
         if (progress) {
             progress(downloadProgress);
         }
-        NSLog(@"%f",downloadProgress.fractionCompleted);
+       NSLog(@"%lld",downloadProgress.completedUnitCount);
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         NSString *path = [fileModel getDownloadFileSavePath];
         NSLog(@"%@",path);
