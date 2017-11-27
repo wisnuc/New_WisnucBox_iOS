@@ -123,6 +123,7 @@ FilesHelperOpenFilesDelegate
 
 - (void)registerNotifacationAndDelegate{
     [KDefaultNotificationCenter addObserver:self selector:@selector(handlerStatusChangeNotify:) name:FLFilesStatusChangeNotify object:nil];
+
     [FLFIlesHelper helper].openFilesdelegate = self;
 }
 
@@ -302,8 +303,8 @@ FilesHelperOpenFilesDelegate
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (self.isSelect == false) {
-        self.isSelect = true;
+//    if (self.isSelect == false) {
+//        self.isSelect = true;
         [self performSelector:@selector(repeatDelay) withObject:nil afterDelay:0.5f];
         EntriesModel * model = self.dataSouceArray[indexPath.row];
         if (![model.type isEqualToString:@"file"]){
@@ -355,9 +356,15 @@ FilesHelperOpenFilesDelegate
                     } begin:^{
                         
                     } progress:^(NSProgress *downloadProgress) {
+                        CGFloat downloadProgressFloat = (float)downloadProgress.completedUnitCount/(float)downloadProgress.totalUnitCount;
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            [_progressView setValueForProcess:downloadProgress.fractionCompleted];
-                            
+                            if (WB_UserService.currentUser.isCloudLogin) {
+                                
+                                 [_progressView setValueForProcess:downloadProgressFloat];
+//                                NSLog(@"%lld",downloadProgress.completedUnitCount);
+                            }else{
+                                 [_progressView setValueForProcess:downloadProgress.fractionCompleted];
+                            }
                         });
                     } complete:^(CSOneDowloadTask *downloadTask,NSError *error) {
                         [_progressView dismiss];
@@ -373,7 +380,7 @@ FilesHelperOpenFilesDelegate
             }
         }
     }
-}
+//}
 
 #pragma mark UIDocumentInteractionControllerDelegate
 

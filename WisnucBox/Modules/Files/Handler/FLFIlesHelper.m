@@ -112,7 +112,7 @@ static dispatch_once_t onceToken;
         }
     }
      NSString * string  = [NSString stringWithFormat:@"%ld个文件已添加到下载",(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
-    [SXLoadingView showProgressHUDText:string duration:1];
+    [SXLoadingView showProgressHUDText:string duration:1.5];
     [[FLFIlesHelper helper] removeAllChooseFile];
 }
 

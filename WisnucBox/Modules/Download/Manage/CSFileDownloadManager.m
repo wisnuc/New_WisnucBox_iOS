@@ -15,7 +15,7 @@
 #import "FilesServices.h"
 #import "CSDownloadHelper.h"
 
-#define DEFAULT_QUEUE_CAPACITY 6        //默认队列容量
+#define DEFAULT_QUEUE_CAPACITY NSIntegerMax        //默认队列容量
 #define DEFAULT_FAITURE_RETRY_CHANCE 6  //默认失败重试机会
 @interface CSFileDownloadManager ()
 
@@ -284,9 +284,22 @@ __strong static id _sharedObject = nil;
                     }
         }
     }];
-//    [dataTask resume];
+    
+    if (WB_UserService.currentUser.isCloudLogin) {
+     __block  NSProgress *downloadProgress = [[NSProgress alloc]init];
+    [manager setDownloadTaskDidWriteDataBlock:^(NSURLSession * _Nonnull session, NSURLSessionDownloadTask * _Nonnull downloadTask, int64_t bytesWritten, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite) {
+        NSLog(@"%lld/%lld/%lld",bytesWritten,totalBytesWritten,totalBytesExpectedToWrite);
+        downloadProgress.completedUnitCount = totalBytesWritten;
+        downloadProgress.totalUnitCount = [fileModel.getDownloadFileSize longLongValue];
+        if (progress && downloadProgress) {
+            progress(downloadProgress);
+        }
+    }];
+    }
+    
     [downloadTask setDownloadDataTask:dataTask];
     [self startOneDownloadTaskWith:downloadTask];
+    
     
     
 ////    __weak typeof(self) weakSelf = self;

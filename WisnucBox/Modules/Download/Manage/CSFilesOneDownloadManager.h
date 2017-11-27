@@ -12,10 +12,10 @@
 @interface CSFilesOneDownloadManager : NSObject
 + (CSFilesOneDownloadManager*)shareManager;
 + (void)destroyAll;
-- (void)beginDownloadTask:(CSDownloadTask*)downloadTask
+- (void)beginDownloadTask:(CSOneDowloadTask*)downloadTask
                     begin:(CSDownloadBeginEventHandler)begin
                  progress:(CSDownloadingEventHandler)progress
                  complete:(CSOneDownloadedEventHandler)complete;
-- (void)cancelOneDownloadTaskWith:(CSDownloadTask*)downloadTask;
+- (void)cancelOneDownloadTaskWith:(CSOneDowloadTask*)downloadTask;
 - (void)cancelAllDownloadTask;
 @end

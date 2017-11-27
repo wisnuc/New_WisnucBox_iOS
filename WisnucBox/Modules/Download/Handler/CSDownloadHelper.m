@@ -15,6 +15,7 @@
 @interface CSDownloadHelper()<CSDownloadUIBindProtocol>
 {
     CSFileDownloadManager* _manager;
+    int _downdloadIdCount;
     int _downdloadCount;
     NSMutableArray * _oneDownloadArray;
     CSFilesOneDownloadManager* _oneManager;
@@ -49,11 +50,12 @@ __strong static id _sharedObject = nil;
     if (self) {
         _manager = [CSFileDownloadManager sharedDownloadManager];
         _oneManager = [CSFilesOneDownloadManager shareManager];
-        _manager.maxDownload = 3;
-        _manager.maxWaiting = 3;
-        _manager.maxPaused = 3;
+//        _manager.maxDownload = 3;
+//        _manager.maxWaiting = 20;
+//        _manager.maxPaused = 20;
         _manager.maxFailureRetryChance = 5;
         
+        _downdloadIdCount = 0;
         _downdloadCount = 0;
         
         _oneDownloadArray = [NSMutableArray arrayWithCapacity:0];
@@ -86,7 +88,7 @@ __strong static id _sharedObject = nil;
     NSFileManager *manager = [NSFileManager defaultManager];
     
     if ([manager fileExistsAtPath:saveFile]) {
-        [SXLoadingView showProgressHUDText:@"该文件已下载" duration:1.0];
+        [SXLoadingView showProgressHUDText:@"该文件已下载" duration:1.8];
         return;
     }
     
@@ -113,7 +115,7 @@ __strong static id _sharedObject = nil;
     [downloadFileModel setDownloadFileSize:fileSize];
     
     CSOneDowloadTask* downloadTask = [[CSOneDowloadTask alloc] init];
-    [downloadTask setDownloadTaskId:[NSString stringWithFormat:@"%d", _downdloadCount + 1]];
+    [downloadTask setDownloadTaskId:[NSString stringWithFormat:@"%d", _downdloadIdCount + 1]];
     [downloadTask setDownloadFileModel:downloadFileModel];
     [downloadTask setDownloadUIBinder:self];
     if(_manager.downloadingTasks.count>0){
@@ -140,6 +142,7 @@ __strong static id _sharedObject = nil;
 }
 
 - (void)downloadFileWithFileModel:(EntriesModel *)dataModel RootUUID:(NSString *)rootUUID UUID:(NSString *)uuid{
+    _downdloadIdCount++;
     _downdloadCount++;
     NSString *resource = [NSString stringWithFormat:@"/drives/%@/dirs/%@/entries/%@",rootUUID,uuid,dataModel.uuid];
     
@@ -148,7 +151,7 @@ __strong static id _sharedObject = nil;
     NSString* fromUrl = WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@?resource=%@&method=GET&name=%@", kCloudAddr, kCloudCommonPipeUrl, [resource base64EncodedString],dataModel.name] :loaclFormUrl;;
 
     NSString* suffixName = dataModel.name;
-    NSString* tmpFileName = [NSString stringWithFormat:@"file-%d.tmp",_downdloadCount];
+    NSString* tmpFileName = [NSString stringWithFormat:@"file-%d.tmp",_downdloadIdCount];
     NSString* saveFileName= [NSString stringWithFormat:@"%@",dataModel.uuid];
     
     NSString *extensionstring = [suffixName pathExtension];
@@ -157,7 +160,7 @@ __strong static id _sharedObject = nil;
     NSFileManager *manager = [NSFileManager defaultManager];
     
     if ([manager fileExistsAtPath:saveFile]) {
-        [SXLoadingView showProgressHUDText:@"该文件已下载" duration:1.0];
+//        [SXLoadingView showProgressHUDText:@"该文件已下载" duration:1.0];
         return;
     }
     
@@ -184,7 +187,7 @@ __strong static id _sharedObject = nil;
     [downloadFileModel setDownloadFileSize:fileSize];
     
     CSDownloadTask* downloadTask = [[CSDownloadTask alloc] init];
-    [downloadTask setDownloadTaskId:[NSString stringWithFormat:@"%d", _downdloadCount]];
+    [downloadTask setDownloadTaskId:[NSString stringWithFormat:@"%d", _downdloadIdCount]];
     [downloadTask setDownloadFileModel:downloadFileModel];
     [downloadTask setDownloadUIBinder:self];
 
@@ -205,6 +208,8 @@ __strong static id _sharedObject = nil;
         [_manager addDownloadTask:downloadTask];
         [self startDownloadWithTask:downloadTask];
     }
+ 
+    _downdloadCount = 0;
 }
 
 

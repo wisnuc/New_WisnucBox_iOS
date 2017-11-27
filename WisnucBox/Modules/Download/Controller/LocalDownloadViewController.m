@@ -58,6 +58,7 @@ UIDocumentInteractionControllerDelegate
     [self loadData];
     [self.view addSubview:self.tableView];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, 64)];
+    [KDefaultNotificationCenter addObserver:self selector:@selector(handleNetReachabilityNotify:) name:NETWORK_REACHABILITY_CHANGE_NOTIFY object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -85,6 +86,19 @@ UIDocumentInteractionControllerDelegate
     NSLog(@"%@",_downloadingArray);
     [self.tableView reloadData];
 }
+
+- (void)handleNetReachabilityNotify:(NSNotification *)noti {
+    NSNumber *statusNumber = noti.object;
+    AFNetworkReachabilityStatus status = [statusNumber integerValue];
+    if (status != AFNetworkReachabilityStatusReachableViaWiFi) {
+        [_downloadingArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:idx inSection:0];
+            LocalDownloadingTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            cell.progressLabel.text = @"等待下载";
+        }];
+    }
+}
+
 
 - (void)presentOptionsMenu
 {
@@ -162,7 +176,7 @@ UIDocumentInteractionControllerDelegate
         NSLog(@"%@",downloadTask);
         CSDownloadModel* downloadFileModel = [downloadTask getDownloadFileModel];
         cell.fileNameLabel.text = downloadFileModel.downloadFileName;
-        cell.progressLabel.text = @"正在下载";
+//        cell.progressLabel.text = @"正在下载";
         downloadTask.progressBlock = ^(NSProgress *downloadProgress) {
             NSString *progressString = [NSString stringWithFormat:@"%@/%@",[CSFileUtil calculateUnit:downloadProgress.completedUnitCount],[CSFileUtil calculateUnit:downloadProgress.totalUnitCount]];
         
@@ -193,6 +207,9 @@ UIDocumentInteractionControllerDelegate
                     if (self.downloadingArray.count == 0) {
                         [actionSheet setHidden:YES];
                         return ;
+                    }
+                    if (indexPath.row > self.downloadingArray.count -1 && self.downloadingArray.count -1 > 0) {
+                        return;
                     }
                     
                     CSDownloadTask *downloadTask = [self.downloadingArray objectAtIndex:indexPath.row];

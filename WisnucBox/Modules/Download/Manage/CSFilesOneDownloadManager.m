@@ -180,7 +180,22 @@ __strong static id _sharedObject = nil;
         }
         
     }];
+    
+    if (WB_UserService.currentUser.isCloudLogin) {
+        __block  NSProgress *downloadProgress = [[NSProgress alloc]init];
+        [self.manager setDownloadTaskDidWriteDataBlock:^(NSURLSession * _Nonnull session, NSURLSessionDownloadTask * _Nonnull downloadTask, int64_t bytesWritten, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite) {
+//            NSLog(@"%lld/%lld/%lld",bytesWritten,totalBytesWritten,totalBytesExpectedToWrite);
+            downloadProgress.completedUnitCount = totalBytesWritten;
+            downloadProgress.totalUnitCount = [fileModel.getDownloadFileSize longLongValue];
+            if (progress && downloadProgress) {
+                progress(downloadProgress);
+            }
+        }];
+    }
+    
     [dataTask resume];
+    
+    
     [downloadTask setDownloadDataTask:dataTask];
     [self.souceArray addObject:downloadTask];
     NSLog(@"%@",self.souceArray);
