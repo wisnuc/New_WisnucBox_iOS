@@ -54,6 +54,7 @@
 #import "UIButton+EnlargeEdge.h"
 #import "UIButton+Universal.h"
 #import "UIImage+GKContact.h"
+#import "UIImage+imageWithColor.h"
 #import "UIView+JYExtension.h"
 #import "UIViewController+controller.h"
 #import "NSString+Extension.h"

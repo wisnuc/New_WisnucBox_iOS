@@ -10,7 +10,7 @@
 #import "FMLeftMenu.h"
 #import "FMLoginViewController.h"
 #import "MenuView.h"
-
+//@"设备管理",,@"ic_dns_black"
 #define LeftMenu_NotAdminTitles [NSMutableArray arrayWithObjects:@"文件下载",@"设置",@"注销",nil]
 #define LeftMenu_NotAdminImages [NSMutableArray arrayWithObjects:@"storage",@"set",@"cancel",nil]
 

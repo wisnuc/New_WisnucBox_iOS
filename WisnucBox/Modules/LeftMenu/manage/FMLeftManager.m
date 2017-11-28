@@ -13,6 +13,7 @@
 #import "UIApplication+JYTopVC.h"
 #import "FMUserLoginSettingVC.h"
 #import "LocalDownloadViewController.h"
+#import "WBStationManageRootViewController.h"
 
 @interface FMLeftManager ()<FMLeftMenuDelegate>
 
@@ -208,7 +209,15 @@
 //        if ([selectVC isKindOfClass:[NavViewController class]]) {
 //            [selectVC  pushViewController:vc animated:YES];
 //        }
-    }else if(IsEquallString(title, @"用户管理")){
+    }
+    
+    else if(IsEquallString(title, @"设备管理")){
+        vc = [[WBStationManageRootViewController alloc]init];
+        if ([selectVC isKindOfClass:[NavViewController class]]) {
+            [selectVC  pushViewController:vc animated:YES];
+        }
+    }
+    else if(IsEquallString(title, @"用户管理")){
         vc = [[FMUserSetting alloc]init];
         if ([selectVC isKindOfClass:[NavViewController class]]) {
             [selectVC  pushViewController:vc animated:YES];

@@ -6,5 +6,7 @@
 #import <Foundation/Foundation.h>
 
 @interface UIViewController (controller)
+
 + (UIViewController *)getCurrentVC;
+- (void)addLeftBarButtonWithImage:(UIImage *)buttonImage andHighlightButtonImage:(UIImage *)image  andSEL:(SEL)sel;
 @end
