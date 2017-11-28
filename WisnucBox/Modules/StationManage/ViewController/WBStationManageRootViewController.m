@@ -8,6 +8,8 @@
 
 #import "WBStationManageRootViewController.h"
 #import "WBStationManageRootTableViewCell.h"
+#import "WBStationManageTimeViewController.h"
+#import "WBStationManageNetworkViewController.h"
 
 #define DefaultRowCount 5
 
@@ -31,6 +33,7 @@ UITableViewDataSource
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:UICOLOR_RGB(0x03a9f4)] forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.backgroundColor = UICOLOR_RGB(0x03a9f4);
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
      [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 }
@@ -38,7 +41,7 @@ UITableViewDataSource
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName :[UIColor darkTextColor]}];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }
 
@@ -85,7 +88,32 @@ UITableViewDataSource
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    switch (indexPath.row) {
+        case 0:
+        
+            break;
+        case 1:
+           
+            break;
+        case 2:
+        {
+            WBStationManageNetworkViewController *networkVC = [[WBStationManageNetworkViewController alloc]init];
+            [self.navigationController pushViewController:networkVC animated:YES];
+        }
+            break;
+        case 3:
+        {
+            WBStationManageTimeViewController *timeVC = [[WBStationManageTimeViewController alloc]init];
+            [self.navigationController pushViewController:timeVC animated:YES];
+        }
+            break;
+        case 4:
+
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
