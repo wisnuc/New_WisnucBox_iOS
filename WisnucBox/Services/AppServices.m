@@ -488,6 +488,7 @@
     NSInteger _lastNotifyCount;
     BOOL _shouldNotify;
     BOOL _needRetry;
+    BOOL _isStartLocation;
 }
 
 @property (nonatomic, readwrite) NSMutableArray<JYAsset *> *hashwaitingQueue;
@@ -530,21 +531,20 @@
         _shouldUpload = NO;
         _shouldNotify = NO;
         _needRetry = YES;
+        _isStartLocation = NO;
         _lastNotifyCount = 0;
         _hashLimitCount = 4;
         _uploadLimitCount = 4;
         dispatch_async(dispatch_get_main_queue(), ^{
             _locationManager = [[CLLocationManager alloc]init];
             self.locationManager.delegate = self;
-            [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+            [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBestForNavigation];
             if ([[UIDevice currentDevice].systemVersion floatValue] > 8)
                 [self.locationManager requestAlwaysAuthorization];
-            
             if ([[UIDevice currentDevice].systemVersion floatValue] > 9)
                 [self.locationManager setAllowsBackgroundLocationUpdates:YES];
             [self.locationManager startUpdatingLocation];
         });
-        
         [self workingQueue];
         [self managerQueue];
     }
@@ -799,6 +799,13 @@
         self.shouldUpload = YES;
         _needRetry = YES;
         [self schedule];
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            if(_isStartLocation) return;
+//            _isStartLocation = YES;
+//            if ([[UIDevice currentDevice].systemVersion floatValue] > 9)
+//                [self.locationManager setAllowsBackgroundLocationUpdates:YES];
+//            [self.locationManager startMonitoringSignificantLocationChanges];
+//        });
     });
 }
 
@@ -938,9 +945,7 @@
     [self.hashFailQueue removeAllObjects];
     
     [self.uploadPaddingQueue removeAllObjects];
-    [self.uploadingQueue enumerateObjectsUsingBlock:^(WBUploadModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [obj cancel];
-    }];
+    [self stop];
     [self.uploadingQueue removeAllObjects];
     [self.uploadedQueue removeAllObjects];
     [self.uploadErrorQueue removeAllObjects];
@@ -952,9 +957,9 @@
 - (void)locationManager:(CLLocationManager *)manager
      didUpdateLocations:(NSArray<CLLocation *> *)locations
 {
-    CLLocation *loc = [locations objectAtIndex:0];
-    
-    NSLog(@"经纬度  %f  %f ",loc.coordinate.latitude,loc.coordinate.longitude);
+//    CLLocation *loc = [locations objectAtIndex:0];
+//    
+//    NSLog(@"经纬度  %f  %f ",loc.coordinate.latitude,loc.coordinate.longitude);
 }
 
 @end

@@ -238,6 +238,13 @@
     }
 }
 
+//- (void)rotateOrientation:(UIInterfaceOrientation)orientation {
+//
+//    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+//    [[UIApplication sharedApplication] setStatusBarOrientation:orientation animated:YES];
+//    [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:orientation] forKey:@"orientation"];
+//}
+
 - (void)initNavBtns
 {
 //    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
