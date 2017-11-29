@@ -84,7 +84,7 @@
             
         } completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
              dispatch_async(dispatch_get_main_queue(), ^{
-            self.userHeaderIV.image = [self imageCirclewithImage:image];
+                 self.userHeaderIV.image = [self imageCirclewithImage:image];
              });
         }];
     }else{
@@ -200,19 +200,19 @@
         NSString * s = [NSString stringWithFormat:@"当前已上传：%ld张, 错误：%ld 张， 正在上传：%ld 张， 正在等待：%ld 张", WB_PhotoUploadManager.uploadedQueue.count, WB_PhotoUploadManager.uploadErrorQueue.count, WB_PhotoUploadManager.uploadingQueue.count, WB_PhotoUploadManager.uploadPaddingQueue.count];
         [SXLoadingView showAlertHUD:s duration:2];
     }
-//    if(self.delegate){
-//        [self.delegate LeftMenuViewClick:10 andTitle:@"个人信息"];
-//    }
+    if(self.delegate){
+        [self.delegate LeftMenuViewClickSettingTable:10 andTitle:@"个人信息"];
+    }
 }
 
 -(void)layoutSubviews{
     [super layoutSubviews];
     [self getUserInfo];
     self.bonjourLabel.text = _userInfo.bonjour_name;
-    if ([AppServices sharedService].userServices.currentUser.isCloudLogin) {
-        self.nameLabel.text = [AppServices sharedService].userServices.currentUser.userName;
+    if (![AppServices sharedService].userServices.currentUser.isCloudLogin) {
         self.userHeaderIV.image = [UIImage imageForName:self.nameLabel.text size:self.userHeaderIV.bounds.size];
     }
+    self.nameLabel.text = [AppServices sharedService].userServices.currentUser.userName;
 //    [cell.contentView addSubview:progressLb];
 //    progressLb.hidden = !_displayProgress;
 

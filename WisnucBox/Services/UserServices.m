@@ -48,7 +48,6 @@
             return ;
         }
         self.isUserLogin = true;
-//        self.defaultToken = selgself.currentUser.localToken;
     }else{
         self.currentUser = nil;
         self.isUserLogin = false;

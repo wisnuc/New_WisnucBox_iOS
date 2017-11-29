@@ -14,6 +14,7 @@
 #import "FMUserLoginSettingVC.h"
 #import "LocalDownloadViewController.h"
 #import "WBStationManageRootViewController.h"
+#import "FMUserEditVC.h"
 
 @interface FMLeftManager ()<FMLeftMenuDelegate>
 
@@ -205,10 +206,10 @@
     CYLTabBarController * tVC = (CYLTabBarController *)MyAppDelegate.window.rootViewController;
     NavViewController * selectVC = (NavViewController *)tVC.selectedViewController;
     if(IsEquallString(title, @"个人信息")){
-//        vc = self.Info;
-//        if ([selectVC isKindOfClass:[NavViewController class]]) {
-//            [selectVC  pushViewController:vc animated:YES];
-//        }
+        vc = [FMUserEditVC new];
+        if ([selectVC isKindOfClass:[NavViewController class]]) {
+            [selectVC  pushViewController:vc animated:YES];
+        }
     }
     
     else if(IsEquallString(title, @"设备管理")){
@@ -237,7 +238,6 @@
     }
     else if(IsEquallString(title,@"注销")){
         NSLog(@"注销");
-#warning  logout
         //!!!!!: logout do something
         [SXLoadingView showProgressHUD:@"正在注销"];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

@@ -47,16 +47,6 @@
         _switchOn = [AppServices sharedService].userServices.currentUser.autoBackUp;
 }
 
--(void)anySwitch{
-#warning start stop backup
-    if (_switchOn) {
-//            [[FMPhotoManager defaultManager] start];
-    }else{
-//            [[FMPhotoManager defaultManager] stop];
-    }
-    
-}
-
 - (instancetype)initPrivate {
     self  = [super init];
     return self;
@@ -64,7 +54,7 @@
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 2;
+    return 3;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -82,8 +72,7 @@
         if(!WB_UserService.isUserLogin) switchBtn.enabled = NO;
         [cell.contentView addSubview:switchBtn];
     }
-    else
-        if(indexPath.row == 1){
+    else if(indexPath.row == 1){
         UILabel * titleLb = [[UILabel alloc] initWithFrame:CGRectMake(16, 23, 200, 17)];
         titleLb.text = @"清除缓存";
         titleLb.font = [UIFont systemFontOfSize:17];
@@ -103,7 +92,21 @@
             });
         });        
         cell.accessoryView = cleanBtn;
-   }
+    } else {
+        if (indexPath.row == 2) {
+            UILabel * titleLb = [[UILabel alloc] initWithFrame:CGRectMake(16, 23, 200, 17)];
+            titleLb.text = @"后台备份:";
+            titleLb.font = [UIFont systemFontOfSize:17];
+            
+            [cell.contentView addSubview:titleLb];
+            cell.contentView.layer.masksToBounds = YES;
+            UISwitch *switchBtn = [[UISwitch alloc]initWithFrame:CGRectMake(__kWidth - 70, 16, 50, 40)];
+            switchBtn.on = [kUD_ObjectForKey(BackgroundUpload_KEY) boolValue];
+            [switchBtn addTarget:self  action:@selector(switchBtnHandleForSyncBackground:) forControlEvents:UIControlEventValueChanged];
+            if(!WB_UserService.isUserLogin) switchBtn.enabled = NO;
+            [cell.contentView addSubview:switchBtn];
+        }
+    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -147,21 +150,6 @@
     }
 }
 
--(void)switchBtnHandleForWWNN:(UISwitch *)switchBtn{
-    [AppServices sharedService].userServices.currentUser.backUpInWWAN = switchBtn.isOn;
-    [[AppServices sharedService].userServices synchronizedCurrentUser];
-#warning open close backup WWAN
-//    if([PhotoManager shareManager].netStatus == FMNetStatusWWAN ){
-//        if (switchBtn.isOn) {
-//            MyNSLog(@"备份开关开启");
-//                [[FMPhotoManager defaultManager] start];
-//        }else{
-//            MyNSLog(@"备份开关关闭");
-//                [[FMPhotoManager defaultManager] stop];
-//        }
-//    }
-}
-
 -(void)switchBtnHandleForSync:(UISwitch *)switchBtn{
     WB_UserService.currentUser.autoBackUp = switchBtn.isOn;
     [WB_UserService synchronizedCurrentUser];
@@ -170,6 +158,11 @@
        [WB_AppServices startUploadAssets:nil];
     else
         [WB_AppServices.photoUploadManager stop];
+}
+
+- (void)switchBtnHandleForSyncBackground:(UISwitch *)sw {
+    [kUserDefaults setBool:sw.isOn forKey:BackgroundUpload_KEY];
+    [[NSNotificationCenter defaultCenter] postNotificationName:BackgroundUploadChangeNotify object:nil];
 }
 
 - (IBAction)cleanBtnClick:(id)sender {

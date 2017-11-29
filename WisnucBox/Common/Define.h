@@ -34,6 +34,9 @@
 #define BackUpAssetDirName @"上传的照片"
 #define BackUpFilesDirName @"上传的文件"
 
+#define BackgroundUpload_KEY  @"BackgroundUpload_KEY"
+#define BackgroundUploadChangeNotify @"BackgroundUploadChangeNotify"
+
 #define kUserDefaults [NSUserDefaults standardUserDefaults]
 #define kUD_Synchronize [[NSUserDefaults standardUserDefaults] synchronize]
 #define kUD_ObjectForKey(key) [[NSUserDefaults standardUserDefaults] objectForKey:key]
