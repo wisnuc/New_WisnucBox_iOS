@@ -36,20 +36,20 @@
     self.title = @"用户管理";
     self.navigationController.navigationBar.translucent = NO;
     [_backButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
-    
-    [self getData];
+  
     [self displayInfomation];
     [self registerTableView];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+    [self getData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [self.navigationController setNavigationBarHidden:NO];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 - (void)registerTableView{
@@ -58,10 +58,10 @@
 }
 
 - (void)displayInfomation{
-     WBUser *userInfo = [AppServices sharedService].userServices.currentUser;
-    _nameLabel.text = userInfo.userName;
-    _typeLabel.text = userInfo.bonjour_name;
-    _urlLabel.text = userInfo.sn_address;
+//     WBUser *userInfo = ;
+    _nameLabel.text = WB_UserService.currentUser.userName;
+    _typeLabel.text = WB_UserService.currentUser.bonjour_name;
+    _urlLabel.text = WB_UserService.currentUser.sn_address;
 }
 
 - (void)getData{

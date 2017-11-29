@@ -10,6 +10,8 @@
 #import "WBStationManageRootTableViewCell.h"
 #import "WBStationManageTimeViewController.h"
 #import "WBStationManageNetworkViewController.h"
+#import "WBStatioManageEquipmentViewController.h"
+#import "FMUserSetting.h"
 
 #define DefaultRowCount 5
 
@@ -90,10 +92,16 @@ UITableViewDataSource
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     switch (indexPath.row) {
         case 0:
-        
+        {
+            FMUserSetting *settingVC = [[FMUserSetting alloc]init];
+            [self.navigationController pushViewController:settingVC animated:YES];
+        }
             break;
         case 1:
-           
+        {
+             WBStatioManageEquipmentViewController *equipmentVC = [[ WBStatioManageEquipmentViewController alloc]init];
+            [self.navigationController pushViewController:equipmentVC animated:YES];
+        }
             break;
         case 2:
         {

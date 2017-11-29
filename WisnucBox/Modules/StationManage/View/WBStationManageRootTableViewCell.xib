@@ -19,7 +19,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uvd-rv-qe6">
-                        <rect key="frame" x="56" y="12" width="39.5" height="19.5"/>
+                        <rect key="frame" x="60" y="12" width="39.5" height="19.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -45,7 +45,7 @@
                     <constraint firstItem="uvd-rv-qe6" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Ieo-wh-eZT"/>
                     <constraint firstAttribute="trailing" secondItem="LUg-7N-7Fs" secondAttribute="trailing" constant="16" id="Lsd-wX-oXL"/>
                     <constraint firstItem="LUg-7N-7Fs" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="iYs-Oy-7BR"/>
-                    <constraint firstItem="uvd-rv-qe6" firstAttribute="leading" secondItem="Mfn-Ce-Gqf" secondAttribute="trailing" constant="16" id="j5A-TC-qIs"/>
+                    <constraint firstItem="uvd-rv-qe6" firstAttribute="leading" secondItem="Mfn-Ce-Gqf" secondAttribute="trailing" constant="20" id="j5A-TC-qIs"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

@@ -148,20 +148,23 @@
 // 10001 : get token error
 // 10002 : get userHome error
 // 10003 : get userBackupDir error
-- (void)loginWithBasic:(NSString *)basic userUUID:(NSString *)uuid name:(NSString *)userName addr:(NSString *)addr isWechat:(BOOL)isWechat completeBlock:(void(^)(NSError *error, WBUser *user))callback {
+- (void)loginWithBasic:(NSString *)basic userUUID:(NSString *)uuid StationName:(NSString *)stationName UserName:(NSString *)userName addr:(NSString *)addr isWechat:(BOOL)isWechat completeBlock:(void(^)(NSError *error, WBUser *user))callback {
     @weaky(self);
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
+    NSString* urlString = [NSString stringWithFormat:@"http://%@:3000/", addr];
     [manager.requestSerializer setValue:[NSString stringWithFormat:@"Basic %@",basic] forHTTPHeaderField:@"Authorization"];
-    [manager GET:[NSString stringWithFormat:@"%@token",addr] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [manager GET:[NSString stringWithFormat:@"%@token",urlString] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSString * token = responseObject[@"token"];
-        self.netServices = [[NetServices alloc]initWithLocalURL:addr andCloudURL:nil];
+        self.netServices = [[NetServices alloc]initWithLocalURL:urlString andCloudURL:nil];
         WBUser *user = [WB_UserService createUserWithUserUUID:uuid];
         user.userName = userName;
-        user.localAddr = addr;
+        user.localAddr = urlString;
         user.localToken = token;
         user.isFirstUser = NO;
         user.isAdmin = NO;
         user.isCloudLogin = NO;
+        user.bonjour_name = stationName;
+        user.sn_address = addr;
         [WB_UserService setCurrentUser:user];
         [WB_UserService synchronizedCurrentUser];
         NSLog(@"GET Token Success");
@@ -207,6 +210,7 @@
     self.netServices = [[NetServices alloc]initWithLocalURL:nil andCloudURL:addr];
     WBUser *user = [WB_UserService createUserWithUserUUID:cloudUserModel.uuid];
     user.userName = cloudUserModel.username;
+    user.bonjour_name = cloudUserModel.name;
 //    user.localAddr = nil;
     user.stationId = cloudUserModel.stationId;
     user.cloudToken = cloudToken;

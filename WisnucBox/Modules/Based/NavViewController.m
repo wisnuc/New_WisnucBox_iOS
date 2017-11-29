@@ -77,14 +77,19 @@
 
 - (void)addBackItemWith:(UIViewController *)viewController
 {
+
+    self.navigationItem.hidesBackButton = YES;
+//    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back_gray"] style:UIBarButtonItemStyleDone target:self action:@selector(backBtnClick)];
+    
+    self.navigationItem.leftItemsSupplementBackButton = YES;
     //左按钮
     UIButton *leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 52, 52)];
     [leftBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];//设置按钮点击事件
     if (self.navigationBar.backgroundColor == UICOLOR_RGB(0x03a9f4)) {
         NSLog(@"😁");
     }
-    
-   
+
+
     [leftBtn setImage:[UIImage imageNamed:@"back_gray"] forState:UIControlStateNormal];
     [leftBtn setImage:[UIImage imageNamed:@"back_grayhighlight"] forState:UIControlStateHighlighted];
     //设置按钮正常状态图片
@@ -93,7 +98,7 @@
     UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     negativeSpacer.width = -16 - 2*([UIScreen mainScreen].scale - 1);//这个数值可以根据情况自由变化
     viewController.navigationItem.leftBarButtonItems = @[negativeSpacer, leftBarButon];
-    viewController.navigationItem.leftBarButtonItem.tintColor = [UIColor redColor];
+//    viewController.navigationItem.leftBarButtonItem.tintColor = [UIColor redColor];
 }
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated

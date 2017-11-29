@@ -53,14 +53,34 @@ UITableViewDataSource
     [SXLoadingView showProgressHUD:@"正在获取..."];
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
-        NSDictionary * responseDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+
+        NSArray * responseArr = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+        NSDictionary * responseDic  = responseArr[0];
+        if (responseArr.count >0) {
+           responseDic  = responseArr[0];
+        }
         WBStationManageNetInterfacesModel *model = [WBStationManageNetInterfacesModel yy_modelWithDictionary:responseDic];
-        [self.dataArray addObject:model];
+        [model.ipAddresses enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSDictionary *objDic = obj;
+            IpAddressesModel *ipModel  = [IpAddressesModel yy_modelWithDictionary:objDic];
+            [ipModel setName:model.name];
+            [ipModel setSpeed:model.speed];
+            if (![ipModel.internal boolValue] && [ipModel.family isEqualToString: @"IPv4"]) {
+            
+                [self.dataArray addObject:ipModel];
+            }
+        }];
+     
         [SXLoadingView hideProgressHUD];
         [self.tableView reloadData];
     } failure:^(__kindof JYBaseRequest *request) {
         [SXLoadingView hideProgressHUD];
         NSLog(@"%@",request.error);
+        NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+        if(errorData.length >0){
+            NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+            NSLog(@"失败,%@",serializedData);
+        }
         [self.tableView reloadData];
     }];
 }
@@ -78,35 +98,39 @@ UITableViewDataSource
         cell =  [[WBStationManageTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([WBStationManageTableViewCell class])];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    WBStationManageNetInterfacesModel *model;
+    IpAddressesModel*model;
     if (self.dataArray.count >0) {
         model = self.dataArray[0];
     }
     
     switch (indexPath.row) {
         case 0:
-//            cell.normalLabel.text = model.localTime;
-//            cell.detailLabel.text = @"本地时间";
-//            break;
-//        case 1:
-//            cell.normalLabel.text = model.universalTime;
-//            cell.detailLabel.text = @"世界时间";
-//            break;
-//        case 2:
-//            cell.normalLabel.text = model.wbRTCTime;
-//            cell.detailLabel.text = @"RTC时间";
-//            break;
-//        case 3:
-//            cell.normalLabel.text = model.timeZone;
-//            cell.detailLabel.text = @"时区";
-//            break;
-//        case 4:
-//            cell.normalLabel.text = [model.wbNTPSynchronized boolValue]?@"yes" : @"no";
-//            cell.detailLabel.text = @"已完成时间同步";
-//            break;
-//        case 5:
-//            cell.normalLabel.text =[model.wbNetworkTimeOn boolValue]?@"yes" : @"no";
-//            cell.detailLabel.text = @"使用网络时间";
+            cell.normalLabel.text = model.name;
+            cell.detailLabel.text = @"网卡名称";
+            break;
+        case 1:
+            cell.normalLabel.text = [NSString stringWithFormat:@"%@M",model.speed];
+            cell.detailLabel.text = @"宽带";
+            break;
+        case 2:
+            cell.normalLabel.text = @"IPv4";
+            cell.detailLabel.text = @"地址类型";
+            break;
+        case 3:
+            cell.normalLabel.text = model.address;
+            cell.detailLabel.text = @"网络地址";
+            break;
+        case 4:
+            cell.normalLabel.text = model.netmask;
+            cell.detailLabel.text = @"子网掩码";
+            break;
+        case 5:
+            cell.normalLabel.text = model.mac;
+            cell.detailLabel.text = @"MAC地址";
+            break;
+        case 6:
+            cell.normalLabel.text = WB_UserService.currentUser.isCloudLogin?@"本地设备连接" : @"远程设备连接";
+            cell.detailLabel.text = @"网络连接类型";
             break;
         default:
             break;
@@ -153,7 +177,7 @@ UITableViewDataSource
 
 - (UITableView *)tableView{
     if (!_tableView) {
-        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.timeImageView.frame) + 16, 0, __kWidth - 16 - 24 - 16, __kHeight - 64) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.timeImageView.frame) + 20, 0, __kWidth - 16 - 24 - 20, __kHeight - 64) style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];

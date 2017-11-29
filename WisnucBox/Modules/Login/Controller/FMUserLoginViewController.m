@@ -79,7 +79,7 @@
     [SXLoadingView showProgressHUD:@"正在登录"];
     NSString * UUID = [NSString stringWithFormat:@"%@:%@",_user.uuid,IsNilString(_loginTextField.text)?@"":_loginTextField.text];
     NSString * Basic = [UUID base64EncodedString];
-    [WB_AppServices loginWithBasic:Basic userUUID:_user.uuid name:_user.username addr:_service.path isWechat:NO completeBlock:^(NSError *error, WBUser *user) {
+    [WB_AppServices loginWithBasic:Basic userUUID:_user.uuid StationName:_service.name UserName:_user.username addr:_service.displayPath isWechat:NO completeBlock:^(NSError *error, WBUser *user) {
         [SXLoadingView hideProgressHUD];
         sender.userInteractionEnabled = YES;
         if(error || IsNilString(user.userHome)){

@@ -211,18 +211,23 @@
 //        }
     }
     
-    else if(IsEquallString(title, @"设备管理")){
-        vc = [[WBStationManageRootViewController alloc]init];
-        if ([selectVC isKindOfClass:[NavViewController class]]) {
-            [selectVC  pushViewController:vc animated:YES];
+        else if(IsEquallString(title, @"用户管理")){
+                vc = [[FMUserSetting alloc]init];
+                if ([selectVC isKindOfClass:[NavViewController class]]) {
+                    [selectVC  pushViewController:vc animated:YES];
+                }
         }
-    }
-    else if(IsEquallString(title, @"用户管理")){
-        vc = [[FMUserSetting alloc]init];
-        if ([selectVC isKindOfClass:[NavViewController class]]) {
-            [selectVC  pushViewController:vc animated:YES];
-        }
-    }
+
+    
+//    else if(IsEquallString(title, @"设备管理")){
+//        if (!WB_UserService.currentUser.isCloudLogin) {
+//            vc = [[WBStationManageRootViewController alloc]init];
+//            if ([selectVC isKindOfClass:[NavViewController class]]) {
+//                [selectVC  pushViewController:vc animated:YES];
+//            }
+//        }
+//    }
+
     else if (IsEquallString(title, @"文件下载")){
         vc = [[LocalDownloadViewController alloc]init];
         if ([selectVC isKindOfClass:[NavViewController class]]) {
