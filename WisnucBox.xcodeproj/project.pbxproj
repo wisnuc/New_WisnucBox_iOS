@@ -197,6 +197,14 @@
 		C139DFD11FC7DFC7007098E5 /* ic_play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C139DFC81FC7DFC7007098E5 /* ic_play@2x.png */; };
 		C139DFD21FC7DFC7007098E5 /* play2.png in Resources */ = {isa = PBXBuildFile; fileRef = C139DFC91FC7DFC7007098E5 /* play2.png */; };
 		C139DFD41FC7F76C007098E5 /* F5F5F5.png in Resources */ = {isa = PBXBuildFile; fileRef = C139DFD31FC7F76C007098E5 /* F5F5F5.png */; };
+		C183CDDD1FCE8D84002E29CD /* FMChangePwdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C183CDD11FCE8D82002E29CD /* FMChangePwdVC.m */; };
+		C183CDDE1FCE8D84002E29CD /* FMChangePwdVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = C183CDD21FCE8D82002E29CD /* FMChangePwdVC.xib */; };
+		C183CDE21FCE8D84002E29CD /* FMUserEditVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C183CDDB1FCE8D84002E29CD /* FMUserEditVC.m */; };
+		C183CDE31FCE8D84002E29CD /* FMUserEditVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = C183CDDC1FCE8D84002E29CD /* FMUserEditVC.xib */; };
+		C183CDEA1FCE9CE8002E29CD /* FMChangeNameVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C183CDE81FCE9CE8002E29CD /* FMChangeNameVC.m */; };
+		C183CDEB1FCE9CE8002E29CD /* FMChangeNameVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = C183CDE91FCE9CE8002E29CD /* FMChangeNameVC.xib */; };
+		C183CDEE1FCEA20C002E29CD /* FMUpdateUserAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C183CDED1FCEA20C002E29CD /* FMUpdateUserAPI.m */; };
+		C183CDF11FCEA2E9002E29CD /* FMUpdateUserPasswordAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C183CDF01FCEA2E9002E29CD /* FMUpdateUserPasswordAPI.m */; };
 		C1D2D6C91FC8587000EE1C46 /* livePhoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1D2D6C71FC8587000EE1C46 /* livePhoto@2x.png */; };
 		C1D2D6CA1FC8587000EE1C46 /* livePhoto@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1D2D6C81FC8587000EE1C46 /* livePhoto@3x.png */; };
 		F65035611FAC00A60007979D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035601FAC00A60007979D /* main.m */; };
@@ -922,6 +930,19 @@
 		C139DFC81FC7DFC7007098E5 /* ic_play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_play@2x.png"; sourceTree = "<group>"; };
 		C139DFC91FC7DFC7007098E5 /* play2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play2.png; sourceTree = "<group>"; };
 		C139DFD31FC7F76C007098E5 /* F5F5F5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = F5F5F5.png; sourceTree = "<group>"; };
+		C183CDD11FCE8D82002E29CD /* FMChangePwdVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMChangePwdVC.m; sourceTree = "<group>"; };
+		C183CDD21FCE8D82002E29CD /* FMChangePwdVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FMChangePwdVC.xib; sourceTree = "<group>"; };
+		C183CDD41FCE8D83002E29CD /* FMChangePwdVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMChangePwdVC.h; sourceTree = "<group>"; };
+		C183CDD81FCE8D83002E29CD /* FMUserEditVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMUserEditVC.h; sourceTree = "<group>"; };
+		C183CDDB1FCE8D84002E29CD /* FMUserEditVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMUserEditVC.m; sourceTree = "<group>"; };
+		C183CDDC1FCE8D84002E29CD /* FMUserEditVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FMUserEditVC.xib; sourceTree = "<group>"; };
+		C183CDE71FCE9CE8002E29CD /* FMChangeNameVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FMChangeNameVC.h; sourceTree = "<group>"; };
+		C183CDE81FCE9CE8002E29CD /* FMChangeNameVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FMChangeNameVC.m; sourceTree = "<group>"; };
+		C183CDE91FCE9CE8002E29CD /* FMChangeNameVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FMChangeNameVC.xib; sourceTree = "<group>"; };
+		C183CDEC1FCEA20C002E29CD /* FMUpdateUserAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FMUpdateUserAPI.h; sourceTree = "<group>"; };
+		C183CDED1FCEA20C002E29CD /* FMUpdateUserAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FMUpdateUserAPI.m; sourceTree = "<group>"; };
+		C183CDEF1FCEA2E9002E29CD /* FMUpdateUserPasswordAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FMUpdateUserPasswordAPI.h; sourceTree = "<group>"; };
+		C183CDF01FCEA2E9002E29CD /* FMUpdateUserPasswordAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FMUpdateUserPasswordAPI.m; sourceTree = "<group>"; };
 		C1D2D6C71FC8587000EE1C46 /* livePhoto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "livePhoto@2x.png"; sourceTree = "<group>"; };
 		C1D2D6C81FC8587000EE1C46 /* livePhoto@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "livePhoto@3x.png"; sourceTree = "<group>"; };
 		F650355C1FAC00A60007979D /* WisnucBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WisnucBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2081,6 +2102,10 @@
 				71A3D6731FB584360002B8B1 /* FMCreateUserAPI.m */,
 				71A3D66F1FB57F830002B8B1 /* FMAsyncUsersAPI.h */,
 				71A3D6701FB57F830002B8B1 /* FMAsyncUsersAPI.m */,
+				C183CDEC1FCEA20C002E29CD /* FMUpdateUserAPI.h */,
+				C183CDED1FCEA20C002E29CD /* FMUpdateUserAPI.m */,
+				C183CDEF1FCEA2E9002E29CD /* FMUpdateUserPasswordAPI.h */,
+				C183CDF01FCEA2E9002E29CD /* FMUpdateUserPasswordAPI.m */,
 			);
 			path = Users;
 			sourceTree = "<group>";
@@ -2198,6 +2223,22 @@
 				C139DFC91FC7DFC7007098E5 /* play2.png */,
 			);
 			path = photo;
+			sourceTree = "<group>";
+		};
+		C183CDD01FCE8C5A002E29CD /* userInfo */ = {
+			isa = PBXGroup;
+			children = (
+				C183CDD41FCE8D83002E29CD /* FMChangePwdVC.h */,
+				C183CDD11FCE8D82002E29CD /* FMChangePwdVC.m */,
+				C183CDD21FCE8D82002E29CD /* FMChangePwdVC.xib */,
+				C183CDD81FCE8D83002E29CD /* FMUserEditVC.h */,
+				C183CDDB1FCE8D84002E29CD /* FMUserEditVC.m */,
+				C183CDDC1FCE8D84002E29CD /* FMUserEditVC.xib */,
+				C183CDE71FCE9CE8002E29CD /* FMChangeNameVC.h */,
+				C183CDE81FCE9CE8002E29CD /* FMChangeNameVC.m */,
+				C183CDE91FCE9CE8002E29CD /* FMChangeNameVC.xib */,
+			);
+			name = userInfo;
 			sourceTree = "<group>";
 		};
 		D9B3E6DE895EF13E2BDF26E5 /* Pods */ = {
@@ -2439,6 +2480,7 @@
 		F6830EB71FB2FC40005AC578 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				C183CDD01FCE8C5A002E29CD /* userInfo */,
 				F6830EE81FB2FEE0005AC578 /* userMange */,
 				F6830EE21FB2FE9F005AC578 /* setting */,
 				F6830EE11FB2FE77005AC578 /* loginManage */,
@@ -3205,6 +3247,7 @@
 				F68311BE1FB30AAF005AC578 /* album_praise.png in Resources */,
 				F68310F51FB30AAE005AC578 /* ic_arrow_drop_down@2x.png in Resources */,
 				F68310801FB30AAE005AC578 /* album_balloon.png in Resources */,
+				C183CDEB1FCE9CE8002E29CD /* FMChangeNameVC.xib in Resources */,
 				F68310D21FB30AAE005AC578 /* float_btn_del@2x.png in Resources */,
 				C139DFCA1FC7DFC7007098E5 /* ic_pause.png in Resources */,
 				F68311921FB30AAF005AC578 /* small_0.png in Resources */,
@@ -3418,6 +3461,7 @@
 				F6830EF01FB2FEF3005AC578 /* FMUserAddVC.xib in Resources */,
 				F683116E1FB30AAE005AC578 /* praise.png in Resources */,
 				F683110C1FB30AAE005AC578 /* icon_down.png in Resources */,
+				C183CDE31FCE8D84002E29CD /* FMUserEditVC.xib in Resources */,
 				F683110A1FB30AAE005AC578 /* icon_del@2x.png in Resources */,
 				F68311121FB30AAE005AC578 /* info@3x.png in Resources */,
 				F68310A21FB30AAE005AC578 /* check_circle.png in Resources */,
@@ -3465,6 +3509,7 @@
 				F68311551FB30AAE005AC578 /* photo-album_select@3x.png in Resources */,
 				F683118D1FB30AAF005AC578 /* share_red_select@2x.png in Resources */,
 				F6830F031FB2FF8C005AC578 /* ImageHeaderView.xib in Resources */,
+				C183CDDE1FCE8D84002E29CD /* FMChangePwdVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3602,6 +3647,7 @@
 				F675614A1FB3428F00E3277F /* MFTextField.m in Sources */,
 				1F4D75AF1FAC4BB800E6516C /* FilesServices.m in Sources */,
 				1F1AB9F61FB971AF006EB1FC /* CSFileUtil.m in Sources */,
+				C183CDDD1FCE8D84002E29CD /* FMChangePwdVC.m in Sources */,
 				C11EAB221FC4066A007C9BA7 /* WBCloudJsonAPI.m in Sources */,
 				1F4D75AD1FAC4BB800E6516C /* WBLocalAsset+CoreDataProperties.m in Sources */,
 				F67D64061FAC7D3600E23D16 /* JYAsset.m in Sources */,
@@ -3649,6 +3695,7 @@
 				F6830F181FB300D2005AC578 /* FMLeftUserCell.m in Sources */,
 				F6830EB51FB2FAE0005AC578 /* RDVTabBarItem.m in Sources */,
 				F6830EB31FB2FAE0005AC578 /* RDVTabBar.m in Sources */,
+				C183CDE21FCE8D84002E29CD /* FMUserEditVC.m in Sources */,
 				1F4D75A41FAC4BB800E6516C /* UserModel.m in Sources */,
 				1FC2AFF81FC6684100E8C9DE /* WBgetStationInfoAPI.m in Sources */,
 				1F922EFB1FCEC3C800A7614B /* WBReNameAPI.m in Sources */,
@@ -3731,6 +3778,7 @@
 				1F4D75A31FAC4BB800E6516C /* FMHandLoginVC.m in Sources */,
 				F6830F161FB300D2005AC578 /* FMLeftMenuCell.m in Sources */,
 				1F4D75BB1FAC5D2400E6516C /* ServerBrowser.m in Sources */,
+				C183CDEA1FCE9CE8002E29CD /* FMChangeNameVC.m in Sources */,
 				1FB0900B1FBC519A0020B304 /* NSString+Extension.m in Sources */,
 				1F922EE41FCE998A00A7614B /* WBStationManageStorageAPI.m in Sources */,
 				1F1AB9F21FB97092006EB1FC /* NSObject+KVOBlock.m in Sources */,
@@ -3739,12 +3787,14 @@
 				F6AAD1881FB049E100DEDBDC /* WBFile+CoreDataClass.m in Sources */,
 				1F4D75A11FAC4BB800E6516C /* FMUserLoginViewController.m in Sources */,
 				F679336E1FB00D9B00C9A7DC /* WBUser+CoreDataProperties.m in Sources */,
+				C183CDEE1FCEA20C002E29CD /* FMUpdateUserAPI.m in Sources */,
 				1F922EB81FCD75EC00A7614B /* WBStationManageNetInterfaceAPI.m in Sources */,
 				71A3D67E1FB5ADAA0002B8B1 /* FMGetJWTAPI.m in Sources */,
 				F6830F151FB300D2005AC578 /* MenuView.m in Sources */,
 				1F4D759E1FAC4BB800E6516C /* UIColor+FM_UserHeadImage.m in Sources */,
 				F65035611FAC00A60007979D /* main.m in Sources */,
 				1F4D759D1FAC4BB800E6516C /* UIButton+Universal.m in Sources */,
+				C183CDF11FCEA2E9002E29CD /* FMUpdateUserPasswordAPI.m in Sources */,
 				C138D0791FB9A4B0000CF518 /* EntriesModel.m in Sources */,
 				F67D643E1FAC7E5600E23D16 /* JYCollectionViewCell.m in Sources */,
 				F6830EF11FB2FEF3005AC578 /* FMUserSetting.m in Sources */,

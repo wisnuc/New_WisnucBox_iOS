@@ -102,7 +102,6 @@
 	<string>WISNUC 需要访问你的相册用以备份</string>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>fetch</string>
 		<string>location</string>
 	</array>
 	<key>UIFileSharingEnabled</key>

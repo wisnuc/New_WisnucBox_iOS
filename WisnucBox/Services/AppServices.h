@@ -43,6 +43,8 @@
 
 @property (strong, nonatomic) JYProcessView * progressView;
 
+@property (nonatomic) CLLocationManager * locationManager;
+
 + (instancetype)sharedService;
 
 - (void)bootStrap;

@@ -18,6 +18,9 @@
 #import "NSError+WBCode.h"
 #import "CSFilesOneDownloadManager.h"
 
+@interface AppServices ()<CLLocationManagerDelegate>
+@end
+
 @implementation AppServices {
     BOOL _isRebuildingPhotoUploader;
     NSInteger _notiNumber;
@@ -42,6 +45,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserAuthChange) name:ASSETS_AUTH_CHANGE_NOTIFY object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMemoryWarning) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNetReachabilityNotify:) name:NETWORK_REACHABILITY_CHANGE_NOTIFY object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlebackgroundChange) name:BackgroundUploadChangeNotify object:nil];
     _notiNumber = 0;
     [self assetServices];
     if(self.userServices.currentUser)
@@ -64,6 +68,15 @@
     if(WB_AssetService.userAuth){
         NSArray * allLocalAsset = [self.assetServices allAssets];
         [self.photoUploadManager startWithLocalAssets:allLocalAsset andNetAssets:@[]];
+    }
+}
+
+- (void)handlebackgroundChange {
+    if(kUD_ObjectForKey(BackgroundUpload_KEY)) {
+        [self.locationManager startUpdatingLocation];
+    }else {
+        if(_locationManager)
+           [_locationManager stopUpdatingLocation];
     }
 }
 
@@ -130,9 +143,6 @@
         if(WB_AssetService.userAuth) {
             NSArray * allLocalAsset = [self.assetServices allAssets];
             [self.photoUploadManager startWithLocalAssets:allLocalAsset andNetAssets:@[]];
-//            if(WB_UserService.currentUser.autoBackUp) {
-//                [self startUploadAssets:nil];
-//            }
         }
     });
 }
@@ -211,10 +221,8 @@
     WBUser *user = [WB_UserService createUserWithUserUUID:cloudUserModel.uuid];
     user.userName = cloudUserModel.username;
     user.bonjour_name = cloudUserModel.name;
-//    user.localAddr = nil;
     user.stationId = cloudUserModel.stationId;
     user.cloudToken = cloudToken;
-//    user.localToken = nil;
     user.isFirstUser = [cloudUserModel.isFirstUser boolValue];
     user.isAdmin = [cloudUserModel.isAdmin boolValue];
     user.isCloudLogin = YES;
@@ -380,6 +388,21 @@
 
 // services load
 
+- (CLLocationManager *)locationManager {
+    @synchronized (self) {
+        if(!_locationManager) {
+            _locationManager = [[CLLocationManager alloc]init];
+            self.locationManager.delegate = self;
+            [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBestForNavigation];
+            if ([[UIDevice currentDevice].systemVersion floatValue] > 8)
+                [self.locationManager requestAlwaysAuthorization];
+            if ([[UIDevice currentDevice].systemVersion floatValue] > 9)
+                [self.locationManager setAllowsBackgroundLocationUpdates:YES];
+        }
+        return _locationManager;
+    }
+}
+
 - (WBUploadManager *)photoUploadManager {
     @synchronized (self) {
         if(!_photoUploadManager) {
@@ -449,6 +472,15 @@
     return _progressView;
 }
 
+#pragma mark -  定位代理方法
+- (void)locationManager:(CLLocationManager *)manager
+     didUpdateLocations:(NSArray<CLLocation *> *)locations
+{
+    //    CLLocation *loc = [locations objectAtIndex:0];
+    //
+    //    NSLog(@"经纬度  %f  %f ",loc.coordinate.latitude,loc.coordinate.longitude);
+}
+
 - (void)abort {
     //destory JYnetEngine
     [[JYNetEngine sharedInstance] cancleAllRequest];
@@ -461,7 +493,8 @@
     _assetServices ? [_assetServices abort] :
     _netServices ? [_netServices abort] :
     _dbServices ? [_dbServices abort] :
-    _photoUploadManager? [_photoUploadManager destroy] : nil;
+    _photoUploadManager? [_photoUploadManager destroy] :
+    _locationManager ? [_locationManager stopUpdatingLocation] : nil;
     
     _userServices = nil;
     _fileServices = nil;
@@ -469,7 +502,9 @@
     _netServices = nil;
     _dbServices = nil;
     _photoUploadManager = nil;
+    _locationManager = nil;
     //cancel download
+    
     [CSFileDownloadManager destroyAll];
     [FilesDataSourceManager destroyAll];
     [FLFIlesHelper destroyAll];
@@ -492,6 +527,7 @@
     NSInteger _lastNotifyCount;
     BOOL _shouldNotify;
     BOOL _needRetry;
+    BOOL _isStartLocation;
 }
 
 @property (nonatomic, readwrite) NSMutableArray<JYAsset *> *hashwaitingQueue;
@@ -518,8 +554,6 @@
 
 @property (nonatomic) dispatch_queue_t workingQueue;
 
-@property (nonatomic) CLLocationManager * locationManager;
-
 @end
 
 @implementation WBUploadManager
@@ -534,21 +568,10 @@
         _shouldUpload = NO;
         _shouldNotify = NO;
         _needRetry = YES;
+        _isStartLocation = NO;
         _lastNotifyCount = 0;
         _hashLimitCount = 4;
         _uploadLimitCount = 4;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            _locationManager = [[CLLocationManager alloc]init];
-            self.locationManager.delegate = self;
-            [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
-            if ([[UIDevice currentDevice].systemVersion floatValue] > 8)
-                [self.locationManager requestAlwaysAuthorization];
-            
-            if ([[UIDevice currentDevice].systemVersion floatValue] > 9)
-                [self.locationManager setAllowsBackgroundLocationUpdates:YES];
-            [self.locationManager startUpdatingLocation];
-        });
-        
         [self workingQueue];
         [self managerQueue];
     }
@@ -942,9 +965,7 @@
     [self.hashFailQueue removeAllObjects];
     
     [self.uploadPaddingQueue removeAllObjects];
-    [self.uploadingQueue enumerateObjectsUsingBlock:^(WBUploadModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [obj cancel];
-    }];
+    [self stop];
     [self.uploadingQueue removeAllObjects];
     [self.uploadedQueue removeAllObjects];
     [self.uploadErrorQueue removeAllObjects];
@@ -952,14 +973,7 @@
     [self.uploadedLocalHashSet removeAllObjects];
 }
 
-#pragma mark -  定位代理方法
-- (void)locationManager:(CLLocationManager *)manager
-     didUpdateLocations:(NSArray<CLLocation *> *)locations
-{
-    CLLocation *loc = [locations objectAtIndex:0];
-    
-    NSLog(@"经纬度  %f  %f ",loc.coordinate.latitude,loc.coordinate.longitude);
-}
+
 
 @end
 

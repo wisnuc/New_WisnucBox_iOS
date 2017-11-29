@@ -46,17 +46,6 @@
         }];
         _saveContext = [NSManagedObjectContext MR_newMainQueueContext];
         _fetchNetAssetLock = dispatch_semaphore_create(1);
-        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            if(WB_UserService.currentUser)
-                [self getNetAssets:^(NSError *error, NSArray *netAssets) {
-                    if (error) {
-                        NSLog(@"Fetch NetAssets Error :%@", error);
-                    }else {
-                        self.allNetAssets = [NSMutableArray arrayWithArray:netAssets];
-                        NSLog(@"Fetch NetAssets Success :%@", netAssets);
-                    }
-                }];
-        });
     }
     return self;
 }
