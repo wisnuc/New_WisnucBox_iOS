@@ -73,6 +73,37 @@
 		1F922E671FC8706200A7614B /* CSOneDowloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F922E661FC8706200A7614B /* CSOneDowloadTask.m */; };
 		1F922E6A1FC8833100A7614B /* share_files@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E681FC8833100A7614B /* share_files@3x.png */; };
 		1F922E6B1FC8833100A7614B /* share_files@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E691FC8833100A7614B /* share_files@2x.png */; };
+		1F922E701FCD315600A7614B /* WBStationManageRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F922E6F1FCD315600A7614B /* WBStationManageRootViewController.m */; };
+		1F922E751FCD342000A7614B /* ic_dns_black@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E721FCD341F00A7614B /* ic_dns_black@3x.png */; };
+		1F922E761FCD342000A7614B /* ic_dns_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E731FCD341F00A7614B /* ic_dns_black.png */; };
+		1F922E771FCD342000A7614B /* ic_dns_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E741FCD341F00A7614B /* ic_dns_black@2x.png */; };
+		1F922E7C1FCD3E1400A7614B /* WBStationManageRootTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F922E7A1FCD3E1400A7614B /* WBStationManageRootTableViewCell.m */; };
+		1F922E7D1FCD3E1400A7614B /* WBStationManageRootTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E7B1FCD3E1400A7614B /* WBStationManageRootTableViewCell.xib */; };
+		1F922E811FCD3FC100A7614B /* ic_chevron_right@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E7E1FCD3FBF00A7614B /* ic_chevron_right@3x.png */; };
+		1F922E821FCD3FC100A7614B /* ic_chevron_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E7F1FCD3FBF00A7614B /* ic_chevron_right.png */; };
+		1F922E831FCD3FC100A7614B /* ic_chevron_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E801FCD3FC000A7614B /* ic_chevron_right@2x.png */; };
+		1F922E871FCD426000A7614B /* ic_dns@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E841FCD425F00A7614B /* ic_dns@2x.png */; };
+		1F922E881FCD426000A7614B /* ic_dns@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E851FCD425F00A7614B /* ic_dns@3x.png */; };
+		1F922E891FCD426000A7614B /* ic_dns.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E861FCD426000A7614B /* ic_dns.png */; };
+		1F922E8D1FCD429900A7614B /* ic_person_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E8A1FCD429800A7614B /* ic_person_add.png */; };
+		1F922E8E1FCD429900A7614B /* ic_person_add@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E8B1FCD429800A7614B /* ic_person_add@3x.png */; };
+		1F922E8F1FCD429900A7614B /* ic_person_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E8C1FCD429900A7614B /* ic_person_add@2x.png */; };
+		1F922E931FCD42DF00A7614B /* ic_network@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E901FCD42DE00A7614B /* ic_network@3x.png */; };
+		1F922E941FCD42DF00A7614B /* ic_network.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E911FCD42DE00A7614B /* ic_network.png */; };
+		1F922E951FCD42DF00A7614B /* ic_network@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E921FCD42DE00A7614B /* ic_network@2x.png */; };
+		1F922E991FCD42F900A7614B /* ic_power_settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E961FCD42F800A7614B /* ic_power_settings@2x.png */; };
+		1F922E9A1FCD42F900A7614B /* ic_power_settings@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E971FCD42F800A7614B /* ic_power_settings@3x.png */; };
+		1F922E9B1FCD42F900A7614B /* ic_power_settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E981FCD42F900A7614B /* ic_power_settings.png */; };
+		1F922E9F1FCD432000A7614B /* ic_access_time@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E9C1FCD431F00A7614B /* ic_access_time@2x.png */; };
+		1F922EA01FCD432000A7614B /* ic_access_time.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E9D1FCD431F00A7614B /* ic_access_time.png */; };
+		1F922EA11FCD432000A7614B /* ic_access_time@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922E9E1FCD432000A7614B /* ic_access_time@3x.png */; };
+		1F922EA41FCD4D5D00A7614B /* WBStationManageTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F922EA31FCD4D5D00A7614B /* WBStationManageTimeViewController.m */; };
+		1F922EA81FCD5CD100A7614B /* WBStationManageTimedateAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F922EA71FCD5CD100A7614B /* WBStationManageTimedateAPI.m */; };
+		1F922EAC1FCD5D2100A7614B /* WBStationManageTimeDateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F922EAB1FCD5D2100A7614B /* WBStationManageTimeDateModel.m */; };
+		1F922EAF1FCD740700A7614B /* WBStationManageNetworkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F922EAE1FCD740700A7614B /* WBStationManageNetworkViewController.m */; };
+		1F922EB21FCD744C00A7614B /* WBStationManageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F922EB11FCD744C00A7614B /* WBStationManageTableViewCell.m */; };
+		1F922EB51FCD758C00A7614B /* WBStationManageNetInterfacesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F922EB41FCD758C00A7614B /* WBStationManageNetInterfacesModel.m */; };
+		1F922EB81FCD75EC00A7614B /* WBStationManageNetInterfaceAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F922EB71FCD75EC00A7614B /* WBStationManageNetInterfaceAPI.m */; };
 		1FB0900B1FBC519A0020B304 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB090091FBC51990020B304 /* NSString+Extension.m */; };
 		1FC2AFEF1FC5299300E8C9DE /* WBCloudLoginAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2AFEE1FC5299300E8C9DE /* WBCloudLoginAPI.m */; };
 		1FC2AFF21FC52B4800E8C9DE /* CloudLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2AFF11FC52B4800E8C9DE /* CloudLoginModel.m */; };
@@ -689,6 +720,46 @@
 		1F922E661FC8706200A7614B /* CSOneDowloadTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSOneDowloadTask.m; sourceTree = "<group>"; };
 		1F922E681FC8833100A7614B /* share_files@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_files@3x.png"; sourceTree = "<group>"; };
 		1F922E691FC8833100A7614B /* share_files@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_files@2x.png"; sourceTree = "<group>"; };
+		1F922E6E1FCD315600A7614B /* WBStationManageRootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBStationManageRootViewController.h; sourceTree = "<group>"; };
+		1F922E6F1FCD315600A7614B /* WBStationManageRootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBStationManageRootViewController.m; sourceTree = "<group>"; };
+		1F922E721FCD341F00A7614B /* ic_dns_black@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_dns_black@3x.png"; sourceTree = "<group>"; };
+		1F922E731FCD341F00A7614B /* ic_dns_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_dns_black.png; sourceTree = "<group>"; };
+		1F922E741FCD341F00A7614B /* ic_dns_black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_dns_black@2x.png"; sourceTree = "<group>"; };
+		1F922E791FCD3E1400A7614B /* WBStationManageRootTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBStationManageRootTableViewCell.h; sourceTree = "<group>"; };
+		1F922E7A1FCD3E1400A7614B /* WBStationManageRootTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBStationManageRootTableViewCell.m; sourceTree = "<group>"; };
+		1F922E7B1FCD3E1400A7614B /* WBStationManageRootTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBStationManageRootTableViewCell.xib; sourceTree = "<group>"; };
+		1F922E7E1FCD3FBF00A7614B /* ic_chevron_right@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_chevron_right@3x.png"; sourceTree = "<group>"; };
+		1F922E7F1FCD3FBF00A7614B /* ic_chevron_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_chevron_right.png; sourceTree = "<group>"; };
+		1F922E801FCD3FC000A7614B /* ic_chevron_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_chevron_right@2x.png"; sourceTree = "<group>"; };
+		1F922E841FCD425F00A7614B /* ic_dns@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_dns@2x.png"; sourceTree = "<group>"; };
+		1F922E851FCD425F00A7614B /* ic_dns@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_dns@3x.png"; sourceTree = "<group>"; };
+		1F922E861FCD426000A7614B /* ic_dns.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_dns.png; sourceTree = "<group>"; };
+		1F922E8A1FCD429800A7614B /* ic_person_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_person_add.png; sourceTree = "<group>"; };
+		1F922E8B1FCD429800A7614B /* ic_person_add@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_person_add@3x.png"; sourceTree = "<group>"; };
+		1F922E8C1FCD429900A7614B /* ic_person_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_person_add@2x.png"; sourceTree = "<group>"; };
+		1F922E901FCD42DE00A7614B /* ic_network@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_network@3x.png"; sourceTree = "<group>"; };
+		1F922E911FCD42DE00A7614B /* ic_network.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_network.png; sourceTree = "<group>"; };
+		1F922E921FCD42DE00A7614B /* ic_network@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_network@2x.png"; sourceTree = "<group>"; };
+		1F922E961FCD42F800A7614B /* ic_power_settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_power_settings@2x.png"; sourceTree = "<group>"; };
+		1F922E971FCD42F800A7614B /* ic_power_settings@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_power_settings@3x.png"; sourceTree = "<group>"; };
+		1F922E981FCD42F900A7614B /* ic_power_settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_power_settings.png; sourceTree = "<group>"; };
+		1F922E9C1FCD431F00A7614B /* ic_access_time@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_access_time@2x.png"; sourceTree = "<group>"; };
+		1F922E9D1FCD431F00A7614B /* ic_access_time.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_access_time.png; sourceTree = "<group>"; };
+		1F922E9E1FCD432000A7614B /* ic_access_time@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_access_time@3x.png"; sourceTree = "<group>"; };
+		1F922EA21FCD4D5D00A7614B /* WBStationManageTimeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBStationManageTimeViewController.h; sourceTree = "<group>"; };
+		1F922EA31FCD4D5D00A7614B /* WBStationManageTimeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBStationManageTimeViewController.m; sourceTree = "<group>"; };
+		1F922EA61FCD5CD100A7614B /* WBStationManageTimedateAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBStationManageTimedateAPI.h; sourceTree = "<group>"; };
+		1F922EA71FCD5CD100A7614B /* WBStationManageTimedateAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBStationManageTimedateAPI.m; sourceTree = "<group>"; };
+		1F922EAA1FCD5D2100A7614B /* WBStationManageTimeDateModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBStationManageTimeDateModel.h; sourceTree = "<group>"; };
+		1F922EAB1FCD5D2100A7614B /* WBStationManageTimeDateModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBStationManageTimeDateModel.m; sourceTree = "<group>"; };
+		1F922EAD1FCD740700A7614B /* WBStationManageNetworkViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBStationManageNetworkViewController.h; sourceTree = "<group>"; };
+		1F922EAE1FCD740700A7614B /* WBStationManageNetworkViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBStationManageNetworkViewController.m; sourceTree = "<group>"; };
+		1F922EB01FCD744C00A7614B /* WBStationManageTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBStationManageTableViewCell.h; sourceTree = "<group>"; };
+		1F922EB11FCD744C00A7614B /* WBStationManageTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBStationManageTableViewCell.m; sourceTree = "<group>"; };
+		1F922EB31FCD758C00A7614B /* WBStationManageNetInterfacesModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBStationManageNetInterfacesModel.h; sourceTree = "<group>"; };
+		1F922EB41FCD758C00A7614B /* WBStationManageNetInterfacesModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBStationManageNetInterfacesModel.m; sourceTree = "<group>"; };
+		1F922EB61FCD75EC00A7614B /* WBStationManageNetInterfaceAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBStationManageNetInterfaceAPI.h; sourceTree = "<group>"; };
+		1F922EB71FCD75EC00A7614B /* WBStationManageNetInterfaceAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBStationManageNetInterfaceAPI.m; sourceTree = "<group>"; };
 		1FB090091FBC51990020B304 /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
 		1FB0900A1FBC51990020B304 /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
 		1FC2AFED1FC5299300E8C9DE /* WBCloudLoginAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBCloudLoginAPI.h; sourceTree = "<group>"; };
@@ -1511,6 +1582,7 @@
 		1F4D756A1FAC4BB700E6516C /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				1F922E6C1FCD310E00A7614B /* StationManage */,
 				C138D0441FB89F85000CF518 /* Files */,
 				1F7CE6601FB002F9004467C8 /* Download */,
 				F67D64281FAC7DFE00E23D16 /* Photos */,
@@ -1683,6 +1755,7 @@
 		1F61E52C1FAC7AEB008ACEFB /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				1F922E711FCD340700A7614B /* StationManage */,
 				C139DFC01FC7DFC7007098E5 /* photo */,
 				1F7CE6531FB0028C004467C8 /* Based */,
 				1F7CE62C1FAC824E004467C8 /* Login */,
@@ -1756,6 +1829,91 @@
 			path = Handler;
 			sourceTree = "<group>";
 		};
+		1F922E6C1FCD310E00A7614B /* StationManage */ = {
+			isa = PBXGroup;
+			children = (
+				1F922EA91FCD5CD900A7614B /* Model */,
+				1F922E781FCD3DDF00A7614B /* View */,
+				1F922E6D1FCD312900A7614B /* ViewController */,
+			);
+			path = StationManage;
+			sourceTree = "<group>";
+		};
+		1F922E6D1FCD312900A7614B /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1F922E6E1FCD315600A7614B /* WBStationManageRootViewController.h */,
+				1F922E6F1FCD315600A7614B /* WBStationManageRootViewController.m */,
+				1F922EA21FCD4D5D00A7614B /* WBStationManageTimeViewController.h */,
+				1F922EA31FCD4D5D00A7614B /* WBStationManageTimeViewController.m */,
+				1F922EAD1FCD740700A7614B /* WBStationManageNetworkViewController.h */,
+				1F922EAE1FCD740700A7614B /* WBStationManageNetworkViewController.m */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		1F922E711FCD340700A7614B /* StationManage */ = {
+			isa = PBXGroup;
+			children = (
+				1F922E9D1FCD431F00A7614B /* ic_access_time.png */,
+				1F922E9C1FCD431F00A7614B /* ic_access_time@2x.png */,
+				1F922E9E1FCD432000A7614B /* ic_access_time@3x.png */,
+				1F922E981FCD42F900A7614B /* ic_power_settings.png */,
+				1F922E961FCD42F800A7614B /* ic_power_settings@2x.png */,
+				1F922E971FCD42F800A7614B /* ic_power_settings@3x.png */,
+				1F922E911FCD42DE00A7614B /* ic_network.png */,
+				1F922E921FCD42DE00A7614B /* ic_network@2x.png */,
+				1F922E901FCD42DE00A7614B /* ic_network@3x.png */,
+				1F922E8A1FCD429800A7614B /* ic_person_add.png */,
+				1F922E8C1FCD429900A7614B /* ic_person_add@2x.png */,
+				1F922E8B1FCD429800A7614B /* ic_person_add@3x.png */,
+				1F922E861FCD426000A7614B /* ic_dns.png */,
+				1F922E841FCD425F00A7614B /* ic_dns@2x.png */,
+				1F922E851FCD425F00A7614B /* ic_dns@3x.png */,
+				1F922E7F1FCD3FBF00A7614B /* ic_chevron_right.png */,
+				1F922E801FCD3FC000A7614B /* ic_chevron_right@2x.png */,
+				1F922E7E1FCD3FBF00A7614B /* ic_chevron_right@3x.png */,
+				1F922E731FCD341F00A7614B /* ic_dns_black.png */,
+				1F922E741FCD341F00A7614B /* ic_dns_black@2x.png */,
+				1F922E721FCD341F00A7614B /* ic_dns_black@3x.png */,
+			);
+			path = StationManage;
+			sourceTree = "<group>";
+		};
+		1F922E781FCD3DDF00A7614B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1F922E791FCD3E1400A7614B /* WBStationManageRootTableViewCell.h */,
+				1F922E7A1FCD3E1400A7614B /* WBStationManageRootTableViewCell.m */,
+				1F922E7B1FCD3E1400A7614B /* WBStationManageRootTableViewCell.xib */,
+				1F922EB01FCD744C00A7614B /* WBStationManageTableViewCell.h */,
+				1F922EB11FCD744C00A7614B /* WBStationManageTableViewCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1F922EA51FCD5C4F00A7614B /* StationManage */ = {
+			isa = PBXGroup;
+			children = (
+				1F922EA61FCD5CD100A7614B /* WBStationManageTimedateAPI.h */,
+				1F922EA71FCD5CD100A7614B /* WBStationManageTimedateAPI.m */,
+				1F922EB61FCD75EC00A7614B /* WBStationManageNetInterfaceAPI.h */,
+				1F922EB71FCD75EC00A7614B /* WBStationManageNetInterfaceAPI.m */,
+			);
+			path = StationManage;
+			sourceTree = "<group>";
+		};
+		1F922EA91FCD5CD900A7614B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1F922EAA1FCD5D2100A7614B /* WBStationManageTimeDateModel.h */,
+				1F922EAB1FCD5D2100A7614B /* WBStationManageTimeDateModel.m */,
+				1F922EB31FCD758C00A7614B /* WBStationManageNetInterfacesModel.h */,
+				1F922EB41FCD758C00A7614B /* WBStationManageNetInterfacesModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		1FFEADAB1FB087A100CD3068 /* Manage */ = {
 			isa = PBXGroup;
 			children = (
@@ -1804,6 +1962,7 @@
 		71A3D66B1FB57D8C0002B8B1 /* APIs */ = {
 			isa = PBXGroup;
 			children = (
+				1F922EA51FCD5C4F00A7614B /* StationManage */,
 				C1196BB81FC3BFC100E96973 /* Cloud */,
 				C138D0631FB99AF3000CF518 /* Media */,
 				C138D0471FB8A5D7000CF518 /* Drives */,
@@ -2797,6 +2956,7 @@
 				F68310AD1FB30AAE005AC578 /* comment_share@3x.png in Resources */,
 				F683115F1FB30AAE005AC578 /* photo_plus_open.png in Resources */,
 				F68310BC1FB30AAE005AC578 /* dot@2x.png in Resources */,
+				1F922EA11FCD432000A7614B /* ic_access_time@3x.png in Resources */,
 				F68310881FB30AAE005AC578 /* Arrow@2x.png in Resources */,
 				F683107F1FB30AAE005AC578 /* add_album@3x.png in Resources */,
 				F68311B21FB30AAF005AC578 /* user.png in Resources */,
@@ -2818,6 +2978,7 @@
 				F683109A1FB30AAE005AC578 /* cancel@2x.png in Resources */,
 				F683108C1FB30AAE005AC578 /* Arrow_down@3x.png in Resources */,
 				F68311201FB30AAE005AC578 /* lock_line@2x.png in Resources */,
+				1F922E991FCD42F900A7614B /* ic_power_settings@2x.png in Resources */,
 				F68310E31FB30AAE005AC578 /* hard.png in Resources */,
 				1FD7A1041FB05A51000D4CB3 /* key.png in Resources */,
 				F6830EF21FB2FEF3005AC578 /* FMUserSetting.xib in Resources */,
@@ -2913,6 +3074,7 @@
 				F68311141FB30AAE005AC578 /* info_user@2x.png in Resources */,
 				F683112D1FB30AAE005AC578 /* mask-layer@3x.png in Resources */,
 				F68310A71FB30AAE005AC578 /* check_circle_select@3x.png in Resources */,
+				1F922E9A1FCD42F900A7614B /* ic_power_settings@3x.png in Resources */,
 				F6830EC61FB2FD1D005AC578 /* FMUsersLoginMangeCell.xib in Resources */,
 				1F922E6A1FC8833100A7614B /* share_files@3x.png in Resources */,
 				F68311441FB30AAE005AC578 /* open_in.png in Resources */,
@@ -2923,10 +3085,12 @@
 				F68311501FB30AAE005AC578 /* photo-album.png in Resources */,
 				F68311191FB30AAE005AC578 /* local.png in Resources */,
 				F68310DD1FB30AAE005AC578 /* good_red_select.png in Resources */,
+				1F922E771FCD342000A7614B /* ic_dns_black@2x.png in Resources */,
 				F68311001FB30AAE005AC578 /* ic_mode_edit_18pt.png in Resources */,
 				1FD7A1051FB05A51000D4CB3 /* logo@2x.png in Resources */,
 				F68311541FB30AAE005AC578 /* photo-album_select@2x.png in Resources */,
 				F683115D1FB30AAE005AC578 /* photo_plus_close@2x.png in Resources */,
+				1F922E831FCD3FC100A7614B /* ic_chevron_right@2x.png in Resources */,
 				F683111D1FB30AAE005AC578 /* local_select@2x.png in Resources */,
 				F68310E21FB30AAE005AC578 /* handrail@3x.png in Resources */,
 				F68310C71FB30AAE005AC578 /* fab_share.png in Resources */,
@@ -2939,6 +3103,7 @@
 				F68310D21FB30AAE005AC578 /* float_btn_del@2x.png in Resources */,
 				C139DFCA1FC7DFC7007098E5 /* ic_pause.png in Resources */,
 				F68311921FB30AAF005AC578 /* small_0.png in Resources */,
+				1F922E9B1FCD42F900A7614B /* ic_power_settings.png in Resources */,
 				1F4D75A71FAC4BB800E6516C /* DGPopUpViewTextView.xib in Resources */,
 				F68311AF1FB30AAF005AC578 /* up.png in Resources */,
 				F68311AB1FB30AAF005AC578 /* transparency_bg@3x.png in Resources */,
@@ -2951,6 +3116,7 @@
 				F68311B41FB30AAF005AC578 /* user@3x.png in Resources */,
 				1FD7A10E1FB05A51000D4CB3 /* WeChat.png in Resources */,
 				F68311021FB30AAE005AC578 /* ic_mode_edit_18pt@3x.png in Resources */,
+				1F922E7D1FCD3E1400A7614B /* WBStationManageRootTableViewCell.xib in Resources */,
 				F68310EB1FB30AAE005AC578 /* head-portrait@3x.png in Resources */,
 				F68311A01FB30AAF005AC578 /* storage@3x.png in Resources */,
 				F68310DA1FB30AAE005AC578 /* good_red.png in Resources */,
@@ -2963,6 +3129,7 @@
 				1FD7A0EE1FB05A45000D4CB3 /* back_gray@2x.png in Resources */,
 				F68311111FB30AAE005AC578 /* info@2x.png in Resources */,
 				F68310971FB30AAE005AC578 /* bg_pic@2x.jpg in Resources */,
+				1F922E811FCD3FC100A7614B /* ic_chevron_right@3x.png in Resources */,
 				F68310CA1FB30AAE005AC578 /* fangzheng.ttf in Resources */,
 				F683112C1FB30AAE005AC578 /* mask-layer@2x.png in Resources */,
 				F68310891FB30AAE005AC578 /* Arrow@3x.png in Resources */,
@@ -2970,6 +3137,7 @@
 				F683119C1FB30AAF005AC578 /* stationLogo@2x.png in Resources */,
 				F68311C51FB30AAF005AC578 /* praise_line@2x.png in Resources */,
 				F68310E51FB30AAE005AC578 /* hard@3x.png in Resources */,
+				1F922EA01FCD432000A7614B /* ic_access_time.png in Resources */,
 				C139DFCC1FC7DFC7007098E5 /* play2@2x.png in Resources */,
 				F68310CF1FB30AAE005AC578 /* file_more@2x.png in Resources */,
 				F683118F1FB30AAF005AC578 /* share_select.png in Resources */,
@@ -2990,6 +3158,7 @@
 				F68310BA1FB30AAE005AC578 /* del_user@3x.png in Resources */,
 				F68310861FB30AAE005AC578 /* all@3x.png in Resources */,
 				F68310961FB30AAE005AC578 /* bg_pic.jpg in Resources */,
+				1F922E881FCD426000A7614B /* ic_dns@3x.png in Resources */,
 				F68311991FB30AAF005AC578 /* small_3@2x.png in Resources */,
 				F68310841FB30AAE005AC578 /* all.png in Resources */,
 				C1D2D6CA1FC8587000EE1C46 /* livePhoto@3x.png in Resources */,
@@ -3000,6 +3169,7 @@
 				F68310821FB30AAE005AC578 /* album_share@2x.png in Resources */,
 				F68310ED1FB30AAE005AC578 /* help@2x.png in Resources */,
 				F683113B1FB30AAE005AC578 /* nav_left_close@2x.png in Resources */,
+				1F922E951FCD42DF00A7614B /* ic_network@2x.png in Resources */,
 				1FD7A1141FB05A51000D4CB3 /* key@3x.png in Resources */,
 				F68311CF1FB30AAF005AC578 /* send@3x.png in Resources */,
 				F683107A1FB30AAE005AC578 /* About.png in Resources */,
@@ -3038,7 +3208,9 @@
 				F68310F61FB30AAE005AC578 /* ic_arrow_drop_down@3x.png in Resources */,
 				F68311BD1FB30AAF005AC578 /* album_comment@3x.png in Resources */,
 				F68311251FB30AAE005AC578 /* login.png in Resources */,
+				1F922E761FCD342000A7614B /* ic_dns_black.png in Resources */,
 				F68311061FB30AAE005AC578 /* icon_close.png in Resources */,
+				1F922E941FCD42DF00A7614B /* ic_network.png in Resources */,
 				F68310FD1FB30AAE005AC578 /* ic_lock_outline.png in Resources */,
 				F683112E1FB30AAE005AC578 /* menu.png in Resources */,
 				F68311961FB30AAF005AC578 /* small_1@2x.png in Resources */,
@@ -3067,9 +3239,11 @@
 				C139DFD11FC7DFC7007098E5 /* ic_play@2x.png in Resources */,
 				F68311701FB30AAE005AC578 /* praise@3x.png in Resources */,
 				F68311301FB30AAE005AC578 /* menu@3x.png in Resources */,
+				1F922E931FCD42DF00A7614B /* ic_network@3x.png in Resources */,
 				F68310C91FB30AAE005AC578 /* fab_share@3x.png in Resources */,
 				F68311241FB30AAE005AC578 /* lock_photo@3x.png in Resources */,
 				F683117F1FB30AAF005AC578 /* select@3x.png in Resources */,
+				1F922E821FCD3FC100A7614B /* ic_chevron_right.png in Resources */,
 				1FD7A1171FB05A51000D4CB3 /* key@2x.png in Resources */,
 				F68311CC1FB30AAF005AC578 /* send-_select@3x.png in Resources */,
 				F68310B71FB30AAE005AC578 /* del@3x.png in Resources */,
@@ -3084,6 +3258,7 @@
 				F683112F1FB30AAE005AC578 /* menu@2x.png in Resources */,
 				F68310E01FB30AAE005AC578 /* handrail.png in Resources */,
 				F683108B1FB30AAE005AC578 /* Arrow_down@2x.png in Resources */,
+				1F922E9F1FCD432000A7614B /* ic_access_time@2x.png in Resources */,
 				F68310E41FB30AAE005AC578 /* hard@2x.png in Resources */,
 				F683109F1FB30AAE005AC578 /* check-box_select.png in Resources */,
 				F683109D1FB30AAE005AC578 /* check-box@2x.png in Resources */,
@@ -3093,6 +3268,7 @@
 				F683119D1FB30AAF005AC578 /* stationLogo@3x.png in Resources */,
 				F68310AF1FB30AAE005AC578 /* date_bg@2x.png in Resources */,
 				1FD7A10A1FB05A51000D4CB3 /* PLUS.png in Resources */,
+				1F922E871FCD426000A7614B /* ic_dns@2x.png in Resources */,
 				1F4D75CC1FAC5FF900E6516C /* FMCloudUserTableViewCell.xib in Resources */,
 				F68311971FB30AAF005AC578 /* small_1@3x.png in Resources */,
 				F68311C81FB30AAF005AC578 /* praise_solid_select@2x.png in Resources */,
@@ -3133,7 +3309,9 @@
 				F68311391FB30AAE005AC578 /* more_highlight@3x.png in Resources */,
 				F68310DF1FB30AAE005AC578 /* good_red_select@3x.png in Resources */,
 				1F3F998A1FB0353F00D6CC64 /* LocalDownloadTableViewCell.xib in Resources */,
+				1F922E8D1FCD429900A7614B /* ic_person_add.png in Resources */,
 				F68311AC1FB30AAF005AC578 /* unselected.png in Resources */,
+				1F922E751FCD342000A7614B /* ic_dns_black@3x.png in Resources */,
 				F683111F1FB30AAE005AC578 /* lock_line.png in Resources */,
 				F68311A61FB30AAF005AC578 /* tabbar_selected_background.png in Resources */,
 				F68311561FB30AAE005AC578 /* photo.png in Resources */,
@@ -3149,6 +3327,7 @@
 				F683118B1FB30AAF005AC578 /* share_red@3x.png in Resources */,
 				F68311771FB30AAE005AC578 /* return_resize.png in Resources */,
 				F683117A1FB30AAF005AC578 /* Roboto-Light.ttf in Resources */,
+				1F922E891FCD426000A7614B /* ic_dns.png in Resources */,
 				F68310B51FB30AAE005AC578 /* del.png in Resources */,
 				F68311721FB30AAE005AC578 /* praise_share@2x.png in Resources */,
 				F68310FA1FB30AAE005AC578 /* ic_https.png in Resources */,
@@ -3158,6 +3337,8 @@
 				F68310B11FB30AAE005AC578 /* Default-568h@2x.png in Resources */,
 				F68310A51FB30AAE005AC578 /* check_circle_select.png in Resources */,
 				F68311A81FB30AAF005AC578 /* touxiang.jpg in Resources */,
+				1F922E8E1FCD429900A7614B /* ic_person_add@3x.png in Resources */,
+				1F922E8F1FCD429900A7614B /* ic_person_add@2x.png in Resources */,
 				F6830F171FB300D2005AC578 /* FMLeftMenuCell.xib in Resources */,
 				F68310E91FB30AAE005AC578 /* head-portrait.png in Resources */,
 				F68311B51FB30AAF005AC578 /* virtual_machine.png in Resources */,
@@ -3290,6 +3471,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F922EA41FCD4D5D00A7614B /* WBStationManageTimeViewController.m in Sources */,
+				1F922E7C1FCD3E1400A7614B /* WBStationManageRootTableViewCell.m in Sources */,
 				C139DFBE1FC6B9F3007098E5 /* FMMediaRamdomKeyAPI.m in Sources */,
 				1F5D21831FBC3DB0006C65AA /* FilesModel.m in Sources */,
 				1F4D75C71FAC5EB500E6516C /* GCDAsyncSocket.m in Sources */,
@@ -3334,6 +3517,7 @@
 				F6830EBD1FB2FD10005AC578 /* FMUserLoginSettingVC.m in Sources */,
 				C11EAB2E1FC43611007C9BA7 /* WBCloudGetStationsAPI.m in Sources */,
 				F6D8CC3D1FB42D6500673824 /* UIApplication+JYTopVC.m in Sources */,
+				1F922EAF1FCD740700A7614B /* WBStationManageNetworkViewController.m in Sources */,
 				C138D0571FB94396000CF518 /* FLDrivesAPI.m in Sources */,
 				C138D05A1FB94D8D000CF518 /* FLGetDriveDirAPI.m in Sources */,
 				1F1ABA001FB978EB006EB1FC /* CSDownloadTaskQueue.m in Sources */,
@@ -3355,6 +3539,7 @@
 				1F4D759C1FAC4BB800E6516C /* UIButton+EnlargeEdge.m in Sources */,
 				1FC2AFF21FC52B4800E8C9DE /* CloudLoginModel.m in Sources */,
 				1F4D75CB1FAC5FF900E6516C /* FMCloudUserTableViewCell.m in Sources */,
+				1F922EB51FCD758C00A7614B /* WBStationManageNetInterfacesModel.m in Sources */,
 				F675614D1FB3428F00E3277F /* UIImage+MFTint.m in Sources */,
 				1F5D217D1FBC351A006C65AA /* FilesDataSourceManager.m in Sources */,
 				F6D8CC441FB448B800673824 /* UIImage+imageWithColor.m in Sources */,
@@ -3379,9 +3564,11 @@
 				1F1ABA131FB99882006EB1FC /* CSDownloadHelper.m in Sources */,
 				1FFEADB51FB1594900CD3068 /* CSDownloadModel.m in Sources */,
 				F6830EC51FB2FD1D005AC578 /* FMUsersLoginMangeCell.m in Sources */,
+				1F922E701FCD315600A7614B /* WBStationManageRootViewController.m in Sources */,
 				1F1AB9EC1FB968CA006EB1FC /* FLFilesCell.m in Sources */,
 				1F922E671FC8706200A7614B /* CSOneDowloadTask.m in Sources */,
 				1F4D75C61FAC5EB500E6516C /* GCDAsyncUdpSocket.m in Sources */,
+				1F922EAC1FCD5D2100A7614B /* WBStationManageTimeDateModel.m in Sources */,
 				F6830F011FB2FF8C005AC578 /* BaseTableViewCell.m in Sources */,
 				1FC2AFEF1FC5299300E8C9DE /* WBCloudLoginAPI.m in Sources */,
 				F67D64271FAC7D9A00E23D16 /* UIView+JY_ExtendTouchRect.m in Sources */,
@@ -3403,8 +3590,10 @@
 				F6D8CC3A1FB402CB00673824 /* FMBaseFirstVC.m in Sources */,
 				1F4D75D01FAC604100E6516C /* LoginTableViewCell.m in Sources */,
 				F679336D1FB00D9B00C9A7DC /* WBUser+CoreDataClass.m in Sources */,
+				1F922EA81FCD5CD100A7614B /* WBStationManageTimedateAPI.m in Sources */,
 				1FC2AFFB1FC6692D00E8C9DE /* WBGetSystemInformationAPI.m in Sources */,
 				F6830F041FB2FF8C005AC578 /* FMUserSettingCell.m in Sources */,
+				1F922EB21FCD744C00A7614B /* WBStationManageTableViewCell.m in Sources */,
 				F671F1081FB4B8820051DF93 /* JYProcessView.m in Sources */,
 				C138D0601FB970F7000CF518 /* NSString+DeviceName.m in Sources */,
 				F675614E1FB3428F00E3277F /* UITextField+MFClearButton.m in Sources */,
@@ -3422,6 +3611,7 @@
 				F6AAD1881FB049E100DEDBDC /* WBFile+CoreDataClass.m in Sources */,
 				1F4D75A11FAC4BB800E6516C /* FMUserLoginViewController.m in Sources */,
 				F679336E1FB00D9B00C9A7DC /* WBUser+CoreDataProperties.m in Sources */,
+				1F922EB81FCD75EC00A7614B /* WBStationManageNetInterfaceAPI.m in Sources */,
 				71A3D67E1FB5ADAA0002B8B1 /* FMGetJWTAPI.m in Sources */,
 				F6830F151FB300D2005AC578 /* MenuView.m in Sources */,
 				1F4D759E1FAC4BB800E6516C /* UIColor+FM_UserHeadImage.m in Sources */,

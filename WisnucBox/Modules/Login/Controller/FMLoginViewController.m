@@ -91,6 +91,7 @@ WXApiDelegate
 
 - (void)viewWillDisappear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [UIApplication sharedApplication].statusBarStyle =UIStatusBarStyleDefault;
     [_reachabilityTimer invalidate];
     _reachabilityTimer = nil;
     self.browser.delegate = nil;

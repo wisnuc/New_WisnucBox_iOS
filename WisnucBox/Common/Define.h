@@ -50,6 +50,15 @@
 
 #define KDefaultOffset 8
 
+
+#ifdef DEBUG
+#define NSLog(...) NSLog(__VA_ARGS__)
+#define debugMethod() NSLog(@"%s", __func__)
+#else
+#define NSLog(...)
+#define debugMethod()
+#endif
+
 #ifndef weaky
 #if DEBUG
 #if __has_feature(objc_arc)

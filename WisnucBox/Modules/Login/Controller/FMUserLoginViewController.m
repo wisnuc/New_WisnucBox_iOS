@@ -29,6 +29,7 @@
 @implementation FMUserLoginViewController
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     [self.navigationController setNavigationBarHidden:animated];
     [self.loginTextField becomeFirstResponder];
 }
@@ -36,6 +37,7 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.loginTextField resignFirstResponder];
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{

@@ -183,13 +183,16 @@ FilesHelperOpenFilesDelegate
         [SXLoadingView showAlertHUD:@"您所在的文件夹没有文件可以选择" duration:2];
         return;
     }
-    [self.tableView.mj_header setHidden:YES];
-    [UIView animateWithDuration:0.5 animations:^{
-        self.chooseHeadView.transform = CGAffineTransformTranslate(self.chooseHeadView.transform, 0, 64);
-    }];
     [self.chooseHeadView setHidden:NO];
-    _addButton.hidden = NO;
-    self.tabBarController.tabBar.hidden = YES;
+    [self.tableView.mj_header setHidden:YES];
+    [UIView animateWithDuration:0.2 animations:^{
+        self.chooseHeadView.transform = CGAffineTransformTranslate(self.chooseHeadView.transform, 0, 64);
+    }completion:^(BOOL finished) {
+      
+        _addButton.hidden = NO;
+    }];
+
+//    self.tabBarController.tabBar.hidden = YES;
     self.cellStatus = FLFliesCellStatusCanChoose;
     _countLb.text = [NSString stringWithFormat:@"已选%ld个文件",(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
     [self.tableView reloadData];
@@ -202,11 +205,14 @@ FilesHelperOpenFilesDelegate
     }
     
     [self.tableView.mj_header setHidden:NO];
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         self.chooseHeadView.transform = CGAffineTransformTranslate(self.chooseHeadView.transform, 0, -64);
+    } completion:^(BOOL finished) {
+        [self.chooseHeadView setHidden:YES];
+         _addButton.hidden = YES;
     }];
-    [self.chooseHeadView setHidden:YES];
-    _addButton.hidden = YES;
+  
+   
 //    [self.rdv_tabBarController setTabBarHidden:NO animated:YES];
     self.cellStatus = FLFliesCellStatusNormal;
     _countLb.text = [NSString stringWithFormat:@"已选1个文件"];
