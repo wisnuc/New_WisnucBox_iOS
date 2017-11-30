@@ -11,6 +11,7 @@
 #import "WBStationManageTimeViewController.h"
 #import "WBStationManageNetworkViewController.h"
 #import "WBStatioManageEquipmentViewController.h"
+#import "WBStationManageRebotViewController.h"
 #import "FMUserSetting.h"
 
 #define DefaultRowCount 5
@@ -116,7 +117,10 @@ UITableViewDataSource
         }
             break;
         case 4:
-
+        {
+            WBStationManageRebotViewController *rebotViewController = [[WBStationManageRebotViewController alloc]init];
+             [self.navigationController pushViewController:rebotViewController animated:YES];
+        }
             break;
             
         default:

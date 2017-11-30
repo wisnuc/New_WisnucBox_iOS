@@ -10,6 +10,8 @@
 #import "FMUserSettingCell.h"
 #import "FMUserAddVC.h"
 #import "FMUsers.h"
+#import "WBgetStationInfoAPI.h"
+#import "WBStationInfoModel.h"
 
 @interface FMUserSetting ()<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UILabel *deviceNameLb;
@@ -60,11 +62,20 @@
 - (void)displayInfomation{
 //     WBUser *userInfo = ;
     _nameLabel.text = WB_UserService.currentUser.userName;
-    _typeLabel.text = WB_UserService.currentUser.bonjour_name;
+//    _typeLabel.text = WB_UserService.currentUser.bonjour_name;
     _urlLabel.text = WB_UserService.currentUser.sn_address;
 }
 
 - (void)getData{
+    WBgetStationInfoAPI * stationApi = [WBgetStationInfoAPI apiWithServicePath:WB_UserService.currentUser.localAddr];
+    [stationApi startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        //         NSLog(@"%@",request.responseJsonObject);
+        WBStationInfoModel *model = [WBStationInfoModel yy_modelWithJSON:request.responseJsonObject];
+        _typeLabel.text = model.name;
+    } failure:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.error);
+    }];
+    
     FMAsyncUsersAPI * usersApi = [FMAsyncUsersAPI new];
     [SXLoadingView showProgressHUD:@"正在加载..."];
     [usersApi startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {

@@ -7,6 +7,7 @@
 //
 
 #import "WBStationManageRenameViewController.h"
+#import "WBReNameAPI.h"
 
 @interface WBStationManageRenameViewController ()
 
@@ -40,7 +41,18 @@
 }
 
 - (void)patchToReName{
-    
+    if (![_renameTextField.text isEqualToString:_stationName]) {
+        [SXLoadingView showProgressHUDText:@"正在修改设备名,请稍候..." duration:1.2];
+        WBReNameAPI *api = [WBReNameAPI apiWithName:_renameTextField.text];
+        [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+            NSLog(@"%@",request.responseJsonObject);
+            if (self.delegate && [self.delegate respondsToSelector:@selector(reNameComplete)]) {
+                [self.delegate reNameComplete];
+            }
+        } failure:^(__kindof JYBaseRequest *request) {
+            NSLog(@"%@",request.error);
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

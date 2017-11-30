@@ -9,5 +9,6 @@
 #import "JYBaseRequest.h"
 
 @interface WBReNameAPI : JYBaseRequest
-
+@property (nonatomic) NSString * name;
++ (instancetype)apiWithName:(NSString *)name;
 @end
