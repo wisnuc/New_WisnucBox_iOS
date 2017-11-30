@@ -367,7 +367,7 @@ UIDocumentInteractionControllerDelegate
         }else if ([data.actionType isEqualToString:@"下载"]){
             typeString = @"下载成功";
         }else{
-            typeString = @"未知";
+            typeString = @"下载成功";
         }
         cell.transmitTypeLabel.text = typeString;
 //        [CSDateUtil stringWithDate:data.timeDate withFormat:@"yyyy-MM-dd HH:mm:ss"];
