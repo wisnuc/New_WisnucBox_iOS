@@ -1712,7 +1712,6 @@
 			isa = PBXGroup;
 			children = (
 				1FAD742A1FD00B8F00A5D880 /* Upload */,
-				1FAD74181FCFE04600A5D880 /* User */,
 				1F922E6C1FCD310E00A7614B /* StationManage */,
 				C138D0441FB89F85000CF518 /* Files */,
 				1F7CE6601FB002F9004467C8 /* Download */,
@@ -2087,21 +2086,6 @@
 				1F922EE91FCEAAB600A7614B /* WBStationInfoModel.m */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		1FAD74181FCFE04600A5D880 /* User */ = {
-			isa = PBXGroup;
-			children = (
-				1FAD74191FCFE06C00A5D880 /* BindWechat */,
-			);
-			path = User;
-			sourceTree = "<group>";
-		};
-		1FAD74191FCFE06C00A5D880 /* BindWechat */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = BindWechat;
 			sourceTree = "<group>";
 		};
 		1FAD74231FCFE98D00A5D880 /* Model */ = {
@@ -4128,6 +4112,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8SC32MU7TG;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WisnucBox/Common/default.pch;
@@ -4136,6 +4122,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wisnuc.fruit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -4146,6 +4133,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8SC32MU7TG;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WisnucBox/Common/default.pch;
@@ -4154,6 +4143,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wisnuc.fruit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

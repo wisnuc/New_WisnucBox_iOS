@@ -16,7 +16,9 @@ typedef void(^longPressDownloadingBlock)(LocalDownloadingTableViewCell * cell);
 
 @interface LocalDownloadingTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *fileNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *progressLabel;
+//@property (weak, nonatomic) IBOutlet UILabel *progressLabel;
+@property (weak, nonatomic) IBOutlet UIProgressView *progressView;
+
 
 @property (weak, nonatomic) IBOutlet UIImageView *f_ImageView;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;

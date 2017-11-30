@@ -24,21 +24,21 @@
 @implementation CSFileUploadManager
 {
     /**
-     *  下载任务列表
+     *  上传任务列表
      */
     NSMutableArray* _uploadTasks;
     
     /**
-     *  下载任务进行队列
+     *  上传任务进行队列
      */
     CSUploadTaskQueue* _taskDoingQueue;
     /**
-     *  下载任务队列KVO观察者
+     *  上传任务队列KVO观察者
      */
     id _taskDoingQueueKVO;
     
     /**
-     *  下载任务等待队列
+     *  上传任务等待队列
      */
     CSUploadTaskQueue* _taskWaitingQueue;
     /**
@@ -47,7 +47,7 @@
     id _taskWaitingQueueKVO;
     
     /**
-     *  下载任务暂停队列
+     *  上传任务暂停队列
      */
     CSUploadTaskQueue* _taskPausedQueue;
     /**
@@ -81,7 +81,7 @@
         _taskPausedQueue    = [[CSUploadTaskQueue alloc] initWithMaxCapacity:_maxPaused];
         _subject = [RACSubject subject];
         _excuteCount = 0;
-        //初始下载中队列容量变化观察
+        //初始上传中队列容量变化观察
         [self initUploadTaskDoingQueueObserver];
     }
     
@@ -116,7 +116,7 @@ __strong static id _sharedObject = nil;
     
     if ([_taskWaitingQueue full])
     {
-        NSLog(@"等待队列满了，通知客户端达到下载最大限了");
+        NSLog(@"等待队列满了，通知客户端达到上传最大限了");
         
         return;
     }
@@ -257,7 +257,7 @@ __strong static id _sharedObject = nil;
                                                   }
                                                   return ;
                                               }
-                                              //下载失败重新发起下载请求（即重试）
+                                              //上传失败重新发起上传请求（即重试）
                                               [self beginUploadTask:uploadTask begin:begin progress:progress complete:complete];
                                           }
                                           else
@@ -284,11 +284,11 @@ __strong static id _sharedObject = nil;
 //    NSMutableURLRequest* urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[dataUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet  URLQueryAllowedCharacterSet]]]];
 //    [urlRequest setValue:WB_UserService.currentUser.isCloudLogin ? WB_UserService.currentUser.cloudToken : [NSString stringWithFormat:@"JWT %@", WB_UserService.defaultToken] forHTTPHeaderField:@"Authorization"];
 //    NSString* tempPath = [fileModel getUploadTempSavePath];
-//    NSLog(@"临时下载地:%@",tempPath);
-//    //获取已下载文件大小，如果不为零，表示可以继续下载
+//    NSLog(@"临时上传地:%@",tempPath);
+//    //获取已上传文件大小，如果不为零，表示可以继续上传
 //    __block long long currentLength = [CSFileUtil fileSizeForPath:tempPath];
 //    __block long long fileLength;
-//    NSLog(@"已下载文件大小:%lld",currentLength);
+//    NSLog(@"已上传文件大小:%lld",currentLength);
 //
 //    //断点续传
 //    if (currentLength > 0)
@@ -336,7 +336,7 @@ __strong static id _sharedObject = nil;
 //                    }
 //                    return ;
 //                }
-//                //下载失败重新发起下载请求（即重试）
+//                //上传失败重新发起上传请求（即重试）
 //                [self beginUploadTask:UploadTask begin:begin progress:progress complete:complete];
 //            }
 //            else
@@ -359,7 +359,7 @@ __strong static id _sharedObject = nil;
 //            //            NSString* UploadFinishTime = [CSDateUtil stringWithDate:curDate withFormat:@"yyyy-MM-dd HH:mm:ss"];
 //            [fileModel setUploadFinishTime:curDate];
 //
-//            //保存下载完成的文件信息
+//            //保存上传完成的文件信息
 //            NSDictionary* UploadFinishInfo = @{
 //                                                 @"UploadFileName"       : [fileModel getUploadFileName],
 //                                                 @"UploadFinishTime"     : [fileModel getUploadFinishTime],
@@ -379,7 +379,7 @@ __strong static id _sharedObject = nil;
 //                NSLog(@"%@写入成功",finishPlist);
 //            }
 //
-//            //将文件从临时目录内剪切到下载目录
+//            //将文件从临时目录内剪切到上传目录
 //            //                        NSString* tempFile = [fileModel getUploadTempSavePath];
 //            //                        NSString* saveFile = [fileModel getUploadFileSavePath];
 //            //                        [CSFileUtil cutFileAtPath:tempFile toPath:saveFile];
@@ -433,14 +433,14 @@ __strong static id _sharedObject = nil;
 {
     [uploadTask setUploadStatus:CSUploadStatusWaitingForStart];
     
-    if ([_taskDoingQueue full]) //下载队列满了....进入等待队列
+    if ([_taskDoingQueue full]) //上传队列满了....进入等待队列
     {
-        NSLog(@"下载队列满了....进入等待队列.UploadTask = %@",uploadTask);
+        NSLog(@"上传队列满了....进入等待队列.UploadTask = %@",uploadTask);
         
         [_taskWaitingQueue enqueue:uploadTask];
         
     }
-    else //将任务推入下载队列，并开启下载
+    else //将任务推入上传队列，并开启上传
     {
         [_taskDoingQueue enqueue:uploadTask];
         [uploadTask startUploadTask:^(){
@@ -450,16 +450,16 @@ __strong static id _sharedObject = nil;
 }
 
 /**
- *  继续一项下载任务
+ *  继续一项上传任务
  *
  *  @param UploadTask 要继续的任务
  */
 - (void)doContinueOneUploadTaskWith:(CSUploadTask*)uploadTask
 {
     
-    if ([_taskDoingQueue full]) //下载队列满了....进入等待队列
+    if ([_taskDoingQueue full]) //上传队列满了....进入等待队列
     {
-        NSLog(@"下载队列满了....进入等待队列.UploadTask = %@",uploadTask);
+        NSLog(@"上传队列满了....进入等待队列.UploadTask = %@",uploadTask);
         
         //将处于任务暂停状态的，改为等待回复状态
         if ([uploadTask getUploadStatus] == CSUploadStatusPaused)
@@ -470,7 +470,7 @@ __strong static id _sharedObject = nil;
         [_taskWaitingQueue enqueue:uploadTask];
         
     }
-    else //将任务推入下载队列，并恢复下载
+    else //将任务推入上传队列，并恢复上传
     {
         [_taskDoingQueue enqueue:uploadTask];
         //暂停的直接恢复
@@ -503,7 +503,7 @@ __strong static id _sharedObject = nil;
 }
 
 /**
- *  暂停一项下载任务
+ *  暂停一项上传任务
  *
  *  @param UploadTask 要暂停的任务
  */
@@ -523,7 +523,7 @@ __strong static id _sharedObject = nil;
 
 - (void)pauseOneUploadTaskWith:(CSUploadTask*)uploadTask
 {
-    //从下载队列中移除
+    //从上传队列中移除
     [_taskDoingQueue remove:uploadTask];
     
     [self doPauseOneUploadTaskWith:uploadTask];
@@ -546,7 +546,7 @@ __strong static id _sharedObject = nil;
 {
     [self doPauseOneUploadTaskWith:uploadTask];
     
-    //从下载队列中移除
+    //从上传队列中移除
     [_taskDoingQueue remove:uploadTask];
     //从等待队列中移除
     [_taskWaitingQueue remove:uploadTask];
@@ -660,7 +660,7 @@ __strong static id _sharedObject = nil;
 
 #pragma mark - Utilies
 /**
- *  初始化下载队列观察者
+ *  初始化上传队列观察者
  *
  *  @param queue
  */
@@ -674,30 +674,30 @@ __strong static id _sharedObject = nil;
         BOOL isFullOldValue = [[change objectForKey:NSKeyValueChangeOldKey] boolValue];
         BOOL isFullNewValue = [[change objectForKey:NSKeyValueChangeNewKey] boolValue];
         
-        NSLog(@"I see you changed value from \"%@\" to \"%@\" (下载队列)", isFullOldValue ? @"YES" : @"NO", isFullNewValue ? @"YES" : @"NO");
+        NSLog(@"I see you changed value from \"%@\" to \"%@\" (上传队列)", isFullOldValue ? @"YES" : @"NO", isFullNewValue ? @"YES" : @"NO");
         
         if (isFullOldValue == isFullNewValue && isFullNewValue == YES) {
             return;
         }
         
-        //只要下载队列不为空，就从下载等待队列中取出任务，进行下载
+        //只要上传队列不为空，就从上传等待队列中取出任务，进行上传
         if (isFullNewValue == NO)
         {
             
             CSUploadTask* uploadTask = (id<CSUploadTaskProtocol>)[weakWaitingQueue dequeue];
             
-            //开始下载任务
+            //开始上传任务
             if (uploadTask != nil) {
                 
                 [weakOperationQueue enqueue:uploadTask];
                 
-                if ([uploadTask getUploadStatus] == CSUploadStatusWaitingForStart) //开始下载
+                if ([uploadTask getUploadStatus] == CSUploadStatusWaitingForStart) //开始上传
                 {
                     [uploadTask startUploadTask:^(){
                         [uploadTask setUploadStatus:CSUploadStatusUploading];
                     }];
                 }
-                else if([uploadTask getUploadStatus] == CSUploadStatusWaitingForResume) //恢复下载
+                else if([uploadTask getUploadStatus] == CSUploadStatusWaitingForResume) //恢复上传
                 {
                     [uploadTask continueUploadTask:^(){
                         [uploadTask setUploadStatus:CSUploadStatusUploading];
@@ -706,7 +706,7 @@ __strong static id _sharedObject = nil;
             }
             else
             {
-                NSLog(@"下载等待队列为空....");
+                NSLog(@"上传等待队列为空....");
             }
             
         }
@@ -716,7 +716,7 @@ __strong static id _sharedObject = nil;
 }
 
 /**
- *  验证下载文件元数据是否都合法
+ *  验证上传文件元数据是否都合法
  *
  *  @param fileModel
  *

@@ -62,7 +62,6 @@
 
 - (void)requestForBackupPhotos:(void(^)(BOOL shouldUpload))callback;
 
-- (void)readyUploadFilesWithFilePath:(NSString *)filePath Complete:(void(^)(NSError *))callback;
 
 - (void)cancelFilesUplod;
 @end
@@ -132,8 +131,6 @@
 + (instancetype)initWithAsset:(JYAsset *)asset;
 
 - (void)startUseTimeStamp:(BOOL)yesOrNo completeBlock:(void(^)(NSError * , id))callback;
-
-- (void)uploadFilesWithFilePath:(NSString *)filePath Progress:(void (^)(NSProgress *))progress Complete:(void(^)(NSError *))callback;
 
 // must call callback EABORT
 - (void)cancel;

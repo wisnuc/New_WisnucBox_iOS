@@ -22,6 +22,7 @@ typedef void(^longPressBlock)(LocalDownloadTableViewCell * cell);
 @property (weak, nonatomic) IBOutlet UILabel *downloadedSizeLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *f_ImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *layerView;
+@property (weak, nonatomic) IBOutlet UILabel *transmitTypeLabel;
 @property (nonatomic) longPressBlock longpressBlock;
 @property (nonatomic) LocalFliesCellStatus status;
 @end

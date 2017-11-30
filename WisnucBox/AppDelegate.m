@@ -13,6 +13,8 @@
 #import "FirstFilesViewController.h"
 #import "JYProcessView.h"
 #import "FMUserEditVC.h"
+#import "CSUploadHelper.h"
+#import "LocalDownloadViewController.h"
 
 @interface AppDelegate () <WXApiDelegate>
 @property (nonatomic,strong) FMLoginViewController *loginController;
@@ -64,6 +66,8 @@
         
         [WB_AppServices updateCurrentUserInfoWithCompleteBlock:nil];
     });
+    
+    [[CSUploadHelper shareManager]startUploadAction];
     FirstFilesViewController *filesViewController = [[FirstFilesViewController alloc]init];
     NavViewController *nav1 = [[NavViewController alloc] initWithRootViewController:photosVC];
     NavViewController *nav2 = [[NavViewController alloc] initWithRootViewController:filesViewController];
@@ -194,10 +198,14 @@
             {
                 NSLog(@"%@写入失败",saveFile);
             }else{
-                [WB_AppServices readyUploadFilesWithFilePath:saveFile Complete:^(NSError *error) {
-                    if (!error) {
-                    }
-                }];
+                [[CSUploadHelper shareManager] readyUploadFilesWithFilePath:saveFile];
+                CYLTabBarController * tVC = (CYLTabBarController *)MyAppDelegate.window.rootViewController;
+                NavViewController * selectVC = (NavViewController *)tVC.selectedViewController;
+               LocalDownloadViewController *localViewController  = [[LocalDownloadViewController alloc]init];
+                NSLog(@"%@",NSStringFromClass([[UIViewController getCurrentVC] class]));
+                if ([selectVC isKindOfClass:[NavViewController class]]) {
+                    [selectVC  pushViewController:localViewController animated:YES];
+                }
                 NSLog(@"%@写入成功",saveFile);
                 
             }

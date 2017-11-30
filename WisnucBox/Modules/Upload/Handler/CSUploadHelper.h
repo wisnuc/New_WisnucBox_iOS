@@ -23,4 +23,6 @@
 + (void)destroyAll;
 
 @property(weak,nonatomic)id<UploadHelperDelegate> delegate;
+- (void)readyUploadFilesWithFilePath:(NSString *)filePath;
+- (void)startUploadAction;
 @end

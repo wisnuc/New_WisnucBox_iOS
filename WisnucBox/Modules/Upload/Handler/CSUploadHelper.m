@@ -48,12 +48,30 @@ __strong static id _sharedObject = nil;
     return self;
 }
 
+
+
+- (void)readyUploadFilesWithFilePath:(NSString *)filePath{
+    @weaky(self);
+    if (!WB_UserService.currentUser.uploadFileDir) {
+    [WB_NetService getUserBackupDirName:BackUpFilesDirName BackupDir:^(NSError *error, NSString *entryUUID) {
+        if(error){
+            [SXLoadingView showProgressHUDText:@"上传失败" duration:1.0];
+            return ;
+        }
+        WB_UserService.currentUser.uploadFileDir = entryUUID;
+        [weak_self uploadFileWithFilePath:filePath];
+    }];
+    }else{
+        [weak_self uploadFileWithFilePath:filePath];
+    }
+}
+
 - (void)uploadFileWithFilePath:(NSString *)filePath{
     _uploadIdCount++;
     NSString* suffixName = [filePath lastPathComponent];
     NSFileManager *manager = [NSFileManager defaultManager];
     if (![manager fileExistsAtPath:filePath]) {
-                [SXLoadingView showProgressHUDText:@"该文件不存在" duration:1.0];
+        [SXLoadingView showProgressHUDText:@"该文件不存在" duration:1.0];
         return;
     }
     
@@ -70,7 +88,7 @@ __strong static id _sharedObject = nil;
     [uploadTask setUploadTaskId:[NSString stringWithFormat:@"%d", _uploadIdCount]];
     [uploadTask setUploadFileModel:uploadFileModel];
     [uploadTask setUploadUIBinder:self];
-
+    
     if(_manager.uploadingTasks.count>0){
         __block BOOL find = NO;
         [_manager.uploadingTasks enumerateObjectsUsingBlock:^(CSUploadTask * obj, NSUInteger idx, BOOL *stop) {
@@ -83,7 +101,7 @@ __strong static id _sharedObject = nil;
             [_manager addUploadTask:uploadTask];
             [self startUploadWithTask:uploadTask];
         }
-
+        
     } else{
         [_manager addUploadTask:uploadTask];
         [self startUploadWithTask:uploadTask];
@@ -93,14 +111,15 @@ __strong static id _sharedObject = nil;
 
 - (void)startUploadWithTask:(CSUploadTask*)uploadTask
 {
+    @weaky(self);
     [_manager uploadDataAsyncWithTask:uploadTask
                                   begin:^{
                                       [self updateUIWithTask:uploadTask];
-                                      NSLog(@"准备开始下载...");
+                                      NSLog(@"准备开始上传...");
                                   }
-                               progress:^(NSProgress *UploadProgress) {
+                               progress:^(NSProgress *uploadProgress) {
                                    if (uploadTask.progressBlock) {
-                                       uploadTask.progressBlock(UploadProgress);
+                                       uploadTask.progressBlock(uploadProgress);
                                    }
                                    //                                  });
                                    
@@ -118,6 +137,9 @@ __strong static id _sharedObject = nil;
                                        NSLog(@"上传成功");
                                        uploadTask.uploadStatus = CSUploadStatusSuccess;
                                        [self updateUIWithTask:uploadTask];
+                                       if (self.needUploadArray.count >0) {
+                                           [self startUploadAction];
+                                       }
                                    }
                                    
                                }];
@@ -152,7 +174,18 @@ __strong static id _sharedObject = nil;
     
 }
 
+- (void)startUploadAction{
+    @weaky(self);
+    [self getAllNeedUploadFiles];
+    if (self.needUploadArray.count>0) {
+        [_needUploadArray enumerateObjectsUsingBlock:^(NSString *filePath, NSUInteger idx, BOOL * _Nonnull stop) {
+            [weak_self uploadFileWithFilePath:filePath];
+        }];
+    }
+}
+
 - (void)getAllNeedUploadFiles{
+    [self.needUploadArray removeAllObjects];
     NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:KUploadFilesDocument createIfNotExist:YES];
     NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager]enumeratorAtPath:savePath];
     for (NSString *fileName in enumerator)
@@ -161,6 +194,7 @@ __strong static id _sharedObject = nil;
        [self.needUploadArray addObject:saveFile];
     }
 }
+
 
 - (NSMutableArray *)needUploadArray{
     if (!_needUploadArray) {

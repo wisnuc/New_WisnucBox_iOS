@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="63.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="文件名" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0XN-iL-tK0">
@@ -38,9 +38,9 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="文件大小" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F5k-K7-voi">
-                        <rect key="frame" x="254.5" y="41" width="49.5" height="14.5"/>
+                        <rect key="frame" x="60" y="41" width="49.5" height="14.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="textColor" red="0.60392156862745094" green="0.60392156862745094" blue="0.60392156862745094" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="file_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="maz-4p-iBu">
@@ -50,21 +50,34 @@
                             <constraint firstAttribute="width" constant="30" id="VLw-pm-7Yb"/>
                         </constraints>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="类型" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="emh-0b-PJf">
+                        <rect key="frame" x="129.5" y="41" width="25" height="14.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="zXZ-1n-A8v" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="3Jr-Kd-GTW"/>
+                    <constraint firstItem="emh-0b-PJf" firstAttribute="bottom" secondItem="F5k-K7-voi" secondAttribute="bottom" id="6G1-EO-kBU"/>
                     <constraint firstItem="maz-4p-iBu" firstAttribute="centerX" secondItem="zXZ-1n-A8v" secondAttribute="centerX" id="E9l-bS-egS"/>
                     <constraint firstAttribute="trailing" secondItem="0XN-iL-tK0" secondAttribute="trailing" constant="16" id="EcZ-8y-KIe"/>
                     <constraint firstItem="maz-4p-iBu" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="NGX-3U-X0M"/>
                     <constraint firstItem="zXZ-1n-A8v" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="OpA-hT-Dof"/>
+                    <constraint firstItem="F5k-K7-voi" firstAttribute="leading" secondItem="zXZ-1n-A8v" secondAttribute="trailing" constant="10" id="b42-8M-jdy"/>
                     <constraint firstAttribute="bottom" secondItem="F5k-K7-voi" secondAttribute="bottom" constant="8" id="bx9-WY-YeH"/>
+                    <constraint firstItem="emh-0b-PJf" firstAttribute="leading" secondItem="F5k-K7-voi" secondAttribute="trailing" constant="20" id="hi3-eT-snY"/>
                     <constraint firstItem="0XN-iL-tK0" firstAttribute="leading" secondItem="zXZ-1n-A8v" secondAttribute="trailing" constant="10" id="jqj-wH-koD"/>
-                    <constraint firstAttribute="trailing" secondItem="F5k-K7-voi" secondAttribute="trailing" constant="16" id="k7B-Tx-gW5"/>
                     <constraint firstItem="0XN-iL-tK0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="lDf-IM-JLr"/>
                     <constraint firstItem="maz-4p-iBu" firstAttribute="centerY" secondItem="zXZ-1n-A8v" secondAttribute="centerY" id="lbJ-mT-cDB"/>
                     <constraint firstItem="kEP-Wr-wo2" firstAttribute="leading" secondItem="zXZ-1n-A8v" secondAttribute="trailing" constant="10" id="nA5-m7-fc2"/>
                     <constraint firstItem="F5k-K7-voi" firstAttribute="centerY" secondItem="kEP-Wr-wo2" secondAttribute="centerY" id="r8E-z6-oKF"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="subviews">
+                        <exclude reference="kEP-Wr-wo2"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="downloadTimeLabel" destination="kEP-Wr-wo2" id="1EJ-4R-69i"/>
@@ -72,6 +85,7 @@
                 <outlet property="f_ImageView" destination="maz-4p-iBu" id="uwM-N1-pwu"/>
                 <outlet property="fileNameLabel" destination="0XN-iL-tK0" id="lda-2E-aUH"/>
                 <outlet property="layerView" destination="zXZ-1n-A8v" id="qbX-XU-3AG"/>
+                <outlet property="transmitTypeLabel" destination="emh-0b-PJf" id="0uC-Uk-wJK"/>
             </connections>
             <point key="canvasLocation" x="26" y="62"/>
         </tableViewCell>
