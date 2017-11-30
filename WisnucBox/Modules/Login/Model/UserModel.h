@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface UserModel : NSObject
 //用户名
 @property (nonatomic) NSString * username;
@@ -18,4 +19,5 @@
 
 @property (nonatomic) NSNumber * disabled;
 
+@property (nonatomic) GlobalModel *global;
 @end

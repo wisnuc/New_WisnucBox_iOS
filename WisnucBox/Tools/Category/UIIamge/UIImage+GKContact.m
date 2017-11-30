@@ -285,6 +285,18 @@ static inline NSString *GKContactKey(NSString *initials, CGSize size, UIColor *b
     return newImage;
 }
 
-
++ (UIImage *)imageCirclewithImage:(UIImage *)image{
+    UIImage *originImage = image;
+    UIGraphicsBeginImageContext(originImage.size);
+    UIBezierPath *path =[UIBezierPath bezierPathWithOvalInRect:CGRectMake( 0, 0, image.size.width, image.size.height)];
+    
+    [path addClip];
+    
+    [originImage drawAtPoint:CGPointZero];
+    originImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    return originImage;
+}
 
 @end

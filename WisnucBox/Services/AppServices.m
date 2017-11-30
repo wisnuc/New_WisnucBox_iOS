@@ -158,7 +158,7 @@
 // 10001 : get token error
 // 10002 : get userHome error
 // 10003 : get userBackupDir error
-- (void)loginWithBasic:(NSString *)basic userUUID:(NSString *)uuid StationName:(NSString *)stationName UserName:(NSString *)userName addr:(NSString *)addr isWechat:(BOOL)isWechat completeBlock:(void(^)(NSError *error, WBUser *user))callback {
+- (void)loginWithBasic:(NSString *)basic userUUID:(NSString *)uuid StationName:(NSString *)stationName UserName:(NSString *)userName addr:(NSString *)addr AvatarURL:(NSString *)avatar isWechat:(BOOL)isWechat completeBlock:(void(^)(NSError *error, WBUser *user))callback {
     @weaky(self);
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
     NSString* urlString = [NSString stringWithFormat:@"http://%@:3000/", addr];
@@ -175,6 +175,9 @@
         user.isCloudLogin = NO;
         user.bonjour_name = stationName;
         user.sn_address = addr;
+        if (avatar) {
+            user.avaterURL = avatar;
+        }
         [WB_UserService setCurrentUser:user];
         [WB_UserService synchronizedCurrentUser];
         NSLog(@"GET Token Success");

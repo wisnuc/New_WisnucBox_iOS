@@ -12,6 +12,7 @@
 #import "AppServices.h"
 #import "FirstFilesViewController.h"
 #import "JYProcessView.h"
+#import "FMUserEditVC.h"
 
 @interface AppDelegate () <WXApiDelegate>
 @property (nonatomic,strong) FMLoginViewController *loginController;
@@ -233,7 +234,11 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [(FMLoginViewController *)[UIViewController getCurrentVC] weChatCallBackRespCode:aresp.code];
                 });
-            }else {
+            }else  if([[UIViewController getCurrentVC] isKindOfClass:[FMUserEditVC class]]){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [(FMUserEditVC *)[UIViewController getCurrentVC] weChatCallBackRespCode:aresp.code];
+                });
+            }else{
                 [SXLoadingView hideProgressHUD];
             }
         }

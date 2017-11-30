@@ -138,6 +138,10 @@
 		1F922F081FCFB40600A7614B /* ic_build@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922F051FCFB40500A7614B /* ic_build@3x.png */; };
 		1F922F091FCFB40600A7614B /* ic_build.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F922F061FCFB40500A7614B /* ic_build.png */; };
 		1F922F0C1FCFB5FE00A7614B /* WBStationBootAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F922F0B1FCFB5FE00A7614B /* WBStationBootAPI.m */; };
+		1FAD741C1FCFE0BC00A5D880 /* WBStationTicketsAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAD741B1FCFE0BC00A5D880 /* WBStationTicketsAPI.m */; };
+		1FAD741F1FCFE67F00A5D880 /* WBTicketsUserAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAD741E1FCFE67F00A5D880 /* WBTicketsUserAPI.m */; };
+		1FAD74261FCFE99C00A5D880 /* TicketUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAD74251FCFE99C00A5D880 /* TicketUserModel.m */; };
+		1FAD74291FCFEAE000A5D880 /* WBStationTicketsWechatAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAD74281FCFEAE000A5D880 /* WBStationTicketsWechatAPI.m */; };
 		1FB0900B1FBC519A0020B304 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB090091FBC51990020B304 /* NSString+Extension.m */; };
 		1FC2AFEF1FC5299300E8C9DE /* WBCloudLoginAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2AFEE1FC5299300E8C9DE /* WBCloudLoginAPI.m */; };
 		1FC2AFF21FC52B4800E8C9DE /* CloudLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2AFF11FC52B4800E8C9DE /* CloudLoginModel.m */; };
@@ -846,6 +850,14 @@
 		1F922F061FCFB40500A7614B /* ic_build.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_build.png; sourceTree = "<group>"; };
 		1F922F0A1FCFB5FE00A7614B /* WBStationBootAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBStationBootAPI.h; sourceTree = "<group>"; };
 		1F922F0B1FCFB5FE00A7614B /* WBStationBootAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBStationBootAPI.m; sourceTree = "<group>"; };
+		1FAD741A1FCFE0BC00A5D880 /* WBStationTicketsAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBStationTicketsAPI.h; sourceTree = "<group>"; };
+		1FAD741B1FCFE0BC00A5D880 /* WBStationTicketsAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBStationTicketsAPI.m; sourceTree = "<group>"; };
+		1FAD741D1FCFE67F00A5D880 /* WBTicketsUserAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBTicketsUserAPI.h; sourceTree = "<group>"; };
+		1FAD741E1FCFE67F00A5D880 /* WBTicketsUserAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBTicketsUserAPI.m; sourceTree = "<group>"; };
+		1FAD74241FCFE99C00A5D880 /* TicketUserModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TicketUserModel.h; sourceTree = "<group>"; };
+		1FAD74251FCFE99C00A5D880 /* TicketUserModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TicketUserModel.m; sourceTree = "<group>"; };
+		1FAD74271FCFEAE000A5D880 /* WBStationTicketsWechatAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBStationTicketsWechatAPI.h; sourceTree = "<group>"; };
+		1FAD74281FCFEAE000A5D880 /* WBStationTicketsWechatAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBStationTicketsWechatAPI.m; sourceTree = "<group>"; };
 		1FB090091FBC51990020B304 /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
 		1FB0900A1FBC51990020B304 /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
 		1FC2AFED1FC5299300E8C9DE /* WBCloudLoginAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBCloudLoginAPI.h; sourceTree = "<group>"; };
@@ -1681,6 +1693,7 @@
 		1F4D756A1FAC4BB700E6516C /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				1FAD74181FCFE04600A5D880 /* User */,
 				1F922E6C1FCD310E00A7614B /* StationManage */,
 				C138D0441FB89F85000CF518 /* Files */,
 				1F7CE6601FB002F9004467C8 /* Download */,
@@ -2057,6 +2070,30 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		1FAD74181FCFE04600A5D880 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				1FAD74191FCFE06C00A5D880 /* BindWechat */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		1FAD74191FCFE06C00A5D880 /* BindWechat */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = BindWechat;
+			sourceTree = "<group>";
+		};
+		1FAD74231FCFE98D00A5D880 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1FAD74241FCFE99C00A5D880 /* TicketUserModel.h */,
+				1FAD74251FCFE99C00A5D880 /* TicketUserModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		1FFEADAB1FB087A100CD3068 /* Manage */ = {
 			isa = PBXGroup;
 			children = (
@@ -2128,6 +2165,12 @@
 				C183CDED1FCEA20C002E29CD /* FMUpdateUserAPI.m */,
 				C183CDEF1FCEA2E9002E29CD /* FMUpdateUserPasswordAPI.h */,
 				C183CDF01FCEA2E9002E29CD /* FMUpdateUserPasswordAPI.m */,
+				1FAD741A1FCFE0BC00A5D880 /* WBStationTicketsAPI.h */,
+				1FAD741B1FCFE0BC00A5D880 /* WBStationTicketsAPI.m */,
+				1FAD741D1FCFE67F00A5D880 /* WBTicketsUserAPI.h */,
+				1FAD741E1FCFE67F00A5D880 /* WBTicketsUserAPI.m */,
+				1FAD74271FCFEAE000A5D880 /* WBStationTicketsWechatAPI.h */,
+				1FAD74281FCFEAE000A5D880 /* WBStationTicketsWechatAPI.m */,
 			);
 			path = Users;
 			sourceTree = "<group>";
@@ -2189,13 +2232,6 @@
 				1F196F351FB9416A004D5EB7 /* Controller */,
 			);
 			path = Files;
-			sourceTree = "<group>";
-		};
-		C138D0451FB8A5B0000CF518 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		C138D0471FB8A5D7000CF518 /* Drives */ = {
@@ -2491,9 +2527,9 @@
 		F6830EB61FB2FC40005AC578 /* LeftMenu */ = {
 			isa = PBXGroup;
 			children = (
+				1FAD74231FCFE98D00A5D880 /* Model */,
 				F6D8CC2D1FB3F90100673824 /* manage */,
 				F6830EB71FB2FC40005AC578 /* Controller */,
-				C138D0451FB8A5B0000CF518 /* Model */,
 				F6830EB91FB2FC40005AC578 /* View */,
 			);
 			path = LeftMenu;
@@ -3752,12 +3788,14 @@
 				71A3D66A1FB57AC30002B8B1 /* JYRequestConfig.m in Sources */,
 				1F922F0C1FCFB5FE00A7614B /* WBStationBootAPI.m in Sources */,
 				F6830EEF1FB2FEF3005AC578 /* FMUserAddVC.m in Sources */,
+				1FAD74291FCFEAE000A5D880 /* WBStationTicketsWechatAPI.m in Sources */,
 				C138D0661FB99AF3000CF518 /* FMMediaAPI.m in Sources */,
 				F67D644A1FAC7E6B00E23D16 /* JYThumbVC.m in Sources */,
 				F67D64491FAC7E6B00E23D16 /* JYShowBigImgViewController.m in Sources */,
 				C127BD611FBC7C5700596112 /* NSString+WBUUID.m in Sources */,
 				1F4D75A21FAC4BB800E6516C /* FMLoginViewController.m in Sources */,
 				F6D8CC411FB42E1300673824 /* UIView+JYExtension.m in Sources */,
+				1FAD741C1FCFE0BC00A5D880 /* WBStationTicketsAPI.m in Sources */,
 				1F4D759F1FAC4BB800E6516C /* UIColor+fm_color.m in Sources */,
 				1F1ABA131FB99882006EB1FC /* CSDownloadHelper.m in Sources */,
 				1FFEADB51FB1594900CD3068 /* CSDownloadModel.m in Sources */,
@@ -3820,6 +3858,7 @@
 				71A3D67E1FB5ADAA0002B8B1 /* FMGetJWTAPI.m in Sources */,
 				F6830F151FB300D2005AC578 /* MenuView.m in Sources */,
 				1F4D759E1FAC4BB800E6516C /* UIColor+FM_UserHeadImage.m in Sources */,
+				1FAD74261FCFE99C00A5D880 /* TicketUserModel.m in Sources */,
 				F65035611FAC00A60007979D /* main.m in Sources */,
 				1F4D759D1FAC4BB800E6516C /* UIButton+Universal.m in Sources */,
 				C183CDF11FCEA2E9002E29CD /* FMUpdateUserPasswordAPI.m in Sources */,
@@ -3827,6 +3866,7 @@
 				F67D643E1FAC7E5600E23D16 /* JYCollectionViewCell.m in Sources */,
 				F6830EF11FB2FEF3005AC578 /* FMUserSetting.m in Sources */,
 				1F4D75B21FAC4BB800E6516C /* DBServices.m in Sources */,
+				1FAD741F1FCFE67F00A5D880 /* WBTicketsUserAPI.m in Sources */,
 				1F3F99891FB0353F00D6CC64 /* LocalDownloadTableViewCell.m in Sources */,
 				1F1FA3871FC3F38200272347 /* FilesShareViewController.m in Sources */,
 				F67D64121FAC7D7F00E23D16 /* CocoaSecurity.m in Sources */,

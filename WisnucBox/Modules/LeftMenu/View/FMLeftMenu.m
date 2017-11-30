@@ -77,7 +77,7 @@
     
     [self getUserInfo];
     WBUser * currentUser = [AppServices sharedService].userServices.currentUser;
-    if (currentUser.isCloudLogin) {
+    if (WB_UserService.currentUser.avaterURL) {
         self.nameLabel.text = _userInfo.userName;
         NSString *avatarUrl = currentUser.avaterURL;
         [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:avatarUrl] options:SDWebImageDownloaderHighPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {

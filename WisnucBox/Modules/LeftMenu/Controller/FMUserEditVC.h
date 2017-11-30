@@ -8,6 +8,10 @@
 
 #import "FABaseVC.h"
 
-@interface FMUserEditVC : FABaseVC
+@interface TicketModel : NSObject
+@property (nonatomic,copy)NSString *ticketId;
+@end
 
+@interface FMUserEditVC : FABaseVC
+- (void)weChatCallBackRespCode:(NSString *)code;
 @end

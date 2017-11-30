@@ -293,10 +293,10 @@ UIDocumentInteractionControllerDelegate
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     if(section == 0){
-        return @"正在下载";
+        return @"正在传输";
     }
     else{
-        return @"已下载";
+        return @"已传输";
     }
 }
 
