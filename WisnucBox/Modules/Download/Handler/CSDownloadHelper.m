@@ -326,7 +326,7 @@ __strong static id _sharedObject = nil;
 
 - (void)cancleDownload{
     if (_oneDownloadArray.count>0) {
-        [_oneDownloadArray enumerateObjectsUsingBlock:^(CSDownloadTask* obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [_oneDownloadArray enumerateObjectsUsingBlock:^(CSOneDowloadTask* obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [_oneManager cancelOneDownloadTaskWith:obj];
             [_oneDownloadArray removeAllObjects];
         }];

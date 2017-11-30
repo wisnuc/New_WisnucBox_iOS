@@ -229,7 +229,7 @@
         }
     }
 
-    else if (IsEquallString(title, @"文件下载")){
+    else if (IsEquallString(title, @"传输管理")){
         vc = [[LocalDownloadViewController alloc]init];
         if ([selectVC isKindOfClass:[NavViewController class]]) {
             [selectVC  pushViewController:vc animated:YES];

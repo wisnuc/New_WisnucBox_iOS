@@ -221,7 +221,7 @@ __strong static id _sharedObject = nil;
                         [_downloadTasks removeObject:downloadTask];
                     }
             if (complete) {
-                complete(downloadTask,nil);
+                complete(downloadTask,error);
             }
             
         }else{
@@ -273,6 +273,7 @@ __strong static id _sharedObject = nil;
                         wBFile.fileUUID = fileModel.getDownloadFileUUID;
                         wBFile.timeDate = fileModel.downloadFinishTime;
                         wBFile.downloadURL = fileModel.downloadTaskURL;
+                        wBFile.actionType = @"下载";
                         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
             //            FilesServices *services = [FilesServices new];
             //            [services saveFile:wBFile];
@@ -280,7 +281,7 @@ __strong static id _sharedObject = nil;
                         [self.downloadedTasks addObject:downloadTask];
             
                     if (complete) {
-                        complete(downloadTask,error);
+                        complete(downloadTask,nil);
                     }
         }
     }];

@@ -187,7 +187,7 @@
     if (self.window) {
         if (url) {
             NSString *fileNameStr = [url lastPathComponent];
-            NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:[NSString stringWithFormat:@"Upload/%@",WB_UserService.currentUser.uuid] createIfNotExist:YES];
+            NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:KUploadFilesDocument createIfNotExist:YES];
             NSString* saveFile = [savePath stringByAppendingPathComponent:fileNameStr];
             NSData *data = [NSData dataWithContentsOfURL:url];
             if (![data writeToFile:saveFile atomically:YES])
@@ -196,7 +196,6 @@
             }else{
                 [WB_AppServices readyUploadFilesWithFilePath:saveFile Complete:^(NSError *error) {
                     if (!error) {
-                    
                     }
                 }];
                 NSLog(@"%@写入成功",saveFile);

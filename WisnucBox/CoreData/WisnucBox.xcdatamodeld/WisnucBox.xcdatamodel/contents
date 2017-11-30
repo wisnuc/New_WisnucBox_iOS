@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13533" systemVersion="17B48" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="WBFile" representedClassName="WBFile" syncable="YES">
+        <attribute name="actionType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="downloadedFileSize" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="downloadURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="fileName" optional="YES" attributeType="String" syncable="YES"/>
@@ -37,7 +38,7 @@
         <attribute name="uuid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="WBFile" positionX="-54" positionY="45" width="128" height="165"/>
+        <element name="WBFile" positionX="-54" positionY="45" width="128" height="180"/>
         <element name="WBLocalAsset" positionX="-63" positionY="-18" width="128" height="75"/>
         <element name="WBUser" positionX="-54" positionY="9" width="128" height="345"/>
     </elements>

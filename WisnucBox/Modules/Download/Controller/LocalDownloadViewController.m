@@ -34,6 +34,10 @@ UIDocumentInteractionControllerDelegate
 
 @property (nonatomic,strong) NSMutableArray *downloadingArray;
 
+@property (nonatomic,strong) NSMutableArray *transmitingArray;
+
+@property (nonatomic,strong) NSMutableArray *transmitiedArray;
+
 @property (nonatomic,strong) NSMutableArray *downloadedArray;
 
 @property (nonatomic,strong) CSFileDownloadManager *downloadManager;
@@ -51,7 +55,7 @@ UIDocumentInteractionControllerDelegate
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createNavBtns];
-    self.title = @"下载管理";
+    self.title = @"传输管理";
     [CSDownloadHelper shareManager].delegate = self;
     _manager  = [CSFileDownloadManager sharedDownloadManager];
     _filesServices = [FilesServices new];
@@ -70,6 +74,8 @@ UIDocumentInteractionControllerDelegate
 - (void)loadData{
     self.downloadingArray = [NSMutableArray arrayWithArray:_manager.downloadingTasks];
     self.downloadedArray = [NSMutableArray arrayWithArray: [_filesServices findAll]];
+    self.transmitingArray = [NSMutableArray arrayWithArray:self.downloadingArray];
+    self.transmitiedArray =  [NSMutableArray arrayWithArray:self.downloadedArray];
 }
 
 - (void)createNavBtns{
@@ -293,10 +299,10 @@ UIDocumentInteractionControllerDelegate
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     if(section == 0){
-        return @"正在传输";
+        return @"未完成";
     }
     else{
-        return @"已传输";
+        return @"已完成";
     }
 }
 
@@ -384,6 +390,20 @@ UIDocumentInteractionControllerDelegate
         _downloadingArray = [NSMutableArray arrayWithCapacity:0];
     }
     return _downloadingArray;
+}
+
+-(NSMutableArray *)transmitingArray{
+    if(!_transmitingArray){
+        _transmitingArray = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _transmitingArray;
+}
+
+- (NSMutableArray *)transmitiedArray{
+    if(!_transmitiedArray){
+        _transmitiedArray = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _transmitiedArray;
 }
 
 - (NSMutableArray *)chooseArr{

@@ -170,11 +170,13 @@
         UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"您确定要绑定该微信吗？" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             NSLog(@"点击了取消按钮");
-             [weak_self bindWechatLastActionWith:userModel IsBind:NO];
+            
+//             [weak_self bindWechatLastActionWith:userModel IsBind:NO];
         }];
         
         UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"绑定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             NSLog(@"点击了确定按钮");
+            [SXLoadingView showProgressHUD:@"正在绑定..."];
             [weak_self bindWechatLastActionWith:userModel IsBind:YES];
             
         }];
@@ -187,17 +189,24 @@
 }
 
 - (void)bindWechatLastActionWith:(TicketUserModel *)model IsBind:(BOOL)isBind{
-    [SXLoadingView showProgressHUD:@"正在绑定..."];
     [[WBStationTicketsWechatAPI apiWithTicketId:_model.ticketId Guid:model.userId Isbind:isBind] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         [SXLoadingView hideProgressHUD];
         WBUser *user = WB_UserService.currentUser;
         user.avaterURL = model.avatarUrl;
         [WB_UserService setCurrentUser:user];
         [WB_UserService synchronizedCurrentUser];
-        [SXLoadingView showProgressHUDText:@"微信绑定成功" duration:1.5];
+        if (isBind) {
+            [SXLoadingView showProgressHUDText:@"微信绑定成功" duration:1.5];
+        }
     } failure:^(__kindof JYBaseRequest *request) {
-        NSLog(@"%@",request.error);
         [SXLoadingView hideProgressHUD];
+        NSLog(@"%@",request.error);
+        NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+        if(errorData.length>0){
+            NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+            NSLog(@"%@",serializedData);
+             [SXLoadingView showProgressHUDText:[NSString stringWithFormat:@"微信绑定失败，原因：%@",serializedData[@"message"]] duration:1.5];
+        }
     }];
 }
 

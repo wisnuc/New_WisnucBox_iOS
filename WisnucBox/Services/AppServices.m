@@ -17,6 +17,8 @@
 #import "CSDownloadHelper.h"
 #import "NSError+WBCode.h"
 #import "CSFilesOneDownloadManager.h"
+#import "CSFileUploadManager.h"
+#import "CSUploadHelper.h"
 
 @interface AppServices ()<CLLocationManagerDelegate>
 @end
@@ -342,16 +344,16 @@
 
 - (void)startUploadFilesWithFilePath:(NSString *)filePath Progress:(void (^)(NSProgress *))progress Complete:(void(^)(NSError *))callback {
     @weaky(self);
-    [self.netServices getEntriesInUserBackupDir:^(NSError *error, NSArray<EntriesModel *> *entries) {
-        if(error) {
-            if(error.wbCode == WBUploadDirNotFound)
-                [weak_self rebulidUploadManager];
-            return NSLog(@"Get BackupDir entries error");
-        }
+//    [self.netServices getEntriesInUserBackupDir:^(NSError *error, NSArray<EntriesModel *> *entries) {
+//        if(error) {
+//            if(error.wbCode == WBUploadDirNotFound)
+//                [weak_self rebulidUploadManager];
+//            return NSLog(@"Get BackupDir entries error");
+//        }
         NSLog(@"Start Upload ...");
          WBUploadModel * model = [WBUploadModel new];
         [model uploadFilesWithFilePath:filePath Progress:progress Complete:callback];
-    }];
+//    }];
 }
 
 - (void)readyUploadFilesWithFilePath:(NSString *)filePath Complete:(void(^)(NSError *))callback{
@@ -359,6 +361,7 @@
     [WB_NetService getUserBackupDirName:BackUpFilesDirName BackupDir:^(NSError *error, NSString *entryUUID) {
         if(error) return callback(({error.wbCode = 10003; error;}));
         WB_UserService.currentUser.uploadFileDir = entryUUID;
+        
 //            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
             self.progressView.descLb.text =@"正在上传文件";
@@ -513,6 +516,8 @@
     [FLFIlesHelper destroyAll];
     [CSDownloadHelper destroyAll];
     [CSFilesOneDownloadManager destroyAll];
+    [CSUploadHelper destroyAll];
+    [CSFileUploadManager destroyAll];
 }
 
 @end

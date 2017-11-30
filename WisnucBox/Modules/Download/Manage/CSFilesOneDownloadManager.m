@@ -170,6 +170,7 @@ __strong static id _sharedObject = nil;
             wBFile.fileUUID = fileModel.getDownloadFileUUID;
             wBFile.timeDate = fileModel.downloadFinishTime;
             wBFile.downloadURL = fileModel.downloadTaskURL;
+            wBFile.actionType = @"下载";
             [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
             [self.souceArray removeObject:downloadTask];
             //调用外部回调（比如执行UI更新）
@@ -348,7 +349,7 @@ __strong static id _sharedObject = nil;
     
 }
 
-- (void)cancelOneDownloadTaskWith:(CSDownloadTask*)downloadTask{
+- (void)cancelOneDownloadTaskWith:(CSOneDowloadTask*)downloadTask{
     [downloadTask cancelDownloadTask:^(){
         [downloadTask setDownloadStatus:CSDownloadStatusCanceled];
     }];
@@ -368,7 +369,7 @@ __strong static id _sharedObject = nil;
 - (void)cancelAllDownloadTask{
     @weaky(self)
     NSLog(@"%@",self.souceArray);
-    [self.souceArray enumerateObjectsUsingBlock:^(CSDownloadTask *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.souceArray enumerateObjectsUsingBlock:^(CSOneDowloadTask *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [weak_self cancelOneDownloadTaskWith:obj];
     }];
     [self.souceArray removeAllObjects];
