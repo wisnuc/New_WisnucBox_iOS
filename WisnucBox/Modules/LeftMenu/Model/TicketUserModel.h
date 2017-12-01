@@ -11,6 +11,7 @@
 @interface TicketStationModel : NSObject
 @property (nonatomic) NSArray *users;
 @property (nonatomic,copy) NSString *createdAt;
+@property (nonatomic,copy) NSString *ticketId;
 @end
 
 @interface TicketUserModel : WBBaseModel
@@ -19,4 +20,5 @@
 @property (nonatomic,copy) NSString *avatarUrl;
 @property (nonatomic,copy) NSString *type;
 @property (nonatomic,copy) NSString *createdAt;
+@property (nonatomic,copy) NSString *ticketId;
 @end

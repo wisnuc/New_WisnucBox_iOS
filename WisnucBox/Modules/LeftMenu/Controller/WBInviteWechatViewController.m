@@ -20,6 +20,7 @@ UITableViewDelegate,
 UITableViewDataSource
 >
 @property (nonatomic) UITableView *tableView;
+@property (nonatomic) NSMutableArray *ticketIdArray;
 @property (nonatomic) NSMutableArray *dataArray;
 @property (nonatomic) UIButton *inviteButton;
 @property (nonatomic) NSString *ticketId;
@@ -57,6 +58,8 @@ UITableViewDataSource
 
 - (void)getData{
     @weaky(self);
+    [self.dataArray removeAllObjects];
+    [self.ticketIdArray removeAllObjects];
     [SXLoadingView showProgressHUD:@"正在加载"];
     [[WBStationTicketsAPI apiWithRequestMethodString:@"GET" Type:nil] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
          NSLog(@"%@",request.responseJsonObject);
@@ -66,6 +69,7 @@ UITableViewDataSource
             [model.users enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 TicketUserModel *usersModel = obj;
                 [usersModel setCreatedAt:model.createdAt];
+                [usersModel setTicketId:model.ticketId];
 //                NSLog(@"%@",obj);
                 if (usersModel) {
                     [self.dataArray addObject:usersModel];
@@ -94,6 +98,7 @@ UITableViewDataSource
         NSString *urlString = requestDic[@"url"];
         NSString * ticketId = [urlString substringFromIndex:12];
         NSLog(@"%@",ticketId);
+        [self.ticketIdArray addObject:ticketId];
         [weak_self invitWechatWithTicketId:ticketId];
     } failure:^(__kindof JYBaseRequest *request) {
          NSLog(@"%@",request.error);
@@ -128,6 +133,7 @@ UITableViewDataSource
 #pragma tableViewDelegate;
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    @weaky(self);
     WBInviteWechatTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WBInviteWechatTableViewCell class])];
     if (!cell) {
         cell =  (WBInviteWechatTableViewCell *) [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([WBInviteWechatTableViewCell class]) owner:self options:nil] lastObject];
@@ -162,11 +168,43 @@ UITableViewDataSource
     }];
 
     cell.resolvedClickBlock = ^(WBInviteWechatTableViewCell *inviteCell){
-        [WBStationTicketsWechatAPI apiWithTicketId:_ticketId Guid:usersModel.userId Isbind:YES];
+        [SXLoadingView showProgressHUD:@""];
+        [[WBStationTicketsWechatAPI apiWithTicketId:usersModel.ticketId Guid:usersModel.userId Isbind:YES] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+            NSLog(@"%@",request.responseJsonObject);
+            [SXLoadingView hideProgressHUD];
+            [SXLoadingView showProgressHUDText:@"接受邀请成功" duration:1.5];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weak_self getData];
+            });
+           
+        } failure:^(__kindof JYBaseRequest *request) {
+            NSLog(@"%@",request.error);
+            [SXLoadingView hideProgressHUD];
+            [SXLoadingView showProgressHUDText:@"接受邀请失败" duration:1.5];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weak_self getData];
+            });
+        }];
     };
     
     cell.rejectedClickBlock = ^(WBInviteWechatTableViewCell *inviteCell) {
-        [WBStationTicketsWechatAPI apiWithTicketId:_ticketId Guid:usersModel.userId Isbind:NO];
+    
+        [SXLoadingView showProgressHUD:@""];
+        [[WBStationTicketsWechatAPI apiWithTicketId:usersModel.ticketId Guid:usersModel.userId Isbind:NO]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+         [SXLoadingView hideProgressHUD];
+         [SXLoadingView showProgressHUDText:@"已拒绝接受邀请" duration:1.5];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weak_self getData];
+            });
+            NSLog(@"%@",request.responseJsonObject);
+        } failure:^(__kindof JYBaseRequest *request) {
+            [SXLoadingView hideProgressHUD];
+            [SXLoadingView showProgressHUDText:@"失败" duration:1.5];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weak_self getData];
+            });
+            NSLog(@"%@",request.error);
+        }];;
     } ;
 //    [cell.leftImageView sd_setImageWithURL:[NSURL URLWithString:usersModel.avatarUrl] placeholderImage:[UIImage imageWithColor:[UIColor groupTableViewBackgroundColor]] options:SDWebImageRefreshCached];
     
@@ -217,6 +255,13 @@ UITableViewDataSource
         _inviteButton.frame = CGRectMake(__kWidth - 20 -63, __kHeight - 100 -63-64, 63, 63);
     }
     return _inviteButton;
+}
+
+- (NSMutableArray *)ticketIdArray{
+    if (!_ticketIdArray) {
+        _ticketIdArray = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _ticketIdArray;
 }
 
 @end
