@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSString *fileSize;
 @property (nullable, nonatomic, copy) NSString *downloadedFileSize;
 @property (nullable, nonatomic, copy) NSString *downloadURL;
-
+@property (nullable, nonatomic, copy) NSString *actionType;
 @end
 
 NS_ASSUME_NONNULL_END

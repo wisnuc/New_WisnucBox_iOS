@@ -8,7 +8,15 @@
 
 #import "FABaseVC.h"
 
+@class ReNameDelegate;
+@protocol ReNameDelegate <NSObject>
+
+-(void)reNameComplete;
+
+@end
+
 @interface WBStationManageRenameViewController : FABaseVC
 @property (weak, nonatomic) IBOutlet UITextField *renameTextField;
+@property (nonatomic,weak) id<ReNameDelegate> delegate;
 @property (nonatomic,strong) NSString *stationName;
 @end

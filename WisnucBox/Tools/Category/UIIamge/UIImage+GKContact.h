@@ -49,4 +49,6 @@
 + (UIImage *)imageWithImage:(UIImage *)image scaledToFillSize:(CGSize)size;
 
 + (instancetype)imageWhiteForName:(NSString *)name size:(CGSize)size;
+
++ (UIImage *)imageCirclewithImage:(UIImage *)image;
 @end

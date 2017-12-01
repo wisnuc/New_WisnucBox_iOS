@@ -19,7 +19,8 @@
 @interface WBStatioManageEquipmentViewController ()
 <
 UITableViewDelegate,
-UITableViewDataSource
+UITableViewDataSource,
+ReNameDelegate
 >
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) UIImageView *timeImageView;
@@ -56,6 +57,11 @@ UITableViewDataSource
 }
 
 - (void)getData{
+    [self.dataStationInfoArray removeAllObjects];
+    [self.dataRootArray removeAllObjects];
+    [self.dataCpuInfoArray removeAllObjects];
+    [self.dataStorageArray removeAllObjects];
+    
     WBgetStationInfoAPI * stationApi = [WBgetStationInfoAPI apiWithServicePath:WB_UserService.currentUser.localAddr];
     [stationApi startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
 //         NSLog(@"%@",request.responseJsonObject);
@@ -114,7 +120,26 @@ UITableViewDataSource
     WBStationManageRenameViewController *renameVC = [[WBStationManageRenameViewController alloc]init];
     WBStationInfoModel *model = self.dataStationInfoArray[0];
     renameVC.stationName = model.name;
+    renameVC.delegate = self;
     [self.navigationController pushViewController:renameVC animated:YES];
+}
+
+- (void)reNameComplete{
+    [self getData];
+    [SXLoadingView showProgressHUDText:@"设备名修改成功" duration:1.5];
+    [self.tableView reloadData];
+}
+
+- (id)transformedValue:(id)value
+{
+    double convertedValue = [value doubleValue];
+    int multiplyFactor = 0;
+    NSArray *tokens = [NSArray arrayWithObjects:@"bytes",@"KB",@"MB",@"GB",@"TB",@"PB", @"EB", @"ZB",    @"YB",nil];
+    while (convertedValue > 1024) {
+        convertedValue /= 1024;multiplyFactor++;
+    }
+    return [NSString stringWithFormat:@"%4.2f %@",convertedValue, [tokens objectAtIndex:multiplyFactor]];
+    
 }
 
 #pragma tableViewDelegate;
@@ -197,20 +222,23 @@ UITableViewDataSource
                 switch (indexPath.row) {
                     case 0:
                     {
-                        cell.normalLabel.text = model.memInfo.memTotal;
+                        NSString *memTotal = [model.memInfo.memTotal substringToIndex:model.memInfo.memTotal.length-3];
+                        cell.normalLabel.text = [NSString stringWithFormat:@"%.2f GB",[memTotal floatValue]/1024/1024];
                         cell.detailLabel.text = @"总内存";
                         cell.leftImageView.image = [UIImage imageNamed:@"ic_sd_storage"];
                     }
                         break;
                     case 1:
                     {
-                        cell.normalLabel.text = model.memInfo.memFree;
+                        NSString *memFree = [model.memInfo.memFree substringToIndex:model.memInfo.memFree.length-3];
+                        cell.normalLabel.text = [NSString stringWithFormat:@"%.2f GB",[memFree floatValue]/1024/1024];
                         cell.detailLabel.text = @"未使用内存";
                     }
                         break;
                     case 2:
                     {
-                        cell.normalLabel.text = model.memInfo.memAvailable;
+                        NSString *memAvailable = [model.memInfo.memAvailable substringToIndex:model.memInfo.memAvailable.length-3];
+                        cell.normalLabel.text = [NSString stringWithFormat:@"%.2f GB",[memAvailable floatValue]/1024/1024];
                         cell.detailLabel.text = @"可用内存";
                     }
                         break;
@@ -226,20 +254,23 @@ UITableViewDataSource
                 switch (indexPath.row) {
                     case 0:
                     {
-                        cell.normalLabel.text = model.memInfo.memTotal;
+                        NSString *memTotal = [model.memInfo.memTotal substringToIndex:model.memInfo.memTotal.length-3];
+                        cell.normalLabel.text = [NSString stringWithFormat:@"%.2f GB",[memTotal floatValue]/1024/1024];
                         cell.detailLabel.text = @"总内存";
                         cell.leftImageView.image = [UIImage imageNamed:@"ic_sd_storage"];
                     }
                         break;
                     case 1:
                     {
-                        cell.normalLabel.text = model.memInfo.memFree;
+                        NSString *memFree = [model.memInfo.memFree substringToIndex:model.memInfo.memFree.length-3];
+                        cell.normalLabel.text = [NSString stringWithFormat:@"%.2f GB",[memFree floatValue]/1024/1024];
                         cell.detailLabel.text = @"未使用内存";
                     }
                         break;
                     case 2:
                     {
-                        cell.normalLabel.text = model.memInfo.memAvailable;
+                        NSString *memAvailable = [model.memInfo.memAvailable substringToIndex:model.memInfo.memAvailable.length-3];
+                        cell.normalLabel.text = [NSString stringWithFormat:@"%.2f GB",[memAvailable floatValue]/1024/1024];
                         cell.detailLabel.text = @"可用内存";
                     }
                         break;
@@ -381,20 +412,20 @@ UITableViewDataSource
             switch (indexPath.row) {
                 case 0:
                 {
-                    cell.normalLabel.text = [NSString stringWithFormat:@"%@",volumesModel.usage.overall[@"deviceSize"]];
+                    cell.normalLabel.text = [NSString stringWithFormat:@"%@",  [self transformedValue:volumesModel.usage.overall[@"deviceSize"]]];
                     cell.detailLabel.text = @"总空间";
                     cell.leftImageView.image = [UIImage imageNamed:@"ic_storage"];
                 }
                     break;
                 case 1:
                 {
-                    cell.normalLabel.text = [NSString stringWithFormat:@"%@",volumesModel.usage.data[@"size"]];
+                    cell.normalLabel.text = [NSString stringWithFormat:@"%@",[self transformedValue: volumesModel.usage.data[@"size"]]];
                     cell.detailLabel.text = @"用户数据空间";
                 }
                     break;
                 case 2:
                 {
-                    cell.normalLabel.text =  cell.normalLabel.text = [NSString stringWithFormat:@"%@",volumesModel.usage.overall[@"free"]];
+                    cell.normalLabel.text =  cell.normalLabel.text = [NSString stringWithFormat:@"%@",[self transformedValue:volumesModel.usage.overall[@"free"]]];
                     cell.detailLabel.text = @"可用空间";
                 }
                     break;
@@ -408,6 +439,7 @@ UITableViewDataSource
     
     return cell;
 }
+
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     UILabel *lineLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 0.5)];

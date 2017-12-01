@@ -16,25 +16,35 @@
 #import "CSDateUtil.h"
 #import "CSDownloadHelper.h"
 #import "FilesServices.h"
-
+#import "CSUploadHelper.h"
 
 @interface LocalDownloadViewController ()
 <
 UITableViewDelegate,
 UITableViewDataSource,
 DownloadHelperDelegate,
+UploadHelperDelegate,
 UIDocumentInteractionControllerDelegate
 >
 {
     CSFileDownloadManager* _manager;
+    CSFileUploadManager* _uploadManager;
     FilesServices *_filesServices;
 }
 
 @property (nonatomic,strong) UITableView *tableView;
 
-@property (nonatomic,strong) NSMutableArray *downloadingArray;
+@property (nonatomic,strong) NSMutableArray *transmitingArray;
+
+@property (nonatomic,strong) NSMutableArray *transmitiedArray;
+
+//@property (nonatomic,strong) NSMutableArray *downloadingArray;
 
 @property (nonatomic,strong) NSMutableArray *downloadedArray;
+
+@property (nonatomic,strong) NSMutableArray *uploadingArray;
+
+@property (nonatomic,strong) NSMutableArray *uploadedArray;
 
 @property (nonatomic,strong) CSFileDownloadManager *downloadManager;
 
@@ -51,9 +61,11 @@ UIDocumentInteractionControllerDelegate
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createNavBtns];
-    self.title = @"下载管理";
+    self.title = @"传输管理";
     [CSDownloadHelper shareManager].delegate = self;
+    [CSUploadHelper shareManager].delegate = self;
     _manager  = [CSFileDownloadManager sharedDownloadManager];
+    _uploadManager = [CSFileUploadManager sharedUploadManager];
     _filesServices = [FilesServices new];
     [self loadData];
     [self.view addSubview:self.tableView];
@@ -63,13 +75,19 @@ UIDocumentInteractionControllerDelegate
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    if (self.tableView) {
+        [self.tableView reloadData];
+    }
 //    [self ]
 //    [self.cyl_tabBarController.tabBar setHidden:YES];
 }
 
 - (void)loadData{
-    self.downloadingArray = [NSMutableArray arrayWithArray:_manager.downloadingTasks];
+//    self.downloadingArray = [NSMutableArray arrayWithArray:_manager.downloadingTasks];
+//    self.uploadingArray = [NSMutableArray arrayWithArray:_uploadManager.uploadingTasks];
     self.downloadedArray = [NSMutableArray arrayWithArray: [_filesServices findAll]];
+    self.transmitingArray = [NSMutableArray arrayWithArray:_manager.downloadingTasks];
+    [self.transmitingArray addObjectsFromArray:_uploadManager.uploadingTasks];
 }
 
 - (void)createNavBtns{
@@ -83,18 +101,24 @@ UIDocumentInteractionControllerDelegate
 
 - (void)updateDataWithDownloadTask:(CSDownloadTask *)downloadTask {
     [self loadData];
-    NSLog(@"%@",_downloadingArray);
+//    NSLog(@"%@",_downloadingArray);
     [self.tableView reloadData];
+}
+
+- (void)updateDataWithUploadTask:(CSUploadTask *)uploadTask{
+    [self loadData];
+    [self.tableView reloadData];
+//    NSLog(@"%@",_downloadingArray);
 }
 
 - (void)handleNetReachabilityNotify:(NSNotification *)noti {
     NSNumber *statusNumber = noti.object;
     AFNetworkReachabilityStatus status = [statusNumber integerValue];
     if (status != AFNetworkReachabilityStatusReachableViaWiFi) {
-        [_downloadingArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [_transmitingArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:idx inSection:0];
             LocalDownloadingTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-            cell.progressLabel.text = @"等待下载";
+//            cell.progressLabel.text = @"等待传输";
         }];
     }
 }
@@ -111,10 +135,17 @@ UIDocumentInteractionControllerDelegate
 }
 
 - (void)deleteChooseFiles{
-    for (CSDownloadTask * task in self.downloadingArray) {
+    for (CSDownloadTask * task in self.transmitingArray) {
         if ([self.chooseArr containsObject:task.downloadFileModel.getDownloadFileUUID]) {
             [self.chooseArr removeObject:task];
             [[CSFileDownloadManager sharedDownloadManager] cancelOneDownloadTaskWith:task];
+        }
+    }
+    
+    for (CSUploadTask * task in self.transmitingArray) {
+        if ([self.chooseArr containsObject:task.uploadFileModel.getUploadFileUUID]) {
+            [self.chooseArr removeObject:task];
+            [[CSFileUploadManager sharedUploadManager] cancelOneUploadTaskWith:task];
         }
     }
 
@@ -131,7 +162,7 @@ UIDocumentInteractionControllerDelegate
 
 - (void)rightBtnClick:(UIButton *)btn{
     @weaky(self);
-    if(_downloadedArray.count == 0 && _downloadingArray.count == 0){
+    if(_downloadedArray.count == 0 && self.transmitingArray.count == 0){
         [SXLoadingView showProgressHUDText:@"没有文件可以进行选择" duration:1];
     }else{
         if (!self.cellStatus) {
@@ -171,76 +202,152 @@ UIDocumentInteractionControllerDelegate
         if (!cell) {
             cell= [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([LocalDownloadingTableViewCell class]) owner:nil options:nil] lastObject];
         }
-        CSDownloadTask *downloadTask = _downloadingArray[indexPath.row];
-        NSLog(@"%@",_downloadingArray);
-        NSLog(@"%@",downloadTask);
-        CSDownloadModel* downloadFileModel = [downloadTask getDownloadFileModel];
-        cell.fileNameLabel.text = downloadFileModel.downloadFileName;
-//        cell.progressLabel.text = @"正在下载";
-        downloadTask.progressBlock = ^(NSProgress *downloadProgress) {
-            NSString *progressString = [NSString stringWithFormat:@"%@/%@",[CSFileUtil calculateUnit:downloadProgress.completedUnitCount],[CSFileUtil calculateUnit:downloadProgress.totalUnitCount]];
-        
-//            NSString *progressString = [NSString stringWithFormat:@"%@/%@",[CSFileUtil calculateUnit:downloadProgress.],[CSFileUtil calculateUnit:totalBytesExpectedToRead]];
-              if ([NSThread isMainThread] ) {
-                     cell.progressLabel.text = progressString;
-              }else{
-                  dispatch_async(dispatch_get_main_queue(), ^{
-                      cell.progressLabel.text = progressString;
-                  });
-              }
+        NSLog(@"%@",[_transmitingArray[indexPath.row] class]);
+        if ([NSStringFromClass([_transmitingArray[indexPath.row] class]) isEqualToString:NSStringFromClass([CSDownloadTask class])]) {
+            CSDownloadTask *downloadTask = _transmitingArray[indexPath.row] ;
+            NSLog(@"%@",_transmitingArray);
+            NSLog(@"%@",downloadTask);
+            CSDownloadModel* downloadFileModel = [downloadTask getDownloadFileModel];
+            cell.fileNameLabel.text = downloadFileModel.downloadFileName;
+            //        cell.progressLabel.text = @"正在下载";
+            downloadTask.progressBlock = ^(NSProgress *downloadProgress) {
+//                NSString *progressString = [NSString stringWithFormat:@"%@/%@",[CSFileUtil calculateUnit:downloadProgress.completedUnitCount],[CSFileUtil calculateUnit:downloadProgress.totalUnitCount]];
+                
+                float progressFloat = (float)downloadProgress.completedUnitCount/(float)downloadProgress.totalUnitCount;
+                
+                //            NSString *progressString = [NSString stringWithFormat:@"%@/%@",[CSFileUtil calculateUnit:downloadProgress.],[CSFileUtil calculateUnit:totalBytesExpectedToRead]];
+                if ([NSThread isMainThread] ) {
+                    cell.progressView.progress = progressFloat;
+                }else{
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        cell.progressView.progress = progressFloat;
+                    });
+                }
+                
+            };
+            if ([self.chooseArr containsObject:downloadFileModel.getDownloadFileUUID]) {
+                cell.f_ImageView.hidden = YES;
+                cell.layerView.image = [UIImage imageNamed:@"check_circle_select"];
+            }else{
+                cell.f_ImageView.hidden = NO;
+                cell.layerView.image = [UIImage imageNamed:@"check_circle"];
+            }
             
-        };
-        if ([self.chooseArr containsObject:downloadFileModel.getDownloadFileUUID]) {
-            cell.f_ImageView.hidden = YES;
-            cell.layerView.image = [UIImage imageNamed:@"check_circle_select"];
-        }else{
-            cell.f_ImageView.hidden = NO;
-            cell.layerView.image = [UIImage imageNamed:@"check_circle"];
-        }
-        cell.clickBlock = ^(LocalDownloadingTableViewCell * cell){
-            LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:nil
-                                                                     delegate:nil
-                                                            cancelButtonTitle:@"取消"
-                                                        otherButtonTitleArray:@[@"取消下载"]];
-            actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
-                if (buttonIndex == 1) {
-                    if (self.downloadingArray.count == 0) {
-                        [actionSheet setHidden:YES];
-                        return ;
+            cell.clickBlock = ^(LocalDownloadingTableViewCell * cell){
+                LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:nil
+                                                                         delegate:nil
+                                                                cancelButtonTitle:@"取消"
+                                                            otherButtonTitleArray:@[@"取消下载"]];
+                actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
+                    if (buttonIndex == 1) {
+                        if (self.transmitingArray.count == 0) {
+                            [actionSheet setHidden:YES];
+                            return ;
+                        }
+                        if (indexPath.row > self.transmitingArray.count -1 && self.transmitingArray.count -1 > 0) {
+                            return;
+                        }
+                        
+                        CSDownloadTask *downloadTask = [self.transmitingArray objectAtIndex:indexPath.row];
+                        NSLog(@"%u",downloadTask.downloadStatus);
+                        if (downloadTask.downloadStatus == CSDownloadStatusCanceled||
+                            downloadTask.downloadStatus == CSDownloadStatusSuccess||
+                            downloadTask.downloadStatus == CSDownloadStatusFailure ) {
+                            [actionSheet setHidden:YES];
+                            return ;
+                        }
+                        [[CSFileDownloadManager sharedDownloadManager] cancelOneDownloadTaskWith:downloadTask];
+                        [self.transmitingArray removeObjectAtIndex:[indexPath row]];
+                        [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                        [_tableView reloadData];
                     }
-                    if (indexPath.row > self.downloadingArray.count -1 && self.downloadingArray.count -1 > 0) {
-                        return;
-                    }
-                    
-                    CSDownloadTask *downloadTask = [self.downloadingArray objectAtIndex:indexPath.row];
-                    NSLog(@"%u",downloadTask.downloadStatus);
-                    if (downloadTask.downloadStatus == CSDownloadStatusCanceled||
-                       downloadTask.downloadStatus == CSDownloadStatusSuccess||
-                        downloadTask.downloadStatus == CSDownloadStatusFailure ) {
-                        [actionSheet setHidden:YES];
-                        return ;
-                    }
-                    [[CSFileDownloadManager sharedDownloadManager] cancelOneDownloadTaskWith:downloadTask];
-                    [self.downloadingArray removeObjectAtIndex:[indexPath row]];
-                    [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                    [_tableView reloadData];
+                };
+                actionSheet.scrolling          = YES;
+                actionSheet.buttonHeight       = 60.0f;
+                actionSheet.visibleButtonCount = 3.6f;
+                [actionSheet show];
+            };
+            
+            @weaky(self);
+            cell.longpressBlock =^(LocalDownloadingTableViewCell *cell){
+                if (_cellStatus == LocalFliesCellStatusNormal) {
+                    NSString * uuid = downloadFileModel.getDownloadFileUUID;
+                    [weak_self.chooseArr addObject:uuid];
+                    [weak_self changeStatus];
                 }
             };
-            actionSheet.scrolling          = YES;
-            actionSheet.buttonHeight       = 60.0f;
-            actionSheet.visibleButtonCount = 3.6f;
-            [actionSheet show];
-        };
-        
-        @weaky(self);
-        cell.longpressBlock =^(LocalDownloadingTableViewCell *cell){
-            if (_cellStatus == LocalFliesCellStatusNormal) {
-                NSString * uuid = downloadFileModel.getDownloadFileUUID;
-                [weak_self.chooseArr addObject:uuid];
-                [weak_self changeStatus];
+            
+        }else{
+         CSUploadTask *uploadTask = _transmitingArray[indexPath.row] ;
+            NSLog(@"%@",uploadTask);
+            CSUploadModel* uploadFileModel = [uploadTask getUploadFileModel];
+            cell.fileNameLabel.text = uploadFileModel.uploadFileName;
+            //        cell.progressLabel.text = @"正在下载";
+            uploadTask.progressBlock = ^(NSProgress *uploadProgress) {
+                float progressFloat = (float)uploadProgress.completedUnitCount/(float)uploadProgress.totalUnitCount;
+                
+                //            NSString *progressString = [NSString stringWithFormat:@"%@/%@",[CSFileUtil calculateUnit:downloadProgress.],[CSFileUtil calculateUnit:totalBytesExpectedToRead]];
+                if ([NSThread isMainThread] ) {
+                    cell.progressView.progress = progressFloat;
+                }else{
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        cell.progressView.progress = progressFloat;
+                    });
+                }
+                
+            };
+            if ([self.chooseArr containsObject:uploadFileModel.getUploadFileUUID]) {
+                cell.f_ImageView.hidden = YES;
+                cell.layerView.image = [UIImage imageNamed:@"check_circle_select"];
+            }else{
+                cell.f_ImageView.hidden = NO;
+                cell.layerView.image = [UIImage imageNamed:@"check_circle"];
             }
-        };
-        
+            
+            cell.clickBlock = ^(LocalDownloadingTableViewCell * cell){
+                LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:nil
+                                                                         delegate:nil
+                                                                cancelButtonTitle:@"取消"
+                                                            otherButtonTitleArray:@[@"取消上传"]];
+                actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
+                    if (buttonIndex == 1) {
+                        if (self.transmitingArray.count == 0) {
+                            [actionSheet setHidden:YES];
+                            return ;
+                        }
+                        if (indexPath.row > self.transmitingArray.count -1 && self.transmitingArray.count -1 > 0) {
+                            return;
+                        }
+                        
+                        CSUploadTask *uploadTask = [self.transmitingArray objectAtIndex:indexPath.row];
+                        NSLog(@"%u",uploadTask.uploadStatus);
+                        if (uploadTask.uploadStatus == CSUploadStatusCanceled||
+                            uploadTask.uploadStatus == CSUploadStatusSuccess||
+                            uploadTask.uploadStatus == CSUploadStatusFailure ) {
+                            [actionSheet setHidden:YES];
+                            return ;
+                        }
+                        [[CSFileUploadManager sharedUploadManager] cancelOneUploadTaskWith:uploadTask];
+                        [self.transmitingArray removeObjectAtIndex:[indexPath row]];
+                        [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                        [_tableView reloadData];
+                    }
+                };
+                actionSheet.scrolling          = YES;
+                actionSheet.buttonHeight       = 60.0f;
+                actionSheet.visibleButtonCount = 3.6f;
+                [actionSheet show];
+            };
+            
+            @weaky(self);
+            cell.longpressBlock =^(LocalDownloadingTableViewCell *cell){
+                if (_cellStatus == LocalFliesCellStatusNormal) {
+                    NSString * uuid = uploadFileModel.getUploadFileUUID;
+                    [weak_self.chooseArr addObject:uuid];
+                    [weak_self changeStatus];
+                }
+            };
+        }
         cell.status = _cellStatus;
           return cell;
     }else{
@@ -254,7 +361,16 @@ UIDocumentInteractionControllerDelegate
 //        WBFile * data= [WBFile MR_createEntityInContext:[NSManagedObjectContext MR_defaultContext]];
 
         cell.fileNameLabel.text = data.fileName;
-        cell.downloadTimeLabel.text = [CSDateUtil stringWithDate:data.timeDate withFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSString *typeString;
+        if ([data.actionType isEqualToString:@"上传"]) {
+            typeString = @"上传成功";
+        }else if ([data.actionType isEqualToString:@"下载"]){
+            typeString = @"下载成功";
+        }else{
+            typeString = @"下载成功";
+        }
+        cell.transmitTypeLabel.text = typeString;
+//        [CSDateUtil stringWithDate:data.timeDate withFormat:@"yyyy-MM-dd HH:mm:ss"];
         cell.downloadedSizeLabel.text = [CSFileUtil calculateUnit:[data.fileSize longLongValue]];
         
         if ([self.chooseArr containsObject:data.fileUUID]) {
@@ -281,7 +397,7 @@ UIDocumentInteractionControllerDelegate
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0){
-         return self.downloadingArray.count;
+         return self.transmitingArray.count;
     }else{
          return self.downloadedArray.count;
     }
@@ -293,10 +409,10 @@ UIDocumentInteractionControllerDelegate
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     if(section == 0){
-        return @"正在下载";
+        return @"未完成";
     }
     else{
-        return @"已下载";
+        return @"已完成";
     }
 }
 
@@ -310,7 +426,7 @@ UIDocumentInteractionControllerDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(self.cellStatus == LocalFliesCellStatusCanChoose){
         id model = indexPath.section == 0?
-        self.downloadingArray[indexPath.row]:self.downloadedArray[indexPath.row];
+        self.transmitingArray[indexPath.row]:self.downloadedArray[indexPath.row];
         NSString * uuid = [model isKindOfClass:[CSDownloadTask class]]?
         ((CSDownloadTask *)model).downloadFileModel.getDownloadFileUUID:((WBFile*)model).fileUUID;
         
@@ -372,6 +488,14 @@ UIDocumentInteractionControllerDelegate
     return _tableView;
 }
 
+- (NSMutableArray *)uploadingArray{
+    if(!_uploadingArray){
+        _uploadingArray = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _uploadingArray;
+}
+
+
 - (NSMutableArray *)downloadedArray{
     if(!_downloadedArray){
         _downloadedArray = [NSMutableArray arrayWithCapacity:0];
@@ -379,11 +503,25 @@ UIDocumentInteractionControllerDelegate
     return _downloadedArray;
 }
 
-- (NSMutableArray *)downloadingArray{
-    if(!_downloadingArray){
-        _downloadingArray = [NSMutableArray arrayWithCapacity:0];
+//- (NSMutableArray *)downloadingArray{
+//    if(!_downloadingArray){
+//        _downloadingArray = [NSMutableArray arrayWithCapacity:0];
+//    }
+//    return _downloadingArray;
+//}
+
+-(NSMutableArray *)transmitingArray{
+    if(!_transmitingArray){
+        _transmitingArray = [NSMutableArray arrayWithCapacity:0];
     }
-    return _downloadingArray;
+    return _transmitingArray;
+}
+
+- (NSMutableArray *)transmitiedArray{
+    if(!_transmitiedArray){
+        _transmitiedArray = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _transmitiedArray;
 }
 
 - (NSMutableArray *)chooseArr{

@@ -18,6 +18,7 @@
 #import "FilesNextViewController.h"
 #import "FilesDataSourceManager.h"
 #import "CSFilesOneDownloadManager.h"
+#import "WBFilesAndTransmitProtocal.h"
 
 @interface FilesNextViewController ()
 <

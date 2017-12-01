@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WBStationManageRebotViewController">
+            <connections>
+                <outlet property="maintainButton" destination="sFJ-TM-sYu" id="ef8-uo-42z"/>
+                <outlet property="rebotButton" destination="keQ-jp-ATX" id="h92-GT-16e"/>
+                <outlet property="shutDownButton" destination="eFj-ds-cEd" id="a4b-nI-qMF"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_power_settings.png" translatesAutoresizingMaskIntoConstraints="NO" id="Anq-a5-Phe">
+                    <rect key="frame" x="16" y="28" width="24" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="ibW-F3-lYD"/>
+                        <constraint firstAttribute="width" constant="24" id="syK-gL-XhG"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="重启与关机" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Pe-5T-prl">
+                    <rect key="frame" x="60" y="30" width="299" height="20"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eFj-ds-cEd">
+                    <rect key="frame" x="60" y="66" width="45" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="BXc-tA-okC"/>
+                        <constraint firstAttribute="width" constant="45" id="qaU-BY-c2b"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="关机">
+                        <color key="titleColor" red="0.01176470588" green="0.66274509800000003" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="shutDownButtonClick:" destination="-1" eventType="touchUpInside" id="ZVo-xI-Lgn"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="keQ-jp-ATX">
+                    <rect key="frame" x="130" y="61" width="45" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="45" id="cdj-pt-6sO"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="uC1-vb-2bi"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="重启">
+                        <color key="titleColor" red="0.01176470588" green="0.66274509800000003" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="rebotButtonClick:" destination="-1" eventType="touchUpInside" id="ZAM-AM-aoK"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_build.png" translatesAutoresizingMaskIntoConstraints="NO" id="J0I-2Q-qP6">
+                    <rect key="frame" x="16" y="131.5" width="24" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="24" id="An7-gB-dZA"/>
+                        <constraint firstAttribute="height" constant="24" id="H0f-e9-fOG"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="进入维护模式" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gcF-HD-jvL">
+                    <rect key="frame" x="60" y="134" width="299" height="19.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="重启进入维护模式，可以在维护模式下执行磁盘操作或系统维护任务。" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9wD-6w-kpa">
+                    <rect key="frame" x="60" y="169" width="299" height="33.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sDn-ah-hpZ">
+                    <rect key="frame" x="0.0" y="111" width="375" height="0.5"/>
+                    <color key="backgroundColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="0.5" id="g2N-Yx-tD0"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sFJ-TM-sYu">
+                    <rect key="frame" x="60" y="218.5" width="123" height="30"/>
+                    <state key="normal" title="重启进入维护模式">
+                        <color key="titleColor" red="0.01176470588" green="0.66274509800000003" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="miantainButtonClick:" destination="-1" eventType="touchUpInside" id="IEm-uM-1tE"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Anq-a5-Phe" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="28" id="2MF-OG-MKJ"/>
+                <constraint firstItem="9wD-6w-kpa" firstAttribute="leading" secondItem="gcF-HD-jvL" secondAttribute="leading" id="2aR-nb-4s6"/>
+                <constraint firstItem="gcF-HD-jvL" firstAttribute="centerY" secondItem="J0I-2Q-qP6" secondAttribute="centerY" id="3oN-v1-eHZ"/>
+                <constraint firstItem="2Pe-5T-prl" firstAttribute="leading" secondItem="Anq-a5-Phe" secondAttribute="trailing" constant="20" id="4Pc-lg-1hh"/>
+                <constraint firstItem="J0I-2Q-qP6" firstAttribute="leading" secondItem="Anq-a5-Phe" secondAttribute="leading" id="6HJ-hh-vp5"/>
+                <constraint firstItem="J0I-2Q-qP6" firstAttribute="top" secondItem="sDn-ah-hpZ" secondAttribute="bottom" constant="20" id="Ac2-G3-ITC"/>
+                <constraint firstItem="gcF-HD-jvL" firstAttribute="leading" secondItem="J0I-2Q-qP6" secondAttribute="trailing" constant="20" id="CqW-dE-HL7"/>
+                <constraint firstItem="sFJ-TM-sYu" firstAttribute="leading" secondItem="eFj-ds-cEd" secondAttribute="leading" id="Mx8-vY-I28"/>
+                <constraint firstItem="keQ-jp-ATX" firstAttribute="centerY" secondItem="eFj-ds-cEd" secondAttribute="centerY" id="O59-Pk-5eH"/>
+                <constraint firstItem="2Pe-5T-prl" firstAttribute="centerY" secondItem="Anq-a5-Phe" secondAttribute="centerY" id="QMN-fK-bZR"/>
+                <constraint firstItem="eFj-ds-cEd" firstAttribute="leading" secondItem="2Pe-5T-prl" secondAttribute="leading" id="T85-mk-aDf"/>
+                <constraint firstItem="keQ-jp-ATX" firstAttribute="leading" secondItem="eFj-ds-cEd" secondAttribute="trailing" constant="25" id="VXN-A3-Ob6"/>
+                <constraint firstItem="sDn-ah-hpZ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="XrD-rq-Q0i"/>
+                <constraint firstAttribute="trailing" secondItem="9wD-6w-kpa" secondAttribute="trailing" constant="16" id="etC-wG-gRf"/>
+                <constraint firstItem="9wD-6w-kpa" firstAttribute="top" secondItem="gcF-HD-jvL" secondAttribute="bottom" constant="16" id="gdz-IS-zT9"/>
+                <constraint firstItem="eFj-ds-cEd" firstAttribute="top" secondItem="2Pe-5T-prl" secondAttribute="bottom" constant="16" id="ir2-gI-4M3"/>
+                <constraint firstAttribute="trailing" secondItem="2Pe-5T-prl" secondAttribute="trailing" constant="16" id="ka2-wp-rLt"/>
+                <constraint firstItem="sDn-ah-hpZ" firstAttribute="top" secondItem="eFj-ds-cEd" secondAttribute="bottom" constant="20" id="l6Z-Xf-WND"/>
+                <constraint firstAttribute="trailing" secondItem="gcF-HD-jvL" secondAttribute="trailing" constant="16" id="mS1-KB-wMh"/>
+                <constraint firstItem="Anq-a5-Phe" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="nLp-fi-d6h"/>
+                <constraint firstItem="sFJ-TM-sYu" firstAttribute="top" secondItem="9wD-6w-kpa" secondAttribute="bottom" constant="16" id="sZb-Hi-j5Z"/>
+                <constraint firstAttribute="trailing" secondItem="sDn-ah-hpZ" secondAttribute="trailing" id="vgC-1K-A33"/>
+                <constraint firstItem="J0I-2Q-qP6" firstAttribute="centerX" secondItem="Anq-a5-Phe" secondAttribute="centerX" id="w6F-MO-xCF"/>
+            </constraints>
+            <point key="canvasLocation" x="34.5" y="53.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="ic_build.png" width="24" height="24"/>
+        <image name="ic_power_settings.png" width="24" height="24"/>
+    </resources>
+</document>

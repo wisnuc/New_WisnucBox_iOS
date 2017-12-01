@@ -53,7 +53,7 @@
 
 - (void)startUploadAssets:(void(^)(void))complete;
 
-- (void)loginWithBasic:(NSString *)basic userUUID:(NSString *)uuid StationName:(NSString *)stationName UserName:(NSString *)userName addr:(NSString *)addr isWechat:(BOOL)isWechat completeBlock:(void(^)(NSError *error, WBUser *user))callback;
+- (void)loginWithBasic:(NSString *)basic userUUID:(NSString *)uuid StationName:(NSString *)stationName UserName:(NSString *)userName addr:(NSString *)addr AvatarURL:(NSString *)avatar isWechat:(BOOL)isWechat completeBlock:(void(^)(NSError *error, WBUser *user))callback;
 
 // wechat login with wechat code
 - (void)wechatLoginWithUserModel:(CloudModelForUser *)cloudUserModel Token:(NSString *)cloudToken AvatarUrl:(NSString *)avatarUrl addr:(NSString *)addr completeBlock:(void(^)(NSError *error, WBUser *user))callback;
@@ -62,7 +62,6 @@
 
 - (void)requestForBackupPhotos:(void(^)(BOOL shouldUpload))callback;
 
-- (void)readyUploadFilesWithFilePath:(NSString *)filePath Complete:(void(^)(NSError *))callback;
 
 - (void)cancelFilesUplod;
 @end
@@ -132,8 +131,6 @@
 + (instancetype)initWithAsset:(JYAsset *)asset;
 
 - (void)startUseTimeStamp:(BOOL)yesOrNo completeBlock:(void(^)(NSError * , id))callback;
-
-- (void)uploadFilesWithFilePath:(NSString *)filePath Progress:(void (^)(NSProgress *))progress Complete:(void(^)(NSError *))callback;
 
 // must call callback EABORT
 - (void)cancel;

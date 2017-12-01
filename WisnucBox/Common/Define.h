@@ -34,6 +34,8 @@
 #define BackUpAssetDirName @"上传的照片"
 #define BackUpFilesDirName @"上传的文件"
 
+#define KUploadFilesDocument [NSString stringWithFormat:@"Upload/%@",WB_UserService.currentUser.uuid]
+
 #define BackgroundUpload_KEY  @"BackgroundUpload_KEY"
 #define BackgroundUploadChangeNotify @"BackgroundUploadChangeNotify"
 
