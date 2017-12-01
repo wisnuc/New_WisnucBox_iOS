@@ -7,6 +7,13 @@
 //
 
 #import "TicketUserModel.h"
+@implementation TicketStationModel
++ (NSDictionary *)modelContainerPropertyGenericClass {
+    return @{@"users" : [TicketUserModel class],
+             };
+}
+@end
+
 
 @implementation TicketUserModel
 

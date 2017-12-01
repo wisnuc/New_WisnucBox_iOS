@@ -231,7 +231,7 @@ static BOOL needHide = YES;
     
     [subject subscribeNext:^(id x) {
         [[WBGetSystemInformationAPI apiWithServicePath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-            //            MyNSLog(@"%@",request.responseJsonObject);
+    
             NSDictionary *rootDic =request.responseJsonObject;
             NSDictionary *dic = [rootDic objectForKey:@"ws215i"];
             NSString *type;
@@ -645,7 +645,7 @@ static BOOL needHide = YES;
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         UserModel *model = _userDataSource[indexPath.row];
-        
+       
         NSLog(@"%@======%lu",model.username,(unsigned long)_userDataSource.count);
         cell.userNameLabel.text = model.username;
         cell.userNameImageView.image = [UIImage imageForName:model.username size:cell.userNameImageView.bounds.size];
@@ -672,7 +672,7 @@ static BOOL needHide = YES;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == _userListTableViwe) {
         UserModel *model = _userDataSource[indexPath.row];;
-        
+//        NSLog(@"%@",model.global);
         FMUserLoginViewController *userLoginVC = [[FMUserLoginViewController alloc]init];
         FMSerachService * ser;
         if (_userDataCount >0) {

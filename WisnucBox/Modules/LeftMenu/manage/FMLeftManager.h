@@ -24,6 +24,9 @@
 #define LeftMenu_AdminTitles [NSMutableArray arrayWithObjects:@"传输管理",@"设备管理",@"设置",@"注销",nil]
 #define LeftMenu_AdminImages [NSMutableArray arrayWithObjects:@"storage",@"ic_dns_black",@"set",@"cancel",nil]
 
+#define LeftMenu_AdminBindWechetTitles [NSMutableArray arrayWithObjects:@"传输管理",@"设备管理",@"邀请微信好友",@"设置",@"注销",nil]
+#define LeftMenu_AdminBindWechetImages [NSMutableArray arrayWithObjects:@"storage",@"ic_dns_black",@"person_add",@"set",@"cancel",nil]
+
 @interface FMLeftManager : NSObject
 
 @property (nonatomic) MenuView * menu;

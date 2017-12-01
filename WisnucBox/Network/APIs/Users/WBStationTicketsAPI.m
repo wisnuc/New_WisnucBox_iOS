@@ -9,19 +9,34 @@
 #import "WBStationTicketsAPI.h"
 
 @implementation WBStationTicketsAPI
-
++ (instancetype)apiWithRequestMethodString:(NSString *)requestMethodString Type:(NSString *)type{
+    WBStationTicketsAPI *api = [WBStationTicketsAPI new];
+    api.requestMethodString  = requestMethodString;
+    api.type = type;
+    return api;
+    
+}
 /// Http请求的方法
 - (JYRequestMethod)requestMethod{
-    return JYRequestMethodPost;
+    if ([_requestMethodString isEqualToString:@"GET"]) {
+        return JYRequestMethodGet;
+    }else if ([_requestMethodString isEqualToString:@"POST"]){
+       return JYRequestMethodPost;
+    }else{
+        return JYRequestMethodGet;
+    }
 }
 /// 请求的URL
 - (NSString *)requestUrl{
     return @"station/tickets";
 }
 - (id)requestArgument{
-    NSDictionary *dic = @{
-                          @"type":@"bind"
-                          };
+    NSDictionary *dic;
+    if (_type) {
+        dic = @{
+                @"type":_type
+                };
+    }
     return dic;
 }
 

@@ -35,6 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL autoBackUp;
 @property (nonatomic) BOOL backUpInWWAN;
 @property (nonatomic) BOOL askForBackup;
+@property (nonatomic) BOOL isBindWechat;
 
 @end
 

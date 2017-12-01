@@ -19,6 +19,7 @@
 #import "CSFilesOneDownloadManager.h"
 #import "CSFileUploadManager.h"
 #import "CSUploadHelper.h"
+#import "UserModel.h"
 
 @interface AppServices ()<CLLocationManagerDelegate>
 @end
@@ -274,9 +275,17 @@
 - (void)updateCurrentUserInfoWithCompleteBlock:(void(^)(NSError *, BOOL success))callback {
     [[FMAccountUsersAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
-        if (IsEquallString(dic[@"uuid"], WB_UserService.currentUser.uuid)) {
-            WB_UserService.currentUser.isAdmin = [dic[@"isAdmin"] boolValue];
-            WB_UserService.currentUser.isFirstUser = [dic[@"isFirstUser"] boolValue];
+        NSLog(@"%@",request.responseJsonObject);
+         UserModel *userModel = [UserModel yy_modelWithDictionary:dic];
+        if (IsEquallString(userModel.uuid, WB_UserService.currentUser.uuid)) {
+            WB_UserService.currentUser.isAdmin = [userModel.isAdmin boolValue];
+            WB_UserService.currentUser.isFirstUser = [userModel.isFirstUser boolValue];
+            if (userModel.global) {
+                WB_UserService.currentUser.isBindWechat = YES;
+            }else{
+                WB_UserService.currentUser.isBindWechat = NO;
+            }
+           
             [WB_UserService synchronizedCurrentUser];
             //notify
             [[NSNotificationCenter defaultCenter] postNotificationName:UserInfoChangedNotify object:nil];

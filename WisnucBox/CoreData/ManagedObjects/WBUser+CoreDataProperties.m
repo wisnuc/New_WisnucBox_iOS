@@ -34,4 +34,5 @@
 @dynamic guid;
 @dynamic askForBackup;
 @dynamic uploadFileDir;
+@dynamic isBindWechat;
 @end

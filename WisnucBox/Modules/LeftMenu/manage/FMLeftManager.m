@@ -15,6 +15,7 @@
 #import "LocalDownloadViewController.h"
 #import "WBStationManageRootViewController.h"
 #import "FMUserEditVC.h"
+#import "WBInviteWechatViewController.h"
 
 @interface FMLeftManager ()<FMLeftMenuDelegate>
 
@@ -83,10 +84,14 @@
 
 // userinfo update
 - (void)userInfoChange {
-    if(WB_UserService.currentUser.isFirstUser || WB_UserService.currentUser.isAdmin) {
+    if(WB_UserService.currentUser.isBindWechat &&(WB_UserService.currentUser.isFirstUser || WB_UserService.currentUser.isAdmin)) {
+        _leftMenu.menus = LeftMenu_AdminBindWechetTitles;
+        _leftMenu.imageNames = LeftMenu_AdminBindWechetImages;
+    }
+    else if (WB_UserService.currentUser.isFirstUser || WB_UserService.currentUser.isAdmin){
         _leftMenu.menus = LeftMenu_AdminTitles;
         _leftMenu.imageNames = LeftMenu_AdminImages;
-    }else{
+    }else {
         _leftMenu.menus = LeftMenu_NotAdminTitles;//@"个人信息", @"我的私有云", @"用户管理", @"设置", @"帮助",
         _leftMenu.imageNames = LeftMenu_NotAdminImages;
     }
@@ -211,6 +216,12 @@
             [selectVC  pushViewController:vc animated:YES];
         }
     }
+    else if (IsEquallString(title, @"传输管理")){
+        vc = [[LocalDownloadViewController alloc]init];
+        if ([selectVC isKindOfClass:[NavViewController class]]) {
+            [selectVC  pushViewController:vc animated:YES];
+        }
+    }
     
 //        else if(IsEquallString(title, @"用户管理")){
 //                vc = [[FMUserSetting alloc]init];
@@ -228,13 +239,16 @@
             }
         }
     }
-
-    else if (IsEquallString(title, @"传输管理")){
-        vc = [[LocalDownloadViewController alloc]init];
+    
+    else if (IsEquallString(title, @"邀请微信好友")){
+        if (!WB_UserService.currentUser.isCloudLogin) {
+        vc = [[WBInviteWechatViewController alloc]init];
         if ([selectVC isKindOfClass:[NavViewController class]]) {
             [selectVC  pushViewController:vc animated:YES];
         }
+        }
     }
+    
     else if (IsEquallString(title, @"设置")){
         vc = [[FMSetting alloc]initPrivate];
         if ([selectVC isKindOfClass:[NavViewController class]]) {

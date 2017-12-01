@@ -9,5 +9,8 @@
 #import "JYBaseRequest.h"
 
 @interface WBStationTicketsAPI : JYBaseRequest
+@property (nonatomic) NSString *requestMethodString;
+@property (nonatomic) NSString *type;
 
++ (instancetype)apiWithRequestMethodString:(NSString *)requestMethodString Type:(NSString *)type;
 @end
