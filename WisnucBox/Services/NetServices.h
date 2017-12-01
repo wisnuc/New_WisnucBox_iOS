@@ -28,6 +28,7 @@
 
 //notify
 #define NETWORK_REACHABILITY_CHANGE_NOTIFY @"NETWORK_REACHABILITY_CHANGE_NOTIFY"
+#define NETWORK_CHECKOUT_TO_LAN_NOTIFY @"NETWORK_CHECKOUT_TO_LAN_NOTIFY"
 
 @interface NetServices : NSObject <ServiceProtocol>
 
@@ -39,7 +40,15 @@
 
 @property (nonatomic, readonly) AFNetworkReachabilityStatus status;
 
+- (void)updateIsCloud:(BOOL)isCloud andLocalURL:(NSString *)localUrl andCloudURL:(NSString *)cloudUrl;
+
+- (void)testForLANIP:(NSString *)LANIP commplete:(void(^)(BOOL success))callback;
+
+- (void)testAndCheckoutIfSuccessComplete:(void(^)(void))callback;
+
 - (instancetype)initWithLocalURL:(NSString *)localUrl andCloudURL:(NSString *)cloudUrl;
+
+- (void)getLocalTokenWithCloud:(void(^)(NSError *, NSString * token))callback;
 
 - (void)getUserBackupDirName:(NSString *)name BackupDir:(void(^)(NSError *, NSString * entryUUID))callback;
 

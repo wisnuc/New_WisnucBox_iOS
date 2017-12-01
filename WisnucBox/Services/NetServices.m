@@ -14,6 +14,7 @@
 #import "Base64.h"
 #import "NSError+WBCode.h"
 #import "CSFileDownloadManager.h"
+#import "WBCloudLocalTokenAPI.h"
 
 
 @interface NetServices()
@@ -34,6 +35,34 @@
     [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
 }
 
+- (void)testForLANIP:(NSString *)LANIP commplete:(void(^)(BOOL success))callback {
+    AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer.timeoutInterval = 3;
+    [manager GET:[NSString stringWithFormat:@"%@station/info", LANIP] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        return callback(YES);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        return callback(NO);
+    }];
+}
+
+- (void)testAndCheckoutIfSuccessComplete:(void(^)(void))callback {
+    if(!WB_UserService.currentUser) return callback();
+    [self testForLANIP:WB_UserService.currentUser.localAddr commplete:^(BOOL success) {
+        if(!success) return callback();
+        [self getLocalTokenWithCloud:^(NSError *error, NSString *token) {
+            if(error) return callback();
+            [self updateIsCloud:NO andLocalURL:WB_UserService.currentUser.localAddr andCloudURL:nil];
+            WB_UserService.currentUser.isCloudLogin = NO;
+            WB_UserService.currentUser.localToken = token;
+            [WB_UserService setCurrentUser:WB_UserService.currentUser];
+            [WB_UserService synchronizedCurrentUser];
+            NSLog(@"切换网络成功");
+            [[NSNotificationCenter defaultCenter] postNotificationName:NETWORK_CHECKOUT_TO_LAN_NOTIFY object:nil];
+            return callback();
+        }];
+    }];
+}
+
 - (instancetype)initWithLocalURL:(NSString *)localUrl andCloudURL:(NSString *)cloudUrl {
     if(self = [super init]){
         self.localUrl = localUrl;
@@ -48,6 +77,13 @@
         [self checkNetwork];
     }
     return self;
+}
+
+- (void)updateIsCloud:(BOOL)isCloud andLocalURL:(NSString *)localUrl andCloudURL:(NSString *)cloudUrl {
+    self.localUrl = localUrl;
+    self.cloudUrl = cloudUrl;
+    self.isCloud = isCloud;
+    [JYRequestConfig sharedConfig].baseURL = isCloud ? cloudUrl : localUrl;
 }
 
 - (void)checkNetwork
@@ -107,6 +143,16 @@
             SaveToUserDefault(Current_Backup_Dir, backupDirUUID);
             return callback(nil, backupDirUUID);
         }];
+    }];
+}
+
+- (void)getLocalTokenWithCloud:(void(^)(NSError *, NSString * token))callback {
+    if(!WB_UserService.isUserLogin) return callback([NSError errorWithDomain:@"User Not Login" code:NO_USER_LOGIN userInfo:nil], NULL);
+    [[WBCloudLocalTokenAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSString * token = ((NSDictionary *)(request.responseJsonObject[@"data"]))[@"token"];
+        return callback(nil, token);
+    } failure:^(__kindof JYBaseRequest *request) {
+        return callback(request.error, nil);
     }];
 }
 

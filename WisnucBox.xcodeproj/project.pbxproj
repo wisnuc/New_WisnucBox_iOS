@@ -248,6 +248,11 @@
 		C183CDEB1FCE9CE8002E29CD /* FMChangeNameVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = C183CDE91FCE9CE8002E29CD /* FMChangeNameVC.xib */; };
 		C183CDEE1FCEA20C002E29CD /* FMUpdateUserAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C183CDED1FCEA20C002E29CD /* FMUpdateUserAPI.m */; };
 		C183CDF11FCEA2E9002E29CD /* FMUpdateUserPasswordAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C183CDF01FCEA2E9002E29CD /* FMUpdateUserPasswordAPI.m */; };
+		C183CDF41FCFD859002E29CD /* NSObject+SXRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = C183CDF31FCFD858002E29CD /* NSObject+SXRuntime.m */; };
+		C183CDFC1FCFD8A0002E29CD /* UIBarButtonItem+SXCreate.m in Sources */ = {isa = PBXBuildFile; fileRef = C183CDF61FCFD89F002E29CD /* UIBarButtonItem+SXCreate.m */; };
+		C183CDFD1FCFD8A0002E29CD /* UINavigationController+SXFullScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = C183CDF71FCFD89F002E29CD /* UINavigationController+SXFullScreen.m */; };
+		C183CDFE1FCFD8A0002E29CD /* UINavigation+SXFixSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = C183CDFA1FCFD8A0002E29CD /* UINavigation+SXFixSpace.m */; };
+		C183CE041FD006A9002E29CD /* WBCloudLocalTokenAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C183CE031FD006A9002E29CD /* WBCloudLocalTokenAPI.m */; };
 		C1D2D6C91FC8587000EE1C46 /* livePhoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1D2D6C71FC8587000EE1C46 /* livePhoto@2x.png */; };
 		C1D2D6CA1FC8587000EE1C46 /* livePhoto@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1D2D6C81FC8587000EE1C46 /* livePhoto@3x.png */; };
 		F65035611FAC00A60007979D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F65035601FAC00A60007979D /* main.m */; };
@@ -1046,6 +1051,16 @@
 		C183CDED1FCEA20C002E29CD /* FMUpdateUserAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FMUpdateUserAPI.m; sourceTree = "<group>"; };
 		C183CDEF1FCEA2E9002E29CD /* FMUpdateUserPasswordAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FMUpdateUserPasswordAPI.h; sourceTree = "<group>"; };
 		C183CDF01FCEA2E9002E29CD /* FMUpdateUserPasswordAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FMUpdateUserPasswordAPI.m; sourceTree = "<group>"; };
+		C183CDF21FCFD858002E29CD /* NSObject+SXRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SXRuntime.h"; sourceTree = "<group>"; };
+		C183CDF31FCFD858002E29CD /* NSObject+SXRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SXRuntime.m"; sourceTree = "<group>"; };
+		C183CDF61FCFD89F002E29CD /* UIBarButtonItem+SXCreate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+SXCreate.m"; sourceTree = "<group>"; };
+		C183CDF71FCFD89F002E29CD /* UINavigationController+SXFullScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+SXFullScreen.m"; sourceTree = "<group>"; };
+		C183CDF81FCFD89F002E29CD /* UINavigation+SXFixSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigation+SXFixSpace.h"; sourceTree = "<group>"; };
+		C183CDF91FCFD8A0002E29CD /* UIBarButtonItem+SXCreate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+SXCreate.h"; sourceTree = "<group>"; };
+		C183CDFA1FCFD8A0002E29CD /* UINavigation+SXFixSpace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigation+SXFixSpace.m"; sourceTree = "<group>"; };
+		C183CDFB1FCFD8A0002E29CD /* UINavigationController+SXFullScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+SXFullScreen.h"; sourceTree = "<group>"; };
+		C183CE021FD006A9002E29CD /* WBCloudLocalTokenAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBCloudLocalTokenAPI.h; sourceTree = "<group>"; };
+		C183CE031FD006A9002E29CD /* WBCloudLocalTokenAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBCloudLocalTokenAPI.m; sourceTree = "<group>"; };
 		C1D2D6C71FC8587000EE1C46 /* livePhoto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "livePhoto@2x.png"; sourceTree = "<group>"; };
 		C1D2D6C81FC8587000EE1C46 /* livePhoto@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "livePhoto@3x.png"; sourceTree = "<group>"; };
 		F650355C1FAC00A60007979D /* WisnucBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WisnucBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1582,6 +1597,8 @@
 		1F1AB9EF1FB9706A006EB1FC /* NSObject */ = {
 			isa = PBXGroup;
 			children = (
+				C183CDF21FCFD858002E29CD /* NSObject+SXRuntime.h */,
+				C183CDF31FCFD858002E29CD /* NSObject+SXRuntime.m */,
 				1F1AB9F01FB97092006EB1FC /* NSObject+KVOBlock.h */,
 				1F1AB9F11FB97092006EB1FC /* NSObject+KVOBlock.m */,
 				C11EAB261FC41495007C9BA7 /* NSError+WBCode.h */,
@@ -1713,6 +1730,7 @@
 		1F4D75591FAC4BB700E6516C /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				C183CDF51FCFD899002E29CD /* UINaviagtion */,
 				1F1AB9EF1FB9706A006EB1FC /* NSObject */,
 				F6D8CC3E1FB42DFF00673824 /* UIView */,
 				F6D8CC311FB401A500673824 /* UIApplication */,
@@ -2387,6 +2405,8 @@
 				C11EAB2D1FC43611007C9BA7 /* WBCloudGetStationsAPI.m */,
 				1FC2AFED1FC5299300E8C9DE /* WBCloudLoginAPI.h */,
 				1FC2AFEE1FC5299300E8C9DE /* WBCloudLoginAPI.m */,
+				C183CE021FD006A9002E29CD /* WBCloudLocalTokenAPI.h */,
+				C183CE031FD006A9002E29CD /* WBCloudLocalTokenAPI.m */,
 			);
 			path = Cloud;
 			sourceTree = "<group>";
@@ -2466,6 +2486,19 @@
 				C183CDE91FCE9CE8002E29CD /* FMChangeNameVC.xib */,
 			);
 			name = userInfo;
+			sourceTree = "<group>";
+		};
+		C183CDF51FCFD899002E29CD /* UINaviagtion */ = {
+			isa = PBXGroup;
+			children = (
+				C183CDF91FCFD8A0002E29CD /* UIBarButtonItem+SXCreate.h */,
+				C183CDF61FCFD89F002E29CD /* UIBarButtonItem+SXCreate.m */,
+				C183CDF81FCFD89F002E29CD /* UINavigation+SXFixSpace.h */,
+				C183CDFA1FCFD8A0002E29CD /* UINavigation+SXFixSpace.m */,
+				C183CDFB1FCFD8A0002E29CD /* UINavigationController+SXFullScreen.h */,
+				C183CDF71FCFD89F002E29CD /* UINavigationController+SXFullScreen.m */,
+			);
+			path = UINaviagtion;
 			sourceTree = "<group>";
 		};
 		D9B3E6DE895EF13E2BDF26E5 /* Pods */ = {
@@ -3923,6 +3956,7 @@
 				F675614B1FB3428F00E3277F /* UIColor+MaterialTextField.m in Sources */,
 				F68311D61FB311FC005AC578 /* FMUsers.m in Sources */,
 				71A3D6741FB584360002B8B1 /* FMCreateUserAPI.m in Sources */,
+				C183CDFD1FCFD8A0002E29CD /* UINavigationController+SXFullScreen.m in Sources */,
 				F67D64071FAC7D3600E23D16 /* PHAsset+JYEXT.m in Sources */,
 				F6830F1A1FB300D2005AC578 /* FMLeftUserFooterView.m in Sources */,
 				1FAD74771FD1049900A5D880 /* WBInviteWechatViewController.m in Sources */,
@@ -3960,6 +3994,7 @@
 				C138D07A1FB9A4B0000CF518 /* DirectoriesModel.m in Sources */,
 				C138D0781FB9A4B0000CF518 /* DriveModel.m in Sources */,
 				F6830F181FB300D2005AC578 /* FMLeftUserCell.m in Sources */,
+				C183CE041FD006A9002E29CD /* WBCloudLocalTokenAPI.m in Sources */,
 				F6830EB51FB2FAE0005AC578 /* RDVTabBarItem.m in Sources */,
 				F6830EB31FB2FAE0005AC578 /* RDVTabBar.m in Sources */,
 				C183CDE21FCE8D84002E29CD /* FMUserEditVC.m in Sources */,
@@ -4032,6 +4067,7 @@
 				F67D643F1FAC7E5600E23D16 /* JYProgressHUD.m in Sources */,
 				71A3D6681FB57AC30002B8B1 /* JYNetEngine.m in Sources */,
 				1F4D75B11FAC4BB800E6516C /* UserServices.m in Sources */,
+				C183CDF41FCFD859002E29CD /* NSObject+SXRuntime.m in Sources */,
 				F6830EC41FB2FD1D005AC578 /* FMUserLoginHeaderView.m in Sources */,
 				F6D8CC3A1FB402CB00673824 /* FMBaseFirstVC.m in Sources */,
 				1F4D75D01FAC604100E6516C /* LoginTableViewCell.m in Sources */,
@@ -4041,10 +4077,12 @@
 				F6830F041FB2FF8C005AC578 /* FMUserSettingCell.m in Sources */,
 				1F922EB21FCD744C00A7614B /* WBStationManageTableViewCell.m in Sources */,
 				F671F1081FB4B8820051DF93 /* JYProcessView.m in Sources */,
+				C183CDFC1FCFD8A0002E29CD /* UIBarButtonItem+SXCreate.m in Sources */,
 				C138D0601FB970F7000CF518 /* NSString+DeviceName.m in Sources */,
 				F675614E1FB3428F00E3277F /* UITextField+MFClearButton.m in Sources */,
 				F6AAD1891FB049E100DEDBDC /* WBFile+CoreDataProperties.m in Sources */,
 				F671F1051FB4B3B50051DF93 /* VCFloatingActionButton.m in Sources */,
+				C183CDFE1FCFD8A0002E29CD /* UINavigation+SXFixSpace.m in Sources */,
 				1F8EAF291FBACD5000FEED19 /* FLFIlesHelper.m in Sources */,
 				1F4D75A01FAC4BB800E6516C /* SXLoadingView.m in Sources */,
 				F67933711FB0142900C9A7DC /* WBAsset.m in Sources */,

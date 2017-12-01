@@ -544,6 +544,9 @@ static BOOL needHide = YES;
                     [mutableDic addEntriesFromDictionary:stationDic];
                      NSLog(@"%@",model.data.user.userId);
                     CloudModelForUser *userModel = [CloudModelForUser yy_modelWithDictionary:mutableDic];
+                    if(stationDic[@"LANIP"] && ((NSArray *)stationDic[@"LANIP"]).count){
+                        userModel.LANIP = stationDic[@"LANIP"][0];
+                    }
                     return block(nil, userModel);
                 }
             }
@@ -573,8 +576,8 @@ static BOOL needHide = YES;
             else NSLog(@"Get User Home Error");
             [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"登录失败！ code: %ld", error.wbCode] duration:1];
         }else{
-            [SXLoadingView hideProgressHUD];
             [MyAppDelegate initRootVC];
+            [SXLoadingView hideProgressHUD];
         }
     }];
 }

@@ -36,6 +36,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"编辑用户信息";
+<<<<<<< HEAD
+    self.navigationController.navigationBar.translucent = NO;
+    [self.userHeaderImageView setImage:[UIImage imageForName:WB_UserService.currentUser.userName size:self.userHeaderImageView.bounds.size]];
+=======
+>>>>>>> 08262f3f823774daaac92e4535f5f1a52680dd4c
     [self.userName setTitle:WB_UserService.currentUser.userName forState:UIControlStateNormal];
     
 }
@@ -69,12 +74,16 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+<<<<<<< HEAD
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+=======
     self.navigationController.navigationBarHidden = YES;
     if (!WB_UserService.currentUser.isCloudLogin) {
         [self getUserData];
     }else{
         [self.bindWechatButton setHidden:YES];
     }
+>>>>>>> 08262f3f823774daaac92e4535f5f1a52680dd4c
     [self.userHeaderImageView setImage:[UIImage imageForName:WB_UserService.currentUser.userName size:self.userHeaderImageView.bounds.size]];
     [self.userName setTitle:WB_UserService.currentUser.userName forState:UIControlStateNormal];
 }
@@ -99,7 +108,12 @@
 
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+<<<<<<< HEAD
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    
+=======
     self.navigationController.navigationBarHidden = NO;
+>>>>>>> 08262f3f823774daaac92e4535f5f1a52680dd4c
 }
 
 - (IBAction)changeAvater:(id)sender {

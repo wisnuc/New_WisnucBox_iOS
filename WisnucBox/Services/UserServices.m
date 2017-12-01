@@ -109,7 +109,7 @@
 }
 
 - (void)synchronizedCurrentUser {
-    [self saveUser:self.currentUser];
+    [self saveUser:self.currentUser];        
 }
 
 @end
