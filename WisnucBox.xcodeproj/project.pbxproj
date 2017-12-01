@@ -175,6 +175,12 @@
 		1FAD74811FD14A4700A5D880 /* add_invite.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD747E1FD14A4600A5D880 /* add_invite.png */; };
 		1FAD74821FD14A4700A5D880 /* add_invite@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD747F1FD14A4700A5D880 /* add_invite@3x.png */; };
 		1FAD74841FD1537400A5D880 /* invite_miniProgram.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD74831FD1537400A5D880 /* invite_miniProgram.png */; };
+		1FAD74881FD15EBE00A5D880 /* upload_download.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD74851FD15EBA00A5D880 /* upload_download.png */; };
+		1FAD74891FD15EBE00A5D880 /* upload_download@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD74861FD15EBB00A5D880 /* upload_download@3x.png */; };
+		1FAD748A1FD15EBE00A5D880 /* upload_download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD74871FD15EBD00A5D880 /* upload_download@2x.png */; };
+		1FAD748E1FD15F3300A5D880 /* weChat_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD748B1FD15F3100A5D880 /* weChat_add@2x.png */; };
+		1FAD748F1FD15F3300A5D880 /* weChat_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD748C1FD15F3200A5D880 /* weChat_add.png */; };
+		1FAD74901FD15F3300A5D880 /* weChat_add@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD748D1FD15F3300A5D880 /* weChat_add@3x.png */; };
 		1FB0900B1FBC519A0020B304 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB090091FBC51990020B304 /* NSString+Extension.m */; };
 		1FC2AFEF1FC5299300E8C9DE /* WBCloudLoginAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2AFEE1FC5299300E8C9DE /* WBCloudLoginAPI.m */; };
 		1FC2AFF21FC52B4800E8C9DE /* CloudLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2AFF11FC52B4800E8C9DE /* CloudLoginModel.m */; };
@@ -940,6 +946,12 @@
 		1FAD747E1FD14A4600A5D880 /* add_invite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add_invite.png; sourceTree = "<group>"; };
 		1FAD747F1FD14A4700A5D880 /* add_invite@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_invite@3x.png"; sourceTree = "<group>"; };
 		1FAD74831FD1537400A5D880 /* invite_miniProgram.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = invite_miniProgram.png; sourceTree = "<group>"; };
+		1FAD74851FD15EBA00A5D880 /* upload_download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upload_download.png; sourceTree = "<group>"; };
+		1FAD74861FD15EBB00A5D880 /* upload_download@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "upload_download@3x.png"; sourceTree = "<group>"; };
+		1FAD74871FD15EBD00A5D880 /* upload_download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "upload_download@2x.png"; sourceTree = "<group>"; };
+		1FAD748B1FD15F3100A5D880 /* weChat_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChat_add@2x.png"; sourceTree = "<group>"; };
+		1FAD748C1FD15F3200A5D880 /* weChat_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weChat_add.png; sourceTree = "<group>"; };
+		1FAD748D1FD15F3300A5D880 /* weChat_add@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChat_add@3x.png"; sourceTree = "<group>"; };
 		1FB090091FBC51990020B304 /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
 		1FB0900A1FBC51990020B304 /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
 		1FC2AFED1FC5299300E8C9DE /* WBCloudLoginAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBCloudLoginAPI.h; sourceTree = "<group>"; };
@@ -2836,6 +2848,12 @@
 		F6830F1F1FB30AAD005AC578 /* LeftMenu */ = {
 			isa = PBXGroup;
 			children = (
+				1FAD748C1FD15F3200A5D880 /* weChat_add.png */,
+				1FAD748B1FD15F3100A5D880 /* weChat_add@2x.png */,
+				1FAD748D1FD15F3300A5D880 /* weChat_add@3x.png */,
+				1FAD74851FD15EBA00A5D880 /* upload_download.png */,
+				1FAD74871FD15EBD00A5D880 /* upload_download@2x.png */,
+				1FAD74861FD15EBB00A5D880 /* upload_download@3x.png */,
 				1FAD74831FD1537400A5D880 /* invite_miniProgram.png */,
 				1FAD747E1FD14A4600A5D880 /* add_invite.png */,
 				1FAD747D1FD14A4600A5D880 /* add_invite@2x.png */,
@@ -3446,6 +3464,7 @@
 				F68311A41FB30AAF005AC578 /* tabbar_normal_background.png in Resources */,
 				F68311751FB30AAE005AC578 /* recommend@2x.png in Resources */,
 				1FD7A0EA1FB05A45000D4CB3 /* back@2x.png in Resources */,
+				1FAD748E1FD15F3300A5D880 /* weChat_add@2x.png in Resources */,
 				F683117B1FB30AAF005AC578 /* Roboto-Medium.ttf in Resources */,
 				1FAD746D1FD0EDED00A5D880 /* jpg_icon.png in Resources */,
 				1F0898DC1FB05FF900B86723 /* eye_off.png in Resources */,
@@ -3458,6 +3477,7 @@
 				F68310931FB30AAE005AC578 /* back_grayhighlight.png in Resources */,
 				F68311151FB30AAE005AC578 /* info_user@3x.png in Resources */,
 				F68310A41FB30AAE005AC578 /* check_circle@3x.png in Resources */,
+				1FAD748F1FD15F3300A5D880 /* weChat_add.png in Resources */,
 				F683107D1FB30AAE005AC578 /* add_album.png in Resources */,
 				F68311821FB30AAF005AC578 /* set@3x.png in Resources */,
 				F68311401FB30AAE005AC578 /* no_file@3x.png in Resources */,
@@ -3505,6 +3525,7 @@
 				F68311441FB30AAE005AC578 /* open_in.png in Resources */,
 				F68311BF1FB30AAF005AC578 /* album_praise@2x.png in Resources */,
 				F683111A1FB30AAE005AC578 /* local@2x.png in Resources */,
+				1FAD74901FD15F3300A5D880 /* weChat_add@3x.png in Resources */,
 				F683116F1FB30AAE005AC578 /* praise@2x.png in Resources */,
 				F68311861FB30AAF005AC578 /* share_photo.png in Resources */,
 				F68311501FB30AAE005AC578 /* photo-album.png in Resources */,
@@ -3613,6 +3634,7 @@
 				1FAD74841FD1537400A5D880 /* invite_miniProgram.png in Resources */,
 				F68310AE1FB30AAE005AC578 /* date_bg.png in Resources */,
 				1FAD744E1FD0EDC700A5D880 /* wechat_icon.png in Resources */,
+				1FAD74891FD15EBE00A5D880 /* upload_download@3x.png in Resources */,
 				1FD7A1071FB05A51000D4CB3 /* PLUS@2x.png in Resources */,
 				F68310E71FB30AAE005AC578 /* hard_select@2x.png in Resources */,
 				F68310981FB30AAE005AC578 /* bg_pic@3x.jpg in Resources */,
@@ -3673,6 +3695,7 @@
 				F68311661FB30AAE005AC578 /* photos@2x.png in Resources */,
 				F68311D11FB30AAF005AC578 /* video@2x.png in Resources */,
 				1FAD74801FD14A4700A5D880 /* add_invite@2x.png in Resources */,
+				1FAD74881FD15EBE00A5D880 /* upload_download.png in Resources */,
 				1FD7A0EF1FB05A45000D4CB3 /* back_gray.png in Resources */,
 				F68311621FB30AAE005AC578 /* photo_select.png in Resources */,
 				1FAD746F1FD0EDED00A5D880 /* mov_icon.png in Resources */,
@@ -3795,6 +3818,7 @@
 				F68311B11FB30AAF005AC578 /* up@3x.png in Resources */,
 				F68311B31FB30AAF005AC578 /* user@2x.png in Resources */,
 				F68311A21FB30AAF005AC578 /* storage_select@2x.png in Resources */,
+				1FAD748A1FD15EBE00A5D880 /* upload_download@2x.png in Resources */,
 				F68310B11FB30AAE005AC578 /* Default-568h@2x.png in Resources */,
 				F68310A51FB30AAE005AC578 /* check_circle_select.png in Resources */,
 				F68311A81FB30AAF005AC578 /* touxiang.jpg in Resources */,

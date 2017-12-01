@@ -87,6 +87,7 @@ UITableViewDataSource
 
 - (void)inviteButtonClick:(UIButton *)sender{
     @weaky(self);
+    [SXLoadingView showProgressHUD:@""];
     [[WBStationTicketsAPI apiWithRequestMethodString:@"POST" Type:@"invite"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
         NSDictionary *requestDic = request.responseJsonObject;
@@ -96,11 +97,14 @@ UITableViewDataSource
         [weak_self invitWechatWithTicketId:ticketId];
     } failure:^(__kindof JYBaseRequest *request) {
          NSLog(@"%@",request.error);
+         [SXLoadingView hideProgressHUD];
+         [SXLoadingView showProgressHUDText:@"分享失败" duration:1.3];
     }];
 }
 
 - (void)invitWechatWithTicketId:(NSString *)ticketId{
     _ticketId = ticketId;
+    [SXLoadingView hideProgressHUD];
     WXMiniProgramObject *wxMiniProgram = [WXMiniProgramObject object];
     wxMiniProgram.webpageUrl = @"https://open.weixin.qq.com";
     wxMiniProgram.userName = WX_MiniProgram_OriginID;

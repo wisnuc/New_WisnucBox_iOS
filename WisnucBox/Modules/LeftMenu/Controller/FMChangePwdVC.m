@@ -21,6 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"修改登录密码";
 }
 
 - (IBAction)btnClick:(id)sender {

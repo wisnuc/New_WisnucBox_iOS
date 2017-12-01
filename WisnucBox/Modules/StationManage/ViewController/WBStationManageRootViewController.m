@@ -30,7 +30,7 @@ UITableViewDataSource
     [super viewDidLoad];
     self.title = @"设备管理";
     [self.view addSubview:self.tableView];
-//    [self addLeftBarButtonWithImage:[UIImage imageNamed:@"back"] andHighlightButtonImage:nil andSEL:@selector(backbtnClick:)];
+    [self addLeftBarButtonWithImage:[UIImage imageNamed:@"back"] andHighlightButtonImage:nil andSEL:@selector(backbtnClick:)];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -39,6 +39,7 @@ UITableViewDataSource
     self.navigationController.navigationBar.backgroundColor = UICOLOR_RGB(0x03a9f4);
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
      [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+//    [self.navigationController.navigationItem.leftBarButtonItem setImage:[UIImage imageNamed:@"back"]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -50,7 +51,6 @@ UITableViewDataSource
 
 - (void)backbtnClick:(UIButton *)sender {
     [self.navigationController popViewControllerAnimated:YES];
-   
 }
 
 #pragma tableViewDelegate;

@@ -19,6 +19,7 @@
     [super viewDidLoad];
     self.title = @"编辑设备名";
     self.renameTextField.text = _stationName;
+    [self addLeftBarButtonWithImage:[UIImage imageNamed:@"back"] andHighlightButtonImage:nil andSEL:@selector(backbtnClick:)];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -35,9 +36,14 @@
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }
 
+- (void)backbtnClick:(UIButton *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+     [self patchToReName];
+}
+
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-    [self patchToReName];
+   
 }
 
 - (void)patchToReName{

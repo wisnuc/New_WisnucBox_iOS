@@ -17,6 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"修改用户名";
 }
 
 - (IBAction)btnClick:(id)sender {
