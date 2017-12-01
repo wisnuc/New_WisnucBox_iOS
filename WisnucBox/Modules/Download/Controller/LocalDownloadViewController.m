@@ -135,20 +135,22 @@ UIDocumentInteractionControllerDelegate
 }
 
 - (void)deleteChooseFiles{
-    for (CSDownloadTask * task in self.transmitingArray) {
-        if ([self.chooseArr containsObject:task.downloadFileModel.getDownloadFileUUID]) {
+    [self.transmitingArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([NSStringFromClass([obj class]) isEqualToString:NSStringFromClass([CSDownloadTask class])]) {
+            CSDownloadTask * task = obj;
+            if ([self.chooseArr containsObject:task.downloadFileModel.getDownloadFileUUID]) {
             [self.chooseArr removeObject:task];
             [[CSFileDownloadManager sharedDownloadManager] cancelOneDownloadTaskWith:task];
+            }
+        }else{
+               CSUploadTask * task = obj;
+                if ([self.chooseArr containsObject:task.uploadFileModel.getUploadFileUUID]) {
+                    [self.chooseArr removeObject:task];
+                    [[CSFileUploadManager sharedUploadManager] cancelOneUploadTaskWith:task];
+            }
         }
-    }
-    
-    for (CSUploadTask * task in self.transmitingArray) {
-        if ([self.chooseArr containsObject:task.uploadFileModel.getUploadFileUUID]) {
-            [self.chooseArr removeObject:task];
-            [[CSFileUploadManager sharedUploadManager] cancelOneUploadTaskWith:task];
-        }
-    }
-
+    }];
+        
     NSMutableArray * arrayTemp = self.downloadedArray;
     NSArray * array = [NSArray arrayWithArray: arrayTemp];
     for (WBFile * downloadFileModel in array) {
