@@ -26,6 +26,7 @@
     NSInteger _notiNumber;
 }
 
+
 // init asset
 // init userServices
 // init net if has user (config baseurl)
@@ -103,9 +104,13 @@
         [self.photoUploadManager stop];
     }
     else if(self.photoUploadManager.shouldUpload == NO) {
-        [self startUploadAssets:nil];
+        if(!WB_UserService.currentUser.isCloudLogin)
+            [self startUploadAssets:nil];
+        else
+            [WB_NetService testAndCheckoutIfSuccessComplete:^{
+                [self rebulidUploadManager];
+            }];
     }
- 
 }
 
 //need destroy photoUploadManager and rebulid if currentuser`s backupdir notfound,
@@ -178,37 +183,7 @@
         [WB_UserService setCurrentUser:user];
         [WB_UserService synchronizedCurrentUser];
         NSLog(@"GET Token Success");
-        [WB_NetService getUserHome:^(NSError *error, NSString *userHome){
-            if(error) return callback(({error.wbCode = 10002; error;}), user);
-            user.userHome = userHome;
-            [WB_UserService synchronizedCurrentUser];
-            NSLog(@"GET USER HOME SUCCESS");
-            [WB_NetService getUserBackupDirName:BackUpAssetDirName BackupDir:^(NSError *error, NSString *entryUUID) {
-                if(error) return callback(({error.wbCode = 10003; error;}), user);
-                user.backUpDir = entryUUID;
-                [WB_UserService synchronizedCurrentUser];
-                NSLog(@"GET BACKUP DIR SUCCESS");
-                if(!user.askForBackup)
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        [weak_self requestForBackupPhotos:^(BOOL shouldUpload) {
-                            user.askForBackup = YES;
-                            user.autoBackUp = shouldUpload;
-                            [WB_UserService synchronizedCurrentUser];
-                            if(shouldUpload) {
-                                [weak_self startUploadAssets:nil];
-                            }
-                        }];
-                    });
-                else if(user.autoBackUp)
-                    [weak_self startUploadAssets:nil];
-                
-                dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                    [weak_self updateCurrentUserInfoWithCompleteBlock:nil];
-                });
-                
-                return callback(nil, user);
-            }];
-        }];
+        [weak_self nextSteapForLogin:callback];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         error.wbCode = 10001;
         callback(error, NULL);
@@ -228,16 +203,47 @@
     user.isCloudLogin = YES;
     user.avaterURL = avatarUrl;
     user.guid = cloudUserModel.global.guid;
+    if (!IsNilString(cloudUserModel.LANIP)) {
+        NSString* urlString = [NSString stringWithFormat:@"http://%@:3000/", cloudUserModel.LANIP];
+        user.localAddr = urlString;
+    }
     [WB_UserService setCurrentUser:user];
     [WB_UserService synchronizedCurrentUser];
     NSLog(@"GET Token Success");
-    [WB_NetService getUserHome:^(NSError *error, NSString *userHome){
-        if(error) return callback(({error.wbCode = 10002; error;}), user);
+    [WB_NetService testForLANIP:user.localAddr commplete:^(BOOL success) { // test for it
+        if(success) {
+            [WB_NetService getLocalTokenWithCloud:^(NSError *error, NSString *token) {
+                if(!error) {
+                    user.isCloudLogin = NO;
+                    [self.netServices updateIsCloud:NO andLocalURL:user.localAddr andCloudURL:WX_BASE_URL];
+                    user.localToken = token;
+                }
+                [WB_UserService setCurrentUser:user];
+                [WB_UserService synchronizedCurrentUser];
+                [weak_self nextSteapForLogin:callback];
+            }];
+        }else
+            [weak_self nextSteapForLogin:callback];
+        
+    }];
+}
+
+- (void)nextSteapForLogin:(void(^)(NSError *error, WBUser *user))callback{
+    WBUser * user = WB_UserService.currentUser;
+    @weaky(self);
+    [WB_NetService getUserHome:^(NSError *error, NSString *userHome) {
+        if(error) {
+            [WB_UserService logoutUser];
+            return callback(({error.wbCode = 10002; error;}), user);
+        }
         user.userHome = userHome;
         [WB_UserService synchronizedCurrentUser];
         NSLog(@"GET USER HOME SUCCESS");
         [WB_NetService getUserBackupDirName:BackUpAssetDirName BackupDir:^(NSError *error, NSString *entryUUID) {
-            if(error) return callback(({error.wbCode = 10003; error;}), user);
+            if(error) {
+                [WB_UserService logoutUser];
+                return callback(({error.wbCode = 10003; error;}), user);
+            }
             user.backUpDir = entryUUID;
             [WB_UserService synchronizedCurrentUser];
             NSLog(@"GET BACKUP DIR SUCCESS");
@@ -254,11 +260,9 @@
                 });
             else if(user.autoBackUp)
                 [weak_self startUploadAssets:nil];
-            
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
                 [weak_self updateCurrentUserInfoWithCompleteBlock:nil];
             });
-            
             return callback(nil, user);
         }];
     }];
@@ -855,7 +859,11 @@
         }
         NSLog(@"hash calculate finish. uploadPaddingQueue:%lu", (unsigned long)self.uploadPaddingQueue.count);
     }
-    if(self.hashwaitingQueue.count == 0 && self.hashWorkingQueue.count == 0 && self.uploadPaddingQueue.count == 0 && self.uploadingQueue.count == 0){ NSLog(@"backup asset finish ----=======>>>><<<<<<<<====-----  errorCount:%lu  finishedCount:%lu", (unsigned long)_uploadErrorQueue.count, (unsigned long)_uploadedQueue.count);
+    if(self.hashwaitingQueue.count == 0 && self.hashWorkingQueue.count == 0 && self.uploadPaddingQueue.count == 0 && self.uploadingQueue.count == 0){
+        NSLog(@"backup asset finish ----=======>>>><<<<<<<<====-----  errorCount:%lu  finishedCount:%lu", (unsigned long)_uploadErrorQueue.count, (unsigned long)_uploadedQueue.count);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIApplication sharedApplication].idleTimerDisabled = NO;
+        });
         dispatch_async(self.managerQueue, ^{
             if(self.uploadErrorQueue.count) { // retry
                 _needRetry = NO;
@@ -890,7 +898,6 @@
         }
         
         if(!_shouldUpload) return;
-        
         while(self.uploadPaddingQueue.count > 0 && self.uploadingQueue.count < self.uploadLimitCount) {
             JYAsset * asset = [self.uploadPaddingQueue lastObject];
             [self.uploadPaddingQueue removeLastObject];
@@ -947,6 +954,13 @@
                 [weakSelf schedule];
             });
         }];
+    });
+}
+
+- (void)setShouldUpload:(BOOL)shouldUpload {
+    _shouldUpload = shouldUpload;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UIApplication sharedApplication].idleTimerDisabled = _shouldUpload;
     });
 }
 

@@ -27,30 +27,12 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     //左按钮
-    UIButton *leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 56, 56)];
+    UIButton *leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 24, 24)];
     [leftBtn addTarget:self action:@selector(showLeftMenu) forControlEvents:UIControlEventTouchUpInside];//设置按钮点击事件
     [leftBtn setImage:[UIImage imageNamed:@"menu"] forState:UIControlStateNormal];//设置按钮正常状态图片
     [leftBtn setImage:[UIImage imageNamed:@"menu_select"] forState:UIControlStateHighlighted];
-//    leftBtn.backgroundColor = [UIColor redColor];
     UIBarButtonItem *leftBarButon = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
-    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    negativeSpacer.width = -16 - 2*([UIScreen mainScreen].scale - 1);//这个数值可以根据情况自由变化
-
-
-
-    if ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 11)
-    {
-        UIView *barBtnView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-        leftBtn.frame = CGRectMake(0, 0,44, 44);
-        barBtnView.backgroundColor = [UIColor blackColor];
-//        [barBtnView setPo];
-        [barBtnView addSubview:leftBtn];
-
-        [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:leftBtn]];
-
-    } else{
-        self.navigationItem.leftBarButtonItems = @[negativeSpacer, leftBarButon];
-    }
+    self.navigationItem.leftBarButtonItems = @[ leftBarButon];
 
     [self.cyl_tabBarController.tabBar setHidden:NO];
 }

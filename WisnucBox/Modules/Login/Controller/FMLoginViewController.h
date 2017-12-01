@@ -22,6 +22,7 @@
 @property(nonatomic,copy) NSNumber *isFirstUser;
 @property(nonatomic,copy) NSString *stationId;
 @property(nonatomic) GlobalModel *global;
+@property(nonatomic) NSString *LANIP;
 @end
 
 @interface FMLoginViewController : FABaseVC
