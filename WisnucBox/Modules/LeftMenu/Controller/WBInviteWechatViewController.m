@@ -20,7 +20,6 @@ UITableViewDelegate,
 UITableViewDataSource
 >
 @property (nonatomic) UITableView *tableView;
-@property (nonatomic) NSMutableArray *ticketIdArray;
 @property (nonatomic) NSMutableArray *dataArray;
 @property (nonatomic) UIButton *inviteButton;
 @property (nonatomic) NSString *ticketId;
@@ -59,7 +58,6 @@ UITableViewDataSource
 - (void)getData{
     @weaky(self);
     [self.dataArray removeAllObjects];
-    [self.ticketIdArray removeAllObjects];
     [SXLoadingView showProgressHUD:@"正在加载"];
     [[WBStationTicketsAPI apiWithRequestMethodString:@"GET" Type:nil] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
          NSLog(@"%@",request.responseJsonObject);
@@ -98,7 +96,6 @@ UITableViewDataSource
         NSString *urlString = requestDic[@"url"];
         NSString * ticketId = [urlString substringFromIndex:12];
         NSLog(@"%@",ticketId);
-        [self.ticketIdArray addObject:ticketId];
         [weak_self invitWechatWithTicketId:ticketId];
     } failure:^(__kindof JYBaseRequest *request) {
          NSLog(@"%@",request.error);
@@ -255,13 +252,6 @@ UITableViewDataSource
         _inviteButton.frame = CGRectMake(__kWidth - 20 -63, __kHeight - 100 -63-64, 63, 63);
     }
     return _inviteButton;
-}
-
-- (NSMutableArray *)ticketIdArray{
-    if (!_ticketIdArray) {
-        _ticketIdArray = [NSMutableArray arrayWithCapacity:0];
-    }
-    return _ticketIdArray;
 }
 
 @end
