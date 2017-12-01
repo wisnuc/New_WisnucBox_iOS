@@ -11,6 +11,7 @@
 #import "CSDownloadHelper.h"
 #import "CSFileUtil.h"
 #import "FilesNextViewController.h"
+#import "WBFilesAndTransmitProtocal.h"
 
 @interface FLFIlesHelper ()
 {
@@ -122,7 +123,25 @@ static dispatch_once_t onceToken;
 
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if ([model.type isEqualToString:@"file"]) {
-        cell.f_ImageView.image = [UIImage imageNamed:@"file_icon"];
+        BOOL resultPNG = [[model.name pathExtension] caseInsensitiveCompare:@"png"] == NSOrderedSame;
+        BOOL resultGIF = [[model.name pathExtension] caseInsensitiveCompare:@"gif"] == NSOrderedSame;
+        BOOL resultJPG = [[model.name pathExtension] caseInsensitiveCompare:@"jpg"] == NSOrderedSame;
+        BOOL resultMP4 = [[model.name pathExtension] caseInsensitiveCompare:@"mp4"] == NSOrderedSame;
+        BOOL resultMOV = [[model.name pathExtension] caseInsensitiveCompare:@"mov"] == NSOrderedSame;
+        if (resultPNG) {
+            cell.f_ImageView.image = [UIImage imageNamed:@"png_icon"];
+        }else if (resultGIF){
+            cell.f_ImageView.image = [UIImage imageNamed:@"gif_icon"];
+        }else if (resultJPG){
+            cell.f_ImageView.image = [UIImage imageNamed:@"jpg_icon"];
+        }else if (resultMP4){
+            cell.f_ImageView.image = [UIImage imageNamed:@"mp4_icon"];
+        }else if (resultMOV){
+            cell.f_ImageView.image = [UIImage imageNamed:@"mov_icon"];
+        }else {
+            cell.f_ImageView.image = [UIImage imageNamed:@"file_icon"];
+        }
+//        cell.f_ImageView.image = [UIImage imageNamed:@"file_icon"];
         cell.timeLabel.text = [self getTimeWithTimeSecond:model.mtime/1000];
     }else{
         cell.f_ImageView.image = [UIImage imageNamed:@"folder_icon"];
