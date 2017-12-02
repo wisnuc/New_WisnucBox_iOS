@@ -52,6 +52,20 @@
 }
 
 -(void)addNavBtn{
+    self.navigationItem.hidesBackButton = YES;
+
+//    self.navigationItem.leftItemsSupplementBackButton = YES;
+    //左按钮
+    UIButton *leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 24, 24)];
+    [leftBtn addTarget:self action:@selector(backBtnClick:) forControlEvents:UIControlEventTouchUpInside];//设置按钮点击事件
+    
+    
+    [leftBtn setImage:[UIImage imageNamed:@"back_gray"] forState:UIControlStateNormal];
+    [leftBtn setImage:[UIImage imageNamed:@"back_grayhighlight"] forState:UIControlStateHighlighted];
+    //设置按钮正常状态图片
+    UIBarButtonItem *leftBarButon = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
+ 
+    self.navigationItem.leftBarButtonItem = leftBarButon;
     UIButton * rBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 30)];
     rBtn.titleLabel.font = [UIFont fontWithName:FANGZHENG size:16];
     [rBtn setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
@@ -59,6 +73,10 @@
     [rBtn addTarget:self action:@selector(rBtnClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem * item = [[UIBarButtonItem alloc]initWithCustomView:rBtn];
     self.navigationItem.rightBarButtonItem = item;
+}
+
+- (void)backBtnClick:(UIButton *)sender{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)rBtnClick{
