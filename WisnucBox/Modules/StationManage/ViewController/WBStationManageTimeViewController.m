@@ -99,11 +99,11 @@ UITableViewDataSource
             cell.detailLabel.text = @"时区";
             break;
         case 4:
-            cell.normalLabel.text = [model.wbNTPSynchronized boolValue]?@"yes" : @"no";
+            cell.normalLabel.text = [model.wbNTPSynchronized boolValue]?@"Yes" : @"No";
             cell.detailLabel.text = @"已完成时间同步";
             break;
         case 5:
-            cell.normalLabel.text =[model.wbNetworkTimeOn boolValue]?@"yes" : @"no";
+            cell.normalLabel.text =[model.wbNetworkTimeOn boolValue]?@"Yes" : @"No";
             cell.detailLabel.text = @"使用网络时间";
             break;
         default:

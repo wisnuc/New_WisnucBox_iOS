@@ -237,6 +237,8 @@
             if ([selectVC isKindOfClass:[NavViewController class]]) {
                 [selectVC  pushViewController:vc animated:YES];
             }
+        }else{
+            [SXLoadingView showProgressHUDText:@"目前仅支持局域网操作" duration:1.5];
         }
     }
     
@@ -246,6 +248,8 @@
         if ([selectVC isKindOfClass:[NavViewController class]]) {
             [selectVC  pushViewController:vc animated:YES];
         }
+        }else{
+             [SXLoadingView showProgressHUDText:@"目前仅支持局域网操作" duration:1.5];
         }
     }
     

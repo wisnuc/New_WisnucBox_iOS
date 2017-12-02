@@ -129,7 +129,7 @@ UITableViewDataSource
             cell.detailLabel.text = @"MAC地址";
             break;
         case 6:
-            cell.normalLabel.text = WB_UserService.currentUser.isCloudLogin?@"本地设备连接" : @"远程设备连接";
+            cell.normalLabel.text = WB_UserService.currentUser.isCloudLogin?@"远程设备连接" : @"本地设备连接";
             cell.detailLabel.text = @"网络连接类型";
             break;
         default:
