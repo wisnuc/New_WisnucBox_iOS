@@ -146,7 +146,7 @@ __strong static id _sharedObject = nil;
         [self.uploadingTasks addObject:uploadTask];
         begin();
     }
-    NSString * filePath = fileModel.uploadFileSavePath;
+    NSString * filePath = fileModel.uploadTempSavePath;
     NSString * hashString  = [FileHash sha256HashOfFileAtPath:filePath];
     NSNumber * sizeNumber = [NSNumber numberWithLongLong:[WB_FileService fileSizeAtPath:filePath]];
     NSString * fileName = [filePath lastPathComponent];
@@ -189,13 +189,20 @@ __strong static id _sharedObject = nil;
                           success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                               NSLog(@"Upload Success -->");
                               NSLog(@"%@",responseObject);
-                              [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+                             
                                           [uploadTask setUploadStatus:CSUploadStatusSuccess];
                                           [_taskDoingQueue dequeue];
                                           [self.uploadingTasks removeObject:uploadTask];
                                           NSDate* curDate = [NSDate date];
                                           [fileModel setUploadFinishTime:curDate];
-                
+                              
+                                          NSString* tempFile = [fileModel getUploadTempSavePath];
+                                          NSString* saveFile = [fileModel getUploadFileSavePath];
+                                          NSFileManager *manager = [NSFileManager defaultManager];
+                                          if ([manager fileExistsAtPath:tempFile]) {
+                                            [CSFileUtil cutFileAtPath:tempFile toPath:saveFile];
+                                          }
+                                         [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
                                           WBFile * wBFile = [WBFile MR_createEntityInContext:[NSManagedObjectContext MR_defaultContext]];
                                           wBFile.uuid = fileModel.uploadFileUserId;
                                           NSLog(@"%@",fileModel.uploadFileSize);
@@ -541,9 +548,9 @@ __strong static id _sharedObject = nil;
     [self.uploadingTasks removeObject:uploadTask];
     [_uploadTasks removeObject:uploadTask];
     NSError *error;
-    NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:KUploadFilesDocument createIfNotExist:YES];
-    NSString* saveFile = [savePath stringByAppendingPathComponent:uploadTask.getUploadFileModel.uploadFileName];
-    [[NSFileManager defaultManager] removeItemAtPath:saveFile error:&error];
+//    NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:KUploadFilesDocument createIfNotExist:NO];
+//    NSString* saveFile = [savePath stringByAppendingPathComponent:uploadTask.getUploadFileModel.uploadFileName];
+    [[NSFileManager defaultManager] removeItemAtPath:uploadTask.getUploadFileModel.uploadFileSavePath error:&error];
     if (!error) {
         NSLog(@"删除文件成功");
     }else{

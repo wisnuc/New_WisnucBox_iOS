@@ -98,17 +98,17 @@
         }
     }
     if (status == AFNetworkReachabilityStatusReachableViaWiFi){
-    MBProgressHUD *progressHUD = [[MBProgressHUD alloc] initWithView:[AppServices mainWindow]];
-    progressHUD.mode = MBProgressHUDModeText;
-    progressHUD.labelText = @"正在使用WIFI";
-    progressHUD.labelFont = [UIFont systemFontOfSize:13];
-    [[AppServices mainWindow] addSubview:progressHUD];
-    progressHUD.animationType = MBProgressHUDAnimationZoom;
-    
-    progressHUD.removeFromSuperViewOnHide = YES;
-    progressHUD.opacity = 0.7;
-    [progressHUD show:YES];
-    [progressHUD hide:YES afterDelay:1.0];
+//    MBProgressHUD *progressHUD = [[MBProgressHUD alloc] initWithView:[AppServices mainWindow]];
+//    progressHUD.mode = MBProgressHUDModeText;
+//    progressHUD.labelText = @"正在使用WIFI";
+//    progressHUD.labelFont = [UIFont systemFontOfSize:13];
+//    [[AppServices mainWindow] addSubview:progressHUD];
+//    progressHUD.animationType = MBProgressHUDAnimationZoom;
+//    
+//    progressHUD.removeFromSuperViewOnHide = YES;
+//    progressHUD.opacity = 0.7;
+//    [progressHUD show:YES];
+//    [progressHUD hide:YES afterDelay:1.0];
     }
   
     if(!WB_UserService.currentUser || !WB_UserService.currentUser.autoBackUp || !_shouldListenReachability) return;
@@ -344,7 +344,7 @@
 }
 
 - (void)requestForBackupPhotos:(void(^)(BOOL shouldUpload))callback {
-    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否自动备份该手机的照片至WISNUC服务器" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否自动备份该手机的照片至WISNUC服务器，要备份全部照片可能需要较长时间，请尽量保持App在前台运行。" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         NSLog(@"点击了取消按钮");
         WB_UserService.currentUser.autoBackUp = NO;

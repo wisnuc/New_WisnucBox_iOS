@@ -110,7 +110,7 @@
              }
              case AFNetworkReachabilityStatusReachableViaWWAN:
              {
-                [SXLoadingView showProgressHUDText:@"正在使用手机流量" duration:1];
+//                [SXLoadingView showProgressHUDText:@"正在使用手机流量" duration:1];
                  NSLog(@"手机网络");
                  break;
              }

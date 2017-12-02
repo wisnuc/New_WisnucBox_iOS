@@ -156,7 +156,7 @@ UIDocumentInteractionControllerDelegate
     for (WBFile * downloadFileModel in array) {
         if ([self.chooseArr containsObject:downloadFileModel.fileUUID]) {
             [self.downloadedArray removeObject:downloadFileModel];
-            [_filesServices deleteFileWithFileUUID:downloadFileModel.fileUUID FileName:downloadFileModel.fileName];
+            [_filesServices deleteFileWithFileUUID:downloadFileModel.fileUUID FileName:downloadFileModel.fileName ActionType:downloadFileModel.actionType];
         }
     }
     [self changeStatus];
@@ -448,16 +448,24 @@ UIDocumentInteractionControllerDelegate
         [self.tableView reloadData];
     }else{
         if (indexPath.section == 1) {
+            NSString *openPath ;
             WBFile *downloadedFileModel = _downloadedArray[indexPath.row];
             NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
             NSString* suffixName = downloadedFileModel.fileUUID;
             NSString *fileName = downloadedFileModel.fileName;
-            NSString *extensionstring = [fileName pathExtension];
-            NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",suffixName,extensionstring]];
+            if ([downloadedFileModel.actionType isEqualToString:@"下载"]) {
+                NSString *extensionstring = [fileName pathExtension];
+                NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",suffixName,extensionstring]];
+                openPath = saveFile;
+            }else{
+                NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",fileName]];
+                openPath = saveFile;
+            }
+         
 //            NSURL *url = [NSURL fileURLWithPath:saveFile];
-            NSLog(@"文件位置%@",saveFile);
-            if ([[NSFileManager defaultManager] fileExistsAtPath:saveFile] ) {
-                _documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:saveFile]];
+            NSLog(@"文件位置%@",openPath);
+            if ([[NSFileManager defaultManager] fileExistsAtPath:openPath] ) {
+                _documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:openPath]];
                 _documentController.delegate = self;
                 [self presentOptionsMenu];
             }
