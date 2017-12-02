@@ -550,7 +550,7 @@ __strong static id _sharedObject = nil;
     NSError *error;
 //    NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:KUploadFilesDocument createIfNotExist:NO];
 //    NSString* saveFile = [savePath stringByAppendingPathComponent:uploadTask.getUploadFileModel.uploadFileName];
-    [[NSFileManager defaultManager] removeItemAtPath:uploadTask.getUploadFileModel.uploadFileSavePath error:&error];
+    [[NSFileManager defaultManager] removeItemAtPath:uploadTask.getUploadFileModel.uploadTempSavePath error:&error];
     if (!error) {
         NSLog(@"删除文件成功");
     }else{
