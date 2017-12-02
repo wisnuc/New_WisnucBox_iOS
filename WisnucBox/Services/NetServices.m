@@ -157,8 +157,9 @@
 
 - (void)getUserHome:(void(^)(NSError *, NSString * userHome))callback{
     if(!WB_UserService.isUserLogin) return callback([NSError errorWithDomain:@"User Not Login" code:NO_USER_LOGIN userInfo:nil], NULL);
+    BOOL isCloudRequest  = WB_UserService.currentUser.isCloudLogin;
     [[FLDrivesAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        NSArray * responseArr = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+        NSArray * responseArr = isCloudRequest ? request.responseJsonObject[@"data"] : request.responseJsonObject;
         NSLog(@"%@",responseArr);
         __block BOOL find = NO;
         [responseArr enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -227,8 +228,9 @@
 // 获取 名为 “上传的照片” 的文件夹， 没有就创建
 - (void)getUserBackupDirName:(NSString *)name BaseDir:(void(^)(NSError *, NSString * dirUUID))callback {
     FLGetDriveDirAPI * api = [FLGetDriveDirAPI apiWithDrive:WB_UserService.currentUser.userHome dir:WB_UserService.currentUser.userHome];
+    BOOL isCloudRequest  = WB_UserService.currentUser.isCloudLogin;
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+        NSDictionary * dic = isCloudRequest ? request.responseJsonObject[@"data"] : request.responseJsonObject;
         NSArray * arr = [NSArray arrayWithArray:[dic objectForKey:@"entries"]];
         //FIXME: file name equal backup base name
         __block BOOL find = NO;
@@ -260,8 +262,9 @@
 - (void)getUserBackupDirWithBackUpBaseDir:(NSString *)baseUUID complete:(void(^)(NSError *, NSString *backupDirUUID))callback {
     FLGetDriveDirAPI * api = [FLGetDriveDirAPI apiWithDrive:WB_UserService.currentUser.userHome dir:baseUUID];
     NSString *photoDirName = [NSString stringWithFormat:@"来自%@",[NSString deviceName]];
+    BOOL isCloudRequest  = WB_UserService.currentUser.isCloudLogin;
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+        NSDictionary * dic = isCloudRequest ? request.responseJsonObject[@"data"] : request.responseJsonObject;
         NSArray * arr = [NSArray arrayWithArray:[dic objectForKey:@"entries"]];
         //FIXME: file name equal backup base name
         __block BOOL find = NO;

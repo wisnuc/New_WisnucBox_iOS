@@ -587,28 +587,12 @@ static BOOL needHide = YES;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (scrollView == self.stationScrollView &&scrollView.contentOffset.x > __kWidth/2) {
-        
-//    if () {
+    
     int page = scrollView.contentOffset.x/__kWidth;
     _stationPageControl.currentPage = page;
     FMSerachService *ser = _tempDataSource[page];
     _userDataSource = ser.users;
     _userDataCount = page;
-//    if (ser.ws215i && ser.ws215i.length > 0) {
-//        _stationCardView.backgroundColor = UICOLOR_RGB(0x8bc3a4);
-//        _stationScrollView.backgroundColor = UICOLOR_RGB(0x689f38);
-//    }else{
-//        _stationCardView.backgroundColor =  UICOLOR_RGB(0x03a9f4);
-//        _stationScrollView.backgroundColor = UICOLOR_RGB(0x0288d1);
-//    }
-//        MyNSLog(@"%f",scrollView.contentOffset.x);
-//        if (scrollView.contentOffset.x == JYSCREEN_WIDTH *page) {
-       
-//        }
-//    }
-   
-//    if (_stationPageControl.currentPage) {
-//        _stationPageControl.transform=CGAffineTransformScale(CGAffineTransformIdentity, 2, 2);
     }
 }
 

@@ -13,8 +13,6 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "NSString+WBUUID.h"
 
-#define JY_TMP_Folder [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]stringByAppendingPathComponent:@"JYTMP"]
-
 @implementation PHAsset (JYEXT)
 
 - (BOOL)isGif
