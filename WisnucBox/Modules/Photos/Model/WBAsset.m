@@ -26,6 +26,8 @@
 - (JYAssetType)type {
     if(!IsNilString(self.m) && [kVideoTypes containsObject:self.m]){
         return JYAssetTypeNetVideo;
+    }else if(IsEquallString(self.m, @"GIF")) {
+        return JYAssetTypeGIF;
     }
     return JYAssetTypeNetImage;
 }
