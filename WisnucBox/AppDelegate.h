@@ -14,6 +14,8 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
+@property (nonatomic) dispatch_block_t completeBlock;
+
 @property (nonatomic) FMLeftManager *leftManager;
 
 - (void)initRootVC;
