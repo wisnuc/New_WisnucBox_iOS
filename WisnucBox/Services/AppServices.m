@@ -20,7 +20,7 @@
 #import "CSFileUploadManager.h"
 #import "CSUploadHelper.h"
 
-@interface AppServices ()<CLLocationManagerDelegate>
+@interface AppServices ()
 @end
 
 @implementation AppServices {
@@ -48,7 +48,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserAuthChange) name:ASSETS_AUTH_CHANGE_NOTIFY object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMemoryWarning) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNetReachabilityNotify:) name:NETWORK_REACHABILITY_CHANGE_NOTIFY object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlebackgroundChange) name:BackgroundUploadChangeNotify object:nil];
     _notiNumber = 0;
     [self assetServices];
     if(self.userServices.currentUser)
@@ -74,15 +73,6 @@
     }
 }
 
-- (void)handlebackgroundChange {
-    if(kUD_ObjectForKey(BackgroundUpload_KEY)) {
-        [self.locationManager startUpdatingLocation];
-    }else {
-        if(_locationManager)
-           [_locationManager stopUpdatingLocation];
-    }
-}
-
 // Net Reachability
 
 - (void)handleNetReachabilityNotify:(NSNotification *)noti {
@@ -102,16 +92,21 @@
     }
   
     if(!WB_UserService.currentUser || !WB_UserService.currentUser.autoBackUp) return;
-    
-    if(status != AFNetworkReachabilityStatusReachableViaWiFi && !WB_UserService.currentUser.backUpInWWAN){
-        [self.photoUploadManager stop];
-    }
-    else if(self.photoUploadManager.shouldUpload == NO) {
+//
+//    if(status != AFNetworkReachabilityStatusReachableViaWiFi && !WB_UserService.currentUser.backUpInWWAN){
+//        [self.photoUploadManager stop];
+//    }
+    if (status == AFNetworkReachabilityStatusReachableViaWiFi) {
+        [self.photoUploadManager destroy];
+        self.photoUploadManager = nil;
+        [self.photoUploadManager startWithLocalAssets:[self.assetServices allAssets] andNetAssets:@[]];
         if(!WB_UserService.currentUser.isCloudLogin)
-            [self startUploadAssets:nil];
+           [WB_NetService testForLANIP:WB_UserService.currentUser.localAddr commplete:^(BOOL success) { //测试是否可用网络
+              if(success) [self startUploadAssets:nil];
+           }];
         else
             [WB_NetService testAndCheckoutIfSuccessComplete:^{
-                [self rebulidUploadManager];
+                [self startUploadAssets:nil];
             }];
     }
 }
@@ -355,22 +350,6 @@
 }
 
 // services load
-
-- (CLLocationManager *)locationManager {
-    @synchronized (self) {
-        if(!_locationManager) {
-            _locationManager = [[CLLocationManager alloc]init];
-            self.locationManager.delegate = self;
-            [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBestForNavigation];
-            if ([[UIDevice currentDevice].systemVersion floatValue] > 8)
-                [self.locationManager requestAlwaysAuthorization];
-            if ([[UIDevice currentDevice].systemVersion floatValue] > 9)
-                [self.locationManager setAllowsBackgroundLocationUpdates:YES];
-        }
-        return _locationManager;
-    }
-}
-
 - (WBUploadManager *)photoUploadManager {
     @synchronized (self) {
         if(!_photoUploadManager) {
@@ -440,15 +419,6 @@
     return _progressView;
 }
 
-#pragma mark -  定位代理方法
-- (void)locationManager:(CLLocationManager *)manager
-     didUpdateLocations:(NSArray<CLLocation *> *)locations
-{
-    //    CLLocation *loc = [locations objectAtIndex:0];
-    //
-    //    NSLog(@"经纬度  %f  %f ",loc.coordinate.latitude,loc.coordinate.longitude);
-}
-
 - (void)abort {
     //destory JYnetEngine
     [[JYNetEngine sharedInstance] cancleAllRequest];
@@ -461,8 +431,7 @@
     _assetServices ? [_assetServices abort] :
     _netServices ? [_netServices abort] :
     _dbServices ? [_dbServices abort] :
-    _photoUploadManager? [_photoUploadManager destroy] :
-    _locationManager ? [_locationManager stopUpdatingLocation] : nil;
+    _photoUploadManager? [_photoUploadManager destroy] : nil;
     
     _userServices = nil;
     _fileServices = nil;
@@ -470,7 +439,6 @@
     _netServices = nil;
     _dbServices = nil;
     _photoUploadManager = nil;
-    _locationManager = nil;
     //cancel download
     
     [CSFileDownloadManager destroyAll];

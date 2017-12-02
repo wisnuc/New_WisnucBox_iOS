@@ -11,14 +11,12 @@
 #import "WBUser+CoreDataClass.h"
 #import "AppServices.h"
 #import "FirstFilesViewController.h"
-#import "JYProcessView.h"
 #import "FMUserEditVC.h"
 #import "CSUploadHelper.h"
 #import "LocalDownloadViewController.h"
 
 @interface AppDelegate () <WXApiDelegate>
 @property (nonatomic,strong) FMLoginViewController *loginController;
-@property (strong, nonatomic) JYProcessView * progressView;
 @end
 
 @implementation AppDelegate

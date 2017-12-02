@@ -36,7 +36,6 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-//    [self.cyl_tabBarController.tabBar setHidden:YES];
     self.displayProgress = NO;
     [self.settingTableView reloadData];
 
@@ -54,7 +53,7 @@
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 3;
+    return 2;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -92,20 +91,6 @@
             });
         });        
         cell.accessoryView = cleanBtn;
-    } else {
-        if (indexPath.row == 2) {
-            UILabel * titleLb = [[UILabel alloc] initWithFrame:CGRectMake(16, 23, 200, 17)];
-            titleLb.text = @"后台备份:";
-            titleLb.font = [UIFont systemFontOfSize:17];
-            
-            [cell.contentView addSubview:titleLb];
-            cell.contentView.layer.masksToBounds = YES;
-            UISwitch *switchBtn = [[UISwitch alloc]initWithFrame:CGRectMake(__kWidth - 70, 16, 50, 40)];
-            switchBtn.on = [kUD_ObjectForKey(BackgroundUpload_KEY) boolValue];
-            [switchBtn addTarget:self  action:@selector(switchBtnHandleForSyncBackground:) forControlEvents:UIControlEventValueChanged];
-            if(!WB_UserService.isUserLogin) switchBtn.enabled = NO;
-            [cell.contentView addSubview:switchBtn];
-        }
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -158,11 +143,6 @@
        [WB_AppServices startUploadAssets:nil];
     else
         [WB_AppServices.photoUploadManager stop];
-}
-
-- (void)switchBtnHandleForSyncBackground:(UISwitch *)sw {
-    [kUserDefaults setBool:sw.isOn forKey:BackgroundUpload_KEY];
-    [[NSNotificationCenter defaultCenter] postNotificationName:BackgroundUploadChangeNotify object:nil];
 }
 
 - (IBAction)cleanBtnClick:(id)sender {

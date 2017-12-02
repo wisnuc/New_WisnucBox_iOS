@@ -43,8 +43,6 @@
 
 @property (strong, nonatomic) JYProcessView * progressView;
 
-@property (nonatomic) CLLocationManager * locationManager;
-
 + (instancetype)sharedService;
 
 - (void)bootStrap;
@@ -134,6 +132,4 @@
 
 // must call callback EABORT
 - (void)cancel;
-- (void)cancelUplodFiles;
-
 @end

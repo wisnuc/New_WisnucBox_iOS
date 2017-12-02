@@ -36,9 +36,6 @@
 
 #define KUploadFilesDocument [NSString stringWithFormat:@"Upload/%@",WB_UserService.currentUser.uuid]
 
-#define BackgroundUpload_KEY  @"BackgroundUpload_KEY"
-#define BackgroundUploadChangeNotify @"BackgroundUploadChangeNotify"
-
 #define kUserDefaults [NSUserDefaults standardUserDefaults]
 #define kUD_Synchronize [[NSUserDefaults standardUserDefaults] synchronize]
 #define kUD_ObjectForKey(key) [[NSUserDefaults standardUserDefaults] objectForKey:key]
