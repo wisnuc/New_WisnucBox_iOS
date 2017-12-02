@@ -382,6 +382,31 @@
     }];
 }
 
++ (PHImageRequestID)requestOriginalImageSyncForAsset:(PHAsset *)asset completion:(void (^)(NSError * error, UIImage *, NSDictionary *))completion {
+    CGFloat pW = __kWidth*[UIScreen mainScreen].scale;
+    CGFloat pH = asset.pixelHeight * (pW/asset.pixelWidth);
+    CGSize targetSize = CGSizeMake(pW, pH);
+    PHImageRequestOptions *imageRequestOptions = [[PHImageRequestOptions alloc] init];
+    imageRequestOptions.resizeMode = PHImageRequestOptionsResizeModeExact;
+    CGRect square = CGRectMake(0, 0, asset.pixelWidth, asset.pixelHeight);
+    CGRect cropRect = CGRectApplyAffineTransform(square,
+                                                 CGAffineTransformMakeScale(1.0 / asset.pixelWidth,
+                                                                            1.0 / asset.pixelHeight));
+    imageRequestOptions.normalizedCropRect = cropRect;
+    imageRequestOptions.synchronous = YES;
+    imageRequestOptions.networkAccessAllowed = YES;
+    return [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:targetSize contentMode:PHImageContentModeAspectFit options:imageRequestOptions resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        if (result) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (completion) {
+                    completion(nil, result,info);
+                }
+            });
+        }else
+            NSLog(@"UNKNOWEN GET IMAGE ERROR !!!");
+    }];
+}
+
 
 + (PHImageRequestID)requestOriginalImageDataForAsset:(PHAsset *)asset completion:(void (^)(NSData *, NSDictionary *))completion
 {
