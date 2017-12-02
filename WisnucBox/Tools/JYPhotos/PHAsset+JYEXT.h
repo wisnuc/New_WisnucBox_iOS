@@ -10,6 +10,8 @@
 
 #import "JYAsset.h"
 
+#define JY_TMP_Folder [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]stringByAppendingPathComponent:@"JYTMP"]
+
 @interface PHAsset (JYEXT)
 
 - (BOOL)isGif;

@@ -28,6 +28,7 @@
 @implementation AppServices {
     BOOL _isRebuildingPhotoUploader;
     NSInteger _notiNumber;
+    BOOL _shouldListenReachability;
 }
 
 
@@ -52,8 +53,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNetReachabilityNotify:) name:NETWORK_REACHABILITY_CHANGE_NOTIFY object:nil];
     _notiNumber = 0;
     [self assetServices];
-    if(self.userServices.currentUser)
+    if(self.userServices.currentUser) {
+        _shouldListenReachability = YES;
         [self netServices];
+    } else
+        _shouldListenReachability = NO;
     [self bootStrap];
     return self;
 }
@@ -107,11 +111,7 @@
     [progressHUD hide:YES afterDelay:1.0];
     }
   
-    if(!WB_UserService.currentUser || !WB_UserService.currentUser.autoBackUp) return;
-//
-//    if(status != AFNetworkReachabilityStatusReachableViaWiFi && !WB_UserService.currentUser.backUpInWWAN){
-//        [self.photoUploadManager stop];
-//    }
+    if(!WB_UserService.currentUser || !WB_UserService.currentUser.autoBackUp || !_shouldListenReachability) return;
     if (status == AFNetworkReachabilityStatusReachableViaWiFi) {
         [self.photoUploadManager destroy];
         self.photoUploadManager = nil;
@@ -146,10 +146,8 @@
     if (_isRebuildingPhotoUploader)  return;
     _isRebuildingPhotoUploader = YES;
     dispatch_async(dispatch_get_main_queue(), ^{
-        if(_photoUploadManager)
-            [_photoUploadManager destroy];
+        if(_photoUploadManager) [_photoUploadManager destroy];
         _photoUploadManager = nil;
-        NSLog(@"PhotoUploadManager destroy Success!");
         @weaky(self);
         [self updateUserBackupDir:^(NSError *error, WBUser *user) {
             _isRebuildingPhotoUploader = false;
@@ -158,7 +156,6 @@
                 [weak_self startUploadAssets:nil];
             } else
                 NSLog(@"--------->> Update User BackUp Dir Error <<------------- \n error: %@", error);
-            
         }];
     });
 }
@@ -166,8 +163,11 @@
 - (void)rebulid {
     [self abort];
     [self assetServices];
-    if(self.userServices.currentUser)
+    if(self.userServices.currentUser)  {
+        _shouldListenReachability = YES;
         [self netServices];
+    } else
+        _shouldListenReachability = NO;
     [self bootStrap];
 }
 
@@ -262,6 +262,7 @@
 
 - (void)nextSteapForLogin:(void(^)(NSError *error, WBUser *user))callback{
     WBUser * user = WB_UserService.currentUser;
+    _shouldListenReachability = NO;
     @weaky(self);
     [WB_NetService getUserHome:^(NSError *error, NSString *userHome) {
         if(error) {
@@ -290,11 +291,12 @@
                         }
                     }];
                 });
-            else if(user.autoBackUp)
+            else if(user.autoBackUp && WB_NetService.status == AFNetworkReachabilityStatusReachableViaWiFi)
                 [weak_self startUploadAssets:nil];
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
                 [weak_self updateCurrentUserInfoWithCompleteBlock:nil];
             });
+            _shouldListenReachability = YES;
             return callback(nil, user);
         }];
     }];
@@ -459,12 +461,12 @@
     [[SDWebImageManager sharedManager] cancelAll];
     [[SDWebImageDownloader sharedDownloader] cancelAllDownloads];
     
-    _userServices ? [_userServices abort] :
-    _fileServices ? [_fileServices abort] :
-    _assetServices ? [_assetServices abort] :
-    _netServices ? [_netServices abort] :
-    _dbServices ? [_dbServices abort] :
-    _photoUploadManager? [_photoUploadManager destroy] : nil;
+    _userServices ? [_userServices abort] : nil;
+    _fileServices ? [_fileServices abort] : nil;
+    _assetServices ? [_assetServices abort] : nil;
+    _netServices ? [_netServices abort] : nil;
+    _dbServices ? [_dbServices abort] : nil;
+    _photoUploadManager ? [_photoUploadManager destroy] : nil;
     
     _userServices = nil;
     _fileServices = nil;
@@ -561,24 +563,13 @@
         _manager.attemptsToRecreateUploadTasksForBackgroundSessions = YES;
         _manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
         _manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+        
         @weaky(self);
         [_manager setDidFinishEventsForBackgroundURLSessionBlock:^(NSURLSession * _Nonnull session) {
             @strongy(self)
-            [session getAllTasksWithCompletionHandler:^(NSArray<__kindof NSURLSessionTask *> * _Nonnull tasks) {
-                dispatch_async(self.managerQueue, ^{
-//                    for (WBUploadModel * model in self.uploadingQueue) {
-//                        if(model.dataTask.state == NSURLSessionTaskStateCompleted) {
-//                            [self.uploadingQueue removeObject:model];
-//                            [self.uploadedQueue addObject:model];
-//                        }
-//                    }
-                    [self schedule];
-//                    dispatch_async(dispatch_get_main_queue(), ^{
-//                        if(MyAppDelegate.completeBlock)
-//                            MyAppDelegate.completeBlock();
-//                    });
-                });
-            }];
+            dispatch_async(self.managerQueue, ^{
+                [self schedule];
+            });
         }];
     }
     return _manager;
@@ -975,6 +966,11 @@
     [self.uploadingQueue enumerateObjectsUsingBlock:^(WBUploadModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [obj cancel];
     }];
+    [self.manager.session getAllTasksWithCompletionHandler:^(NSArray<__kindof NSURLSessionTask *> * _Nonnull tasks) {
+        [tasks enumerateObjectsUsingBlock:^(__kindof NSURLSessionTask * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [obj cancel];
+        }];
+    }];
 }
 
 - (void)destroy {
@@ -990,6 +986,7 @@
     [self.uploadErrorQueue removeAllObjects];
     [self.uploadedNetQueue removeAllObjects];
     [self.uploadedLocalHashSet removeAllObjects];
+    [self.manager.session invalidateAndCancel];
 }
 
 
@@ -999,12 +996,14 @@
 @implementation WBUploadModel {
     PHImageRequestID _requestFileID;
     AFHTTPSessionManager * _manager;
+    BOOL _shouldStop;
 }
 
 + (instancetype)initWithAsset:(JYAsset *)asset andManager:(AFHTTPSessionManager *)manager{
     WBUploadModel * model = [WBUploadModel new];
     model.asset = asset;
     model->_manager = manager;
+    model->_shouldStop = NO;
     return model;
 }
 
@@ -1016,6 +1015,7 @@ static NSArray * invaildChars;
     _requestFileID =  [self.asset.asset getFile:^(NSError *error, NSString *filePath) {
         if(error)
             return callback(error, nil);
+        if(_shouldStop) return callback([NSError errorWithDomain:@"cancel" code:20010 userInfo:nil], nil);
         NSLog(@"==========================开始上传==============================");
         NSString * hashString = weak_self.asset.digest;
         NSInteger sizeNumber = (NSInteger)[WB_FileService fileSizeAtPath:filePath];
@@ -1055,7 +1055,8 @@ static NSArray * invaildChars;
             mutableDic = nil;
             [_manager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@",WB_UserService.defaultToken] forHTTPHeaderField:@"Authorization"];
         }
-        NSURL *requestFileTempPath = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@_temp", filePath]];
+        NSString * requestTempPath = [NSString stringWithFormat:@"%@_temp", filePath];
+        NSURL *requestFileTempPath = [NSURL fileURLWithPath:requestTempPath];
         
         
         NSMutableURLRequest *request = [_manager.requestSerializer multipartFormRequestWithMethod:@"POST" URLString:urlString parameters:mutableDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
@@ -1071,10 +1072,11 @@ static NSArray * invaildChars;
         
         [_manager.requestSerializer requestWithMultipartFormRequest:request writingStreamContentsToFile:requestFileTempPath completionHandler:^(NSError * _Nullable error) {
             if(error) return callback(error, nil);
+            if(_shouldStop) return callback([NSError errorWithDomain:@"cancel" code:20010 userInfo:nil], nil);
             request.HTTPBodyStream = nil;
             weak_self.dataTask = [_manager uploadTaskWithRequest:request fromFile:requestFileTempPath progress:nil completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
-                NSLog(@"--------1111111111---------");
                 if(!weak_self) return;
+                if(_shouldStop) return callback([NSError errorWithDomain:@"cancel" code:20010 userInfo:nil], nil);
                 if(!error) {
                     NSLog(@"Upload Success -->");
                     if(weak_self.callback) weak_self.callback(nil, responseObject);
@@ -1103,6 +1105,7 @@ static NSArray * invaildChars;
                     weak_self.error = error;
                     if (weak_self.callback) weak_self.callback(error, nil);
                     [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+                    [[NSFileManager defaultManager] removeItemAtPath:requestTempPath error:nil];
                 }
             }];
             [_dataTask resume];
@@ -1159,6 +1162,7 @@ static NSArray * invaildChars;
 }
 
 - (void)cancel {
+    self->_shouldStop = YES;
     if(_requestFileID) {
        [[PHImageManager defaultManager] cancelImageRequest:_requestFileID];
         _requestFileID = PHInvalidImageRequestID;
