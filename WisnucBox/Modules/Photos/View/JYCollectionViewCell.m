@@ -187,25 +187,19 @@
         self.videoBottomView.hidden = NO;
         self.videoImageView.hidden = YES;
         self.liveImageView.hidden = NO;
+        self.liveImageView.image = [UIImage imageNamed:@"livePhoto"];
         self.timeLabel.text = @"Live";
-    } else{
+    }else if (model.type == JYAssetTypeGIF) {
+        self.videoBottomView.hidden = NO;
+        self.videoImageView.hidden = YES;
+        self.liveImageView.hidden = NO;
+        self.liveImageView.image = [UIImage imageNamed:@"gif_photo"];
+        self.timeLabel.text = @"";
+    }else {
         self.videoImageView.hidden = YES;
         self.videoBottomView.hidden = YES;
         self.liveImageView.hidden = YES;
     }
-//    else if (model.type == JYMediaTypeGif) {
-//        self.videoBottomView.hidden = !self.allSelectGif;
-//        self.videoImageView.hidden = YES;
-//        self.liveImageView.hidden = YES;
-//        self.timeLabel.text = @"GIF";
-//    } else if (model.type == JYMediaTypeLivePhoto) {
-//        self.videoBottomView.hidden = !self.allSelectLivePhoto;
-//        self.videoImageView.hidden = YES;
-//        self.liveImageView.hidden = NO;
-//        self.timeLabel.text = @"Live";
-//    } else {
-//        self.videoBottomView.hidden = YES;
-//    }
     
 //    if (self.showMask) {
 //        self.topView.backgroundColor = [self.maskColor colorWithAlphaComponent:.2];
