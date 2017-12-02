@@ -47,7 +47,7 @@
  *  get high image binary data sync
  */
 + (PHImageRequestID)requestHighImageDataSyncForAsset:(PHAsset *)asset completion:(void (^)(NSError * error, NSData *, NSDictionary *))completion;
-
++ (PHImageRequestID)requestOriginalImageSyncForAsset:(PHAsset *)asset completion:(void (^)(NSError * error, UIImage *, NSDictionary *))completion;
 /**
  * get image binary data
  */

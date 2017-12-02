@@ -346,10 +346,10 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self tabBarAnimationWithHidden:NO];
     });
-//    if (_edgeGesture) {
-//        [self.view removeGestureRecognizer:_edgeGesture];
-//        _edgeGesture = nil;
-//    }
+    //    if (_edgeGesture) {
+    //        [self.view removeGestureRecognizer:_edgeGesture];
+    //        _edgeGesture = nil;
+    //    }
 }
 
 //tabbar 动画
@@ -368,7 +368,7 @@
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self updateIndicatorFrame];
         });
-
+        
     }
 }
 
@@ -399,13 +399,13 @@
     //    layout.sectionInset = UIEdgeInsetsMake(0, 0, 20, 0);
     layout.minimumLineSpacing = 2;
     layout.minimumInteritemSpacing = 2;
-//    if(kSystemVersion >= 9.0)
+    //    if(kSystemVersion >= 9.0)
     layout.sectionHeadersPinToVisibleBounds = NO;
     _currentScale = isSmall ? _currentScale + 1 : _currentScale - 1;
     
     layout.itemSize = CGSizeMake((kViewWidth- 2*(_currentScale-1))/_currentScale, (kViewWidth- 2*(_currentScale-1))/_currentScale);
     [self.collectionView setCollectionViewLayout:layout animated:YES];
-//    [self.collectionView reloadData];
+    //    [self.collectionView reloadData];
 }
 
 
@@ -424,7 +424,7 @@
     _fmCollectionViewLayout.minimumLineSpacing = 2;
     _fmCollectionViewLayout.minimumInteritemSpacing = 2;
     _fmCollectionViewLayout.itemSize = CGSizeMake((kViewWidth- 2*(_currentScale-1))/_currentScale, (kViewWidth- 2*(_currentScale-1))/_currentScale);
-
+    
     
     self.collectionView.collectionViewLayout = _fmCollectionViewLayout;
     self.collectionView.backgroundColor = [UIColor whiteColor];
@@ -469,10 +469,10 @@
     JYCollectionViewCell * cell = (JYCollectionViewCell *)[_collectionView cellForItemAtIndexPath:[_collectionView indexPathsForSelectedItems].firstObject];
     vc.senderViewForAnimation = cell;
     vc.scaleImage = cell.imageView.image;
-//    weakify(self);
+    //    weakify(self);
     [vc setBtnBackBlock:^(NSArray<JYAsset *> *selectedModels, BOOL isOriginal) {
-//        strongify(weakSelf);
-//        [strongSelf.collectionView reloadData];
+        //        strongify(weakSelf);
+        //        [strongSelf.collectionView reloadData];
     }];
     return vc;
 }
@@ -630,7 +630,7 @@
     if (h > kViewHeight || isnan(h)) {
         h = kViewHeight;
         w = model.asset ? h * model.asset.pixelWidth / model.asset.pixelHeight
-                        : h * [(WBAsset *)model w]  /  [(WBAsset *)model h];
+        : h * [(WBAsset *)model w]  /  [(WBAsset *)model h];
     }
     
     return CGSizeMake(w, h);
@@ -860,58 +860,61 @@ bool isDecelerating = NO;
     if ([item isKindOfClass:[WBAsset class]]) {
         NSLog(@"%lu",(unsigned long)item.type);
         if (item.type == JYAssetTypeNetImage) {
-        __block id<SDWebImageOperation> operation =  [WB_NetService getHighWebImageWithHash:[(WBAsset *)item fmhash] completeBlock:^(NSError *error, UIImage *img) {
-            if (error) {
-                NSLog(@"%@",error);
-                // TODO: Load Error Image
-                block(NO,nil);
-            } else {
-                if (img) {
-                     if(!share){
-                         [PHPhotoLibrary saveImageToAlbum:img completion:^(BOOL isSuccess, PHAsset * asset) {
-                             dispatch_async(dispatch_get_main_queue(), ^{
-                                 block(isSuccess,img);
-                             });
-                         }];
-                     }else{
-                         dispatch_async(dispatch_get_main_queue(), ^{
-                             block(YES,img);
-                         });
-                     }
-                 }else
-                     dispatch_async(dispatch_get_main_queue(), ^{
-                         block(NO,nil);
-                     });
-            NSLog(@"%@",img);
-            }
-            [operation cancel];
-            operation = nil;
-        }];
+            __block id<SDWebImageOperation> operation =  [WB_NetService getHighWebImageWithHash:[(WBAsset *)item fmhash] completeBlock:^(NSError *error, UIImage *img) {
+                if (error) {
+                    NSLog(@"%@",error);
+                    // TODO: Load Error Image
+                    block(NO,nil);
+                } else {
+                    if (img) {
+                        if(!share){
+                            [PHPhotoLibrary saveImageToAlbum:img completion:^(BOOL isSuccess, PHAsset * asset) {
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    block(isSuccess,img);
+                                });
+                            }];
+                        }else{
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                block(YES,img);
+                            });
+                        }
+                    }else
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            block(NO,nil);
+                        });
+                    NSLog(@"%@",img);
+                }
+                [operation cancel];
+                operation = nil;
+            }];
         }
     }else{
         NSLog(@"%@",item.asset) ;
         if (item.asset) {
             if (!share) {
                 [item.asset getFile:^(NSError *error, NSString *filePath) {
-                     if (item.asset.mediaType == PHAssetMediaTypeImage && !(item.asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive)) {
-                     UIImage * image;
-                    if (filePath && (image = [UIImage imageWithContentsOfFile:filePath])) {
-                        [PHPhotoLibrary saveImageToAlbum:image completion:^(BOOL isSuccess, PHAsset * asset) {
-                            [[NSFileManager defaultManager]removeItemAtPath:filePath error:nil];//删除image
-                            block(isSuccess,image);
-                        }];
-                    }else block(NO,nil);
-                   }
+                    if (item.type == JYAssetTypeImage || item.type == JYAssetTypeLivePhoto) {
+                        UIImage * image;
+                        if (filePath && (image = [UIImage imageWithContentsOfFile:filePath])) {
+                            [PHPhotoLibrary saveImageToAlbum:image completion:^(BOOL isSuccess, PHAsset * asset) {
+                                [[NSFileManager defaultManager]removeItemAtPath:filePath error:nil];//删除image
+                                block(isSuccess,image);
+                            }];
+                        }else block(NO,nil);
+                    }
                 }];
             }else{
-              if (item.asset.mediaType == PHAssetMediaTypeImage && !(item.asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive)) {
-               [PHPhotoLibrary requestOriginalImageForAsset:item.asset completion:^(UIImage *image, NSDictionary *dic) {
-                      block(YES,image);
+                if (item.type == JYAssetTypeImage || item.type == JYAssetTypeLivePhoto) {
+                    [PHPhotoLibrary requestOriginalImageSyncForAsset:item.asset completion:^(NSError *error, UIImage *image, NSDictionary *dic) {
+                        if(error) return block(NO, nil);
+                        block(YES, image);
                     }];
                 }
             }
-        }else block(NO,nil);
+        }else
+            block(NO,nil);
     }
 }
 
 @end
+

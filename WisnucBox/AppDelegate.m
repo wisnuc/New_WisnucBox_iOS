@@ -183,10 +183,11 @@
    return [WXApi handleOpenURL:url delegate:self];
 }
 
-- (void)applicationWillTerminate:(UIApplication *)application {
-    [MagicalRecord cleanUp];
-    [WB_AppServices abort];
-    [[NSFileManager defaultManager] removeItemAtPath:JY_TMP_Folder error:nil]; //clean tmp
+
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+    if(WB_AppServices.photoUploadManager.shouldUpload) {
+        [UIApplication sharedApplication].idleTimerDisabled = YES;
+    }
 }
 
 //Wechat
