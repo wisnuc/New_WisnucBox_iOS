@@ -30,7 +30,7 @@ UITableViewDataSource
     [self getData];
     [self.view addSubview:self.timeImageView];
     [self.view addSubview:self.tableView];
-    //    [self addLeftBarButtonWithImage:[UIImage imageNamed:@"back"] andHighlightButtonImage:nil andSEL:@selector(backbtnClick:)];
+    [self addLeftBarButtonWithImage:[UIImage imageNamed:@"back"] andHighlightButtonImage:nil andSEL:@selector(backbtnClick:)];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -45,6 +45,9 @@ UITableViewDataSource
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor darkTextColor]}];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+}
+- (void)backbtnClick:(UIButton *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)getData{
@@ -64,10 +67,6 @@ UITableViewDataSource
     }];
 }
 
-- (void)backbtnClick:(UIButton *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-    
-}
 
 #pragma tableViewDelegate;
 

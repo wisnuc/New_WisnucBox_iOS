@@ -39,7 +39,7 @@ ReNameDelegate
     [self getData];
     [self.view addSubview:self.timeImageView];
     [self.view addSubview:self.tableView];
-    //    [self addLeftBarButtonWithImage:[UIImage imageNamed:@"back"] andHighlightButtonImage:nil andSEL:@selector(backbtnClick:)];
+    [self addLeftBarButtonWithImage:[UIImage imageNamed:@"back"] andHighlightButtonImage:nil andSEL:@selector(backbtnClick:)];
 }
 
 - (void)viewWillAppear:(BOOL)animated{

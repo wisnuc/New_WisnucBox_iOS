@@ -7,7 +7,21 @@
 //
 
 #import "TicketUserModel.h"
+@implementation TicketStationModel
++ (NSDictionary *)modelCustomPropertyMapper {
+    return @{
+             @"ticketId": @"id",
+             };
+}
+
++ (NSDictionary *)modelContainerPropertyGenericClass {
+    return @{@"users" : [TicketUserModel class],
+             };
+}
+@end
+
 
 @implementation TicketUserModel
+
 
 @end

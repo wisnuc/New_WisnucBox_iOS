@@ -19,5 +19,9 @@
 
 @property (nonatomic) NSNumber * disabled;
 
+@property (nonatomic) NSNumber *isAdmin;
+
+@property (nonatomic) NSNumber *isFirstUser;
+
 @property (nonatomic) GlobalModel *global;
 @end

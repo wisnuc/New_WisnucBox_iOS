@@ -26,6 +26,7 @@
         <attribute name="cloudToken" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="guid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isAdmin" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isBindWechat" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isCloudLogin" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isFirstUser" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="localAddr" optional="YES" attributeType="String" syncable="YES"/>
@@ -40,6 +41,6 @@
     <elements>
         <element name="WBFile" positionX="-54" positionY="45" width="128" height="180"/>
         <element name="WBLocalAsset" positionX="-63" positionY="-18" width="128" height="75"/>
-        <element name="WBUser" positionX="-54" positionY="9" width="128" height="345"/>
+        <element name="WBUser" positionX="-54" positionY="9" width="128" height="360"/>
     </elements>
 </model>

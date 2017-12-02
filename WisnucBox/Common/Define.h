@@ -28,6 +28,7 @@
 #define kCloudBodyFromName @"fromName"
 
 #define WX_BASE_URL   @"http://www.siyouqun.org/c/v1/"
+#define WX_MiniProgram_OriginID @"gh_37b3425fe189"
 
 #define kVideoTypes @[@"MOV", @"MP4", @"3GP"]
 

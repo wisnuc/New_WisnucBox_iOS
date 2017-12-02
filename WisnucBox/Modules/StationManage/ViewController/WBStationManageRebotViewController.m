@@ -21,6 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"关机与重启";
+    [self addLeftBarButtonWithImage:[UIImage imageNamed:@"back"] andHighlightButtonImage:nil andSEL:@selector(backbtnClick:)];
 //    [_rebotButton.layer setMasksToBounds:YES];
 //
 //    [_rebotButton.layer setCornerRadius:3.0]; //设置矩圆角半径
@@ -69,6 +70,10 @@
     } failure:^(__kindof JYBaseRequest *request) {
         
     }];
+}
+
+- (void)backbtnClick:(UIButton *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

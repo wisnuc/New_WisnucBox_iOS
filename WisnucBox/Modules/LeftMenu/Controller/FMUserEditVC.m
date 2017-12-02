@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *bindWechatButton;
 
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
+@property (weak, nonatomic) IBOutlet UIImageView *bindWechatImageView;
 
 @property (strong,nonatomic) TicketModel *model;
 @property (strong,nonatomic) UserModel *userModel;
@@ -39,7 +40,9 @@
     self.navigationController.navigationBar.translucent = NO;
     [self.userHeaderImageView setImage:[UIImage imageForName:WB_UserService.currentUser.userName size:self.userHeaderImageView.bounds.size]];
     [self.userName setTitle:WB_UserService.currentUser.userName forState:UIControlStateNormal];
-    
+    [self.userName setEnlargeEdgeWithTop:3 right:10 bottom:3 left:2];
+    [self.headerEditBtn setEnlargeEdgeWithTop:3 right:10 bottom:3 left:2];
+    [self.bindWechatButton setEnlargeEdgeWithTop:3 right:10 bottom:3 left:2];
 }
 - (void)getUserData{
     [[FMAccountUsersAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
@@ -49,6 +52,7 @@
         if (userModel.global) {
             _userModel = userModel;
             [self.bindWechatButton setHidden:YES];
+            [self.bindWechatImageView setHidden:YES];
             if (!WB_UserService.currentUser.avaterURL) {
                 return ;
             }
@@ -76,6 +80,7 @@
         [self getUserData];
     }else{
         [self.bindWechatButton setHidden:YES];
+        [self.bindWechatImageView setHidden:YES];
     }
     [self.userHeaderImageView setImage:[UIImage imageForName:WB_UserService.currentUser.userName size:self.userHeaderImageView.bounds.size]];
     [self.userName setTitle:WB_UserService.currentUser.userName forState:UIControlStateNormal];
@@ -111,7 +116,7 @@
 - (IBAction)bindWechatButtonClick:(UIButton *)sender {
     @weaky(self)
     [SXLoadingView showProgressHUD:@"正在准备绑定，请稍候"];
-    [[WBStationTicketsAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+    [[WBStationTicketsAPI apiWithRequestMethodString:@"POST" Type:@"bind"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         [SXLoadingView hideProgressHUD];
         TicketModel *model = [TicketModel yy_modelWithJSON:request.responseJsonObject];
         _model = model;
@@ -149,7 +154,6 @@
        
     }];
     
-   
 }
 
 - (void)bindWechtWithCloudToken:(NSString *)token{
@@ -193,8 +197,10 @@
 - (void)bindWechatLastActionWith:(TicketUserModel *)model IsBind:(BOOL)isBind{
     [[WBStationTicketsWechatAPI apiWithTicketId:_model.ticketId Guid:model.userId Isbind:isBind] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         [SXLoadingView hideProgressHUD];
+        
         WBUser *user = WB_UserService.currentUser;
         user.avaterURL = model.avatarUrl;
+        user.isBindWechat = YES;
         [WB_UserService setCurrentUser:user];
         [WB_UserService synchronizedCurrentUser];
         if (isBind) {

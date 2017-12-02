@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="backgroundView" destination="OMv-gP-idb" id="oXk-Zl-HmI"/>
                 <outlet property="bindWechatButton" destination="hYZ-Fh-JNq" id="1py-8f-kuA"/>
+                <outlet property="bindWechatImageView" destination="hyg-ce-My0" id="A99-pf-p5f"/>
                 <outlet property="headerEditBtn" destination="jhp-mf-Chk" id="bOZ-2R-tcG"/>
                 <outlet property="userHeaderImageView" destination="ZqC-oc-cPt" id="KVS-aM-EsR"/>
                 <outlet property="userName" destination="CrX-WG-HTB" id="hiE-Wb-yFV"/>
@@ -24,6 +25,28 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gq6-E7-8ow">
+                    <rect key="frame" x="341" y="218" width="18" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="18" id="LQk-Zd-gPa"/>
+                        <constraint firstAttribute="height" constant="18" id="WA7-lB-Al4"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="ic_mode_edit_18pt.png"/>
+                    <connections>
+                        <action selector="changUserName:" destination="-1" eventType="touchUpInside" id="cGS-ND-wBT"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ICZ-KD-MRc">
+                    <rect key="frame" x="341" y="277" width="18" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="18" id="SR8-8w-i1e"/>
+                        <constraint firstAttribute="height" constant="18" id="e0K-OM-ED2"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="ic_mode_edit_18pt.png"/>
+                    <connections>
+                        <action selector="changePwdBtn:" destination="-1" eventType="touchUpInside" id="Yug-fN-v29"/>
+                    </connections>
+                </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OMv-gP-idb">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="184"/>
                     <subviews>
@@ -75,56 +98,34 @@
                     </constraints>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_account_circle.png" translatesAutoresizingMaskIntoConstraints="NO" id="1nK-Gp-t99">
-                    <rect key="frame" x="16" y="218" width="24" height="24"/>
+                    <rect key="frame" x="16" y="218.5" width="24" height="24"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="24" id="NKE-Xj-LSL"/>
                         <constraint firstAttribute="height" constant="24" id="R9E-7O-1f7"/>
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_https.png" translatesAutoresizingMaskIntoConstraints="NO" id="8up-qj-FsN">
-                    <rect key="frame" x="16" y="274" width="24" height="24"/>
+                    <rect key="frame" x="16" y="274.5" width="24" height="24"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tBZ-fH-3EF">
                     <rect key="frame" x="72" y="305" width="303" height="1"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ICZ-KD-MRc">
-                    <rect key="frame" x="341" y="277" width="18" height="18"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="18" id="SR8-8w-i1e"/>
-                        <constraint firstAttribute="height" constant="18" id="e0K-OM-ED2"/>
-                    </constraints>
-                    <state key="normal" backgroundImage="ic_mode_edit_18pt.png"/>
-                    <connections>
-                        <action selector="changePwdBtn:" destination="-1" eventType="touchUpInside" id="Yug-fN-v29"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a3k-Wx-AnN">
-                    <rect key="frame" x="72" y="273" width="253" height="25"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a3k-Wx-AnN">
+                    <rect key="frame" x="60" y="274" width="305" height="25"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="25" id="FoU-Yd-JRr"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                    <state key="normal" title="密码修改">
+                    <state key="normal" title="******">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
                         <action selector="changePwdBtn:" destination="-1" eventType="touchUpInside" id="Hxs-Zy-Tlp"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gq6-E7-8ow">
-                    <rect key="frame" x="341" y="219" width="18" height="18"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="18" id="LQk-Zd-gPa"/>
-                        <constraint firstAttribute="height" constant="18" id="WA7-lB-Al4"/>
-                    </constraints>
-                    <state key="normal" backgroundImage="ic_mode_edit_18pt.png"/>
-                    <connections>
-                        <action selector="changUserName:" destination="-1" eventType="touchUpInside" id="cGS-ND-wBT"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CrX-WG-HTB">
-                    <rect key="frame" x="72" y="215" width="224" height="25"/>
+                    <rect key="frame" x="60" y="215" width="305" height="27"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <state key="normal" title="username">
                         <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -134,28 +135,40 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hYZ-Fh-JNq">
-                    <rect key="frame" x="72" y="338" width="287" height="30"/>
-                    <state key="normal" title="微信绑定"/>
+                    <rect key="frame" x="60" y="330.5" width="299" height="16"/>
+                    <state key="normal" title="微信绑定">
+                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                    </state>
                     <connections>
                         <action selector="bindWechatButtonClick:" destination="-1" eventType="touchUpInside" id="thX-fO-aTK"/>
                     </connections>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wechat_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="hyg-ce-My0">
+                    <rect key="frame" x="16" y="326.5" width="24" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="JTy-Rs-Oqh"/>
+                        <constraint firstAttribute="width" constant="24" id="aMU-wC-7SZ"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <gestureRecognizers/>
             <constraints>
                 <constraint firstItem="8up-qj-FsN" firstAttribute="top" secondItem="1nK-Gp-t99" secondAttribute="bottom" constant="32" id="0ea-lj-Hu8"/>
+                <constraint firstAttribute="trailing" secondItem="a3k-Wx-AnN" secondAttribute="trailing" constant="10" id="1RM-eV-EfK"/>
                 <constraint firstItem="a3k-Wx-AnN" firstAttribute="leading" secondItem="tBZ-fH-3EF" secondAttribute="leading" id="1vt-5D-ypC"/>
                 <constraint firstItem="CrX-WG-HTB" firstAttribute="leading" secondItem="a3k-Wx-AnN" secondAttribute="leading" id="423-ey-Xzd"/>
                 <constraint firstItem="1nK-Gp-t99" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="4Mx-w2-fE5"/>
                 <constraint firstItem="hYZ-Fh-JNq" firstAttribute="top" secondItem="tBZ-fH-3EF" secondAttribute="bottom" constant="32" id="5mv-76-6sa"/>
-                <constraint firstItem="ICZ-KD-MRc" firstAttribute="leading" secondItem="a3k-Wx-AnN" secondAttribute="trailing" constant="16" id="AEm-k2-hsj"/>
+                <constraint firstItem="Gq6-E7-8ow" firstAttribute="top" secondItem="1nK-Gp-t99" secondAttribute="top" id="6kZ-Te-b9E"/>
+                <constraint firstItem="CrX-WG-HTB" firstAttribute="leading" secondItem="1nK-Gp-t99" secondAttribute="trailing" constant="20" id="9wN-wo-0qx"/>
                 <constraint firstItem="8up-qj-FsN" firstAttribute="leading" secondItem="1nK-Gp-t99" secondAttribute="leading" id="Ana-f7-0hw"/>
                 <constraint firstItem="OMv-gP-idb" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="BIj-xu-LcA"/>
                 <constraint firstItem="2WX-5q-C84" firstAttribute="top" secondItem="CrX-WG-HTB" secondAttribute="bottom" constant="8" id="DaA-hg-pb4"/>
-                <constraint firstAttribute="trailing" secondItem="ICZ-KD-MRc" secondAttribute="trailing" constant="16" id="ELn-Rl-z4h"/>
                 <constraint firstItem="OMv-gP-idb" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="GL2-tQ-jrw"/>
                 <constraint firstAttribute="trailing" secondItem="OMv-gP-idb" secondAttribute="trailing" id="Hfe-HF-Xf8"/>
+                <constraint firstItem="hyg-ce-My0" firstAttribute="centerX" secondItem="1nK-Gp-t99" secondAttribute="centerX" id="Iiq-7z-3Vr"/>
+                <constraint firstItem="hyg-ce-My0" firstAttribute="leading" secondItem="8up-qj-FsN" secondAttribute="leading" id="Inb-f6-b1J"/>
                 <constraint firstItem="hYZ-Fh-JNq" firstAttribute="leading" secondItem="CrX-WG-HTB" secondAttribute="leading" id="MIs-si-Anc"/>
                 <constraint firstAttribute="trailing" secondItem="2WX-5q-C84" secondAttribute="trailing" id="Mr2-Qa-3RC"/>
                 <constraint firstAttribute="trailing" secondItem="hYZ-Fh-JNq" secondAttribute="trailing" constant="16" id="O2F-lh-yML"/>
@@ -164,19 +177,31 @@
                 <constraint firstItem="2WX-5q-C84" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="72" id="Qj2-2Y-WLR"/>
                 <constraint firstItem="tBZ-fH-3EF" firstAttribute="centerX" secondItem="2WX-5q-C84" secondAttribute="centerX" id="RR1-MS-PXe"/>
                 <constraint firstItem="ICZ-KD-MRc" firstAttribute="centerY" secondItem="a3k-Wx-AnN" secondAttribute="centerY" id="S5w-1Q-wYo"/>
+                <constraint firstItem="hyg-ce-My0" firstAttribute="centerY" secondItem="hYZ-Fh-JNq" secondAttribute="centerY" id="Whm-g8-Kxt"/>
                 <constraint firstItem="a3k-Wx-AnN" firstAttribute="bottom" secondItem="tBZ-fH-3EF" secondAttribute="bottom" constant="-8" id="XKD-S7-Bk2"/>
-                <constraint firstItem="CrX-WG-HTB" firstAttribute="height" secondItem="a3k-Wx-AnN" secondAttribute="height" id="a14-aJ-fLc"/>
+                <constraint firstItem="CrX-WG-HTB" firstAttribute="height" secondItem="a3k-Wx-AnN" secondAttribute="height" constant="2" id="a14-aJ-fLc"/>
+                <constraint firstAttribute="trailing" secondItem="Gq6-E7-8ow" secondAttribute="trailing" constant="16" id="a6r-dH-YT7"/>
                 <constraint firstItem="2WX-5q-C84" firstAttribute="top" secondItem="OMv-gP-idb" secondAttribute="bottom" constant="64" id="cD4-yk-0dI"/>
+                <constraint firstItem="hYZ-Fh-JNq" firstAttribute="top" secondItem="a3k-Wx-AnN" secondAttribute="bottom" constant="32" id="d0d-KD-pqe"/>
+                <constraint firstItem="hyg-ce-My0" firstAttribute="top" secondItem="8up-qj-FsN" secondAttribute="bottom" constant="28" id="eOC-v0-las"/>
                 <constraint firstItem="a3k-Wx-AnN" firstAttribute="leading" secondItem="CrX-WG-HTB" secondAttribute="leading" id="g66-KR-BQq"/>
-                <constraint firstAttribute="trailing" secondItem="CrX-WG-HTB" secondAttribute="trailing" constant="79" id="hU5-UJ-joh"/>
+                <constraint firstAttribute="trailing" secondItem="CrX-WG-HTB" secondAttribute="trailing" constant="10" id="hU5-UJ-joh"/>
                 <constraint firstItem="8up-qj-FsN" firstAttribute="width" secondItem="1nK-Gp-t99" secondAttribute="width" id="nKx-3a-zcQ"/>
+                <constraint firstItem="CrX-WG-HTB" firstAttribute="top" secondItem="OMv-gP-idb" secondAttribute="bottom" constant="31" id="tYM-cr-0eK"/>
+                <constraint firstItem="8up-qj-FsN" firstAttribute="centerX" secondItem="1nK-Gp-t99" secondAttribute="centerX" id="uqN-y6-n9W"/>
                 <constraint firstItem="tBZ-fH-3EF" firstAttribute="top" secondItem="2WX-5q-C84" secondAttribute="bottom" constant="56" id="w02-fk-TYh"/>
                 <constraint firstItem="tBZ-fH-3EF" firstAttribute="height" secondItem="2WX-5q-C84" secondAttribute="height" id="wGh-7S-UCE"/>
-                <constraint firstItem="Gq6-E7-8ow" firstAttribute="centerY" secondItem="CrX-WG-HTB" secondAttribute="centerY" id="wdf-L3-0wk"/>
-                <constraint firstItem="Gq6-E7-8ow" firstAttribute="leading" secondItem="ICZ-KD-MRc" secondAttribute="leading" id="wpl-KZ-bqg"/>
+                <constraint firstItem="ICZ-KD-MRc" firstAttribute="leading" secondItem="Gq6-E7-8ow" secondAttribute="leading" id="xIV-gS-aBZ"/>
+                <constraint firstItem="CrX-WG-HTB" firstAttribute="centerY" secondItem="Gq6-E7-8ow" secondAttribute="centerY" constant="1" id="xec-5S-iZ0"/>
                 <constraint firstItem="8up-qj-FsN" firstAttribute="centerY" secondItem="a3k-Wx-AnN" secondAttribute="centerY" id="xzF-pJ-NvU"/>
             </constraints>
-            <point key="canvasLocation" x="-967" y="-134"/>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="2WX-5q-C84"/>
+                    <exclude reference="tBZ-fH-3EF"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="-967.5" y="-134.5"/>
         </view>
     </objects>
     <resources>
@@ -185,5 +210,6 @@
         <image name="ic_account_circle.png" width="24" height="24"/>
         <image name="ic_https.png" width="24" height="24"/>
         <image name="ic_mode_edit_18pt.png" width="18" height="18"/>
+        <image name="wechat_icon.png" width="24" height="24"/>
     </resources>
 </document>

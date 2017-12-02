@@ -168,6 +168,19 @@
 		1FAD74701FD0EDED00A5D880 /* mov_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD746A1FD0EDE600A5D880 /* mov_icon@2x.png */; };
 		1FAD74711FD0EDED00A5D880 /* mov_icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD746B1FD0EDEA00A5D880 /* mov_icon@3x.png */; };
 		1FAD74721FD0EDED00A5D880 /* jpg_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD746C1FD0EDEC00A5D880 /* jpg_icon@2x.png */; };
+		1FAD74771FD1049900A5D880 /* WBInviteWechatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAD74761FD1049900A5D880 /* WBInviteWechatViewController.m */; };
+		1FAD747B1FD1061D00A5D880 /* WBInviteWechatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAD74791FD1061D00A5D880 /* WBInviteWechatTableViewCell.m */; };
+		1FAD747C1FD1061D00A5D880 /* WBInviteWechatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD747A1FD1061D00A5D880 /* WBInviteWechatTableViewCell.xib */; };
+		1FAD74801FD14A4700A5D880 /* add_invite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD747D1FD14A4600A5D880 /* add_invite@2x.png */; };
+		1FAD74811FD14A4700A5D880 /* add_invite.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD747E1FD14A4600A5D880 /* add_invite.png */; };
+		1FAD74821FD14A4700A5D880 /* add_invite@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD747F1FD14A4700A5D880 /* add_invite@3x.png */; };
+		1FAD74841FD1537400A5D880 /* invite_miniProgram.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD74831FD1537400A5D880 /* invite_miniProgram.png */; };
+		1FAD74881FD15EBE00A5D880 /* upload_download.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD74851FD15EBA00A5D880 /* upload_download.png */; };
+		1FAD74891FD15EBE00A5D880 /* upload_download@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD74861FD15EBB00A5D880 /* upload_download@3x.png */; };
+		1FAD748A1FD15EBE00A5D880 /* upload_download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD74871FD15EBD00A5D880 /* upload_download@2x.png */; };
+		1FAD748E1FD15F3300A5D880 /* weChat_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD748B1FD15F3100A5D880 /* weChat_add@2x.png */; };
+		1FAD748F1FD15F3300A5D880 /* weChat_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD748C1FD15F3200A5D880 /* weChat_add.png */; };
+		1FAD74901FD15F3300A5D880 /* weChat_add@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD748D1FD15F3300A5D880 /* weChat_add@3x.png */; };
 		1FB0900B1FBC519A0020B304 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB090091FBC51990020B304 /* NSString+Extension.m */; };
 		1FC2AFEF1FC5299300E8C9DE /* WBCloudLoginAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2AFEE1FC5299300E8C9DE /* WBCloudLoginAPI.m */; };
 		1FC2AFF21FC52B4800E8C9DE /* CloudLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2AFF11FC52B4800E8C9DE /* CloudLoginModel.m */; };
@@ -924,6 +937,21 @@
 		1FAD746B1FD0EDEA00A5D880 /* mov_icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mov_icon@3x.png"; sourceTree = "<group>"; };
 		1FAD746C1FD0EDEC00A5D880 /* jpg_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jpg_icon@2x.png"; sourceTree = "<group>"; };
 		1FAD74731FD0EF5200A5D880 /* WBFilesAndTransmitProtocal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBFilesAndTransmitProtocal.h; sourceTree = "<group>"; };
+		1FAD74751FD1049900A5D880 /* WBInviteWechatViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBInviteWechatViewController.h; sourceTree = "<group>"; };
+		1FAD74761FD1049900A5D880 /* WBInviteWechatViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBInviteWechatViewController.m; sourceTree = "<group>"; };
+		1FAD74781FD1061D00A5D880 /* WBInviteWechatTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBInviteWechatTableViewCell.h; sourceTree = "<group>"; };
+		1FAD74791FD1061D00A5D880 /* WBInviteWechatTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBInviteWechatTableViewCell.m; sourceTree = "<group>"; };
+		1FAD747A1FD1061D00A5D880 /* WBInviteWechatTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBInviteWechatTableViewCell.xib; sourceTree = "<group>"; };
+		1FAD747D1FD14A4600A5D880 /* add_invite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_invite@2x.png"; sourceTree = "<group>"; };
+		1FAD747E1FD14A4600A5D880 /* add_invite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add_invite.png; sourceTree = "<group>"; };
+		1FAD747F1FD14A4700A5D880 /* add_invite@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_invite@3x.png"; sourceTree = "<group>"; };
+		1FAD74831FD1537400A5D880 /* invite_miniProgram.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = invite_miniProgram.png; sourceTree = "<group>"; };
+		1FAD74851FD15EBA00A5D880 /* upload_download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upload_download.png; sourceTree = "<group>"; };
+		1FAD74861FD15EBB00A5D880 /* upload_download@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "upload_download@3x.png"; sourceTree = "<group>"; };
+		1FAD74871FD15EBD00A5D880 /* upload_download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "upload_download@2x.png"; sourceTree = "<group>"; };
+		1FAD748B1FD15F3100A5D880 /* weChat_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChat_add@2x.png"; sourceTree = "<group>"; };
+		1FAD748C1FD15F3200A5D880 /* weChat_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weChat_add.png; sourceTree = "<group>"; };
+		1FAD748D1FD15F3300A5D880 /* weChat_add@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChat_add@3x.png"; sourceTree = "<group>"; };
 		1FB090091FBC51990020B304 /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
 		1FB0900A1FBC51990020B304 /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
 		1FC2AFED1FC5299300E8C9DE /* WBCloudLoginAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBCloudLoginAPI.h; sourceTree = "<group>"; };
@@ -2256,6 +2284,15 @@
 			path = Files;
 			sourceTree = "<group>";
 		};
+		1FAD74741FD1046700A5D880 /* InviteWechat */ = {
+			isa = PBXGroup;
+			children = (
+				1FAD74751FD1049900A5D880 /* WBInviteWechatViewController.h */,
+				1FAD74761FD1049900A5D880 /* WBInviteWechatViewController.m */,
+			);
+			name = InviteWechat;
+			sourceTree = "<group>";
+		};
 		1FFEADAB1FB087A100CD3068 /* Manage */ = {
 			isa = PBXGroup;
 			children = (
@@ -2715,6 +2752,7 @@
 		F6830EB71FB2FC40005AC578 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				1FAD74741FD1046700A5D880 /* InviteWechat */,
 				C183CDD01FCE8C5A002E29CD /* userInfo */,
 				F6830EE81FB2FEE0005AC578 /* userMange */,
 				F6830EE21FB2FE9F005AC578 /* setting */,
@@ -2752,6 +2790,9 @@
 				F6830EC11FB2FD1D005AC578 /* FMUsersLoginMangeCell.h */,
 				F6830EC21FB2FD1D005AC578 /* FMUsersLoginMangeCell.m */,
 				F6830EC31FB2FD1D005AC578 /* FMUsersLoginMangeCell.xib */,
+				1FAD74781FD1061D00A5D880 /* WBInviteWechatTableViewCell.h */,
+				1FAD74791FD1061D00A5D880 /* WBInviteWechatTableViewCell.m */,
+				1FAD747A1FD1061D00A5D880 /* WBInviteWechatTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2807,6 +2848,16 @@
 		F6830F1F1FB30AAD005AC578 /* LeftMenu */ = {
 			isa = PBXGroup;
 			children = (
+				1FAD748C1FD15F3200A5D880 /* weChat_add.png */,
+				1FAD748B1FD15F3100A5D880 /* weChat_add@2x.png */,
+				1FAD748D1FD15F3300A5D880 /* weChat_add@3x.png */,
+				1FAD74851FD15EBA00A5D880 /* upload_download.png */,
+				1FAD74871FD15EBD00A5D880 /* upload_download@2x.png */,
+				1FAD74861FD15EBB00A5D880 /* upload_download@3x.png */,
+				1FAD74831FD1537400A5D880 /* invite_miniProgram.png */,
+				1FAD747E1FD14A4600A5D880 /* add_invite.png */,
+				1FAD747D1FD14A4600A5D880 /* add_invite@2x.png */,
+				1FAD747F1FD14A4700A5D880 /* add_invite@3x.png */,
 				1F922E581FC80F3300A7614B /* lauchScreen.png */,
 				1F922E571FC80F3200A7614B /* lauchScreen@2x.png */,
 				1F922E591FC80F3300A7614B /* lauchScreen@3x.png */,
@@ -3320,6 +3371,7 @@
 				F68310DC1FB30AAE005AC578 /* good_red@3x.png in Resources */,
 				1F922E5B1FC80F3400A7614B /* lauchScreen.png in Resources */,
 				F68311431FB30AAE005AC578 /* no_photo@3x.png in Resources */,
+				1FAD74821FD14A4700A5D880 /* add_invite@3x.png in Resources */,
 				F68311271FB30AAE005AC578 /* login@3x.png in Resources */,
 				F68310BD1FB30AAE005AC578 /* dot@3x.png in Resources */,
 				F68310BE1FB30AAE005AC578 /* download.png in Resources */,
@@ -3412,6 +3464,7 @@
 				F68311A41FB30AAF005AC578 /* tabbar_normal_background.png in Resources */,
 				F68311751FB30AAE005AC578 /* recommend@2x.png in Resources */,
 				1FD7A0EA1FB05A45000D4CB3 /* back@2x.png in Resources */,
+				1FAD748E1FD15F3300A5D880 /* weChat_add@2x.png in Resources */,
 				F683117B1FB30AAF005AC578 /* Roboto-Medium.ttf in Resources */,
 				1FAD746D1FD0EDED00A5D880 /* jpg_icon.png in Resources */,
 				1F0898DC1FB05FF900B86723 /* eye_off.png in Resources */,
@@ -3424,6 +3477,7 @@
 				F68310931FB30AAE005AC578 /* back_grayhighlight.png in Resources */,
 				F68311151FB30AAE005AC578 /* info_user@3x.png in Resources */,
 				F68310A41FB30AAE005AC578 /* check_circle@3x.png in Resources */,
+				1FAD748F1FD15F3300A5D880 /* weChat_add.png in Resources */,
 				F683107D1FB30AAE005AC578 /* add_album.png in Resources */,
 				F68311821FB30AAF005AC578 /* set@3x.png in Resources */,
 				F68311401FB30AAE005AC578 /* no_file@3x.png in Resources */,
@@ -3471,6 +3525,7 @@
 				F68311441FB30AAE005AC578 /* open_in.png in Resources */,
 				F68311BF1FB30AAF005AC578 /* album_praise@2x.png in Resources */,
 				F683111A1FB30AAE005AC578 /* local@2x.png in Resources */,
+				1FAD74901FD15F3300A5D880 /* weChat_add@3x.png in Resources */,
 				F683116F1FB30AAE005AC578 /* praise@2x.png in Resources */,
 				F68311861FB30AAF005AC578 /* share_photo.png in Resources */,
 				F68311501FB30AAE005AC578 /* photo-album.png in Resources */,
@@ -3576,8 +3631,10 @@
 				F683107A1FB30AAE005AC578 /* About.png in Resources */,
 				F68310D61FB30AAE005AC578 /* folder_icon@3x.png in Resources */,
 				F68311601FB30AAE005AC578 /* photo_plus_open@2x.png in Resources */,
+				1FAD74841FD1537400A5D880 /* invite_miniProgram.png in Resources */,
 				F68310AE1FB30AAE005AC578 /* date_bg.png in Resources */,
 				1FAD744E1FD0EDC700A5D880 /* wechat_icon.png in Resources */,
+				1FAD74891FD15EBE00A5D880 /* upload_download@3x.png in Resources */,
 				1FD7A1071FB05A51000D4CB3 /* PLUS@2x.png in Resources */,
 				F68310E71FB30AAE005AC578 /* hard_select@2x.png in Resources */,
 				F68310981FB30AAE005AC578 /* bg_pic@3x.jpg in Resources */,
@@ -3614,6 +3671,7 @@
 				F68311091FB30AAE005AC578 /* icon_del.png in Resources */,
 				F650356A1FAC00A70007979D /* Main.storyboard in Resources */,
 				F68310F61FB30AAE005AC578 /* ic_arrow_drop_down@3x.png in Resources */,
+				1FAD747C1FD1061D00A5D880 /* WBInviteWechatTableViewCell.xib in Resources */,
 				F68311BD1FB30AAF005AC578 /* album_comment@3x.png in Resources */,
 				F68311251FB30AAE005AC578 /* login.png in Resources */,
 				1F922E761FCD342000A7614B /* ic_dns_black.png in Resources */,
@@ -3636,6 +3694,8 @@
 				F68310851FB30AAE005AC578 /* all@2x.png in Resources */,
 				F68311661FB30AAE005AC578 /* photos@2x.png in Resources */,
 				F68311D11FB30AAF005AC578 /* video@2x.png in Resources */,
+				1FAD74801FD14A4700A5D880 /* add_invite@2x.png in Resources */,
+				1FAD74881FD15EBE00A5D880 /* upload_download.png in Resources */,
 				1FD7A0EF1FB05A45000D4CB3 /* back_gray.png in Resources */,
 				F68311621FB30AAE005AC578 /* photo_select.png in Resources */,
 				1FAD746F1FD0EDED00A5D880 /* mov_icon.png in Resources */,
@@ -3715,6 +3775,7 @@
 				F68310831FB30AAE005AC578 /* album_share@3x.png in Resources */,
 				F6830EBE1FB2FD10005AC578 /* FMUserLoginSettingVC.xib in Resources */,
 				1FD7A1161FB05A51000D4CB3 /* logo@3x.png in Resources */,
+				1FAD74811FD14A4700A5D880 /* add_invite.png in Resources */,
 				F68311131FB30AAE005AC578 /* info_user.png in Resources */,
 				F6830EF01FB2FEF3005AC578 /* FMUserAddVC.xib in Resources */,
 				F683116E1FB30AAE005AC578 /* praise.png in Resources */,
@@ -3757,6 +3818,7 @@
 				F68311B11FB30AAF005AC578 /* up@3x.png in Resources */,
 				F68311B31FB30AAF005AC578 /* user@2x.png in Resources */,
 				F68311A21FB30AAF005AC578 /* storage_select@2x.png in Resources */,
+				1FAD748A1FD15EBE00A5D880 /* upload_download@2x.png in Resources */,
 				F68310B11FB30AAE005AC578 /* Default-568h@2x.png in Resources */,
 				F68310A51FB30AAE005AC578 /* check_circle_select.png in Resources */,
 				F68311A81FB30AAF005AC578 /* touxiang.jpg in Resources */,
@@ -3921,6 +3983,7 @@
 				C183CDFD1FCFD8A0002E29CD /* UINavigationController+SXFullScreen.m in Sources */,
 				F67D64071FAC7D3600E23D16 /* PHAsset+JYEXT.m in Sources */,
 				F6830F1A1FB300D2005AC578 /* FMLeftUserFooterView.m in Sources */,
+				1FAD74771FD1049900A5D880 /* WBInviteWechatViewController.m in Sources */,
 				F65035671FAC00A60007979D /* ViewController.m in Sources */,
 				1F4D75A61FAC4BB800E6516C /* DGPopUpViewTextView.m in Sources */,
 				F67D64481FAC7E6B00E23D16 /* JYForceTouchPreviewController.m in Sources */,
@@ -3949,6 +4012,7 @@
 				C138D0571FB94396000CF518 /* FLDrivesAPI.m in Sources */,
 				1F922EC31FCE867400A7614B /* WBStationManageEquipmentModel.m in Sources */,
 				C138D05A1FB94D8D000CF518 /* FLGetDriveDirAPI.m in Sources */,
+				1FAD747B1FD1061D00A5D880 /* WBInviteWechatTableViewCell.m in Sources */,
 				1F1ABA001FB978EB006EB1FC /* CSDownloadTaskQueue.m in Sources */,
 				F65035641FAC00A60007979D /* AppDelegate.m in Sources */,
 				C138D07A1FB9A4B0000CF518 /* DirectoriesModel.m in Sources */,
