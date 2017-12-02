@@ -19,9 +19,8 @@
     NSLog(@"FilesServices dealloc");
 }
 
-- (void)deleteFileWithFileUUID:(NSString *)fileuuid FileName:(NSString *)fileName{
-    
-    [self removeFileWithFileName:fileName UUID:fileuuid];
+- (void)deleteFileWithFileUUID:(NSString *)fileuuid FileName:(NSString *)fileName ActionType:(NSString *)actionType{
+    [self removeFileWithFileName:fileName UUID:fileuuid ActionType:actionType];
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"uuid = %@ && fileUUID = %@", WB_UserService.currentUser.uuid, fileuuid];
     [WBFile MR_deleteAllMatchingPredicate:predicate inContext:[NSManagedObjectContext MR_defaultContext]];
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
@@ -33,16 +32,24 @@
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
-- (void)removeFileWithFileName:(NSString *)fileName UUID:(NSString *)uuid{
+- (void)removeFileWithFileName:(NSString *)fileName UUID:(NSString *)uuid ActionType:(NSString *)actionType{
+    NSString *deletePath ;
     NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
     NSString* suffixName = uuid;
     NSString *fileNameString = fileName;
-    NSString *extensionstring = [fileNameString pathExtension];
-    NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",suffixName,extensionstring]];
-    NSLog(@"文件位置%@",saveFile);
-    if ([[NSFileManager defaultManager] fileExistsAtPath:saveFile]) {
+    if (actionType && [actionType isEqualToString:@"上传"]) {
+        NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",fileName]];
+        deletePath = saveFile;
+    }else{
+        NSString *extensionstring = [fileNameString pathExtension];
+        NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",suffixName,extensionstring]];
+        deletePath = saveFile;
+    }
+   
+    NSLog(@"文件位置%@",deletePath);
+    if ([[NSFileManager defaultManager] fileExistsAtPath:deletePath]) {
         NSError *error = nil;
-        [[NSFileManager defaultManager] removeItemAtPath:saveFile error:&error];
+        [[NSFileManager defaultManager] removeItemAtPath:deletePath error:&error];
         if (error) {
             NSLog(@"删除失败");
         }else{

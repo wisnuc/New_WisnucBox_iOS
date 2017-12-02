@@ -80,12 +80,15 @@ __strong static id _sharedObject = nil;
     
     NSLog(@"上传文件路径为:%@",filePath);
     
+    NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:YES];
+    NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",suffixName]];
+    
     CSUploadModel* uploadFileModel = [[CSUploadModel alloc] init];
     [uploadFileModel setUploadFileName:[NSString stringWithFormat:@"%@",suffixName]];
-    [uploadFileModel setUploadFileSavePath:filePath];
+    [uploadFileModel setUploadFileSavePath:saveFile];
+    [uploadFileModel setUploadTempSavePath:filePath];
     [uploadFileModel setUploadFileUserId:WB_UserService.currentUser.uuid];
     NSNumber* fileSize = [NSNumber numberWithLongLong:[[manager attributesOfItemAtPath:filePath error:nil]fileSize]];
-    NSLog(@"%@",fileSize);
     [uploadFileModel setUploadFileSize:fileSize];
     
     CSUploadTask* uploadTask = [[CSUploadTask alloc] init];

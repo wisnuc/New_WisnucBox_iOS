@@ -130,17 +130,7 @@ ReNameDelegate
     [self.tableView reloadData];
 }
 
-- (id)transformedValue:(id)value
-{
-    double convertedValue = [value doubleValue];
-    int multiplyFactor = 0;
-    NSArray *tokens = [NSArray arrayWithObjects:@"bytes",@"KB",@"MB",@"GB",@"TB",@"PB", @"EB", @"ZB",    @"YB",nil];
-    while (convertedValue > 1024) {
-        convertedValue /= 1024;multiplyFactor++;
-    }
-    return [NSString stringWithFormat:@"%4.2f %@",convertedValue, [tokens objectAtIndex:multiplyFactor]];
-    
-}
+
 
 #pragma tableViewDelegate;
 
@@ -412,20 +402,20 @@ ReNameDelegate
             switch (indexPath.row) {
                 case 0:
                 {
-                    cell.normalLabel.text = [NSString stringWithFormat:@"%@",  [self transformedValue:volumesModel.usage.overall[@"deviceSize"]]];
+                    cell.normalLabel.text = [NSString stringWithFormat:@"%@",  [NSString transformedValue:volumesModel.usage.overall[@"deviceSize"]]];
                     cell.detailLabel.text = @"总空间";
                     cell.leftImageView.image = [UIImage imageNamed:@"ic_storage"];
                 }
                     break;
                 case 1:
                 {
-                    cell.normalLabel.text = [NSString stringWithFormat:@"%@",[self transformedValue: volumesModel.usage.data[@"size"]]];
+                    cell.normalLabel.text = [NSString stringWithFormat:@"%@",[NSString transformedValue: volumesModel.usage.data[@"size"]]];
                     cell.detailLabel.text = @"用户数据空间";
                 }
                     break;
                 case 2:
                 {
-                    cell.normalLabel.text =  cell.normalLabel.text = [NSString stringWithFormat:@"%@",[self transformedValue:volumesModel.usage.overall[@"free"]]];
+                    cell.normalLabel.text =  cell.normalLabel.text = [NSString stringWithFormat:@"%@",[NSString transformedValue:volumesModel.usage.overall[@"free"]]];
                     cell.detailLabel.text = @"可用空间";
                 }
                     break;

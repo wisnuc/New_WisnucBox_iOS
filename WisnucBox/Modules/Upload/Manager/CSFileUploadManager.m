@@ -146,7 +146,7 @@ __strong static id _sharedObject = nil;
         [self.uploadingTasks addObject:uploadTask];
         begin();
     }
-    NSString * filePath = fileModel.uploadFileSavePath;
+    NSString * filePath = fileModel.uploadTempSavePath;
     NSString * hashString  = [FileHash sha256HashOfFileAtPath:filePath];
     NSNumber * sizeNumber = [NSNumber numberWithLongLong:[WB_FileService fileSizeAtPath:filePath]];
     NSString * fileName = [filePath lastPathComponent];
@@ -189,13 +189,20 @@ __strong static id _sharedObject = nil;
                           success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                               NSLog(@"Upload Success -->");
                               NSLog(@"%@",responseObject);
-                              [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+                             
                                           [uploadTask setUploadStatus:CSUploadStatusSuccess];
                                           [_taskDoingQueue dequeue];
                                           [self.uploadingTasks removeObject:uploadTask];
                                           NSDate* curDate = [NSDate date];
                                           [fileModel setUploadFinishTime:curDate];
-                
+                              
+                                          NSString* tempFile = [fileModel getUploadTempSavePath];
+                                          NSString* saveFile = [fileModel getUploadFileSavePath];
+                                          NSFileManager *manager = [NSFileManager defaultManager];
+                                          if ([manager fileExistsAtPath:tempFile]) {
+                                            [CSFileUtil cutFileAtPath:tempFile toPath:saveFile];
+                                          }
+                                         [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
                                           WBFile * wBFile = [WBFile MR_createEntityInContext:[NSManagedObjectContext MR_defaultContext]];
                                           wBFile.uuid = fileModel.uploadFileUserId;
                                           NSLog(@"%@",fileModel.uploadFileSize);
@@ -242,32 +249,32 @@ __strong static id _sharedObject = nil;
                               
                               [_taskDoingQueue dequeue];
                               [self.uploadingTasks removeObject:uploadTask];
-                              int failureCount = [uploadTask increaseFailureCount];
-                              
-                              
-                                          NSLog(@"路径:%@,失败次数:%d,重试机会:%d",filePath,failureCount,self.maxFailureRetryChance);
-                              
-                                          if (failureCount <= self.maxFailureRetryChance)
-                                          {
-                                              NSLog(@"重试中...");
-                                              if (uploadTask.uploadStatus == CSUploadStatusCanceled) {
-                                                  //调用外部回调（比如执行UI更新），通知UI任务已经失败了
-                                                  if (complete) {
-                                                      complete(uploadTask,error);
-                                                  }
-                                                  return ;
-                                              }
-                                              //上传失败重新发起上传请求（即重试）
-                                              [self beginUploadTask:uploadTask begin:begin progress:progress complete:complete];
-                                          }
-                                          else
-                                          {
+//                              int failureCount = [uploadTask increaseFailureCount];
+//
+//
+//                                          NSLog(@"路径:%@,失败次数:%d,重试机会:%d",filePath,failureCount,self.maxFailureRetryChance);
+//
+//                                          if (failureCount <= self.maxFailureRetryChance)
+//                                          {
+//                                              NSLog(@"重试中...");
+//                                              if (uploadTask.uploadStatus == CSUploadStatusCanceled) {
+//                                                  //调用外部回调（比如执行UI更新），通知UI任务已经失败了
+//                                                  if (complete) {
+//                                                      complete(uploadTask,error);
+//                                                  }
+//                                                  return ;
+//                                              }
+//                                              //上传失败重新发起上传请求（即重试）
+//                                              [self beginUploadTask:uploadTask begin:begin progress:progress complete:complete];
+//                                          }
+//                                          else
+//                                          {
                                               NSLog(@"宣告失败...");
                               
                                               [uploadTask setUploadStatus:CSUploadStatusFailure];
                                               [_uploadTasks removeObject:uploadTask];
         
-                                          }
+//                                          }
                                           if (complete) {
                                               complete(uploadTask,error);
                                           }
@@ -540,6 +547,15 @@ __strong static id _sharedObject = nil;
     
     [self.uploadingTasks removeObject:uploadTask];
     [_uploadTasks removeObject:uploadTask];
+    NSError *error;
+//    NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:KUploadFilesDocument createIfNotExist:NO];
+//    NSString* saveFile = [savePath stringByAppendingPathComponent:uploadTask.getUploadFileModel.uploadFileName];
+    [[NSFileManager defaultManager] removeItemAtPath:uploadTask.getUploadFileModel.uploadFileSavePath error:&error];
+    if (!error) {
+        NSLog(@"删除文件成功");
+    }else{
+        NSLog(@"删除文件失败");
+    }
 }
 
 - (void)cancelOneUploadTaskWith:(CSUploadTask*)uploadTask
