@@ -65,5 +65,10 @@
     return sizeText;
 }
 
++ (NSString *)URLDecodedString:(NSString *)str
+{
+    NSString *decodedString=(__bridge_transfer NSString *)CFURLCreateStringByReplacingPercentEscapesUsingEncoding(NULL, (__bridge CFStringRef)str, CFSTR(""), CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding));
+    return decodedString;
+}
 
 @end

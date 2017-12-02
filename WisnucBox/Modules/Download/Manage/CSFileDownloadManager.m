@@ -186,7 +186,7 @@ __strong static id _sharedObject = nil;
         return url;
 
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-        NSLog(@"%@",error);
+        NSLog(@"%@",filePath);
 //         fileModel setDownloadFileSavePath:
         if (error) {
                     if (error.code == -1005) {
@@ -521,7 +521,20 @@ __strong static id _sharedObject = nil;
 ////    }];
 }
 
-
++ (void)changeFolderName:(NSString *)folderName beforeName:(NSString *)beforeName {
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSString *beforeFolder = [NSString stringWithFormat:@"%@/Documents/%@", NSHomeDirectory(),beforeName];
+    NSString *afterFolder = [NSString stringWithFormat:@"%@/Documents/%@", NSHomeDirectory(),folderName];
+    [fm createDirectoryAtPath:afterFolder withIntermediateDirectories:YES attributes:nil error:nil];
+    NSDirectoryEnumerator *dirEnum = [fm enumeratorAtPath:beforeFolder];
+    NSString *path;
+    while ((path = [dirEnum nextObject]) != nil) {
+        [fm moveItemAtPath:[NSString stringWithFormat:@"%@/%@",beforeFolder,path]
+                    toPath:[NSString stringWithFormat:@"%@/%@",afterFolder,path]
+                     error:NULL];
+    }
+    [fm removeItemAtPath:beforeFolder error:nil];
+}
 - (void)startOneDownloadTaskWith:(CSDownloadTask*)downloadTask
 {
     [downloadTask setDownloadStatus:CSDownloadStatusWaitingForStart];

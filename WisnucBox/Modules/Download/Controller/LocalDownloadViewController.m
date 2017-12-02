@@ -429,9 +429,15 @@ UIDocumentInteractionControllerDelegate
     if(self.cellStatus == LocalFliesCellStatusCanChoose){
         id model = indexPath.section == 0?
         self.transmitingArray[indexPath.row]:self.downloadedArray[indexPath.row];
-        NSString * uuid = [model isKindOfClass:[CSDownloadTask class]]?
-        ((CSDownloadTask *)model).downloadFileModel.getDownloadFileUUID:((WBFile*)model).fileUUID;
-        
+        NSString * uuid;
+        if ([NSStringFromClass([model class]) isEqualToString:NSStringFromClass([CSDownloadTask class])]) {
+          uuid = ((CSDownloadTask *)model).downloadFileModel.getDownloadFileUUID;
+        }else if([NSStringFromClass([model class]) isEqualToString:NSStringFromClass([CSUploadTask class])]){
+          uuid = ((CSUploadTask *)model).uploadFileModel.getUploadFileUUID;
+        }else if([NSStringFromClass([model class]) isEqualToString:NSStringFromClass([WBFile class])]){
+            uuid = ((WBFile*)model).fileUUID;
+        }
+    
         if([self.chooseArr containsObject:uuid]){
             [self.chooseArr removeObject:uuid];
         }

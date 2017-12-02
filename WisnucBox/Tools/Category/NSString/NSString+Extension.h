@@ -14,4 +14,5 @@
 - (CGSize)sizeWithFont:(UIFont *)font maxSize:(CGSize)maxSize;
 + (NSString *)fileSizeWithFileName:(NSString *)fileName;
 + (NSString *)fileSizeWithFLModel:(EntriesModel *)model;
++ (NSString *)URLDecodedString:(NSString *)str;
 @end

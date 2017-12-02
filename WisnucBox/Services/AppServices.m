@@ -85,10 +85,11 @@
                 [[CSFileDownloadManager sharedDownloadManager] pauseAllDownloadTask];
             }
         }else{
-             [[CSUploadHelper shareManager]startUploadAction];
+          
             if ([CSFileDownloadManager sharedDownloadManager].downloadingTasks.count >0) {
                 [[CSFileDownloadManager sharedDownloadManager] startAllDownloadTask];
             }
+             [[CSUploadHelper shareManager]startUploadAction];
         }
     }
   

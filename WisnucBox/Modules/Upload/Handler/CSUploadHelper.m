@@ -57,8 +57,11 @@ __strong static id _sharedObject = nil;
         if(error){
             [SXLoadingView showProgressHUDText:@"上传失败" duration:1.0];
             return ;
+        }else{
+            [weak_self readyUploadFilesWithFilePath:filePath];
         }
         WB_UserService.currentUser.uploadFileDir = entryUUID;
+        [WB_UserService synchronizedCurrentUser];
         [weak_self uploadFileWithFilePath:filePath];
     }];
     }else{
@@ -82,6 +85,7 @@ __strong static id _sharedObject = nil;
     [uploadFileModel setUploadFileSavePath:filePath];
     [uploadFileModel setUploadFileUserId:WB_UserService.currentUser.uuid];
     NSNumber* fileSize = [NSNumber numberWithLongLong:[[manager attributesOfItemAtPath:filePath error:nil]fileSize]];
+    NSLog(@"%@",fileSize);
     [uploadFileModel setUploadFileSize:fileSize];
     
     CSUploadTask* uploadTask = [[CSUploadTask alloc] init];
@@ -179,7 +183,7 @@ __strong static id _sharedObject = nil;
     [self getAllNeedUploadFiles];
     if (self.needUploadArray.count>0) {
         [_needUploadArray enumerateObjectsUsingBlock:^(NSString *filePath, NSUInteger idx, BOOL * _Nonnull stop) {
-            [weak_self uploadFileWithFilePath:filePath];
+            [weak_self readyUploadFilesWithFilePath:filePath];
         }];
     }
 }

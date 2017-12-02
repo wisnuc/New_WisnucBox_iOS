@@ -185,27 +185,34 @@
 
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
-    
+    NSLog(@"%@",NSStringFromClass([[UIViewController getCurrentVC] class]));
+    NSString *controllerString = NSStringFromClass([[UIViewController getCurrentVC] class]);
     if (self.window) {
         if (url) {
             NSString *fileNameStr = [url lastPathComponent];
             NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:KUploadFilesDocument createIfNotExist:YES];
             NSString* saveFile = [savePath stringByAppendingPathComponent:fileNameStr];
             NSData *data = [NSData dataWithContentsOfURL:url];
+            NSFileManager *manager = [NSFileManager defaultManager];
+            if ([manager fileExistsAtPath:saveFile]) {
+                NSError *error ;
+                [manager removeItemAtPath:saveFile error:&error];
+            }
             if (![data writeToFile:saveFile atomically:YES])
             {
                 NSLog(@"%@写入失败",saveFile);
             }else{
                 [[CSUploadHelper shareManager] readyUploadFilesWithFilePath:saveFile];
-                CYLTabBarController * tVC = (CYLTabBarController *)MyAppDelegate.window.rootViewController;
-                NavViewController * selectVC = (NavViewController *)tVC.selectedViewController;
-               LocalDownloadViewController *localViewController  = [[LocalDownloadViewController alloc]init];
-                NSLog(@"%@",NSStringFromClass([[UIViewController getCurrentVC] class]));
-                if ([selectVC isKindOfClass:[NavViewController class]]) {
-                    [selectVC  pushViewController:localViewController animated:YES];
+                if (![controllerString isEqualToString:NSStringFromClass([LocalDownloadViewController class])]) {
+                    CYLTabBarController * tVC = (CYLTabBarController *)MyAppDelegate.window.rootViewController;
+                    NavViewController * selectVC = (NavViewController *)tVC.selectedViewController;
+                    LocalDownloadViewController *localViewController  = [[LocalDownloadViewController alloc]init];
+                    
+                    if ([selectVC isKindOfClass:[NavViewController class]]) {
+                        [selectVC  pushViewController:localViewController animated:YES];
+                    }
                 }
                 NSLog(@"%@写入成功",saveFile);
-                
             }
         }
     }
