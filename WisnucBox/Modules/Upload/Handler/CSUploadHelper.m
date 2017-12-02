@@ -85,7 +85,6 @@ __strong static id _sharedObject = nil;
     [uploadFileModel setUploadFileSavePath:filePath];
     [uploadFileModel setUploadFileUserId:WB_UserService.currentUser.uuid];
     NSNumber* fileSize = [NSNumber numberWithLongLong:[[manager attributesOfItemAtPath:filePath error:nil]fileSize]];
-    NSLog(@"%@",fileSize);
     [uploadFileModel setUploadFileSize:fileSize];
     
     CSUploadTask* uploadTask = [[CSUploadTask alloc] init];

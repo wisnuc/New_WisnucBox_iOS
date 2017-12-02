@@ -106,7 +106,6 @@
                  
              {
                  NSLog(@"WiFi网络");
-                 [SXLoadingView showProgressHUDText:@"正在使用WIFI" duration:1];
                  break;
              }
              case AFNetworkReachabilityStatusReachableViaWWAN:

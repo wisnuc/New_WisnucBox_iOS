@@ -74,11 +74,28 @@ UITableViewDataSource
                 }
             }];
         }];
+        [weak_self sequenceDataSource];
         [weak_self endLoadData];
     } failure:^(__kindof JYBaseRequest *request) {
         [weak_self endLoadData];
         NSLog(@"%@",request.error);
     }];
+}
+
+- (void)sequenceDataSource{
+    NSMutableArray *isPendingArr = [NSMutableArray arrayWithCapacity:0];
+    NSMutableArray *isNotPendingArr = [NSMutableArray arrayWithCapacity:0];
+    for (TicketUserModel * model  in self.dataArray) {
+        if ([model.type isEqualToString:@"pending"]) {
+            [isPendingArr addObject: model];
+        }
+        else{
+            [isNotPendingArr addObject: model];
+        }
+    }
+    [self.dataArray removeAllObjects];
+    [self.dataArray addObjectsFromArray:isPendingArr];
+    [self.dataArray addObjectsFromArray:isNotPendingArr];
 }
 
 - (void)endLoadData{

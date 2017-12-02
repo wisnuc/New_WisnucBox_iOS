@@ -15,4 +15,5 @@
 + (NSString *)fileSizeWithFileName:(NSString *)fileName;
 + (NSString *)fileSizeWithFLModel:(EntriesModel *)model;
 + (NSString *)URLDecodedString:(NSString *)str;
++ (NSString *)transformedValue:(id)value;
 @end

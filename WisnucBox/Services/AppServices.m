@@ -20,6 +20,7 @@
 #import "CSFileUploadManager.h"
 #import "CSUploadHelper.h"
 #import "UserModel.h"
+#import <MBProgressHUD/MBProgressHUD.h>
 
 @interface AppServices ()
 @end
@@ -92,6 +93,19 @@
              [[CSUploadHelper shareManager]startUploadAction];
         }
     }
+    if (status == AFNetworkReachabilityStatusReachableViaWiFi){
+    MBProgressHUD *progressHUD = [[MBProgressHUD alloc] initWithView:[AppServices mainWindow]];
+    progressHUD.mode = MBProgressHUDModeText;
+    progressHUD.labelText = @"正在使用WIFI";
+    progressHUD.labelFont = [UIFont systemFontOfSize:13];
+    [[AppServices mainWindow] addSubview:progressHUD];
+    progressHUD.animationType = MBProgressHUDAnimationZoom;
+    
+    progressHUD.removeFromSuperViewOnHide = YES;
+    progressHUD.opacity = 0.7;
+    [progressHUD show:YES];
+    [progressHUD hide:YES afterDelay:1.0];
+    }
   
     if(!WB_UserService.currentUser || !WB_UserService.currentUser.autoBackUp) return;
 //
@@ -110,6 +124,20 @@
             [WB_NetService testAndCheckoutIfSuccessComplete:^{
                 [self startUploadAssets:nil];
             }];
+    }
+}
+
+//获取当前window
++ (UIWindow *)mainWindow
+{
+    UIApplication *app = [UIApplication sharedApplication];
+    if ([app.delegate respondsToSelector:@selector(window)])
+    {
+        return [app.delegate window];
+    }
+    else
+    {
+        return [app keyWindow];
     }
 }
 

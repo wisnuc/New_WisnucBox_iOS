@@ -202,6 +202,10 @@
             {
                 NSLog(@"%@写入失败",saveFile);
             }else{
+               
+               NSNumber* fileSize = [NSNumber numberWithLongLong:[[manager attributesOfItemAtPath:saveFile error:nil]fileSize]];
+                NSLog(@"%@",fileSize);
+            
                 [[CSUploadHelper shareManager] readyUploadFilesWithFilePath:saveFile];
                 if (![controllerString isEqualToString:NSStringFromClass([LocalDownloadViewController class])]) {
                     CYLTabBarController * tVC = (CYLTabBarController *)MyAppDelegate.window.rootViewController;

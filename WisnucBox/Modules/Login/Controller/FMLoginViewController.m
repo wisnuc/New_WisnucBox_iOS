@@ -455,7 +455,7 @@ static BOOL needHide = YES;
 
 - (void)weChatCallBackRespCode:(NSString *)code{
     @weaky(self)
-    [SXLoadingView showProgressHUD:@"正在远程登录"];
+    [SXLoadingView showProgressHUD:@""];
     self.cloudLoginStationArray=[NSMutableArray arrayWithCapacity:0];
     [[WBCloudLoginAPI apiWithCode:code] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         [SXLoadingView updateProgressHUD:@"正在获取设备列表"];
@@ -569,12 +569,12 @@ static BOOL needHide = YES;
         userModel  = _cloudLoginStationArray[_current];
     }
     [WB_AppServices wechatLoginWithUserModel:userModel Token:_token AvatarUrl:_avatarUrl addr:WX_BASE_URL completeBlock:^(NSError *error, WBUser *user) {
-        [SXLoadingView hideProgressHUD];
         sender.userInteractionEnabled = YES;
         if(error || IsNilString(user.userHome)){
             if(!user) NSLog(@"GET TOKEN ERROR");
             else NSLog(@"Get User Home Error");
             [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"登录失败！ code: %ld", error.wbCode] duration:1];
+            [SXLoadingView hideProgressHUD];
         }else{
             [MyAppDelegate initRootVC];
             [SXLoadingView hideProgressHUD];

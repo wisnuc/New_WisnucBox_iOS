@@ -373,7 +373,7 @@ UIDocumentInteractionControllerDelegate
         }
         cell.transmitTypeLabel.text = typeString;
 //        [CSDateUtil stringWithDate:data.timeDate withFormat:@"yyyy-MM-dd HH:mm:ss"];
-        cell.downloadedSizeLabel.text = [CSFileUtil calculateUnit:[data.fileSize longLongValue]];
+        cell.downloadedSizeLabel.text = [NSString transformedValue:data.fileSize];
         
         if ([self.chooseArr containsObject:data.fileUUID]) {
             cell.f_ImageView.hidden = YES;

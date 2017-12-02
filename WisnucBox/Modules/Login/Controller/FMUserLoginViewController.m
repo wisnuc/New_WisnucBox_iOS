@@ -80,13 +80,13 @@
     NSString * UUID = [NSString stringWithFormat:@"%@:%@",_user.uuid,IsNilString(_loginTextField.text)?@"":_loginTextField.text];
     NSString * Basic = [UUID base64EncodedString];
     [WB_AppServices loginWithBasic:Basic userUUID:_user.uuid StationName:_service.name UserName:_user.username addr:_service.displayPath AvatarURL:_user.avatar isWechat:NO completeBlock:^(NSError *error, WBUser *user) {
-        [SXLoadingView hideProgressHUD];
-        sender.userInteractionEnabled = YES;
         if(error || IsNilString(user.userHome)){
             if(!user) NSLog(@"GET TOKEN ERROR");
             else NSLog(@"Get User Home Error");
             [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"登录失败！ code: %ld", (long)error.wbCode] duration:1];
         }else{
+            sender.userInteractionEnabled = YES;
+            [SXLoadingView hideProgressHUD];
             [MyAppDelegate initRootVC];
         }
     }];
