@@ -284,4 +284,8 @@
     [WXApi registerApp:KWxAppID];
 }
 
+- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)(void))completionHandler {
+    self.completeBlock = completionHandler;
+}
+
 @end

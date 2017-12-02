@@ -60,8 +60,6 @@
 
 - (void)requestForBackupPhotos:(void(^)(BOOL shouldUpload))callback;
 
-
-- (void)cancelFilesUplod;
 @end
 
 #define HashCalculateFinishedNotify @"HashCalculateFinishedNotify"
@@ -124,9 +122,11 @@
 
 @property (nonatomic) BOOL isRemoved;
 
+@property (nonatomic) NSURLSessionDataTask * dataTask;
+
 @property (nonatomic, copy) void(^callback)(NSError * , id);
 
-+ (instancetype)initWithAsset:(JYAsset *)asset;
++ (instancetype)initWithAsset:(JYAsset *)asset andManager:(AFHTTPSessionManager *)manager;
 
 - (void)startUseTimeStamp:(BOOL)yesOrNo completeBlock:(void(^)(NSError * , id))callback;
 
