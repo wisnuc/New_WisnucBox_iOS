@@ -120,8 +120,9 @@
 - (void)getNetAssets:(void(^)(NSError *, NSArray<WBAsset *> *))callback {
 //    dispatch_semaphore_wait(self.fetchNetAssetLock, DISPATCH_TIME_FOREVER);
     @weaky(self);
+    BOOL isCloudRequest  = WB_UserService.currentUser.isCloudLogin;
     [[FMMediaAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        NSArray * medias = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+        NSArray * medias = isCloudRequest ? request.responseJsonObject[@"data"] : request.responseJsonObject;
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             NSMutableArray *photoArr = [NSMutableArray arrayWithCapacity:0];
             [medias enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {

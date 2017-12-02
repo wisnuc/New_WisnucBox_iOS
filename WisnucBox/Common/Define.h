@@ -53,6 +53,9 @@
 
 #define KDefaultOffset 8
 
+//tmp
+#define JY_TMP_Folder [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]stringByAppendingPathComponent:@"JYTMP"]
+
 
 #ifdef DEBUG
 #define NSLog(...) NSLog(__VA_ARGS__)
