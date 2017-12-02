@@ -46,29 +46,87 @@
 }
 
 - (IBAction)shutDownButtonClick:(UIButton *)sender {
-    WBStationBootAPI *api = [WBStationBootAPI apiWithState:@"shutdown" Mode:nil];
-    [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        [SXLoadingView showProgressHUDText:@"关机成功" duration:1.5];
-    } failure:^(__kindof JYBaseRequest *request) {
+//    NSLog(@"%@",WB_UserService.currentUser.localToken);
+    
+    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"确定关机吗？" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        NSLog(@"点击了取消按钮");
         
+    }];
+    
+    UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSLog(@"点击了确定按钮");
+        [SXLoadingView showProgressHUD:@"正在关机"];
+        WBStationBootAPI *api = [WBStationBootAPI apiWithState:@"poweroff" Mode:nil];
+        [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+            [SXLoadingView hideProgressHUD];
+            [SXLoadingView showProgressHUDText:@"关机成功" duration:1.5];
+        } failure:^(__kindof JYBaseRequest *request) {
+            [SXLoadingView hideProgressHUD];
+            [SXLoadingView showProgressHUDText:@"关机失败" duration:1.5];
+            NSLog(@"%@",request.error);
+            NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+            if(errorData.length >0){
+                NSMutableArray *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+                NSLog(@"Upload Failure ---> :serializedData %@", serializedData);
+            }
+        }];
+        
+    }];
+    [alertVc addAction:cancle];
+    [alertVc addAction:confirm];
+    [self presentViewController:alertVc animated:YES completion:^{
     }];
 }
 
 - (IBAction)rebotButtonClick:(UIButton *)sender {
-    WBStationBootAPI *api = [WBStationBootAPI apiWithState:@"reboot" Mode:nil];
-    [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        [SXLoadingView showProgressHUDText:@"重启成功" duration:1.5];
-    } failure:^(__kindof JYBaseRequest *request) {
+    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"确定重启设备吗？" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        NSLog(@"点击了取消按钮");
         
     }];
+    
+    UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSLog(@"点击了确定按钮");
+        [SXLoadingView showProgressHUD:@"正在重启"];
+        WBStationBootAPI *api = [WBStationBootAPI apiWithState:@"reboot" Mode:nil];
+        [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+            [SXLoadingView hideProgressHUD];
+            [SXLoadingView showProgressHUDText:@"重启成功" duration:1.5];
+        } failure:^(__kindof JYBaseRequest *request) {
+            [SXLoadingView hideProgressHUD];
+            [SXLoadingView showProgressHUDText:@"重启失败" duration:1.5];
+        }];
+    }];
+    [alertVc addAction:cancle];
+    [alertVc addAction:confirm];
+    [self presentViewController:alertVc animated:YES completion:^{
+    }];
+
 }
 
 - (IBAction)miantainButtonClick:(UIButton *)sender {
-    WBStationBootAPI *api = [WBStationBootAPI apiWithState:@"reboot" Mode:@"maintenance"];
-    [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        [SXLoadingView showProgressHUDText:@"已进入维护模式" duration:1.5];
-    } failure:^(__kindof JYBaseRequest *request) {
+    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"确定进入维护模式吗？" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        NSLog(@"点击了取消按钮");
         
+    }];
+    
+    UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSLog(@"点击了确定按钮");
+        [SXLoadingView showProgressHUD:@"正在进入维护模式"];
+        WBStationBootAPI *api = [WBStationBootAPI apiWithState:@"reboot" Mode:@"maintenance"];
+        [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+            [SXLoadingView hideProgressHUD];
+            [SXLoadingView showProgressHUDText:@"已进入维护模式" duration:1.5];
+        } failure:^(__kindof JYBaseRequest *request) {
+            [SXLoadingView hideProgressHUD];
+            [SXLoadingView showProgressHUDText:@"进入维护模式失败" duration:1.5];
+        }];
+    }];
+    [alertVc addAction:cancle];
+    [alertVc addAction:confirm];
+    [self presentViewController:alertVc animated:YES completion:^{
     }];
 }
 

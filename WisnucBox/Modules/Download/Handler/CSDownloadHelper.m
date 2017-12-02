@@ -95,11 +95,11 @@ __strong static id _sharedObject = nil;
     NSLog(@"成功下载路径为:%@",savePath);
     NSLog(@"成功文件为:%@",saveFile);
     
-    NSString* tempPath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/Tmp" createIfNotExist:YES];
-    NSString* tempFile = [tempPath stringByAppendingPathComponent:tmpFileName];
-    
-    NSLog(@"临时下载路径为:%@",tempPath);
-    NSLog(@"临时文件为:%@",tempFile);
+//    NSString* tempPath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/Tmp" createIfNotExist:YES];
+//    NSString* tempFile = [tempPath stringByAppendingPathComponent:tmpFileName];
+//
+//    NSLog(@"临时下载路径为:%@",tempPath);
+//    NSLog(@"临时文件为:%@",tempFile);
     
     //     NSString* fileName = [suffixName stringByDeletingPathExtension];
     
@@ -108,7 +108,7 @@ __strong static id _sharedObject = nil;
     [downloadFileModel setGetDownloadFileUUID:dataModel.uuid];
     [downloadFileModel setDownloadTaskURL:fromUrl];
     [downloadFileModel setDownloadFileSavePath:saveFile];
-    [downloadFileModel setDownloadTempSavePath:tempFile];
+//    [downloadFileModel setDownloadTempSavePath:tempFile];
     [downloadFileModel setDownloadFileUserId:WB_UserService.currentUser.uuid];
     [downloadFileModel setDownloadFilePlistURL:@""];
     NSNumber* fileSize = [NSNumber numberWithLongLong:dataModel.size];
@@ -167,11 +167,11 @@ __strong static id _sharedObject = nil;
     NSLog(@"成功下载路径为:%@",savePath);
     NSLog(@"成功文件为:%@",saveFile);
     
-    NSString* tempPath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/Tmp" createIfNotExist:YES];
-    NSString* tempFile = [tempPath stringByAppendingPathComponent:tmpFileName];
+//    NSString* tempPath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/Tmp" createIfNotExist:YES];
+//    NSString* tempFile = [tempPath stringByAppendingPathComponent:tmpFileName];
     
-    NSLog(@"临时下载路径为:%@",tempPath);
-    NSLog(@"临时文件为:%@",tempFile);
+//    NSLog(@"临时下载路径为:%@",tempPath);
+//    NSLog(@"临时文件为:%@",tempFile);
     
     //     NSString* fileName = [suffixName stringByDeletingPathExtension];
     
@@ -180,7 +180,7 @@ __strong static id _sharedObject = nil;
     [downloadFileModel setGetDownloadFileUUID:dataModel.uuid];
     [downloadFileModel setDownloadTaskURL:fromUrl];
     [downloadFileModel setDownloadFileSavePath:saveFile];
-    [downloadFileModel setDownloadTempSavePath:tempFile];
+//    [downloadFileModel setDownloadTempSavePath:tempFile];
     [downloadFileModel setDownloadFileUserId:WB_UserService.currentUser.uuid];
     [downloadFileModel setDownloadFilePlistURL:@""];
     NSNumber* fileSize = [NSNumber numberWithLongLong:dataModel.size];

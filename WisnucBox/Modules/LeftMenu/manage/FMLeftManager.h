@@ -18,14 +18,14 @@
 //#define LeftMenu_AdminImages [NSMutableArray arrayWithObjects:@"storage",@"person_add",@"set",@"cancel",nil]
 
 //
-#define LeftMenu_NotAdminTitles [NSMutableArray arrayWithObjects:@"传输管理",@"设置",@"注销",nil]
-#define LeftMenu_NotAdminImages [NSMutableArray arrayWithObjects:@"upload_download",@"ic_dns_black",@"set",@"cancel",nil]
+#define LeftMenu_NotAdminTitles [NSMutableArray arrayWithObjects:@"传输管理",@"设置",nil]
+#define LeftMenu_NotAdminImages [NSMutableArray arrayWithObjects:@"upload_download",@"ic_dns_black",@"set",nil]
 
-#define LeftMenu_AdminTitles [NSMutableArray arrayWithObjects:@"传输管理",@"设备管理",@"设置",@"注销",nil]
-#define LeftMenu_AdminImages [NSMutableArray arrayWithObjects:@"upload_download",@"ic_dns_black",@"set",@"cancel",nil]
+#define LeftMenu_AdminTitles [NSMutableArray arrayWithObjects:@"传输管理",@"设备管理",@"设置",nil]
+#define LeftMenu_AdminImages [NSMutableArray arrayWithObjects:@"upload_download",@"ic_dns_black",@"set",nil]
 
-#define LeftMenu_AdminBindWechetTitles [NSMutableArray arrayWithObjects:@"传输管理",@"设备管理",@"邀请微信好友",@"设置",@"注销",nil]
-#define LeftMenu_AdminBindWechetImages [NSMutableArray arrayWithObjects:@"upload_download",@"ic_dns_black",@"weChat_add",@"set",@"cancel",nil]
+#define LeftMenu_AdminBindWechetTitles [NSMutableArray arrayWithObjects:@"传输管理",@"设备管理",@"邀请微信好友",@"设置",nil]
+#define LeftMenu_AdminBindWechetImages [NSMutableArray arrayWithObjects:@"upload_download",@"ic_dns_black",@"weChat_add",@"set",nil]
 
 @interface FMLeftManager : NSObject
 

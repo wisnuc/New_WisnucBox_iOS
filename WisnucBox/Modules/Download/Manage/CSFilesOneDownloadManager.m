@@ -354,15 +354,15 @@ __strong static id _sharedObject = nil;
         [downloadTask setDownloadStatus:CSDownloadStatusCanceled];
     }];
     
-    CSDownloadModel* fileModel = [downloadTask getDownloadFileModel];
+//    CSDownloadModel* fileModel = [downloadTask getDownloadFileModel];
     
     //移除临时文件
-    NSString* tempFile = [fileModel getDownloadTempSavePath];
-    [CSFileUtil deleteFileAtPath:tempFile];
-    
-    //移除临时plist
-    NSString* tempFilePlist = [[fileModel getDownloadTempSavePath] stringByAppendingPathExtension:@"plist"];
-    [CSFileUtil deleteFileAtPath:tempFilePlist];
+//    NSString* tempFile = [fileModel getDownloadTempSavePath];
+//    [CSFileUtil deleteFileAtPath:tempFile];
+//    
+//    //移除临时plist
+//    NSString* tempFilePlist = [[fileModel getDownloadTempSavePath] stringByAppendingPathExtension:@"plist"];
+//    [CSFileUtil deleteFileAtPath:tempFilePlist];
     
 }
 

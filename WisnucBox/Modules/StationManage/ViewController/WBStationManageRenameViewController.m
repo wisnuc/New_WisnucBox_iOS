@@ -20,6 +20,11 @@
     self.title = @"编辑设备名";
     self.renameTextField.text = _stationName;
     [self addLeftBarButtonWithImage:[UIImage imageNamed:@"back"] andHighlightButtonImage:nil andSEL:@selector(backbtnClick:)];
+    UIButton * rightButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 24, 24)];
+    [rightButton setTitle:@"完成" forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(rightButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    self.navigationItem.leftBarButtonItem = rightButtonItem;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -38,7 +43,11 @@
 
 - (void)backbtnClick:(UIButton *)sender {
     [self.navigationController popViewControllerAnimated:YES];
-     [self patchToReName];
+}
+
+- (void)rightButtonClick:(UIButton *)sender{
+    [self patchToReName];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated{

@@ -590,6 +590,9 @@ static BOOL needHide = YES;
     
     int page = scrollView.contentOffset.x/__kWidth;
     _stationPageControl.currentPage = page;
+    if (page > _tempDataSource.count) {
+        return;
+    }
     FMSerachService *ser = _tempDataSource[page];
     _userDataSource = ser.users;
     _userDataCount = page;

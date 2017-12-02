@@ -17,6 +17,7 @@
 #import "WBStationTicketsWechatAPI.h"
 #import "WBCloudLoginAPI.h"
 #import "CloudLoginModel.h"
+#import "AppDelegate.h"
 
 @interface FMUserEditVC ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *userHeaderImageView;
@@ -217,6 +218,32 @@
         }
     }];
 }
+- (IBAction)logoutButtonClick:(UIButton *)sender {
+    [SXLoadingView showProgressHUD:@"正在注销"];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self skipToLogin];
+    });
+}
+
+-(void)skipToLogin{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        MyAppDelegate.window.rootViewController = nil;
+        [MyAppDelegate.window resignKeyWindow];
+        [WB_UserService logoutUser];
+        [WB_AppServices rebulid];
+        for (UIView *view in MyAppDelegate.window.subviews) {
+            [view removeFromSuperview];
+        }
+        //reload menu
+//        [self reloadWithTitles:LeftMenu_NotAdminTitles andImages:LeftMenu_NotAdminImages];
+        
+        FMLoginViewController * vc = [[FMLoginViewController alloc]init];
+        NavViewController *nav = [[NavViewController alloc] initWithRootViewController:vc];
+        MyAppDelegate.window.rootViewController = nav;
+        [MyAppDelegate.window makeKeyAndVisible];
+    });
+}
+
 
 @end
 
