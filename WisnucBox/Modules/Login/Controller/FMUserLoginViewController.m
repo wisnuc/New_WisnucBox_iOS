@@ -86,8 +86,8 @@
             [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"登录失败！ code: %ld", (long)error.wbCode] duration:1];
         }else{
             sender.userInteractionEnabled = YES;
-            [SXLoadingView hideProgressHUD];
             [MyAppDelegate initRootVC];
+            [SXLoadingView hideProgressHUD];
         }
     }];
 }
