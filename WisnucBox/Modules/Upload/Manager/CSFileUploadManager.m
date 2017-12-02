@@ -148,8 +148,7 @@ __strong static id _sharedObject = nil;
     }
     NSString * filePath = fileModel.uploadFileSavePath;
     NSString * hashString  = [FileHash sha256HashOfFileAtPath:filePath];
-    NSInteger sizeNumber = (NSInteger)[WB_FileService fileSizeAtPath:filePath];
-    //            NSString * exestr = [filePath lastPathComponent];
+    NSNumber * sizeNumber = [NSNumber numberWithLongLong:[WB_FileService fileSizeAtPath:filePath]];
     NSString * fileName = [filePath lastPathComponent];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
@@ -165,12 +164,12 @@ __strong static id _sharedObject = nil;
         [manifestDic setObject:fileName forKey:kCloudBodyToName];
         [manifestDic setObject:resource forKey:kCloudBodyResource];
         [manifestDic setObject:hashString forKey:@"sha256"];
-        [manifestDic setObject:@(sizeNumber) forKey:@"size"];
+        [manifestDic setObject:sizeNumber forKey:@"size"];
         NSData *josnData = [NSJSONSerialization dataWithJSONObject:manifestDic options:NSJSONWritingPrettyPrinted error:nil];
         NSString *result = [[NSString alloc] initWithData:josnData  encoding:NSUTF8StringEncoding];
         [mutableDic setObject:result forKey:@"manifest"];
         [manager.requestSerializer setValue:[NSString stringWithFormat:@"%@", WB_UserService.currentUser.cloudToken] forHTTPHeaderField:@"Authorization"];
-        manager.requestSerializer.timeoutInterval = 60;
+        manager.requestSerializer.timeoutInterval = 200000;
     }else {
         urlString = [NSString stringWithFormat:@"%@drives/%@/dirs/%@/entries/",[JYRequestConfig sharedConfig].baseURL,WB_UserService.currentUser.userHome, WB_UserService.currentUser.uploadFileDir];
         mutableDic = nil;
@@ -180,7 +179,7 @@ __strong static id _sharedObject = nil;
         if(WB_UserService.currentUser.isCloudLogin) {
             [formData appendPartWithFileURL:[NSURL fileURLWithPath:filePath] name:fileName fileName:fileName mimeType:@"image/jpeg" error:nil];
         }else {
-            NSDictionary *dic = @{@"size":@(sizeNumber),@"sha256":hashString};
+            NSDictionary *dic = @{@"size":sizeNumber,@"sha256":hashString};
             NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
             NSString *jsonString =  [[NSString alloc] initWithData:jsonData  encoding:NSUTF8StringEncoding];
             [formData appendPartWithFileURL:[NSURL fileURLWithPath:filePath] name:fileName fileName:jsonString mimeType:@"image/jpeg" error:nil];
@@ -200,7 +199,8 @@ __strong static id _sharedObject = nil;
                                           WBFile * wBFile = [WBFile MR_createEntityInContext:[NSManagedObjectContext MR_defaultContext]];
                                           wBFile.uuid = fileModel.uploadFileUserId;
                                           NSLog(@"%@",fileModel.uploadFileSize);
-                                          wBFile.fileUUID = hashString;
+                                          NSDate* datenow = [NSDate date];
+                                          wBFile.fileUUID = [NSString stringWithFormat:@"%@%@",hashString,datenow];
                                           wBFile.fileName = fileModel.uploadFileName;
                                           wBFile.fileSize = [NSString stringWithFormat:@"%@",fileModel.uploadFileSize];
                                           wBFile.filePath = fileModel.uploadFileSavePath;
@@ -221,7 +221,7 @@ __strong static id _sharedObject = nil;
                               NSLog(@"Upload Failure ---> : %@", error);
                               NSLog(@"Upload Failure ---> : %@  ----> : %ld", fileName, (long)((NSHTTPURLResponse *)task.response).statusCode);
                               NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
-                              if(errorData.length >0 && ((NSHTTPURLResponse *)task.response).statusCode == 403){
+                              if(errorData.length >0){
                                   NSMutableArray *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
                                   NSLog(@"Upload Failure ---> :serializedData %@", serializedData);
                                   if([serializedData isKindOfClass:[NSArray class]]) {

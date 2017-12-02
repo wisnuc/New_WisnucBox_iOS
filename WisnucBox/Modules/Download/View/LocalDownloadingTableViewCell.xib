@@ -61,7 +61,7 @@
                             <constraint firstAttribute="height" constant="2" id="wKm-Js-J5e"/>
                         </constraints>
                         <color key="progressTintColor" red="0.01176470588" green="0.66274509800000003" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="trackTintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="trackTintColor" white="0.67000000000000004" alpha="1" colorSpace="calibratedWhite"/>
                     </progressView>
                 </subviews>
                 <color key="tintColor" red="0.011764705882352941" green="0.66274509803921566" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>

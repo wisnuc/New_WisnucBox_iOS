@@ -20,6 +20,7 @@
 }
 
 - (void)deleteFileWithFileUUID:(NSString *)fileuuid FileName:(NSString *)fileName{
+    
     [self removeFileWithFileName:fileName UUID:fileuuid];
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"uuid = %@ && fileUUID = %@", WB_UserService.currentUser.uuid, fileuuid];
     [WBFile MR_deleteAllMatchingPredicate:predicate inContext:[NSManagedObjectContext MR_defaultContext]];
@@ -42,6 +43,11 @@
     if ([[NSFileManager defaultManager] fileExistsAtPath:saveFile]) {
         NSError *error = nil;
         [[NSFileManager defaultManager] removeItemAtPath:saveFile error:&error];
+        if (error) {
+            NSLog(@"删除失败");
+        }else{
+            NSLog(@"删除成功");
+        }
     }
 }
 
@@ -51,7 +57,8 @@
     
     if ([manager fileExistsAtPath:filePath]){
         
-        return [[manager attributesOfItemAtPath:filePath error:nil] fileSize];
+        unsigned long long  size = [[manager attributesOfItemAtPath:filePath error:nil] fileSize];
+        return size;
     }
     return 0;
 }
