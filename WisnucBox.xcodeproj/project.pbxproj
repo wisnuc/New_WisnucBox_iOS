@@ -212,6 +212,7 @@
 		1FD7A1161FB05A51000D4CB3 /* logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A1021FB05A51000D4CB3 /* logo@3x.png */; };
 		1FD7A1171FB05A51000D4CB3 /* key@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A1031FB05A51000D4CB3 /* key@2x.png */; };
 		1FD8ACF11FB05F7500F19F1C /* eye.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD8ACF01FB05F7500F19F1C /* eye.png */; };
+		1FF3AD511FD5254C00E1E536 /* LoginSeverPathModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3AD501FD5254C00E1E536 /* LoginSeverPathModel.m */; };
 		1FFEADAE1FB087AE00CD3068 /* CSFileDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEADAD1FB087AE00CD3068 /* CSFileDownloadManager.m */; };
 		1FFEADB51FB1594900CD3068 /* CSDownloadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEADB41FB1594900CD3068 /* CSDownloadModel.m */; };
 		2C68507817DCDF432CF88A3F /* Pods_WisnucBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 357873726A4400954BE467E2 /* Pods_WisnucBox.framework */; };
@@ -991,6 +992,8 @@
 		1FD7A1021FB05A51000D4CB3 /* logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@3x.png"; sourceTree = "<group>"; };
 		1FD7A1031FB05A51000D4CB3 /* key@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "key@2x.png"; sourceTree = "<group>"; };
 		1FD8ACF01FB05F7500F19F1C /* eye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye.png; sourceTree = "<group>"; };
+		1FF3AD4F1FD5254C00E1E536 /* LoginSeverPathModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginSeverPathModel.h; sourceTree = "<group>"; };
+		1FF3AD501FD5254C00E1E536 /* LoginSeverPathModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginSeverPathModel.m; sourceTree = "<group>"; };
 		1FFEADAC1FB087AE00CD3068 /* CSFileDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSFileDownloadManager.h; sourceTree = "<group>"; };
 		1FFEADAD1FB087AE00CD3068 /* CSFileDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSFileDownloadManager.m; sourceTree = "<group>"; };
 		1FFEADB31FB1594900CD3068 /* CSDownloadModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSDownloadModel.h; sourceTree = "<group>"; };
@@ -1850,6 +1853,8 @@
 				1F4D75761FAC4BB800E6516C /* FMSerachService.m */,
 				1FC2AFF01FC52B4800E8C9DE /* CloudLoginModel.h */,
 				1FC2AFF11FC52B4800E8C9DE /* CloudLoginModel.m */,
+				1FF3AD4F1FD5254C00E1E536 /* LoginSeverPathModel.h */,
+				1FF3AD501FD5254C00E1E536 /* LoginSeverPathModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4108,6 +4113,7 @@
 				F6D8CC3A1FB402CB00673824 /* FMBaseFirstVC.m in Sources */,
 				1F4D75D01FAC604100E6516C /* LoginTableViewCell.m in Sources */,
 				F679336D1FB00D9B00C9A7DC /* WBUser+CoreDataClass.m in Sources */,
+				1FF3AD511FD5254C00E1E536 /* LoginSeverPathModel.m in Sources */,
 				1F922EA81FCD5CD100A7614B /* WBStationManageTimedateAPI.m in Sources */,
 				1FC2AFFB1FC6692D00E8C9DE /* WBGetSystemInformationAPI.m in Sources */,
 				F6830F041FB2FF8C005AC578 /* FMUserSettingCell.m in Sources */,

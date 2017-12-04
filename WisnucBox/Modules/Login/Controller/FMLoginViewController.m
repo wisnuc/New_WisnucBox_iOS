@@ -95,14 +95,14 @@ WXApiDelegate
     [_reachabilityTimer invalidate];
     _reachabilityTimer = nil;
     self.browser.delegate = nil;
-    [self.browser stopServer];
+    [self.browser stopServerBrowser];
 }
 
 -(void)dealloc{
     [_reachabilityTimer invalidate];
     _reachabilityTimer = nil;
     self.browser.delegate = nil;
-    [self.browser stopServer];
+    [self.browser stopServerBrowser];
 }
 
 - (instancetype)init{

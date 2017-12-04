@@ -28,7 +28,7 @@
         
         _browser = [[NSNetServiceBrowser alloc] init];
         _browser.delegate = self;
-        [_browser searchForServicesOfType:_serverType inDomain:@""];
+        [_browser searchForServicesOfType:_serverType inDomain:@"local."];
     }
     return self;
 }
@@ -66,6 +66,10 @@
     _thisServer = [[NSNetService alloc] initWithDomain:@"" type:self.serverType name:@"" port:self.port];
     _thisServer.delegate = self;
     [_thisServer publish];
+}
+
+- (void)stopServerBrowser{
+    [_browser stop];
 }
 
 - (void) stopServer {
