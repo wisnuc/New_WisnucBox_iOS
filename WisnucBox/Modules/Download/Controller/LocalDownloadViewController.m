@@ -61,7 +61,7 @@ UIDocumentInteractionControllerDelegate
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createNavBtns];
-    self.title = @"传输管理";
+    self.title = LeftMenuTransmissionManageString;
     [CSDownloadHelper shareManager].delegate = self;
     [CSUploadHelper shareManager].delegate = self;
     _manager  = [CSFileDownloadManager sharedDownloadManager];
@@ -163,24 +163,29 @@ UIDocumentInteractionControllerDelegate
 }
 
 - (void)rightBtnClick:(UIButton *)btn{
+    NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
+    NSString *selectTitle = WBLocalizedString(@"choose_text", nil);
+    NSString *clearTitle = WBLocalizedString(@"clear_select_item", nil);
+    NSString *deleteTitle = WBLocalizedString(@"delete_text", nil);
+    
     @weaky(self);
     if(_downloadedArray.count == 0 && self.transmitingArray.count == 0){
         [SXLoadingView showProgressHUDText:@"没有文件可以进行选择" duration:1];
     }else{
         if (!self.cellStatus) {
-            [[LCActionSheet sheetWithTitle:@"" cancelButtonTitle:@"取消" clicked:^(LCActionSheet *actionSheet, NSInteger buttonIndex) {
+            [[LCActionSheet sheetWithTitle:@"" cancelButtonTitle:cancelTitle clicked:^(LCActionSheet *actionSheet, NSInteger buttonIndex) {
                 if (buttonIndex == 1) {
                     [weak_self changeStatus];
                 }
-            } otherButtonTitles:@"选择", nil] show];
+            } otherButtonTitles:selectTitle, nil] show];
         }else{
-            [[LCActionSheet sheetWithTitle:@"" cancelButtonTitle:@"取消" clicked:^(LCActionSheet *actionSheet, NSInteger buttonIndex) {
+            [[LCActionSheet sheetWithTitle:@"" cancelButtonTitle:cancelTitle clicked:^(LCActionSheet *actionSheet, NSInteger buttonIndex) {
                 if (buttonIndex == 1) {
                     [weak_self changeStatus];
                 }else if ( buttonIndex == 2){
                     [weak_self deleteChooseFiles];
                 }
-            } otherButtonTitles:@"清除选择",@"删除", nil] show];
+            } otherButtonTitles:clearTitle,deleteTitle, nil] show];
         }
     }
 }
@@ -234,11 +239,11 @@ UIDocumentInteractionControllerDelegate
                 cell.f_ImageView.hidden = NO;
                 cell.layerView.image = [UIImage imageNamed:@"check_circle"];
             }
-            
+            NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
             cell.clickBlock = ^(LocalDownloadingTableViewCell * cell){
                 LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:nil
                                                                          delegate:nil
-                                                                cancelButtonTitle:@"取消"
+                                                                cancelButtonTitle:cancelTitle
                                                             otherButtonTitleArray:@[@"取消下载"]];
                 actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
                     if (buttonIndex == 1) {
@@ -305,11 +310,11 @@ UIDocumentInteractionControllerDelegate
                 cell.f_ImageView.hidden = NO;
                 cell.layerView.image = [UIImage imageNamed:@"check_circle"];
             }
-            
+            NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
             cell.clickBlock = ^(LocalDownloadingTableViewCell * cell){
                 LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:nil
                                                                          delegate:nil
-                                                                cancelButtonTitle:@"取消"
+                                                                cancelButtonTitle:cancelTitle
                                                             otherButtonTitleArray:@[@"取消上传"]];
                 actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
                     if (buttonIndex == 1) {
@@ -411,10 +416,10 @@ UIDocumentInteractionControllerDelegate
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     if(section == 0){
-        return @"未完成";
+        return WBLocalizedString(@"completed", nil);
     }
     else{
-        return @"已完成";
+        return WBLocalizedString(@"incomplete", nil);
     }
 }
 
@@ -453,14 +458,14 @@ UIDocumentInteractionControllerDelegate
             NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
             NSString* suffixName = downloadedFileModel.fileUUID;
             NSString *fileName = downloadedFileModel.fileName;
-            if ([downloadedFileModel.actionType isEqualToString:@"下载"]) {
-                NSString *extensionstring = [fileName pathExtension];
-                NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",suffixName,extensionstring]];
-                openPath = saveFile;
-            }else{
+//            if ([downloadedFileModel.actionType isEqualToString:@"下载"]) {
+//                NSString *extensionstring = [fileName pathExtension];
+//                NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",suffixName,extensionstring]];
+//                openPath = saveFile;
+//            }else{
                 NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",fileName]];
                 openPath = saveFile;
-            }
+//            }
          
 //            NSURL *url = [NSURL fileURLWithPath:saveFile];
             NSLog(@"文件位置%@",openPath);

@@ -215,23 +215,16 @@
         if ([selectVC isKindOfClass:[NavViewController class]]) {
             [selectVC  pushViewController:vc animated:YES];
         }
-    }
-    else if (IsEquallString(title, @"传输管理")){
+    }else
+    
+    if (IsEquallString(title,LeftMenuTransmissionManageString)){
         vc = [[LocalDownloadViewController alloc]init];
         if ([selectVC isKindOfClass:[NavViewController class]]) {
             [selectVC  pushViewController:vc animated:YES];
         }
     }
     
-//        else if(IsEquallString(title, @"用户管理")){
-//                vc = [[FMUserSetting alloc]init];
-//                if ([selectVC isKindOfClass:[NavViewController class]]) {
-//                    [selectVC  pushViewController:vc animated:YES];
-//                }
-//        }
-
-    
-    else if(IsEquallString(title, @"设备管理")){
+    else if(IsEquallString(title, LeftMenuEquipmentManageString)){
         if (!WB_UserService.currentUser.isCloudLogin) {
             vc = [[WBStationManageRootViewController alloc]init];
             if ([selectVC isKindOfClass:[NavViewController class]]) {
@@ -242,7 +235,7 @@
         }
     }
     
-    else if (IsEquallString(title, @"邀请微信好友")){
+    else if (IsEquallString(title, LeftMenuInvitationString)){
         if (!WB_UserService.currentUser.isCloudLogin) {
         vc = [[WBInviteWechatViewController alloc]init];
         if ([selectVC isKindOfClass:[NavViewController class]]) {
@@ -253,19 +246,19 @@
         }
     }
     
-    else if (IsEquallString(title, @"设置")){
+    else if (IsEquallString(title, LeftMenuSettingString)){
         vc = [[FMSetting alloc]initPrivate];
         if ([selectVC isKindOfClass:[NavViewController class]]) {
             [selectVC  pushViewController:vc animated:YES];
         }
-    }
-    else if(IsEquallString(title,@"注销")){
-        NSLog(@"注销");
-        //!!!!!: logout do something
-        [SXLoadingView showProgressHUD:@"正在注销"];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self skipToLogin];
-        });
+//    }
+//    else if(IsEquallString(title,@"注销")){
+//        NSLog(@"注销");
+//        //!!!!!: logout do something
+//        [SXLoadingView showProgressHUD:@"正在注销"];
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            [self skipToLogin];
+//        });
     }else if(IsEquallString(title,@"USER_FOOTERVIEW_CLICK")){
         vc = [FMUserLoginSettingVC new];
         if ([selectVC isKindOfClass:[NavViewController class]]) {

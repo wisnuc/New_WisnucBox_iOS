@@ -30,7 +30,7 @@ UITableViewDataSource
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"邀请微信好友";
+    self.title = LeftMenuInvitationString;
     [self initMjRefresh];
 //    [self getData];
     [self.view addSubview:self.tableView];
@@ -58,7 +58,7 @@ UITableViewDataSource
 - (void)getData{
     @weaky(self);
     [self.dataArray removeAllObjects];
-    [SXLoadingView showProgressHUD:@"正在加载"];
+    [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
     [[WBStationTicketsAPI apiWithRequestMethodString:@"GET" Type:nil] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
          NSLog(@"%@",request.responseJsonObject);
         NSArray *arr = request.responseJsonObject;
@@ -155,10 +155,10 @@ UITableViewDataSource
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     TicketUserModel *usersModel = self.dataArray[indexPath.row];
     if ([usersModel.type isEqualToString:@"resolved"]) {
-        cell.stateTypeLabel.text = @"已接受";
+        cell.stateTypeLabel.text = WBLocalizedString(@"accepted", nil);
     }else if([usersModel.type isEqualToString:@"rejected"])
     {
-        cell.stateTypeLabel.text = @"已拒绝";
+        cell.stateTypeLabel.text = WBLocalizedString(@"refused", nil);
     }else if([usersModel.type isEqualToString:@"pending"])
     {
         [cell.rejectedButton setHidden:NO];

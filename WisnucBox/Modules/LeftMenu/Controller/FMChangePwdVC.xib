@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FMChangePwdVC">
             <connections>
+                <outlet property="confirmButton" destination="IIq-r1-vKc" id="45W-2N-w3J"/>
                 <outlet property="oldPwd" destination="Sz6-eU-8dg" id="zuP-WX-bLk"/>
                 <outlet property="pwdTF" destination="t2w-OU-Ugf" id="oCw-8L-eCG"/>
                 <outlet property="rePwdTF" destination="8OE-5L-r51" id="kRi-gV-4kN"/>

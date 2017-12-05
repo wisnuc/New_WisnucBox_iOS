@@ -20,6 +20,9 @@
 
 #define KWxAppID      @"wx99b54eb728323fe8"
 
+//localized
+#define WBLocalizedString(key, comment) [[NSBundle mainBundle] localizedStringForKey:(key) value:@"" table:nil]
+
 //Cloud Body Keys
 #define kCloudBodyResource @"resource"
 #define kCloudBodyOp       @"op"
@@ -52,6 +55,21 @@
 #define MyAppDelegate ((AppDelegate *)[[UIApplication sharedApplication] delegate])
 
 #define KDefaultOffset 8
+
+#define kFirstTabBarTitle WBLocalizedString(@"photo", nil)
+#define kSecondTabBarTitle WBLocalizedString(@"file", nil)
+
+#define kStationManageUserMangeString WBLocalizedString(@"user_manage", nil)
+#define kStationManageEquipmentString WBLocalizedString(@"equipment", nil)
+#define kStationManageNetworkString WBLocalizedString(@"network", nil)
+#define kStationManageTimeString WBLocalizedString(@"time", nil)
+#define kStationManageRebootShutdownString WBLocalizedString(@"reboot_shutdown", nil)
+
+#define LeftMenuTransmissionManageString WBLocalizedString(@"transmission_manage", nil)
+#define LeftMenuSettingString WBLocalizedString(@"setting", nil)
+#define LeftMenuEquipmentManageString WBLocalizedString(@"equipment_manage", nil)
+#define LeftMenuInvitationString WBLocalizedString(@"invitation", nil)
+
 
 //tmp
 #define JY_TMP_Folder [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]stringByAppendingPathComponent:@"JYTMP"]

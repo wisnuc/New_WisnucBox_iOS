@@ -109,6 +109,7 @@ FilesHelperOpenFilesDelegate
     [FilesDataSourceManager manager].delegate = self;
     [[FilesDataSourceManager manager] getFilesWithDriveUUID:_driveUUID DirUUID:_parentUUID];
     _cellStatus = FLFliesCellStatusNormal;
+    self.tableView.noDataImageName = @"no_file";
     [self.tableView reloadData];
 }
 
@@ -139,12 +140,14 @@ FilesHelperOpenFilesDelegate
 }
 
 - (void)rightBtnClick:(UIButton *)btn{
+    NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
+    NSString *selectTitle = WBLocalizedString(@"select_file", nil);
     if (self.cellStatus != FLFliesCellStatusCanChoose) {
-        [[LCActionSheet sheetWithTitle:@"" cancelButtonTitle:@"取消" clicked:^(LCActionSheet *actionSheet, NSInteger buttonIndex) {
+        [[LCActionSheet sheetWithTitle:@"" cancelButtonTitle:cancelTitle clicked:^(LCActionSheet *actionSheet, NSInteger buttonIndex) {
             if (buttonIndex == 1) {
                 [self actionForChooseStatus];
             }
-        } otherButtonTitles:@"选择文件", nil] show];
+        } otherButtonTitles:selectTitle, nil] show];
     }else{
     }
 }
@@ -338,7 +341,7 @@ FilesHelperOpenFilesDelegate
                 NSString* suffixName = model.uuid;
                 NSString *fileName = model.name;
                 NSString *extensionstring = [fileName pathExtension];
-                NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",suffixName,extensionstring]];
+                NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",fileName]];
                 NSLog(@"文件位置%@",saveFile);
                 if ([[NSFileManager defaultManager] fileExistsAtPath:saveFile]) {
                     _documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:saveFile]];
@@ -432,7 +435,7 @@ FilesHelperOpenFilesDelegate
         _countLb = countLb;
         [_chooseHeadView addSubview:countLb];
         [_chooseHeadView addSubview:leftBtn];
-        _countLb.text = @"选择文件";
+        _countLb.text = WBLocalizedString(@"select_file", nil);
         _countLb.font = [UIFont fontWithName:FANGZHENG size:16];
         [_chooseHeadView setHidden:YES];
     }

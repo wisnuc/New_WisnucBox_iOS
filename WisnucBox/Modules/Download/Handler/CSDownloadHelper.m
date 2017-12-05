@@ -80,11 +80,11 @@ __strong static id _sharedObject = nil;
 //    NSLog(@"%@",fromUrl);
     NSString* suffixName = dataModel.name;
     NSDate* datenow = [NSDate date];
-    NSString* tmpFileName = [NSString stringWithFormat:@"file-%@%@.tmp",suffixName,datenow];
+//    NSString* tmpFileName = [NSString stringWithFormat:@"file-%@%@.tmp",suffixName,datenow];
     NSString* saveFileName= [NSString stringWithFormat:@"%@",dataModel.uuid];
     NSString *extensionstring = [suffixName pathExtension];
     NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:YES];
-    NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",saveFileName,extensionstring]];
+    NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",suffixName]];
     NSFileManager *manager = [NSFileManager defaultManager];
     
     if ([manager fileExistsAtPath:saveFile]) {
@@ -151,12 +151,12 @@ __strong static id _sharedObject = nil;
     NSString* fromUrl = WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@?resource=%@&method=GET&name=%@", kCloudAddr, kCloudCommonPipeUrl, [resource base64EncodedString],dataModel.name] :loaclFormUrl;;
 
     NSString* suffixName = dataModel.name;
-    NSString* tmpFileName = [NSString stringWithFormat:@"file-%d.tmp",_downdloadIdCount];
+//    NSString* tmpFileName = [NSString stringWithFormat:@"file-%d.tmp",_downdloadIdCount];
     NSString* saveFileName= [NSString stringWithFormat:@"%@",dataModel.uuid];
     
     NSString *extensionstring = [suffixName pathExtension];
     NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:YES];
-    NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",saveFileName,extensionstring]];
+    NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",suffixName]];
     NSFileManager *manager = [NSFileManager defaultManager];
     
     if ([manager fileExistsAtPath:saveFile]) {

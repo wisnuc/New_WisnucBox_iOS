@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *doubleCheckTF;
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 
+@property (weak, nonatomic) IBOutlet UIButton *confirmButton;
 @property (nonatomic) id navDelegate;
 
 @end
@@ -24,7 +25,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    NSString *titleString = WBLocalizedString(@"confirm", nil);
+    [self.confirmButton setTitle:titleString forState:UIControlStateNormal];
     [_backButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
     self.userNameTF.returnKeyType = UIReturnKeyDone;
     self.userNameTF.delegate = self;

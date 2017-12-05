@@ -34,6 +34,7 @@
 
 - (void)initRootVC {
     self.window.rootViewController = nil;
+
     if(WB_UserService.isUserLogin) {
         // userHome / backupdir / backupbasedir / token / address
         // To TabBar
@@ -42,6 +43,7 @@
         self.window.rootViewController = tabbar;
     }else{
         // TO Login VC
+//        id x = [UIApplication sharedApplication].delegate;
         self.leftManager = nil;
         FMLoginViewController *loginController = [[FMLoginViewController alloc]init];
         _loginController = loginController;
@@ -68,8 +70,8 @@
     FirstFilesViewController *filesViewController = [[FirstFilesViewController alloc]init];
     NavViewController *nav1 = [[NavViewController alloc] initWithRootViewController:photosVC];
     NavViewController *nav2 = [[NavViewController alloc] initWithRootViewController:filesViewController];
-    photosVC.title = @"照片";
-    filesViewController.title = @"文件";
+    photosVC.title = kFirstTabBarTitle;
+    filesViewController.title = kSecondTabBarTitle;
     NSDictionary *dict1 = @{
                             CYLTabBarItemImage : @"photo",
                             CYLTabBarItemSelectedImage : @"photo_select",

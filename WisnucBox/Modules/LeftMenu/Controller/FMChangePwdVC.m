@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *pwdTF;
 @property (weak, nonatomic) IBOutlet UITextField *rePwdTF;
 @property (weak, nonatomic) IBOutlet UITextField *oldPwd;
+@property (weak, nonatomic) IBOutlet UIButton *confirmButton;
 
 @end
 
@@ -22,6 +23,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"修改登录密码";
+    NSString *buttonTitle = WBLocalizedString(@"confirm", nil);
+    [_confirmButton setTitle:buttonTitle forState:UIControlStateNormal];
 }
 
 - (IBAction)btnClick:(id)sender {

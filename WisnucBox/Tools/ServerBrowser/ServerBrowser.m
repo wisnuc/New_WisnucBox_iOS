@@ -33,6 +33,10 @@
     return self;
 }
 
+-(void)dealloc{
+    
+}
+
 - (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didFindService:(NSNetService *)aNetService moreComing:(BOOL)moreComing {
     aNetService.delegate = self;
     [_discoveredServers addObject:aNetService];

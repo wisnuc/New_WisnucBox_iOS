@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *urlLabel;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 @end
 
@@ -35,7 +36,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"用户管理";
+    self.titleLabel.text = kStationManageUserMangeString;
     self.navigationController.navigationBar.translucent = NO;
     [_backButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
   
@@ -77,7 +78,7 @@
     }];
     
     FMAsyncUsersAPI * usersApi = [FMAsyncUsersAPI new];
-    [SXLoadingView showProgressHUD:@"正在加载..."];
+    [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
     [usersApi startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSArray * userArr = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"]
                                 : request.responseJsonObject;

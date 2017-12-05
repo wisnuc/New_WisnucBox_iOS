@@ -105,6 +105,8 @@ __strong static id _sharedObject = nil;
         
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
         NSLog(@"%@",filePath);
+        // 创建一个空的文件到沙盒中
+     
         if (error) {
             NSLog(@"%@",error);
             
@@ -131,24 +133,24 @@ __strong static id _sharedObject = nil;
             [fileModel setDownloadFinishTime:curDate];
             
             //保存下载完成的文件信息
-            NSDictionary* downloadFinishInfo = @{
-                                                 @"downloadFileName"       : [fileModel getDownloadFileName],
-                                                 @"downloadFinishTime"     : [fileModel getDownloadFinishTime],
-                                                 @"downloadFileSize"       : [fileModel getDownloadFileSize],
-                                                 @"downloadFileSavePath"   : [fileModel getDownloadFileSavePath],
-                                                 
-                                                 @"downloadFileUserId"    : [fileModel getDownloadFileUserId],
-                                                 @"downloadFileFromURL"    : [fileModel getDownloadTaskURL],
-                                                 @"downloadFilePlistURL"   : [fileModel getDownloadFilePlistURL]
-                                                 };
+//            NSDictionary* downloadFinishInfo = @{
+//                                                 @"downloadFileName"       : [fileModel getDownloadFileName],
+//                                                 @"downloadFinishTime"     : [fileModel getDownloadFinishTime],
+//                                                 @"downloadFileSize"       : [fileModel getDownloadFileSize],
+//                                                 @"downloadFileSavePath"   : [fileModel getDownloadFileSavePath],
+//                                                 
+//                                                 @"downloadFileUserId"    : [fileModel getDownloadFileUserId],
+//                                                 @"downloadFileFromURL"    : [fileModel getDownloadTaskURL],
+//                                                 @"downloadFilePlistURL"   : [fileModel getDownloadFilePlistURL]
+//                                                 };
             
-            NSString* finishPlist = [[fileModel getDownloadFileSavePath] stringByAppendingPathExtension:@"plist"];
-            if (![downloadFinishInfo writeToFile:finishPlist atomically:YES])
-            {
-                NSLog(@"%@写入失败",finishPlist);
-            }else{
-                NSLog(@"%@写入成功",finishPlist);
-            }
+//            NSString* finishPlist = [[fileModel getDownloadFileSavePath] stringByAppendingPathExtension:@"plist"];
+//            if (![downloadFinishInfo writeToFile:finishPlist atomically:YES])
+//            {
+//                NSLog(@"%@写入失败",finishPlist);
+//            }else{
+//                NSLog(@"%@写入成功",finishPlist);
+//            }
             
             //将文件从临时目录内剪切到下载目录
             //                        NSString* tempFile = [fileModel getDownloadTempSavePath];
@@ -156,8 +158,14 @@ __strong static id _sharedObject = nil;
             //                        [CSFileUtil cutFileAtPath:tempFile toPath:saveFile];
             
             //移除临时plist
-            NSString* tempFilePlist = [[fileModel getDownloadTempSavePath] stringByAppendingPathExtension:@"plist"];
-            [CSFileUtil deleteFileAtPath:tempFilePlist];
+//            NSString* tempFilePlist = [[fileModel getDownloadTempSavePath] stringByAppendingPathExtension:@"plist"];
+//            [CSFileUtil deleteFileAtPath:tempFilePlist];
+            
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            
+            if ([fileManager fileExistsAtPath:filePath.path]) {
+                NSLog(@"%@",filePath.path);
+            }
             
             WBFile * wBFile = [WBFile MR_createEntityInContext:[NSManagedObjectContext MR_defaultContext]];
             wBFile.uuid = fileModel.downloadFileUserId;

@@ -105,8 +105,9 @@
 
 - (UIButton *)cancelBtn{
     if (!_cancelBtn) {
+        NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
         _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+        [_cancelBtn setTitle:cancelTitle forState:UIControlStateNormal];
         [_cancelBtn addTarget:self  action:@selector(cancleBtnClick) forControlEvents:UIControlEventTouchUpInside];
         _cancelBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
 //        _cancelBtn.frame = CGRectMake(_backView.frame.size.width - 70, _backView.frame.size.height  - 30, 50, 15);

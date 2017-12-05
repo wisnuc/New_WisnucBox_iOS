@@ -159,6 +159,7 @@
 
 - (void)bindWechtWithCloudToken:(NSString *)token{
     @weaky(self);
+    NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
     RACSubject *subject = [RACSubject subject];
     [[WBTicketsUserAPI apiWithTicketId:_model.ticketId WithToken:token]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSDictionary * responseDic =  request.responseJsonObject[@"data"];
@@ -175,7 +176,7 @@
         TicketUserModel *userModel = x;
         
         UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"您确定要绑定该微信吗？" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        UIAlertAction *cancle = [UIAlertAction actionWithTitle:cancelTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             NSLog(@"点击了取消按钮");
             
 //             [weak_self bindWechatLastActionWith:userModel IsBind:NO];

@@ -30,6 +30,6 @@
 - (void) stopServer;
 - (void) stopServerBrowser;
 
-@property (weak) id<ServerBrowserDelegate> delegate;
+@property (weak,nonatomic) id<ServerBrowserDelegate> delegate;
 
 @end

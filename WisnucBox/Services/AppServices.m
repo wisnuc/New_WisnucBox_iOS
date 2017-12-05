@@ -345,7 +345,8 @@
 
 - (void)requestForBackupPhotos:(void(^)(BOOL shouldUpload))callback {
     UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否自动备份该手机的照片至WISNUC服务器，要备份全部照片可能需要较长时间，请尽量保持App在前台运行。" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
+    UIAlertAction *cancle = [UIAlertAction actionWithTitle:cancelTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         NSLog(@"点击了取消按钮");
         WB_UserService.currentUser.autoBackUp = NO;
         [[NSNotificationCenter defaultCenter] postNotificationName:UserBackUpConfigChangeNotify object:@(0)];

@@ -41,7 +41,8 @@ static dispatch_once_t onceToken;
 - (void)getFilesWithDriveUUID:(NSString *)driveUUID DirUUID:(NSString *)uuid{
     FLGetDriveDirAPI *api = [FLGetDriveDirAPI apiWithDrive:driveUUID dir:uuid];
 //     NSLog(@"%@",api.requestUrl);
-    [SXLoadingView showProgressHUD:@"正在加载..."];
+    
+    [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
         NSDictionary * responseDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;

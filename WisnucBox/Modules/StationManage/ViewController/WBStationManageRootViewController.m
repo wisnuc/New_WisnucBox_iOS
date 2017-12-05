@@ -28,9 +28,13 @@ UITableViewDataSource
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"设备管理";
+    self.title = LeftMenuEquipmentManageString;
     [self.view addSubview:self.tableView];
     [self addLeftBarButtonWithImage:[UIImage imageNamed:@"back"] andHighlightButtonImage:nil andSEL:@selector(backbtnClick:)];
+}
+
+- (void)dealloc{
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -64,23 +68,23 @@ UITableViewDataSource
     switch (indexPath.row) {
         case 0:
             cell.leftImageView.image = [UIImage imageNamed:@"ic_person_add"];
-            cell.nameLabel.text = @"用户管理";
+            cell.nameLabel.text = kStationManageUserMangeString;
             break;
         case 1:
             cell.leftImageView.image = [UIImage imageNamed:@"ic_dns"];
-            cell.nameLabel.text = @"设备";
+            cell.nameLabel.text = kStationManageEquipmentString;
             break;
         case 2:
             cell.leftImageView.image = [UIImage imageNamed:@"ic_network"];
-            cell.nameLabel.text = @"网络";
+            cell.nameLabel.text = kStationManageNetworkString;
             break;
         case 3:
             cell.leftImageView.image = [UIImage imageNamed:@"ic_access_time"];
-            cell.nameLabel.text = @"时间";
+            cell.nameLabel.text = kStationManageTimeString;
             break;
         case 4:
             cell.leftImageView.image = [UIImage imageNamed:@"ic_power_settings"];
-            cell.nameLabel.text = @"重启与关机";
+            cell.nameLabel.text = kStationManageRebootShutdownString;
             break;
             
         default:

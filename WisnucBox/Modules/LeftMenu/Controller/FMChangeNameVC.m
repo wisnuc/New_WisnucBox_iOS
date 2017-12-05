@@ -11,6 +11,7 @@
 
 @interface FMChangeNameVC ()
 @property (weak, nonatomic) IBOutlet UITextField *uNameTF;
+@property (weak, nonatomic) IBOutlet UIButton *confirmButton;
 @end
 
 @implementation FMChangeNameVC
@@ -18,6 +19,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"修改用户名";
+    NSString *titleString = WBLocalizedString(@"confirm", nil);
+    [self.confirmButton setTitle:titleString forState:UIControlStateNormal];
 }
 
 - (IBAction)btnClick:(id)sender {

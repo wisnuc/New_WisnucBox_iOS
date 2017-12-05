@@ -1,0 +1,109 @@
+/* 
+  Localizable.strings
+  WisnucBox
+
+  Created by wisnuc-imac on 2017/12/5.
+  Copyright © 2017年 JackYang. All rights reserved.
+*/
+
+"confirm" = "Confirm";
+"cancel" = "Cancel";
+"choose_text" = "Select";
+"delete_text" = "Delete";
+"clear_select_item" = "Clear selection";
+"select_file" = "Select Files";
+"select_photo" = "Select Photos";
+
+"accepted" = "Accepted";
+"refused" = "Refused";
+"accept" = "Accept";
+"refuse" = "Refuse";
+
+
+
+"loading..." = "Loading...";
+
+// LeftMenu Title
+"setting" = "Setting";
+"transmission_manage" = "Transfer";
+"equipment_manage" = "Station";
+"invitation" = "Invite a friend";
+
+//TabBar Title
+"photo" = "Photos";
+"file" = "Files";
+
+//Photos
+
+
+//Files
+"my_file" = "My Files";
+
+//transmission
+"completed" = "Completed";
+"incomplete" = "InComplete";
+
+//Setting
+"photo_auto_upload_setting_text" = "Automatic backup";
+"clear_cache" = "Erase temporary files";
+"clear" = "Erase";
+"confirm_clear_cache" = "Erase all temporary files?";
+"calculating" = "Calculating...";
+"clear_completed" = "Clear completed";
+"clearing_cache" = "Clearing cache";
+"already_upload_media_percent_text" = "Backup";
+
+//Station
+"user_manage" = "Users";
+"equipment" = "Device";
+"network" = "Network";
+"time" = "Time";
+"reboot_shutdown" = "Reboot or Poweroff";
+"reboot" = "Reboot";
+"shutdown" = "Poweroff";
+"enter_maintenance" = "Maintenance Mode";
+"maintenance_explain" = "In maintenance mode, you can reconfigure disks or Wisnuc system, your device will reboot before entering maintenance mode.";
+"reboot_and_enter_maintenance" = "Go Maintenance Mode";
+"confirm_shutdown" = "Are you sure you want to shut down?";
+"confirm_reboot" = "Are you sure you want to reboot?";
+"confirm_maintenance" = "Are you sure you want to enter maintenance mode?";
+"confirm_shutdown_title" = "Confirm shut down";
+"confirm_reboot_title" = "Confirm reboot";
+"confirm_maintenance_title" = "Confirm to enter maintenance mode?";
+"shutting_down" = "Shutting down...";
+"rebooting" = "Rebooting...";
+"entering_maintenance_mode" = "Entering maintenance mode...";
+"shut_down_successfully" = "Shut down successfully";
+"reboot_successfully" = "Reboot successfully";
+"enter_maintenance_mode_successfully" = "Enter maintenance mode successfully";
+"shutdown_failed" = "Shutdown failed";
+"reboot_failed" = "Reboot_failed";
+"enter_maintenance_mode_failed" = "Enter maintenance mode failed";
+
+
+//station time
+"local_time" = "Local Time";
+"universal_time" = "Universal Time";
+"rtc_time" = "RTC Time";
+"time_zone" = "Time Zone";
+"ntp_synchronized" = "NTP Synchronized";
+"network_time_on" = "Use Network Time";
+
+//station network
+"nic_name" = "NIC Name";
+"bandwidth" = "Bandwidth";
+"type" = "Type";
+"network_address" = "Eth Address";
+"subnet_mask" = "Subnet Mask";
+"nic_mac_address" = "NIC Mac Address";
+"network_connection_type" = "Connection Type";
+"remote_connection" = "Remote Connection";
+"local_station_connection" = "Local network Connection";
+
+//Backup
+"Backup_closed" = "Backup is turned off";
+
+//User
+"user_name" = "User Name";
+"confirm_user_password" = "Confirm Password";
+

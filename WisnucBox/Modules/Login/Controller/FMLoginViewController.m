@@ -778,7 +778,7 @@ static BOOL needHide = YES;
         }];
         
         UILabel *label = [[UILabel alloc]init];
-        label.text = @"微信登录";
+        label.text = WBLocalizedString(@"wechatLogin", nil) ;
         label.font = [UIFont systemFontOfSize:14];
         label.textColor = [UIColor blackColor];
         label.alpha = 0.87;

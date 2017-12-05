@@ -1,0 +1,106 @@
+/* 
+  Localizable.strings
+  WisnucBox
+
+  Created by wisnuc-imac on 2017/12/5.
+  Copyright © 2017年 JackYang. All rights reserved.
+*/
+
+"confirm" = "确定";
+"cancel" = "取消";
+"choose_text" = "选择";
+"delete_text" = "删除";
+"clear_select_item" = "清除选择";
+"select_file" = "选择文件";
+"select_photo" = "选择照片";
+
+"accepted" = "已接受";
+"refused" = "已拒绝";
+"accept" = "接受";
+"refuse" = "拒绝";
+
+"loading..." = "正在加载...";
+
+// LeftMenu Title
+"setting" = "设置";
+"transmission_manage" = "传输管理";
+"equipment_manage" = "设备管理";
+"invitation" = "邀请微信好友";
+
+//TabBar Title
+"photo" = "照片";
+"file" = "文件";
+
+//Photos
+
+
+//Files
+"my_file" = "我的文件";
+
+//transmission
+"completed" = "完成";
+"incomplete" = "未完成";
+
+//Setting
+"photo_auto_upload_setting_text" = "照片自动备份";
+"clear_cache" = "清除缓存";
+"clear" = "清除";
+"confirm_clear_cache" = "是否要清除缓存文件？";
+"calculating" = "计算中...";
+"clear_completed" = "清除完成";
+"clearing_cache" = "正在清除缓存";
+"already_upload_media_percent_text" = "已完成";
+
+//Station
+"user_manage" = "用户管理";
+"equipment" = "设备";
+"network" = "网络";
+"time" = "时间";
+"reboot_shutdown" = "重启与关机";
+"reboot" = "重启";
+"shutdown" = "关机";
+"enter_maintenance" = "进入维护模式";
+"maintenance_explain" = "重启后进入维护模式，可以在维护模式下执行磁盘操作或系统维护任务。";
+"reboot_and_enter_maintenance" = "重启进入维护模式";
+"confirm_shutdown" = "确定要关机吗？";
+"confirm_reboot" = "确定要重启吗？";
+"confirm_maintenance" = "确定要进入维护模式吗？";
+"confirm_shutdown_title" = "确认关机";
+"confirm_reboot_title" = "确认重启";
+"confirm_maintenance_title" = "确认进入维护模式";
+"shutting_down" = "正在关机...";
+"rebooting" = "正在重启...";
+"entering_maintenance_mode" = "正在进入维护模式...";
+"shut_down_successfully" = "已关机";
+"reboot_successfully" = "已重启";
+"enter_maintenance_mode_successfully" = "已进入维护模式";
+"shutdown_failed" = "关机失败";
+"reboot_failed" = "重启失败";
+"enter_maintenance_mode_failed" = "进入维护模式失败";
+
+//station time
+"local_time" = "本地时间";
+"universal_time" = "世界时间";
+"rtc_time" = "RTC 时间";
+"time_zone" = "时区";
+"ntp_synchronized" = "已完成时间同步";
+"network_time_on" = "使用网络时间";
+
+//station network
+"nic_name" = "网卡名称";
+"bandwidth" = "宽带";
+"type" = "地址类型";
+"network_address" = "网络地址";
+"subnet_mask" = "子网掩码";
+"nic_mac_address" = "MAC地址";
+"network_connection_type" = "本地设备连接";
+"remote_connection" = "远程设备连接";
+"local_station_connection" = "本地设备连接";
+
+//Backup
+"Backup_closed" = "备份已关闭";
+
+//User
+"user_name" = "用户名";
+"confirm_user_password" = "确认密码";
+

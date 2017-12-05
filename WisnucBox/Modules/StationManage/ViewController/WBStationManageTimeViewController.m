@@ -26,7 +26,7 @@ UITableViewDataSource
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"时间与日期";
+    self.title = kStationManageTimeString;
     [self getData];
     [self.view addSubview:self.timeImageView];
     [self.view addSubview:self.tableView];
@@ -52,7 +52,7 @@ UITableViewDataSource
 
 - (void)getData{
     WBStationManageTimedateAPI *api = [[WBStationManageTimedateAPI alloc]init];
-    [SXLoadingView showProgressHUD:@"正在获取..."];
+    [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSDictionary * responseDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
         WBStationManageTimeDateModel *model = [WBStationManageTimeDateModel yy_modelWithDictionary:responseDic];
@@ -84,27 +84,27 @@ UITableViewDataSource
     switch (indexPath.row) {
         case 0:
             cell.normalLabel.text = model.localTime;
-            cell.detailLabel.text = @"本地时间";
+            cell.detailLabel.text = WBLocalizedString(@"local_time", nil);
             break;
         case 1:
             cell.normalLabel.text = model.universalTime;
-            cell.detailLabel.text = @"世界时间";
+            cell.detailLabel.text = WBLocalizedString(@"universal_time", nil);
             break;
         case 2:
             cell.normalLabel.text = model.wbRTCTime;
-            cell.detailLabel.text = @"RTC时间";
+            cell.detailLabel.text = WBLocalizedString(@"rtc_time", nil);
             break;
         case 3:
             cell.normalLabel.text = model.timeZone;
-            cell.detailLabel.text = @"时区";
+            cell.detailLabel.text = WBLocalizedString(@"time_zone", nil) ;
             break;
         case 4:
             cell.normalLabel.text = [model.wbNTPSynchronized boolValue]?@"Yes" : @"No";
-            cell.detailLabel.text = @"已完成时间同步";
+            cell.detailLabel.text = WBLocalizedString(@"ntp_synchronized", nil);
             break;
         case 5:
             cell.normalLabel.text =[model.wbNetworkTimeOn boolValue]?@"Yes" : @"No";
-            cell.detailLabel.text = @"使用网络时间";
+            cell.detailLabel.text = WBLocalizedString(@"network_time_on", nil);
             break;
         default:
             break;

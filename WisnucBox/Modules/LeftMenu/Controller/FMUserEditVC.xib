@@ -151,7 +151,7 @@
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UFR-XZ-JUX">
-                    <rect key="frame" x="30" y="593" width="315" height="30"/>
+                    <rect key="frame" x="30" y="606" width="315" height="30"/>
                     <color key="backgroundColor" red="1" green="0.39242548788863552" blue="0.40160507369386833" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <state key="normal" title="注销">
@@ -177,7 +177,7 @@
                 <constraint firstItem="OMv-gP-idb" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="BIj-xu-LcA"/>
                 <constraint firstItem="2WX-5q-C84" firstAttribute="top" secondItem="CrX-WG-HTB" secondAttribute="bottom" constant="8" id="DaA-hg-pb4"/>
                 <constraint firstItem="UFR-XZ-JUX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="EQP-sK-Stc"/>
-                <constraint firstAttribute="bottom" secondItem="UFR-XZ-JUX" secondAttribute="bottom" constant="44" id="FiX-5a-iyN"/>
+                <constraint firstAttribute="bottom" secondItem="UFR-XZ-JUX" secondAttribute="bottom" constant="31" id="FiX-5a-iyN"/>
                 <constraint firstItem="OMv-gP-idb" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="GL2-tQ-jrw"/>
                 <constraint firstAttribute="trailing" secondItem="OMv-gP-idb" secondAttribute="trailing" id="Hfe-HF-Xf8"/>
                 <constraint firstItem="hyg-ce-My0" firstAttribute="centerX" secondItem="1nK-Gp-t99" secondAttribute="centerX" id="Iiq-7z-3Vr"/>

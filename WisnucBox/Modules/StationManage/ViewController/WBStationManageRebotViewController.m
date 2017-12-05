@@ -13,6 +13,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *rebotButton;
 @property (weak, nonatomic) IBOutlet UIButton *shutDownButton;
 @property (weak, nonatomic) IBOutlet UIButton *maintainButton;
+@property (weak, nonatomic) IBOutlet UILabel *rebootPowerOffLabel;
+@property (weak, nonatomic) IBOutlet UILabel *miantainLabel;
+@property (weak, nonatomic) IBOutlet UILabel *miantainDetailLabel;
 
 @end
 
@@ -20,15 +23,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"关机与重启";
+    self.title = kStationManageRebootShutdownString;
+    [_shutDownButton setTitle:WBLocalizedString(@"shutdown", nil) forState:UIControlStateNormal];
+    [_rebotButton setTitle:WBLocalizedString(@"reboot", nil) forState:UIControlStateNormal];
+    [_maintainButton setTitle:WBLocalizedString(@"reboot_and_enter_maintenance", nil) forState:UIControlStateNormal];
+    [_rebootPowerOffLabel setText:WBLocalizedString(@"reboot_shutdown", nil)];
+    [_miantainDetailLabel setText:WBLocalizedString(@"enter_maintenance", nil)];
+    [_miantainLabel setText:WBLocalizedString(@"rmaintenance_explain", nil)];
+    
     [self addLeftBarButtonWithImage:[UIImage imageNamed:@"back"] andHighlightButtonImage:nil andSEL:@selector(backbtnClick:)];
-//    [_rebotButton.layer setMasksToBounds:YES];
-//
-//    [_rebotButton.layer setCornerRadius:3.0]; //设置矩圆角半径
-//
-//    [_rebotButton.layer setBorderWidth:1.0];   //边框宽度
-//
-//    [_rebotButton.layer setBorderColor:COR1.CGColor];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -47,23 +51,26 @@
 
 - (IBAction)shutDownButtonClick:(UIButton *)sender {
 //    NSLog(@"%@",WB_UserService.currentUser.localToken);
-    
-    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"确定关机吗？" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    NSString *confirmTitle = WBLocalizedString(@"confirm", nil);
+    NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
+    NSString *titileString = WBLocalizedString(@"confirm_shutdown_title", nil);
+    NSString *message = WBLocalizedString(@"confirm_shutdown", nil);
+    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:titileString message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancle = [UIAlertAction actionWithTitle:cancelTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         NSLog(@"点击了取消按钮");
         
     }];
     
-    UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    UIAlertAction *confirm = [UIAlertAction actionWithTitle:confirmTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSLog(@"点击了确定按钮");
-        [SXLoadingView showProgressHUD:@"正在关机"];
+        [SXLoadingView showProgressHUD:WBLocalizedString(@"shutting_down", nil)];
         WBStationBootAPI *api = [WBStationBootAPI apiWithState:@"poweroff" Mode:nil];
         [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
             [SXLoadingView hideProgressHUD];
-            [SXLoadingView showProgressHUDText:@"关机成功" duration:1.5];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"shut_down_successfully", nil) duration:1.5];
         } failure:^(__kindof JYBaseRequest *request) {
             [SXLoadingView hideProgressHUD];
-            [SXLoadingView showProgressHUDText:@"关机失败" duration:1.5];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"shutdown_failed", nil) duration:1.5];
             NSLog(@"%@",request.error);
             NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
             if(errorData.length >0){
@@ -80,22 +87,26 @@
 }
 
 - (IBAction)rebotButtonClick:(UIButton *)sender {
-    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"确定重启设备吗？" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    NSString *confirmTitle = WBLocalizedString(@"confirm", nil);
+    NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
+    NSString *titileString = WBLocalizedString(@"confirm_reboot_title", nil);
+    NSString *message = WBLocalizedString(@"confirm_reboot", nil);
+    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:titileString message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancle = [UIAlertAction actionWithTitle:cancelTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         NSLog(@"点击了取消按钮");
         
     }];
-    
-    UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+ 
+    UIAlertAction *confirm = [UIAlertAction actionWithTitle:confirmTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSLog(@"点击了确定按钮");
-        [SXLoadingView showProgressHUD:@"正在重启"];
+        [SXLoadingView showProgressHUD:WBLocalizedString(@"rebooting", nil)];
         WBStationBootAPI *api = [WBStationBootAPI apiWithState:@"reboot" Mode:nil];
         [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
             [SXLoadingView hideProgressHUD];
-            [SXLoadingView showProgressHUDText:@"重启成功" duration:1.5];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"reboot_successfully", nil) duration:1.5];
         } failure:^(__kindof JYBaseRequest *request) {
             [SXLoadingView hideProgressHUD];
-            [SXLoadingView showProgressHUDText:@"重启失败" duration:1.5];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"reboot_failed", nil) duration:1.5];
         }];
     }];
     [alertVc addAction:cancle];
@@ -106,22 +117,25 @@
 }
 
 - (IBAction)miantainButtonClick:(UIButton *)sender {
-    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"确定进入维护模式吗？" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    NSString *confirmTitle = WBLocalizedString(@"confirm", nil);
+    NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
+    NSString *titileString = WBLocalizedString(@"confirm_maintenance_title", nil);
+    NSString *message = WBLocalizedString(@"confirm_maintenance", nil);
+    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:titileString message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancle = [UIAlertAction actionWithTitle:cancelTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         NSLog(@"点击了取消按钮");
         
     }];
-    
-    UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    UIAlertAction *confirm = [UIAlertAction actionWithTitle:confirmTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSLog(@"点击了确定按钮");
-        [SXLoadingView showProgressHUD:@"正在进入维护模式"];
+        [SXLoadingView showProgressHUD:WBLocalizedString(@"entering_maintenance_mode", nil)];
         WBStationBootAPI *api = [WBStationBootAPI apiWithState:@"reboot" Mode:@"maintenance"];
         [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
             [SXLoadingView hideProgressHUD];
-            [SXLoadingView showProgressHUDText:@"已进入维护模式" duration:1.5];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"enter_maintenance_mode_successfully", nil) duration:1.5];
         } failure:^(__kindof JYBaseRequest *request) {
             [SXLoadingView hideProgressHUD];
-            [SXLoadingView showProgressHUDText:@"进入维护模式失败" duration:1.5];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"enter_maintenance_mode_failed", nil) duration:1.5];
         }];
     }];
     [alertVc addAction:cancle];

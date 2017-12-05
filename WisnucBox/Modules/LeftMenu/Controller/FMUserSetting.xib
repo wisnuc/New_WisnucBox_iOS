@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="backButton" destination="Tik-jc-pWw" id="SdH-Ux-Zrb"/>
                 <outlet property="nameLabel" destination="tpF-lE-lZd" id="LJK-Kv-1ed"/>
+                <outlet property="titleLabel" destination="YEA-7M-0Mh" id="L6H-vw-KZo"/>
                 <outlet property="typeLabel" destination="x7m-WO-pzi" id="gfR-RP-Rwv"/>
                 <outlet property="urlLabel" destination="hqG-PD-5gJ" id="gRa-5h-unZ"/>
                 <outlet property="usersTableView" destination="gbJ-IU-I7j" id="Y8j-2g-76d"/>

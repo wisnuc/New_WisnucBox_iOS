@@ -50,7 +50,7 @@
     
     self.userHeaderIV.userInteractionEnabled = YES;
     [self.userHeaderIV addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapHeader:)]];
-
+    _backupLabel.text = WBLocalizedString(@"Backup_closed", nil);
     _progressLabel = [[UILabel alloc]init];
     _progressLabel.text = @"         ";
     _progressLabel.textColor = [UIColor colorWithRed:236 green:236 blue:236 alpha:1];
@@ -243,7 +243,7 @@
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        self.backupLabel.text = [NSString stringWithFormat:@"已备份%@%%",mutiplyDecimal];
+        self.backupLabel.text = [NSString stringWithFormat:@"%@%@%%",WBLocalizedString(@"already_upload_media_percent_text", nil),mutiplyDecimal];
         self.backUpProgressView.progress = progress;
         self.progressLabel.text = [NSString stringWithFormat:@"%lu/%lu", (unsigned long)currentCount, (unsigned long)allcount];
         NSLog(@"已上传：%@/本地照片总数:%lu",self.progressLabel.text, (unsigned long)allcount);

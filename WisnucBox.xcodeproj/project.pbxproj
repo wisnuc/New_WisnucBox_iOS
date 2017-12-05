@@ -213,6 +213,9 @@
 		1FD7A1171FB05A51000D4CB3 /* key@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A1031FB05A51000D4CB3 /* key@2x.png */; };
 		1FD8ACF11FB05F7500F19F1C /* eye.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD8ACF01FB05F7500F19F1C /* eye.png */; };
 		1FF3AD511FD5254C00E1E536 /* LoginSeverPathModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3AD501FD5254C00E1E536 /* LoginSeverPathModel.m */; };
+		1FF3AD541FD63F5C00E1E536 /* WBLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3AD531FD63F5C00E1E536 /* WBLoginViewController.m */; };
+		1FF3AD5A1FD669DB00E1E536 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1FF3AD5C1FD669DB00E1E536 /* Localizable.strings */; };
+		1FF3AD621FD66E8C00E1E536 /* UIScrollView+JYEmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3AD611FD66E8C00E1E536 /* UIScrollView+JYEmptyView.m */; };
 		1FFEADAE1FB087AE00CD3068 /* CSFileDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEADAD1FB087AE00CD3068 /* CSFileDownloadManager.m */; };
 		1FFEADB51FB1594900CD3068 /* CSDownloadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEADB41FB1594900CD3068 /* CSDownloadModel.m */; };
 		2C68507817DCDF432CF88A3F /* Pods_WisnucBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 357873726A4400954BE467E2 /* Pods_WisnucBox.framework */; };
@@ -994,6 +997,14 @@
 		1FD8ACF01FB05F7500F19F1C /* eye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye.png; sourceTree = "<group>"; };
 		1FF3AD4F1FD5254C00E1E536 /* LoginSeverPathModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginSeverPathModel.h; sourceTree = "<group>"; };
 		1FF3AD501FD5254C00E1E536 /* LoginSeverPathModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginSeverPathModel.m; sourceTree = "<group>"; };
+		1FF3AD521FD63F5C00E1E536 /* WBLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBLoginViewController.h; sourceTree = "<group>"; };
+		1FF3AD531FD63F5C00E1E536 /* WBLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBLoginViewController.m; sourceTree = "<group>"; };
+		1FF3AD551FD6691900E1E536 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		1FF3AD561FD6691900E1E536 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		1FF3AD5D1FD669EA00E1E536 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1FF3AD5E1FD66A0200E1E536 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		1FF3AD601FD66E8B00E1E536 /* UIScrollView+JYEmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+JYEmptyView.h"; sourceTree = "<group>"; };
+		1FF3AD611FD66E8C00E1E536 /* UIScrollView+JYEmptyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+JYEmptyView.m"; sourceTree = "<group>"; };
 		1FFEADAC1FB087AE00CD3068 /* CSFileDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSFileDownloadManager.h; sourceTree = "<group>"; };
 		1FFEADAD1FB087AE00CD3068 /* CSFileDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSFileDownloadManager.m; sourceTree = "<group>"; };
 		1FFEADB31FB1594900CD3068 /* CSDownloadModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSDownloadModel.h; sourceTree = "<group>"; };
@@ -1751,6 +1762,7 @@
 		1F4D75591FAC4BB700E6516C /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				1FF3AD5F1FD66E7B00E1E536 /* UIScrollView */,
 				C183CDF51FCFD899002E29CD /* UINaviagtion */,
 				1F1AB9EF1FB9706A006EB1FC /* NSObject */,
 				F6D8CC3E1FB42DFF00673824 /* UIView */,
@@ -1840,6 +1852,8 @@
 				1F4D75701FAC4BB800E6516C /* FMLoginViewController.m */,
 				1F4D75711FAC4BB800E6516C /* FMUserLoginViewController.h */,
 				1F4D756D1FAC4BB800E6516C /* FMUserLoginViewController.m */,
+				1FF3AD521FD63F5C00E1E536 /* WBLoginViewController.h */,
+				1FF3AD531FD63F5C00E1E536 /* WBLoginViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2304,6 +2318,23 @@
 			name = InviteWechat;
 			sourceTree = "<group>";
 		};
+		1FF3AD571FD6699B00E1E536 /* Localizable */ = {
+			isa = PBXGroup;
+			children = (
+				1FF3AD5C1FD669DB00E1E536 /* Localizable.strings */,
+			);
+			path = Localizable;
+			sourceTree = "<group>";
+		};
+		1FF3AD5F1FD66E7B00E1E536 /* UIScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				1FF3AD601FD66E8B00E1E536 /* UIScrollView+JYEmptyView.h */,
+				1FF3AD611FD66E8C00E1E536 /* UIScrollView+JYEmptyView.m */,
+			);
+			path = UIScrollView;
+			sourceTree = "<group>";
+		};
 		1FFEADAB1FB087A100CD3068 /* Manage */ = {
 			isa = PBXGroup;
 			children = (
@@ -2562,6 +2593,7 @@
 		F650355E1FAC00A60007979D /* WisnucBox */ = {
 			isa = PBXGroup;
 			children = (
+				1FF3AD571FD6699B00E1E536 /* Localizable */,
 				71A3D64E1FB578D00002B8B1 /* Network */,
 				1F61E52B1FAC7AE0008ACEFB /* Source */,
 				1F4D75811FAC4BB800E6516C /* CoreData */,
@@ -3755,6 +3787,7 @@
 				F683109D1FB30AAE005AC578 /* check-box@2x.png in Resources */,
 				F683114F1FB30AAE005AC578 /* personal@3x.png in Resources */,
 				F68311C11FB30AAF005AC578 /* circle.png in Resources */,
+				1FF3AD5A1FD669DB00E1E536 /* Localizable.strings in Resources */,
 				F68310C81FB30AAE005AC578 /* fab_share@2x.png in Resources */,
 				1F922EC81FCE931A00A7614B /* ic_tv@2x.png in Resources */,
 				F683119D1FB30AAF005AC578 /* stationLogo@3x.png in Resources */,
@@ -3978,6 +4011,7 @@
 				1F922EA41FCD4D5D00A7614B /* WBStationManageTimeViewController.m in Sources */,
 				1F922E7C1FCD3E1400A7614B /* WBStationManageRootTableViewCell.m in Sources */,
 				C139DFBE1FC6B9F3007098E5 /* FMMediaRamdomKeyAPI.m in Sources */,
+				1FF3AD541FD63F5C00E1E536 /* WBLoginViewController.m in Sources */,
 				1F5D21831FBC3DB0006C65AA /* FilesModel.m in Sources */,
 				1F4D75C71FAC5EB500E6516C /* GCDAsyncSocket.m in Sources */,
 				71A3D6791FB5AD230002B8B1 /* FMGetUsersAPI.m in Sources */,
@@ -4030,6 +4064,7 @@
 				1F922EC31FCE867400A7614B /* WBStationManageEquipmentModel.m in Sources */,
 				C138D05A1FB94D8D000CF518 /* FLGetDriveDirAPI.m in Sources */,
 				1FAD747B1FD1061D00A5D880 /* WBInviteWechatTableViewCell.m in Sources */,
+				1FF3AD621FD66E8C00E1E536 /* UIScrollView+JYEmptyView.m in Sources */,
 				1F1ABA001FB978EB006EB1FC /* CSDownloadTaskQueue.m in Sources */,
 				F65035641FAC00A60007979D /* AppDelegate.m in Sources */,
 				C138D07A1FB9A4B0000CF518 /* DirectoriesModel.m in Sources */,
@@ -4197,10 +4232,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		1FF3AD5C1FD669DB00E1E536 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1FF3AD5D1FD669EA00E1E536 /* en */,
+				1FF3AD5E1FD66A0200E1E536 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		F65035681FAC00A70007979D /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				F65035691FAC00A70007979D /* Base */,
+				1FF3AD551FD6691900E1E536 /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -4209,6 +4254,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				F650356E1FAC00A70007979D /* Base */,
+				1FF3AD561FD6691900E1E536 /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -4220,6 +4266,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -4275,6 +4322,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";

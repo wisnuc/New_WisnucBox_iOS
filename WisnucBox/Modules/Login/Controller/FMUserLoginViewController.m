@@ -58,6 +58,10 @@
     [self.view addSubview:self.eyeButton];
 }
 
+-(void)dealloc{
+    
+}
+
 #pragma mark textFiledDelegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
      [self.view endEditing:YES];
@@ -85,6 +89,10 @@
             else NSLog(@"Get User Home Error");
             [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"登录失败！ code: %ld", (long)error.wbCode] duration:1];
         }else{
+            AppDelegate * app = (AppDelegate *)[UIApplication sharedApplication].delegate ;
+            app.window.rootViewController = nil;
+            [app.window resignKeyWindow];
+            [app.window removeFromSuperview];
             sender.userInteractionEnabled = YES;
             [MyAppDelegate initRootVC];
             [SXLoadingView hideProgressHUD];

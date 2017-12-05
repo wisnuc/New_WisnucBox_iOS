@@ -35,7 +35,7 @@ ReNameDelegate
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"设备信息";
+    self.title = kStationManageEquipmentString;
     [self getData];
     [self.view addSubview:self.timeImageView];
     [self.view addSubview:self.tableView];

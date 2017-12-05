@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FMUserAddVC">
             <connections>
                 <outlet property="backButton" destination="OC2-SG-FhD" id="SDd-av-j82"/>
+                <outlet property="confirmButton" destination="AIK-Nf-oS0" id="eUD-v1-djs"/>
                 <outlet property="doubleCheckTF" destination="NbO-y7-dJx" id="Ljl-Nf-G1y"/>
                 <outlet property="passwordTF" destination="m3X-z8-d7v" id="fa1-UZ-LTD"/>
                 <outlet property="userNameTF" destination="INS-2S-QOJ" id="udW-Zc-6L4"/>

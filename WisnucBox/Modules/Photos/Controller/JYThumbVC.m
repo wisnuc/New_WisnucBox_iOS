@@ -289,10 +289,12 @@
 }
 
 -(void)rightBtnClick:(id)sender{
+    NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
+    NSString *selectTitle = WBLocalizedString(@"select_photo", nil);
     LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:nil
                                                              delegate:nil
-                                                    cancelButtonTitle:@"取消"
-                                                otherButtonTitleArray:@[@"选择照片"]];
+                                                    cancelButtonTitle:cancelTitle
+                                                otherButtonTitleArray:@[selectTitle]];
     actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
         if (buttonIndex == 1) {
             self.isSelectMode = YES;

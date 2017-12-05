@@ -26,31 +26,32 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="状态" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b9P-4q-3cb">
-                        <rect key="frame" x="254" y="23" width="50" height="18"/>
+                        <rect key="frame" x="244" y="23" width="60" height="18"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="50" id="HsJ-n0-kY3"/>
+                            <constraint firstAttribute="width" constant="60" id="HsJ-n0-kY3"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gvv-hl-SI2">
-                        <rect key="frame" x="72" y="10" width="166" height="19.5"/>
+                        <rect key="frame" x="72" y="10" width="156" height="19.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IlK-8L-T4N">
-                        <rect key="frame" x="72" y="37" width="166" height="16"/>
+                        <rect key="frame" x="72" y="37" width="156" height="16"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xj6-hu-jC0">
-                        <rect key="frame" x="259" y="16" width="45" height="30"/>
+                        <rect key="frame" x="257" y="16.5" width="47" height="29"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="45" id="KVf-9t-mBQ"/>
+                            <constraint firstAttribute="width" constant="47" id="KVf-9t-mBQ"/>
                         </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <state key="normal" title="拒绝">
                             <color key="titleColor" red="0.01176470588" green="0.66274509800000003" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
@@ -59,10 +60,11 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QC4-0K-my7">
-                        <rect key="frame" x="201" y="16" width="45" height="30"/>
+                        <rect key="frame" x="193" y="16.5" width="47" height="29"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="45" id="gwi-UY-jNf"/>
+                            <constraint firstAttribute="width" constant="47" id="gwi-UY-jNf"/>
                         </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <state key="normal" title="接受">
                             <color key="titleColor" red="0.01176470588" green="0.66274509800000003" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
@@ -77,7 +79,7 @@
                     <constraint firstItem="IlK-8L-T4N" firstAttribute="leading" secondItem="Gvv-hl-SI2" secondAttribute="leading" id="C3D-GR-uMS"/>
                     <constraint firstItem="b9P-4q-3cb" firstAttribute="leading" secondItem="Gvv-hl-SI2" secondAttribute="trailing" constant="16" id="DWY-PT-NBt"/>
                     <constraint firstAttribute="bottom" secondItem="IlK-8L-T4N" secondAttribute="bottom" constant="10" id="E7K-1I-30d"/>
-                    <constraint firstItem="b9P-4q-3cb" firstAttribute="leading" secondItem="QC4-0K-my7" secondAttribute="trailing" constant="8" id="K3B-Jv-ayv"/>
+                    <constraint firstItem="b9P-4q-3cb" firstAttribute="leading" secondItem="QC4-0K-my7" secondAttribute="trailing" constant="4" id="K3B-Jv-ayv"/>
                     <constraint firstItem="Gvv-hl-SI2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="LrC-q0-Ojf"/>
                     <constraint firstItem="b9P-4q-3cb" firstAttribute="leading" secondItem="IlK-8L-T4N" secondAttribute="trailing" constant="16" id="SUN-qm-Th1"/>
                     <constraint firstItem="saF-jY-Emt" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="UMl-DC-Y8M"/>

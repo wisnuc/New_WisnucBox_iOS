@@ -189,10 +189,10 @@ static dispatch_once_t onceToken;
             if (openFileString.length>0) {
                 [arr addObject:openFileString];
             }
-            
+            NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
             LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:nil
                                                                      delegate:nil
-                                                            cancelButtonTitle:@"取消"
+                                                            cancelButtonTitle:cancelTitle
                                                         otherButtonTitleArray:arr];
             actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
                 if (buttonIndex == 1) {
@@ -206,10 +206,10 @@ static dispatch_once_t onceToken;
                 }
                 }else if(buttonIndex == 2) {
                     NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
-                    NSString* suffixName = model.uuid;
+//                    NSString* suffixName = model.uuid;
                     NSString *fileName = model.name;
-                    NSString *extensionstring = [fileName pathExtension];
-                    NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",suffixName,extensionstring]];
+//                    NSString *extensionstring = [fileName pathExtension];
+                    NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",fileName]];
             
                     if ([[NSFileManager defaultManager] fileExistsAtPath:saveFile]) {
                         if (_openFilesdelegate && [_openFilesdelegate respondsToSelector:@selector(openTheFileWithFilePath:)]) {
