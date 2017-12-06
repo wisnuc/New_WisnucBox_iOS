@@ -119,7 +119,7 @@ static dispatch_once_t onceToken;
 
 - (void)configCells:(FLFilesCell * )cell withModel:(EntriesModel *)model cellStatus:(FLFliesCellStatus)status viewController:(UIViewController *)viewController parentUUID:(NSString *)uuid RootUUID:(NSString *)rootUUID{
     cell.nameLabel.text = model.name;
-    cell.sizeLabel.text = [NSString fileSizeWithFLModel:model];
+    cell.sizeLabel.text = [NSString transformedValue:[NSNumber numberWithLongLong:model.size]];
 
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if ([model.type isEqualToString:@"file"]) {

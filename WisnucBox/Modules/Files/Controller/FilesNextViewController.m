@@ -365,6 +365,7 @@ FilesHelperOpenFilesDelegate
                     } begin:^{
                         
                     } progress:^(NSProgress *downloadProgress) {
+                        dispatch_async(dispatch_get_global_queue(0, 0), ^{
                         CGFloat downloadProgressFloat = (float)downloadProgress.completedUnitCount/(float)downloadProgress.totalUnitCount;
                         dispatch_async(dispatch_get_main_queue(), ^{
                             if (WB_UserService.currentUser.isCloudLogin) {
@@ -375,6 +376,7 @@ FilesHelperOpenFilesDelegate
                                  [_progressView setValueForProcess:downloadProgress.fractionCompleted];
                             }
                         });
+                    });
                     } complete:^(CSOneDowloadTask *downloadTask,NSError *error) {
                         [_progressView dismiss];
                         if (!error) {

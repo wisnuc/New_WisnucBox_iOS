@@ -217,21 +217,33 @@ UIDocumentInteractionControllerDelegate
             CSDownloadModel* downloadFileModel = [downloadTask getDownloadFileModel];
             cell.fileNameLabel.text = downloadFileModel.downloadFileName;
             //        cell.progressLabel.text = @"正在下载";
+            
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
             downloadTask.progressBlock = ^(NSProgress *downloadProgress) {
-//                NSString *progressString = [NSString stringWithFormat:@"%@/%@",[CSFileUtil calculateUnit:downloadProgress.completedUnitCount],[CSFileUtil calculateUnit:downloadProgress.totalUnitCount]];
-                
-                float progressFloat = (float)downloadProgress.completedUnitCount/(float)downloadProgress.totalUnitCount;
-                
-                //            NSString *progressString = [NSString stringWithFormat:@"%@/%@",[CSFileUtil calculateUnit:downloadProgress.],[CSFileUtil calculateUnit:totalBytesExpectedToRead]];
-                if ([NSThread isMainThread] ) {
-                    cell.progressView.progress = progressFloat;
+                if (downloadProgress.fractionCompleted) {
+                    if ([NSThread isMainThread] ) {
+                        cell.progressView.progress = downloadProgress.fractionCompleted;
+                    }else{
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            cell.progressView.progress = downloadProgress.fractionCompleted;
+                        });
+                    }
+                    
                 }else{
-                    dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    float progressFloat = (float)downloadProgress.completedUnitCount/(float)downloadProgress.totalUnitCount;
+                    NSLog(@"%f",progressFloat);
+                    if ([NSThread isMainThread] ) {
                         cell.progressView.progress = progressFloat;
-                    });
+                    }else{
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            cell.progressView.progress = progressFloat;
+                        });
+                    }
                 }
                 
-            };
+              };
+            });
             if ([self.chooseArr containsObject:downloadFileModel.getDownloadFileUUID]) {
                 cell.f_ImageView.hidden = YES;
                 cell.layerView.image = [UIImage imageNamed:@"check_circle_select"];
