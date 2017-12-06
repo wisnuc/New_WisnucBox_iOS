@@ -37,7 +37,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = @"手动设置";
+    self.title = WBLocalizedString(@"manual_setting", nil);
     UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self  action:@selector(handlerTap)];
     [self.view addGestureRecognizer:tap];
     [self initView];
@@ -66,10 +66,10 @@
     UIBarButtonItem *leftBarButon = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
  
     self.navigationItem.leftBarButtonItem = leftBarButon;
-    UIButton * rBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 30)];
-    rBtn.titleLabel.font = [UIFont fontWithName:FANGZHENG size:16];
-    [rBtn setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
-    [rBtn setTitle:@"完成" forState:UIControlStateNormal];
+    UIButton * rBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 30)];
+    rBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    [rBtn setTitleColor:COR1 forState:UIControlStateNormal];
+    [rBtn setTitle:WBLocalizedString(@"finish_text", nil) forState:UIControlStateNormal];
     [rBtn addTarget:self action:@selector(rBtnClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem * item = [[UIBarButtonItem alloc]initWithCustomView:rBtn];
     self.navigationItem.rightBarButtonItem = item;
@@ -81,7 +81,7 @@
 
 -(void)rBtnClick{
     if(![self checkIPIsValidate]){
-        [SXLoadingView showAlertHUD:@"IP输入有误！" duration:1];
+        [SXLoadingView showAlertHUD:WBLocalizedString(@"IP_error", nil) duration:1];
         return;
     }
     if (self.block) {
@@ -103,7 +103,7 @@
 
 - (void)initView{
    
-    self.textView = [[DGPopUpViewTextView alloc] initWithName:@"IP" andPlaceHolder:@"请输入IP地址"];
+    self.textView = [[DGPopUpViewTextView alloc] initWithName:@"IP" andPlaceHolder:WBLocalizedString(@"eneter_IP", nil)];
 //    self.textView_2 = [[DGPopUpViewTextView alloc] initWithName:@"Username" andPlaceHolder: @"用户名"];
 //    self.textView_3 = [[DGPopUpViewTextView alloc] initWithName:@"Password" andPlaceHolder:@"密码"];
 //    self.textView_3.textField.secureTextEntry = YES;

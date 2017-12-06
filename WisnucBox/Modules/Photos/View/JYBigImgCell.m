@@ -879,7 +879,7 @@
     self.icloudLoadFailedLabel.hidden = YES;
     self.imageView.hidden = NO;
     
-    if(WB_UserService.currentUser.isCloudLogin) return [SXLoadingView showAlertHUD:@"外网环境，暂不支持播放" duration:1];
+    if(WB_UserService.currentUser.isCloudLogin) return [SXLoadingView showAlertHUD:WBLocalizedString(@"operation_not_support", nil) duration:1];
     
     [self.indicator startAnimating];
     
@@ -903,7 +903,7 @@
             [strongSelf.indicator stopAnimating];
         });
     } failure:^(__kindof JYBaseRequest *request) {
-        [SXLoadingView showAlertHUD:@"播放失败" duration:1];
+        [SXLoadingView showAlertHUD:WBLocalizedString(@"play_failed", nil) duration:1];
         [weakSelf.indicator stopAnimating];
     }];
 }
@@ -955,7 +955,7 @@
                 });
             }];
         }else {
-            if(WB_UserService.currentUser.isCloudLogin) return [SXLoadingView showAlertHUD:@"外网环境，暂不支持播放" duration:1];
+            if(WB_UserService.currentUser.isCloudLogin) return [SXLoadingView showAlertHUD:WBLocalizedString(@"operation_not_support", nil) duration:1];
             return;
         }
     } else {

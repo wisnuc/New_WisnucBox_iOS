@@ -112,7 +112,7 @@ static dispatch_once_t onceToken;
             [[CSDownloadHelper shareManager] downloadFileWithFileModel:model RootUUID:rootUUID UUID:uuid];
         }
     }
-     NSString * string  = [NSString stringWithFormat:@"%ld个文件已添加到下载",(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
+     NSString * string  = [NSString stringWithFormat:@"%ld个文件已添加到下载队列",(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
     [SXLoadingView showProgressHUDText:string duration:1.5];
     [[FLFIlesHelper helper] removeAllChooseFile];
 }
@@ -166,17 +166,17 @@ static dispatch_once_t onceToken;
 
     @weaky(self);
     if ([model.type isEqualToString:@"file"]) {
-    
+        NSString *redownloadString = WBLocalizedString(@"re_download_the_item", nil);
         cell.clickBlock = ^(FLFilesCell * cell){
             cell.downBtn.userInteractionEnabled = YES;
             weak_self.chooseModel = model;
-            NSString *downloadString  = @"下载该文件";
+            NSString *downloadString  =WBLocalizedString(@"download_the_item", nil);
             NSString *openFileString;
             NSMutableArray *downloadedArr = [NSMutableArray arrayWithArray:[_filesServices findAll]];
             for (WBFile * fileModel in downloadedArr) {
                 if ([fileModel.fileUUID isEqualToString:model.uuid]) {
-                    downloadString = @"重新下载";
-                    openFileString = @"打开该文件";
+                    downloadString = redownloadString;
+                    openFileString = WBLocalizedString(@"open_the_item", nil);
                 }
             }
 
@@ -196,7 +196,7 @@ static dispatch_once_t onceToken;
                                                         otherButtonTitleArray:arr];
             actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
                 if (buttonIndex == 1) {
-                if ([downloadString isEqualToString:@"重新下载"]) {
+                if ([downloadString isEqualToString:redownloadString]) {
                     [_filesServices deleteFileWithFileUUID:model.uuid FileName:model.name ActionType:nil];
                 }
                 [[CSDownloadHelper  shareManager] downloadFileWithFileModel:model RootUUID:rootUUID UUID:uuid ];

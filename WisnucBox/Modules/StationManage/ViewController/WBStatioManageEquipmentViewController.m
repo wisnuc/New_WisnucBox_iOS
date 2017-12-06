@@ -73,7 +73,7 @@ ReNameDelegate
     }];
     
     WBGetSystemInformationAPI *api = [WBGetSystemInformationAPI apiWithServicePath:WB_UserService.currentUser.localAddr];
-    [SXLoadingView showProgressHUD:@"正在获取..."];
+    [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
 //        NSLog(@"%@",request.responseJsonObject);
         WBStationManageEquipmentModel *model = [WBStationManageEquipmentModel yy_modelWithJSON:request.responseJsonObject];
@@ -126,7 +126,7 @@ ReNameDelegate
 
 - (void)reNameComplete{
     [self getData];
-    [SXLoadingView showProgressHUDText:@"设备名修改成功" duration:1.5];
+    [SXLoadingView showProgressHUDText:WBLocalizedString(@"device_name_modified_successfully", nil) duration:1.5];
     [self.tableView reloadData];
 }
 
@@ -169,7 +169,7 @@ ReNameDelegate
                 case 0:
                 {
                     cell.normalLabel.text = stationInfoModel.name;
-                    cell.detailLabel.text = @"设备名称";
+                    cell.detailLabel.text = WBLocalizedString(@"equipment_label", nil);
                     cell.leftImageView.image = [UIImage imageNamed:@"ic_tv"];
                     [cell.editButton setHidden:NO];
                     [cell.editButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
@@ -189,20 +189,20 @@ ReNameDelegate
                     case 0:
                     {
                         cell.normalLabel.text = @"WS215i";
-                        cell.detailLabel.text = @"设备型号";
+                        cell.detailLabel.text = WBLocalizedString(@"equipment_type", nil);
                         cell.leftImageView.image = [UIImage imageNamed:@"ic_dns"];
                     }
                         break;
                     case 1:
                     {
                         cell.normalLabel.text = model.ws215i.serial;
-                        cell.detailLabel.text = @"设备型号";
+                        cell.detailLabel.text = WBLocalizedString(@"hardware_serial_number", nil);
                     }
                         break;
                     case 2:
                     {
                         cell.normalLabel.text = model.ws215i.mac;
-                        cell.detailLabel.text = @"mac 地址";
+                        cell.detailLabel.text = WBLocalizedString(@"mac_address", nil);
                     }
                         break;
                     default:
@@ -214,7 +214,7 @@ ReNameDelegate
                     {
                         NSString *memTotal = [model.memInfo.memTotal substringToIndex:model.memInfo.memTotal.length-3];
                         cell.normalLabel.text = [NSString stringWithFormat:@"%.2f GB",[memTotal floatValue]/1024/1024];
-                        cell.detailLabel.text = @"总内存";
+                        cell.detailLabel.text = WBLocalizedString(@"total_memory_size", nil);
                         cell.leftImageView.image = [UIImage imageNamed:@"ic_sd_storage"];
                     }
                         break;
@@ -222,14 +222,14 @@ ReNameDelegate
                     {
                         NSString *memFree = [model.memInfo.memFree substringToIndex:model.memInfo.memFree.length-3];
                         cell.normalLabel.text = [NSString stringWithFormat:@"%.2f GB",[memFree floatValue]/1024/1024];
-                        cell.detailLabel.text = @"未使用内存";
+                        cell.detailLabel.text = WBLocalizedString(@"free_memory_size", nil);
                     }
                         break;
                     case 2:
                     {
                         NSString *memAvailable = [model.memInfo.memAvailable substringToIndex:model.memInfo.memAvailable.length-3];
                         cell.normalLabel.text = [NSString stringWithFormat:@"%.2f GB",[memAvailable floatValue]/1024/1024];
-                        cell.detailLabel.text = @"可用内存";
+                        cell.detailLabel.text = WBLocalizedString(@"available_memory_size", nil);
                     }
                         break;
                     default:
@@ -246,7 +246,7 @@ ReNameDelegate
                     {
                         NSString *memTotal = [model.memInfo.memTotal substringToIndex:model.memInfo.memTotal.length-3];
                         cell.normalLabel.text = [NSString stringWithFormat:@"%.2f GB",[memTotal floatValue]/1024/1024];
-                        cell.detailLabel.text = @"总内存";
+                        cell.detailLabel.text = WBLocalizedString(@"total_memory_size", nil);;
                         cell.leftImageView.image = [UIImage imageNamed:@"ic_sd_storage"];
                     }
                         break;
@@ -254,14 +254,14 @@ ReNameDelegate
                     {
                         NSString *memFree = [model.memInfo.memFree substringToIndex:model.memInfo.memFree.length-3];
                         cell.normalLabel.text = [NSString stringWithFormat:@"%.2f GB",[memFree floatValue]/1024/1024];
-                        cell.detailLabel.text = @"未使用内存";
+                        cell.detailLabel.text = WBLocalizedString(@"free_memory_size", nil);
                     }
                         break;
                     case 2:
                     {
                         NSString *memAvailable = [model.memInfo.memAvailable substringToIndex:model.memInfo.memAvailable.length-3];
                         cell.normalLabel.text = [NSString stringWithFormat:@"%.2f GB",[memAvailable floatValue]/1024/1024];
-                        cell.detailLabel.text = @"可用内存";
+                        cell.detailLabel.text = WBLocalizedString(@"available_memory_size", nil);
                     }
                         break;
                     default:
@@ -272,20 +272,20 @@ ReNameDelegate
                     case 0:
                     {
                         cell.normalLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)model.cpuInfo.count];
-                        cell.detailLabel.text = @"CPU 核心数";
+                        cell.detailLabel.text = WBLocalizedString(@"cpu_core_number", nil);
                         cell.leftImageView.image = [UIImage imageNamed:@"ic_memory"];
                     }
                         break;
                     case 1:
                     {
                         cell.normalLabel.text = cupModel.modelName;
-                        cell.detailLabel.text = @"CPU 类型";
+                        cell.detailLabel.text = WBLocalizedString(@"cpu_type", nil);
                     }
                         break;
                     case 2:
                     {
                         cell.normalLabel.text = cupModel.cacheSize;
-                        cell.detailLabel.text = @"CPU 缓存数";
+                        cell.detailLabel.text = WBLocalizedString(@"cpu_cache_size", nil);
                     }
                         break;
                     default:
@@ -301,20 +301,20 @@ ReNameDelegate
                     case 0:
                     {
                         cell.normalLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)model.cpuInfo.count];
-                        cell.detailLabel.text = @"CPU 核心数";
+                        cell.detailLabel.text = WBLocalizedString(@"cpu_core_number", nil);
                         cell.leftImageView.image = [UIImage imageNamed:@"ic_memory"];
                     }
                         break;
                     case 1:
                     {
                         cell.normalLabel.text = cupModel.modelName;
-                        cell.detailLabel.text = @"CPU 类型";
+                        cell.detailLabel.text = WBLocalizedString(@"cpu_type", nil);
                     }
                         break;
                     case 2:
                     {
                         cell.normalLabel.text = cupModel.cacheSize;
-                        cell.detailLabel.text = @"CPU 缓存数";
+                        cell.detailLabel.text = WBLocalizedString(@"cpu_cache_size", nil);
                     }
                         break;
                     default:
@@ -325,20 +325,20 @@ ReNameDelegate
                     case 0:
                     {
                         cell.normalLabel.text = @"Btrfs";
-                        cell.detailLabel.text = @"文件系统类型";
+                        cell.detailLabel.text = WBLocalizedString(@"file_system_type", nil);
                         cell.leftImageView.image = [UIImage imageNamed:@"brtfs"];
                     }
                         break;
                     case 1:
                     {
                         cell.normalLabel.text = [NSString stringWithFormat:@"%@",volumesModel.total];
-                        cell.detailLabel.text = @"磁盘数量";
+                        cell.detailLabel.text = WBLocalizedString(@"disk_count", nil);
                     }
                         break;
                     case 2:
                     {
                         cell.normalLabel.text = volumesModel.usage.data[@"mode"];
-                        cell.detailLabel.text = @"磁盘阵列模式";
+                        cell.detailLabel.text = WBLocalizedString(@"disk_array_mode", nil);
                     }
                         break;
                     default:
@@ -353,20 +353,20 @@ ReNameDelegate
                   case 0:
                   {
                       cell.normalLabel.text = @"Btrfs";
-                      cell.detailLabel.text = @"文件系统类型";
+                      cell.detailLabel.text = WBLocalizedString(@"file_system_type", nil);
                       cell.leftImageView.image = [UIImage imageNamed:@"brtfs"];
                   }
                       break;
                   case 1:
                   {
                       cell.normalLabel.text = [NSString stringWithFormat:@"%@",volumesModel.total];
-                      cell.detailLabel.text = @"磁盘数量";
+                      cell.detailLabel.text = WBLocalizedString(@"disk_count", nil);
                   }
                       break;
                   case 2:
                   {
                       cell.normalLabel.text = volumesModel.usage.data[@"mode"];
-                      cell.detailLabel.text = @"磁盘阵列模式";
+                      cell.detailLabel.text = WBLocalizedString(@"disk_array_mode", nil);
                   }
                       break;
                   default:
@@ -377,20 +377,20 @@ ReNameDelegate
                   case 0:
                   {
                       cell.normalLabel.text = [NSString stringWithFormat:@"%@",volumesModel.usage.overall[@"deviceSize"]];
-                      cell.detailLabel.text = @"总空间";
+                      cell.detailLabel.text = WBLocalizedString(@"total_space", nil);
                       cell.leftImageView.image = [UIImage imageNamed:@"ic_storage"];
                   }
                       break;
                   case 1:
                   {
                       cell.normalLabel.text = [NSString stringWithFormat:@"%@",volumesModel.usage.data[@"size"]];
-                      cell.detailLabel.text = @"用户数据空间";
+                      cell.detailLabel.text = WBLocalizedString(@"user_data_space", nil);
                   }
                       break;
                   case 2:
                   {
                       cell.normalLabel.text =  cell.normalLabel.text = [NSString stringWithFormat:@"%@",volumesModel.usage.overall[@"free"]];
-                      cell.detailLabel.text = @"可用空间";
+                      cell.detailLabel.text = WBLocalizedString(@"available_space", nil);
                   }
                       break;
                   default:
@@ -402,29 +402,26 @@ ReNameDelegate
             switch (indexPath.row) {
                 case 0:
                 {
-                    cell.normalLabel.text = [NSString stringWithFormat:@"%@",  [NSString transformedValue:volumesModel.usage.overall[@"deviceSize"]]];
-                    cell.detailLabel.text = @"总空间";
+                    cell.normalLabel.text = [NSString stringWithFormat:@"%@",volumesModel.usage.overall[@"deviceSize"]];
+                    cell.detailLabel.text = WBLocalizedString(@"total_space", nil);
                     cell.leftImageView.image = [UIImage imageNamed:@"ic_storage"];
                 }
                     break;
                 case 1:
                 {
-                    cell.normalLabel.text = [NSString stringWithFormat:@"%@",[NSString transformedValue: volumesModel.usage.data[@"size"]]];
-                    cell.detailLabel.text = @"用户数据空间";
+                    cell.normalLabel.text = [NSString stringWithFormat:@"%@",volumesModel.usage.data[@"size"]];
+                    cell.detailLabel.text = WBLocalizedString(@"user_data_space", nil);
                 }
                     break;
                 case 2:
                 {
-                    cell.normalLabel.text =  cell.normalLabel.text = [NSString stringWithFormat:@"%@",[NSString transformedValue:volumesModel.usage.overall[@"free"]]];
-                    cell.detailLabel.text = @"可用空间";
+                    cell.normalLabel.text =  cell.normalLabel.text = [NSString stringWithFormat:@"%@",volumesModel.usage.overall[@"free"]];
+                    cell.detailLabel.text = WBLocalizedString(@"available_space", nil);
                 }
                     break;
                 default:
                     break;
             }
-            break;
-        default:
-            break;
     }
     
     return cell;

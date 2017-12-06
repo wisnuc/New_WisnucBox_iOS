@@ -88,7 +88,7 @@ __strong static id _sharedObject = nil;
     NSFileManager *manager = [NSFileManager defaultManager];
     
     if ([manager fileExistsAtPath:saveFile]) {
-        [SXLoadingView showProgressHUDText:@"该文件已下载" duration:1.8];
+        [SXLoadingView showProgressHUDText:WBLocalizedString(@"file_downloaded", nil) duration:1.8];
         return;
     }
     

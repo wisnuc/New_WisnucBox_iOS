@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *urlLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *userHeaderLabel;
 
 @end
 
@@ -38,6 +39,7 @@
     [super viewDidLoad];
     self.titleLabel.text = kStationManageUserMangeString;
     self.navigationController.navigationBar.translucent = NO;
+    self.userHeaderLabel.text = WBLocalizedString(@"user", nil);
     [_backButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
   
     [self displayInfomation];
@@ -95,7 +97,7 @@
         [SXLoadingView hideProgressHUD];
     } failure:^(__kindof JYBaseRequest *request) {
         [SXLoadingView hideProgressHUD];
-        [SXLoadingView showAlertHUD:@"请求失败" duration:1];
+        [SXLoadingView showAlertHUD:WBLocalizedString(@"error", nil) duration:1];
         NSLog(@"%@",request.error);
         NSLog(@"FMAsyncUsersAPI 失败");
     }];

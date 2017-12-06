@@ -28,6 +28,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UIImageView *bindWechatImageView;
+@property (weak, nonatomic) IBOutlet UIButton *logoutButton;
 
 @property (strong,nonatomic) TicketModel *model;
 @property (strong,nonatomic) UserModel *userModel;
@@ -44,6 +45,8 @@
     [self.userName setEnlargeEdgeWithTop:3 right:10 bottom:3 left:2];
     [self.headerEditBtn setEnlargeEdgeWithTop:3 right:10 bottom:3 left:2];
     [self.bindWechatButton setEnlargeEdgeWithTop:3 right:10 bottom:3 left:2];
+    [self.bindWechatButton setTitle:WBLocalizedString(@"bind_wechat_user", nil) forState:UIControlStateNormal];
+    [self.logoutButton setTitle:WBLocalizedString(@"logout", nil) forState:UIControlStateNormal];
 }
 - (void)getUserData{
     [[FMAccountUsersAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
@@ -116,7 +119,7 @@
 
 - (IBAction)bindWechatButtonClick:(UIButton *)sender {
     @weaky(self)
-    [SXLoadingView showProgressHUD:@"正在准备绑定，请稍候"];
+    [SXLoadingView showProgressHUD:@"loading..."];
     [[WBStationTicketsAPI apiWithRequestMethodString:@"POST" Type:@"bind"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         [SXLoadingView hideProgressHUD];
         TicketModel *model = [TicketModel yy_modelWithJSON:request.responseJsonObject];
@@ -140,7 +143,7 @@
 }
 
 - (void)setupAlertController{
-    [SXLoadingView showProgressHUDText:@"您尚未安装微信" duration:1.5];
+    [SXLoadingView showProgressHUDText:WBLocalizedString(@"not_installed_WeChat", nil) duration:1.5];
 }
 
 - (void)weChatCallBackRespCode:(NSString *)code{
@@ -174,17 +177,18 @@
     
     [subject subscribeNext:^(id  _Nullable x) {
         TicketUserModel *userModel = x;
-        
-        UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"您确定要绑定该微信吗？" preferredStyle:UIAlertControllerStyleAlert];
+        NSString *alertActionTitleString = WBLocalizedString(@"bind", nil);
+        NSString *alertTitleString = WBLocalizedString(@"confirm_binding_WeChat", nil);
+        UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:alertTitleString message:WBLocalizedString(@"binding_WeChat?", nil) preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancle = [UIAlertAction actionWithTitle:cancelTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             NSLog(@"点击了取消按钮");
             
-//             [weak_self bindWechatLastActionWith:userModel IsBind:NO];
+             [weak_self bindWechatLastActionWith:userModel IsBind:NO];
         }];
         
-        UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"绑定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIAlertAction *confirm = [UIAlertAction actionWithTitle:alertActionTitleString style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             NSLog(@"点击了确定按钮");
-            [SXLoadingView showProgressHUD:@"正在绑定..."];
+            [SXLoadingView showProgressHUD:WBLocalizedString(@"binding", nil)];
             [weak_self bindWechatLastActionWith:userModel IsBind:YES];
             
         }];
@@ -206,7 +210,7 @@
         [WB_UserService setCurrentUser:user];
         [WB_UserService synchronizedCurrentUser];
         if (isBind) {
-            [SXLoadingView showProgressHUDText:@"微信绑定成功" duration:1.5];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"success", nil) duration:1.5];
         }
     } failure:^(__kindof JYBaseRequest *request) {
         [SXLoadingView hideProgressHUD];
@@ -215,12 +219,12 @@
         if(errorData.length>0){
             NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
             NSLog(@"%@",serializedData);
-             [SXLoadingView showProgressHUDText:[NSString stringWithFormat:@"微信绑定失败，原因：%@",serializedData[@"message"]] duration:1.5];
+             [SXLoadingView showProgressHUDText:[NSString stringWithFormat:@"error，reason：%@",serializedData[@"message"]] duration:1.5];
         }
     }];
 }
 - (IBAction)logoutButtonClick:(UIButton *)sender {
-    [SXLoadingView showProgressHUD:@"正在注销"];
+    [SXLoadingView showProgressHUD:WBLocalizedString(@"logout...", nil)];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self skipToLogin];
     });

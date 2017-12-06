@@ -773,7 +773,7 @@ bool isDecelerating = NO;
         [self shareToOtherApp];
     }
     else
-        [SXLoadingView showAlertHUD:@"请先选择照片" duration:1];
+        [SXLoadingView showAlertHUD:WBLocalizedString(@"please_select_the_photo", nil) duration:1];
 }
 
 //其他分享
@@ -846,7 +846,7 @@ bool isDecelerating = NO;
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [weak_self.pv dismiss];
                         if (!isShare)
-                            [SXLoadingView showAlertHUD:@"下载完成" duration:1];
+                            [SXLoadingView showAlertHUD:WBLocalizedString(@"download_completed", nil) duration:1];
                         if (block) block([tempDownArr copy]);
                     });
                 }

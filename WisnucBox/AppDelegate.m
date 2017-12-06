@@ -226,16 +226,16 @@
         }
             break;
         case WXErrCodeAuthDeny://用户拒绝授权
-            [SXLoadingView showProgressHUDText:@"授权失败" duration:1.5];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"rejected_authorization", nil) duration:1.5];
             break;
         case WXErrCodeSentFail://用户取消
-            [SXLoadingView showProgressHUDText:@"发送失败" duration:1.5];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"error", nil) duration:1.5];
             break;
         case WXErrCodeUnsupport://用户取消
-            [SXLoadingView showProgressHUDText:@"微信不支持" duration:1.5];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"WeChat_not_support", nil) duration:1.5];
             break;
         case WXErrCodeUserCancel://用户取消
-            [SXLoadingView showProgressHUDText:@"用户点击取消并返回" duration:1.5];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"user_cancel_wechat", nil) duration:1.5];
             break;
         case WXErrCodeCommon://用户取消
             [SXLoadingView showProgressHUDText:@"普通错误类型" duration:1.5];

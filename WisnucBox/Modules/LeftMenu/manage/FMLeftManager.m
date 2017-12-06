@@ -231,7 +231,7 @@
                 [selectVC  pushViewController:vc animated:YES];
             }
         }else{
-            [SXLoadingView showProgressHUDText:@"目前仅支持局域网操作" duration:1.5];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"operation_not_support", nil) duration:1.5];
         }
     }
     
@@ -242,7 +242,7 @@
             [selectVC  pushViewController:vc animated:YES];
         }
         }else{
-             [SXLoadingView showProgressHUDText:@"目前仅支持局域网操作" duration:1.5];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"operation_not_support", nil) duration:1.5];
         }
     }
     

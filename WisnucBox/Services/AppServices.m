@@ -344,7 +344,9 @@
 }
 
 - (void)requestForBackupPhotos:(void(^)(BOOL shouldUpload))callback {
-    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否自动备份该手机的照片至WISNUC服务器，要备份全部照片可能需要较长时间，请尽量保持App在前台运行。" preferredStyle:UIAlertControllerStyleAlert];
+    NSString *alertTitle = WBLocalizedString(@"backup_tips", nil);
+    NSString *alertMessage = WBLocalizedString(@"backup_alert_message", nil);
+    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
     NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
     UIAlertAction *cancle = [UIAlertAction actionWithTitle:cancelTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         NSLog(@"点击了取消按钮");
@@ -354,7 +356,7 @@
         callback(NO);
     }];
     
-    UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"备份" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    UIAlertAction *confirm = [UIAlertAction actionWithTitle:WBLocalizedString(@"backup", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSLog(@"点击了确定按钮");
         WB_UserService.currentUser.autoBackUp = YES;
         [[NSNotificationCenter defaultCenter] postNotificationName:UserBackUpConfigChangeNotify object:@(1)];
@@ -369,7 +371,7 @@
 
 - (void)startUploadAssets:(void(^)(void))complete {
     @weaky(self);
-    if(self.netServices.status != AFNetworkReachabilityStatusReachableViaWiFi) return [SXLoadingView showAlertHUD:@"非wifi环境, 停止上传" duration:1];
+    if(self.netServices.status != AFNetworkReachabilityStatusReachableViaWiFi) return [SXLoadingView showAlertHUD:WBLocalizedString(@"non_wifi", nil) duration:1];
     [self.netServices getEntriesInUserBackupDir:^(NSError *error, NSArray<EntriesModel *> *entries) {
         if(error) {
             if(error.wbCode == WBUploadDirNotFound)

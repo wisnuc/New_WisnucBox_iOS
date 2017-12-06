@@ -22,28 +22,31 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"修改登录密码";
+    self.title = WBLocalizedString(@"modify_password", nil);
     NSString *buttonTitle = WBLocalizedString(@"confirm", nil);
     [_confirmButton setTitle:buttonTitle forState:UIControlStateNormal];
+    [_oldPwd setPlaceholder:WBLocalizedString(@"original_user_password", nil)];
+    [_pwdTF setPlaceholder:WBLocalizedString(@"new_user_password", nil)];
+    [_rePwdTF setPlaceholder:WBLocalizedString(@"confirm_user_password", nil)];
 }
 
 - (IBAction)btnClick:(id)sender {
-    if(IsNilString(_oldPwd.text)) return [SXLoadingView showAlertHUD:@"请输入原密码" duration:1];
-    if(IsNilString(_pwdTF.text)) return [SXLoadingView showAlertHUD:@"请输入新密码" duration:1];
-    if(IsNilString(_rePwdTF.text)) return [SXLoadingView showAlertHUD:@"请确认新密码" duration:1];
-    if(!IsEquallString(_pwdTF.text, _rePwdTF.text)) return [SXLoadingView showAlertHUD:@"两次输入的新密码不一致" duration:1];
+    if(IsNilString(_oldPwd.text)) return [SXLoadingView showAlertHUD:WBLocalizedString(@"enter_original_password", nil) duration:1];
+    if(IsNilString(_pwdTF.text)) return [SXLoadingView showAlertHUD:WBLocalizedString(@"enter_new_password", nil) duration:1];
+    if(IsNilString(_rePwdTF.text)) return [SXLoadingView showAlertHUD:WBLocalizedString(@"confirm_new_password", nil) duration:1];
+    if(!IsEquallString(_pwdTF.text, _rePwdTF.text)) return [SXLoadingView showAlertHUD:WBLocalizedString(@"new_password_inconsistent", nil) duration:1];
     
     FMUpdateUserPasswordAPI * api = [FMUpdateUserPasswordAPI new];
     api.oldPwd = _oldPwd.text;
     api.nPwd = _pwdTF.text;
-    [SXLoadingView showProgressHUD:@"正在修改..."];
+    [SXLoadingView showProgressHUD:@"loading..."];
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         [SXLoadingView hideProgressHUD];
-        [SXLoadingView showAlertHUD:@"修改成功" duration:1];
+        [SXLoadingView showAlertHUD:WBLocalizedString(@"success", nil) duration:1];
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(__kindof JYBaseRequest *request) {
         [SXLoadingView hideProgressHUD];
-        [SXLoadingView showAlertHUD:@"修改失败" duration:1];
+        [SXLoadingView showAlertHUD:WBLocalizedString(@"error", nil) duration:1];
     }];
 }
 

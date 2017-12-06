@@ -13,6 +13,7 @@
 "clear_select_item" = "Clear selection";
 "select_file" = "Select Files";
 "select_photo" = "Select Photos";
+"finish_text" = "Done";
 
 "accepted" = "Accepted";
 "refused" = "Refused";
@@ -23,23 +24,42 @@
 
 "loading..." = "Loading...";
 
+"error" = "Error, operation failed";
+"success" = "The operation is successful";
+
 // LeftMenu Title
 "setting" = "Setting";
 "transmission_manage" = "Transfer";
 "equipment_manage" = "Station";
 "invitation" = "Invite a friend";
+"operation_not_support" = "Operation not supported";
 
 //TabBar Title
 "photo" = "Photos";
 "file" = "Files";
 
+//Upload
+"upload_failed" = "Upload Failed";
+"this_file_does_not_exist" = "This file does not exist.";
 //Photos
-
+"please_select_the_photo" = "Please select the photo";
+"download_completed" = "Download completed";
+"play_failed" = "Play failed";
+"sharing_failed" = "Sharing failed";
 
 //Files
 "my_file" = "My Files";
+"re_download_the_item" = "Re Download";
+"download_the_item" = "Download the item";
+"open_the_item" = "Open";
+"select_count" = "%ld Selected";
+"file_preview_failed" = "File preview failed";
+"please_select_the_file" = "Please select the file";
+"nofile_choose" = "There is no file in your folder to choose from";
+"file_downloaded" = "This file has been downloaded";
+"no_file" = "No file to choose from";
 
-//transmission
+// Transmission
 "completed" = "Completed";
 "incomplete" = "InComplete";
 
@@ -98,12 +118,83 @@
 "nic_mac_address" = "NIC Mac Address";
 "network_connection_type" = "Connection Type";
 "remote_connection" = "Remote Connection";
-"local_station_connection" = "Local network Connection";
+"local_station_connection" = "Local Network Connection";
+
+//station device
+"equipment_label" = "Device Name";
+"equipment_type" = "Device Type";
+"hardware_serial_number" = "Serial Number";
+"mac_address" = "Mac Address";
+"total_memory_size" = "RAM Size";
+"free_memory_size" = "Free RAM Size";
+"available_memory_size" = "Available RAM Size";
+"cpu_core_number" = "Processor Count";
+"cpu_type" = "Processor Series";
+"cpu_cache_size" = "Processor Cache";
+"file_system_type" = "File System";
+"disk_count" = "Disk Count";
+"disk_array_mode" = "RAID Type";
+"total_space" = "Hard Drive";
+"user_data_space" = "Used Space";
+"available_space" = "Available Space";
+"modify_equipment_label" = "Modify Device Name";
+"device_name_modified_successfully" = "Device name modified successfully";
 
 //Backup
-"Backup_closed" = "Backup is turned off";
+"backup_closed" = "Backup is turned off";
+"backup_tips" = "Backup tips";
+"backup_alert_message" = "Whether to automatically back up the phone's photos to WISNUC server, it may take a long time to back up all the photos, please try to keep the App running in the foreground.";
+"backup" = "Backup";
+"non_wifi" = "Non-wifi, stop uploading";
+
 
 //User
 "user_name" = "User Name";
 "confirm_user_password" = "Confirm Password";
+"create_user" = "Create User";
+"bind_wechat_user" = "Bind WeChat User";
+"modify_user_name" = "Modify User Name";
+"modify_password" = "Modify Password";
+"original_user_password"  = "Original User Password";
+"new_user_password" = "New User Password";
+"enter_original_password" = "Please enter the original password";
+"enter_new_password" =  "Please enter a new password";
+"confirm_new_password"  = "Please confirm the new password";
+"new_password_inconsistent" = "The new password entered twice is inconsistent";
+"not_installed_WeChat" = "You have not installed WeChat yet";
+"bind" = "Bind";
+"confirm_binding_WeChat" = "Confirm binding WeChat";
+"binding_WeChat?" = "Are you sure you want to bind WeChat?";
+"binding" = "Binding...";
+"empty_username" = "Please enter username";
+"empty_password" = "Please enter password";
+"different_user_name" = "Please enter a different user name.";
+"username_has_illegal_character" = "User name has illegal character";
+"password_has_illegal_character" = "Password has illegal character";
+"username_exceed_character" = "Username can not exceed 16 characters";
+"password_exceed_character" = "The password can not exceed 30 characters";
+
+//Login
+
+"logging_in" = "Logging in...";
+"wechat_login" = "WeChat Login";
+"password_text" = "Password";
+"virtual_machine" = "Virtual Machine";
+"user" = "User";
+"manual_setting" = "Manual Setting";
+"logout" = "Logout";
+"searching" = "Searching...";
+"logout..." = "Logout...";
+"IP_error" = "IP input is incorrect";
+"eneter_IP" = "Please enter the IP address";
+"login_failed" = "Login failed";
+"no_online_device" = "No online device";
+"no_binding_user_in_nas" = "No binding user in nas";
+"no_user_info" = "The device failed to obtain user information";
+"network_is_disconnected" = "The network is disconnected";
+"user_cancel_wechat" = "The user clicks Cancel and returns";
+"rejected_authorization" = "Rejected authorization";
+"WeChat_not_support" = "WeChat does not support it";
+
+
 

@@ -18,27 +18,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"修改用户名";
+    self.title = WBLocalizedString(@"modify_user_name", nil);
     NSString *titleString = WBLocalizedString(@"confirm", nil);
     [self.confirmButton setTitle:titleString forState:UIControlStateNormal];
+    [self.uNameTF setPlaceholder:WBLocalizedString(@"user_name", nil)];
 }
 
 - (IBAction)btnClick:(id)sender {
-    if(IsEquallString(WB_UserService.currentUser.userName, _uNameTF.text)) return [SXLoadingView showAlertHUD:@"请输入不同的用户名" duration:1];
-    if(IsNilString(_uNameTF.text)) return [SXLoadingView showAlertHUD:@"用户名不能为空" duration:1];
+    if(IsEquallString(WB_UserService.currentUser.userName, _uNameTF.text)) return [SXLoadingView showAlertHUD:WBLocalizedString(@"different_user_name", nil) duration:1];
+    if(IsNilString(_uNameTF.text)) return [SXLoadingView showAlertHUD:WBLocalizedString(@"empty_username", nil) duration:1];
     FMUpdateUserAPI * api = [FMUpdateUserAPI new];
     api.userName = _uNameTF.text;
-    [SXLoadingView showProgressHUD:@"正在修改..."];
+    [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         [SXLoadingView hideProgressHUD];
         NSDictionary *dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
         WB_UserService.currentUser.userName = dic[@"username"];
         [WB_UserService synchronizedCurrentUser];
-        [SXLoadingView showAlertHUD:@"修改成功" duration:1];
+        [SXLoadingView showAlertHUD:WBLocalizedString(@"success", nil) duration:1];
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(__kindof JYBaseRequest *request) {
         [SXLoadingView hideProgressHUD];
-        [SXLoadingView showAlertHUD:@"修改失败" duration:1];
+        [SXLoadingView showAlertHUD:WBLocalizedString(@"error", nil) duration:1];
     }];
 }
 

@@ -109,7 +109,6 @@ FilesHelperOpenFilesDelegate
     [FilesDataSourceManager manager].delegate = self;
     [[FilesDataSourceManager manager] getFilesWithDriveUUID:_driveUUID DirUUID:_parentUUID];
     _cellStatus = FLFliesCellStatusNormal;
-    self.tableView.noDataImageName = @"no_file";
     [self.tableView reloadData];
 }
 
@@ -174,7 +173,7 @@ FilesHelperOpenFilesDelegate
     
     BOOL canOpen = [self.documentController presentPreviewAnimated:YES];
     if (!canOpen) {
-        [SXLoadingView showProgressHUDText:@"文件预览失败" duration:1];
+        [SXLoadingView showProgressHUDText:WBLocalizedString(@"file_preview_failed", nil) duration:1];
         [_documentController presentOptionsMenuFromRect:self.view.bounds inView:self.view animated:YES];
     }
 }
@@ -184,7 +183,7 @@ FilesHelperOpenFilesDelegate
         return;
     }
     if (self.dataSouceArray.count == 0) {
-        [SXLoadingView showAlertHUD:@"您所在的文件夹没有文件可以选择" duration:2];
+        [SXLoadingView showAlertHUD:WBLocalizedString(@"nofile_choose", nil) duration:2];
         return;
     }
     [self.chooseHeadView setHidden:NO];
@@ -198,7 +197,7 @@ FilesHelperOpenFilesDelegate
 
 //    self.tabBarController.tabBar.hidden = YES;
     self.cellStatus = FLFliesCellStatusCanChoose;
-    _countLb.text = [NSString stringWithFormat:@"已选%ld个文件",(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
+    _countLb.text = [NSString stringWithFormat:WBLocalizedString(@"select_count", nil),(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
     [self.tableView reloadData];
     //     }
 }
@@ -219,7 +218,7 @@ FilesHelperOpenFilesDelegate
    
 //    [self.rdv_tabBarController setTabBarHidden:NO animated:YES];
     self.cellStatus = FLFliesCellStatusNormal;
-    _countLb.text = [NSString stringWithFormat:@"已选1个文件"];
+    _countLb.text = [NSString stringWithFormat:WBLocalizedString(@"select_count", nil),1];
     [self.tableView reloadData];
 }
 
@@ -272,7 +271,7 @@ FilesHelperOpenFilesDelegate
     if (self.cellStatus == FLFliesCellStatusCanChoose) {
         if (row == 0) {
             if ([FLFIlesHelper helper].chooseFiles.count == 0) {
-                [SXLoadingView showAlertHUD:@"请先选择文件" duration:1];
+                [SXLoadingView showAlertHUD:WBLocalizedString(@"please_select_the_file", nil) duration:1];
             }else{
                 [self actionForNormalStatus];
                 [[FLFIlesHelper helper] downloadChooseFilesParentUUID:_parentUUID RootUUID:_driveUUID];
@@ -334,7 +333,7 @@ FilesHelperOpenFilesDelegate
                     [[FLFIlesHelper helper] removeChooseFile:model];
                 }else
                     [[FLFIlesHelper helper] addChooseFile:model];
-                _countLb.text = [NSString stringWithFormat:@"已选%ld个文件",(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
+                _countLb.text = [NSString stringWithFormat:WBLocalizedString(@"select_count", nil),(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
                 [self.tableView reloadData];
             }else{
                 NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
@@ -407,6 +406,7 @@ FilesHelperOpenFilesDelegate
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.contentInset = UIEdgeInsetsMake(KDefaultOffset, 0, 0, 0);
+        _tableView.noDataImageName = @"no_file";
     }
     return _tableView;
 }

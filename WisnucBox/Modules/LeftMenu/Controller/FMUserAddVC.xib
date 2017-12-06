@@ -13,9 +13,13 @@
             <connections>
                 <outlet property="backButton" destination="OC2-SG-FhD" id="SDd-av-j82"/>
                 <outlet property="confirmButton" destination="AIK-Nf-oS0" id="eUD-v1-djs"/>
+                <outlet property="confirmTitleLabel" destination="6dt-9f-ndp" id="jnB-hW-tkF"/>
                 <outlet property="doubleCheckTF" destination="NbO-y7-dJx" id="Ljl-Nf-G1y"/>
+                <outlet property="navigationTitleLabel" destination="zVM-cj-Ycn" id="BnK-bm-Adu"/>
                 <outlet property="passwordTF" destination="m3X-z8-d7v" id="fa1-UZ-LTD"/>
+                <outlet property="passwordTitleLabel" destination="HLE-67-qLN" id="lAS-vy-DRx"/>
                 <outlet property="userNameTF" destination="INS-2S-QOJ" id="udW-Zc-6L4"/>
+                <outlet property="userNameTitileLabel" destination="Y0h-AG-cn3" id="yJu-lc-UMI"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -24,7 +28,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="用户名" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="INS-2S-QOJ" userLabel="username">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="INS-2S-QOJ" userLabel="username">
                     <rect key="frame" x="52" y="247" width="346" height="20"/>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -58,7 +62,7 @@
                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m3X-z8-d7v" userLabel="密码1：">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m3X-z8-d7v" userLabel="密码1：">
                     <rect key="frame" x="52" y="327" width="346" height="20"/>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -75,15 +79,12 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.87" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="确认密码" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6dt-9f-ndp">
-                    <rect key="frame" x="52" y="378" width="76" height="17"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="76" id="ksR-uE-eKZ"/>
-                    </constraints>
+                    <rect key="frame" x="52" y="378" width="346" height="17"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="确认密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NbO-y7-dJx" userLabel="password2">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NbO-y7-dJx" userLabel="password2">
                     <rect key="frame" x="52" y="407" width="346" height="20"/>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -205,6 +206,7 @@
                 <constraint firstItem="HLE-67-qLN" firstAttribute="leading" secondItem="e5R-wQ-leG" secondAttribute="leading" id="cL3-jm-mnv"/>
                 <constraint firstAttribute="trailing" secondItem="63O-vD-dCg" secondAttribute="trailing" id="cXv-6n-KRp"/>
                 <constraint firstItem="6dt-9f-ndp" firstAttribute="leading" secondItem="WQs-QT-yCh" secondAttribute="leading" id="dLS-X6-PLR"/>
+                <constraint firstAttribute="trailing" secondItem="6dt-9f-ndp" secondAttribute="trailing" constant="16" id="dgv-Cf-F1S"/>
                 <constraint firstItem="e5R-wQ-leG" firstAttribute="top" secondItem="INS-2S-QOJ" secondAttribute="bottom" constant="2" id="fDt-QH-sV1"/>
                 <constraint firstItem="WQs-QT-yCh" firstAttribute="width" secondItem="m3X-z8-d7v" secondAttribute="width" id="feQ-zY-38f"/>
                 <constraint firstItem="6dt-9f-ndp" firstAttribute="top" secondItem="WQs-QT-yCh" secondAttribute="bottom" constant="28" id="gGf-4m-gKD"/>

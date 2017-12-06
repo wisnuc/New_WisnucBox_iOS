@@ -1200,7 +1200,7 @@
 		F6830EE41FB2FEC4005AC578 /* FMSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMSetting.h; sourceTree = "<group>"; };
 		F6830EE51FB2FEC4005AC578 /* FMSetting.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FMSetting.xib; sourceTree = "<group>"; };
 		F6830EE91FB2FEF3005AC578 /* FMUserAddVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMUserAddVC.h; sourceTree = "<group>"; };
-		F6830EEA1FB2FEF3005AC578 /* FMUserAddVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMUserAddVC.m; sourceTree = "<group>"; };
+		F6830EEA1FB2FEF3005AC578 /* FMUserAddVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMUserAddVC.m; sourceTree = "<group>"; wrapsLines = 1; };
 		F6830EEB1FB2FEF3005AC578 /* FMUserAddVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FMUserAddVC.xib; sourceTree = "<group>"; };
 		F6830EEC1FB2FEF3005AC578 /* FMUserSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMUserSetting.h; sourceTree = "<group>"; };
 		F6830EED1FB2FEF3005AC578 /* FMUserSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMUserSetting.m; sourceTree = "<group>"; };

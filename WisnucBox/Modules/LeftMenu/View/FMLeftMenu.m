@@ -50,7 +50,7 @@
     
     self.userHeaderIV.userInteractionEnabled = YES;
     [self.userHeaderIV addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapHeader:)]];
-    _backupLabel.text = WBLocalizedString(@"Backup_closed", nil);
+    _backupLabel.text = WBLocalizedString(@"backup_closed", nil);
     _progressLabel = [[UILabel alloc]init];
     _progressLabel.text = @"         ";
     _progressLabel.textColor = [UIColor colorWithRed:236 green:236 blue:236 alpha:1];

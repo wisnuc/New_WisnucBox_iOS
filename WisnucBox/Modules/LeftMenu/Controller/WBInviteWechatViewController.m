@@ -117,7 +117,7 @@ UITableViewDataSource
     } failure:^(__kindof JYBaseRequest *request) {
          NSLog(@"%@",request.error);
          [SXLoadingView hideProgressHUD];
-         [SXLoadingView showProgressHUDText:@"分享失败" duration:1.3];
+         [SXLoadingView showProgressHUDText:WBLocalizedString(@"sharing_failed", nil) duration:1.3];
     }];
 }
 
@@ -186,7 +186,7 @@ UITableViewDataSource
         [[WBStationTicketsWechatAPI apiWithTicketId:usersModel.ticketId Guid:usersModel.userId Isbind:YES] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
             NSLog(@"%@",request.responseJsonObject);
             [SXLoadingView hideProgressHUD];
-            [SXLoadingView showProgressHUDText:@"接受邀请成功" duration:1.5];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"accepted", nil) duration:1.5];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weak_self getData];
             });
@@ -194,7 +194,7 @@ UITableViewDataSource
         } failure:^(__kindof JYBaseRequest *request) {
             NSLog(@"%@",request.error);
             [SXLoadingView hideProgressHUD];
-            [SXLoadingView showProgressHUDText:@"接受邀请失败" duration:1.5];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"error", nil) duration:1.5];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weak_self getData];
             });
@@ -206,14 +206,14 @@ UITableViewDataSource
         [SXLoadingView showProgressHUD:@""];
         [[WBStationTicketsWechatAPI apiWithTicketId:usersModel.ticketId Guid:usersModel.userId Isbind:NO]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
          [SXLoadingView hideProgressHUD];
-         [SXLoadingView showProgressHUDText:@"已拒绝接受邀请" duration:1.5];
+         [SXLoadingView showProgressHUDText:WBLocalizedString(@"refused", nil) duration:1.5];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weak_self getData];
             });
             NSLog(@"%@",request.responseJsonObject);
         } failure:^(__kindof JYBaseRequest *request) {
             [SXLoadingView hideProgressHUD];
-            [SXLoadingView showProgressHUDText:@"失败" duration:1.5];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"error", nil) duration:1.5];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weak_self getData];
             });

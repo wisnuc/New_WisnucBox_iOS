@@ -18,6 +18,10 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *confirmButton;
 @property (nonatomic) id navDelegate;
+@property (weak, nonatomic) IBOutlet UILabel *navigationTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *userNameTitileLabel;
+@property (weak, nonatomic) IBOutlet UILabel *passwordTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *confirmTitleLabel;
 
 @end
 
@@ -34,6 +38,13 @@
     self.passwordTF.delegate = self;
     self.doubleCheckTF.delegate = self;
     self.doubleCheckTF.returnKeyType = UIReturnKeyDone;
+    self.navigationTitleLabel.text = WBLocalizedString(@"create_user", nil);
+    self.userNameTitileLabel.text = WBLocalizedString(@"user_name", nil);
+    self.passwordTitleLabel.text = WBLocalizedString(@"password_text", nil);
+    self.confirmTitleLabel.text = WBLocalizedString(@"confirm_user_password", nil);
+    self.userNameTF.placeholder = WBLocalizedString(@"user_name", nil);
+    self.passwordTF.placeholder = WBLocalizedString(@"password_text", nil);
+    self.doubleCheckTF.placeholder = WBLocalizedString(@"confirm_user_password", nil);
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -51,22 +62,27 @@
 
 - (IBAction)addBtnClick:(id)sender {
     if (![NSString isUserName:_userNameTF.text]) {
-        [SXLoadingView  showProgressHUDText:@"用户名含有非法字符!" duration:1];
+        [SXLoadingView  showProgressHUDText:WBLocalizedString(@"username_has_illegal_character", nil) duration:1];
         return;
     }
     
     if (![NSString isPassword:_passwordTF.text]) {
-        [SXLoadingView  showProgressHUDText:@"密码不符合规则!" duration:1];
+        [SXLoadingView  showProgressHUDText:WBLocalizedString(@"password_has_illegal_character", nil) duration:1];
+        return;
+    }
+    
+    if (self.passwordTF.text.length<=0) {
+        [SXLoadingView  showProgressHUDText:WBLocalizedString(@"empty_password", nil) duration:1];
         return;
     }
     if (self.userNameTF.text.length<=0)
-        [SXLoadingView  showProgressHUDText:@"请输入用户名!" duration:1];
+        [SXLoadingView  showProgressHUDText:WBLocalizedString(@"empty_username", nil) duration:1];
     else if(self.userNameTF.text.length >= 16)
-     [SXLoadingView  showProgressHUDText:@"用户名不能超过16个字符!" duration:1];
+     [SXLoadingView  showProgressHUDText:WBLocalizedString(@"username_exceed_character", nil) duration:1];
     else if(self.passwordTF.text.length >= 30)
-     [SXLoadingView  showProgressHUDText:@"密码不能超过30个字符!" duration:1];
+     [SXLoadingView  showProgressHUDText:WBLocalizedString(@"password_exceed_character", nil) duration:1];
     else if(!IsEquallString(self.passwordTF.text, self.doubleCheckTF.text))
-     [SXLoadingView  showProgressHUDText:@"两次密码不一致！" duration:1];
+     [SXLoadingView  showProgressHUDText:WBLocalizedString(@"new_password_inconsistent",nil) duration:1];
     else{
         FMCreateUserAPI * api = [FMCreateUserAPI new];
         NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:0];
@@ -74,11 +90,11 @@
         [dic setObject:IsNilString(self.passwordTF.text)?@"":self.passwordTF.text forKey:@"password"];
         api.param = dic;
         [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-            [SXLoadingView showAlertHUD:@"创建用户成功" duration:1];
+            [SXLoadingView showAlertHUD:WBLocalizedString(@"success",nil) duration:1];
             [self.navigationController popViewControllerAnimated:YES];
         } failure:^(__kindof JYBaseRequest *request) {
             NSLog(@"FMCreateUserAPI %@",request.error);
-            [SXLoadingView showAlertHUD:@"创建用户失败" duration:1];
+            [SXLoadingView showAlertHUD:@"error" duration:1];
         }];
     }
 }

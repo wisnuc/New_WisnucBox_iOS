@@ -92,7 +92,7 @@
     [_cancelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(_backView).offset(-25);
         make.bottom.equalTo(_backView).offset(-16);
-        make.size.mas_equalTo(CGSizeMake(44, 20));
+        make.size.mas_equalTo(CGSizeMake(50, 20));
     }];
     [_processView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_backView).offset(25);

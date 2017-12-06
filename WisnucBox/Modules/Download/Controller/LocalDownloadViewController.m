@@ -128,7 +128,7 @@ UIDocumentInteractionControllerDelegate
 {
     BOOL canOpen = [self.documentController presentPreviewAnimated:YES];
     if (!canOpen) {
-        [SXLoadingView showProgressHUDText:@"文件预览失败" duration:1];
+        [SXLoadingView showProgressHUDText:WBLocalizedString(@"file_preview_failed", nil) duration:1];
         [_documentController presentOptionsMenuFromRect:self.view.bounds inView:self.view animated:YES];
     }
 
@@ -170,7 +170,7 @@ UIDocumentInteractionControllerDelegate
     
     @weaky(self);
     if(_downloadedArray.count == 0 && self.transmitingArray.count == 0){
-        [SXLoadingView showProgressHUDText:@"没有文件可以进行选择" duration:1];
+        [SXLoadingView showProgressHUDText:WBLocalizedString(@"no_file", nil) duration:1];
     }else{
         if (!self.cellStatus) {
             [[LCActionSheet sheetWithTitle:@"" cancelButtonTitle:cancelTitle clicked:^(LCActionSheet *actionSheet, NSInteger buttonIndex) {

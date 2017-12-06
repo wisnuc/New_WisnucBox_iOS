@@ -15,6 +15,7 @@
                 <outlet property="bindWechatButton" destination="hYZ-Fh-JNq" id="1py-8f-kuA"/>
                 <outlet property="bindWechatImageView" destination="hyg-ce-My0" id="A99-pf-p5f"/>
                 <outlet property="headerEditBtn" destination="jhp-mf-Chk" id="bOZ-2R-tcG"/>
+                <outlet property="logoutButton" destination="UFR-XZ-JUX" id="z9G-yh-PB2"/>
                 <outlet property="userHeaderImageView" destination="ZqC-oc-cPt" id="KVS-aM-EsR"/>
                 <outlet property="userName" destination="CrX-WG-HTB" id="hiE-Wb-yFV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -151,9 +152,12 @@
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UFR-XZ-JUX">
-                    <rect key="frame" x="30" y="606" width="315" height="30"/>
+                    <rect key="frame" x="30" y="598" width="315" height="38"/>
                     <color key="backgroundColor" red="1" green="0.39242548788863552" blue="0.40160507369386833" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="38" id="nnf-LC-nQU"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <state key="normal" title="注销">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
