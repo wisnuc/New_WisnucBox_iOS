@@ -69,7 +69,7 @@ UIDocumentInteractionControllerDelegate
     _filesServices = [FilesServices new];
     [self loadData];
     [self.view addSubview:self.tableView];
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, 64)];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [KDefaultNotificationCenter addObserver:self selector:@selector(handleNetReachabilityNotify:) name:NETWORK_REACHABILITY_CHANGE_NOTIFY object:nil];
 }
 
@@ -91,12 +91,23 @@ UIDocumentInteractionControllerDelegate
 }
 
 - (void)createNavBtns{
-    UIButton * rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];
+    UIButton * rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 24, 24)];
     [rightBtn setImage:[UIImage imageNamed:@"more"] forState:UIControlStateNormal];
     [rightBtn setImage:[UIImage imageNamed:@"more_highlight"] forState:UIControlStateHighlighted];
+    NSString* phoneVersion = [[UIDevice currentDevice] systemVersion];
+    NSLog(@"%@",phoneVersion);
+    
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -10;
+    if([phoneVersion floatValue]>=11.0){
+        rightBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 0,0, -10);
+    }
     [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+     [rightBtn setEnlargeEdgeWithTop:10 right:5 bottom:5 left:5];
     UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = rightItem;
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:rightItem,negativeSpacer,nil];
 }
 
 - (void)updateDataWithDownloadTask:(CSDownloadTask *)downloadTask {
@@ -202,7 +213,7 @@ UIDocumentInteractionControllerDelegate
 #pragma UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     if (indexPath.section==0) {
       LocalDownloadingTableViewCell *cell;
        cell = [tableView  cellForRowAtIndexPath:indexPath];
@@ -428,10 +439,10 @@ UIDocumentInteractionControllerDelegate
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     if(section == 0){
-        return WBLocalizedString(@"completed", nil);
+        return WBLocalizedString(@"incomplete", nil);
     }
     else{
-        return WBLocalizedString(@"incomplete", nil);
+        return WBLocalizedString(@"completed", nil);
     }
 }
 
@@ -514,7 +525,7 @@ UIDocumentInteractionControllerDelegate
 //lazy
 - (UITableView *)tableView{
     if (!_tableView) {
-        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight - 64) style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
     }

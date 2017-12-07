@@ -1033,7 +1033,11 @@ static NSArray * invaildChars;
         }
         fileName = tempFileName;
         if(yesOrNo) {
-            fileName = [NSString stringWithFormat:@"%@_%f", fileName, [[NSDate date] timeIntervalSince1970]];
+            
+          NSString * fileNameDeletingPathExtension = [fileName stringByDeletingPathExtension];
+            // 获得文件的后缀名（不带'.'）
+          NSString * pathExtension = [filePath pathExtension];
+            fileName = [NSString stringWithFormat:@"%@_%f.%@", fileNameDeletingPathExtension, [[NSDate date] timeIntervalSince1970],pathExtension];
         }
         NSString *urlString;
         NSMutableDictionary * mutableDic = [NSMutableDictionary dictionaryWithCapacity:0];

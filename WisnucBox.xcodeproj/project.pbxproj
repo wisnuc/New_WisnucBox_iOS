@@ -661,7 +661,6 @@
 		F68311D01FB30AAF005AC578 /* video.png in Resources */ = {isa = PBXBuildFile; fileRef = F68310771FB30AAE005AC578 /* video.png */; };
 		F68311D11FB30AAF005AC578 /* video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F68310781FB30AAE005AC578 /* video@2x.png */; };
 		F68311D21FB30AAF005AC578 /* video@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F68310791FB30AAE005AC578 /* video@3x.png */; };
-		F68311D61FB311FC005AC578 /* FMUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = F68311D51FB311FC005AC578 /* FMUsers.m */; };
 		F68311DD1FB31369005AC578 /* LCActionSheet.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F68311D81FB31369005AC578 /* LCActionSheet.bundle */; };
 		F68311DE1FB31369005AC578 /* LCActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = F68311DA1FB31369005AC578 /* LCActionSheet.m */; };
 		F68311DF1FB31369005AC578 /* LCActionSheetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F68311DC1FB31369005AC578 /* LCActionSheetCell.m */; };
@@ -1549,8 +1548,6 @@
 		F68310771FB30AAE005AC578 /* video.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video.png; sourceTree = "<group>"; };
 		F68310781FB30AAE005AC578 /* video@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video@2x.png"; sourceTree = "<group>"; };
 		F68310791FB30AAE005AC578 /* video@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video@3x.png"; sourceTree = "<group>"; };
-		F68311D41FB311FC005AC578 /* FMUsers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMUsers.h; sourceTree = "<group>"; };
-		F68311D51FB311FC005AC578 /* FMUsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMUsers.m; sourceTree = "<group>"; };
 		F68311D81FB31369005AC578 /* LCActionSheet.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LCActionSheet.bundle; sourceTree = "<group>"; };
 		F68311D91FB31369005AC578 /* LCActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCActionSheet.h; sourceTree = "<group>"; };
 		F68311DA1FB31369005AC578 /* LCActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCActionSheet.m; sourceTree = "<group>"; };
@@ -3244,8 +3241,6 @@
 		F68311D31FB30D46005AC578 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				F68311D41FB311FC005AC578 /* FMUsers.h */,
-				F68311D51FB311FC005AC578 /* FMUsers.m */,
 				1F5D217E1FBC3CC6006C65AA /* WBBaseModel.h */,
 				1F5D217F1FBC3CC6006C65AA /* WBBaseModel.m */,
 			);
@@ -4029,7 +4024,6 @@
 				F671F1031FB4B3B50051DF93 /* floatTableViewCell.m in Sources */,
 				1F4D75B01FAC4BB800E6516C /* AssetsServices.m in Sources */,
 				F675614B1FB3428F00E3277F /* UIColor+MaterialTextField.m in Sources */,
-				F68311D61FB311FC005AC578 /* FMUsers.m in Sources */,
 				71A3D6741FB584360002B8B1 /* FMCreateUserAPI.m in Sources */,
 				C183CDFD1FCFD8A0002E29CD /* UINavigationController+SXFullScreen.m in Sources */,
 				F67D64071FAC7D3600E23D16 /* PHAsset+JYEXT.m in Sources */,

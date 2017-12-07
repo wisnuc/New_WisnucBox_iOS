@@ -52,6 +52,7 @@
     [self.navigationController setNavigationBarHidden:YES];
     self.navDelegate = self.navigationController.interactivePopGestureRecognizer.delegate;
     self.navigationController.interactivePopGestureRecognizer.delegate = (id)self;
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 }
 
 -(void)viewWillDisappear:(BOOL)animated{

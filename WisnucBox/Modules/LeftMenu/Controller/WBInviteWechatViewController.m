@@ -266,7 +266,14 @@ UITableViewDataSource
         _inviteButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_inviteButton setImage:[UIImage imageNamed:@"add_invite"] forState:UIControlStateNormal];
         [_inviteButton addTarget:self action:@selector(inviteButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        _inviteButton.frame = CGRectMake(__kWidth - 20 -63, __kHeight - 100 -63-64, 63, 63);
+         _inviteButton.frame = CGRectMake(__kWidth - 16 -63, __kHeight-63-16 -64, 63, 63);
+        _inviteButton.contentMode = UIViewContentModeScaleAspectFit;
+        _inviteButton.layer.cornerRadius =_inviteButton.frame.size.width/2;
+        _inviteButton.layer.shadowColor = [UIColor blackColor].CGColor;
+        _inviteButton.layer.shadowRadius = 2.f;
+        _inviteButton.layer.shadowOffset = CGSizeMake(0, 3);
+        _inviteButton.layer.shadowOpacity = 0.4f;
+       
     }
     return _inviteButton;
 }

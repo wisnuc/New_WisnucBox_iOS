@@ -42,7 +42,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.13.6</string>
+	<string>1.14.0</string>
 	<key>CFBundleTypeName</key>
 	<string>com.myapp.common-data</string>
 	<key>CFBundleURLTypes</key>

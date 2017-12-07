@@ -429,8 +429,9 @@ ReNameDelegate
 
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    UILabel *lineLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 0.5)];
-    lineLabel.backgroundColor = [UIColor colorWithRed:191/255.0f green:191/255.0f blue:191/255.0f alpha:1];
+    UILabel *lineLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 0.2)];
+    lineLabel.backgroundColor = [UIColor blackColor];
+    lineLabel.alpha = .12;
     return lineLabel;
 }
 

@@ -50,7 +50,7 @@
 "re_download_the_item" = "重新下载";
 "download_the_item" = "下载该文件";
 "open_the_item" = "打开该文件";
-"select_files" = "%ld项已选";
+"select_count" = "%ld项已选";
 "file_preview_failed" = "文件预览失败";
 "please_select_the_file" = "请先选择文件";
 "nofile_choose" = "您所在的文件夹没有文件可以选择";
@@ -82,12 +82,12 @@
 "enter_maintenance" = "进入维护模式";
 "maintenance_explain" = "重启后进入维护模式，可以在维护模式下执行磁盘操作或系统维护任务。";
 "reboot_and_enter_maintenance" = "重启进入维护模式";
-"confirm_shutdown" = "确定要关机吗？";
-"confirm_reboot" = "确定要重启吗？";
-"confirm_maintenance" = "确定要进入维护模式吗？";
-"confirm_shutdown_title" = "确认关机";
-"confirm_reboot_title" = "确认重启";
-"confirm_maintenance_title" = "确认进入维护模式";
+"confirm_shutdown" = "WISNUC设备将被关闭";
+"confirm_reboot" = "WISNUC设备将被重启";
+"confirm_maintenance" = "WISNUC设备将被重启后进入维护模式";
+"confirm_shutdown_title" = "关机";
+"confirm_reboot_title" = "重启";
+"confirm_maintenance_title" = "进入维护模式";
 "shutting_down" = "正在关机...";
 "rebooting" = "正在重启...";
 "entering_maintenance_mode" = "正在进入维护模式...";
@@ -151,6 +151,7 @@
 "confirm_user_password" = "确认密码";
 "create_user" = "新建用户";
 "bind_wechat_user" = "绑定微信用户";
+"modify_user_info" = "编辑用户信息";
 "modify_user_name" = "修改用户名";
 "modify_password" = "修改密码";
 "original_user_password"  = "原密码";
@@ -171,6 +172,7 @@
 "password_has_illegal_character" = "密码中含有非法字符";
 "username_exceed_character" = "用户名不能超过16个字符";
 "password_exceed_character" = "密码不能超过30个字符";
+"administrator" = "管理员";
 
 //Login
 "logging_in" = "正在登录...";

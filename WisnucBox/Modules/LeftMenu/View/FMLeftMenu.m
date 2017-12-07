@@ -54,7 +54,7 @@
     _progressLabel = [[UILabel alloc]init];
     _progressLabel.text = @"         ";
     _progressLabel.textColor = [UIColor colorWithRed:236 green:236 blue:236 alpha:1];
-    _progressLabel.font = [UIFont fontWithName:@"Hiragino Sans GB" size:12];
+    _progressLabel.font = [UIFont systemFontOfSize:12];
     _progressLabel.textAlignment = NSTextAlignmentRight;
     _progressLabel.preferredMaxLayoutWidth = (self.frame.size.width -10.0 * 2);
     [_progressLabel  setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
@@ -92,25 +92,27 @@
         self.userHeaderIV.image = [UIImage imageForName:self.nameLabel.text size:self.userHeaderIV.bounds.size];
     }
 
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSString *urlString = [NSString stringWithFormat:@"https://itunes.apple.com/cn/lookup?id=1132191394"];
-    [manager.requestSerializer setValue: [NSString stringWithFormat:@"JWT %@", [AppServices sharedService].userServices.defaultToken] forHTTPHeaderField:@"Authorization"];
-    [manager POST:urlString parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSArray *array = responseObject[@"results"];
-        NSDictionary *dict = [array lastObject];
-        NSString *app_Version = dict[@"version"];
-        self.versionLb.text = [NSString stringWithFormat:@"WISNUC %@",app_Version];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-    }];
+//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+//    NSString *urlString = [NSString stringWithFormat:@"https://itunes.apple.com/cn/lookup?id=1132191394"];
+//    [manager.requestSerializer setValue: [NSString stringWithFormat:@"JWT %@", [AppServices sharedService].userServices.defaultToken] forHTTPHeaderField:@"Authorization"];
+//    [manager POST:urlString parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//        NSArray *array = responseObject[@"results"];
+//        NSDictionary *dict = [array lastObject];
+//        NSString *app_Version = dict[@"version"];
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    self.versionLb.text = [NSString stringWithFormat:@"WISNUC %@",app_Version];
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//
+//    }];
 
      dispatch_async(dispatch_get_main_queue(), ^{
 
          UILabel * progressLb = [[UILabel alloc] initWithFrame:CGRectMake(0, 80, __kWidth, 15)];
          progressLb.font = [UIFont systemFontOfSize:12];
          progressLb.textAlignment = NSTextAlignmentCenter;
-         self.nameLabel.font = [UIFont fontWithName:DONGQING size:14];
+//         self.nameLabel.font = [UIFont fontWithName:DONGQING size:14];
      });
     
 }

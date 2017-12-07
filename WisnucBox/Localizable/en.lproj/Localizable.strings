@@ -83,13 +83,13 @@
 "shutdown" = "Poweroff";
 "enter_maintenance" = "Maintenance Mode";
 "maintenance_explain" = "In maintenance mode, you can reconfigure disks or Wisnuc system, your device will reboot before entering maintenance mode.";
-"reboot_and_enter_maintenance" = "Go Maintenance Mode";
-"confirm_shutdown" = "Are you sure you want to shut down?";
-"confirm_reboot" = "Are you sure you want to reboot?";
-"confirm_maintenance" = "Are you sure you want to enter maintenance mode?";
-"confirm_shutdown_title" = "Confirm shut down";
-"confirm_reboot_title" = "Confirm reboot";
-"confirm_maintenance_title" = "Confirm to enter maintenance mode?";
+"reboot_and_enter_maintenance" = "Enter Maintenance Mode";
+"confirm_shutdown" = "WISNUC device will be shut down";
+"confirm_reboot" = "WISNUC device will be rebooted";
+"confirm_maintenance" = "WISNUC device will be rebooted into maintenance mode";
+"confirm_shutdown_title" = "Shut Down";
+"confirm_reboot_title" = "Reboot";
+"confirm_maintenance_title" = "Enter maintenance mode";
 "shutting_down" = "Shutting down...";
 "rebooting" = "Rebooting...";
 "entering_maintenance_mode" = "Entering maintenance mode...";
@@ -153,6 +153,7 @@
 "confirm_user_password" = "Confirm Password";
 "create_user" = "Create User";
 "bind_wechat_user" = "Bind WeChat User";
+"modify_user_info" = "Modify User Info";
 "modify_user_name" = "Modify User Name";
 "modify_password" = "Modify Password";
 "original_user_password"  = "Original User Password";
@@ -173,6 +174,7 @@
 "password_has_illegal_character" = "Password has illegal character";
 "username_exceed_character" = "Username can not exceed 16 characters";
 "password_exceed_character" = "The password can not exceed 30 characters";
+"administrator" = "Administrator";
 
 //Login
 

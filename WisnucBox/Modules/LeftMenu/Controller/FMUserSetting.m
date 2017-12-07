@@ -9,7 +9,7 @@
 #import "FMUserSetting.h"
 #import "FMUserSettingCell.h"
 #import "FMUserAddVC.h"
-#import "FMUsers.h"
+#import "UserModel.h"
 #import "WBgetStationInfoAPI.h"
 #import "WBStationInfoModel.h"
 
@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *urlLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *userHeaderLabel;
+@property (weak, nonatomic) IBOutlet UIButton *fabButton;
 
 @end
 
@@ -44,12 +45,22 @@
   
     [self displayInfomation];
     [self registerTableView];
+    [self setShadowforFabButton];
+}
+- (void)setShadowforFabButton{
+    _fabButton.contentMode = UIViewContentModeScaleAspectFit;
+    _fabButton.layer.cornerRadius =_fabButton.frame.size.width/2;
+    _fabButton.layer.shadowColor = [UIColor blackColor].CGColor;
+    _fabButton.layer.shadowRadius = 2.f;
+    _fabButton.layer.shadowOffset = CGSizeMake(0, 3);
+    _fabButton.layer.shadowOpacity = 0.4f;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     [self getData];
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -84,10 +95,10 @@
     [usersApi startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSArray * userArr = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"]
                                 : request.responseJsonObject;
-        
+        NSLog(@"%@",request.responseJsonObject);
         NSMutableArray *tempDataSource = [NSMutableArray arrayWithCapacity:0];
         for (NSDictionary * dic in userArr) {
-            FMUsers * model = [FMUsers yy_modelWithJSON:dic];
+            UserModel * model = [UserModel yy_modelWithJSON:dic];
             [tempDataSource addObject:model];
         }
         self.dataSource = tempDataSource;
@@ -124,11 +135,24 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    FMUserSettingCell * cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FMUserSettingCell class]) forIndexPath:indexPath];
-    FMUsers * model = self.dataSource[indexPath.row];
+    
+    FMUserSettingCell * cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FMUserSettingCell class])];
+    if (!cell) {
+        cell = (FMUserSettingCell *) [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([FMUserSettingCell class]) owner:self options:nil] lastObject];
+    }
+    UserModel * model = self.dataSource[indexPath.row];
+//    if (model.global) {
+//        cell.wxLabel.text = @"nil";
+//    }else{
+//        cell.wxLabel.text = @"微信未绑定";
+//    }
     cell.userImageVIew.image = [UIImage imageForName:model.username size:cell.userImageVIew.bounds.size];
     cell.userNameLb.text = model.username;
-    cell.state = UserSettingCellStateNormal;
+    if ([model.isAdmin boolValue]&& [model.isFirstUser boolValue]) {
+        cell.roleLb.text = WBLocalizedString(@"administrator", nil);
+    }else{
+        cell.roleLb.text = @"普通用户";
+    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }

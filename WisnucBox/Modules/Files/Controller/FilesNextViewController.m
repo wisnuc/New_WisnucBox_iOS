@@ -85,23 +85,35 @@ FilesHelperOpenFilesDelegate
 
 -(void)createNavBtns{
     self.title = _name;
-    UIButton * rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];
+//    self.navigationItem.rightBarButtonItem = nil;
+    UIButton * rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 24, 24)];
     [rightBtn setImage:[UIImage imageNamed:@"more"] forState:UIControlStateNormal];
     [rightBtn setImage:[UIImage imageNamed:@"more_highlight"] forState:UIControlStateHighlighted];
+    NSString* phoneVersion = [[UIDevice currentDevice] systemVersion];
+    NSLog(@"%@",phoneVersion);
+   
     UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
                                        initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
                                        target:nil action:nil];
-    negativeSpacer.width = -14;
+    negativeSpacer.width = -10;
+    if([phoneVersion floatValue]>=11.0){
+         rightBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 0,0, -10);
+    }
     [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [rightBtn setEnlargeEdgeWithTop:10 right:5 bottom:5 left:5];
     UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:negativeSpacer,rightItem,nil];
- 
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:rightItem,negativeSpacer,nil];
+//    UIBarButtonItem * rightItem = [UIBarButtonItem itemWithTarget:self action:@selector(rightBtnClick:) nomalImage:[UIImage imageNamed:@"more"]  higeLightedImage:[UIImage imageNamed:@"more_highlight"]  imageEdgeInsets:UIEdgeInsetsMake(0, 20, 0, 0)];
+//     UIBarButtonItem * rightItemfixSpace = [UIBarButtonItem fixedSpaceWithWidth:100];
+//    self.navigationItem.rightBarButtonItems = @[rightItem,rightItemfixSpace];
+
+//    self.navigationItem.rightBarButtonItem = [UIBarButtonItem fixedSpaceWithWidth:10];
 }
 
 - (void)initView{
     [self.view addSubview:self.tableView];
     [self initMjRefresh];
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, 8)];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.view addSubview:self.addButton];
 }
 
@@ -404,7 +416,7 @@ FilesHelperOpenFilesDelegate
 
 - (UITableView *)tableView{
     if (!_tableView) {
-        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight - 44) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight - 64) style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.contentInset = UIEdgeInsetsMake(KDefaultOffset, 0, 0, 0);
@@ -446,7 +458,7 @@ FilesHelperOpenFilesDelegate
 
 - (VCFloatingActionButton *)addButton{
     if(!_addButton){
-        CGRect floatFrame = CGRectMake(__kWidth - 80 , __kHeight - 64 - 56 - 88, 56, 56);
+        CGRect floatFrame = CGRectMake(__kWidth - 56 - 16 , __kHeight - 64 - 56 - 16, 56, 56);
         _addButton = [[VCFloatingActionButton alloc]initWithFrame:floatFrame normalImage:[UIImage imageNamed:@"add_album"] andPressedImage:[UIImage imageNamed:@"icon_close"] withScrollview:_tableView];
         _addButton.automaticallyInsets = YES;
         _addButton.imageArray = @[@"download"];

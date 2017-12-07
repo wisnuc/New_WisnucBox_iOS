@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,13 +27,13 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UVC-Lu-mGd" userLabel="leftTitleLb">
-                        <rect key="frame" x="72" y="16" width="337" height="18"/>
+                        <rect key="frame" x="68" y="16" width="329" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view alpha="0.12" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7DA-cC-l71">
-                        <rect key="frame" x="16" y="48.5" width="394" height="0.5"/>
+                        <rect key="frame" x="0.0" y="48.5" width="426" height="0.5"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="0.5" id="YcU-ce-I6q"/>
@@ -42,17 +42,18 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="UVC-Lu-mGd" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="AG1-N4-ZPV"/>
-                    <constraint firstItem="NFD-21-rHS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="ESH-Yq-th2"/>
                     <constraint firstAttribute="trailingMargin" secondItem="UVC-Lu-mGd" secondAttribute="trailing" constant="9" id="L9W-uw-l4y"/>
                     <constraint firstItem="NFD-21-rHS" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Q8N-GJ-qoA"/>
-                    <constraint firstItem="UVC-Lu-mGd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="64" id="mTA-0U-1gs"/>
+                    <constraint firstItem="NFD-21-rHS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="gND-WZ-JSl"/>
+                    <constraint firstItem="UVC-Lu-mGd" firstAttribute="leading" secondItem="NFD-21-rHS" secondAttribute="trailing" constant="32" id="kuT-Wf-j9k"/>
                 </constraints>
             </tableViewCellContentView>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="7DA-cC-l71" secondAttribute="bottom" constant="1" id="dnJ-c2-R6c"/>
-                <constraint firstItem="7DA-cC-l71" firstAttribute="leading" secondItem="KGk-i7-Jjw" secondAttribute="leading" constant="16" id="jVT-oz-HUf"/>
-                <constraint firstAttribute="trailing" secondItem="7DA-cC-l71" secondAttribute="trailing" constant="16" id="rcZ-d5-uYU"/>
+                <constraint firstItem="7DA-cC-l71" firstAttribute="leading" secondItem="KGk-i7-Jjw" secondAttribute="leading" id="jVT-oz-HUf"/>
+                <constraint firstAttribute="trailing" secondItem="7DA-cC-l71" secondAttribute="trailing" id="rcZ-d5-uYU"/>
             </constraints>
+            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="leftIV" destination="NFD-21-rHS" id="K37-Ca-epy"/>
                 <outlet property="leftLine" destination="7DA-cC-l71" id="eS3-wp-WBs"/>

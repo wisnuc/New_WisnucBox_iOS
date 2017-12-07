@@ -20,6 +20,7 @@
 #import "AppDelegate.h"
 
 @interface FMUserEditVC ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *navigationTitle;
 @property (weak, nonatomic) IBOutlet UIImageView *userHeaderImageView;
 
 @property (weak, nonatomic) IBOutlet UIButton *headerEditBtn;
@@ -40,6 +41,7 @@
     [super viewDidLoad];
     self.title = @"编辑用户信息";
     self.navigationController.navigationBar.translucent = NO;
+    self.navigationTitle.text = WBLocalizedString(@"modify_user_info", nil);
     [self.userHeaderImageView setImage:[UIImage imageForName:WB_UserService.currentUser.userName size:self.userHeaderImageView.bounds.size]];
     [self.userName setTitle:WB_UserService.currentUser.userName forState:UIControlStateNormal];
     [self.userName setEnlargeEdgeWithTop:3 right:10 bottom:3 left:2];
@@ -88,6 +90,7 @@
     }
     [self.userHeaderImageView setImage:[UIImage imageForName:WB_UserService.currentUser.userName size:self.userHeaderImageView.bounds.size]];
     [self.userName setTitle:WB_UserService.currentUser.userName forState:UIControlStateNormal];
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 }
 
 - (IBAction)changUserName:(id)sender {
@@ -110,6 +113,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 

@@ -22,9 +22,16 @@
     NSString *titleString = WBLocalizedString(@"confirm", nil);
     [self.confirmButton setTitle:titleString forState:UIControlStateNormal];
     [self.uNameTF setPlaceholder:WBLocalizedString(@"user_name", nil)];
+    UIButton * rightButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 24)];
+    rightButton.titleLabel.font = [UIFont systemFontOfSize:16];
+    [rightButton setTitleColor:COR1 forState:UIControlStateNormal];
+    [rightButton setTitle:WBLocalizedString(@"finish_text", nil) forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(rightButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem = rightButtonItem;
 }
 
-- (IBAction)btnClick:(id)sender {
+- (void)rightButtonClick:(UIButton *)sender{
     if(IsEquallString(WB_UserService.currentUser.userName, _uNameTF.text)) return [SXLoadingView showAlertHUD:WBLocalizedString(@"different_user_name", nil) duration:1];
     if(IsNilString(_uNameTF.text)) return [SXLoadingView showAlertHUD:WBLocalizedString(@"empty_username", nil) duration:1];
     FMUpdateUserAPI * api = [FMUpdateUserAPI new];
@@ -41,6 +48,10 @@
         [SXLoadingView hideProgressHUD];
         [SXLoadingView showAlertHUD:WBLocalizedString(@"error", nil) duration:1];
     }];
+}
+
+- (IBAction)btnClick:(id)sender {
+   
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{

@@ -17,8 +17,8 @@
 
 -(void)setState:(FMUserSettingCellState)state{
     _state = state;
-    _emailLb.hidden = !state;
-    _deleteBtn.hidden = !state;
+//    _userNameLb.hidden = !state;
+//    _deleteBtn.hidden = !state;
 }
 
 - (IBAction)deleteBtnClick:(id)sender {

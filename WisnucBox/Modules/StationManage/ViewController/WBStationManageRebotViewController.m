@@ -28,8 +28,8 @@
     [_rebotButton setTitle:WBLocalizedString(@"reboot", nil) forState:UIControlStateNormal];
     [_maintainButton setTitle:WBLocalizedString(@"reboot_and_enter_maintenance", nil) forState:UIControlStateNormal];
     [_rebootPowerOffLabel setText:WBLocalizedString(@"reboot_shutdown", nil)];
-    [_miantainDetailLabel setText:WBLocalizedString(@"enter_maintenance", nil)];
-    [_miantainLabel setText:WBLocalizedString(@"rmaintenance_explain", nil)];
+    [_miantainDetailLabel setText:WBLocalizedString(@"maintenance_explain", nil)];
+    [_miantainLabel setText:WBLocalizedString(@"enter_maintenance", nil)];
     
     [self addLeftBarButtonWithImage:[UIImage imageNamed:@"back"] andHighlightButtonImage:nil andSEL:@selector(backbtnClick:)];
 
