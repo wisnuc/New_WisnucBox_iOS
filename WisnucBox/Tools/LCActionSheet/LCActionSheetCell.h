@@ -20,6 +20,6 @@
 /**
  *  Line.
  */
-@property (nonatomic, weak) UIImageView *lineView;
+@property (nonatomic, weak) UIView *lineView;
 
 @end

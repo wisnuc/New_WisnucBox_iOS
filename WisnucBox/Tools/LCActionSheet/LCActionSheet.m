@@ -283,7 +283,7 @@
     UIView *divisionView         = [[UIView alloc] init];
 //    divisionView.alpha           = 0.1f;
 //    divisionView.backgroundColor = LC_ACTION_SHEET_COLOR(150, 150, 150);
-    divisionView.backgroundColor = [UIColor colorWithRed:217/255.0f green:217/255.0f blue:220/255.0f alpha:1];
+    divisionView.backgroundColor = [UIColor colorWithRed:222/255.0f green:222/255.0f blue:224/255.0f alpha:1];
     [bottomView addSubview:divisionView];
     [divisionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(bottomView);

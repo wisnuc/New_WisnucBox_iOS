@@ -7,7 +7,7 @@
 //
 
 #import "LCActionSheetCell.h"
-
+#define LC_ACTION_SHEET_COLOR(r, g, b)      [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:1.0f]
 @interface LCActionSheetCell ()
 
 /**
@@ -29,8 +29,8 @@
         NSString *highlightedPath = [bundlePath stringByAppendingPathComponent:@"bgImage_HL@2x.png"];
         UIImage *highlightedImage = [UIImage imageWithContentsOfFile:highlightedPath];
         
-        NSString *linePath = [bundlePath stringByAppendingPathComponent:@"cellLine@2x.png"];
-        UIImage *lineImage = [UIImage imageWithContentsOfFile:linePath];
+//        NSString *linePath = [bundlePath stringByAppendingPathComponent:@"cellLine@2x.png"];
+//        UIImage *lineImage = [UIImage imageWithContentsOfFile:linePath];
         
         UIImageView *highlightedView  = [[UIImageView alloc] init];
         highlightedView.image         = highlightedImage;
@@ -44,8 +44,9 @@
         [self addSubview:titleLabel];
         self.titleLabel = titleLabel;
         
-        UIImageView *lineView  = [[UIImageView alloc] init];
-        lineView.image         = lineImage;
+        UIView *lineView  = [[UIView alloc] init];
+//        lineView.image         = lineImage;
+        lineView.backgroundColor = LC_ACTION_SHEET_COLOR(222,222,224);
         lineView.contentMode   = UIViewContentModeTop;
         lineView.clipsToBounds = YES;
         [self addSubview:lineView];
