@@ -39,9 +39,9 @@ CGFloat buttonToScreenHeight;
 
         buttonToScreenHeight = SCREEN_HEIGHT - CGRectGetMaxY(self.frame);
         
-        _menuTable = [[UITableView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/5*3, 0, SCREEN_WIDTH/5*2,SCREEN_HEIGHT - (SCREEN_HEIGHT - CGRectGetMaxY(_buttonView.frame))-10)];
+        _menuTable = [[UITableView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/5*3 +10, 0, SCREEN_WIDTH/5*2,SCREEN_HEIGHT - (SCREEN_HEIGHT - CGRectGetMaxY(_buttonView.frame))-10)];
         _menuTable.scrollEnabled = NO;
-        
+//        _menuTable.backgroundColor = [UIColor redColor];
         
         _menuTable.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH/2, CGRectGetHeight(frame))];
         
@@ -123,7 +123,6 @@ CGFloat buttonToScreenHeight;
     
 
     _pressedImageView  = [[UIImageView alloc]initWithFrame:self.bounds];
-    
     _pressedImageView.contentMode = UIViewContentModeScaleAspectFit;
     _pressedImageView.userInteractionEnabled = YES;
     _pressedImageView.layer.cornerRadius = self.jy_Width/2;
@@ -148,7 +147,7 @@ CGFloat buttonToScreenHeight;
     _automaticallyInsets = automaticallyInsets;
     if (automaticallyInsets) {
         _buttonView.jy_Top = _buttonView.jy_Top + 64;
-        _menuTable.frame = CGRectMake(SCREEN_WIDTH/5*3, 0, SCREEN_WIDTH/5*2,SCREEN_HEIGHT - (SCREEN_HEIGHT - CGRectGetMaxY(_buttonView.frame))-10);
+        _menuTable.frame = CGRectMake(SCREEN_WIDTH/5*3 + 10, 0, SCREEN_WIDTH/5*2,SCREEN_HEIGHT - (SCREEN_HEIGHT - CGRectGetMaxY(_buttonView.frame))-10);
     }
 }
 
