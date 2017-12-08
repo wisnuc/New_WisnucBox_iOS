@@ -57,6 +57,10 @@
 
 - (void)_build {
     [self assetServices];
+    _isLogining = NO;
+    _isBuilding = NO;
+    isStartingUpload = NO;
+    needRestart = NO;
     if(self.userServices.currentUser) [self netServices];
     if(self.assetServices.userAuth) {
         NSArray * allLocalAsset = [self.assetServices allAssets];
