@@ -28,16 +28,14 @@
 @implementation AppServices {
     BOOL _isRebuildingPhotoUploader;
     NSInteger _notiNumber;
-    BOOL _shouldListenReachability;
+    BOOL _isLogining; // 是否正在登陆
+    BOOL _isBuilding; // 是否正在初始化
 }
-
-
 // init asset
 // init userServices
 // init net if has user (config baseurl)
 // startup photoUploadManager
 // if need upload start backup
-
 + (instancetype)sharedService {
     static AppServices * appServices;
     static dispatch_once_t onceToken;
@@ -46,20 +44,29 @@
     });
     return appServices;
 }
+
 - (instancetype)init {
     self = [super init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserAuthChange) name:ASSETS_AUTH_CHANGE_NOTIFY object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMemoryWarning) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNetReachabilityNotify:) name:NETWORK_REACHABILITY_CHANGE_NOTIFY object:nil];
     _notiNumber = 0;
-    [self assetServices];
-    if(self.userServices.currentUser) {
-        _shouldListenReachability = YES;
-        [self netServices];
-    } else
-        _shouldListenReachability = NO;
-    [self bootStrap];
+    [self _build];
     return self;
+}
+
+- (void)_build {
+    [self assetServices];
+    if(self.userServices.currentUser) [self netServices];
+    if(self.assetServices.userAuth) {
+        NSArray * allLocalAsset = [self.assetServices allAssets];
+        [self.photoUploadManager startWithLocalAssets:allLocalAsset andNetAssets:@[]];
+    }
+}
+
+- (void)rebulid {
+    [self abort];
+    [self _build];
 }
 
 - (void)receiveMemoryWarning {
@@ -80,7 +87,6 @@
 }
 
 // Net Reachability
-
 - (void)handleNetReachabilityNotify:(NSNotification *)noti {
     _notiNumber ++;
     AFNetworkReachabilityStatus status = self.netServices.status;
@@ -97,25 +103,10 @@
              [[CSUploadHelper shareManager]startUploadAction];
         }
     }
-    if (status == AFNetworkReachabilityStatusReachableViaWiFi){
-//    MBProgressHUD *progressHUD = [[MBProgressHUD alloc] initWithView:[AppServices mainWindow]];
-//    progressHUD.mode = MBProgressHUDModeText;
-//    progressHUD.labelText = @"正在使用WIFI";
-//    progressHUD.labelFont = [UIFont systemFontOfSize:13];
-//    [[AppServices mainWindow] addSubview:progressHUD];
-//    progressHUD.animationType = MBProgressHUDAnimationZoom;
-//    
-//    progressHUD.removeFromSuperViewOnHide = YES;
-//    progressHUD.opacity = 0.7;
-//    [progressHUD show:YES];
-//    [progressHUD hide:YES afterDelay:1.0];
-    }
-  
-    if(!WB_UserService.currentUser || !WB_UserService.currentUser.autoBackUp || !_shouldListenReachability) return;
+    
+    if(_isLogining) return;
+    if(!WB_UserService.currentUser || !WB_UserService.currentUser.autoBackUp) return;
     if (status == AFNetworkReachabilityStatusReachableViaWiFi) {
-        [self.photoUploadManager destroy];
-        self.photoUploadManager = nil;
-        [self.photoUploadManager startWithLocalAssets:[self.assetServices allAssets] andNetAssets:@[]];
         if(!WB_UserService.currentUser.isCloudLogin)
            [WB_NetService testForLANIP:WB_UserService.currentUser.localAddr commplete:^(BOOL success) { //测试是否可用网络
               if(success) [self startUploadAssets:nil];
@@ -124,6 +115,8 @@
             [WB_NetService testAndCheckoutIfSuccessComplete:^{
                 [self startUploadAssets:nil];
             }];
+    }else {
+        [self.photoUploadManager stop];
     }
 }
 
@@ -160,27 +153,6 @@
     });
 }
 
-- (void)rebulid {
-    [self abort];
-    [self assetServices];
-    if(self.userServices.currentUser)  {
-        _shouldListenReachability = YES;
-        [self netServices];
-    } else
-        _shouldListenReachability = NO;
-    [self bootStrap];
-}
-
-- (void)bootStrap {
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        if(WB_AssetService.userAuth) {
-            NSArray * allLocalAsset = [self.assetServices allAssets];
-            [self.photoUploadManager startWithLocalAssets:allLocalAsset andNetAssets:@[]];
-        }
-    });
-}
-
-
 // get token
 // create userSession
 // isFirstUser ?
@@ -194,8 +166,14 @@
 // 10003 : get userBackupDir error
 - (void)loginWithBasic:(NSString *)basic userUUID:(NSString *)uuid StationName:(NSString *)stationName UserName:(NSString *)userName addr:(NSString *)addr AvatarURL:(NSString *)avatar isWechat:(BOOL)isWechat completeBlock:(void(^)(NSError *error, WBUser *user))callback {
     @weaky(self);
+    if(_isLogining) return;
+    _isLogining = YES;
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
     NSString* urlString = [NSString stringWithFormat:@"http://%@:3000/", addr];
+    void(^_callback)(NSError *error, WBUser *user) = ^(NSError *error, WBUser *user) {
+        _isLogining = NO;
+        callback(error, user);
+    };
     [manager.requestSerializer setValue:[NSString stringWithFormat:@"Basic %@",basic] forHTTPHeaderField:@"Authorization"];
     [manager GET:[NSString stringWithFormat:@"%@token",urlString] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSString * token = responseObject[@"token"];
@@ -215,15 +193,21 @@
         [WB_UserService setCurrentUser:user];
         [WB_UserService synchronizedCurrentUser];
         NSLog(@"GET Token Success");
-        [weak_self nextSteapForLogin:callback];
+        [weak_self nextSteapForLogin:_callback];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         error.wbCode = 10001;
-        callback(error, NULL);
+        _callback(error, NULL);
     }];
 }
 
 - (void)wechatLoginWithUserModel:(CloudModelForUser *)cloudUserModel Token:(NSString *)cloudToken AvatarUrl:(NSString *)avatarUrl addr:(NSString *)addr completeBlock:(void(^)(NSError *error, WBUser *user))callback{
     @weaky(self);
+    if(_isLogining) return;
+    _isLogining = YES;
+    void(^_callback)(NSError *error, WBUser *user) = ^(NSError *error, WBUser *user) {
+        _isLogining = NO;
+        callback(error, user);
+    };
     self.netServices = [[NetServices alloc]initWithLocalURL:nil andCloudURL:addr];
     WBUser *user = [WB_UserService createUserWithUserUUID:cloudUserModel.uuid];
     user.userName = cloudUserModel.username;
@@ -252,17 +236,15 @@
                 }
                 [WB_UserService setCurrentUser:user];
                 [WB_UserService synchronizedCurrentUser];
-                [weak_self nextSteapForLogin:callback];
+                [weak_self nextSteapForLogin:_callback];
             }];
         }else
-            [weak_self nextSteapForLogin:callback];
-        
+            [weak_self nextSteapForLogin:_callback];
     }];
 }
 
 - (void)nextSteapForLogin:(void(^)(NSError *error, WBUser *user))callback{
     WBUser * user = WB_UserService.currentUser;
-    _shouldListenReachability = NO;
     @weaky(self);
     [WB_NetService getUserHome:^(NSError *error, NSString *userHome) {
         if(error) {
@@ -296,7 +278,6 @@
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
                 [weak_self updateCurrentUserInfoWithCompleteBlock:nil];
             });
-            _shouldListenReachability = YES;
             return callback(nil, user);
         }];
     }];
@@ -369,11 +350,20 @@
     }];
 }
 
+static BOOL isStartingUpload = NO;
+static BOOL needRestart = NO;
 - (void)startUploadAssets:(void(^)(void))complete {
     @weaky(self);
+    if(isStartingUpload) {
+        needRestart = YES;
+        if(complete) complete();
+        return;
+    }
+    isStartingUpload = YES;
     if(self.netServices.status != AFNetworkReachabilityStatusReachableViaWiFi) return [SXLoadingView showAlertHUD:WBLocalizedString(@"non_wifi", nil) duration:1];
     [self.netServices getEntriesInUserBackupDir:^(NSError *error, NSArray<EntriesModel *> *entries) {
         if(error) {
+            isStartingUpload = NO;
             if(error.wbCode == WBUploadDirNotFound)
                 [weak_self rebulidUploadManager];
             return NSLog(@"Get BackupDir entries error");
@@ -382,6 +372,7 @@
         NSMutableArray * netEntries = [NSMutableArray arrayWithArray:entries];
         [self.photoUploadManager setNetAssets:netEntries];
         [self.photoUploadManager startUpload];
+        isStartingUpload = NO;
         if(complete) complete();
     }];
 }
@@ -874,8 +865,8 @@
     }
     dispatch_async(self.managerQueue, ^{
         while(self.hashWorkingQueue.count < self.hashLimitCount && self.hashwaitingQueue.count > 0) {
-            JYAsset * asset = [self.hashwaitingQueue lastObject];
-            [self.hashwaitingQueue removeLastObject];
+            JYAsset * asset = [self.hashwaitingQueue firstObject];
+            [self.hashwaitingQueue removeObject:asset];
             [self.hashWorkingQueue addObject:asset];
             __weak typeof(self) weakSelf = self;
             dispatch_async([self workingQueue], ^{
@@ -896,8 +887,8 @@
         
         if(!_shouldUpload) return;
         while(self.uploadPaddingQueue.count > 0 && self.uploadingQueue.count < self.uploadLimitCount) {
-            JYAsset * asset = [self.uploadPaddingQueue lastObject];
-            [self.uploadPaddingQueue removeLastObject];
+            JYAsset * asset = [self.uploadPaddingQueue firstObject];
+            [self.uploadPaddingQueue removeObject:asset];
             WBUploadModel * model = [WBUploadModel initWithAsset:asset andManager:self.manager];
             if([self.uploadedNetHashSet containsObject:asset.digest] || [self.uploadedLocalHashSet containsObject:asset.digest]) {
                 [self.uploadedQueue addObject:model];
@@ -978,6 +969,7 @@
 }
 
 - (void)destroy {
+    _isdestroing = YES;
     [self.hashwaitingQueue removeAllObjects];
     // TODO: cancel working queue?
     [self.hashWorkingQueue removeAllObjects];
@@ -991,6 +983,7 @@
     [self.uploadedNetQueue removeAllObjects];
     [self.uploadedLocalHashSet removeAllObjects];
     [self.manager.session invalidateAndCancel];
+    _isdestroing = NO;
 }
 
 
@@ -1041,6 +1034,7 @@ static NSArray * invaildChars;
 //            fileName = [NSString stringWithFormat:@"%@_%f.%@", fileNameDeletingPathExtension, [[NSDate date] timeIntervalSince1970],pathExtension];
 
         }
+        NSLog(@"filename : %@", fileName);
         NSString *urlString;
         NSMutableDictionary * mutableDic = [NSMutableDictionary dictionaryWithCapacity:0];
         if (WB_UserService.currentUser.isCloudLogin) {

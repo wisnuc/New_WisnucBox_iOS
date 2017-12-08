@@ -45,8 +45,6 @@
 
 + (instancetype)sharedService;
 
-- (void)bootStrap;
-
 - (void)rebulid;
 
 - (void)startUploadAssets:(void(^)(void))complete;
