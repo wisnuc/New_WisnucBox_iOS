@@ -277,19 +277,19 @@
     [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(bottomView);
         make.bottom.equalTo(tableView.mas_top);
-        make.height.equalTo(@1);
+        make.height.equalTo(@0.5);
     }];
     
     UIView *divisionView         = [[UIView alloc] init];
 //    divisionView.alpha           = 0.1f;
 //    divisionView.backgroundColor = LC_ACTION_SHEET_COLOR(150, 150, 150);
-    divisionView.backgroundColor = [UIColor lightGrayColor];
+    divisionView.backgroundColor = [UIColor colorWithRed:217/255.0f green:217/255.0f blue:220/255.0f alpha:1];
     [bottomView addSubview:divisionView];
     [divisionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(bottomView);
         make.top.equalTo(tableView.mas_bottom).offset(-1.0f);
         
-        CGFloat height = self.cancelButtonTitle.length > 0 ? 0.7f : 0;
+        CGFloat height = self.cancelButtonTitle.length > 0 ? 0.5f : 0;
         make.height.equalTo(@(height));
     }];
     

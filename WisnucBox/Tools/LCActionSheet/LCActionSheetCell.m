@@ -59,7 +59,7 @@
     
     self.highlightedView.frame = self.bounds;
     self.titleLabel.frame      = self.bounds;
-    self.lineView.frame        = CGRectMake(0, 0, self.bounds.size.width, 1.0f);
+    self.lineView.frame        = CGRectMake(0, 0, self.bounds.size.width, 0.5f);
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {}
