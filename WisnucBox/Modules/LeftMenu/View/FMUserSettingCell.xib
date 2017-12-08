@@ -42,9 +42,9 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xQe-pF-HF2">
-                        <rect key="frame" x="349" y="53" width="0.0" height="0.0"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
+                        <rect key="frame" x="349" y="31.5" width="0.0" height="0.0"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -56,8 +56,8 @@
                     <constraint firstItem="aeQ-7V-jgj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="fxB-5k-gkY"/>
                     <constraint firstItem="2g2-Eu-Lyc" firstAttribute="leading" secondItem="aeQ-7V-jgj" secondAttribute="trailing" constant="13" id="jlP-Mq-VeZ"/>
                     <constraint firstAttribute="trailingMargin" secondItem="2g2-Eu-Lyc" secondAttribute="trailing" constant="68" id="jtJ-w7-4J7"/>
+                    <constraint firstItem="xQe-pF-HF2" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="npk-r2-pbC"/>
                     <constraint firstItem="2g2-Eu-Lyc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="qud-bX-DfY"/>
-                    <constraint firstItem="xQe-pF-HF2" firstAttribute="centerY" secondItem="kmX-9z-dU8" secondAttribute="centerY" id="uIu-Rf-lNk"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

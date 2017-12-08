@@ -10,7 +10,6 @@
 #import "FMChangePwdVC.h"
 #import "FMChangeNameVC.h"
 #import "FMAccountUsersAPI.h"
-#import "UserModel.h"
 #import "WBStationTicketsAPI.h"
 #import "WBTicketsUserAPI.h"
 #import "TicketUserModel.h"
@@ -18,6 +17,9 @@
 #import "WBCloudLoginAPI.h"
 #import "CloudLoginModel.h"
 #import "AppDelegate.h"
+
+
+
 
 @interface FMUserEditVC ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *navigationTitle;
@@ -32,15 +34,20 @@
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;
 @property (weak, nonatomic) IBOutlet UIButton *leftNaviButton;
 
+@property (weak, nonatomic) IBOutlet UIImageView *secondImageView;
+@property (weak, nonatomic) IBOutlet UIButton *passwordButton;
 @property (strong,nonatomic) TicketModel *model;
-@property (strong,nonatomic) UserModel *userModel;
+@property (weak, nonatomic) IBOutlet UIButton *firstEditButton;
+@property (weak, nonatomic) IBOutlet UIButton *secondEditButton;
+@property (weak, nonatomic) IBOutlet UILabel *userTypeLabel;
+
 @end
 
 @implementation FMUserEditVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"编辑用户信息";
+//    self.title = @"编辑用户信息";
     self.navigationController.navigationBar.translucent = NO;
     self.navigationTitle.text = WBLocalizedString(@"modify_user_info", nil);
     [self.leftNaviButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:10];
@@ -57,7 +64,9 @@
     self.logoutButton.layer.shadowRadius = 2.f;
     self.logoutButton.layer.shadowOffset = CGSizeMake(0, 3);
     self.logoutButton.layer.shadowOpacity = 0.4f;
+    
 }
+
 - (void)getUserData{
     [[FMAccountUsersAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
@@ -90,6 +99,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+    if (self.type == UserDetail) {
+        [self setDetailType];
+    }else
+    {
     if (!WB_UserService.currentUser.isCloudLogin) {
         [self getUserData];
     }else{
@@ -98,8 +111,45 @@
     }
     [self.userHeaderImageView setImage:[UIImage imageForName:WB_UserService.currentUser.userName size:self.userHeaderImageView.bounds.size]];
     [self.userName setTitle:WB_UserService.currentUser.userName forState:UIControlStateNormal];
+    [self.userName setUserInteractionEnabled:YES];
+    [self.passwordButton setUserInteractionEnabled:YES];
+    [self.bindWechatButton setUserInteractionEnabled:YES];
+    [self.userTypeLabel setHidden:YES];
+    }
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 }
+
+- (void)setDetailType{
+    [self.userName setTitle:_userModel.username forState:UIControlStateNormal];
+    [self.userHeaderImageView setImage:[UIImage imageForName:_userModel.username size:self.userHeaderImageView.bounds.size]];
+    [self.userName setUserInteractionEnabled:NO];
+    [self.passwordButton setUserInteractionEnabled:NO];
+    [self.bindWechatButton setUserInteractionEnabled:NO];
+    if (_userModel.global) {
+        [_bindWechatButton setTitle:@"微信已绑定" forState:UIControlStateNormal];
+    }else{
+        [_bindWechatButton setTitle:@"微信未绑定" forState:UIControlStateNormal];
+    }
+    _secondImageView.image = [UIImage imageNamed:@"ic_account_circle"];
+    if ([_userModel.isAdmin boolValue]&& [_userModel.isFirstUser boolValue]) {
+        [_passwordButton setTitle:WBLocalizedString(@"super_administrator", nil) forState:UIControlStateNormal];
+    }else if ([_userModel.isAdmin boolValue]&& ![_userModel.isFirstUser boolValue]){
+        [_passwordButton setTitle:WBLocalizedString(@"administrator", nil) forState:UIControlStateNormal];
+    }else if (![_userModel.isAdmin boolValue]&& ![_userModel.isFirstUser boolValue]){
+        [_passwordButton setTitle:WBLocalizedString(@"general_user", nil) forState:UIControlStateNormal];
+    }
+    if ([_userModel.disabled boolValue]) {
+        [_userTypeLabel setText:WBLocalizedString(@"disabled", nil)];
+        [_userTypeLabel setHidden:NO];
+        [_logoutButton setTitle:WBLocalizedString(@"enable", nil) forState:UIControlStateNormal];
+    }else{
+        [_userTypeLabel setHidden:YES];
+        [_logoutButton setTitle:WBLocalizedString(@"disable", nil) forState:UIControlStateNormal];
+    }
+    [_firstEditButton setHidden:YES];
+    [_secondEditButton setHidden:YES];
+}
+
 
 - (IBAction)changUserName:(id)sender {
     FMChangeNameVC * vc = [FMChangeNameVC new];
@@ -131,6 +181,7 @@
 
 - (IBAction)bindWechatButtonClick:(UIButton *)sender {
     @weaky(self)
+  
     [SXLoadingView showProgressHUD:@"loading..."];
     [[WBStationTicketsAPI apiWithRequestMethodString:@"POST" Type:@"bind"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         [SXLoadingView hideProgressHUD];
@@ -151,7 +202,6 @@
          NSLog(@"%@",request.error);
         [SXLoadingView hideProgressHUD];
     }];
-    
 }
 
 - (void)setupAlertController{
@@ -236,10 +286,19 @@
     }];
 }
 - (IBAction)logoutButtonClick:(UIButton *)sender {
+    if (self.type == UserDetail) {
+        if ([_userModel.disabled boolValue]) {
+            
+        }else{
+            
+        }
+    }else
+    {
     [SXLoadingView showProgressHUD:WBLocalizedString(@"logout...", nil)];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self skipToLogin];
     });
+    }
 }
 
 -(void)skipToLogin{
