@@ -272,6 +272,8 @@ FilesHelperOpenFilesDelegate
         [self sequenceDataSource];
         [self.tableView reloadData];
         [self.tableView.mj_header endRefreshing];
+        [self.tableView displayWithMsg:@"暂无文件" withRowCount:self.dataSouceArray.count andIsNoData:YES  andTableViewFrame:self.view.bounds
+                             andTouchBlock:nil];
     }else{
         [self.tableView.mj_header endRefreshing];
     }
