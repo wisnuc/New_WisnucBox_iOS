@@ -561,6 +561,7 @@
         NSString * bundleId = [[NSBundle mainBundle].infoDictionary objectForKey:@"CFBundleIdentifier"];
         NSString * identifier = [NSString stringWithFormat:@"%@.backgroundSession", bundleId];
         NSURLSessionConfiguration * config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:identifier];
+        
         config.allowsCellularAccess = NO;
         _manager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:config];
         _manager.attemptsToRecreateUploadTasksForBackgroundSessions = YES;
@@ -1033,11 +1034,12 @@ static NSArray * invaildChars;
         }
         fileName = tempFileName;
         if(yesOrNo) {
-            
-          NSString * fileNameDeletingPathExtension = [fileName stringByDeletingPathExtension];
-            // 获得文件的后缀名（不带'.'）
-          NSString * pathExtension = [filePath pathExtension];
-            fileName = [NSString stringWithFormat:@"%@_%f.%@", fileNameDeletingPathExtension, [[NSDate date] timeIntervalSince1970],pathExtension];
+            fileName = [NSString stringWithFormat:@"%f_%@", [[NSDate date] timeIntervalSince1970], fileName];
+//          NSString * fileNameDeletingPathExtension = [fileName stringByDeletingPathExtension];
+//            // 获得文件的后缀名（不带'.'）
+//          NSString * pathExtension = [filePath pathExtension];
+//            fileName = [NSString stringWithFormat:@"%@_%f.%@", fileNameDeletingPathExtension, [[NSDate date] timeIntervalSince1970],pathExtension];
+
         }
         NSString *urlString;
         NSMutableDictionary * mutableDic = [NSMutableDictionary dictionaryWithCapacity:0];
@@ -1081,7 +1083,8 @@ static NSArray * invaildChars;
             if(error) return callback(error, nil);
             if(_shouldStop) return callback([NSError errorWithDomain:@"cancel" code:20010 userInfo:nil], nil);
             request.HTTPBodyStream = nil;
-            weak_self.dataTask = [_manager uploadTaskWithRequest:request fromFile:requestFileTempPath progress:nil completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+            weak_self.dataTask = [_manager uploadTaskWithRequest:request fromFile:requestFileTempPath progress:^(NSProgress * _Nonnull uploadProgress) {
+            } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
                 if(!weak_self) return;
                 if(_shouldStop) return callback([NSError errorWithDomain:@"cancel" code:20010 userInfo:nil], nil);
                 if(!error) {
@@ -1111,61 +1114,13 @@ static NSArray * invaildChars;
                     }
                     weak_self.error = error;
                     if (weak_self.callback) weak_self.callback(error, nil);
-                    [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
-                    [[NSFileManager defaultManager] removeItemAtPath:requestTempPath error:nil];
                 }
+                [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+                [[NSFileManager defaultManager] removeItemAtPath:requestTempPath error:nil];
             }];
-            [_dataTask resume];
+            [weak_self.dataTask resume];
         }];
     }];
-//        [_manager.serializer requestWithMultipartFormRequest:request writingStreamContentsToFile:filePathtemp completionHandler:^(NSError *error) { NSURLSessionUploadTask *uploadTask = [self.activeSessionManager uploadTaskWithRequest:request fromFile:filePathtemp progress:&progress completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) { }]; [uploadTask resume]; }];
-        
-//        _dataTask = [_manager POST:urlString parameters:mutableDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-//            if(WB_UserService.currentUser.isCloudLogin) {
-//                [formData appendPartWithFileURL:[NSURL fileURLWithPath:filePath] name:fileName fileName:fileName mimeType:@"image/jpeg" error:nil];
-//            }else {
-//                NSDictionary *dic = @{@"size":@(sizeNumber),@"sha256":hashString};
-//                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
-//                NSString *jsonString =  [[NSString alloc] initWithData:jsonData  encoding:NSUTF8StringEncoding];
-//                [formData appendPartWithFileURL:[NSURL fileURLWithPath:filePath] name:fileName fileName:jsonString mimeType:@"image/jpeg" error:nil];
-//            }
-//        }
-//        progress:nil
-//        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//            NSLog(@"Upload Success -->");
-//            [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
-//            if(!weak_self) return;
-//            if(weak_self.callback) weak_self.callback(nil, responseObject);
-//        }
-//        failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//            NSLog(@"Upload Failure ---> : %@", error);
-//            NSLog(@"Upload Failure ---> : %@  ----> : %ld", fileName, (long)((NSHTTPURLResponse *)task.response).statusCode);
-//            NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
-//            if(errorData.length >0 && ((NSHTTPURLResponse *)task.response).statusCode == 403){
-//                NSMutableArray *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
-//                NSLog(@"Upload Failure ---> :serializedData %@", serializedData);
-//                if([serializedData isKindOfClass:[NSArray class]]) {
-//                    @try {
-//                        NSDictionary *errorRootDic = serializedData[0];
-//                        NSDictionary *errorDic = errorRootDic[@"error"];
-//                        NSString *code = errorDic[@"code"];
-//                        NSInteger status = [errorDic[@"status"] integerValue];
-//                        if ([code isEqualToString:@"EEXIST"])
-//                            error.wbCode = WBUploadFileExist;
-//                        if(status == 404)
-//                            error.wbCode = WBUploadDirNotFound;
-//                    } @catch (NSException *exception) {
-//                        NSLog(@"%@", exception);
-//                    }
-//                }
-//            }
-//            [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil]; // remove tmpFile
-//
-//            if (!weak_self) return;
-//            weak_self.error = error;
-//            if (weak_self.callback) weak_self.callback(error, nil);
-//        }];
-//    }];
 }
 
 - (void)cancel {
