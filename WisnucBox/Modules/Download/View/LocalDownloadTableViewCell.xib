@@ -19,7 +19,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="文件名" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0XN-iL-tK0">
-                        <rect key="frame" x="60" y="10" width="244" height="21"/>
+                        <rect key="frame" x="76" y="10" width="228" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -38,7 +38,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="文件大小" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F5k-K7-voi">
-                        <rect key="frame" x="60" y="39" width="49.5" height="14.5"/>
+                        <rect key="frame" x="76" y="39" width="49.5" height="14.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.60392156862745094" green="0.60392156862745094" blue="0.60392156862745094" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -51,7 +51,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="类型" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="emh-0b-PJf">
-                        <rect key="frame" x="129.5" y="39" width="25" height="14.5"/>
+                        <rect key="frame" x="145.5" y="39" width="25" height="14.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -64,9 +64,9 @@
                     <constraint firstAttribute="trailing" secondItem="0XN-iL-tK0" secondAttribute="trailing" constant="16" id="EcZ-8y-KIe"/>
                     <constraint firstItem="maz-4p-iBu" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="NGX-3U-X0M"/>
                     <constraint firstItem="zXZ-1n-A8v" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="OpA-hT-Dof"/>
-                    <constraint firstItem="F5k-K7-voi" firstAttribute="leading" secondItem="zXZ-1n-A8v" secondAttribute="trailing" constant="10" id="b42-8M-jdy"/>
+                    <constraint firstItem="F5k-K7-voi" firstAttribute="leading" secondItem="zXZ-1n-A8v" secondAttribute="trailing" constant="26" id="b42-8M-jdy"/>
                     <constraint firstItem="emh-0b-PJf" firstAttribute="leading" secondItem="F5k-K7-voi" secondAttribute="trailing" constant="20" id="hi3-eT-snY"/>
-                    <constraint firstItem="0XN-iL-tK0" firstAttribute="leading" secondItem="zXZ-1n-A8v" secondAttribute="trailing" constant="10" id="jqj-wH-koD"/>
+                    <constraint firstItem="0XN-iL-tK0" firstAttribute="leading" secondItem="zXZ-1n-A8v" secondAttribute="trailing" constant="26" id="jqj-wH-koD"/>
                     <constraint firstItem="maz-4p-iBu" firstAttribute="centerY" secondItem="zXZ-1n-A8v" secondAttribute="centerY" id="lbJ-mT-cDB"/>
                     <constraint firstItem="kEP-Wr-wo2" firstAttribute="leading" secondItem="zXZ-1n-A8v" secondAttribute="trailing" constant="10" id="nA5-m7-fc2"/>
                     <constraint firstItem="F5k-K7-voi" firstAttribute="centerY" secondItem="kEP-Wr-wo2" secondAttribute="centerY" id="r8E-z6-oKF"/>
@@ -79,7 +79,7 @@
                     </mask>
                 </variation>
             </tableViewCellContentView>
-            <inset key="separatorInset" minX="62" minY="0.0" maxX="0.0" maxY="0.0"/>
+            <inset key="separatorInset" minX="76" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="downloadTimeLabel" destination="kEP-Wr-wo2" id="1EJ-4R-69i"/>
                 <outlet property="downloadedSizeLabel" destination="F5k-K7-voi" id="O7w-RO-YhY"/>

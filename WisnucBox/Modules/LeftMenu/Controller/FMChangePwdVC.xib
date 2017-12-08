@@ -67,7 +67,7 @@
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IIq-r1-vKc">
-                    <rect key="frame" x="0.0" y="627" width="375" height="40"/>
+                    <rect key="frame" x="16" y="611" width="343" height="40"/>
                     <color key="backgroundColor" red="0.29558175800000003" green="0.65108972789999997" blue="0.93336850400000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="QOi-Ic-sX8"/>
@@ -116,7 +116,6 @@
                 <constraint firstItem="xKv-9s-4Um" firstAttribute="top" secondItem="8OE-5L-r51" secondAttribute="bottom" constant="8" id="AD1-hp-9OG"/>
                 <constraint firstItem="tqE-x2-Iqm" firstAttribute="leading" secondItem="BoK-1W-pi3" secondAttribute="leading" id="BEh-Q0-pvA"/>
                 <constraint firstItem="8OE-5L-r51" firstAttribute="width" secondItem="xKv-9s-4Um" secondAttribute="width" id="Fuz-Hy-6BD"/>
-                <constraint firstAttribute="bottom" secondItem="IIq-r1-vKc" secondAttribute="bottom" id="G2g-Ul-MDk"/>
                 <constraint firstItem="xKv-9s-4Um" firstAttribute="top" secondItem="BoK-1W-pi3" secondAttribute="bottom" constant="64" id="Jv0-rS-elc"/>
                 <constraint firstItem="xKv-9s-4Um" firstAttribute="height" secondItem="BoK-1W-pi3" secondAttribute="height" id="PIA-og-dix"/>
                 <constraint firstItem="t2w-OU-Ugf" firstAttribute="width" secondItem="BoK-1W-pi3" secondAttribute="width" id="QKM-47-Rts"/>
@@ -125,7 +124,7 @@
                 <constraint firstItem="2cC-Sp-q48" firstAttribute="top" secondItem="8OE-5L-r51" secondAttribute="top" id="aYF-Fo-Eim"/>
                 <constraint firstAttribute="trailing" secondItem="BoK-1W-pi3" secondAttribute="trailing" id="edL-IO-e7B"/>
                 <constraint firstItem="BoK-1W-pi3" firstAttribute="top" secondItem="tqE-x2-Iqm" secondAttribute="bottom" constant="63" id="gbv-eN-cN3"/>
-                <constraint firstAttribute="trailing" secondItem="IIq-r1-vKc" secondAttribute="trailing" id="hE8-XR-t4K"/>
+                <constraint firstAttribute="trailing" secondItem="IIq-r1-vKc" secondAttribute="trailing" constant="16" id="iEA-43-Wi5"/>
                 <constraint firstItem="tqE-x2-Iqm" firstAttribute="trailing" secondItem="BoK-1W-pi3" secondAttribute="trailing" id="knW-5k-vlj"/>
                 <constraint firstItem="BoK-1W-pi3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="170" id="lum-9F-bws"/>
                 <constraint firstItem="t2w-OU-Ugf" firstAttribute="centerX" secondItem="BoK-1W-pi3" secondAttribute="centerX" id="msH-i2-Rye"/>
@@ -133,7 +132,8 @@
                 <constraint firstItem="xKv-9s-4Um" firstAttribute="leading" secondItem="BoK-1W-pi3" secondAttribute="leading" id="oh9-fU-TGO"/>
                 <constraint firstItem="xKv-9s-4Um" firstAttribute="width" secondItem="BoK-1W-pi3" secondAttribute="width" id="olZ-If-QAa"/>
                 <constraint firstItem="Sz6-eU-8dg" firstAttribute="leading" secondItem="tqE-x2-Iqm" secondAttribute="leading" id="omj-Xj-nL4"/>
-                <constraint firstItem="IIq-r1-vKc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="p3i-zv-cmA"/>
+                <constraint firstAttribute="bottom" secondItem="IIq-r1-vKc" secondAttribute="bottom" constant="16" id="ow7-21-bdw"/>
+                <constraint firstItem="IIq-r1-vKc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="qPH-1t-XEz"/>
                 <constraint firstItem="2cC-Sp-q48" firstAttribute="centerY" secondItem="8OE-5L-r51" secondAttribute="centerY" id="wKQ-w5-fsz"/>
             </constraints>
             <point key="canvasLocation" x="24.5" y="51.5"/>

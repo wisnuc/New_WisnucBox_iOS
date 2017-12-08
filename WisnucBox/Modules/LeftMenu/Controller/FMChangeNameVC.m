@@ -27,6 +27,7 @@
     [rightButton setTitleColor:COR1 forState:UIControlStateNormal];
     [rightButton setTitle:WBLocalizedString(@"finish_text", nil) forState:UIControlStateNormal];
     [rightButton addTarget:self action:@selector(rightButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [rightButton setEnlargeEdgeWithTop:5 right:10 bottom:5 left:5];
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem = rightButtonItem;
 }

@@ -64,6 +64,7 @@ UITableViewDataSource
 }
 
 - (void)loadData{
+    [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
     [self.dataSouceArray removeAllObjects];
     [self.shareDataArray removeAllObjects];
     [[FLDrivesAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
@@ -102,9 +103,11 @@ UITableViewDataSource
             }
             [self sequenceDataSouce];
             [self.tableView.mj_header endRefreshing];
+            [SXLoadingView hideProgressHUD];
         }];
     } failure:^(__kindof JYBaseRequest *request) {
         [self.tableView.mj_header endRefreshing];
+        [SXLoadingView hideProgressHUD];
     }];
 }
 

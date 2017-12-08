@@ -429,19 +429,28 @@ ReNameDelegate
 
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    UILabel *lineLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 0.2)];
+    UIView *footerView = [UIView new];
+    footerView.backgroundColor = [UIColor whiteColor];
+    UILabel *lineLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 7.5, __kWidth, 0.5)];
     lineLabel.backgroundColor = [UIColor blackColor];
     lineLabel.alpha = .12;
-    return lineLabel;
+    [footerView addSubview:lineLabel];
+    return footerView;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView *headerView = [UIView new];
+    headerView.backgroundColor = [UIColor whiteColor];
+    return headerView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 0.5;
+    return 8;
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-//    return 0;
-//}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 8;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     switch (indexPath.row) {

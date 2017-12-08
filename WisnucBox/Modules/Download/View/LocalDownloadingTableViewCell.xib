@@ -19,7 +19,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="文件名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GAf-Al-olb">
-                        <rect key="frame" x="60" y="10" width="220" height="21"/>
+                        <rect key="frame" x="76" y="10" width="204" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.87807684075342463" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
@@ -55,8 +55,8 @@
                             <action selector="cancelBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="uLE-4R-2c0"/>
                         </connections>
                     </button>
-                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="75O-Ge-LB4">
-                        <rect key="frame" x="60" y="42" width="215" height="2"/>
+                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="75O-Ge-LB4">
+                        <rect key="frame" x="76" y="42" width="199" height="2"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="2" id="wKm-Js-J5e"/>
                         </constraints>
@@ -67,7 +67,7 @@
                 <color key="tintColor" red="0.011764705882352941" green="0.66274509803921566" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstItem="75O-Ge-LB4" firstAttribute="leading" secondItem="GAf-Al-olb" secondAttribute="leading" id="5T9-1x-Zff"/>
-                    <constraint firstItem="GAf-Al-olb" firstAttribute="leading" secondItem="C6c-QC-NpB" secondAttribute="trailing" constant="10" id="8Ch-Ng-y13"/>
+                    <constraint firstItem="GAf-Al-olb" firstAttribute="leading" secondItem="C6c-QC-NpB" secondAttribute="trailing" constant="26" id="8Ch-Ng-y13"/>
                     <constraint firstItem="75O-Ge-LB4" firstAttribute="bottom" secondItem="KHn-bG-kXB" secondAttribute="bottom" id="Gr0-M2-S1P"/>
                     <constraint firstItem="KHn-bG-kXB" firstAttribute="centerY" secondItem="C6c-QC-NpB" secondAttribute="centerY" id="Kfy-9w-DKB"/>
                     <constraint firstItem="11n-ow-vvH" firstAttribute="leading" secondItem="C6c-QC-NpB" secondAttribute="trailing" constant="10" id="O8w-MK-ZHN"/>
@@ -93,7 +93,7 @@
                     </mask>
                 </variation>
             </tableViewCellContentView>
-            <inset key="separatorInset" minX="60" minY="0.0" maxX="0.0" maxY="0.0"/>
+            <inset key="separatorInset" minX="76" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="cancelButton" destination="NBJ-vJ-ep2" id="4Mu-oC-AJ9"/>
                 <outlet property="f_ImageView" destination="KHn-bG-kXB" id="oOq-4F-oaB"/>

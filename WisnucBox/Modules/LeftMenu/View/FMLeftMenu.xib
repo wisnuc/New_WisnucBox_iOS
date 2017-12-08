@@ -32,7 +32,7 @@
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </tableView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="用户名获取中" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="InW-Xi-ER3">
-                    <rect key="frame" x="16" y="97.5" width="243" height="19.5"/>
+                    <rect key="frame" x="16" y="104.5" width="243" height="19.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
@@ -59,7 +59,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="正在获取设备信息..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mKa-Gf-E18">
-                    <rect key="frame" x="16" y="124" width="307" height="17"/>
+                    <rect key="frame" x="16" y="128" width="307" height="17"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="hnf-5A-lTK"/>
                     </constraints>
@@ -84,7 +84,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="head-portrait.png" translatesAutoresizingMaskIntoConstraints="NO" id="8q5-bR-fHS">
-                    <rect key="frame" x="16" y="17.5" width="64" height="64"/>
+                    <rect key="frame" x="16" y="26.5" width="64" height="64"/>
                     <gestureRecognizers/>
                     <constraints>
                         <constraint firstAttribute="height" constant="64" id="XvU-i3-feq"/>
@@ -104,7 +104,7 @@
                 <constraint firstItem="nKw-lj-RPT" firstAttribute="leading" secondItem="gZm-OB-Sqc" secondAttribute="leading" id="7Xr-Ak-t8G"/>
                 <constraint firstItem="UCf-2J-WUS" firstAttribute="leading" secondItem="gZm-OB-Sqc" secondAttribute="leading" constant="16" id="7fd-zi-fdD"/>
                 <constraint firstItem="mKa-Gf-E18" firstAttribute="top" secondItem="yU1-y9-FTn" secondAttribute="bottom" constant="6" id="EJ0-GL-D3Y"/>
-                <constraint firstItem="mKa-Gf-E18" firstAttribute="top" secondItem="InW-Xi-ER3" secondAttribute="bottom" constant="7.5" id="F7z-j4-As3"/>
+                <constraint firstItem="mKa-Gf-E18" firstAttribute="top" secondItem="InW-Xi-ER3" secondAttribute="bottom" constant="4" id="F7z-j4-As3"/>
                 <constraint firstItem="InW-Xi-ER3" firstAttribute="leading" secondItem="nKw-lj-RPT" secondAttribute="leading" constant="16" id="FxI-Pa-Tcf"/>
                 <constraint firstItem="9WK-pc-3S3" firstAttribute="top" secondItem="nKw-lj-RPT" secondAttribute="bottom" constant="-1" id="GQh-an-4wE"/>
                 <constraint firstItem="InW-Xi-ER3" firstAttribute="trailing" secondItem="nKw-lj-RPT" secondAttribute="trailing" constant="-80" id="Icc-nS-Zfb"/>
@@ -118,7 +118,7 @@
                 <constraint firstAttribute="bottom" secondItem="BSv-LH-7wp" secondAttribute="bottom" id="XPg-v4-GB6"/>
                 <constraint firstItem="pKs-6N-neu" firstAttribute="leading" secondItem="gZm-OB-Sqc" secondAttribute="leading" constant="16" id="aTG-Qb-zu0"/>
                 <constraint firstAttribute="bottom" secondItem="9WK-pc-3S3" secondAttribute="bottom" constant="52" id="bkT-iN-5fI"/>
-                <constraint firstItem="InW-Xi-ER3" firstAttribute="top" secondItem="8q5-bR-fHS" secondAttribute="bottom" constant="16" id="c6x-91-c83"/>
+                <constraint firstItem="InW-Xi-ER3" firstAttribute="top" secondItem="8q5-bR-fHS" secondAttribute="bottom" constant="14" id="c6x-91-c83"/>
                 <constraint firstItem="yU1-y9-FTn" firstAttribute="centerY" secondItem="InW-Xi-ER3" secondAttribute="centerY" constant="2" id="f0e-db-YDe"/>
                 <constraint firstItem="nKw-lj-RPT" firstAttribute="top" secondItem="gZm-OB-Sqc" secondAttribute="top" id="fIb-tb-zAw"/>
                 <constraint firstAttribute="trailing" secondItem="mKa-Gf-E18" secondAttribute="trailing" constant="16" id="fmA-qm-vBd"/>
@@ -126,7 +126,7 @@
                 <constraint firstItem="8q5-bR-fHS" firstAttribute="leading" secondItem="InW-Xi-ER3" secondAttribute="leading" id="hFv-Wk-S0p"/>
                 <constraint firstItem="XNi-XL-Of2" firstAttribute="leading" secondItem="gZm-OB-Sqc" secondAttribute="leading" constant="100" id="hQf-aR-sfR"/>
                 <constraint firstItem="yU1-y9-FTn" firstAttribute="leading" secondItem="nKw-lj-RPT" secondAttribute="trailing" constant="-40" id="hbj-zy-FaF"/>
-                <constraint firstItem="pKs-6N-neu" firstAttribute="top" secondItem="mKa-Gf-E18" secondAttribute="bottom" constant="8" id="hoY-6K-TM9"/>
+                <constraint firstItem="pKs-6N-neu" firstAttribute="top" secondItem="mKa-Gf-E18" secondAttribute="bottom" constant="4" id="hoY-6K-TM9"/>
                 <constraint firstItem="9WK-pc-3S3" firstAttribute="top" secondItem="pKs-6N-neu" secondAttribute="bottom" constant="16" id="j26-r7-ibx"/>
                 <constraint firstAttribute="bottom" secondItem="UCf-2J-WUS" secondAttribute="bottom" constant="24" id="ktX-uK-MLl"/>
                 <constraint firstAttribute="trailing" secondItem="UCf-2J-WUS" secondAttribute="trailing" constant="34" id="oK6-AK-ZFa"/>

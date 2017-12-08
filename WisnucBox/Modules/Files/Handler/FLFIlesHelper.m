@@ -172,14 +172,24 @@ static dispatch_once_t onceToken;
             weak_self.chooseModel = model;
             NSString *downloadString  =WBLocalizedString(@"download_the_item", nil);
             NSString *openFileString;
-            NSMutableArray *downloadedArr = [NSMutableArray arrayWithArray:[_filesServices findAll]];
-            for (WBFile * fileModel in downloadedArr) {
-                if ([fileModel.fileUUID isEqualToString:model.uuid]) {
-                    downloadString = redownloadString;
-                    openFileString = WBLocalizedString(@"open_the_item", nil);
-                }
+//            NSMutableArray *downloadedArr = [NSMutableArray arrayWithArray:[_filesServices findAll]];
+//            for (WBFile * fileModel in downloadedArr) {
+//                NSLog(@"%@/%@",fileModel.fileUUID,model.uuid);
+//                if ([fileModel.fileUUID isEqualToString:model.uuid]) {
+//                    downloadString = redownloadString;
+//                    openFileString = WBLocalizedString(@"open_the_item", nil);
+//                }
+//            }
+            NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
+            //                    NSString* suffixName = model.uuid;
+            NSString *fileName = model.name;
+            //                    NSString *extensionstring = [fileName pathExtension];
+            NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",fileName]];
+            
+            if ([[NSFileManager defaultManager] fileExistsAtPath:saveFile]) {
+                downloadString = redownloadString;
+                openFileString = WBLocalizedString(@"open_the_item", nil);
             }
-
     
             NSMutableArray * arr = [NSMutableArray arrayWithCapacity:0];
             if (downloadString.length>0) {

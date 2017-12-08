@@ -294,6 +294,7 @@
         rightBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 0,0, -10);
     }
     [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [rightBtn setEnlargeEdgeWithTop:5 right:10 bottom:5 left:5];
     UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:rightItem,negativeSpacer,nil];
 }

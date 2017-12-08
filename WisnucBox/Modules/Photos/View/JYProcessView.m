@@ -84,6 +84,7 @@
 }
 
 -(void)dismiss{
+    _processView.progress = 0.0f;
     [[UIApplication sharedApplication].keyWindow willRemoveSubview:_backWindow];
     [self.backWindow removeFromSuperview];
 }
