@@ -30,7 +30,7 @@ UITableViewDataSource
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"邀请微信好友";
+    self.title = LeftMenuInvitationString;
     [self initMjRefresh];
 //    [self getData];
     [self.view addSubview:self.tableView];
@@ -58,7 +58,7 @@ UITableViewDataSource
 - (void)getData{
     @weaky(self);
     [self.dataArray removeAllObjects];
-    [SXLoadingView showProgressHUD:@"正在加载"];
+    [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
     [[WBStationTicketsAPI apiWithRequestMethodString:@"GET" Type:nil] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
          NSLog(@"%@",request.responseJsonObject);
         NSArray *arr = request.responseJsonObject;
@@ -117,7 +117,7 @@ UITableViewDataSource
     } failure:^(__kindof JYBaseRequest *request) {
          NSLog(@"%@",request.error);
          [SXLoadingView hideProgressHUD];
-         [SXLoadingView showProgressHUDText:@"分享失败" duration:1.3];
+         [SXLoadingView showProgressHUDText:WBLocalizedString(@"sharing_failed", nil) duration:1.3];
     }];
 }
 
@@ -155,10 +155,10 @@ UITableViewDataSource
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     TicketUserModel *usersModel = self.dataArray[indexPath.row];
     if ([usersModel.type isEqualToString:@"resolved"]) {
-        cell.stateTypeLabel.text = @"已接受";
+        cell.stateTypeLabel.text = WBLocalizedString(@"accepted", nil);
     }else if([usersModel.type isEqualToString:@"rejected"])
     {
-        cell.stateTypeLabel.text = @"已拒绝";
+        cell.stateTypeLabel.text = WBLocalizedString(@"refused", nil);
     }else if([usersModel.type isEqualToString:@"pending"])
     {
         [cell.rejectedButton setHidden:NO];
@@ -186,7 +186,7 @@ UITableViewDataSource
         [[WBStationTicketsWechatAPI apiWithTicketId:usersModel.ticketId Guid:usersModel.userId Isbind:YES] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
             NSLog(@"%@",request.responseJsonObject);
             [SXLoadingView hideProgressHUD];
-            [SXLoadingView showProgressHUDText:@"接受邀请成功" duration:1.5];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"accepted", nil) duration:1.5];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weak_self getData];
             });
@@ -194,7 +194,7 @@ UITableViewDataSource
         } failure:^(__kindof JYBaseRequest *request) {
             NSLog(@"%@",request.error);
             [SXLoadingView hideProgressHUD];
-            [SXLoadingView showProgressHUDText:@"接受邀请失败" duration:1.5];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"error", nil) duration:1.5];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weak_self getData];
             });
@@ -206,14 +206,14 @@ UITableViewDataSource
         [SXLoadingView showProgressHUD:@""];
         [[WBStationTicketsWechatAPI apiWithTicketId:usersModel.ticketId Guid:usersModel.userId Isbind:NO]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
          [SXLoadingView hideProgressHUD];
-         [SXLoadingView showProgressHUDText:@"已拒绝接受邀请" duration:1.5];
+         [SXLoadingView showProgressHUDText:WBLocalizedString(@"refused", nil) duration:1.5];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weak_self getData];
             });
             NSLog(@"%@",request.responseJsonObject);
         } failure:^(__kindof JYBaseRequest *request) {
             [SXLoadingView hideProgressHUD];
-            [SXLoadingView showProgressHUDText:@"失败" duration:1.5];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"error", nil) duration:1.5];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weak_self getData];
             });
@@ -266,7 +266,14 @@ UITableViewDataSource
         _inviteButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_inviteButton setImage:[UIImage imageNamed:@"add_invite"] forState:UIControlStateNormal];
         [_inviteButton addTarget:self action:@selector(inviteButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        _inviteButton.frame = CGRectMake(__kWidth - 20 -63, __kHeight - 100 -63-64, 63, 63);
+         _inviteButton.frame = CGRectMake(__kWidth - 16 -63, __kHeight-63-16 -64, 63, 63);
+        _inviteButton.contentMode = UIViewContentModeScaleAspectFit;
+        _inviteButton.layer.cornerRadius =_inviteButton.frame.size.width/2;
+        _inviteButton.layer.shadowColor = [UIColor blackColor].CGColor;
+        _inviteButton.layer.shadowRadius = 2.f;
+        _inviteButton.layer.shadowOffset = CGSizeMake(0, 3);
+        _inviteButton.layer.shadowOpacity = 0.4f;
+       
     }
     return _inviteButton;
 }

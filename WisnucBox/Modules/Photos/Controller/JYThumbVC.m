@@ -267,7 +267,7 @@
 
 -(void)createControlbtn {
     if(!_addButton){
-        CGRect floatFrame = CGRectMake(__kWidth - 80 , __kHeight - 64 - 56 - 88, 56, 56);
+        CGRect floatFrame = CGRectMake(__kWidth - 56 - 16 , __kHeight - 64 - 56 - 16, 56, 56);
         _addButton = [[VCFloatingActionButton alloc]initWithFrame:floatFrame normalImage:[UIImage imageNamed:@"add_album"] andPressedImage:[UIImage imageNamed:@"icon_close"] withScrollview:_collectionView];
         _addButton.automaticallyInsets = YES;
         _addButton.imageArray = @[@"fab_share"];
@@ -280,19 +280,31 @@
 
 -(void)addRightBtn{
     
-    
     UIButton * rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 24, 24)];
     [rightBtn setImage:[UIImage imageNamed:@"more"] forState:UIControlStateNormal];
-    [rightBtn setImage:[UIImage imageNamed:@"more_highlight"] forState:UIControlStateHighlighted];    [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [rightBtn setImage:[UIImage imageNamed:@"more_highlight"] forState:UIControlStateHighlighted];
+    NSString* phoneVersion = [[UIDevice currentDevice] systemVersion];
+    NSLog(@"%@",phoneVersion);
+    [rightBtn setEnlargeEdgeWithTop:10 right:5 bottom:5 left:5];
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -10;
+    if([phoneVersion floatValue]>=11.0){
+        rightBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 0,0, -10);
+    }
+    [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:rightItem,nil];
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:rightItem,negativeSpacer,nil];
 }
 
 -(void)rightBtnClick:(id)sender{
+    NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
+    NSString *selectTitle = WBLocalizedString(@"select_photo", nil);
     LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:nil
                                                              delegate:nil
-                                                    cancelButtonTitle:@"取消"
-                                                otherButtonTitleArray:@[@"选择照片"]];
+                                                    cancelButtonTitle:cancelTitle
+                                                otherButtonTitleArray:@[selectTitle]];
     actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
         if (buttonIndex == 1) {
             self.isSelectMode = YES;
@@ -771,7 +783,7 @@ bool isDecelerating = NO;
         [self shareToOtherApp];
     }
     else
-        [SXLoadingView showAlertHUD:@"请先选择照片" duration:1];
+        [SXLoadingView showAlertHUD:WBLocalizedString(@"please_select_the_photo", nil) duration:1];
 }
 
 //其他分享
@@ -844,7 +856,7 @@ bool isDecelerating = NO;
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [weak_self.pv dismiss];
                         if (!isShare)
-                            [SXLoadingView showAlertHUD:@"下载完成" duration:1];
+                            [SXLoadingView showAlertHUD:WBLocalizedString(@"download_completed", nil) duration:1];
                         if (block) block([tempDownArr copy]);
                     });
                 }

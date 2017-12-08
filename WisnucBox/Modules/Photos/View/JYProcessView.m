@@ -92,7 +92,7 @@
     [_cancelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(_backView).offset(-25);
         make.bottom.equalTo(_backView).offset(-16);
-        make.size.mas_equalTo(CGSizeMake(44, 20));
+        make.size.mas_equalTo(CGSizeMake(50, 20));
     }];
     [_processView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_backView).offset(25);
@@ -105,8 +105,9 @@
 
 - (UIButton *)cancelBtn{
     if (!_cancelBtn) {
+        NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
         _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+        [_cancelBtn setTitle:cancelTitle forState:UIControlStateNormal];
         [_cancelBtn addTarget:self  action:@selector(cancleBtnClick) forControlEvents:UIControlEventTouchUpInside];
         _cancelBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
 //        _cancelBtn.frame = CGRectMake(_backView.frame.size.width - 70, _backView.frame.size.height  - 30, 50, 15);

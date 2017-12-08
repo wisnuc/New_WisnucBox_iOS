@@ -75,7 +75,7 @@
 {
     double convertedValue = [value doubleValue];
     int multiplyFactor = 0;
-    NSArray *tokens = [NSArray arrayWithObjects:@"bytes",@"KB",@"MB",@"GB",@"TB",@"PB", @"EB", @"ZB",    @"YB",nil];
+    NSArray *tokens = [NSArray arrayWithObjects:@"B",@"KB",@"MB",@"GB",@"TB",@"PB", @"EB", @"ZB",    @"YB",nil];
     while (convertedValue > 1024) {
         convertedValue /= 1024;multiplyFactor++;
     }

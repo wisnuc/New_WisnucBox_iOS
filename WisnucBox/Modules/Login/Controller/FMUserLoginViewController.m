@@ -58,6 +58,10 @@
     [self.view addSubview:self.eyeButton];
 }
 
+-(void)dealloc{
+    
+}
+
 #pragma mark textFiledDelegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
      [self.view endEditing:YES];
@@ -76,15 +80,19 @@
 - (void)loginButtonClick:(UIButton *)sender{
     [self.view endEditing:YES];
     sender.userInteractionEnabled = NO;
-    [SXLoadingView showProgressHUD:@"正在登录"];
+    [SXLoadingView showProgressHUD:WBLocalizedString(@"logging_in", nil)];
     NSString * UUID = [NSString stringWithFormat:@"%@:%@",_user.uuid,IsNilString(_loginTextField.text)?@"":_loginTextField.text];
     NSString * Basic = [UUID base64EncodedString];
     [WB_AppServices loginWithBasic:Basic userUUID:_user.uuid StationName:_service.name UserName:_user.username addr:_service.displayPath AvatarURL:_user.avatar isWechat:NO completeBlock:^(NSError *error, WBUser *user) {
         if(error || IsNilString(user.userHome)){
             if(!user) NSLog(@"GET TOKEN ERROR");
             else NSLog(@"Get User Home Error");
-            [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"登录失败！ code: %ld", (long)error.wbCode] duration:1];
+            [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"%@ code: %ld", WBLocalizedString(@"login_failed", nil),(long)error.wbCode] duration:1];
         }else{
+            AppDelegate * app = (AppDelegate *)[UIApplication sharedApplication].delegate ;
+            app.window.rootViewController = nil;
+            [app.window resignKeyWindow];
+            [app.window removeFromSuperview];
             sender.userInteractionEnabled = YES;
             [MyAppDelegate initRootVC];
             [SXLoadingView hideProgressHUD];
@@ -194,7 +202,7 @@
 -(UILabel *)passwordLabel{
     if (!_passwordLabel) {
         _passwordLabel = [[UILabel alloc]initWithFrame:CGRectMake(16+CGRectGetMaxX(_leftTextFieldImageView.frame), CGRectGetMaxY(_userNameBackgroudView.frame) + 32, 100, 15)];
-        _passwordLabel.text = @"密码";
+        _passwordLabel.text = WBLocalizedString(@"password_text", nil);
         _passwordLabel.font = [UIFont systemFontOfSize:12];
         _passwordLabel.textColor = kBlackColor;
         _passwordLabel.alpha = 0.54;

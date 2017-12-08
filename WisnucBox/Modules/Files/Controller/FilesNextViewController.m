@@ -85,23 +85,35 @@ FilesHelperOpenFilesDelegate
 
 -(void)createNavBtns{
     self.title = _name;
-    UIButton * rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];
+//    self.navigationItem.rightBarButtonItem = nil;
+    UIButton * rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 24, 24)];
     [rightBtn setImage:[UIImage imageNamed:@"more"] forState:UIControlStateNormal];
     [rightBtn setImage:[UIImage imageNamed:@"more_highlight"] forState:UIControlStateHighlighted];
+    NSString* phoneVersion = [[UIDevice currentDevice] systemVersion];
+    NSLog(@"%@",phoneVersion);
+   
     UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
                                        initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
                                        target:nil action:nil];
-    negativeSpacer.width = -14;
+    negativeSpacer.width = -10;
+    if([phoneVersion floatValue]>=11.0){
+         rightBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 0,0, -10);
+    }
     [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [rightBtn setEnlargeEdgeWithTop:10 right:5 bottom:5 left:5];
     UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:negativeSpacer,rightItem,nil];
- 
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:rightItem,negativeSpacer,nil];
+//    UIBarButtonItem * rightItem = [UIBarButtonItem itemWithTarget:self action:@selector(rightBtnClick:) nomalImage:[UIImage imageNamed:@"more"]  higeLightedImage:[UIImage imageNamed:@"more_highlight"]  imageEdgeInsets:UIEdgeInsetsMake(0, 20, 0, 0)];
+//     UIBarButtonItem * rightItemfixSpace = [UIBarButtonItem fixedSpaceWithWidth:100];
+//    self.navigationItem.rightBarButtonItems = @[rightItem,rightItemfixSpace];
+
+//    self.navigationItem.rightBarButtonItem = [UIBarButtonItem fixedSpaceWithWidth:10];
 }
 
 - (void)initView{
     [self.view addSubview:self.tableView];
     [self initMjRefresh];
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, 8)];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.view addSubview:self.addButton];
 }
 
@@ -139,12 +151,14 @@ FilesHelperOpenFilesDelegate
 }
 
 - (void)rightBtnClick:(UIButton *)btn{
+    NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
+    NSString *selectTitle = WBLocalizedString(@"select_file", nil);
     if (self.cellStatus != FLFliesCellStatusCanChoose) {
-        [[LCActionSheet sheetWithTitle:@"" cancelButtonTitle:@"取消" clicked:^(LCActionSheet *actionSheet, NSInteger buttonIndex) {
+        [[LCActionSheet sheetWithTitle:@"" cancelButtonTitle:cancelTitle clicked:^(LCActionSheet *actionSheet, NSInteger buttonIndex) {
             if (buttonIndex == 1) {
                 [self actionForChooseStatus];
             }
-        } otherButtonTitles:@"选择文件", nil] show];
+        } otherButtonTitles:selectTitle, nil] show];
     }else{
     }
 }
@@ -171,7 +185,7 @@ FilesHelperOpenFilesDelegate
     
     BOOL canOpen = [self.documentController presentPreviewAnimated:YES];
     if (!canOpen) {
-        [SXLoadingView showProgressHUDText:@"文件预览失败" duration:1];
+        [SXLoadingView showProgressHUDText:WBLocalizedString(@"file_preview_failed", nil) duration:1];
         [_documentController presentOptionsMenuFromRect:self.view.bounds inView:self.view animated:YES];
     }
 }
@@ -181,7 +195,7 @@ FilesHelperOpenFilesDelegate
         return;
     }
     if (self.dataSouceArray.count == 0) {
-        [SXLoadingView showAlertHUD:@"您所在的文件夹没有文件可以选择" duration:2];
+        [SXLoadingView showAlertHUD:WBLocalizedString(@"nofile_choose", nil) duration:2];
         return;
     }
     [self.chooseHeadView setHidden:NO];
@@ -195,7 +209,7 @@ FilesHelperOpenFilesDelegate
 
 //    self.tabBarController.tabBar.hidden = YES;
     self.cellStatus = FLFliesCellStatusCanChoose;
-    _countLb.text = [NSString stringWithFormat:@"已选%ld个文件",(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
+    _countLb.text = [NSString stringWithFormat:WBLocalizedString(@"select_count", nil),(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
     [self.tableView reloadData];
     //     }
 }
@@ -216,7 +230,7 @@ FilesHelperOpenFilesDelegate
    
 //    [self.rdv_tabBarController setTabBarHidden:NO animated:YES];
     self.cellStatus = FLFliesCellStatusNormal;
-    _countLb.text = [NSString stringWithFormat:@"已选1个文件"];
+    _countLb.text = [NSString stringWithFormat:WBLocalizedString(@"select_count", nil),1];
     [self.tableView reloadData];
 }
 
@@ -269,7 +283,7 @@ FilesHelperOpenFilesDelegate
     if (self.cellStatus == FLFliesCellStatusCanChoose) {
         if (row == 0) {
             if ([FLFIlesHelper helper].chooseFiles.count == 0) {
-                [SXLoadingView showAlertHUD:@"请先选择文件" duration:1];
+                [SXLoadingView showAlertHUD:WBLocalizedString(@"please_select_the_file", nil) duration:1];
             }else{
                 [self actionForNormalStatus];
                 [[FLFIlesHelper helper] downloadChooseFilesParentUUID:_parentUUID RootUUID:_driveUUID];
@@ -331,14 +345,14 @@ FilesHelperOpenFilesDelegate
                     [[FLFIlesHelper helper] removeChooseFile:model];
                 }else
                     [[FLFIlesHelper helper] addChooseFile:model];
-                _countLb.text = [NSString stringWithFormat:@"已选%ld个文件",(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
+                _countLb.text = [NSString stringWithFormat:WBLocalizedString(@"select_count", nil),(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
                 [self.tableView reloadData];
             }else{
                 NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
                 NSString* suffixName = model.uuid;
                 NSString *fileName = model.name;
                 NSString *extensionstring = [fileName pathExtension];
-                NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",suffixName,extensionstring]];
+                NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",fileName]];
                 NSLog(@"文件位置%@",saveFile);
                 if ([[NSFileManager defaultManager] fileExistsAtPath:saveFile]) {
                     _documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:saveFile]];
@@ -363,6 +377,7 @@ FilesHelperOpenFilesDelegate
                     } begin:^{
                         
                     } progress:^(NSProgress *downloadProgress) {
+                        dispatch_async(dispatch_get_global_queue(0, 0), ^{
                         CGFloat downloadProgressFloat = (float)downloadProgress.completedUnitCount/(float)downloadProgress.totalUnitCount;
                         dispatch_async(dispatch_get_main_queue(), ^{
                             if (WB_UserService.currentUser.isCloudLogin) {
@@ -373,6 +388,7 @@ FilesHelperOpenFilesDelegate
                                  [_progressView setValueForProcess:downloadProgress.fractionCompleted];
                             }
                         });
+                    });
                     } complete:^(CSOneDowloadTask *downloadTask,NSError *error) {
                         [_progressView dismiss];
                         if (!error) {
@@ -400,10 +416,11 @@ FilesHelperOpenFilesDelegate
 
 - (UITableView *)tableView{
     if (!_tableView) {
-        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight - 44) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight - 64) style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.contentInset = UIEdgeInsetsMake(KDefaultOffset, 0, 0, 0);
+        _tableView.noDataImageName = @"no_file";
     }
     return _tableView;
 }
@@ -432,7 +449,7 @@ FilesHelperOpenFilesDelegate
         _countLb = countLb;
         [_chooseHeadView addSubview:countLb];
         [_chooseHeadView addSubview:leftBtn];
-        _countLb.text = @"选择文件";
+        _countLb.text = WBLocalizedString(@"select_file", nil);
         _countLb.font = [UIFont fontWithName:FANGZHENG size:16];
         [_chooseHeadView setHidden:YES];
     }
@@ -441,7 +458,7 @@ FilesHelperOpenFilesDelegate
 
 - (VCFloatingActionButton *)addButton{
     if(!_addButton){
-        CGRect floatFrame = CGRectMake(__kWidth - 80 , __kHeight - 64 - 56 - 88, 56, 56);
+        CGRect floatFrame = CGRectMake(__kWidth - 56 - 16 , __kHeight - 64 - 56 - 16, 56, 56);
         _addButton = [[VCFloatingActionButton alloc]initWithFrame:floatFrame normalImage:[UIImage imageNamed:@"add_album"] andPressedImage:[UIImage imageNamed:@"icon_close"] withScrollview:_tableView];
         _addButton.automaticallyInsets = YES;
         _addButton.imageArray = @[@"download"];

@@ -245,13 +245,13 @@ __strong static id _sharedObject = nil;
                                                              @"downloadFilePlistURL"   : [fileModel getDownloadFilePlistURL]
                                                              };
             
-                        NSString* finishPlist = [[fileModel getDownloadFileSavePath] stringByAppendingPathExtension:@"plist"];
-                        if (![downloadFinishInfo writeToFile:finishPlist atomically:YES])
-                        {
-                            NSLog(@"%@写入失败",finishPlist);
-                        }else{
-                            NSLog(@"%@写入成功",finishPlist);
-                        }
+//                        NSString* finishPlist = [[fileModel getDownloadFileSavePath] stringByAppendingPathExtension:@"plist"];
+//                        if (![downloadFinishInfo writeToFile:finishPlist atomically:YES])
+//                        {
+//                            NSLog(@"%@写入失败",finishPlist);
+//                        }else{
+//                            NSLog(@"%@写入成功",finishPlist);
+//                        }
             
                         //将文件从临时目录内剪切到下载目录
 //                        NSString* tempFile = [fileModel getDownloadTempSavePath];

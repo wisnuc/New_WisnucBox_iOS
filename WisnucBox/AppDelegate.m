@@ -34,6 +34,7 @@
 
 - (void)initRootVC {
     self.window.rootViewController = nil;
+
     if(WB_UserService.isUserLogin) {
         // userHome / backupdir / backupbasedir / token / address
         // To TabBar
@@ -42,6 +43,7 @@
         self.window.rootViewController = tabbar;
     }else{
         // TO Login VC
+//        id x = [UIApplication sharedApplication].delegate;
         self.leftManager = nil;
         FMLoginViewController *loginController = [[FMLoginViewController alloc]init];
         _loginController = loginController;
@@ -68,8 +70,8 @@
     FirstFilesViewController *filesViewController = [[FirstFilesViewController alloc]init];
     NavViewController *nav1 = [[NavViewController alloc] initWithRootViewController:photosVC];
     NavViewController *nav2 = [[NavViewController alloc] initWithRootViewController:filesViewController];
-    photosVC.title = @"照片";
-    filesViewController.title = @"文件";
+    photosVC.title = kFirstTabBarTitle;
+    filesViewController.title = kSecondTabBarTitle;
     NSDictionary *dict1 = @{
                             CYLTabBarItemImage : @"photo",
                             CYLTabBarItemSelectedImage : @"photo_select",
@@ -224,16 +226,16 @@
         }
             break;
         case WXErrCodeAuthDeny://用户拒绝授权
-            [SXLoadingView showProgressHUDText:@"授权失败" duration:1.5];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"rejected_authorization", nil) duration:1.5];
             break;
         case WXErrCodeSentFail://用户取消
-            [SXLoadingView showProgressHUDText:@"发送失败" duration:1.5];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"error", nil) duration:1.5];
             break;
         case WXErrCodeUnsupport://用户取消
-            [SXLoadingView showProgressHUDText:@"微信不支持" duration:1.5];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"WeChat_not_support", nil) duration:1.5];
             break;
         case WXErrCodeUserCancel://用户取消
-            [SXLoadingView showProgressHUDText:@"用户点击取消并返回" duration:1.5];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"user_cancel_wechat", nil) duration:1.5];
             break;
         case WXErrCodeCommon://用户取消
             [SXLoadingView showProgressHUDText:@"普通错误类型" duration:1.5];

@@ -25,7 +25,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"设置";
+    self.title = LeftMenuSettingString;
     self.view.backgroundColor = [UIColor whiteColor];
    //    self.automaticallyAdjustsScrollViewInsets = NO;
     self.navigationController.navigationBar.translucent = NO;
@@ -60,7 +60,7 @@
     UITableViewCell * cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"123"];
     if (indexPath.row == 0) {
         UILabel * titleLb = [[UILabel alloc] initWithFrame:CGRectMake(16, 23, 200, 17)];
-        titleLb.text = @"照片自动备份:";
+        titleLb.text = WBLocalizedString(@"photo_auto_upload_setting_text", nil);
         titleLb.font = [UIFont systemFontOfSize:17];
         
         [cell.contentView addSubview:titleLb];
@@ -73,13 +73,13 @@
     }
     else if(indexPath.row == 1){
         UILabel * titleLb = [[UILabel alloc] initWithFrame:CGRectMake(16, 23, 200, 17)];
-        titleLb.text = @"清除缓存";
+        titleLb.text = WBLocalizedString(@"clear_cache", nil);
         titleLb.font = [UIFont systemFontOfSize:17];
         [cell.contentView addSubview:titleLb];
         
         UIButton * cleanBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 70, 40)];
         cleanBtn.userInteractionEnabled = NO;
-        [cleanBtn setTitle:@"正在计算..." forState:UIControlStateNormal];
+        [cleanBtn setTitle:WBLocalizedString(@"calculating", nil) forState:UIControlStateNormal];
         cleanBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         [cleanBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -98,13 +98,18 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 1) {
+        
+        NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
+        NSString *clearTitle = WBLocalizedString(@"clear", nil);
+        NSString *confirmTitle = WBLocalizedString(@"confirm_clear_cache", nil);
+        
         NSUInteger  i = [SDImageCache sharedImageCache].getSize;
        i = i + [[YYImageCache sharedCache].diskCache totalCost];
         if(i>0){
-            LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:@"确认清除缓存"
+            LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:confirmTitle
                                                                      delegate:self
-                                                            cancelButtonTitle:@"取消"
-                                                        otherButtonTitleArray:@[@"清除"]];
+                                                            cancelButtonTitle:cancelTitle
+                                                        otherButtonTitleArray:@[clearTitle]];
             actionSheet.scrolling          = YES;
             actionSheet.buttonHeight       = 60.0f;
             actionSheet.visibleButtonCount = 3.6f;
@@ -121,14 +126,14 @@
 
 - (void)actionSheet:(LCActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 1) {
-        [SXLoadingView showProgressHUD:@"正在清除缓存"];
+        [SXLoadingView showProgressHUD:WBLocalizedString(@"clearing_cache", nil)];
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             [[SDImageCache sharedImageCache] cleanDisk];
             [[SDImageCache sharedImageCache] clearDisk];
             [[YYImageCache sharedCache].diskCache removeAllObjects];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [SXLoadingView hideProgressHUD];
-                [SXLoadingView showAlertHUD:@"清除完成" duration:0.5];
+                [SXLoadingView showAlertHUD:WBLocalizedString(@"clear_completed", nil) duration:0.5];
                 [self.settingTableView reloadData];
             });
         });

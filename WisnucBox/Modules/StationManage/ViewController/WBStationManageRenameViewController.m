@@ -17,14 +17,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"编辑设备名";
+    self.title = WBLocalizedString(@"modify_equipment_label", nil);
     self.renameTextField.text = _stationName;
     [self addLeftBarButtonWithImage:[UIImage imageNamed:@"back"] andHighlightButtonImage:nil andSEL:@selector(backbtnClick:)];
-    UIButton * rightButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 24, 24)];
-    [rightButton setTitle:@"完成" forState:UIControlStateNormal];
+    UIButton * rightButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 24)];
+    rightButton.titleLabel.font = [UIFont systemFontOfSize:16];
+    [rightButton setTitle:WBLocalizedString(@"finish_text", nil) forState:UIControlStateNormal];
     [rightButton addTarget:self action:@selector(rightButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
-    self.navigationItem.leftBarButtonItem = rightButtonItem;
+    self.navigationItem.rightBarButtonItem = rightButtonItem;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -57,7 +58,7 @@
 
 - (void)patchToReName{
     if (![_renameTextField.text isEqualToString:_stationName]) {
-        [SXLoadingView showProgressHUDText:@"正在修改设备名,请稍候..." duration:1.2];
+        [SXLoadingView showProgressHUDText:@"loading..." duration:1.2];
         WBReNameAPI *api = [WBReNameAPI apiWithName:_renameTextField.text];
         [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
             NSLog(@"%@",request.responseJsonObject);

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -40,7 +40,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7BD-P2-wb5" userLabel="downBtn">
-                        <rect key="frame" x="343" y="27" width="20" height="20"/>
+                        <rect key="frame" x="360" y="27" width="20" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="4g8-fl-qR5"/>
                             <constraint firstAttribute="width" constant="20" id="Nr2-tU-GCx"/>
@@ -72,6 +72,7 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="7BD-P2-wb5" secondAttribute="trailing" constant="8" id="4IK-xg-7cW"/>
                     <constraint firstItem="7BD-P2-wb5" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="AoF-9T-ok6"/>
                     <constraint firstItem="tbT-cl-mAk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="CgE-ae-a2b"/>
                     <constraint firstAttribute="trailing" secondItem="mX6-gg-H8j" secondAttribute="trailing" constant="38" id="Esq-MN-aPr"/>
@@ -82,7 +83,6 @@
                     <constraint firstAttribute="trailingMargin" secondItem="0DU-HI-tYw" secondAttribute="trailing" constant="75" id="a9G-Nk-QEk"/>
                     <constraint firstItem="DyJ-oP-YOB" firstAttribute="leading" secondItem="8w9-wt-EEo" secondAttribute="trailing" constant="32" id="bib-0X-kPE"/>
                     <constraint firstItem="DyJ-oP-YOB" firstAttribute="top" secondItem="tbT-cl-mAk" secondAttribute="top" id="chS-4t-xP9"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="7BD-P2-wb5" secondAttribute="trailing" constant="5" id="d2Q-hP-RX3"/>
                     <constraint firstItem="0DU-HI-tYw" firstAttribute="bottom" secondItem="tbT-cl-mAk" secondAttribute="bottom" id="gJV-52-GSa"/>
                     <constraint firstItem="8w9-wt-EEo" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="gOI-jb-wI7"/>
                     <constraint firstItem="mX6-gg-H8j" firstAttribute="bottom" secondItem="0DU-HI-tYw" secondAttribute="bottom" id="ikM-QR-2S4"/>
@@ -91,7 +91,7 @@
                 </constraints>
             </tableViewCellContentView>
             <gestureRecognizers/>
-            <inset key="separatorInset" minX="60" minY="0.0" maxX="0.0" maxY="0.0"/>
+            <inset key="separatorInset" minX="76" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="downBtn" destination="7BD-P2-wb5" id="knh-eN-K2N"/>
                 <outlet property="f_ImageView" destination="8w9-wt-EEo" id="4bx-L4-hq7"/>

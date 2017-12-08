@@ -23,11 +23,13 @@
 
 @property (readonly) NSString* serverType;
 @property (readonly) int16_t port;
+@property (nonatomic) NSString *severPath;
 
 - (BOOL) isRunningServer;
 - (void) createServer;
 - (void) stopServer;
+- (void) stopServerBrowser;
 
-@property (weak) id<ServerBrowserDelegate> delegate;
+@property (weak,nonatomic) id<ServerBrowserDelegate> delegate;
 
 @end

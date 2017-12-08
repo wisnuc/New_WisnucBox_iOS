@@ -12,6 +12,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WBStationManageRebotViewController">
             <connections>
                 <outlet property="maintainButton" destination="sFJ-TM-sYu" id="ef8-uo-42z"/>
+                <outlet property="miantainDetailLabel" destination="9wD-6w-kpa" id="5Me-PJ-SvP"/>
+                <outlet property="miantainLabel" destination="gcF-HD-jvL" id="S2T-0B-J6f"/>
+                <outlet property="rebootPowerOffLabel" destination="2Pe-5T-prl" id="ZCQ-nE-1sG"/>
                 <outlet property="rebotButton" destination="keQ-jp-ATX" id="h92-GT-16e"/>
                 <outlet property="shutDownButton" destination="eFj-ds-cEd" id="a4b-nI-qMF"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -36,10 +39,9 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eFj-ds-cEd">
-                    <rect key="frame" x="60" y="66" width="45" height="25"/>
+                    <rect key="frame" x="60" y="66" width="33" height="35"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="25" id="BXc-tA-okC"/>
-                        <constraint firstAttribute="width" constant="45" id="qaU-BY-c2b"/>
+                        <constraint firstAttribute="height" constant="35" id="BXc-tA-okC"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <state key="normal" title="关机">
@@ -50,9 +52,9 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="keQ-jp-ATX">
-                    <rect key="frame" x="130" y="61" width="45" height="35"/>
+                    <rect key="frame" x="118" y="66" width="50" height="35"/>
                     <constraints>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="45" id="cdj-pt-6sO"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="cdj-pt-6sO"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="uC1-vb-2bi"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -64,33 +66,33 @@
                     </connections>
                 </button>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_build.png" translatesAutoresizingMaskIntoConstraints="NO" id="J0I-2Q-qP6">
-                    <rect key="frame" x="16" y="131.5" width="24" height="24"/>
+                    <rect key="frame" x="16" y="141.5" width="24" height="24"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="24" id="An7-gB-dZA"/>
                         <constraint firstAttribute="height" constant="24" id="H0f-e9-fOG"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="进入维护模式" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gcF-HD-jvL">
-                    <rect key="frame" x="60" y="134" width="299" height="19.5"/>
+                    <rect key="frame" x="60" y="144" width="299" height="19.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="重启进入维护模式，可以在维护模式下执行磁盘操作或系统维护任务。" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9wD-6w-kpa">
-                    <rect key="frame" x="60" y="169" width="299" height="33.5"/>
+                    <rect key="frame" x="60" y="179" width="299" height="33.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sDn-ah-hpZ">
-                    <rect key="frame" x="0.0" y="111" width="375" height="0.5"/>
+                    <rect key="frame" x="0.0" y="121" width="375" height="0.5"/>
                     <color key="backgroundColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="0.5" id="g2N-Yx-tD0"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sFJ-TM-sYu">
-                    <rect key="frame" x="60" y="218.5" width="123" height="30"/>
+                    <rect key="frame" x="60" y="228.5" width="123" height="30"/>
                     <state key="normal" title="重启进入维护模式">
                         <color key="titleColor" red="0.01176470588" green="0.66274509800000003" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>

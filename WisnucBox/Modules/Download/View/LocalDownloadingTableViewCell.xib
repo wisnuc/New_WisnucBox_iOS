@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,7 +21,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="文件名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GAf-Al-olb">
                         <rect key="frame" x="60" y="10" width="220" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.87807684075342463" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--/--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="11n-ow-vvH">
@@ -45,7 +45,7 @@
                         </constraints>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NBJ-vJ-ep2">
-                        <rect key="frame" x="284" y="19" width="20" height="20"/>
+                        <rect key="frame" x="292" y="19" width="20" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="20" id="hCU-Vf-zYK"/>
                             <constraint firstAttribute="height" constant="20" id="qYN-96-daL"/>
@@ -79,10 +79,11 @@
                     <constraint firstAttribute="bottom" secondItem="75O-Ge-LB4" secondAttribute="bottom" constant="14" id="duW-Pz-26e"/>
                     <constraint firstAttribute="trailing" secondItem="75O-Ge-LB4" secondAttribute="trailing" constant="45" id="f1Y-b3-YSO"/>
                     <constraint firstItem="KHn-bG-kXB" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="gp3-m8-sra"/>
+                    <constraint firstItem="C6c-QC-NpB" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="jja-v3-C0g"/>
                     <constraint firstItem="KHn-bG-kXB" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="jmc-9X-QRb"/>
                     <constraint firstItem="KHn-bG-kXB" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="nAb-8z-glH"/>
                     <constraint firstItem="C6c-QC-NpB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="okv-bu-8mS"/>
-                    <constraint firstAttribute="trailing" secondItem="NBJ-vJ-ep2" secondAttribute="trailing" constant="16" id="pa5-fH-I5s"/>
+                    <constraint firstAttribute="trailing" secondItem="NBJ-vJ-ep2" secondAttribute="trailing" constant="8" id="pa5-fH-I5s"/>
                     <constraint firstItem="KHn-bG-kXB" firstAttribute="centerX" secondItem="C6c-QC-NpB" secondAttribute="centerX" id="qBf-TU-ds8"/>
                     <constraint firstItem="C6c-QC-NpB" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="ztD-Qo-sEq"/>
                 </constraints>
@@ -92,6 +93,7 @@
                     </mask>
                 </variation>
             </tableViewCellContentView>
+            <inset key="separatorInset" minX="60" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="cancelButton" destination="NBJ-vJ-ep2" id="4Mu-oC-AJ9"/>
                 <outlet property="f_ImageView" destination="KHn-bG-kXB" id="oOq-4F-oaB"/>

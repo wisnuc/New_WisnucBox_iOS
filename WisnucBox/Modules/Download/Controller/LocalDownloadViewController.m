@@ -61,7 +61,7 @@ UIDocumentInteractionControllerDelegate
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createNavBtns];
-    self.title = @"传输管理";
+    self.title = LeftMenuTransmissionManageString;
     [CSDownloadHelper shareManager].delegate = self;
     [CSUploadHelper shareManager].delegate = self;
     _manager  = [CSFileDownloadManager sharedDownloadManager];
@@ -69,7 +69,7 @@ UIDocumentInteractionControllerDelegate
     _filesServices = [FilesServices new];
     [self loadData];
     [self.view addSubview:self.tableView];
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, 64)];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [KDefaultNotificationCenter addObserver:self selector:@selector(handleNetReachabilityNotify:) name:NETWORK_REACHABILITY_CHANGE_NOTIFY object:nil];
 }
 
@@ -91,12 +91,23 @@ UIDocumentInteractionControllerDelegate
 }
 
 - (void)createNavBtns{
-    UIButton * rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];
+    UIButton * rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 24, 24)];
     [rightBtn setImage:[UIImage imageNamed:@"more"] forState:UIControlStateNormal];
     [rightBtn setImage:[UIImage imageNamed:@"more_highlight"] forState:UIControlStateHighlighted];
+    NSString* phoneVersion = [[UIDevice currentDevice] systemVersion];
+    NSLog(@"%@",phoneVersion);
+    
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -10;
+    if([phoneVersion floatValue]>=11.0){
+        rightBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 0,0, -10);
+    }
     [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+     [rightBtn setEnlargeEdgeWithTop:10 right:5 bottom:5 left:5];
     UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = rightItem;
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:rightItem,negativeSpacer,nil];
 }
 
 - (void)updateDataWithDownloadTask:(CSDownloadTask *)downloadTask {
@@ -128,7 +139,7 @@ UIDocumentInteractionControllerDelegate
 {
     BOOL canOpen = [self.documentController presentPreviewAnimated:YES];
     if (!canOpen) {
-        [SXLoadingView showProgressHUDText:@"文件预览失败" duration:1];
+        [SXLoadingView showProgressHUDText:WBLocalizedString(@"file_preview_failed", nil) duration:1];
         [_documentController presentOptionsMenuFromRect:self.view.bounds inView:self.view animated:YES];
     }
 
@@ -163,24 +174,29 @@ UIDocumentInteractionControllerDelegate
 }
 
 - (void)rightBtnClick:(UIButton *)btn{
+    NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
+    NSString *selectTitle = WBLocalizedString(@"choose_text", nil);
+    NSString *clearTitle = WBLocalizedString(@"clear_select_item", nil);
+    NSString *deleteTitle = WBLocalizedString(@"delete_text", nil);
+    
     @weaky(self);
     if(_downloadedArray.count == 0 && self.transmitingArray.count == 0){
-        [SXLoadingView showProgressHUDText:@"没有文件可以进行选择" duration:1];
+        [SXLoadingView showProgressHUDText:WBLocalizedString(@"no_file", nil) duration:1];
     }else{
         if (!self.cellStatus) {
-            [[LCActionSheet sheetWithTitle:@"" cancelButtonTitle:@"取消" clicked:^(LCActionSheet *actionSheet, NSInteger buttonIndex) {
+            [[LCActionSheet sheetWithTitle:@"" cancelButtonTitle:cancelTitle clicked:^(LCActionSheet *actionSheet, NSInteger buttonIndex) {
                 if (buttonIndex == 1) {
                     [weak_self changeStatus];
                 }
-            } otherButtonTitles:@"选择", nil] show];
+            } otherButtonTitles:selectTitle, nil] show];
         }else{
-            [[LCActionSheet sheetWithTitle:@"" cancelButtonTitle:@"取消" clicked:^(LCActionSheet *actionSheet, NSInteger buttonIndex) {
+            [[LCActionSheet sheetWithTitle:@"" cancelButtonTitle:cancelTitle clicked:^(LCActionSheet *actionSheet, NSInteger buttonIndex) {
                 if (buttonIndex == 1) {
                     [weak_self changeStatus];
                 }else if ( buttonIndex == 2){
                     [weak_self deleteChooseFiles];
                 }
-            } otherButtonTitles:@"清除选择",@"删除", nil] show];
+            } otherButtonTitles:clearTitle,deleteTitle, nil] show];
         }
     }
 }
@@ -197,7 +213,7 @@ UIDocumentInteractionControllerDelegate
 #pragma UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     if (indexPath.section==0) {
       LocalDownloadingTableViewCell *cell;
        cell = [tableView  cellForRowAtIndexPath:indexPath];
@@ -212,21 +228,33 @@ UIDocumentInteractionControllerDelegate
             CSDownloadModel* downloadFileModel = [downloadTask getDownloadFileModel];
             cell.fileNameLabel.text = downloadFileModel.downloadFileName;
             //        cell.progressLabel.text = @"正在下载";
+            
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
             downloadTask.progressBlock = ^(NSProgress *downloadProgress) {
-//                NSString *progressString = [NSString stringWithFormat:@"%@/%@",[CSFileUtil calculateUnit:downloadProgress.completedUnitCount],[CSFileUtil calculateUnit:downloadProgress.totalUnitCount]];
-                
-                float progressFloat = (float)downloadProgress.completedUnitCount/(float)downloadProgress.totalUnitCount;
-                
-                //            NSString *progressString = [NSString stringWithFormat:@"%@/%@",[CSFileUtil calculateUnit:downloadProgress.],[CSFileUtil calculateUnit:totalBytesExpectedToRead]];
-                if ([NSThread isMainThread] ) {
-                    cell.progressView.progress = progressFloat;
+                if (downloadProgress.fractionCompleted) {
+                    if ([NSThread isMainThread] ) {
+                        cell.progressView.progress = downloadProgress.fractionCompleted;
+                    }else{
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            cell.progressView.progress = downloadProgress.fractionCompleted;
+                        });
+                    }
+                    
                 }else{
-                    dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    float progressFloat = (float)downloadProgress.completedUnitCount/(float)downloadProgress.totalUnitCount;
+                    NSLog(@"%f",progressFloat);
+                    if ([NSThread isMainThread] ) {
                         cell.progressView.progress = progressFloat;
-                    });
+                    }else{
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            cell.progressView.progress = progressFloat;
+                        });
+                    }
                 }
                 
-            };
+              };
+            });
             if ([self.chooseArr containsObject:downloadFileModel.getDownloadFileUUID]) {
                 cell.f_ImageView.hidden = YES;
                 cell.layerView.image = [UIImage imageNamed:@"check_circle_select"];
@@ -234,11 +262,11 @@ UIDocumentInteractionControllerDelegate
                 cell.f_ImageView.hidden = NO;
                 cell.layerView.image = [UIImage imageNamed:@"check_circle"];
             }
-            
+            NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
             cell.clickBlock = ^(LocalDownloadingTableViewCell * cell){
                 LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:nil
                                                                          delegate:nil
-                                                                cancelButtonTitle:@"取消"
+                                                                cancelButtonTitle:cancelTitle
                                                             otherButtonTitleArray:@[@"取消下载"]];
                 actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
                     if (buttonIndex == 1) {
@@ -305,11 +333,11 @@ UIDocumentInteractionControllerDelegate
                 cell.f_ImageView.hidden = NO;
                 cell.layerView.image = [UIImage imageNamed:@"check_circle"];
             }
-            
+            NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
             cell.clickBlock = ^(LocalDownloadingTableViewCell * cell){
                 LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:nil
                                                                          delegate:nil
-                                                                cancelButtonTitle:@"取消"
+                                                                cancelButtonTitle:cancelTitle
                                                             otherButtonTitleArray:@[@"取消上传"]];
                 actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
                     if (buttonIndex == 1) {
@@ -411,10 +439,10 @@ UIDocumentInteractionControllerDelegate
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     if(section == 0){
-        return @"未完成";
+        return WBLocalizedString(@"incomplete", nil);
     }
     else{
-        return @"已完成";
+        return WBLocalizedString(@"completed", nil);
     }
 }
 
@@ -453,14 +481,14 @@ UIDocumentInteractionControllerDelegate
             NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
             NSString* suffixName = downloadedFileModel.fileUUID;
             NSString *fileName = downloadedFileModel.fileName;
-            if ([downloadedFileModel.actionType isEqualToString:@"下载"]) {
-                NSString *extensionstring = [fileName pathExtension];
-                NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",suffixName,extensionstring]];
-                openPath = saveFile;
-            }else{
+//            if ([downloadedFileModel.actionType isEqualToString:@"下载"]) {
+//                NSString *extensionstring = [fileName pathExtension];
+//                NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",suffixName,extensionstring]];
+//                openPath = saveFile;
+//            }else{
                 NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",fileName]];
                 openPath = saveFile;
-            }
+//            }
          
 //            NSURL *url = [NSURL fileURLWithPath:saveFile];
             NSLog(@"文件位置%@",openPath);
@@ -497,7 +525,7 @@ UIDocumentInteractionControllerDelegate
 //lazy
 - (UITableView *)tableView{
     if (!_tableView) {
-        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight - 64) style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
     }

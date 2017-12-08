@@ -99,7 +99,7 @@
              case AFNetworkReachabilityStatusNotReachable:
              {
                  NSLog(@"无网络");
-                [SXLoadingView showProgressHUDText:@"网络已断开" duration:1];
+                [SXLoadingView showProgressHUDText:WBLocalizedString(@"network_is_disconnected", nil) duration:1];
                  break;
              }
              case AFNetworkReachabilityStatusReachableViaWiFi:

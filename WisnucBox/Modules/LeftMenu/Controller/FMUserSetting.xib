@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FMUserSetting">
             <connections>
                 <outlet property="backButton" destination="Tik-jc-pWw" id="SdH-Ux-Zrb"/>
+                <outlet property="fabButton" destination="5X0-o3-wws" id="CqY-Tg-7ja"/>
                 <outlet property="nameLabel" destination="tpF-lE-lZd" id="LJK-Kv-1ed"/>
+                <outlet property="titleLabel" destination="YEA-7M-0Mh" id="L6H-vw-KZo"/>
                 <outlet property="typeLabel" destination="x7m-WO-pzi" id="gfR-RP-Rwv"/>
                 <outlet property="urlLabel" destination="hqG-PD-5gJ" id="gRa-5h-unZ"/>
+                <outlet property="userHeaderLabel" destination="xQS-qy-EVD" id="aV9-1o-MTZ"/>
                 <outlet property="usersTableView" destination="gbJ-IU-I7j" id="Y8j-2g-76d"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -112,7 +115,7 @@
                     </connections>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5X0-o3-wws">
-                    <rect key="frame" x="237" y="405" width="63" height="63"/>
+                    <rect key="frame" x="237" y="489" width="63" height="63"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="63" id="RI9-da-y9m"/>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="63" id="aUa-GL-oZ8"/>
@@ -160,7 +163,7 @@
                 <constraint firstAttribute="trailing" secondItem="hJr-ra-oqz" secondAttribute="trailing" id="esa-rK-8Hy"/>
                 <constraint firstItem="viD-64-fn6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="lSr-Iw-ZoL"/>
                 <constraint firstItem="viD-64-fn6" firstAttribute="top" secondItem="hJr-ra-oqz" secondAttribute="bottom" id="mgC-u7-K19"/>
-                <constraint firstAttribute="bottom" secondItem="5X0-o3-wws" secondAttribute="bottom" constant="100" id="okW-ne-Eu1"/>
+                <constraint firstAttribute="bottom" secondItem="5X0-o3-wws" secondAttribute="bottom" constant="16" id="okW-ne-Eu1"/>
                 <constraint firstItem="gbJ-IU-I7j" firstAttribute="top" secondItem="viD-64-fn6" secondAttribute="bottom" id="se2-Jf-tBv"/>
             </constraints>
             <point key="canvasLocation" x="192" y="-156"/>

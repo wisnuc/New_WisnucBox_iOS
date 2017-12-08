@@ -76,7 +76,7 @@ UITableViewDataSource
             if(IsEquallString(model.tag, @"home")){
                 FirstFilesModel *filesModel =  [FirstFilesModel new];
                 filesModel.type = WBFilesFirstDirectoryMyFiles;
-                filesModel.name = @"我的文件";
+                filesModel.name = WBLocalizedString(@"my_file", nil);
                 [self.dataSouceArray addObject:filesModel];
             }else{
                 NSString *string = WB_UserService.currentUser.uuid;

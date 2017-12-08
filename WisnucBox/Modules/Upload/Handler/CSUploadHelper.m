@@ -55,7 +55,7 @@ __strong static id _sharedObject = nil;
     if (!WB_UserService.currentUser.uploadFileDir) {
     [WB_NetService getUserBackupDirName:BackUpFilesDirName BackupDir:^(NSError *error, NSString *entryUUID) {
         if(error){
-            [SXLoadingView showProgressHUDText:@"上传失败" duration:1.0];
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"upload_failed", nil) duration:1.0];
             return ;
         }else{
             [weak_self readyUploadFilesWithFilePath:filePath];
@@ -74,7 +74,7 @@ __strong static id _sharedObject = nil;
     NSString* suffixName = [filePath lastPathComponent];
     NSFileManager *manager = [NSFileManager defaultManager];
     if (![manager fileExistsAtPath:filePath]) {
-        [SXLoadingView showProgressHUDText:@"该文件不存在" duration:1.0];
+        [SXLoadingView showProgressHUDText:WBLocalizedString(@"this_file_does_not_exist", nil) duration:1.0];
         return;
     }
     

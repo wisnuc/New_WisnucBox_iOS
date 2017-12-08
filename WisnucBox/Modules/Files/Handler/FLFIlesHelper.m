@@ -112,14 +112,14 @@ static dispatch_once_t onceToken;
             [[CSDownloadHelper shareManager] downloadFileWithFileModel:model RootUUID:rootUUID UUID:uuid];
         }
     }
-     NSString * string  = [NSString stringWithFormat:@"%ld个文件已添加到下载",(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
+     NSString * string  = [NSString stringWithFormat:@"%ld个文件已添加到下载队列",(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
     [SXLoadingView showProgressHUDText:string duration:1.5];
     [[FLFIlesHelper helper] removeAllChooseFile];
 }
 
 - (void)configCells:(FLFilesCell * )cell withModel:(EntriesModel *)model cellStatus:(FLFliesCellStatus)status viewController:(UIViewController *)viewController parentUUID:(NSString *)uuid RootUUID:(NSString *)rootUUID{
     cell.nameLabel.text = model.name;
-    cell.sizeLabel.text = [NSString fileSizeWithFLModel:model];
+    cell.sizeLabel.text = [NSString transformedValue:[NSNumber numberWithLongLong:model.size]];
 
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if ([model.type isEqualToString:@"file"]) {
@@ -166,17 +166,17 @@ static dispatch_once_t onceToken;
 
     @weaky(self);
     if ([model.type isEqualToString:@"file"]) {
-    
+        NSString *redownloadString = WBLocalizedString(@"re_download_the_item", nil);
         cell.clickBlock = ^(FLFilesCell * cell){
             cell.downBtn.userInteractionEnabled = YES;
             weak_self.chooseModel = model;
-            NSString *downloadString  = @"下载该文件";
+            NSString *downloadString  =WBLocalizedString(@"download_the_item", nil);
             NSString *openFileString;
             NSMutableArray *downloadedArr = [NSMutableArray arrayWithArray:[_filesServices findAll]];
             for (WBFile * fileModel in downloadedArr) {
                 if ([fileModel.fileUUID isEqualToString:model.uuid]) {
-                    downloadString = @"重新下载";
-                    openFileString = @"打开该文件";
+                    downloadString = redownloadString;
+                    openFileString = WBLocalizedString(@"open_the_item", nil);
                 }
             }
 
@@ -189,14 +189,14 @@ static dispatch_once_t onceToken;
             if (openFileString.length>0) {
                 [arr addObject:openFileString];
             }
-            
+            NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
             LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:nil
                                                                      delegate:nil
-                                                            cancelButtonTitle:@"取消"
+                                                            cancelButtonTitle:cancelTitle
                                                         otherButtonTitleArray:arr];
             actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
                 if (buttonIndex == 1) {
-                if ([downloadString isEqualToString:@"重新下载"]) {
+                if ([downloadString isEqualToString:redownloadString]) {
                     [_filesServices deleteFileWithFileUUID:model.uuid FileName:model.name ActionType:nil];
                 }
                 [[CSDownloadHelper  shareManager] downloadFileWithFileModel:model RootUUID:rootUUID UUID:uuid ];
@@ -206,10 +206,10 @@ static dispatch_once_t onceToken;
                 }
                 }else if(buttonIndex == 2) {
                     NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
-                    NSString* suffixName = model.uuid;
+//                    NSString* suffixName = model.uuid;
                     NSString *fileName = model.name;
-                    NSString *extensionstring = [fileName pathExtension];
-                    NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",suffixName,extensionstring]];
+//                    NSString *extensionstring = [fileName pathExtension];
+                    NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",fileName]];
             
                     if ([[NSFileManager defaultManager] fileExistsAtPath:saveFile]) {
                         if (_openFilesdelegate && [_openFilesdelegate respondsToSelector:@selector(openTheFileWithFilePath:)]) {

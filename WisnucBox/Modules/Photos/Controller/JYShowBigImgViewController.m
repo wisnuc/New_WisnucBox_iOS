@@ -74,6 +74,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
+    NSString* phoneVersion = [[UIDevice currentDevice] systemVersion];
+//    NSLog(@"%@",phoneVersion);
+    if([phoneVersion floatValue]>=11.0){
+    if ([_collectionView respondsToSelector:@selector(setContentInsetAdjustmentBehavior:)]) {
+            if (@available(iOS 11.0, *)) {
+                _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+            }
+        }
+    }else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
+
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.clipsToBounds = YES;
     self.view.alpha = 0.0f;

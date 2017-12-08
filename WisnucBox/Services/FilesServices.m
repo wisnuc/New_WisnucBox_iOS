@@ -37,14 +37,14 @@
     NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
     NSString* suffixName = uuid;
     NSString *fileNameString = fileName;
-    if (actionType && [actionType isEqualToString:@"上传"]) {
+//    if (actionType && [actionType isEqualToString:@"上传"]) {
         NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",fileName]];
         deletePath = saveFile;
-    }else{
-        NSString *extensionstring = [fileNameString pathExtension];
-        NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",suffixName,extensionstring]];
-        deletePath = saveFile;
-    }
+//    }else{
+//        NSString *extensionstring = [fileNameString pathExtension];
+//        NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",suffixName,extensionstring]];
+//        deletePath = saveFile;
+//    }
    
     NSLog(@"文件位置%@",deletePath);
     if ([[NSFileManager defaultManager] fileExistsAtPath:deletePath]) {

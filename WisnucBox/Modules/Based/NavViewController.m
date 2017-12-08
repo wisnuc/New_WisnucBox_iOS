@@ -81,7 +81,7 @@
     self.navigationItem.hidesBackButton = YES;
 //    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back_gray"] style:UIBarButtonItemStyleDone target:self action:@selector(backBtnClick)];
     
-    self.navigationItem.leftItemsSupplementBackButton = YES;
+//    self.navigationItem.leftItemsSupplementBackButton = YES;
     //左按钮
     UIButton *leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 24, 24)];
     [leftBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];//设置按钮点击事件

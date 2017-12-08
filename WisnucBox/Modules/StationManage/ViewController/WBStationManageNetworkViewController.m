@@ -27,7 +27,7 @@ UITableViewDataSource
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"时间与日期";
+    self.title = kStationManageNetworkString;
     [self getData];
     [self.view addSubview:self.timeImageView];
     [self.view addSubview:self.tableView];
@@ -50,7 +50,7 @@ UITableViewDataSource
 
 - (void)getData{
     WBStationManageNetInterfaceAPI *api = [[WBStationManageNetInterfaceAPI alloc]init];
-    [SXLoadingView showProgressHUD:@"正在获取..."];
+    [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
 
@@ -106,31 +106,31 @@ UITableViewDataSource
     switch (indexPath.row) {
         case 0:
             cell.normalLabel.text = model.name;
-            cell.detailLabel.text = @"网卡名称";
+            cell.detailLabel.text = WBLocalizedString(@"nic_name", nil);;
             break;
         case 1:
             cell.normalLabel.text = [NSString stringWithFormat:@"%@M",model.speed];
-            cell.detailLabel.text = @"宽带";
+            cell.detailLabel.text = WBLocalizedString(@"bandwidth", nil);
             break;
         case 2:
             cell.normalLabel.text = @"IPv4";
-            cell.detailLabel.text = @"地址类型";
+            cell.detailLabel.text = WBLocalizedString(@"type", nil);
             break;
         case 3:
             cell.normalLabel.text = model.address;
-            cell.detailLabel.text = @"网络地址";
+            cell.detailLabel.text = WBLocalizedString(@"network_address", nil);
             break;
         case 4:
             cell.normalLabel.text = model.netmask;
-            cell.detailLabel.text = @"子网掩码";
+            cell.detailLabel.text = WBLocalizedString(@"subnet_mask", nil);
             break;
         case 5:
             cell.normalLabel.text = model.mac;
-            cell.detailLabel.text = @"MAC地址";
+            cell.detailLabel.text = WBLocalizedString(@"nic_mac_address", nil);
             break;
         case 6:
-            cell.normalLabel.text = WB_UserService.currentUser.isCloudLogin?@"远程设备连接" : @"本地设备连接";
-            cell.detailLabel.text = @"网络连接类型";
+            cell.normalLabel.text = WB_UserService.currentUser.isCloudLogin?WBLocalizedString(@"remote_connection", nil) :WBLocalizedString(@"local_station_connection", nil);
+            cell.detailLabel.text = WBLocalizedString(@"network_connection_type", nil);
             break;
         default:
             break;

@@ -1,0 +1,197 @@
+/* 
+  Localizable.strings
+  WisnucBox
+
+  Created by wisnuc-imac on 2017/12/5.
+  Copyright © 2017年 JackYang. All rights reserved.
+*/
+
+"confirm" = "确定";
+"cancel" = "取消";
+"choose_text" = "选择";
+"delete_text" = "删除";
+"finish_text" = "完成";
+"clear_select_item" = "清除选择";
+"select_file" = "选择文件";
+"select_photo" = "选择照片";
+
+"accepted" = "已接受";
+"refused" = "已拒绝";
+"accept" = "接受";
+"refuse" = "拒绝";
+
+"loading..." = "正在加载...";
+
+"error" = "发生错误，操作失败";
+"success" = "操作成功";
+
+// LeftMenu Title
+"setting" = "设置";
+"transmission_manage" = "传输管理";
+"equipment_manage" = "设备管理";
+"invitation" = "邀请微信好友";
+"operation_not_support" = "目前仅支持局域网操作";
+
+//TabBar Title
+"photo" = "照片";
+"file" = "文件";
+
+//Upload
+"upload_failed" = "上传失败";
+"this_file_does_not_exist" = "该文件不存在";
+//Photos
+"please_select_the_photo" = "请先选择照片";
+"download_completed" = "下载完成";
+"play_failed" = "播放失败";
+"sharing_failed" = "分享失败";
+
+//Files
+"my_file" = "我的文件";
+"re_download_the_item" = "重新下载";
+"download_the_item" = "下载该文件";
+"open_the_item" = "打开该文件";
+"select_count" = "%ld项已选";
+"file_preview_failed" = "文件预览失败";
+"please_select_the_file" = "请先选择文件";
+"nofile_choose" = "您所在的文件夹没有文件可以选择";
+"file_downloaded" = "该文件已下载";
+"no_file" = "没有文件可以进行选择";
+
+//transmission
+"completed" = "已完成";
+"incomplete" = "未完成";
+
+//Setting
+"photo_auto_upload_setting_text" = "照片自动备份";
+"clear_cache" = "清除缓存";
+"clear" = "清除";
+"confirm_clear_cache" = "是否要清除缓存文件？";
+"calculating" = "计算中...";
+"clear_completed" = "清除完成";
+"clearing_cache" = "正在清除缓存";
+"already_upload_media_percent_text" = "已完成";
+
+//Station
+"user_manage" = "用户管理";
+"equipment" = "设备";
+"network" = "网络";
+"time" = "时间";
+"reboot_shutdown" = "重启与关机";
+"reboot" = "重启";
+"shutdown" = "关机";
+"enter_maintenance" = "进入维护模式";
+"maintenance_explain" = "重启后进入维护模式，可以在维护模式下执行磁盘操作或系统维护任务。";
+"reboot_and_enter_maintenance" = "重启进入维护模式";
+"confirm_shutdown" = "WISNUC设备将被关闭";
+"confirm_reboot" = "WISNUC设备将被重启";
+"confirm_maintenance" = "WISNUC设备将被重启后进入维护模式";
+"confirm_shutdown_title" = "关机";
+"confirm_reboot_title" = "重启";
+"confirm_maintenance_title" = "进入维护模式";
+"shutting_down" = "正在关机...";
+"rebooting" = "正在重启...";
+"entering_maintenance_mode" = "正在进入维护模式...";
+"shut_down_successfully" = "已关机";
+"reboot_successfully" = "已重启";
+"enter_maintenance_mode_successfully" = "已进入维护模式";
+"shutdown_failed" = "关机失败";
+"reboot_failed" = "重启失败";
+"enter_maintenance_mode_failed" = "进入维护模式失败";
+
+//station time
+"local_time" = "本地时间";
+"universal_time" = "世界时间";
+"rtc_time" = "RTC 时间";
+"time_zone" = "时区";
+"ntp_synchronized" = "已完成时间同步";
+"network_time_on" = "使用网络时间";
+
+//station network
+"nic_name" = "网卡名称";
+"bandwidth" = "宽带";
+"type" = "地址类型";
+"network_address" = "网络地址";
+"subnet_mask" = "子网掩码";
+"nic_mac_address" = "MAC地址";
+"network_connection_type" = "本地设备连接";
+"remote_connection" = "远程设备连接";
+"local_station_connection" = "本地设备连接";
+
+
+//station device
+
+ "equipment_label" = "设备名称";
+ "equipment_type" = "设备型号";
+ "hardware_serial_number" = "硬件序列号";
+ "mac_address" = "Mac地址";
+ "total_memory_size" = "总内存";
+ "free_memory_size" = "未使用内存";
+ "available_memory_size" = "可用内存";
+ "cpu_core_number" = "CPU核心数";
+ "cpu_type" = "CPU类型";
+ "cpu_cache_size" = "CPU缓存数";
+ "file_system_type" = "文件系统类型";
+ "disk_count" = "磁盘数量";
+ "disk_array_mode" = "磁盘阵列模式";
+ "total_space" = "总空间";
+ "user_data_space" = "用户数据空间";
+ "available_space" = "可用空间";
+"modify_equipment_label" = "编辑设备名";
+"device_name_modified_successfully" = "修改用户名成功";
+
+//Backup
+"backup_closed" = "备份已关闭";
+"backup_tips" = "备份提示";
+"backup_alert_message" = "是否自动备份该手机的照片至WISNUC服务器，要备份全部照片可能需要较长时间，请尽量保持App在前台运行。";
+"backup" = "备份";
+"non_wifi" = "非wifi环境, 停止上传";
+
+//User
+"user_name" = "用户名";
+"confirm_user_password" = "确认密码";
+"create_user" = "新建用户";
+"bind_wechat_user" = "绑定微信用户";
+"modify_user_info" = "编辑用户信息";
+"modify_user_name" = "修改用户名";
+"modify_password" = "修改密码";
+"original_user_password"  = "原密码";
+"new_user_password" = "新密码";
+"enter_original_password" = "请输入原密码";
+"enter_new_password" =  "请输入新密码";
+"confirm_new_password"  = "请确认新密码";
+"new_password_inconsistent" = "两次输入的密码不一致";
+"not_installed_WeChat" = "您尚未安装微信";
+"bind" = "绑定";
+"confirm_binding_WeChat" = "确认绑定微信";
+"binding_WeChat?" = "您确定要绑定该微信吗？";
+"binding" = "正在绑定...";
+"empty_username" = "用户名不能为空";
+"empty_password" = "密码不能为空";
+"different_user_name" = "请输入不同的用户名";
+"username_has_illegal_character" = "用户名中含有非法字符";
+"password_has_illegal_character" = "密码中含有非法字符";
+"username_exceed_character" = "用户名不能超过16个字符";
+"password_exceed_character" = "密码不能超过30个字符";
+"administrator" = "管理员";
+
+//Login
+"logging_in" = "正在登录...";
+"wechat_login" = "微信登录";
+"password_text" = "密码";
+"virtual_machine" = "虚拟机";
+"user" = "用户";
+"manual_setting" = "手动设置";
+"logout" = "注销";
+"searching" = "正在搜索...";
+"logout..." = "注销中...";
+"IP_error" = "IP输入有误";
+"eneter_IP" = "请输入IP地址";
+"login_failed" = "登录失败";
+"no_online_device" = "无在线设备";
+"no_binding_user_in_nas" = "该微信用户还未绑定";
+"no_user_info" = "设备获取用户信息失败";
+"network_is_disconnected" = "网络连接已断开";
+"user_cancel_wechat" = "用户点击取消并返回";
+"rejected_authorization" = "已拒绝授权";
+"WeChat_not_support" = "微信不支持";
+

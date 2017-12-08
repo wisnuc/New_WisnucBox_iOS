@@ -41,6 +41,8 @@
 }
 
 - (void)addLeftBarButtonWithImage:(UIImage *)buttonImage andHighlightButtonImage:(UIImage *)image  andSEL:(SEL)sel{
+    self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.leftBarButtonItem = nil;
     UIButton * left = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 24, 24)];
     [left setImage:buttonImage forState:UIControlStateNormal];
     if (image) {

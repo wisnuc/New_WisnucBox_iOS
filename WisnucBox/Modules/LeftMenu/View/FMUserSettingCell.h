@@ -16,8 +16,9 @@ typedef enum : NSUInteger {
 @interface FMUserSettingCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *userImageVIew;
 @property (weak, nonatomic) IBOutlet UILabel *userNameLb;
-@property (weak, nonatomic) IBOutlet UILabel *emailLb;
+@property (weak, nonatomic) IBOutlet UILabel *roleLb;
 @property (weak, nonatomic) IBOutlet UIButton *deleteBtn;
+@property (weak, nonatomic) IBOutlet UILabel *wxLabel;
 
 @property (nonatomic) FMUserSettingCellState state;
 

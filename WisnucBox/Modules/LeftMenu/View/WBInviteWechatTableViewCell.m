@@ -12,6 +12,8 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    [self.rejectedButton setTitle:WBLocalizedString(@"refuse", nil) forState:UIControlStateNormal];
+    [self.resolvedButton setTitle:WBLocalizedString(@"accept", nil) forState:UIControlStateNormal];
     [self.rejectedButton setHidden:YES];
     [self.resolvedButton setHidden:YES];
 }

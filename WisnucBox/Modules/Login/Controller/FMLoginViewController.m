@@ -95,14 +95,14 @@ WXApiDelegate
     [_reachabilityTimer invalidate];
     _reachabilityTimer = nil;
     self.browser.delegate = nil;
-    [self.browser stopServer];
+    [self.browser stopServerBrowser];
 }
 
 -(void)dealloc{
     [_reachabilityTimer invalidate];
     _reachabilityTimer = nil;
     self.browser.delegate = nil;
-    [self.browser stopServer];
+    [self.browser stopServerBrowser];
 }
 
 - (instancetype)init{
@@ -155,7 +155,7 @@ WXApiDelegate
 static BOOL needHide = YES;
 -(void)viewOfSeaching:(BOOL)seaching{
     if(seaching){
-        [SXLoadingView showProgressHUD:@"正在搜索..."];
+        [SXLoadingView showProgressHUD:WBLocalizedString(@"searching", nil)];
     }else{
         if(needHide) {
             needHide = NO;
@@ -238,7 +238,7 @@ static BOOL needHide = YES;
             if (dic) {
                 type = @"WS215i";
             }else{
-                type = @"虚拟机";
+                type = WBLocalizedString(@"virtual_machine",nil);
             }
             ser.name = x;
             ser.path = urlString;
@@ -421,7 +421,7 @@ static BOOL needHide = YES;
 
 - (void)reloadDataWithService:(FMSerachService *)ser{
     _stationTypeLabel.text = ser.type;
-    if ([ser.type isEqualToString:@"虚拟机"]) {
+    if ([ser.type isEqualToString:WBLocalizedString(@"virtual_machine",nil)]) {
          _stationLogoImageView.image = [UIImage imageNamed:@"virtual_machine"];
     }
     _stationNameLabel.text = ser.name;
@@ -450,7 +450,7 @@ static BOOL needHide = YES;
 }
 
 - (void)setupAlertController{
-    [SXLoadingView showProgressHUDText:@"您尚未安装微信" duration:1.5];
+    [SXLoadingView showProgressHUDText:WBLocalizedString(@"not_installed_WeChat", nil) duration:1.5];
 }
 
 - (void)weChatCallBackRespCode:(NSString *)code{
@@ -458,7 +458,7 @@ static BOOL needHide = YES;
     [SXLoadingView showProgressHUD:@""];
     self.cloudLoginStationArray=[NSMutableArray arrayWithCapacity:0];
     [[WBCloudLoginAPI apiWithCode:code] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        [SXLoadingView updateProgressHUD:@"正在获取设备列表"];
+        [SXLoadingView updateProgressHUD:WBLocalizedString(@"loading...", nil)];
         CloudLoginModel * model = [CloudLoginModel yy_modelWithJSON:request.responseJsonObject];
         weak_self.token = model.data.token;
         weak_self.avatarUrl = model.data.user.avatarUrl;
@@ -467,18 +467,18 @@ static BOOL needHide = YES;
                 [SXLoadingView hideProgressHUD];
                 NSLog(@"%@", error);
                 if(error.wbCode == 50001)
-                    [SXLoadingView showAlertHUD:@"您的微信尚未绑定任何设备" duration:1];
+                    [SXLoadingView showAlertHUD:WBLocalizedString(@"no_binding_user_in_nas", nil) duration:1];
                 if(error.wbCode == 50002)
-                    [SXLoadingView showAlertHUD:@"尚无在线设备" duration:1];
+                    [SXLoadingView showAlertHUD:WBLocalizedString(@"no_online_device", nil) duration:1];
                 else
-                    [SXLoadingView showAlertHUD:@"网络错误,拉取列表失败" duration:1];
+                    [SXLoadingView showAlertHUD:WBLocalizedString(@"error", nil) duration:1];
             }else {
                 _alertView.hidden = NO;
                 [stations enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                     [weak_self getUsersWithStationDic:obj Model:model completeBlock:^(NSError *err, CloudModelForUser *user) {
                         [SXLoadingView hideProgressHUD];
                         if(err) {
-                            return [SXLoadingView showAlertHUD:@"一台设备获取用户信息失败" duration:1];
+                            return [SXLoadingView showAlertHUD:WBLocalizedString(@"no_user_info", nil) duration:1];
                         }
                         [weak_self.cloudLoginStationArray addObject:user];
                         [weak_self.alertView.tableView reloadData];
@@ -490,7 +490,7 @@ static BOOL needHide = YES;
         [SXLoadingView hideProgressHUD];
         NSLog(@"%@",request.error);
         NSHTTPURLResponse * res = (NSHTTPURLResponse *)request.dataTask.response;
-        [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"登录失败:%ld",(long)res.statusCode] duration:1];
+        [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"%@:%ld",WBLocalizedString(@"login_failed", nil),(long)res.statusCode] duration:1];
     }];
 }
 - (void)infoButtonClick:(UIButton *)sender{
@@ -562,7 +562,7 @@ static BOOL needHide = YES;
 }
 
 - (void)loginButtonClick:(UIButton *)sender{
-    [SXLoadingView showProgressHUD:@"正在登录"];
+    [SXLoadingView showProgressHUD:WBLocalizedString(@"logging_in", nil)];
     [self.alertView setHidden:YES];
     CloudModelForUser *userModel;
     if (_cloudLoginStationArray.count!=0) {
@@ -573,7 +573,7 @@ static BOOL needHide = YES;
         if(error || IsNilString(user.userHome)){
             if(!user) NSLog(@"GET TOKEN ERROR");
             else NSLog(@"Get User Home Error");
-            [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"登录失败！ code: %ld", error.wbCode] duration:1];
+            [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"%@ code: %ld", WBLocalizedString(@"login_failed", nil),error.wbCode] duration:1];
             [SXLoadingView hideProgressHUD];
         }else{
             [MyAppDelegate initRootVC];
@@ -737,7 +737,7 @@ static BOOL needHide = YES;
         _userView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.stationScrollView.frame) + 8, __kWidth , 40)];
         _userView.backgroundColor = [UIColor whiteColor];
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(16, 0, __kWidth - 16, 40)];
-        label.text = @"用户";
+        label.text = WBLocalizedString(@"user", nil);
         label.font = [UIFont systemFontOfSize:14];
         label.textColor = [UIColor lightGrayColor];
         [_userView addSubview:label];
@@ -778,7 +778,7 @@ static BOOL needHide = YES;
         }];
         
         UILabel *label = [[UILabel alloc]init];
-        label.text = @"微信登录";
+        label.text = WBLocalizedString(@"wechat_login", nil) ;
         label.font = [UIFont systemFontOfSize:14];
         label.textColor = [UIColor blackColor];
         label.alpha = 0.87;
