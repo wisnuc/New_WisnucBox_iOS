@@ -30,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UIImageView *bindWechatImageView;
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;
+@property (weak, nonatomic) IBOutlet UIButton *leftNaviButton;
 
 @property (strong,nonatomic) TicketModel *model;
 @property (strong,nonatomic) UserModel *userModel;
@@ -42,6 +43,7 @@
     self.title = @"编辑用户信息";
     self.navigationController.navigationBar.translucent = NO;
     self.navigationTitle.text = WBLocalizedString(@"modify_user_info", nil);
+    [self.leftNaviButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:10];
     [self.userHeaderImageView setImage:[UIImage imageForName:WB_UserService.currentUser.userName size:self.userHeaderImageView.bounds.size]];
     [self.userName setTitle:WB_UserService.currentUser.userName forState:UIControlStateNormal];
     [self.userName setEnlargeEdgeWithTop:3 right:10 bottom:3 left:2];
@@ -49,6 +51,12 @@
     [self.bindWechatButton setEnlargeEdgeWithTop:3 right:10 bottom:3 left:2];
     [self.bindWechatButton setTitle:WBLocalizedString(@"bind_wechat_user", nil) forState:UIControlStateNormal];
     [self.logoutButton setTitle:WBLocalizedString(@"logout", nil) forState:UIControlStateNormal];
+  
+    self.logoutButton.layer.cornerRadius = 2;
+    self.logoutButton.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.logoutButton.layer.shadowRadius = 2.f;
+    self.logoutButton.layer.shadowOffset = CGSizeMake(0, 3);
+    self.logoutButton.layer.shadowOpacity = 0.4f;
 }
 - (void)getUserData{
     [[FMAccountUsersAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {

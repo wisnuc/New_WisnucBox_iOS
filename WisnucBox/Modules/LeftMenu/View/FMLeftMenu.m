@@ -36,14 +36,7 @@
     _isUserTableViewShow = NO;
     
     _settingTabelView.scrollEnabled = NO;
-    _settingTabelView.tableFooterView = [UIView new];
-    @weaky(self);
-    _usersTableView.tableFooterView = [FMLeftUserFooterView footerViewWithTouchBlock:^{
-        if(weak_self.delegate){
-            [weak_self.delegate LeftMenuViewClickSettingTable:-1 andTitle:@"USER_FOOTERVIEW_CLICK"];
-            [weak_self checkToStart];
-        }
-    }];
+ 
 
     _userBtn1.layer.cornerRadius = 20;
     _userBtn2.layer.cornerRadius = 20;
@@ -273,7 +266,11 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == _settingTabelView) {
-        FMLeftMenuCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"FMLeftMenuCell" owner:nil options:nil] lastObject];
+        FMLeftMenuCell *cell  = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FMLeftMenuCell class])];
+        if (!cell) {
+         cell  = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([FMLeftMenuCell class]) owner:self options:nil] lastObject];
+        }
+       
         if (indexPath.section == 0) {
             cell.leftLine.backgroundColor = [UIColor blackColor];
             [cell setData:_menus[indexPath.row] andImageName:_imageNames[indexPath.row]];
@@ -284,7 +281,10 @@
         
         return cell;
     }else{
-        FMLeftUserCell * cell =  [[[NSBundle mainBundle] loadNibNamed:@"FMLeftUserCell" owner:nil options:nil] lastObject];
+         FMLeftUserCell *cell  = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FMLeftUserCell class])];
+        if (!cell) {
+             cell =  [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([FMLeftUserCell class]) owner:self options:nil] lastObject];
+        }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         WBUser * info =  self.usersDatasource[indexPath.row];
@@ -310,8 +310,28 @@
     
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    UIView *footerView;
+    if (_settingTabelView == tableView) {
+        footerView = [UIView new];
+        footerView.backgroundColor = [UIColor whiteColor];
+    }else{
+    @weaky(self);
+    footerView = [FMLeftUserFooterView footerViewWithTouchBlock:^{
+        if(weak_self.delegate){
+            [weak_self.delegate LeftMenuViewClickSettingTable:-1 andTitle:@"USER_FOOTERVIEW_CLICK"];
+            [weak_self checkToStart];
+        }
+    }];
+    }
+    return footerView;
+}
+
+
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    return [UIView new];
+    UIView * headerView = [UIView new];
+    headerView.backgroundColor = [UIColor whiteColor];
+    return headerView;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -319,6 +339,10 @@
         return 8;
     }
     return 0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 8;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

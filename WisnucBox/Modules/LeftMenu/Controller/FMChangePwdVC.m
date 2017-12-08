@@ -25,6 +25,11 @@
     self.title = WBLocalizedString(@"modify_password", nil);
     NSString *buttonTitle = WBLocalizedString(@"confirm", nil);
     [_confirmButton setTitle:buttonTitle forState:UIControlStateNormal];
+//    _confirmButton.layer.cornerRadius = 2;
+//    _confirmButton.layer.shadowColor = [UIColor blackColor].CGColor;
+//    _confirmButton.layer.shadowRadius = 2.f;
+//    _confirmButton.layer.shadowOffset = CGSizeMake(0, 3);
+//    _confirmButton.layer.shadowOpacity = 0.4f;
     [_oldPwd setPlaceholder:WBLocalizedString(@"original_user_password", nil)];
     [_pwdTF setPlaceholder:WBLocalizedString(@"new_user_password", nil)];
     [_rePwdTF setPlaceholder:WBLocalizedString(@"confirm_user_password", nil)];

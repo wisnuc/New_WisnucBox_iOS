@@ -31,6 +31,7 @@
     [leftBtn addTarget:self action:@selector(showLeftMenu) forControlEvents:UIControlEventTouchUpInside];//设置按钮点击事件
     [leftBtn setImage:[UIImage imageNamed:@"menu"] forState:UIControlStateNormal];//设置按钮正常状态图片
     [leftBtn setImage:[UIImage imageNamed:@"menu_select"] forState:UIControlStateHighlighted];
+    [leftBtn setEnlargeEdgeWithTop:5 right:5 bottom:5 left:10];
     UIBarButtonItem *leftBarButon = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
     self.navigationItem.leftBarButtonItems = @[ leftBarButon];
 

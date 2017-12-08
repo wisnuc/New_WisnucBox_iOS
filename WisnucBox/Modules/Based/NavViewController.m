@@ -89,6 +89,7 @@
 
     [leftBtn setImage:[UIImage imageNamed:@"back_gray"] forState:UIControlStateNormal];
     [leftBtn setImage:[UIImage imageNamed:@"back_grayhighlight"] forState:UIControlStateHighlighted];
+    [leftBtn setEnlargeEdgeWithTop:5 right:5 bottom:5 left:10];
     //设置按钮正常状态图片
     UIBarButtonItem *leftBarButon = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
 //    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];

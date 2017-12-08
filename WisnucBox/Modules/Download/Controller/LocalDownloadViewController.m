@@ -216,9 +216,9 @@ UIDocumentInteractionControllerDelegate
 //    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     if (indexPath.section==0) {
       LocalDownloadingTableViewCell *cell;
-       cell = [tableView  cellForRowAtIndexPath:indexPath];
+       cell = [tableView  dequeueReusableCellWithIdentifier:NSStringFromClass([LocalDownloadingTableViewCell class])];
         if (!cell) {
-            cell= [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([LocalDownloadingTableViewCell class]) owner:nil options:nil] lastObject];
+            cell= [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([LocalDownloadingTableViewCell class]) owner:self options:nil] lastObject];
         }
         NSLog(@"%@",[_transmitingArray[indexPath.row] class]);
         if ([NSStringFromClass([_transmitingArray[indexPath.row] class]) isEqualToString:NSStringFromClass([CSDownloadTask class])]) {
@@ -384,7 +384,7 @@ UIDocumentInteractionControllerDelegate
         LocalDownloadTableViewCell *cell;
         cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LocalDownloadTableViewCell class])];
         if (nil == cell) {
-            cell= [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([LocalDownloadTableViewCell class]) owner:nil options:nil] lastObject];
+            cell= [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([LocalDownloadTableViewCell class]) owner:self options:nil] lastObject];
         }
         NSLog(@"%@",_downloadedArray[indexPath.row]);
         WBFile * data = _downloadedArray[indexPath.row];

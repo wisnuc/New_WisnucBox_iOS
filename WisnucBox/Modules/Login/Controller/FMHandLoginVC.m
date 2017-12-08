@@ -62,12 +62,14 @@
     
     [leftBtn setImage:[UIImage imageNamed:@"back_gray"] forState:UIControlStateNormal];
     [leftBtn setImage:[UIImage imageNamed:@"back_grayhighlight"] forState:UIControlStateHighlighted];
+     [leftBtn setEnlargeEdgeWithTop:5 right:5 bottom:5 left:10];
     //设置按钮正常状态图片
     UIBarButtonItem *leftBarButon = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
  
     self.navigationItem.leftBarButtonItem = leftBarButon;
     UIButton * rBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 30)];
     rBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    [rBtn setEnlargeEdgeWithTop:5 right:10 bottom:5 left:5];
     [rBtn setTitleColor:COR1 forState:UIControlStateNormal];
     [rBtn setTitle:WBLocalizedString(@"finish_text", nil) forState:UIControlStateNormal];
     [rBtn addTarget:self action:@selector(rBtnClick) forControlEvents:UIControlEventTouchUpInside];
