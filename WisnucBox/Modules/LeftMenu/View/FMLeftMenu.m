@@ -43,7 +43,7 @@
     
     self.userHeaderIV.userInteractionEnabled = YES;
     [self.userHeaderIV addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapHeader:)]];
-    _backupLabel.text = WBLocalizedString(@"backup_closed", nil);
+//    _backupLabel.text = WBLocalizedString(@"backup_closed", nil);
     _progressLabel = [[UILabel alloc]init];
     _progressLabel.text = @"         ";
     _progressLabel.textColor = [UIColor colorWithRed:236 green:236 blue:236 alpha:1];
@@ -70,6 +70,9 @@
     
     [self getUserInfo];
     WBUser * currentUser = [AppServices sharedService].userServices.currentUser;
+    if(!currentUser.autoBackUp)
+        self.backupLabel.text = @"备份已关闭";
+    
     if (WB_UserService.currentUser.avaterURL) {
         self.nameLabel.text = _userInfo.userName;
         NSString *avatarUrl = currentUser.avaterURL;
@@ -377,7 +380,7 @@
 
 - (void)dealloc
 {
-    NSLog(@"FMLeftMenu delloc");
+    NSLog(@"FMLeftMenu dealloc");
 }
 
 - (UILabel *)backupLabel{
