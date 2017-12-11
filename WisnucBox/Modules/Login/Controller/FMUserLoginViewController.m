@@ -88,6 +88,7 @@
             if(!user) NSLog(@"GET TOKEN ERROR");
             else NSLog(@"Get User Home Error");
             [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"%@ code: %ld", WBLocalizedString(@"login_failed", nil),(long)error.wbCode] duration:1];
+            sender.userInteractionEnabled = YES;
         }else{
             AppDelegate * app = (AppDelegate *)[UIApplication sharedApplication].delegate ;
             app.window.rootViewController = nil;
@@ -96,6 +97,7 @@
             sender.userInteractionEnabled = YES;
             [MyAppDelegate initRootVC];
             [SXLoadingView hideProgressHUD];
+            sender.userInteractionEnabled = YES;
         }
     }];
 }

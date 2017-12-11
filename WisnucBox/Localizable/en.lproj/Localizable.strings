@@ -180,6 +180,7 @@
 "disabled" = "Disabled";
 "disable" = "Disable the user";
 "enable" = "Enable the user";
+"enabled" = "Enabled";
 
 //Login
 

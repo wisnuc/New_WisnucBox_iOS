@@ -178,6 +178,7 @@
 "disabled" = "已禁用";
 "disable" = "禁用";
 "enable" = "启用";
+"enabled" = "已启用";
 //Login
 "logging_in" = "正在登录...";
 "wechat_login" = "微信登录";

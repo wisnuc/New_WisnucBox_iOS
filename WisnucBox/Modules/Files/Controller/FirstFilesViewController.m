@@ -40,6 +40,11 @@ UITableViewDataSource
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
 
 - (void)initMjRefresh{
     __weak __typeof(self) weakSelf = self;

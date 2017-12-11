@@ -74,13 +74,15 @@ WXApiDelegate
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
+        _reachabilityTimer =  [NSTimer scheduledTimerWithTimeInterval:12 target:self selector:@selector(searchingAndRefresh) userInfo:nil repeats:YES];
+    [_reachabilityTimer fire];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
 //    [self.navigationController.navigationBar setBackgroundColor:UICOLOR_RGB(0x0288d1)];
     [UIApplication sharedApplication].statusBarStyle =UIStatusBarStyleLightContent;
   
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
-      _reachabilityTimer =  [NSTimer scheduledTimerWithTimeInterval:12 target:self selector:@selector(searchingAndRefresh) userInfo:nil repeats:YES];
+  
     
 }
 
@@ -91,7 +93,7 @@ WXApiDelegate
 
 - (void)viewWillDisappear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [UIApplication sharedApplication].statusBarStyle =UIStatusBarStyleDefault;
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     [_reachabilityTimer invalidate];
     _reachabilityTimer = nil;
     self.browser.delegate = nil;
@@ -114,6 +116,8 @@ WXApiDelegate
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self viewOfSeaching:YES];
+//    [self firstbeginSearching];
     _dataSource = [NSMutableArray arrayWithCapacity:0];
     [self.view addSubview:self.stationScrollView];
  
@@ -126,30 +130,33 @@ WXApiDelegate
      if ([WXApi isWXAppInstalled]) {
      [self.view addSubview:self.wechatView];
     }
-    [self firstbeginSearching];
+
     [self.view addSubview:self.alertView];
 }
 
 - (void)beginSearching {
    
-    double delayInSeconds = 2;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        NSLog(@"发现 %lu 台设备",(unsigned long)_browser.discoveredServers.count);
+//    double delayInSeconds = 2;
+//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//        NSLog(@"发现 %lu 台设备",(unsigned long)self.browser.discoveredServers.count);
 //          [self viewOfSeaching:NO];
-    });
+//    });
+    if (self.browser.discoveredServers.count == 0) {
+        [SXLoadingView hideProgressHUD];
+    }
 }
 
 - (void)firstbeginSearching {
     [self viewOfSeaching:YES];
-    double delayInSeconds = 1;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//    double delayInSeconds = 1;
+//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         NSLog(@"发现 %lu 台设备",(unsigned long)_browser.discoveredServers.count);
         if (self.browser.discoveredServers.count == 0) {
              [SXLoadingView hideProgressHUD];
         }
-    });
+//    });
 }
 
 static BOOL needHide = YES;
@@ -247,6 +254,11 @@ static BOOL needHide = YES;
             ser.displayPath = addressString;
             ser.hostName = service.hostName;
             _expandCell = ser;
+            if (_dataSource.count == 0) {
+                [_dataSource addObject:ser];
+                [self refreshDatasource];
+                return ;
+            }
             BOOL isNew = YES;
             for (FMSerachService * s in _dataSource) {
                 if (IsEquallString(s.path, ser.path)) {
@@ -286,7 +298,7 @@ static BOOL needHide = YES;
     }
     [self updateInfo];
     [self setStationCardView];
-
+    [SXLoadingView hideProgressHUD];
 }
 
 - (void)updateInfo{
@@ -335,8 +347,9 @@ static BOOL needHide = YES;
     }
      _userDataSource = serforUser.users;
     [_userListTableViwe reloadData];
+  
     }
-//    [self viewOfSeaching:NO];
+ 
 }
 
 - (void)setInfoButton{
@@ -426,7 +439,7 @@ static BOOL needHide = YES;
     }
     _stationNameLabel.text = ser.name;
      _stationIpLabel.text = ser.displayPath;
-      [self viewOfSeaching:NO];
+//      [self viewOfSeaching:NO];
 }
 
 - (void)applicationWillResignActive:(NSNotification*)notification {

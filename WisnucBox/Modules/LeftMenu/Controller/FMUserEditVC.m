@@ -17,8 +17,8 @@
 #import "WBCloudLoginAPI.h"
 #import "CloudLoginModel.h"
 #import "AppDelegate.h"
-
-
+#import "FMAccountUsersAPI.h"
+#import "UserModel.h"
 
 
 @interface FMUserEditVC ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
@@ -172,7 +172,7 @@
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
+//    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 - (IBAction)changeAvater:(id)sender {
@@ -286,18 +286,60 @@
     }];
 }
 - (IBAction)logoutButtonClick:(UIButton *)sender {
+    [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
     if (self.type == UserDetail) {
         if ([_userModel.disabled boolValue]) {
-            
+            [[FMAccountUsersAPI apiWithRequestMethod:@"PATCH" Disabled:NO UUID:_userModel.uuid] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+                NSLog(@"%@",request.responseJsonObject);
+                NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+                 UserModel *userModel = [UserModel yy_modelWithDictionary:dic];
+                _userModel = userModel;
+                [_logoutButton setTitle:WBLocalizedString(@"disable", nil) forState:UIControlStateNormal];
+                [_userTypeLabel setHidden:YES];
+                [SXLoadingView showProgressHUDText:WBLocalizedString(@"enabled", nil) duration:1.2f];
+            } failure:^(__kindof JYBaseRequest *request) {
+                [SXLoadingView showProgressHUDText:WBLocalizedString(@"error", nil) duration:1.2f];
+                NSLog(@"%@",request.error);
+                NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+                if(errorData.length >0){
+                    NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+                    NSLog(@"失败,%@",serializedData);
+                }
+            }];
         }else{
-            
+            [[FMAccountUsersAPI apiWithRequestMethod:@"PATCH" Disabled:YES UUID:_userModel.uuid] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+                 NSLog(@"%@",request.responseJsonObject);
+                NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+                UserModel *userModel = [UserModel yy_modelWithDictionary:dic];
+                _userModel = userModel;
+                
+                  [_logoutButton setTitle:WBLocalizedString(@"enable", nil) forState:UIControlStateNormal];
+                if ([_userModel.disabled boolValue]) {
+                    [_userTypeLabel setText:WBLocalizedString(@"disabled", nil)];
+                    [_userTypeLabel setHidden:NO];
+                    [_logoutButton setTitle:WBLocalizedString(@"enable", nil) forState:UIControlStateNormal];
+                }else{
+                    [_userTypeLabel setHidden:YES];
+                    [_logoutButton setTitle:WBLocalizedString(@"disable", nil) forState:UIControlStateNormal];
+                }
+
+                 [SXLoadingView showProgressHUDText:WBLocalizedString(@"disabled", nil) duration:1.2f];
+            } failure:^(__kindof JYBaseRequest *request) {
+                [SXLoadingView showProgressHUDText:WBLocalizedString(@"error", nil) duration:1.2f];
+                 NSLog(@"%@",request.error);
+                NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+                if(errorData.length >0){
+                    NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+                    NSLog(@"失败,%@",serializedData);
+                }
+            }];
         }
     }else
     {
-    [SXLoadingView showProgressHUD:WBLocalizedString(@"logout...", nil)];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self skipToLogin];
-    });
+        [SXLoadingView showProgressHUD:WBLocalizedString(@"logout...", nil)];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self skipToLogin];
+        });
     }
 }
 

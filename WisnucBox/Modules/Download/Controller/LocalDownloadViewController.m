@@ -314,14 +314,14 @@ UIDocumentInteractionControllerDelegate
             cell.fileNameLabel.text = uploadFileModel.uploadFileName;
             //        cell.progressLabel.text = @"正在下载";
             uploadTask.progressBlock = ^(NSProgress *uploadProgress) {
-                float progressFloat = (float)uploadProgress.completedUnitCount/(float)uploadProgress.totalUnitCount;
+//                float progressFloat = (float)uploadProgress.completedUnitCount/(float)uploadProgress.totalUnitCount;
                 
                 //            NSString *progressString = [NSString stringWithFormat:@"%@/%@",[CSFileUtil calculateUnit:downloadProgress.],[CSFileUtil calculateUnit:totalBytesExpectedToRead]];
                 if ([NSThread isMainThread] ) {
-                    cell.progressView.progress = progressFloat;
+                    cell.progressView.progress = uploadProgress.fractionCompleted;
                 }else{
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        cell.progressView.progress = progressFloat;
+                        cell.progressView.progress = uploadProgress.fractionCompleted;
                     });
                 }
                 

@@ -65,8 +65,8 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [super viewWillAppear:animated];
+//    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 - (void)registerTableView{
@@ -143,9 +143,9 @@
     }
 
     if (model.global) {
-        cell.wxLabel.text = @"已绑定";
+        [cell.wxIconImageView setHidden:NO];
     }else{
-        cell.wxLabel.text = @"微信未绑定";
+         [cell.wxIconImageView setHidden:YES];
     }
     cell.userImageVIew.image = [UIImage imageForName:model.username size:cell.userImageVIew.bounds.size];
     cell.userNameLb.text = model.username;
