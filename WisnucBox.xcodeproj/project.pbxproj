@@ -216,6 +216,10 @@
 		1FF3AD541FD63F5C00E1E536 /* WBLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3AD531FD63F5C00E1E536 /* WBLoginViewController.m */; };
 		1FF3AD5A1FD669DB00E1E536 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1FF3AD5C1FD669DB00E1E536 /* Localizable.strings */; };
 		1FF3AD621FD66E8C00E1E536 /* UIScrollView+JYEmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3AD611FD66E8C00E1E536 /* UIScrollView+JYEmptyView.m */; };
+		1FFADF821FDE797C00FA3F6E /* WBLoginTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFADF811FDE797C00FA3F6E /* WBLoginTableView.m */; };
+		1FFADF8A1FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFADF881FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.m */; };
+		1FFADF8B1FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FFADF891FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.xib */; };
+		1FFADF8E1FDE7F7200FA3F6E /* WBLoginTableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFADF8D1FDE7F7200FA3F6E /* WBLoginTableViewDelegate.m */; };
 		1FFEADAE1FB087AE00CD3068 /* CSFileDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEADAD1FB087AE00CD3068 /* CSFileDownloadManager.m */; };
 		1FFEADB51FB1594900CD3068 /* CSDownloadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEADB41FB1594900CD3068 /* CSDownloadModel.m */; };
 		2C68507817DCDF432CF88A3F /* Pods_WisnucBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 357873726A4400954BE467E2 /* Pods_WisnucBox.framework */; };
@@ -1004,6 +1008,13 @@
 		1FF3AD5E1FD66A0200E1E536 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1FF3AD601FD66E8B00E1E536 /* UIScrollView+JYEmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+JYEmptyView.h"; sourceTree = "<group>"; };
 		1FF3AD611FD66E8C00E1E536 /* UIScrollView+JYEmptyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+JYEmptyView.m"; sourceTree = "<group>"; };
+		1FFADF801FDE797C00FA3F6E /* WBLoginTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBLoginTableView.h; sourceTree = "<group>"; };
+		1FFADF811FDE797C00FA3F6E /* WBLoginTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBLoginTableView.m; sourceTree = "<group>"; };
+		1FFADF871FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBLoginCardTableViewCell.h; sourceTree = "<group>"; };
+		1FFADF881FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBLoginCardTableViewCell.m; sourceTree = "<group>"; };
+		1FFADF891FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBLoginCardTableViewCell.xib; sourceTree = "<group>"; };
+		1FFADF8C1FDE7F7200FA3F6E /* WBLoginTableViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBLoginTableViewDelegate.h; sourceTree = "<group>"; };
+		1FFADF8D1FDE7F7200FA3F6E /* WBLoginTableViewDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBLoginTableViewDelegate.m; sourceTree = "<group>"; };
 		1FFEADAC1FB087AE00CD3068 /* CSFileDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSFileDownloadManager.h; sourceTree = "<group>"; };
 		1FFEADAD1FB087AE00CD3068 /* CSFileDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSFileDownloadManager.m; sourceTree = "<group>"; };
 		1FFEADB31FB1594900CD3068 /* CSDownloadModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSDownloadModel.h; sourceTree = "<group>"; };
@@ -1833,6 +1844,7 @@
 		1F4D756B1FAC4BB700E6516C /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				1FFADF831FDE7AD400FA3F6E /* Delegate */,
 				1F4D756C1FAC4BB800E6516C /* Controller */,
 				1F4D75731FAC4BB800E6516C /* Model */,
 				1F4D75781FAC4BB800E6516C /* View */,
@@ -1887,6 +1899,11 @@
 				1F4D75BD1FAC5E3400E6516C /* ChooseAlertView.h */,
 				1F4D75BC1FAC5E3400E6516C /* ChooseAlertView.m */,
 				1F4D75BE1FAC5E3400E6516C /* ChooseAlertView.xib */,
+				1FFADF801FDE797C00FA3F6E /* WBLoginTableView.h */,
+				1FFADF811FDE797C00FA3F6E /* WBLoginTableView.m */,
+				1FFADF871FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.h */,
+				1FFADF881FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.m */,
+				1FFADF891FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2330,6 +2347,15 @@
 				1FF3AD611FD66E8C00E1E536 /* UIScrollView+JYEmptyView.m */,
 			);
 			path = UIScrollView;
+			sourceTree = "<group>";
+		};
+		1FFADF831FDE7AD400FA3F6E /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				1FFADF8C1FDE7F7200FA3F6E /* WBLoginTableViewDelegate.h */,
+				1FFADF8D1FDE7F7200FA3F6E /* WBLoginTableViewDelegate.m */,
+			);
+			path = Delegate;
 			sourceTree = "<group>";
 		};
 		1FFEADAB1FB087A100CD3068 /* Manage */ = {
@@ -3677,6 +3703,7 @@
 				F68310AE1FB30AAE005AC578 /* date_bg.png in Resources */,
 				1FAD744E1FD0EDC700A5D880 /* wechat_icon.png in Resources */,
 				1FAD74891FD15EBE00A5D880 /* upload_download@3x.png in Resources */,
+				1FFADF8B1FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.xib in Resources */,
 				1FD7A1071FB05A51000D4CB3 /* PLUS@2x.png in Resources */,
 				F68310E71FB30AAE005AC578 /* hard_select@2x.png in Resources */,
 				F68310981FB30AAE005AC578 /* bg_pic@3x.jpg in Resources */,
@@ -4050,6 +4077,7 @@
 				C138D05D1FB96100000CF518 /* FLCreateDirAPI.m in Sources */,
 				F67D644E1FAC84E800E23D16 /* NavViewController.m in Sources */,
 				F67D643A1FAC7E5600E23D16 /* FirstDecorationSectionView.m in Sources */,
+				1FFADF8A1FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.m in Sources */,
 				F6830EBD1FB2FD10005AC578 /* FMUserLoginSettingVC.m in Sources */,
 				C11EAB2E1FC43611007C9BA7 /* WBCloudGetStationsAPI.m in Sources */,
 				F6D8CC3D1FB42D6500673824 /* UIApplication+JYTopVC.m in Sources */,
@@ -4113,6 +4141,7 @@
 				1F1ABA131FB99882006EB1FC /* CSDownloadHelper.m in Sources */,
 				1FFEADB51FB1594900CD3068 /* CSDownloadModel.m in Sources */,
 				F6830EC51FB2FD1D005AC578 /* FMUsersLoginMangeCell.m in Sources */,
+				1FFADF8E1FDE7F7200FA3F6E /* WBLoginTableViewDelegate.m in Sources */,
 				1F922E701FCD315600A7614B /* WBStationManageRootViewController.m in Sources */,
 				1F922EF11FCEAE9500A7614B /* WBStationManageRenameViewController.m in Sources */,
 				1F1AB9EC1FB968CA006EB1FC /* FLFilesCell.m in Sources */,
@@ -4174,6 +4203,7 @@
 				F679336E1FB00D9B00C9A7DC /* WBUser+CoreDataProperties.m in Sources */,
 				C183CDEE1FCEA20C002E29CD /* FMUpdateUserAPI.m in Sources */,
 				1F922EB81FCD75EC00A7614B /* WBStationManageNetInterfaceAPI.m in Sources */,
+				1FFADF821FDE797C00FA3F6E /* WBLoginTableView.m in Sources */,
 				71A3D67E1FB5ADAA0002B8B1 /* FMGetJWTAPI.m in Sources */,
 				F6830F151FB300D2005AC578 /* MenuView.m in Sources */,
 				1F4D759E1FAC4BB800E6516C /* UIColor+FM_UserHeadImage.m in Sources */,
