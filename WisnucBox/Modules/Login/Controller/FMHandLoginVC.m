@@ -53,7 +53,7 @@
 
 -(void)addNavBtn{
     self.navigationItem.hidesBackButton = YES;
-
+    self.navigationItem.leftBarButtonItem =   nil;
 //    self.navigationItem.leftItemsSupplementBackButton = YES;
     //左按钮
     UIButton *leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 24, 24)];

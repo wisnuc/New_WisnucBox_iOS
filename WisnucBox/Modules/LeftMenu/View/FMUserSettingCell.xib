@@ -27,7 +27,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2g2-Eu-Lyc" userLabel="nameLb">
-                        <rect key="frame" x="69" y="21.5" width="212" height="20"/>
+                        <rect key="frame" x="69" y="10" width="212" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="J9x-l7-1Ni"/>
                         </constraints>
@@ -52,19 +52,13 @@
                     <constraint firstAttribute="trailing" secondItem="xQe-pF-HF2" secondAttribute="trailing" constant="16" id="JIi-NW-r7c"/>
                     <constraint firstItem="kmX-9z-dU8" firstAttribute="leading" secondItem="2g2-Eu-Lyc" secondAttribute="leading" id="SW7-oh-ga0"/>
                     <constraint firstAttribute="bottom" secondItem="kmX-9z-dU8" secondAttribute="bottom" constant="10" id="W1n-Uu-3dS"/>
-                    <constraint firstItem="2g2-Eu-Lyc" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Zxh-Vq-az2"/>
                     <constraint firstItem="aeQ-7V-jgj" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="eIj-zh-YUq"/>
                     <constraint firstItem="aeQ-7V-jgj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="fxB-5k-gkY"/>
                     <constraint firstItem="2g2-Eu-Lyc" firstAttribute="leading" secondItem="aeQ-7V-jgj" secondAttribute="trailing" constant="13" id="jlP-Mq-VeZ"/>
                     <constraint firstAttribute="trailingMargin" secondItem="2g2-Eu-Lyc" secondAttribute="trailing" constant="68" id="jtJ-w7-4J7"/>
+                    <constraint firstItem="2g2-Eu-Lyc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="qud-bX-DfY"/>
                     <constraint firstItem="xQe-pF-HF2" firstAttribute="centerY" secondItem="kmX-9z-dU8" secondAttribute="centerY" id="uIu-Rf-lNk"/>
                 </constraints>
-                <variation key="default">
-                    <mask key="subviews">
-                        <exclude reference="kmX-9z-dU8"/>
-                        <exclude reference="xQe-pF-HF2"/>
-                    </mask>
-                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="roleLb" destination="kmX-9z-dU8" id="YX5-XC-h0p"/>

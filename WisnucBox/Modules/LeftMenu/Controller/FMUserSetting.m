@@ -148,11 +148,11 @@
 //    }
     cell.userImageVIew.image = [UIImage imageForName:model.username size:cell.userImageVIew.bounds.size];
     cell.userNameLb.text = model.username;
-//    if ([model.isAdmin boolValue]&& [model.isFirstUser boolValue]) {
-//        cell.roleLb.text = WBLocalizedString(@"administrator", nil);
-//    }else{
-//        cell.roleLb.text = @"普通用户";
-//    }
+    if ([model.isAdmin boolValue]&& [model.isFirstUser boolValue]) {
+        cell.roleLb.text = WBLocalizedString(@"administrator", nil);
+    }else{
+        cell.roleLb.text = @"普通用户";
+    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
