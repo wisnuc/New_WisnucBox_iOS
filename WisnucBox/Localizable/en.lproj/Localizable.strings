@@ -175,7 +175,7 @@
 "username_exceed_character" = "Username can not exceed 16 characters";
 "password_exceed_character" = "The password can not exceed 30 characters";
 "administrator" = "Administrator";
-"general_user" ="General user";
+"general_user" ="Common user";
 "super_administrator" = "Super administrator";
 "disabled" = "Disabled";
 "disable" = "Disable the user";
