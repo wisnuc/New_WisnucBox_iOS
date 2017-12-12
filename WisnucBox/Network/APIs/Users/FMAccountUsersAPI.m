@@ -10,14 +10,45 @@
 #import "Base64.h"
 
 @implementation FMAccountUsersAPI
++ (instancetype)apiWithRequestMethod:(NSString *)method Disabled:(BOOL)disabled UUID:(NSString *)uuid{
+    FMAccountUsersAPI *api = [FMAccountUsersAPI new];
+    api.method = method;
+    api.disabled = [NSNumber numberWithBool:disabled];
+    api.uuid = uuid;
+    NSLog(@"%@",api.disabled);
+    return api;
+}
+
 /// Http请求的方法
 - (JYRequestMethod)requestMethod{
-    return JYRequestMethodGet;
+    JYRequestMethod method = JYRequestMethodGet;
+    if (_method && [_method isEqualToString:@"PATCH"]) {
+        method = JYRequestMethodPatch;
+    }
+    return method;
+}
+
+- (id)requestArgument{
+    NSDictionary *param;
+    NSLog(@"%@",_disabled);
+    
+    if (_disabled) {
+        param = @{
+                  @"disabled":_disabled
+                  };
+    }
+    return param;
 }
 
 /// 请求的URL
 - (NSString *)requestUrl{
-    NSString * resouce = [NSString stringWithFormat:@"users/%@", WB_UserService.currentUser.uuid];
+    NSString * resouce;
+    if (_uuid.length>0) {
+      resouce  = [NSString stringWithFormat:@"users/%@", _uuid];
+    }else{
+       resouce = [NSString stringWithFormat:@"users/%@", WB_UserService.currentUser.uuid];
+    }
+   
     return WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@?resource=%@&method=GET", kCloudAddr, kCloudCommonJsonUrl, [resouce base64EncodedString]] : resouce;
 }
 

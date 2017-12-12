@@ -14,12 +14,17 @@
                 <outlet property="backgroundView" destination="OMv-gP-idb" id="oXk-Zl-HmI"/>
                 <outlet property="bindWechatButton" destination="hYZ-Fh-JNq" id="1py-8f-kuA"/>
                 <outlet property="bindWechatImageView" destination="hyg-ce-My0" id="A99-pf-p5f"/>
+                <outlet property="firstEditButton" destination="Gq6-E7-8ow" id="waT-AI-tV4"/>
                 <outlet property="headerEditBtn" destination="jhp-mf-Chk" id="bOZ-2R-tcG"/>
                 <outlet property="leftNaviButton" destination="bFk-dI-k9n" id="uzM-WQ-gXy"/>
                 <outlet property="logoutButton" destination="UFR-XZ-JUX" id="z9G-yh-PB2"/>
                 <outlet property="navigationTitle" destination="oYf-nn-pF2" id="FOb-4o-c83"/>
+                <outlet property="passwordButton" destination="a3k-Wx-AnN" id="17P-Fl-F0F"/>
+                <outlet property="secondEditButton" destination="ICZ-KD-MRc" id="jNM-Ha-7PM"/>
+                <outlet property="secondImageView" destination="8up-qj-FsN" id="T0x-a7-Jhp"/>
                 <outlet property="userHeaderImageView" destination="ZqC-oc-cPt" id="KVS-aM-EsR"/>
                 <outlet property="userName" destination="CrX-WG-HTB" id="hiE-Wb-yFV"/>
+                <outlet property="userTypeLabel" destination="Wyb-su-GR2" id="njm-b1-2HB"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -45,6 +50,7 @@
                         <constraint firstAttribute="width" constant="18" id="SR8-8w-i1e"/>
                         <constraint firstAttribute="height" constant="18" id="e0K-OM-ED2"/>
                     </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <state key="normal" backgroundImage="ic_mode_edit_18pt.png"/>
                     <connections>
                         <action selector="changePwdBtn:" destination="-1" eventType="touchUpInside" id="Yug-fN-v29"/>
@@ -87,19 +93,35 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wyb-su-GR2">
+                            <rect key="frame" x="16" y="205" width="343" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" red="0.29558175800000003" green="0.65108972789999997" blue="0.93336850400000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <constraints>
                         <constraint firstItem="oYf-nn-pF2" firstAttribute="centerY" secondItem="bFk-dI-k9n" secondAttribute="centerY" id="1SQ-vR-TP1"/>
                         <constraint firstItem="jhp-mf-Chk" firstAttribute="centerX" secondItem="ZqC-oc-cPt" secondAttribute="centerX" id="8Ub-vH-4Zs"/>
+                        <constraint firstItem="Wyb-su-GR2" firstAttribute="centerX" secondItem="OMv-gP-idb" secondAttribute="centerX" id="Jfz-Di-6C3"/>
                         <constraint firstItem="oYf-nn-pF2" firstAttribute="centerX" secondItem="OMv-gP-idb" secondAttribute="centerX" id="P2a-zb-QJg"/>
+                        <constraint firstAttribute="bottom" secondItem="Wyb-su-GR2" secondAttribute="bottom" constant="18" id="PV4-zw-TdE"/>
                         <constraint firstItem="bFk-dI-k9n" firstAttribute="top" secondItem="OMv-gP-idb" secondAttribute="top" constant="30" id="SVI-ew-1nl"/>
+                        <constraint firstAttribute="trailing" secondItem="Wyb-su-GR2" secondAttribute="trailing" constant="16" id="Uk3-Dv-nfO"/>
+                        <constraint firstItem="Wyb-su-GR2" firstAttribute="leading" secondItem="OMv-gP-idb" secondAttribute="leading" constant="16" id="W6C-5p-5cf"/>
                         <constraint firstItem="ZqC-oc-cPt" firstAttribute="centerX" secondItem="OMv-gP-idb" secondAttribute="centerX" id="c1A-Jh-MLX"/>
                         <constraint firstItem="bFk-dI-k9n" firstAttribute="leading" secondItem="OMv-gP-idb" secondAttribute="leading" constant="10" id="foM-Nm-Ttq"/>
                         <constraint firstAttribute="height" constant="244" id="jd8-nM-HXj"/>
+                        <constraint firstItem="Wyb-su-GR2" firstAttribute="top" secondItem="ZqC-oc-cPt" secondAttribute="bottom" constant="19" id="yVA-4d-QiC"/>
                         <constraint firstItem="ZqC-oc-cPt" firstAttribute="top" secondItem="OMv-gP-idb" secondAttribute="top" constant="106" id="zYC-qH-Nlj"/>
                         <constraint firstItem="jhp-mf-Chk" firstAttribute="top" secondItem="ZqC-oc-cPt" secondAttribute="bottom" constant="8" id="znk-Fu-tST"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="subviews">
+                            <exclude reference="jhp-mf-Chk"/>
+                        </mask>
+                    </variation>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2WX-5q-C84">
                     <rect key="frame" x="72" y="248" width="303" height="1"/>
@@ -137,7 +159,7 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CrX-WG-HTB">
                     <rect key="frame" x="72" y="275" width="293" height="27"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <state key="normal" title="username">
                         <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                     </state>
@@ -147,6 +169,7 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hYZ-Fh-JNq">
                     <rect key="frame" x="72" y="390.5" width="287" height="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <state key="normal" title="微信绑定">
                         <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                     </state>

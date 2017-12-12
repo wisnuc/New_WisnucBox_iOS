@@ -19,6 +19,7 @@ typedef enum : NSUInteger {
 @property (weak, nonatomic) IBOutlet UILabel *roleLb;
 @property (weak, nonatomic) IBOutlet UIButton *deleteBtn;
 @property (weak, nonatomic) IBOutlet UILabel *wxLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *wxIconImageView;
 
 @property (nonatomic) FMUserSettingCellState state;
 

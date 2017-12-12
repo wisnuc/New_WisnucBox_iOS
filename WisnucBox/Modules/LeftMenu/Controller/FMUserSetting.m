@@ -12,6 +12,7 @@
 #import "UserModel.h"
 #import "WBgetStationInfoAPI.h"
 #import "WBStationInfoModel.h"
+#import "FMUserEditVC.h"
 
 @interface FMUserSetting ()<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UILabel *deviceNameLb;
@@ -64,8 +65,8 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [super viewWillAppear:animated];
+//    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 - (void)registerTableView{
@@ -135,24 +136,38 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    UserModel * model = self.dataSource[indexPath.row];
     FMUserSettingCell * cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FMUserSettingCell class])];
-    if (!cell) {
+    if (cell == nil) {
         cell = (FMUserSettingCell *) [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([FMUserSettingCell class]) owner:self options:nil] lastObject];
     }
-    UserModel * model = self.dataSource[indexPath.row];
-//    if (model.global) {
-//        cell.wxLabel.text = @"nil";
-//    }else{
-//        cell.wxLabel.text = @"微信未绑定";
-//    }
+
+    if (model.global) {
+        [cell.wxIconImageView setHidden:NO];
+    }else{
+         [cell.wxIconImageView setHidden:YES];
+    }
     cell.userImageVIew.image = [UIImage imageForName:model.username size:cell.userImageVIew.bounds.size];
     cell.userNameLb.text = model.username;
+    
+
     if ([model.isAdmin boolValue]&& [model.isFirstUser boolValue]) {
+        cell.roleLb.text = WBLocalizedString(@"super_administrator", nil);
+    }else if ([model.isAdmin boolValue]&& ![model.isFirstUser boolValue]){
         cell.roleLb.text = WBLocalizedString(@"administrator", nil);
-    }else{
-        cell.roleLb.text = @"普通用户";
+    }else if (![model.isAdmin boolValue]&& ![model.isFirstUser boolValue]){
+        cell.roleLb.text = WBLocalizedString(@"general_user", nil);
     }
+    
+//    if ([model.disabled boolValue]) {
+//        [cell.userNameLb setTextColor:[UIColor lightGrayColor]];
+//        [cell.roleLb setTextColor:[UIColor lightGrayColor]];
+//        cell.roleLb.text = WBLocalizedString(@"disabled", nil);
+//    }else{
+//         [cell.roleLb setTextColor:[UIColor darkTextColor]];
+//        [cell.userNameLb setTextColor:[UIColor darkTextColor]];
+//    }
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -162,7 +177,11 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    UserModel * model = self.dataSource[indexPath.row];
+    FMUserEditVC *editVC = [[FMUserEditVC alloc]init];
+    editVC.userModel = model;
+    editVC.type = UserDetail;
+    [self.navigationController pushViewController:editVC animated:YES];
 }
 
 @end

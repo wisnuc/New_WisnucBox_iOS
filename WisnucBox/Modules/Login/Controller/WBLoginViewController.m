@@ -9,11 +9,13 @@
 #import "WBLoginViewController.h"
 #import "LoginTableViewCell.h"
 #import "FMUserLoginViewController.h"
+#import "WBLoginTableView.h"
 
-@interface WBLoginViewController ()<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface WBLoginViewController ()<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,WBLoginTableViewDelegate,WBLoginTableViewDataSource>
 @property (strong, nonatomic) UITableView *userListTableViwe;
 @property (strong, nonatomic) UIScrollView *stationScrollView;
 @property (strong, nonatomic) UIView *userView;
+@property (strong, nonatomic) WBLoginTableView *cardTableView;
 @end
 
 @implementation WBLoginViewController
@@ -21,8 +23,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.view addSubview:self.stationScrollView];
-    
+//    [self.view addSubview:self.stationScrollView];
+    [self.view addSubview:self.cardTableView];
     [self.view addSubview:self.userView];
     [self.view addSubview:self.userListTableViwe];
 
@@ -30,6 +32,11 @@
 
 - (void)dealloc{
     
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 #pragma mark tableView datasource
@@ -126,5 +133,22 @@
     }
     return _userListTableViwe;
 }
+
+-(WBLoginTableView *)cardTableView{
+    if (!_cardTableView) {
+        _cardTableView = [[WBLoginTableView alloc] initWithFrame:CGRectMake(0, 0, 320,448/2 + 64)];
+        
+        _cardTableView.backgroundColor = UICOLOR_RGB(0x0288d1);
+        _cardTableView.pagingEnabled = YES;
+        //        _stationScrollView.contentSize = CGSizeMake(self.tempDataSource.count * JYSCREEN_WIDTH, 0);
+        _cardTableView.bounces = YES;
+        _cardTableView.showsHorizontalScrollIndicator = NO;
+        
+        _cardTableView.delegate_Y = self;
+        _cardTableView.dataSource_Y = self;
+    }
+    return _cardTableView;
+}
+
 
 @end

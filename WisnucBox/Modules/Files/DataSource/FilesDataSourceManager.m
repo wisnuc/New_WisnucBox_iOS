@@ -54,6 +54,11 @@ static dispatch_once_t onceToken;
         [SXLoadingView hideProgressHUD];
     } failure:^(__kindof JYBaseRequest *request) {
         [SXLoadingView hideProgressHUD];
+        NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+        if(errorData.length >0){
+            NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+            NSLog(@"失败,%@",serializedData);
+        }
         NSLog(@"%@",request.error);
         if (self.delegate && [self.delegate respondsToSelector:@selector(datasource:finishLoading:)]) {
             [self.delegate datasource:self finishLoading:NO];

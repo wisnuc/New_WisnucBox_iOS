@@ -46,7 +46,7 @@
 }
 
 -(BOOL)checkIPIsValidate{
-    NSString * pre = @"[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}:[0-9]{2,5}";
+    NSString * pre = @"[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}";
     NSPredicate * check = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",pre];
     return [check evaluateWithObject:self.textView.textField.text];
 }
@@ -89,7 +89,7 @@
     if (self.block) {
         
         FMSerachService * ser = [[FMSerachService alloc]init];
-        ser.path = [NSString stringWithFormat:@"http://%@/",self.textView.textField.text];
+        ser.path = [NSString stringWithFormat:@"http://%@:3000/",self.textView.textField.text];
 //        ser.name = @"WISNUC";
         if(self.textView.textField.text)
             ser.displayPath = [self.textView.textField.text componentsSeparatedByString:@":"][0];

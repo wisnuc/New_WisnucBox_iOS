@@ -14,6 +14,7 @@
 #import "FMUserEditVC.h"
 #import "CSUploadHelper.h"
 #import "LocalDownloadViewController.h"
+#import "WBLoginViewController.h"
 
 @interface AppDelegate () <WXApiDelegate>
 @property (nonatomic,strong) FMLoginViewController *loginController;
