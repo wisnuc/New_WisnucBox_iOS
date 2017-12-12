@@ -32,6 +32,11 @@
     self.navigationItem.rightBarButtonItem = rightButtonItem;
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
 - (void)rightButtonClick:(UIButton *)sender{
     if(IsEquallString(WB_UserService.currentUser.userName, _uNameTF.text)) return [SXLoadingView showAlertHUD:WBLocalizedString(@"different_user_name", nil) duration:1];
     if(IsNilString(_uNameTF.text)) return [SXLoadingView showAlertHUD:WBLocalizedString(@"empty_username", nil) duration:1];

@@ -181,6 +181,8 @@
 "disable" = "Disable the user";
 "enable" = "Enable the user";
 "enabled" = "Enabled";
+"WeChat_is_bound" = "WeChat is bound";
+"WeChat_is_not_bound" = "WeChat is not bound";
 
 //Login
 

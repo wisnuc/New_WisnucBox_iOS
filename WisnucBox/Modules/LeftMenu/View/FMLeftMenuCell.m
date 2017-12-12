@@ -46,7 +46,7 @@
 -(void)setData:(id) data  andImageName:(NSString *)imageName{
     self.leftIV.image = [UIImage imageNamed:imageName];
     //    self.backgroundColor = [UIColor colorFromHexString:@"#eeeeee"];
-    self.leftTitleLb.font = [UIFont italicSystemFontOfSize:16];
+    self.leftTitleLb.font = [UIFont systemFontOfSize:16];
     //    self.textLabel.textColor = [UIColor colorFromHexString:@"#333333"];
     if([data isKindOfClass:[NSString class]]) {
         self.leftTitleLb.text = (NSString *)data;

@@ -35,6 +35,11 @@
     [_rePwdTF setPlaceholder:WBLocalizedString(@"confirm_user_password", nil)];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
 - (IBAction)btnClick:(id)sender {
     if(IsNilString(_oldPwd.text)) return [SXLoadingView showAlertHUD:WBLocalizedString(@"enter_original_password", nil) duration:1];
     if(IsNilString(_pwdTF.text)) return [SXLoadingView showAlertHUD:WBLocalizedString(@"enter_new_password", nil) duration:1];
