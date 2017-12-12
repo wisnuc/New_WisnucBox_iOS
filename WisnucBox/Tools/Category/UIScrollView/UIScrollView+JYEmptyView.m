@@ -21,7 +21,11 @@
         [self addSubview:imageView];
         
         UILabel *tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, imageView.center.y+iconImage.size.height*0.5+JYDescriptionTopSpace, __kWidth-20, JYDescriptionHeight)];
-        tipLabel.textColor = JYColor_RGB(0x999999);
+        if (touchBlock) {
+            tipLabel.textColor = COR1;
+        }else{
+            tipLabel.textColor = JYColor_RGB(0x999999);
+        }
         tipLabel.font = [UIFont systemFontOfSize:JYDescriptionFontSize];
         tipLabel.textAlignment = NSTextAlignmentCenter;
         tipLabel.text = description;
@@ -84,7 +88,7 @@ const char kJYEmptyViewKey;
         if(imageName == nil ||  [imageName isEqualToString:@""]){
             imageName = noData ? @"jy_no_data" : @"jy_no_network";
         }
-        NSLog(@"%@",NSStringFromCGRect(frame));
+//        NSLog(@"%@",NSStringFromCGRect(frame));
         self.emptyView = [[JYEmptyView alloc]initWithFrame:frame description:message canTouch:block andImageName:imageName];
         [self addSubview:self.emptyView];
     }else{

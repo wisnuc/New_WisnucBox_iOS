@@ -120,7 +120,7 @@
 }
 
 - (void)setDetailType{
-    if ([_userModel.isAdmin boolValue]&& [_userModel.isFirstUser boolValue]) {
+    if ([_userModel.isAdmin boolValue] || [_userModel.isFirstUser boolValue]) {
         [_logoutButton setBackgroundColor:[UIColor lightGrayColor]];
         [_logoutButton setUserInteractionEnabled:NO];
     }
@@ -289,6 +289,7 @@
         }
     }];
 }
+
 - (IBAction)logoutButtonClick:(UIButton *)sender {
     [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
     if (self.type == UserDetail) {

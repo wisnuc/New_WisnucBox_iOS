@@ -56,6 +56,7 @@
 "nofile_choose" = "您所在的文件夹没有文件可以选择";
 "file_downloaded" = "该文件已下载";
 "no_file" = "没有文件可以进行选择";
+"no_files" = "暂无文件";
 
 //transmission
 "completed" = "已完成";
@@ -202,4 +203,4 @@
 "user_cancel_wechat" = "用户点击取消并返回";
 "rejected_authorization" = "已拒绝授权";
 "WeChat_not_support" = "微信不支持";
-
+"initialization" = "初始化";

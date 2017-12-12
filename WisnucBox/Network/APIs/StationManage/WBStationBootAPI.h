@@ -11,5 +11,8 @@
 @interface WBStationBootAPI : JYBaseRequest
 @property (nonatomic) NSString * state;
 @property (nonatomic) NSString * mode;
+@property (nonatomic) NSString * mothod;
+@property (nonatomic) NSString * path;
 + (instancetype)apiWithState:(NSString *)state Mode:(NSString *)mode;
++ (instancetype)apiWithPath:(NSString *)path RequestMethod:(NSString *)mothod;
 @end

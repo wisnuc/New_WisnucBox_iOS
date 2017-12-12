@@ -58,6 +58,7 @@
 "nofile_choose" = "There is no file in your folder to choose from";
 "file_downloaded" = "This file has been downloaded";
 "no_file" = "No file to choose from";
+"no_files" = "No files";
 
 // Transmission
 "completed" = "Completed";
@@ -205,6 +206,6 @@
 "user_cancel_wechat" = "The user clicks Cancel and returns";
 "rejected_authorization" = "Rejected authorization";
 "WeChat_not_support" = "WeChat does not support it";
-
+"initialization" = "Initialization";
 
 

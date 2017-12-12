@@ -9,5 +9,6 @@
 #import "JYBaseRequest.h"
 
 @interface WBStationManageStorageAPI : JYBaseRequest
-
+@property(nonatomic,copy) NSString *path;
++(instancetype)apiWithURLPath:(NSString *)path;
 @end

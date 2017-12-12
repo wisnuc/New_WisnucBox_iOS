@@ -40,4 +40,5 @@ typedef void(^JYEmptyTouchBlock)(UIButton * btn);
                     andIsNoData:(BOOL)noData
                     andTableViewFrame:(CGRect)frame
                   andTouchBlock:(JYEmptyTouchBlock)block;
+-(void)removeEmptyView;
 @end

@@ -58,6 +58,11 @@
 		1F4D75CC1FAC5FF900E6516C /* FMCloudUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F4D75CA1FAC5FF900E6516C /* FMCloudUserTableViewCell.xib */; };
 		1F4D75D01FAC604100E6516C /* LoginTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75CE1FAC604100E6516C /* LoginTableViewCell.m */; };
 		1F4D75D11FAC604100E6516C /* LoginTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F4D75CF1FAC604100E6516C /* LoginTableViewCell.xib */; };
+		1F58DEE51FDFDC6B00768DD7 /* disk_settings@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F58DEE21FDFDC6A00768DD7 /* disk_settings@3x.png */; };
+		1F58DEE61FDFDC6B00768DD7 /* disk_settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F58DEE31FDFDC6A00768DD7 /* disk_settings.png */; };
+		1F58DEE71FDFDC6B00768DD7 /* disk_settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F58DEE41FDFDC6B00768DD7 /* disk_settings@2x.png */; };
+		1F58DEEC1FDFF25900768DD7 /* WBInitializationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F58DEEA1FDFF25900768DD7 /* WBInitializationViewController.m */; };
+		1F58DEED1FDFF25900768DD7 /* WBInitializationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F58DEEB1FDFF25900768DD7 /* WBInitializationViewController.xib */; };
 		1F5D217D1FBC351A006C65AA /* FilesDataSourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D217C1FBC351A006C65AA /* FilesDataSourceManager.m */; };
 		1F5D21801FBC3CC6006C65AA /* WBBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D217F1FBC3CC6006C65AA /* WBBaseModel.m */; };
 		1F5D21831FBC3DB0006C65AA /* FilesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D21821FBC3DB0006C65AA /* FilesModel.m */; };
@@ -220,6 +225,7 @@
 		1FFADF8A1FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFADF881FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.m */; };
 		1FFADF8B1FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FFADF891FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.xib */; };
 		1FFADF8E1FDE7F7200FA3F6E /* WBLoginTableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFADF8D1FDE7F7200FA3F6E /* WBLoginTableViewDelegate.m */; };
+		1FFADF911FDFB33600FA3F6E /* BootModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFADF901FDFB33600FA3F6E /* BootModel.m */; };
 		1FFEADAE1FB087AE00CD3068 /* CSFileDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEADAD1FB087AE00CD3068 /* CSFileDownloadManager.m */; };
 		1FFEADB51FB1594900CD3068 /* CSDownloadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEADB41FB1594900CD3068 /* CSDownloadModel.m */; };
 		2C68507817DCDF432CF88A3F /* Pods_WisnucBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 357873726A4400954BE467E2 /* Pods_WisnucBox.framework */; };
@@ -797,6 +803,12 @@
 		1F4D75CD1FAC604100E6516C /* LoginTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTableViewCell.h; sourceTree = "<group>"; };
 		1F4D75CE1FAC604100E6516C /* LoginTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTableViewCell.m; sourceTree = "<group>"; };
 		1F4D75CF1FAC604100E6516C /* LoginTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginTableViewCell.xib; sourceTree = "<group>"; };
+		1F58DEE21FDFDC6A00768DD7 /* disk_settings@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "disk_settings@3x.png"; sourceTree = "<group>"; };
+		1F58DEE31FDFDC6A00768DD7 /* disk_settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = disk_settings.png; sourceTree = "<group>"; };
+		1F58DEE41FDFDC6B00768DD7 /* disk_settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "disk_settings@2x.png"; sourceTree = "<group>"; };
+		1F58DEE91FDFF25900768DD7 /* WBInitializationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBInitializationViewController.h; sourceTree = "<group>"; };
+		1F58DEEA1FDFF25900768DD7 /* WBInitializationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBInitializationViewController.m; sourceTree = "<group>"; };
+		1F58DEEB1FDFF25900768DD7 /* WBInitializationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBInitializationViewController.xib; sourceTree = "<group>"; };
 		1F5D217B1FBC351A006C65AA /* FilesDataSourceManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilesDataSourceManager.h; sourceTree = "<group>"; };
 		1F5D217C1FBC351A006C65AA /* FilesDataSourceManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilesDataSourceManager.m; sourceTree = "<group>"; };
 		1F5D217E1FBC3CC6006C65AA /* WBBaseModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBBaseModel.h; sourceTree = "<group>"; };
@@ -1015,6 +1027,8 @@
 		1FFADF891FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBLoginCardTableViewCell.xib; sourceTree = "<group>"; };
 		1FFADF8C1FDE7F7200FA3F6E /* WBLoginTableViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBLoginTableViewDelegate.h; sourceTree = "<group>"; };
 		1FFADF8D1FDE7F7200FA3F6E /* WBLoginTableViewDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBLoginTableViewDelegate.m; sourceTree = "<group>"; };
+		1FFADF8F1FDFB33600FA3F6E /* BootModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BootModel.h; sourceTree = "<group>"; };
+		1FFADF901FDFB33600FA3F6E /* BootModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BootModel.m; sourceTree = "<group>"; };
 		1FFEADAC1FB087AE00CD3068 /* CSFileDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSFileDownloadManager.h; sourceTree = "<group>"; };
 		1FFEADAD1FB087AE00CD3068 /* CSFileDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSFileDownloadManager.m; sourceTree = "<group>"; };
 		1FFEADB31FB1594900CD3068 /* CSDownloadModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSDownloadModel.h; sourceTree = "<group>"; };
@@ -1829,6 +1843,7 @@
 		1F4D756A1FAC4BB700E6516C /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				1F58DEE81FDFF22C00768DD7 /* Initialization */,
 				1FAD742A1FD00B8F00A5D880 /* Upload */,
 				1F922E6C1FCD310E00A7614B /* StationManage */,
 				C138D0441FB89F85000CF518 /* Files */,
@@ -1878,6 +1893,8 @@
 				1FC2AFF11FC52B4800E8C9DE /* CloudLoginModel.m */,
 				1FF3AD4F1FD5254C00E1E536 /* LoginSeverPathModel.h */,
 				1FF3AD501FD5254C00E1E536 /* LoginSeverPathModel.m */,
+				1FFADF8F1FDFB33600FA3F6E /* BootModel.h */,
+				1FFADF901FDFB33600FA3F6E /* BootModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1992,6 +2009,24 @@
 			path = GCD;
 			sourceTree = "<group>";
 		};
+		1F58DEE81FDFF22C00768DD7 /* Initialization */ = {
+			isa = PBXGroup;
+			children = (
+				1F58DEEE1FDFF2D400768DD7 /* ViewController */,
+			);
+			path = Initialization;
+			sourceTree = "<group>";
+		};
+		1F58DEEE1FDFF2D400768DD7 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1F58DEE91FDFF25900768DD7 /* WBInitializationViewController.h */,
+				1F58DEEA1FDFF25900768DD7 /* WBInitializationViewController.m */,
+				1F58DEEB1FDFF25900768DD7 /* WBInitializationViewController.xib */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		1F5D217A1FBC34F3006C65AA /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
@@ -2025,6 +2060,9 @@
 		1F7CE62C1FAC824E004467C8 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				1F58DEE31FDFDC6A00768DD7 /* disk_settings.png */,
+				1F58DEE41FDFDC6B00768DD7 /* disk_settings@2x.png */,
+				1F58DEE21FDFDC6A00768DD7 /* disk_settings@3x.png */,
 				1F0898DB1FB05FF800B86723 /* eye_off.png */,
 				1FD7A0F51FB05A50000D4CB3 /* eye_off@2x.png */,
 				1FD7A0F41FB05A4F000D4CB3 /* eye_off@3x.png */,
@@ -3611,6 +3649,7 @@
 				F68310E11FB30AAE005AC578 /* handrail@2x.png in Resources */,
 				F68311511FB30AAE005AC578 /* photo-album@2x.png in Resources */,
 				F68311A31FB30AAF005AC578 /* storage_select@3x.png in Resources */,
+				1F58DEED1FDFF25900768DD7 /* WBInitializationViewController.xib in Resources */,
 				F68311BE1FB30AAF005AC578 /* album_praise.png in Resources */,
 				F68310F51FB30AAE005AC578 /* ic_arrow_drop_down@2x.png in Resources */,
 				F68310801FB30AAE005AC578 /* album_balloon.png in Resources */,
@@ -3842,6 +3881,7 @@
 				F68311611FB30AAE005AC578 /* photo_plus_open@3x.png in Resources */,
 				F683117D1FB30AAF005AC578 /* select.png in Resources */,
 				F68310A11FB30AAE005AC578 /* check-box_select@3x.png in Resources */,
+				1F58DEE51FDFDC6B00768DD7 /* disk_settings@3x.png in Resources */,
 				F683114C1FB30AAE005AC578 /* person_add@3x.png in Resources */,
 				F68310831FB30AAE005AC578 /* album_share@3x.png in Resources */,
 				F6830EBE1FB2FD10005AC578 /* FMUserLoginSettingVC.xib in Resources */,
@@ -3850,6 +3890,7 @@
 				F68311131FB30AAE005AC578 /* info_user.png in Resources */,
 				F6830EF01FB2FEF3005AC578 /* FMUserAddVC.xib in Resources */,
 				F683116E1FB30AAE005AC578 /* praise.png in Resources */,
+				1F58DEE71FDFDC6B00768DD7 /* disk_settings@2x.png in Resources */,
 				F683110C1FB30AAE005AC578 /* icon_down.png in Resources */,
 				C183CDE31FCE8D84002E29CD /* FMUserEditVC.xib in Resources */,
 				F683110A1FB30AAE005AC578 /* icon_del@2x.png in Resources */,
@@ -3904,6 +3945,7 @@
 				F683118D1FB30AAF005AC578 /* share_red_select@2x.png in Resources */,
 				F6830F031FB2FF8C005AC578 /* ImageHeaderView.xib in Resources */,
 				C183CDDE1FCE8D84002E29CD /* FMChangePwdVC.xib in Resources */,
+				1F58DEE61FDFDC6B00768DD7 /* disk_settings.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4052,6 +4094,7 @@
 				1F4D75B01FAC4BB800E6516C /* AssetsServices.m in Sources */,
 				F675614B1FB3428F00E3277F /* UIColor+MaterialTextField.m in Sources */,
 				71A3D6741FB584360002B8B1 /* FMCreateUserAPI.m in Sources */,
+				1F58DEEC1FDFF25900768DD7 /* WBInitializationViewController.m in Sources */,
 				C183CDFD1FCFD8A0002E29CD /* UINavigationController+SXFullScreen.m in Sources */,
 				F67D64071FAC7D3600E23D16 /* PHAsset+JYEXT.m in Sources */,
 				F6830F1A1FB300D2005AC578 /* FMLeftUserFooterView.m in Sources */,
@@ -4201,6 +4244,7 @@
 				F6AAD1881FB049E100DEDBDC /* WBFile+CoreDataClass.m in Sources */,
 				1F4D75A11FAC4BB800E6516C /* FMUserLoginViewController.m in Sources */,
 				F679336E1FB00D9B00C9A7DC /* WBUser+CoreDataProperties.m in Sources */,
+				1FFADF911FDFB33600FA3F6E /* BootModel.m in Sources */,
 				C183CDEE1FCEA20C002E29CD /* FMUpdateUserAPI.m in Sources */,
 				1F922EB81FCD75EC00A7614B /* WBStationManageNetInterfaceAPI.m in Sources */,
 				1FFADF821FDE797C00FA3F6E /* WBLoginTableView.m in Sources */,

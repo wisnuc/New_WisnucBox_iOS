@@ -24,6 +24,10 @@
 #import "WBgetStationInfoAPI.h"
 #import "WBGetSystemInformationAPI.h"
 #import "NSError+WBCode.h"
+#import "WBStationBootAPI.h"
+#import "BootModel.h"
+#import "WBStationManageStorageAPI.h"
+#import "WBInitializationViewController.h"
 
 @interface FMLoginViewController ()
 <
@@ -66,6 +70,7 @@ WXApiDelegate
 @property (nonatomic) ServerBrowser* browser;
 @property (nonatomic) ChooseAlertView *alertView;
 @property (nonatomic) NSString *avatarUrl;
+@property (nonatomic) NSInteger currentPage;
 
 @end
 
@@ -173,10 +178,13 @@ static BOOL needHide = YES;
 }
 
 - (void)serverBrowserFoundService:(NSNetService *)service {
-    for (NSData * address in service.addresses) {
-        NSString* addressString = [GCDAsyncSocket hostFromAddress:address];
-        [self findIpToCheck:addressString andService:service];
-    }
+//    NSLog(@"%@",service.hostName);
+        if ([service.hostName rangeOfString:@"wisnuc-"].location !=NSNotFound) {
+            for (NSData * address in service.addresses) {
+                NSString* addressString = [GCDAsyncSocket hostFromAddress:address];
+                [self findIpToCheck:addressString andService:service];
+            }
+        }
 }
 
 - (void)serverBrowserLostService:(NSNetService *)service index:(NSUInteger)index {
@@ -203,42 +211,17 @@ static BOOL needHide = YES;
 
 
 - (void)findIpToCheck:(NSString *)addressString andService:(NSNetService *)service{
-//    NSString* urlString = [NSString stringWithFormat:@"http://%@:3000/", addressString];
-//    FMSerachService * ser = [FMSerachService new];
-//    ser.path = urlString;
-//    ser.displayPath =                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               addressString;
-//    ser.hostName = service.hostName;
-//    _expandCell = ser;
-//    BOOL isNew = YES;
-//    for (FMSerachService * s in _dataSource) {
-//        if (IsEquallString(s.path, ser.path)) {
-//            isNew = NO;
-//            break;
-//        }
-//    }
-//    if (isNew) {
-//        [_dataSource addObject:ser];
-//        [self refreshDatasource];
-//    }
-    NSString* urlString = [NSString stringWithFormat:@"http://%@:3000/", addressString];
+     @weaky(self)
+    __block NSString* urlString = [NSString stringWithFormat:@"http://%@:3000/", addressString];
     NSLog(@"%@", urlString);
-    FMSerachService * ser = [FMSerachService new];
+    //    @weaky(self)
     RACSubject *subject = [RACSubject subject];
-    [[WBgetStationInfoAPI apiWithServicePath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        //        MyNSLog(@"%@",request.responseJsonObject);
-        NSDictionary *rootDic =  request.responseJsonObject;
-        NSString *nameString = [rootDic objectForKey:@"name"];
-        if (nameString.length == 0) {
-            nameString = @"闻上盒子";
-        }
-        [subject sendNext:nameString];
-    } failure:^(__kindof JYBaseRequest *request) {
-        
-    }];
+    FMSerachService * ser = [FMSerachService new];
     
     [subject subscribeNext:^(id x) {
         [[WBGetSystemInformationAPI apiWithServicePath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-    
+            //                NSLog(@"%@",request.responseJsonObject);
+           
             NSDictionary *rootDic =request.responseJsonObject;
             NSDictionary *dic = [rootDic objectForKey:@"ws215i"];
             NSString *type;
@@ -248,6 +231,12 @@ static BOOL needHide = YES;
                 type = WBLocalizedString(@"virtual_machine",nil);
             }
             ser.name = x;
+            ser.isNormal = YES;
+            if ([x isEqualToString:@"uninitialized"]) {
+                ser.name = @"未配置";
+                ser.isNormal = NO;
+            }
+            
             ser.path = urlString;
             ser.type = type;
             //            MyNSLog(@"%@",service.type);
@@ -256,7 +245,7 @@ static BOOL needHide = YES;
             _expandCell = ser;
             if (_dataSource.count == 0) {
                 [_dataSource addObject:ser];
-                [self refreshDatasource];
+                [weak_self refreshDatasource];
                 return ;
             }
             BOOL isNew = YES;
@@ -268,21 +257,80 @@ static BOOL needHide = YES;
             }
             if (isNew) {
                 [_dataSource addObject:ser];
-                [self refreshDatasource];
+                [weak_self refreshDatasource];
             }
         } failure:^(__kindof JYBaseRequest *request) {
-            
+            NSLog(@"%@",request.error);
         }];
         
+    }];
+    
+//    if ([urlString isEqualToString:@"http://10.10.9.141:3000/"]) {
+        [self getBootInfoWithPath:urlString completeBlock:^(BootModel *model) {
+            if (IsEquallString(model.error, @"ENOALT")) {
+                [[WBStationManageStorageAPI apiWithURLPath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+                    NSDictionary * dataDic = request.responseJsonObject;
+                    NSArray *arr = dataDic[@"volumes"];
+                    if (arr && arr.count == 0) {
+                      [subject sendNext:@"uninitialized"];
+                    }
+                } failure:^(__kindof JYBaseRequest *request) {
+                    
+                }];
+                return ;
+            }
+            
+            [[WBgetStationInfoAPI apiWithServicePath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+                //            NSLog(@"%@",request.responseJsonObject);
+                NSDictionary *rootDic =  request.responseJsonObject;
+                NSString *nameString = [rootDic objectForKey:@"name"];
+                if (nameString.length == 0) {
+                    nameString = @"闻上盒子";
+                }
+                [subject sendNext:nameString];
+            } failure:^(__kindof JYBaseRequest *request) {
+                NSLog(@"%@",request.error);
+                NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+                if(errorData.length >0){
+                    NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+                    NSLog(@"失败,%@",serializedData);
+                }
+            }];
+        }];
+//    }
+}
+
+- (void)getBootInfoWithPath:(NSString *)path completeBlock:(void(^)(BootModel *model))block{
+    [[WBStationBootAPI apiWithPath:path RequestMethod:@"GET"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        @weaky(self)
+        NSLog(@"%@",request.responseJsonObject);
+        BootModel *bootModel = [BootModel yy_modelWithJSON:request.responseJsonObject];
+//        if (bootModel.current) {
+            if ([bootModel.state isEqualToString:@"started"]) {
+                block(bootModel);
+            }else if ([bootModel.state isEqualToString:@"stopping"]){
+                
+            }else{
+                [weak_self performSelector:@selector(getBootInfoWithPath: completeBlock:) withObject:block];
+            }
+//        }
+    } failure:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.error);
     }];
 }
 
 - (void)refreshDatasource{
+
     NSMutableArray * temp = [NSMutableArray arrayWithCapacity:0];
     _userDataSource = [NSMutableArray arrayWithCapacity:0];
     for (FMSerachService * ser in _dataSource) {
-        if (ser.isReadly) {
-            [temp addObject:ser];
+        if (ser.isNormal) {
+            if (ser.isReadly) {
+                [temp addObject:ser];
+            }
+        }else{
+             [temp addObject:ser];
+            
         }
     }
 
@@ -314,42 +362,55 @@ static BOOL needHide = YES;
         _stationCardView.layer.cornerRadius = 8;
         _stationCardView.layer.masksToBounds = YES;
         [self.stationScrollView addSubview:self.stationCardView];
-//        [self setStationLogoImageView];
+        //        [self setStationLogoImageView];
         [self setNullInfo];
     }else{
-    for (int i = 0; i<self.tempDataSource.count; i++) {
-        _stationCardView = [[UIView alloc]init];
-        _stationCardView.backgroundColor =  UICOLOR_RGB(0x03a9f4);
-        _stationCardView.frame = CGRectMake(i*__kWidth + 32,64,__kWidth - 32*2, 166);
-        _stationCardView.layer.cornerRadius = 8;
-        _stationCardView.layer.masksToBounds = YES;
-        [self.stationScrollView addSubview:self.stationCardView];
-        
-//        [self setInfoButton];
-        [self setStationLogoImageView];
-        [self setInfo];
-        FMSerachService *ser = _tempDataSource[i];
-        if ([NSThread isMainThread]){
-            [self reloadDataWithService:ser];
-        }else{
-            dispatch_sync(dispatch_get_main_queue(), ^{
-            [self reloadDataWithService:ser];
-            });  
+        for (int i = 0; i<self.tempDataSource.count; i++) {
+            _stationCardView = [[UIView alloc]init];
+            _stationCardView.backgroundColor =  UICOLOR_RGB(0x03a9f4);
+            _stationCardView.frame = CGRectMake(i*__kWidth + 32,64,__kWidth - 32*2, 166);
+            _stationCardView.layer.cornerRadius = 8;
+            _stationCardView.layer.masksToBounds = YES;
+            [self.stationScrollView addSubview:self.stationCardView];
+            
+            //        [self setInfoButton];
+            [self setStationLogoImageView];
+            [self setInfo];
+            FMSerachService *ser = _tempDataSource[i];
+            if ([NSThread isMainThread]){
+                [self reloadDataWithService:ser];
+            }else{
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    [self reloadDataWithService:ser];
+                });
+            }
         }
-    }
         
-    FMSerachService *serforUser;
-    if (_userDataCount > 0) {
-      serforUser  = _tempDataSource[_userDataCount];
-    
-    }else{
-      serforUser  = _tempDataSource[0];
+        FMSerachService *serforUser;
+        if (_userDataCount > 0) {
+            serforUser  = _tempDataSource[_userDataCount];
+            
+        }else{
+            serforUser  = _tempDataSource[0];
+        }
+        _userDataSource = serforUser.users;
+        if (!serforUser.isNormal &&  serforUser.users.count == 0) {
+             [_userListTableViwe removeEmptyView];
+            _userListTableViwe.noDataImageName = @"disk_settings";
+            CGRect rect = CGRectMake(0, 40, self.userListTableViwe.bounds.size.width, self.userListTableViwe.bounds.size.height);
+            NSLog(@"%@--- %@",NSStringFromCGRect(rect),NSStringFromCGRect(self.userListTableViwe.bounds));
+            [_userListTableViwe displayWithMsg:WBLocalizedString(@"initialization", nil) withRowCount:_userDataSource.count andIsNoData:YES  andTableViewFrame:rect
+                                 andTouchBlock:^(UIButton *btn) {
+                                     NSLog(@"😁");
+                                     WBInitializationViewController *initializationVC = [[WBInitializationViewController alloc]init];
+                                     
+                                     [self.navigationController pushViewController:initializationVC animated:YES];
+                                 }];
+        }else{
+            [_userListTableViwe removeEmptyView];
+        }
+        [self.userListTableViwe reloadData];
     }
-     _userDataSource = serforUser.users;
-    [_userListTableViwe reloadData];
-  
-    }
- 
 }
 
 - (void)setInfoButton{
@@ -439,6 +500,7 @@ static BOOL needHide = YES;
     }
     _stationNameLabel.text = ser.name;
      _stationIpLabel.text = ser.displayPath;
+ 
 //      [self viewOfSeaching:NO];
 }
 
@@ -600,21 +662,38 @@ static BOOL needHide = YES;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (scrollView == self.stationScrollView &&scrollView.contentOffset.x > __kWidth/2) {
-    
-    int page = scrollView.contentOffset.x/__kWidth;
-    _stationPageControl.currentPage = page;
-    if (page > _tempDataSource.count) {
-        return;
-    }
-    FMSerachService *ser = _tempDataSource[page];
-    _userDataSource = ser.users;
-    _userDataCount = page;
+        int page = scrollView.contentOffset.x/__kWidth;
+        _stationPageControl.currentPage = page;
+        _currentPage = page;
+        if (page > _tempDataSource.count) {
+            return;
+        }
+        FMSerachService *ser = _tempDataSource[page];
+        _userDataSource = ser.users;
+        _userDataCount = page;
     }
 }
 
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
      if (scrollView == self.stationScrollView) {
+          FMSerachService *ser = _tempDataSource[_currentPage];
+         if (ser.isNormal || _userDataSource.count !=0) {
+
+             [_userListTableViwe removeEmptyView];
+         }else{
+             [_userListTableViwe removeEmptyView];
+             _userListTableViwe.noDataImageName = @"disk_settings";
+             CGRect rect = CGRectMake(0, 40, self.userListTableViwe.bounds.size.width, self.userListTableViwe.bounds.size.height);
+             NSLog(@"%@--- %@",NSStringFromCGRect(rect),NSStringFromCGRect(self.userListTableViwe.bounds));
+             [_userListTableViwe displayWithMsg:WBLocalizedString(@"initialization", nil) withRowCount:0 andIsNoData:YES  andTableViewFrame:rect
+                                  andTouchBlock:^(UIButton *btn) {
+                                      NSLog(@"😋");
+                                      WBInitializationViewController *initializationVC = [[WBInitializationViewController alloc]init];
+                                   
+                                      [self.navigationController pushViewController:initializationVC animated:YES];
+                                  }];
+         }
       [_userListTableViwe reloadData];
      }
 }
@@ -648,7 +727,6 @@ static BOOL needHide = YES;
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         UserModel *model = _userDataSource[indexPath.row];
-       
         NSLog(@"%@======%lu",model.username,(unsigned long)_userDataSource.count);
         cell.userNameLabel.text = model.username;
         cell.userNameImageView.image = [UIImage imageForName:model.username size:cell.userNameImageView.bounds.size];
@@ -685,11 +763,9 @@ static BOOL needHide = YES;
         }
         userLoginVC.service = ser;
         userLoginVC.user = model;
-        
         [self.navigationController pushViewController:userLoginVC animated:YES];
         [self applicationWillResignActive:nil];
     }else{
-       
         _current=indexPath.row;
         [self.alertView.tableView reloadData];
     }

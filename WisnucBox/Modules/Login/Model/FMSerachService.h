@@ -19,4 +19,5 @@
 @property (nonatomic) NSString * ws215i;
 @property (nonatomic) BOOL isReadly;
 @property (nonatomic) NSURLSessionDataTask *task;
+@property (nonatomic) BOOL isNormal;
 @end
