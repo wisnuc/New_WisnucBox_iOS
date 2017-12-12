@@ -29,7 +29,7 @@
     manager.requestSerializer.timeoutInterval = 20;
     _task = [manager GET:[NSString stringWithFormat:@"%@users",_path] parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        NSLog(@"%@",responseObject);
+        NSLog(@"%@",responseObject);
         NSArray * userArr = responseObject;
         NSMutableArray * tempArr = [NSMutableArray arrayWithCapacity:0];
         for (NSDictionary * dic in userArr) {
@@ -41,7 +41,7 @@
         self.users = tempArr;
         self.isReadly = YES;
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
+        NSLog(@"%@",error);
     }];
 }
 @end

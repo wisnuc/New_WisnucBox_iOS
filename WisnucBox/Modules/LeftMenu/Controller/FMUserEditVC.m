@@ -120,15 +120,19 @@
 }
 
 - (void)setDetailType{
+    if ([_userModel.isAdmin boolValue]&& [_userModel.isFirstUser boolValue]) {
+        [_logoutButton setBackgroundColor:[UIColor lightGrayColor]];
+        [_logoutButton setUserInteractionEnabled:NO];
+    }
     [self.userName setTitle:_userModel.username forState:UIControlStateNormal];
     [self.userHeaderImageView setImage:[UIImage imageForName:_userModel.username size:self.userHeaderImageView.bounds.size]];
     [self.userName setUserInteractionEnabled:NO];
     [self.passwordButton setUserInteractionEnabled:NO];
     [self.bindWechatButton setUserInteractionEnabled:NO];
     if (_userModel.global) {
-        [_bindWechatButton setTitle:@"微信已绑定" forState:UIControlStateNormal];
+        [_bindWechatButton setTitle:WBLocalizedString(@"WeChat_is_bound", nil) forState:UIControlStateNormal];
     }else{
-        [_bindWechatButton setTitle:@"微信未绑定" forState:UIControlStateNormal];
+        [_bindWechatButton setTitle:WBLocalizedString(@"WeChat_is_not_bound", nil) forState:UIControlStateNormal];
     }
     _secondImageView.image = [UIImage imageNamed:@"ic_account_circle"];
     if ([_userModel.isAdmin boolValue]&& [_userModel.isFirstUser boolValue]) {
@@ -182,7 +186,7 @@
 - (IBAction)bindWechatButtonClick:(UIButton *)sender {
     @weaky(self)
   
-    [SXLoadingView showProgressHUD:@"loading..."];
+    [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
     [[WBStationTicketsAPI apiWithRequestMethodString:@"POST" Type:@"bind"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         [SXLoadingView hideProgressHUD];
         TicketModel *model = [TicketModel yy_modelWithJSON:request.responseJsonObject];
