@@ -27,6 +27,8 @@ pod 'WechatOpenSDK'
 pod 'MagicalRecord'
 pod 'RTRootNavigationController'
 pod 'CYLTabBarController'
+pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
+pod 'MaterialComponents'
 end
 
 #post_install do |installer|

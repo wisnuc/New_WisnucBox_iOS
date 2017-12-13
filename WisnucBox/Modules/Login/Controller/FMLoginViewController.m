@@ -289,6 +289,8 @@ static BOOL needHide = YES;
                 }
                 [subject sendNext:nameString];
             } failure:^(__kindof JYBaseRequest *request) {
+                NSString *nameString = @"闻上盒子";
+                [subject sendNext:nameString];
                 NSLog(@"%@",request.error);
                 NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
                 if(errorData.length >0){
@@ -297,7 +299,6 @@ static BOOL needHide = YES;
                 }
             }];
         }];
-//    }
 }
 
 - (void)getBootInfoWithPath:(NSString *)path completeBlock:(void(^)(BootModel *model))block{
@@ -394,21 +395,7 @@ static BOOL needHide = YES;
             serforUser  = _tempDataSource[0];
         }
         _userDataSource = serforUser.users;
-        if (!serforUser.isNormal &&  serforUser.users.count == 0) {
-             [_userListTableViwe removeEmptyView];
-            _userListTableViwe.noDataImageName = @"disk_settings";
-            CGRect rect = CGRectMake(0, 40, self.userListTableViwe.bounds.size.width, self.userListTableViwe.bounds.size.height);
-            NSLog(@"%@--- %@",NSStringFromCGRect(rect),NSStringFromCGRect(self.userListTableViwe.bounds));
-            [_userListTableViwe displayWithMsg:WBLocalizedString(@"initialization", nil) withRowCount:_userDataSource.count andIsNoData:YES  andTableViewFrame:rect
-                                 andTouchBlock:^(UIButton *btn) {
-                                     NSLog(@"😁");
-                                     WBInitializationViewController *initializationVC = [[WBInitializationViewController alloc]init];
-                                     
-                                     [self.navigationController pushViewController:initializationVC animated:YES];
-                                 }];
-        }else{
-            [_userListTableViwe removeEmptyView];
-        }
+        [self initializationLayoutUpdateWithModel:serforUser];
         [self.userListTableViwe reloadData];
     }
 }
@@ -657,6 +644,27 @@ static BOOL needHide = YES;
     }];
 }
 
+- (void)initializationLayoutUpdateWithModel:(FMSerachService *)model{
+    if (model.isNormal || _userDataSource.count !=0) {
+        [_userView setHidden:NO];
+        [_userListTableViwe removeEmptyView];
+        _userListTableViwe.bounces = YES;
+    }else{
+        [_userListTableViwe removeEmptyView];
+        [_userView setHidden:YES];
+        _userListTableViwe.bounces = NO;
+        _userListTableViwe.noDataImageName = @"disk_settings";
+        CGRect rect = CGRectMake(0, 0, self.userListTableViwe.bounds.size.width, self.userListTableViwe.bounds.size.height);
+        NSLog(@"%@--- %@",NSStringFromCGRect(rect),NSStringFromCGRect(self.userListTableViwe.bounds));
+        [_userListTableViwe displayWithMsg:WBLocalizedString(@"initialization", nil) withRowCount:0 andIsNoData:YES  andTableViewFrame:rect
+                             andTouchBlock:^(UIButton *btn) {
+                                 //                                      NSLog(@"😋");
+                                 WBInitializationViewController *initializationVC = [[WBInitializationViewController alloc]init];
+                                 
+                                 [self.navigationController pushViewController:initializationVC animated:YES];
+                             }];
+    }
+}
 
 #pragma mark ScrollView delegate
 
@@ -676,26 +684,11 @@ static BOOL needHide = YES;
 
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-     if (scrollView == self.stationScrollView) {
-          FMSerachService *ser = _tempDataSource[_currentPage];
-         if (ser.isNormal || _userDataSource.count !=0) {
-
-             [_userListTableViwe removeEmptyView];
-         }else{
-             [_userListTableViwe removeEmptyView];
-             _userListTableViwe.noDataImageName = @"disk_settings";
-             CGRect rect = CGRectMake(0, 40, self.userListTableViwe.bounds.size.width, self.userListTableViwe.bounds.size.height);
-             NSLog(@"%@--- %@",NSStringFromCGRect(rect),NSStringFromCGRect(self.userListTableViwe.bounds));
-             [_userListTableViwe displayWithMsg:WBLocalizedString(@"initialization", nil) withRowCount:0 andIsNoData:YES  andTableViewFrame:rect
-                                  andTouchBlock:^(UIButton *btn) {
-                                      NSLog(@"😋");
-                                      WBInitializationViewController *initializationVC = [[WBInitializationViewController alloc]init];
-                                   
-                                      [self.navigationController pushViewController:initializationVC animated:YES];
-                                  }];
-         }
-      [_userListTableViwe reloadData];
-     }
+    if (scrollView == self.stationScrollView) {
+        FMSerachService *ser = _tempDataSource[_currentPage];
+        [self initializationLayoutUpdateWithModel:ser];
+        [_userListTableViwe reloadData];
+    }
 }
 
 #pragma mark tableView datasource
@@ -843,6 +836,7 @@ static BOOL needHide = YES;
         _userListTableViwe.delegate = self;
         _userListTableViwe.dataSource = self;
         _userListTableViwe.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+//        _userListTableViwe.backgroundColor = [UIColor orangeColor];
     }
     return _userListTableViwe;
 }
