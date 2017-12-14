@@ -34,15 +34,15 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Mv-NJ-f76">
-                        <rect key="frame" x="67" y="4" width="0.0" height="0.0"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
+                        <rect key="frame" x="67" y="17" width="0.0" height="0.0"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.43977864583333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ybd-4p-Tpo">
-                        <rect key="frame" x="67" y="12" width="0.0" height="0.0"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
+                        <rect key="frame" x="67" y="39" width="0.0" height="0.0"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.43977864579999998" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iMg-9n-NBB">
@@ -51,8 +51,8 @@
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Ybd-4p-Tpo" firstAttribute="top" secondItem="7Mv-NJ-f76" secondAttribute="bottom" constant="8" id="04f-GN-ewK"/>
                     <constraint firstItem="lb0-V7-IEb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="1" id="FTC-7a-TmB"/>
+                    <constraint firstItem="7Mv-NJ-f76" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="-11" id="IkE-55-DYX"/>
                     <constraint firstItem="OtL-aB-Slg" firstAttribute="leading" secondItem="lb0-V7-IEb" secondAttribute="trailing" constant="16" id="N9F-bm-MMt"/>
                     <constraint firstItem="Ybd-4p-Tpo" firstAttribute="leading" secondItem="7Mv-NJ-f76" secondAttribute="leading" id="OOB-g6-kkX"/>
                     <constraint firstItem="lb0-V7-IEb" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="QCf-bJ-JHa"/>
@@ -60,11 +60,15 @@
                     <constraint firstItem="OtL-aB-Slg" firstAttribute="centerY" secondItem="lb0-V7-IEb" secondAttribute="centerY" id="Uqd-NE-r3r"/>
                     <constraint firstAttribute="trailing" secondItem="iMg-9n-NBB" secondAttribute="trailing" id="WSt-s5-nlF"/>
                     <constraint firstItem="7Mv-NJ-f76" firstAttribute="leading" secondItem="OtL-aB-Slg" secondAttribute="trailing" constant="8" id="bUu-uG-vgh"/>
-                    <constraint firstItem="7Mv-NJ-f76" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="gwb-tO-ZRV"/>
+                    <constraint firstItem="Ybd-4p-Tpo" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="11" id="ujQ-6a-iBl"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="checkBox" destination="lb0-V7-IEb" id="wAm-72-9W3"/>
+                <outlet property="detailButton" destination="iMg-9n-NBB" id="aZo-7m-Ah8"/>
+                <outlet property="detailLabel" destination="Ybd-4p-Tpo" id="2bH-0b-OAM"/>
+                <outlet property="leftIconImageView" destination="OtL-aB-Slg" id="f3r-qn-dl3"/>
+                <outlet property="nameLabel" destination="7Mv-NJ-f76" id="RQm-SC-mjp"/>
             </connections>
             <point key="canvasLocation" x="34" y="60"/>
         </tableViewCell>

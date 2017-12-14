@@ -14,6 +14,9 @@
 #define __kWidth [[UIScreen mainScreen]bounds].size.width
 #define __kHeight [[UIScreen mainScreen]bounds].size.height
 
+#define RGBCOLOR(r, g, b)      [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:1.0f]
+#define RGBACOLOR(r, g, b ,a)      [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:a]
+
 #define kCloudAddr    @"http://www.siyouqun.org/"
 #define kCloudCommonJsonUrl [NSString stringWithFormat:@"c/v1/stations/%@/json", WB_UserService.currentUser.stationId]
 #define kCloudCommonPipeUrl [NSString stringWithFormat:@"c/v1/stations/%@/pipe", WB_UserService.currentUser.stationId]

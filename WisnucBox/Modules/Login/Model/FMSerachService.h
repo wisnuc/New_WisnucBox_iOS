@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WBStationManageStorageModel.h"
 
 @interface FMSerachService : NSObject
 
@@ -20,4 +21,5 @@
 @property (nonatomic) BOOL isReadly;
 @property (nonatomic) NSURLSessionDataTask *task;
 @property (nonatomic) BOOL isNormal;
+@property (nonatomic) WBStationManageStorageModel *storageModel;
 @end

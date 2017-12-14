@@ -10,5 +10,9 @@
 
 @interface WBInitDiskTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet BEMCheckBox *checkBox;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *detailLabel;
+@property (weak, nonatomic) IBOutlet UIButton *detailButton;
+@property (weak, nonatomic) IBOutlet UIImageView *leftIconImageView;
 
 @end

@@ -18,10 +18,14 @@
 }
 @end
 
+@implementation WBStationManageBlocksModel
+
+@end
 
 @implementation WBStationManageStorageModel
 + (NSDictionary *)modelContainerPropertyGenericClass {
     return @{@"volumes" : [WBStationManageVolumesModel class],
+             @"blocks" : [WBStationManageBlocksModel class]
              };
 }
 @end

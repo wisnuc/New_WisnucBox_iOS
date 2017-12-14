@@ -27,6 +27,7 @@
 #import "WBStationBootAPI.h"
 #import "BootModel.h"
 #import "WBStationManageStorageAPI.h"
+#import "WBStationManageStorageModel.h"
 #import "WBInitializationViewController.h"
 
 @interface FMLoginViewController ()
@@ -71,6 +72,7 @@ WXApiDelegate
 @property (nonatomic) ChooseAlertView *alertView;
 @property (nonatomic) NSString *avatarUrl;
 @property (nonatomic) NSInteger currentPage;
+@property (nonatomic) WBStationManageStorageModel *storageModel;
 
 @end
 
@@ -212,15 +214,20 @@ static BOOL needHide = YES;
 
 - (void)findIpToCheck:(NSString *)addressString andService:(NSNetService *)service{
      @weaky(self)
-    __block NSString* urlString = [NSString stringWithFormat:@"http://%@:3000/", addressString];
+    NSString* urlString = [NSString stringWithFormat:@"http://%@:3000/", addressString];
     NSLog(@"%@", urlString);
     //    @weaky(self)
+//    if (IsEquallString(urlString, @"http://10.10.9.141:3000/")) {
+    if (!urlString) {
+        return;
+    }
     RACSubject *subject = [RACSubject subject];
     FMSerachService * ser = [FMSerachService new];
     
+   
     [subject subscribeNext:^(id x) {
         [[WBGetSystemInformationAPI apiWithServicePath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-            //                NSLog(@"%@",request.responseJsonObject);
+//            NSLog(@"%@",request.responseJsonObject);
            
             NSDictionary *rootDic =request.responseJsonObject;
             NSDictionary *dic = [rootDic objectForKey:@"ws215i"];
@@ -235,6 +242,9 @@ static BOOL needHide = YES;
             if ([x isEqualToString:@"uninitialized"]) {
                 ser.name = @"未配置";
                 ser.isNormal = NO;
+                if (_storageModel) {
+                    ser.storageModel = _storageModel;
+                }
             }
             
             ser.path = urlString;
@@ -269,10 +279,11 @@ static BOOL needHide = YES;
         [self getBootInfoWithPath:urlString completeBlock:^(BootModel *model) {
             if (IsEquallString(model.error, @"ENOALT")) {
                 [[WBStationManageStorageAPI apiWithURLPath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-                    NSDictionary * dataDic = request.responseJsonObject;
-                    NSArray *arr = dataDic[@"volumes"];
-                    if (arr && arr.count == 0) {
+                    WBStationManageStorageModel *model = [WBStationManageStorageModel yy_modelWithJSON:request.responseJsonObject];
+                    NSLog(@"%@",request.responseJsonObject);
+                    if (model.volumes && model.volumes.count == 0) {
                       [subject sendNext:@"uninitialized"];
+                    _storageModel = model;
                     }
                 } failure:^(__kindof JYBaseRequest *request) {
                     
@@ -299,6 +310,7 @@ static BOOL needHide = YES;
                 }
             }];
         }];
+//    }
 }
 
 - (void)getBootInfoWithPath:(NSString *)path completeBlock:(void(^)(BootModel *model))block{
@@ -660,7 +672,7 @@ static BOOL needHide = YES;
                              andTouchBlock:^(UIButton *btn) {
                                  //                                      NSLog(@"😋");
                                  WBInitializationViewController *initializationVC = [[WBInitializationViewController alloc]init];
-                                 
+                                 initializationVC.searchModel = model;
                                  [self.navigationController pushViewController:initializationVC animated:YES];
                              }];
     }

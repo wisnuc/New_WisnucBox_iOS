@@ -19,6 +19,31 @@
 @property (nonatomic)WBStationManageVolumesUsageModel *usage;
 @end
 
+@interface WBStationManageBlocksModel : NSObject
+@property (nonatomic,copy) NSString *model;
+@property (nonatomic,copy) NSNumber *isDisk;
+@property (nonatomic,copy) NSNumber *isATA;
+@property (nonatomic,copy) NSString *name;
+@property (nonatomic,copy) NSNumber *size;
+@property (nonatomic,copy) NSNumber *isFileSystem;
+@property (nonatomic,copy) NSString *unformattable;
+@property (nonatomic,copy) NSString *idBus;
+
+@end
+
 @interface WBStationManageStorageModel : WBBaseModel
 @property (nonatomic) NSArray *volumes;
+@property (nonatomic) NSArray *blocks;
+//devname = "/dev/sdc2";
+//idBus = ata;
+//isATA = 1;
+//isExtended = 1;
+//isPartition = 1;
+//isDisk = 1;
+//name = sdc2;
+//parentName = sdc;
+//path = "/devices/pci0000:00/0000:00:1f.2/ata8/host7/target7:0:0/7:0:0:0/block/sdc/sdc2";
+//removable = 0;
+//size = 2;
+//unformattable = Extended;
 @end
