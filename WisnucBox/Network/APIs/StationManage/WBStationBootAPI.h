@@ -13,6 +13,8 @@
 @property (nonatomic) NSString * mode;
 @property (nonatomic) NSString * mothod;
 @property (nonatomic) NSString * path;
+@property (nonatomic) NSString * uuid;
 + (instancetype)apiWithState:(NSString *)state Mode:(NSString *)mode;
 + (instancetype)apiWithPath:(NSString *)path RequestMethod:(NSString *)mothod;
++ (instancetype)apiWithPath:(NSString *)path RequestMethod:(NSString *)mothod UUID:(NSString *)uuid;
 @end

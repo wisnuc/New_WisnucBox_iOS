@@ -23,6 +23,15 @@
     return api;
 }
 
++ (instancetype)apiWithPath:(NSString *)path RequestMethod:(NSString *)mothod UUID:(NSString *)uuid{
+    WBStationBootAPI * api = [WBStationBootAPI new];
+    api.path = path;
+    api.mothod = mothod;
+    api.uuid = uuid;
+    return api;
+}
+
+
 - (JYRequestMethod)requestMethod{
     JYRequestMethod method;
     if ([_mothod isEqualToString:@"GET"]) {
@@ -44,6 +53,14 @@
 }
 
 - (id)requestArgument{
+    if (_uuid && _uuid.length >0) {
+        NSDictionary *dic;
+        dic = @{
+                @"current" : _uuid,
+                };
+        
+        return dic;
+    }else{
     NSDictionary *dic;
     if (_mode && _state) {
         dic = @{
@@ -56,6 +73,7 @@
                 };
     }
     return dic;
+    }
 }
 
 - (NSDictionary *)requestHeaderFieldValueDictionary{

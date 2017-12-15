@@ -10,6 +10,13 @@
 @class CloudModelForUser;
 @class GlobalModel;
 
+typedef enum
+{
+    NASTypeNormal = 0,
+    NASTypeUninitialized
+} NASType;
+
+
 @interface GlobalModel : NSObject
 @property(nonatomic,copy) NSString *guid;
 @end

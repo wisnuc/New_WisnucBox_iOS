@@ -9,5 +9,8 @@
 #import "JYBaseRequest.h"
 
 @interface FMAsyncUsersAPI : JYBaseRequest
-
+@property (nonatomic)NSString *userName;
+@property (nonatomic)NSString *password;
+@property (nonatomic)NSString *path;
++(instancetype)apiWithURLPath:(NSString *)path UserName:(NSString *)userName Password:(NSString *)password;
 @end

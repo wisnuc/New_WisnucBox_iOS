@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+@class WBInitDiskTableViewCell;
+typedef void(^cellCheckBoxClickBlock)(BEMCheckBox * cellCheckBox);
 
 @interface WBInitDiskTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet BEMCheckBox *checkBox;
@@ -14,5 +16,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *detailLabel;
 @property (weak, nonatomic) IBOutlet UIButton *detailButton;
 @property (weak, nonatomic) IBOutlet UIImageView *leftIconImageView;
+@property (nonatomic) cellCheckBoxClickBlock cellCheckBoxBlock;
 
 @end

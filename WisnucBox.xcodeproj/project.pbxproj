@@ -220,6 +220,9 @@
 		1FD7A1161FB05A51000D4CB3 /* logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A1021FB05A51000D4CB3 /* logo@3x.png */; };
 		1FD7A1171FB05A51000D4CB3 /* key@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A1031FB05A51000D4CB3 /* key@2x.png */; };
 		1FD8ACF11FB05F7500F19F1C /* eye.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD8ACF01FB05F7500F19F1C /* eye.png */; };
+		1FEFCDDA1FE3AD2000DEC866 /* WBInitDiskSelectedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEFCDD81FE3AD2000DEC866 /* WBInitDiskSelectedTableViewCell.m */; };
+		1FEFCDDB1FE3AD2000DEC866 /* WBInitDiskSelectedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FEFCDD91FE3AD2000DEC866 /* WBInitDiskSelectedTableViewCell.xib */; };
+		1FEFCDE21FE3C83300DEC866 /* WBStorageVolumesAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEFCDE11FE3C83300DEC866 /* WBStorageVolumesAPI.m */; };
 		1FF3AD511FD5254C00E1E536 /* LoginSeverPathModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3AD501FD5254C00E1E536 /* LoginSeverPathModel.m */; };
 		1FF3AD541FD63F5C00E1E536 /* WBLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3AD531FD63F5C00E1E536 /* WBLoginViewController.m */; };
 		1FF3AD5A1FD669DB00E1E536 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1FF3AD5C1FD669DB00E1E536 /* Localizable.strings */; };
@@ -1027,6 +1030,11 @@
 		1FD7A1021FB05A51000D4CB3 /* logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@3x.png"; sourceTree = "<group>"; };
 		1FD7A1031FB05A51000D4CB3 /* key@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "key@2x.png"; sourceTree = "<group>"; };
 		1FD8ACF01FB05F7500F19F1C /* eye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye.png; sourceTree = "<group>"; };
+		1FEFCDD71FE3AD2000DEC866 /* WBInitDiskSelectedTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBInitDiskSelectedTableViewCell.h; sourceTree = "<group>"; };
+		1FEFCDD81FE3AD2000DEC866 /* WBInitDiskSelectedTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBInitDiskSelectedTableViewCell.m; sourceTree = "<group>"; };
+		1FEFCDD91FE3AD2000DEC866 /* WBInitDiskSelectedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBInitDiskSelectedTableViewCell.xib; sourceTree = "<group>"; };
+		1FEFCDE01FE3C83300DEC866 /* WBStorageVolumesAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBStorageVolumesAPI.h; sourceTree = "<group>"; };
+		1FEFCDE11FE3C83300DEC866 /* WBStorageVolumesAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBStorageVolumesAPI.m; sourceTree = "<group>"; };
 		1FF3AD4F1FD5254C00E1E536 /* LoginSeverPathModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginSeverPathModel.h; sourceTree = "<group>"; };
 		1FF3AD501FD5254C00E1E536 /* LoginSeverPathModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginSeverPathModel.m; sourceTree = "<group>"; };
 		1FF3AD521FD63F5C00E1E536 /* WBLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBLoginViewController.h; sourceTree = "<group>"; };
@@ -2062,6 +2070,9 @@
 				1F58DF491FE12FB300768DD7 /* WBInitDiskTableViewCell.h */,
 				1F58DF4A1FE12FB300768DD7 /* WBInitDiskTableViewCell.m */,
 				1F58DF4B1FE12FB300768DD7 /* WBInitDiskTableViewCell.xib */,
+				1FEFCDD71FE3AD2000DEC866 /* WBInitDiskSelectedTableViewCell.h */,
+				1FEFCDD81FE3AD2000DEC866 /* WBInitDiskSelectedTableViewCell.m */,
+				1FEFCDD91FE3AD2000DEC866 /* WBInitDiskSelectedTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2410,6 +2421,15 @@
 			name = InviteWechat;
 			sourceTree = "<group>";
 		};
+		1FEFCDDC1FE3C7DD00DEC866 /* Initialization */ = {
+			isa = PBXGroup;
+			children = (
+				1FEFCDE01FE3C83300DEC866 /* WBStorageVolumesAPI.h */,
+				1FEFCDE11FE3C83300DEC866 /* WBStorageVolumesAPI.m */,
+			);
+			path = Initialization;
+			sourceTree = "<group>";
+		};
 		1FF3AD571FD6699B00E1E536 /* Localizable */ = {
 			isa = PBXGroup;
 			children = (
@@ -2500,6 +2520,7 @@
 		71A3D66B1FB57D8C0002B8B1 /* APIs */ = {
 			isa = PBXGroup;
 			children = (
+				1FEFCDDC1FE3C7DD00DEC866 /* Initialization */,
 				1F922EA51FCD5C4F00A7614B /* StationManage */,
 				C1196BB81FC3BFC100E96973 /* Cloud */,
 				C138D0631FB99AF3000CF518 /* Media */,
@@ -3706,6 +3727,7 @@
 				1FAD74621FD0EDDF00A5D880 /* mp4_icon@2x.png in Resources */,
 				1F922E831FCD3FC100A7614B /* ic_chevron_right@2x.png in Resources */,
 				F683111D1FB30AAE005AC578 /* local_select@2x.png in Resources */,
+				1FEFCDDB1FE3AD2000DEC866 /* WBInitDiskSelectedTableViewCell.xib in Resources */,
 				F68310E21FB30AAE005AC578 /* handrail@3x.png in Resources */,
 				F68310C71FB30AAE005AC578 /* fab_share.png in Resources */,
 				F68310E11FB30AAE005AC578 /* handrail@2x.png in Resources */,
@@ -4196,6 +4218,7 @@
 				F67561581FB342AE00E3277F /* MXScrollViewController.m in Sources */,
 				F6830F021FB2FF8C005AC578 /* ImageHeaderView.m in Sources */,
 				1F1ABA0D1FB9862A006EB1FC /* TestDataModel.m in Sources */,
+				1FEFCDE21FE3C83300DEC866 /* WBStorageVolumesAPI.m in Sources */,
 				F68311DE1FB31369005AC578 /* LCActionSheet.m in Sources */,
 				1F922EBB1FCE617B00A7614B /* WBStatioManageEquipmentViewController.m in Sources */,
 				F67D64111FAC7D7F00E23D16 /* Base64.m in Sources */,
@@ -4221,6 +4244,7 @@
 				F6830EB51FB2FAE0005AC578 /* RDVTabBarItem.m in Sources */,
 				F6830EB31FB2FAE0005AC578 /* RDVTabBar.m in Sources */,
 				C183CDE21FCE8D84002E29CD /* FMUserEditVC.m in Sources */,
+				1FEFCDDA1FE3AD2000DEC866 /* WBInitDiskSelectedTableViewCell.m in Sources */,
 				1F4D75A41FAC4BB800E6516C /* UserModel.m in Sources */,
 				1FC2AFF81FC6684100E8C9DE /* WBgetStationInfoAPI.m in Sources */,
 				1F922EFB1FCEC3C800A7614B /* WBReNameAPI.m in Sources */,

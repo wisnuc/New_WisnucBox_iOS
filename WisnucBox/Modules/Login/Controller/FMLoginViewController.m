@@ -44,6 +44,7 @@ WXApiDelegate
     NSTimer* _reachabilityTimer;
     NSMutableArray *_userDataSource;
     RACSubject *_subject;
+    int _count;
 }
 @property (strong, nonatomic) UIScrollView *stationScrollView;
 @property (strong, nonatomic) UIView *stationCardView;
@@ -125,6 +126,7 @@ WXApiDelegate
     [super viewDidLoad];
     [self viewOfSeaching:YES];
 //    [self firstbeginSearching];
+    _count = 0;
     _dataSource = [NSMutableArray arrayWithCapacity:0];
     [self.view addSubview:self.stationScrollView];
  
@@ -214,66 +216,15 @@ static BOOL needHide = YES;
 
 - (void)findIpToCheck:(NSString *)addressString andService:(NSNetService *)service{
      @weaky(self)
-    NSString* urlString = [NSString stringWithFormat:@"http://%@:3000/", addressString];
+    __block NSString* urlString = [NSString stringWithFormat:@"http://%@:3000/", addressString];
     NSLog(@"%@", urlString);
     //    @weaky(self)
 //    if (IsEquallString(urlString, @"http://10.10.9.141:3000/")) {
-    if (!urlString) {
+    if (!urlString || urlString.length == 0) {
         return;
     }
-    RACSubject *subject = [RACSubject subject];
     FMSerachService * ser = [FMSerachService new];
     
-   
-    [subject subscribeNext:^(id x) {
-        [[WBGetSystemInformationAPI apiWithServicePath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-//            NSLog(@"%@",request.responseJsonObject);
-           
-            NSDictionary *rootDic =request.responseJsonObject;
-            NSDictionary *dic = [rootDic objectForKey:@"ws215i"];
-            NSString *type;
-            if (dic) {
-                type = @"WS215i";
-            }else{
-                type = WBLocalizedString(@"virtual_machine",nil);
-            }
-            ser.name = x;
-            ser.isNormal = YES;
-            if ([x isEqualToString:@"uninitialized"]) {
-                ser.name = @"未配置";
-                ser.isNormal = NO;
-                if (_storageModel) {
-                    ser.storageModel = _storageModel;
-                }
-            }
-            
-            ser.path = urlString;
-            ser.type = type;
-            //            MyNSLog(@"%@",service.type);
-            ser.displayPath = addressString;
-            ser.hostName = service.hostName;
-            _expandCell = ser;
-            if (_dataSource.count == 0) {
-                [_dataSource addObject:ser];
-                [weak_self refreshDatasource];
-                return ;
-            }
-            BOOL isNew = YES;
-            for (FMSerachService * s in _dataSource) {
-                if (IsEquallString(s.path, ser.path)) {
-                    isNew = NO;
-                    break;
-                }
-            }
-            if (isNew) {
-                [_dataSource addObject:ser];
-                [weak_self refreshDatasource];
-            }
-        } failure:^(__kindof JYBaseRequest *request) {
-            NSLog(@"%@",request.error);
-        }];
-        
-    }];
     
 //    if ([urlString isEqualToString:@"http://10.10.9.141:3000/"]) {
         [self getBootInfoWithPath:urlString completeBlock:^(BootModel *model) {
@@ -282,8 +233,8 @@ static BOOL needHide = YES;
                     WBStationManageStorageModel *model = [WBStationManageStorageModel yy_modelWithJSON:request.responseJsonObject];
                     NSLog(@"%@",request.responseJsonObject);
                     if (model.volumes && model.volumes.count == 0) {
-                      [subject sendNext:@"uninitialized"];
-                    _storageModel = model;
+                    ser.storageModel = model;
+                    [weak_self getSystemInformationWithURL:addressString Service:service Name:nil FMSerachServiceModel:ser NASType:NASTypeUninitialized];
                     }
                 } failure:^(__kindof JYBaseRequest *request) {
                     
@@ -298,10 +249,10 @@ static BOOL needHide = YES;
                 if (nameString.length == 0) {
                     nameString = @"闻上盒子";
                 }
-                [subject sendNext:nameString];
+               [weak_self getSystemInformationWithURL:addressString Service:service Name:nameString FMSerachServiceModel:ser NASType:NASTypeNormal];
             } failure:^(__kindof JYBaseRequest *request) {
                 NSString *nameString = @"闻上盒子";
-                [subject sendNext:nameString];
+                [weak_self getSystemInformationWithURL:addressString Service:service Name:nameString FMSerachServiceModel:ser NASType:NASTypeNormal];
                 NSLog(@"%@",request.error);
                 NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
                 if(errorData.length >0){
@@ -324,12 +275,74 @@ static BOOL needHide = YES;
             }else if ([bootModel.state isEqualToString:@"stopping"]){
                 
             }else{
-                [weak_self performSelector:@selector(getBootInfoWithPath: completeBlock:) withObject:block];
+                dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0/*延迟执行时间*/ * NSEC_PER_SEC));
+                
+                dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+                    _count ++;
+//                    if (_count<11) {
+                         [weak_self getBootInfoWithPath:path completeBlock:block];
+//                    }
+                });
             }
 //        }
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
     }];
+}
+
+- (void)getSystemInformationWithURL:(NSString *)url Service:(NSNetService *)service Name:(NSString *)name FMSerachServiceModel:(FMSerachService *)model NASType:(NASType)NAStype{
+      @weaky(self)
+      NSString* finalUrl = [NSString stringWithFormat:@"http://%@:3000/", url];
+    [[WBGetSystemInformationAPI apiWithServicePath:finalUrl]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        //            NSLog(@"%@",request.responseJsonObject);
+      
+        NSDictionary *rootDic =request.responseJsonObject;
+        NSDictionary *dic = [rootDic objectForKey:@"ws215i"];
+        NSString *type;
+        if (dic) {
+            type = @"WS215i";
+        }else{
+            type = WBLocalizedString(@"virtual_machine",nil);
+        }
+        FMSerachService *ser = model;
+        if (name) {
+            ser.name = name;
+        }
+        ser.isNormal = YES;
+        if (NAStype == NASTypeUninitialized) {
+            ser.name = @"未配置";
+            ser.isNormal = NO;
+            if (_storageModel) {
+                ser.storageModel = _storageModel;
+            }
+        }
+        
+        ser.path = finalUrl;
+        ser.type = type;
+        //            MyNSLog(@"%@",service.type);
+        ser.displayPath = url;
+        ser.hostName = service.hostName;
+        _expandCell = ser;
+        if (_dataSource.count == 0) {
+            [_dataSource addObject:ser];
+            [weak_self refreshDatasource];
+            return ;
+        }
+        BOOL isNew = YES;
+        for (FMSerachService * s in _dataSource) {
+            if (IsEquallString(s.path, ser.path)) {
+                isNew = NO;
+                break;
+            }
+        }
+        if (isNew) {
+            [_dataSource addObject:ser];
+            [weak_self refreshDatasource];
+        }
+    } failure:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.error);
+    }];
+    
 }
 
 - (void)refreshDatasource{

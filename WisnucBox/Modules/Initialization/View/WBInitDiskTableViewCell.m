@@ -22,17 +22,12 @@
     self.checkBox.onTintColor = COR1;
     self.checkBox.onCheckColor = [UIColor whiteColor];
     self.checkBox.delegate = self;
-//    self.checkBox.on = NO;
 }
 
 - (void)didTapCheckBox:(BEMCheckBox*)checkBox{
-//    if (checkBox.on) {
-//          [checkBox setOn:YES animated:YES];
-//    }else{
-//          [checkBox setOn:NO animated:YES];
-//    }
-  
-//    [self.checkBox reload];
+    if (self.cellCheckBoxBlock) {
+        _cellCheckBoxBlock(checkBox);
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

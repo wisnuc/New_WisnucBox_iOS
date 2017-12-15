@@ -13,7 +13,9 @@
 
 @property (nonatomic) UserModel * model;
 @property (nonatomic) NSString * passWord;
+@property (nonatomic) NSString *uuid;
+@property (nonatomic) NSString *url;
 
-//+ (instancetype)apiWithBaseUrl:(NSString *)url model:(UserModel *)model;
++ (instancetype)apiWithBaseUrl:(NSString *)url UUID:(NSString *)uuid Password:(NSString *)password;
 
 @end
