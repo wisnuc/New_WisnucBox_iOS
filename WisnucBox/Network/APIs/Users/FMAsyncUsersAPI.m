@@ -36,6 +36,18 @@
      }
 }
 
+
+- (id)requestArgument{
+    NSDictionary *dic;
+    if (_userName && _userName.length>0) {
+        dic = @{
+                @"username" : _userName,
+                @"password" : _password
+                };
+    }
+    return dic;
+}
+
 -(NSDictionary *)requestHeaderFieldValueDictionary{
     NSMutableDictionary * dic;
     if (!_userName) {

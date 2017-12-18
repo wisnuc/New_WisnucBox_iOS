@@ -11,7 +11,6 @@
 
 #import "ServiceProtocol.h"
 #import <MagicalRecord/MagicalRecord.h>
-#import "WisnucBox-Swift.h"
 //Define
 #import "ColorDefine.h"
 #import "Define.h"
@@ -31,10 +30,11 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <MJRefresh/MJRefresh.h>
 #import <CYLTabBarController/CYLTabBarController.h>
-#import <Spring/Spring-Swift.h>
 #import <BEMCheckBox/BEMCheckBox.h>
 #import <MaterialComponents/MaterialTextFields.h>
 #import <MaterialComponents/MaterialButtons.h>
+#import <MaterialComponents/MaterialDialogs.h>
+#import <MotionTransitioning/MDMTransition.h>
 
 //Base
 //#import "RDVTabBarController.h"
@@ -63,6 +63,7 @@
 #import "UIView+JYExtension.h"
 #import "UIViewController+controller.h"
 #import "NSString+Extension.h"
+#import "NSString+Validate.h"
 #import "NSError+WBCode.h"
 #import "UIScrollView+JYEmptyView.h"
 #import "UIBarButtonItem+SXCreate.h"

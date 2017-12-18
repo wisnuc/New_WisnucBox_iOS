@@ -170,6 +170,7 @@
 "binding" = "Binding...";
 "empty_username" = "Please enter username";
 "empty_password" = "Please enter password";
+"empty_confirm_user_password" = "Please enter the confirm password";
 "different_user_name" = "Please enter a different user name.";
 "username_has_illegal_character" = "User name has illegal character";
 "password_has_illegal_character" = "Password has illegal character";

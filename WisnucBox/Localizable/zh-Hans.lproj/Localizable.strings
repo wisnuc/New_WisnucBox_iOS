@@ -168,6 +168,7 @@
 "binding" = "正在绑定...";
 "empty_username" = "用户名不能为空";
 "empty_password" = "密码不能为空";
+"empty_confirm_user_password" = "确认密码";
 "different_user_name" = "请输入不同的用户名";
 "username_has_illegal_character" = "用户名中含有非法字符";
 "password_has_illegal_character" = "密码中含有非法字符";

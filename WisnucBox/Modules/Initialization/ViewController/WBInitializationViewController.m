@@ -16,35 +16,32 @@
 #import "UserModel.h"
 #import "FMGetJWTAPI.h"
 #import "AppDelegate.h"
+#import "WBgetStationInfoAPI.h"
+#import "WBInitChangeDiskTypeAlertViewController.h"
+#import "WBStationTicketsAPI.h"
+#import "TicketUserModel.h"
+#import "WBCloudLoginAPI.h"
+#import "CloudLoginModel.h"
+#import "WBTicketsUserAPI.h"
+#import "WBStationTicketsWechatAPI.h"
+#import "FMUserEditVC.h"
 
 #define WarningDetailColor UICOLOR_RGB(0xf44336)
 #define IgnoreColor RGBACOLOR(0, 0, 0, 0.54f)
 #define OriginTitleColor RGBACOLOR(0, 0, 0, 0.87f)
-#define userNameMax 20
-#define passwordMax 40
+#define userNameMax 16
+#define passwordMax 30
 
 @interface WBInitializationViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,UITextFieldDelegate>
+
+@property(nonatomic,assign) BOOL keyBoardlsVisible;
 @property (nonatomic)UIView *lineView;
+@property (nonatomic)TicketModel *ticketModel;
+@property (nonatomic)NSDictionary *loginDataDic;
 
 @property (nonatomic)NSMutableArray *diskDataArray;
 @property (nonatomic)NSMutableArray *diskSelectedArray;
 @property (nonatomic)UIScrollView *mainScrollView;
-
-
-@property (nonatomic)UILabel *fourStepLabel;
-@property (nonatomic)UILabel *fifthStepLabel;
-
-
-
-@property (nonatomic)UIView *fourStepIconView;
-@property (nonatomic)UIView *fifthStepIconView;
-
-
-
-
-@property (nonatomic)UILabel *fourStepTitle;
-@property (nonatomic)UILabel *fifthStepTitle;
-
 
 @property (nonatomic)UILabel *firstStepLabel;
 @property (nonatomic)UIView *firstStepIconView;
@@ -79,8 +76,22 @@
 @property (nonatomic)MDCButton *thirdStepNextButton;
 @property (nonatomic)MDCButton *thirdPreviousButton;
 @property (nonatomic)UITableView *diskSelectedTableView;
+@property (nonatomic)BEMCheckBox *thirdCheckBox;
 
+@property (nonatomic)UILabel *fourthStepLabel;
+@property (nonatomic)UIView *fourthStepIconView;
+@property (nonatomic)UILabel *fourthStepTitle;
+@property (nonatomic)UILabel *fourthStepDetailLabel;
+@property (nonatomic)MDCButton *fourthStepNextButton;
+@property (nonatomic)MDCButton *fourthIgnoreButton;
+@property (nonatomic)BEMCheckBox *fourthCheckBox;
 
+@property (nonatomic)UILabel *fifthStepLabel;
+@property (nonatomic)UIView *fifthStepIconView;
+@property (nonatomic)UILabel *fifthStepTitle;
+@property (nonatomic)UILabel *fifthStepDetailLabel;
+@property (nonatomic)MDCButton *fifthStepEnterButton;
+@property (nonatomic)MDCButton *fifthPreviousButton;
 
 @end
 
@@ -93,6 +104,9 @@
     UITapGestureRecognizer *tapRecognizer =
     [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDidTouch)];
     [self.view addGestureRecognizer:tapRecognizer];
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(keyboardDidShow) name:UIKeyboardDidShowNotification object:nil];
+    [center addObserver:self selector:@selector(keyboardDidHide) name:UIKeyboardWillHideNotification object:nil];
     [self getDiskData];
 //    [self.view addSubview:self.lineView];
     [self.mainScrollView addSubview:self.firstStepIconView];
@@ -117,13 +131,42 @@
     [self.mainScrollView addSubview:self.thirdStepIconView];
     [self.mainScrollView addSubview:self.thirdStepTitle];
     [self.mainScrollView addSubview:self.diskSelectedTableView];
-    
     [self.mainScrollView addSubview:self.thirdUserNameLabel];
     [self.mainScrollView addSubview:self.thirdDiskTypeLabel];
     [self.mainScrollView addSubview:self.thirdStepNextButton];
     [self.mainScrollView addSubview:self.thirdPreviousButton];
     
-    _mainScrollView.contentSize = CGSizeMake(__kWidth,CGRectGetMaxY( _thirdDiskTypeLabel.frame) +2);
+    [self.mainScrollView addSubview:self.fourthStepIconView];
+    [self.mainScrollView addSubview:self.fourthStepTitle];
+    [self.mainScrollView addSubview:self.fourthStepDetailLabel];
+    [self.mainScrollView addSubview:self.fourthStepNextButton];
+    [self.mainScrollView addSubview:self.fourthIgnoreButton];
+    
+    [self.mainScrollView addSubview:self.fifthStepIconView];
+    [self.mainScrollView addSubview:self.fifthStepTitle];
+    [self.mainScrollView addSubview:self.fifthStepDetailLabel];
+     [self.mainScrollView addSubview:self.fifthStepEnterButton];
+     [self.mainScrollView addSubview:self.fifthPreviousButton];
+    
+    _mainScrollView.contentSize = CGSizeMake(__kWidth,CGRectGetMaxY( _fifthStepTitle.frame) +8);
+}
+
+- (void)keyboardDidShow
+{
+    NSLog(@"键盘弹出");
+    _keyBoardlsVisible =YES;
+}
+//  键盘隐藏触发该方法
+- (void)keyboardDidHide
+{
+    NSLog(@"键盘隐藏");
+    _keyBoardlsVisible =NO;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -159,6 +202,20 @@
     }
 }
 
+- (void)changeDiskTypeClick:(UIButton *)sender{    
+    NSBundle *bundle = [NSBundle bundleForClass:[WBInitChangeDiskTypeAlertViewController class]];
+    UIStoryboard *storyboard =
+    [UIStoryboard storyboardWithName:@"WBInitChangeDiskTypeAlertViewController" bundle:bundle];
+    NSString *identifier = @"DialogID";
+    
+    UIViewController *viewController =
+    [storyboard instantiateViewControllerWithIdentifier:identifier];
+    
+    viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
+    
+    [self presentViewController:viewController animated:YES completion:NULL];
+}
+
 - (void)firstStepButtonClick:(UIButton *)sender{
     @weaky(self)
     if (self.diskSelectedArray.count == 0) {
@@ -182,6 +239,9 @@
         @weaky(self)
         [weak_self creatDiskBackOriginModuleAnimateLayout];
         [weak_self creatUserBackOriginModuleAnimateLayout];
+        _thirdStepIconView.frame = CGRectMake(CGRectGetMinX(self.secondStepIconView.frame),CGRectGetMaxY(self.secondStepDetailLabel.frame)+ 24, 20, 28);
+        
+        _thirdStepTitle.frame = CGRectMake(CGRectGetMinX(_secondStepTitle.frame), CGRectGetMinY(_thirdStepIconView.frame),_secondStepTitle.jy_Width, 17);
         
     } completion:^(BOOL finished) {
         
@@ -190,14 +250,46 @@
 
 - (void)secondStepNextButtonClick:(UIButton *)sender{
     if (_userNameTextField.text.length == 0) {
-        [_textFieldControllerUserName setErrorText:WBLocalizedString(@"empty_username", nil) errorAccessibilityValue:nil];;
+        [_textFieldControllerUserName setErrorText:WBLocalizedString(@"empty_username", nil) errorAccessibilityValue:nil];
+        return;
+    }else if (_userNameTextField.text.length > 16){
+//       [_textFieldControllerUserName setErrorText:WBLocalizedString(@"username_exceed_character", nil) errorAccessibilityValue:nil];
+         return;
+    }else if (![NSString isUserName:_userNameTextField.text]){
+        [_textFieldControllerUserName setErrorText:WBLocalizedString(@"username_has_illegal_character", nil) errorAccessibilityValue:nil];
+       
+         return;
+    }
+    
+    if (_passwordTextField.text.length == 0) {
+        [_textFieldControllerPassword setErrorText:WBLocalizedString(@"empty_password", nil) errorAccessibilityValue:nil];
+         return;
+    } if (_passwordTextField.text.length > 30){
+//        [_textFieldControllerPassword setErrorText:WBLocalizedString(@"password_exceed_character", nil) errorAccessibilityValue:nil];
+        return;
+    }else if (![NSString isUserName:_passwordTextField.text]){
+        [_textFieldControllerPassword setErrorText:WBLocalizedString(@"password_has_illegal_character", nil) errorAccessibilityValue:nil];
         return;
     }
+    
+    if (_confirmPasswordTextField.text.length == 0) {
+        [_textFieldControllerConfirmPassword setErrorText:WBLocalizedString(@"empty_confirm_user_password", nil) errorAccessibilityValue:nil];
+        return;
+    } if (![_passwordTextField.text isEqualToString:_confirmPasswordTextField.text]){
+        [_textFieldControllerConfirmPassword setErrorText:WBLocalizedString(@"new_password_inconsistent", nil) errorAccessibilityValue:nil];
+        return;
+    }
+    
+    
     [self.diskSelectedTableView reloadData];
+    if (_keyBoardlsVisible) {
+       [self tapDidTouch];
+    }
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut  animations:^{
         @weaky(self)
         [weak_self creatUserModuleConfirmInstallAnimateLayout];
         [weak_self confirmInstallAnimateLayout];
+        [weak_self fourthAndFifthStepAnimateLayout];
         
     } completion:^(BOOL finished) {
         
@@ -216,106 +308,6 @@
     }];
 }
 
-#warning install
-- (void)installButtonClick:(UIButton *)sender{
-    @weaky(self);
-    NSMutableArray * targetMutableArray = [NSMutableArray arrayWithCapacity:0];
-    [_diskSelectedArray enumerateObjectsUsingBlock:^(WBStationManageBlocksModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
-        [targetMutableArray addObject:model.name];
-    }];
-    NSArray *tagetArray = [NSArray arrayWithArray:targetMutableArray];
-    
-    [[WBStorageVolumesAPI apiWithURLPath:_searchModel.path Target:tagetArray Mode:_diskTypeLabel.text]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        NSLog(@"%@",request.responseJsonObject);
-        NSMutableArray *dataArray = request.responseJsonObject;
-        NSDictionary *dic = dataArray[0];
-        NSString *uuid = dic[@"uuid"];
-        [weak_self installBootRequestWithUUID:uuid];
-        
-    } failure:^(__kindof JYBaseRequest *request) {
-        NSLog(@"%@",request.error);
-        NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
-        if(errorData.length >0){
-            NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
-            [SXLoadingView showProgressHUD:[NSString stringWithFormat:@"error :StorageVolumesAPI--%@",serializedData]];
-        }
-    }];
-}
-
-- (void)installBootRequestWithUUID:(NSString *)uuid{
-    @weaky(self)
-    [[WBStationBootAPI apiWithPath:_searchModel.path RequestMethod:@"PATCH" UUID:uuid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        BootModel *bootModel = [BootModel yy_modelWithJSON:request.responseJsonObject];
-        if (bootModel.current) {
-        if ([bootModel.state isEqualToString:@"started"]) {
-            [weak_self getStationUsers];
-        }else if ([bootModel.state isEqualToString:@"stopping"]){
-            NSLog(@"error --- bootInstall");
-        }else{
-            dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0/*延迟执行时间*/ * NSEC_PER_SEC));
-            
-            dispatch_after(delayTime, dispatch_get_main_queue(), ^{
-                [weak_self installBootRequestWithUUID:uuid];
-            });
-        }
-        }
-    } failure:^(__kindof JYBaseRequest *request) {
-        NSLog(@"%@",request.error);
-        NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
-        if(errorData.length >0){
-            NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
-            [SXLoadingView showProgressHUD:[NSString stringWithFormat:@"error :StationBootAPI --%@",serializedData]];
-        }
-    }];
-}
-
-- (void)getStationUsers{
-    @weaky(self)
-    [[FMAsyncUsersAPI apiWithURLPath:_searchModel.path UserName:_userNameTextField.text Password:_confirmPasswordTextField.text] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        NSArray * userArr = request.responseJsonObject;
-        if (userArr.count >0) {
-            NSDictionary *dic = userArr[0];
-            UserModel * model = [UserModel yy_modelWithJSON:dic];
-            [weak_self getToken:model];
-        }
-       
-    } failure:^(__kindof JYBaseRequest *request) {
-        NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
-        NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
-        [SXLoadingView showProgressHUD:[NSString stringWithFormat:@"error :userAPI --%@",serializedData]];
-    }];
-}
-
-- (void)getToken:(UserModel *)model{
-    NSString * UUID = [NSString stringWithFormat:@"%@:%@",model.uuid,_confirmPasswordTextField.text];
-    NSString * Basic = [UUID base64EncodedString];
-    [WB_AppServices loginWithBasic:Basic userUUID:model.uuid StationName:_searchModel.name UserName:model.username addr:_searchModel.displayPath AvatarURL:model.avatar isWechat:NO completeBlock:^(NSError *error, WBUser *user) {
-        if(error || IsNilString(user.userHome)){
-            if(!user) NSLog(@"GET TOKEN ERROR");
-            else NSLog(@"Get User Home Error");
-            [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"%@ code: %ld", WBLocalizedString(@"login_failed", nil),(long)error.wbCode] duration:1];
-           
-        }else{
-            AppDelegate * app = (AppDelegate *)[UIApplication sharedApplication].delegate ;
-            app.window.rootViewController = nil;
-            [app.window resignKeyWindow];
-            [app.window removeFromSuperview];
-          
-            [MyAppDelegate initRootVC];
-            [SXLoadingView hideProgressHUD];
-
-        }
-    }];
-    
-    
-    [[FMGetJWTAPI apiWithBaseUrl:_searchModel.path UUID:model.uuid Password:_confirmPasswordTextField.text]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        
-    } failure:^(__kindof JYBaseRequest *request) {
-        NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
-        NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
-        [SXLoadingView showProgressHUD:[NSString stringWithFormat:@"error :toAPI --%@",serializedData]];
-    }];
-}
 
 - (void)creatDiskModuleAnimateLayout{
     _firstStepButton.alpha = 0;
@@ -382,6 +374,14 @@
     _secondPreviousButton.alpha = 0;
 }
 
+- (void)fourthAndFifthStepAnimateLayout{
+    _fourthStepIconView.center = CGPointMake(_fourthStepIconView.center.x,  _thirdStepNextButton. center.y + 36 + _thirdStepNextButton.bounds.size.height/2 + _fourthStepIconView.bounds.size.height/2);
+    _fourthStepTitle.center = CGPointMake(_fourthStepTitle.center.x,_fourthStepIconView.center.y - 4);
+    
+    _fifthStepIconView.center = CGPointMake(_fifthStepIconView.center.x,  _fourthStepTitle. center.y + 36 + _fourthStepTitle.bounds.size.height/2 + _fifthStepIconView.bounds.size.height/2);
+    _fifthStepTitle.center = CGPointMake(_fifthStepTitle.center.x,_fifthStepIconView.center.y - 4);
+}
+
 - (void)creatUserModuleConfirmInstallAnimateLayout{
     _secondPreviousButton.alpha = 0;
     _secondStepNextButton.alpha = 0;
@@ -414,11 +414,391 @@
 }
 
 - (void)creatUserModuleBackSecondStepAnimateLayout{
-    
+    [_secondCheckBox setHidden:YES];
+    _secondStepLabel.backgroundColor = COR1;
+    _secondStepDetailLabel.textColor = WarningDetailColor;
+    _secondStepIconView.center = CGPointMake(_secondStepIconView.center.x,  _firstStepDetailLabel. center.y + 36 + _firstStepDetailLabel.bounds.size.height/2 + _secondStepIconView.bounds.size.height/2);
+    _secondStepTitle.font = [UIFont boldSystemFontOfSize:16];
+    _secondStepTitle.center = CGPointMake(_secondStepTitle.center.x,_secondStepIconView.center.y - 4);
+    _secondStepDetailLabel.center = CGPointMake(_secondStepDetailLabel.center.x,_secondStepTitle.center.y + 8  + _secondStepTitle.bounds.size.height/2 + _secondStepDetailLabel.bounds.size.height/2);
+    _userNameTextField.center = CGPointMake(_userNameTextField.center.x,_secondStepDetailLabel.center.y + 8  + _secondStepDetailLabel.bounds.size.height/2 + _userNameTextField.bounds.size.height/2);
+    _userNameTextField.alpha = 1.0f;
+    _passwordTextField.center = CGPointMake(_passwordTextField.center.x,_userNameTextField.center.y + 8  + _userNameTextField.bounds.size.height/2 + _passwordTextField.bounds.size.height/2);
+    _passwordTextField.alpha = 1.0f;
+    _confirmPasswordTextField.center = CGPointMake(_confirmPasswordTextField.center.x,_passwordTextField.center.y + 8  + _passwordTextField.bounds.size.height/2 + _confirmPasswordTextField.bounds.size.height/2);
+    _confirmPasswordTextField.alpha = 1.0f;
+    _secondStepNextButton.center = CGPointMake(_secondStepNextButton.center.x,_confirmPasswordTextField.center.y + 28  + _confirmPasswordTextField.bounds.size.height/2 + _secondStepNextButton.bounds.size.height/2);
+    _secondStepNextButton.alpha = 1.0f;
+    _secondPreviousButton.center = CGPointMake(_secondPreviousButton.center.x,_confirmPasswordTextField.center.y + 28  + _confirmPasswordTextField.bounds.size.height/2 + _secondStepNextButton.bounds.size.height/2);
+    _secondPreviousButton.alpha = 1.0f;
 }
 
 - (void)installModuleBackOriginAnimateLayout{
+    _thirdStepLabel.backgroundColor = IgnoreColor;
+    _thirdStepIconView.frame = CGRectMake(CGRectGetMinX(self.secondStepIconView.frame),CGRectGetMaxY(self.secondPreviousButton.frame)+ 24, 20, 28);
+
+    _thirdStepTitle.frame = CGRectMake(CGRectGetMinX(_secondStepTitle.frame), CGRectGetMinY(_thirdStepIconView.frame),_secondStepTitle.jy_Width, 17);
+    _thirdStepTitle.textColor = OriginTitleColor;
+    _thirdStepTitle.font = [UIFont systemFontOfSize:16];
+
+    _diskSelectedTableView.frame = CGRectMake(CGRectGetMinX(_thirdStepTitle.frame), CGRectGetMaxY(_thirdStepTitle.frame) + 8,__kWidth - CGRectGetMinX(_thirdStepTitle.frame) - 56 ,56 *self.diskSelectedArray.count + 8);
+    _diskSelectedTableView.alpha = 0;
+    _thirdUserNameLabel.frame = CGRectMake(CGRectGetMinX(_thirdStepTitle.frame), CGRectGetMaxY(_diskSelectedTableView.frame) + 8, __kWidth - CGRectGetMinX(_thirdStepTitle.frame) - 16, 14);
+    _thirdUserNameLabel.alpha = 0;
+    _thirdDiskTypeLabel.frame = CGRectMake(CGRectGetMinX(_thirdStepTitle.frame), CGRectGetMaxY(_thirdUserNameLabel.frame) + 8, __kWidth - CGRectGetMinX(_thirdStepTitle.frame) - 16, 14);
+    _thirdDiskTypeLabel.alpha = 0;
+    _thirdStepNextButton.frame = CGRectMake(CGRectGetMinX(_thirdStepTitle.frame),CGRectGetMaxY(_thirdDiskTypeLabel.frame) +28, 86, 36);
+    _thirdStepNextButton.alpha = 0;
+    _thirdPreviousButton.frame = CGRectMake(CGRectGetMaxX(_thirdStepNextButton.frame) + 8,CGRectGetMaxY(_thirdDiskTypeLabel.frame) +28, 86, 36);
+    _thirdPreviousButton.alpha = 0;
+}
+
+- (void)bindWechatAnimiteLayout{
+    _fourthStepTitle.font = [UIFont boldSystemFontOfSize:16];
+     _fourthStepLabel.backgroundColor = COR1;
+    _fourthStepIconView.center = CGPointMake(_fourthStepIconView.center.x,  _thirdStepTitle. center.y + 36 + _thirdStepTitle.bounds.size.height/2 + _fourthStepIconView.bounds.size.height/2);
+    _fourthStepTitle.center = CGPointMake(_fourthStepTitle.center.x,_fourthStepIconView.center.y - 4);
+    _fourthStepDetailLabel.center = CGPointMake(_fourthStepDetailLabel.center.x,_fourthStepTitle.center.y + 8  + _fourthStepTitle.bounds.size.height/2 + _fourthStepDetailLabel.bounds.size.height/2);
+    _fourthStepDetailLabel.alpha = 1.0f;
+    _fourthStepNextButton.center = CGPointMake(_fourthStepNextButton.center.x,  _fourthStepDetailLabel.center.y + 28 + _fourthStepNextButton.bounds.size.height/2 + _fourthStepDetailLabel.bounds.size.height/2);
+    _fourthIgnoreButton.center = CGPointMake(_fourthIgnoreButton.center.x,  _fourthStepDetailLabel.center.y + 28 + _fourthIgnoreButton.bounds.size.height/2 + _fourthStepDetailLabel.bounds.size.height/2);
+    _fourthStepNextButton.alpha = 1.0f;
+    _fourthIgnoreButton.alpha = 1.0f;
+    _fifthStepIconView.center = CGPointMake(_fifthStepIconView.center.x,  _fourthIgnoreButton. center.y + 36 + _fourthIgnoreButton.bounds.size.height/2 + _fifthStepIconView.bounds.size.height/2);
+    _fifthStepTitle.center = CGPointMake(_fifthStepTitle.center.x,_fifthStepIconView.center.y - 4);
+}
+
+- (void)confirmInstallCompleteAnimateLayout{
+    _thirdStepTitle.font = [UIFont systemFontOfSize:16];
+    _diskSelectedTableView.alpha = 0;
+    _thirdUserNameLabel.alpha = 0;
+    _thirdDiskTypeLabel.alpha = 0;
+    _thirdPreviousButton.alpha = 0;
+    _thirdStepNextButton.alpha = 0;
+    [self.thirdCheckBox setHidden:NO];
+}
+
+#warning install
+- (void)installButtonClick:(UIButton *)sender{
+    @weaky(self);
+    [SXLoadingView showProgressHUD:@"正在创建"];
+    NSMutableArray * targetMutableArray = [NSMutableArray arrayWithCapacity:0];
+    [_diskSelectedArray enumerateObjectsUsingBlock:^(WBStationManageBlocksModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
+        [targetMutableArray addObject:model.name];
+    }];
+    NSArray *tagetArray = [NSArray arrayWithArray:targetMutableArray];
+    NSLog(@"%@",tagetArray);
     
+    [[WBStorageVolumesAPI apiWithURLPath:_searchModel.path Target:tagetArray Mode:_diskTypeLabel.text]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.responseJsonObject);
+        NSDictionary *dic= request.responseJsonObject;
+        //        NSDictionary *dic = dataArray[0];
+        NSString *uuid = dic[@"uuid"];
+        [weak_self installBootRequestWithUUID:uuid];
+        
+    } failure:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.error);
+        NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+        if(errorData.length >0){
+            NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+            
+            NSLog(@"%@",serializedData);
+        }
+        [SXLoadingView showProgressHUDText:WBLocalizedString(@"error", nil) duration:1.0f];
+    }];
+}
+
+- (void)installBootRequestWithUUID:(NSString *)uuid{
+    @weaky(self)
+    [[WBStationBootAPI apiWithPath:_searchModel.path RequestMethod:@"PATCH" UUID:uuid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        BootModel *bootModel = [BootModel yy_modelWithJSON:request.responseJsonObject];
+        if (bootModel.current) {
+            if ([bootModel.state isEqualToString:@"started"]) {
+                [weak_self getStationUsers];
+            }else if ([bootModel.state isEqualToString:@"stopping"]){
+                NSLog(@"error --- bootInstall");
+            }else{
+                dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0/*延迟执行时间*/ * NSEC_PER_SEC));
+                
+                dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+                    [weak_self installBootRequestWithUUID:uuid];
+                });
+            }
+        }
+    } failure:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.error);
+        NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+        if(errorData.length >0){
+            NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+            NSLog(@"%@",serializedData);
+            //            [SXLoadingView showProgressHUDText:[NSString stringWithFormat:@"error :StationBootAPI --%@",serializedData] duration:1.0f];
+        }
+        [SXLoadingView showProgressHUDText:WBLocalizedString(@"error", nil) duration:1.0f];
+    }];
+}
+
+- (void)getStationUsers{
+    @weaky(self)
+    [[FMAsyncUsersAPI apiWithURLPath:_searchModel.path UserName:_userNameTextField.text Password:_confirmPasswordTextField.text] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.responseJsonObject);
+        NSDictionary *dic  = request.responseJsonObject;
+        UserModel * model = [UserModel yy_modelWithJSON:dic];
+        [weak_self getToken:model];
+        
+    } failure:^(__kindof JYBaseRequest *request) {
+        NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+        NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+        NSLog(@"%@",serializedData);
+        //        [SXLoadingView showProgressHUDText:[NSString stringWithFormat:@"error :userAPI --%@",serializedData] duration:1.0];
+        [SXLoadingView showProgressHUDText:WBLocalizedString(@"error", nil) duration:1.0f];
+    }];
+}
+
+- (void)getToken:(UserModel *)model{
+    @weaky(self)
+    [[WBgetStationInfoAPI apiWithServicePath:_searchModel.path]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.responseJsonObject);
+        NSDictionary *rootDic =  request.responseJsonObject;
+        NSString *nameString = [rootDic objectForKey:@"name"];
+        if (nameString.length == 0) {
+            nameString = @"闻上盒子";
+        }
+        [weak_self logoinActionWithModel:model StationName:nameString];
+    } failure:^(__kindof JYBaseRequest *request) {
+        NSString *nameString = @"闻上盒子";
+        [weak_self logoinActionWithModel:model StationName:nameString];
+        NSLog(@"%@",request.error);
+        NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+        if(errorData.length >0){
+            NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+            NSLog(@"失败,%@",serializedData);
+        }
+        
+    }];
+    
+}
+
+- (void)logoinActionWithModel:(UserModel *)model StationName:(NSString *)stationName{
+    @weaky(self)
+    self.loginDataDic  = @{@"userModel":model,
+                           @"stationName":stationName
+                           };
+    [SXLoadingView showProgressHUDText:@"创建完成" duration:1.0f];
+    [UIView animateWithDuration:0.3 animations:^{
+        [weak_self confirmInstallCompleteAnimateLayout];
+        [weak_self bindWechatAnimiteLayout];
+    }];
+}
+
+- (void)thirdStepNextButtonClick:(UIButton *)sender{
+    @weaky(self)
+    UserModel *model = [self.loginDataDic valueForKey:@"userModel"];
+    NSString *stationName = [self.loginDataDic valueForKey:@"stationName"];
+    NSString * UUID = [NSString stringWithFormat:@"%@:%@",model.uuid,_confirmPasswordTextField.text];
+    NSString * Basic = [UUID base64EncodedString];
+    AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
+    NSString* urlString = [NSString stringWithFormat:@"http://%@:3000/", _searchModel.displayPath];
+
+    [manager.requestSerializer setValue:[NSString stringWithFormat:@"Basic %@",Basic] forHTTPHeaderField:@"Authorization"];
+    [manager GET:[NSString stringWithFormat:@"%@token",urlString] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSString * token = responseObject[@"token"];
+        WBUser *user = [WB_UserService createUserWithUserUUID:model.uuid];
+        user.userName = model.username;
+        user.localAddr = urlString;
+        user.localToken = token;
+        user.isFirstUser = NO;
+        user.isAdmin = NO;
+        user.isCloudLogin = NO;
+        user.bonjour_name = stationName;
+        user.sn_address = _searchModel.displayPath;
+        if (model.avatar) {
+            user.avaterURL = model.avatar;
+        }
+        [WB_UserService setCurrentUser:user];
+        [WB_UserService synchronizedCurrentUser];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        error.wbCode = 10001;
+       
+    }];
+    
+    [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
+    [[WBStationTicketsAPI apiWithRequestMethodString:@"POST" Type:@"bind"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        [SXLoadingView hideProgressHUD];
+        TicketModel *model = [TicketModel yy_modelWithJSON:request.responseJsonObject];
+        _ticketModel = model;
+        if ([WXApi isWXAppInstalled]) {
+            SendAuthReq *req = [[SendAuthReq alloc] init];
+            req.scope = @"snsapi_userinfo";
+            req.state = @"App";
+            [WXApi sendReq:req];
+        }
+        else {
+            [weak_self setupAlertController];
+        }
+        
+        NSLog(@"%@",request.responseJsonObject);
+    } failure:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.error);
+        [SXLoadingView hideProgressHUD];
+    }];
+}
+
+- (void)setupAlertController{
+    [SXLoadingView showProgressHUDText:WBLocalizedString(@"not_installed_WeChat", nil) duration:1.5];
+}
+
+- (void)weChatCallBackRespCode:(NSString *)code{
+    @weaky(self);
+    [SXLoadingView showProgressHUD:nil];
+    [[WBCloudLoginAPI apiWithCode:code] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        CloudLoginModel * model = [CloudLoginModel yy_modelWithJSON:request.responseJsonObject];
+        [weak_self bindWechtWithCloudToken:model.data.token];
+        //        weak_self.avatarUrl = model.data.user.avatarUrl;
+    } failure:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.error);
+        
+    }];
+    
+}
+
+- (void)bindWechtWithCloudToken:(NSString *)token{
+    @weaky(self);
+    NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
+    RACSubject *subject = [RACSubject subject];
+    [[WBTicketsUserAPI apiWithTicketId:_ticketModel.ticketId WithToken:token]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSDictionary * responseDic =  request.responseJsonObject[@"data"];
+        TicketUserModel *model = [TicketUserModel yy_modelWithDictionary:responseDic];
+        [SXLoadingView hideProgressHUD];
+        [subject sendNext:model];
+        NSLog(@"%@",request.responseJsonObject);
+    } failure:^(__kindof JYBaseRequest *request) {
+        [SXLoadingView hideProgressHUD];
+        NSLog(@"%@",request.error);
+    }];
+    
+    [subject subscribeNext:^(id  _Nullable x) {
+        TicketUserModel *userModel = x;
+        NSString *alertActionTitleString = WBLocalizedString(@"bind", nil);
+        NSString *alertTitleString = WBLocalizedString(@"confirm_binding_WeChat", nil);
+        UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:alertTitleString message:WBLocalizedString(@"binding_WeChat?", nil) preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancle = [UIAlertAction actionWithTitle:cancelTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            NSLog(@"点击了取消按钮");
+            
+            [weak_self bindWechatLastActionWith:userModel IsBind:NO];
+        }];
+        
+        UIAlertAction *confirm = [UIAlertAction actionWithTitle:alertActionTitleString style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            NSLog(@"点击了确定按钮");
+            [SXLoadingView showProgressHUD:WBLocalizedString(@"binding", nil)];
+            [weak_self bindWechatLastActionWith:userModel IsBind:YES];
+            
+        }];
+        [alertVc addAction:cancle];
+        [alertVc addAction:confirm];
+        [self presentViewController:alertVc animated:YES completion:^{
+        }];
+        
+    }];
+}
+
+- (void)bindWechatLastActionWith:(TicketUserModel *)model IsBind:(BOOL)isBind{
+    @weaky(self)
+    [[WBStationTicketsWechatAPI apiWithTicketId:_ticketModel.ticketId Guid:model.userId Isbind:isBind] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        [SXLoadingView hideProgressHUD];
+        
+        WBUser *user = WB_UserService.currentUser;
+        user.avaterURL = model.avatarUrl;
+        user.isBindWechat = YES;
+        [WB_UserService setCurrentUser:user];
+        [WB_UserService synchronizedCurrentUser];
+        if (isBind) {
+            [SXLoadingView showProgressHUDText:WBLocalizedString(@"success", nil) duration:1.5];
+            
+#warning Do something for last Action
+            
+           [weak_self animiteForLastAction];
+        }
+    } failure:^(__kindof JYBaseRequest *request) {
+        [SXLoadingView hideProgressHUD];
+        NSLog(@"%@",request.error);
+        NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+        if(errorData.length>0){
+            NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+            NSLog(@"%@",serializedData);
+            [SXLoadingView showProgressHUDText:[NSString stringWithFormat:@"error，reason：%@",serializedData[@"message"]] duration:1.5];
+        }
+    }];
+}
+
+- (void)fourthIgnoreButtonClick:(UIButton *)sender{
+    [self animiteForLastAction];
+}
+
+- (void)animiteForLastAction{
+    [UIView animateWithDuration:0.3f animations:^{
+        [_fourthCheckBox setHidden:NO];
+        _fourthStepTitle.font = [UIFont systemFontOfSize:16];
+        _fourthStepDetailLabel.textColor = IgnoreColor;
+        _fourthIgnoreButton.alpha = 0;
+        _fourthStepNextButton.alpha = 0;
+        
+        _fifthStepLabel.backgroundColor = COR1;
+        _fifthStepIconView.center = CGPointMake(_fifthStepIconView.center.x,  _fourthStepDetailLabel. center.y + 36 + _fourthStepDetailLabel.bounds.size.height/2 + _fifthStepIconView.bounds.size.height/2);
+        _fifthStepTitle.center = CGPointMake(_fifthStepTitle.center.x,_fifthStepIconView.center.y - 4);
+        _fifthStepTitle.font = [UIFont boldSystemFontOfSize:16];
+        _fifthStepDetailLabel.center = CGPointMake(_fifthStepDetailLabel.center.x,_fifthStepTitle.center.y + 8  + _fifthStepTitle.bounds.size.height/2 + _fifthStepDetailLabel.bounds.size.height/2);
+        _fifthStepEnterButton.center = CGPointMake(_fifthStepEnterButton.center.x,  _fifthStepDetailLabel.center.y + 28 + _fifthStepEnterButton.bounds.size.height/2 + _fifthStepDetailLabel.bounds.size.height/2);
+        _fifthPreviousButton.center = CGPointMake(_fifthPreviousButton.center.x,  _fifthStepDetailLabel.center.y + 28 + _fifthPreviousButton.bounds.size.height/2 + _fifthStepDetailLabel.bounds.size.height/2);
+        _fifthStepDetailLabel.alpha = 1.0f;
+        _fifthStepEnterButton.alpha = 1.0f;
+        _fifthPreviousButton.alpha = 1.0f;
+    }];
+
+}
+
+- (void)fifthStepEnterButtonClick:(UIButton *)sender{
+    [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
+    if (self.loginDataDic) {
+    UserModel *model = [self.loginDataDic valueForKey:@"userModel"];
+    NSString *stationName = [self.loginDataDic valueForKey:@"stationName"];
+    NSString * UUID = [NSString stringWithFormat:@"%@:%@",model.uuid,_confirmPasswordTextField.text];
+    NSString * Basic = [UUID base64EncodedString];
+    [WB_AppServices loginWithBasic:Basic userUUID:model.uuid StationName:stationName UserName:model.username addr:_searchModel.displayPath AvatarURL:model.avatar isWechat:NO completeBlock:^(NSError *error, WBUser *user) {
+        if(error || IsNilString(user.userHome)){
+            if(!user) NSLog(@"GET TOKEN ERROR");
+            else NSLog(@"Get User Home Error");
+            [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"%@ code: %ld", WBLocalizedString(@"login_failed", nil),(long)error.wbCode] duration:1];
+            
+        }else{
+            AppDelegate * app = (AppDelegate *)[UIApplication sharedApplication].delegate ;
+            app.window.rootViewController = nil;
+            [app.window resignKeyWindow];
+            [app.window removeFromSuperview];
+            
+            [MyAppDelegate initRootVC];
+            [SXLoadingView hideProgressHUD];
+        }
+    }];
+    }
+}
+
+- (void)fifthPreviousButtonClick:(UIButton *)sender{
+    [UIView animateWithDuration:0.3 animations:^{
+        [_fourthCheckBox setHidden:YES];
+        _fourthStepNextButton.alpha = 1.0f;
+        _fourthIgnoreButton.alpha = 1.0f;
+        _fourthStepTitle.font = [UIFont boldSystemFontOfSize:16];
+        _fourthStepDetailLabel.textColor = WarningDetailColor;
+        
+        
+        _fifthStepDetailLabel.alpha = 0;
+        _fifthPreviousButton.alpha = 0;
+        _fifthStepEnterButton.alpha = 0;
+        _fifthStepTitle.font = [UIFont systemFontOfSize:16];
+        _fifthStepLabel.backgroundColor = IgnoreColor;
+        _fifthStepIconView.frame = CGRectMake(CGRectGetMinX(self.fourthStepIconView.frame),CGRectGetMaxY(self.fourthStepNextButton.frame)+ 24, 20, 28);
+        _fifthStepTitle.frame = CGRectMake(CGRectGetMinX(_fourthStepTitle.frame), CGRectGetMinY(_fifthStepIconView.frame),_fourthStepTitle.jy_Width, 17);
+    }];
 }
 
 #pragma tableViewdataSouce
@@ -510,6 +890,19 @@
 
 // All the usual UITextFieldDelegate methods work with MDCTextField
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (textField == _userNameTextField) {
+        if (textField.text.length>0) {
+            [_textFieldControllerUserName setErrorText:nil errorAccessibilityValue:nil];
+        }
+    }else if (textField == _passwordTextField){
+        if (textField.text.length>0) {
+            [_textFieldControllerPassword setErrorText:nil errorAccessibilityValue:nil];
+        }
+    }else if (textField == _confirmPasswordTextField){
+        if (textField.text.length>0) {
+            [_textFieldControllerConfirmPassword setErrorText:nil errorAccessibilityValue:nil];
+        }
+    }
    
    
     return YES;
@@ -680,6 +1073,8 @@
         _diskTypeChangeButton = [[UIButton alloc]initWithFrame:CGRectMake(__kWidth - 56 - 24,CGRectGetMinY(_diskTypeTitle.frame) + 16/2 , 24, 24)];
         [_diskTypeChangeButton setImage:[UIImage imageNamed:@"ic_mode_edit_18pt"] forState:UIControlStateNormal];
         _diskTypeChangeButton.enabled = NO;
+        [_diskTypeChangeButton addTarget:self action:@selector(changeDiskTypeClick:) forControlEvents:UIControlEventTouchUpInside];
+        [_diskTypeChangeButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
 //        _diskTypeChangeButton.backgroundColor = [UIColor cyanColor];
     }
     return _diskTypeChangeButton;
@@ -906,6 +1301,7 @@
         _thirdStepIconView = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.secondStepIconView.frame),CGRectGetMaxY(self.secondStepDetailLabel.frame)+ 24, 20, 28)];
         _thirdStepIconView.backgroundColor = [UIColor whiteColor];
         [_thirdStepIconView addSubview:self.thirdStepLabel];
+        [_thirdStepIconView addSubview:self.thirdCheckBox];
     }
     return _thirdStepIconView;
 }
@@ -992,6 +1388,199 @@
     
 }
 
+- (BEMCheckBox *)thirdCheckBox{
+    if (!_thirdCheckBox) {
+        _thirdCheckBox = [[BEMCheckBox alloc]initWithFrame:CGRectMake(0, 0, 20, 20)];
+        _thirdCheckBox.onFillColor = COR1;
+        _thirdCheckBox.onTintColor = COR1;
+        _thirdCheckBox.onCheckColor = [UIColor whiteColor];
+        [_thirdCheckBox setOn:YES];
+        [_thirdCheckBox setHidden:YES];
+    }
+    return _thirdCheckBox;
+}
+
+- (UILabel *)fourthStepLabel{
+    if (!_fourthStepLabel) {
+        _fourthStepLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 22, 22)];
+        _fourthStepLabel.layer.cornerRadius = 22/2;
+        _fourthStepLabel.layer.masksToBounds = YES;
+        _fourthStepLabel.textColor = [UIColor whiteColor];
+        _fourthStepLabel.text = @"4";
+        _fourthStepLabel.textAlignment = NSTextAlignmentCenter;
+        _fourthStepLabel.font = [UIFont systemFontOfSize:12];
+        _fourthStepLabel.backgroundColor = IgnoreColor;
+    }
+    return _fourthStepLabel;
+}
+
+- (UIView *)fourthStepIconView{
+    if (!_fourthStepIconView) {
+        _fourthStepIconView = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.thirdStepIconView.frame),CGRectGetMaxY(self.thirdStepTitle.frame)+ 24, 20, 28)];
+        _fourthStepIconView.backgroundColor = [UIColor whiteColor];
+        [_fourthStepIconView addSubview:self.fourthStepLabel];
+        [_fourthStepIconView addSubview:self.fourthCheckBox];
+    }
+    return _fourthStepIconView;
+}
+
+- (UILabel *)fourthStepTitle{
+    if (!_fourthStepTitle) {
+        _fourthStepTitle = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(_thirdStepTitle.frame), CGRectGetMinY(_fourthStepIconView.frame),_thirdStepTitle.jy_Width, 17)];
+        _fourthStepTitle.textColor = OriginTitleColor;
+        _fourthStepTitle.text = @"绑定微信用户";
+        _fourthStepTitle.font = [UIFont systemFontOfSize:16];
+    }
+    return _fourthStepTitle;
+}
+
+- (UILabel *)fourthStepDetailLabel{
+    if (!_fourthStepDetailLabel) {
+        _fourthStepDetailLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(_fourthStepTitle.frame), CGRectGetMaxY(_fourthStepTitle.frame) + 8,__kWidth - CGRectGetMinX(_fourthStepTitle.frame) -32 , 30)];
+        _fourthStepDetailLabel.textColor = WarningDetailColor;
+        _fourthStepDetailLabel.numberOfLines = 0;
+        //        _secondStepDetailLabel.adjustsFontSizeToFitWidth = YES;
+        _fourthStepDetailLabel.font = [UIFont systemFontOfSize:12];
+        _fourthStepDetailLabel.text = @"您可以选择现在绑定微信，成功绑定后就可以通过微信扫码，远程登录设备";
+        _fourthStepDetailLabel.alpha = 0;
+    }
+    return _fourthStepDetailLabel;
+}
+
+- (BEMCheckBox *)fourthCheckBox{
+    if (!_fourthCheckBox) {
+        _fourthCheckBox = [[BEMCheckBox alloc]initWithFrame:CGRectMake(0, 0, 20, 20)];
+        _fourthCheckBox.onFillColor = COR1;
+        _fourthCheckBox.onTintColor = COR1;
+        _fourthCheckBox.onCheckColor = [UIColor whiteColor];
+        [_fourthCheckBox setOn:YES];
+        [_fourthCheckBox setHidden:YES];
+    }
+    return _fourthCheckBox;
+}
+
+
+- (MDCButton *)fourthStepNextButton{
+    if (!_fourthStepNextButton) {
+        _fourthStepNextButton = [[MDCButton alloc]initWithFrame:CGRectMake(CGRectGetMinX(_fourthStepDetailLabel.frame),CGRectGetMaxY(_fourthStepDetailLabel.frame) +28, 86, 36)];
+        [_fourthStepNextButton setTitle:@"下一步" forState:UIControlStateNormal];
+        [_fourthStepNextButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _fourthStepNextButton.titleLabel.font = [UIFont systemFontOfSize:14];
+        _fourthStepNextButton.backgroundColor = COR1;
+        _fourthStepNextButton.layer.masksToBounds = YES;
+        _fourthStepNextButton.layer.cornerRadius = 2;
+        //        _fourthStepNextButton.contentVerticalAlignment = NSTextAlignmentCenter;
+        [_fourthStepNextButton addTarget:self action:@selector(thirdStepNextButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        _fourthStepNextButton.alpha = 0;
+        
+    }
+    return _fourthStepNextButton;
+}
+
+- (MDCButton *)fourthIgnoreButton{
+    if (!_fourthIgnoreButton) {
+        _fourthIgnoreButton = [[MDCButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_fourthStepNextButton.frame) + 8,CGRectGetMaxY(_fourthStepDetailLabel.frame) +28, 86, 36)];
+        [_fourthIgnoreButton setTitle:@"忽略" forState:UIControlStateNormal];
+        [_fourthIgnoreButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+        _fourthIgnoreButton.titleLabel.font = [UIFont systemFontOfSize:14];
+        _fourthIgnoreButton.backgroundColor = [UIColor whiteColor];
+        _fourthIgnoreButton.layer.masksToBounds = YES;
+        _fourthIgnoreButton.layer.cornerRadius = 2;
+        //        _secondPreviousButton.contentVerticalAlignment = NSTextAlignmentCenter;
+        [_fourthIgnoreButton addTarget:self action:@selector(fourthIgnoreButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        _fourthIgnoreButton.alpha = 0;
+    }
+    return _fourthIgnoreButton;
+}
+
+
+- (UILabel *)fifthStepLabel{
+    if (!_fifthStepLabel) {
+        _fifthStepLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 22, 22)];
+        _fifthStepLabel.layer.cornerRadius = 22/2;
+        _fifthStepLabel.layer.masksToBounds = YES;
+        _fifthStepLabel.textColor = [UIColor whiteColor];
+        _fifthStepLabel.text = @"5";
+        _fifthStepLabel.textAlignment = NSTextAlignmentCenter;
+        _fifthStepLabel.font = [UIFont systemFontOfSize:12];
+        _fifthStepLabel.backgroundColor = IgnoreColor;
+    }
+    return _fifthStepLabel;
+}
+
+- (UIView *)fifthStepIconView{
+    if (!_fifthStepIconView) {
+        _fifthStepIconView = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.fourthStepIconView.frame),CGRectGetMaxY(self.fourthStepTitle.frame)+ 24, 20, 28)];
+        _fifthStepIconView.backgroundColor = [UIColor whiteColor];
+        [_fifthStepIconView addSubview:self.fifthStepLabel];
+    }
+    return _fifthStepIconView;
+}
+
+- (UILabel *)fifthStepTitle{
+    if (!_fifthStepTitle) {
+        _fifthStepTitle = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(_fourthStepTitle.frame), CGRectGetMinY(_fifthStepIconView.frame),_fourthStepTitle.jy_Width, 17)];
+        _fifthStepTitle.textColor = OriginTitleColor;
+        _fifthStepTitle.text = @"进入系统";
+        _fifthStepTitle.font = [UIFont systemFontOfSize:16];
+    }
+    return _fifthStepTitle;
+}
+
+- (UILabel *)fifthStepDetailLabel{
+    if (!_fifthStepDetailLabel) {
+        _fifthStepDetailLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(_fifthStepTitle.frame), CGRectGetMaxY(_fifthStepTitle.frame) + 8,__kWidth - CGRectGetMinX(_fifthStepTitle.frame) -32 , 30)];
+        _fifthStepDetailLabel.textColor = WarningDetailColor;
+        _fifthStepDetailLabel.numberOfLines = 0;
+        //        _secondStepDetailLabel.adjustsFontSizeToFitWidth = YES;
+        _fifthStepDetailLabel.font = [UIFont systemFontOfSize:12];
+        _fifthStepDetailLabel.text = @"您已成功创建了WISNUC系统";
+        _fifthStepDetailLabel.alpha = 0;
+    }
+    return _fifthStepDetailLabel;
+}
+
+
+- (MDCButton *)fifthStepEnterButton{
+    if (!_fifthStepEnterButton) {
+        _fifthStepEnterButton = [[MDCButton alloc]initWithFrame:CGRectMake(CGRectGetMinX(_fifthStepDetailLabel.frame),CGRectGetMaxY(_fifthStepDetailLabel.frame) +28, 86, 36)];
+        [_fifthStepEnterButton setTitle:@"进入" forState:UIControlStateNormal];
+        [_fifthStepEnterButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _fifthStepEnterButton.titleLabel.font = [UIFont systemFontOfSize:14];
+        _fifthStepEnterButton.backgroundColor = COR1;
+        _fifthStepEnterButton.layer.masksToBounds = YES;
+        _fifthStepEnterButton.layer.cornerRadius = 2;
+        //        _fourthStepNextButton.contentVerticalAlignment = NSTextAlignmentCenter;
+        [_fifthStepEnterButton addTarget:self action:@selector(fifthStepEnterButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        _fifthStepEnterButton.alpha = 0;
+        
+    }
+    return _fifthStepEnterButton;
+}
+
+- (MDCButton *)fifthPreviousButton{
+    if (!_fifthPreviousButton) {
+        _fifthPreviousButton = [[MDCButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_fifthStepEnterButton.frame) + 8,CGRectGetMaxY(_fifthStepDetailLabel.frame) +28, 86, 36)];
+        [_fifthPreviousButton setTitle:@"上一步" forState:UIControlStateNormal];
+        [_fifthPreviousButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+        _fifthPreviousButton.titleLabel.font = [UIFont systemFontOfSize:14];
+        _fifthPreviousButton.backgroundColor = [UIColor whiteColor];
+        _fifthPreviousButton.layer.masksToBounds = YES;
+        _fifthPreviousButton.layer.cornerRadius = 2;
+        //        _secondPreviousButton.contentVerticalAlignment = NSTextAlignmentCenter;
+        [_fifthPreviousButton addTarget:self action:@selector(fifthPreviousButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        _fifthPreviousButton.alpha = 0;
+    }
+    return _fifthPreviousButton;
+}
+
+-  (NSDictionary *)loginDataDic{
+    if (!_loginDataDic) {
+        _loginDataDic = [[NSDictionary alloc]init];
+    }
+    return _loginDataDic;
+}
+
 - (void) tapDidTouch {
 //    [self.view endEditing:YES];
     NSLog(@"touchesBegan");
@@ -1010,4 +1599,8 @@
     
     [UIView commitAnimations];
 }
+
+
+
 @end
+

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--WBInitChangeDiskTypeAlertViewController-->
+        <scene sceneID="9Kx-IZ-7T9">
+            <objects>
+                <viewController storyboardIdentifier="DialogID" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MyR-9H-xq2" userLabel="WBInitChangeDiskTypeAlertViewController" customClass="WBInitChangeDiskTypeAlertViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gD2-eo-W56"/>
+                        <viewControllerLayoutGuide type="bottom" id="o2n-Ce-JVg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fYk-4o-cpC">
+                        <rect key="frame" x="0.0" y="0.0" width="240" height="216"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="磁盘卷模式" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NU7-Ym-ZjW">
+                                <rect key="frame" x="16" y="16" width="208" height="20.5"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BDC-As-hSJ">
+                                <rect key="frame" x="193" y="178" width="31" height="30"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="确定">
+                                    <color key="titleColor" red="0.01176470588" green="0.66274509800000003" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="sureButtonClick:" destination="MyR-9H-xq2" eventType="touchUpInside" id="L5r-Wx-tgZ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HL4-CY-wvi">
+                                <rect key="frame" x="130" y="178" width="31" height="30"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="取消">
+                                    <color key="titleColor" red="0.01176470588" green="0.66274509800000003" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="dismissButtonClick:" destination="MyR-9H-xq2" eventType="touchUpInside" id="bZ7-Uj-LE0"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4df-W1-IKx">
+                                <rect key="frame" x="16" y="60.5" width="24" height="24"/>
+                                <state key="normal" image="ic_radio_button_unchecked.png"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ABX-Cu-nov">
+                                <rect key="frame" x="16" y="100.5" width="24" height="24"/>
+                                <state key="normal" image="ic_radio_button_unchecked.png"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="single 模式" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iiH-Qy-eTD">
+                                <rect key="frame" x="61" y="64" width="75" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="0.19563802080000001" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="raid1 模式" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yf7-hR-Lwg">
+                                <rect key="frame" x="64" y="143.5" width="67.5" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="0.19563802080000001" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AXi-nq-CEw">
+                                <rect key="frame" x="16" y="140.5" width="24" height="24"/>
+                                <state key="normal" image="ic_radio_button_unchecked.png"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="raid0 模式" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5sx-mJ-Son">
+                                <rect key="frame" x="63.5" y="104" width="70" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="0.19563802080000001" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="5sx-mJ-Son" firstAttribute="centerY" secondItem="ABX-Cu-nov" secondAttribute="centerY" id="1sc-1e-9ge"/>
+                            <constraint firstItem="NU7-Ym-ZjW" firstAttribute="leading" secondItem="fYk-4o-cpC" secondAttribute="leading" constant="16" id="6l0-0G-2C8"/>
+                            <constraint firstAttribute="trailing" secondItem="BDC-As-hSJ" secondAttribute="trailing" constant="16" id="7gK-3p-sFf"/>
+                            <constraint firstItem="yf7-hR-Lwg" firstAttribute="centerY" secondItem="AXi-nq-CEw" secondAttribute="centerY" id="DQv-Lr-yvY"/>
+                            <constraint firstItem="BDC-As-hSJ" firstAttribute="leading" secondItem="HL4-CY-wvi" secondAttribute="trailing" constant="32" id="ExM-aQ-vcB"/>
+                            <constraint firstItem="AXi-nq-CEw" firstAttribute="top" secondItem="ABX-Cu-nov" secondAttribute="bottom" constant="16" id="GGA-8q-6ff"/>
+                            <constraint firstItem="AXi-nq-CEw" firstAttribute="leading" secondItem="4df-W1-IKx" secondAttribute="leading" id="HwR-Zs-UrT"/>
+                            <constraint firstItem="iiH-Qy-eTD" firstAttribute="centerY" secondItem="4df-W1-IKx" secondAttribute="centerY" id="Hxx-ER-bmx"/>
+                            <constraint firstItem="yf7-hR-Lwg" firstAttribute="centerX" secondItem="iiH-Qy-eTD" secondAttribute="centerX" id="Pxe-ky-oHG"/>
+                            <constraint firstItem="ABX-Cu-nov" firstAttribute="top" secondItem="4df-W1-IKx" secondAttribute="bottom" constant="16" id="RF6-hd-YHl"/>
+                            <constraint firstAttribute="trailing" secondItem="NU7-Ym-ZjW" secondAttribute="trailing" constant="16" id="Vpe-Jw-dwl"/>
+                            <constraint firstItem="4df-W1-IKx" firstAttribute="top" secondItem="NU7-Ym-ZjW" secondAttribute="bottom" constant="24" id="WBC-Nb-Rul"/>
+                            <constraint firstItem="5sx-mJ-Son" firstAttribute="centerX" secondItem="iiH-Qy-eTD" secondAttribute="centerX" id="giQ-xN-5fL"/>
+                            <constraint firstItem="4df-W1-IKx" firstAttribute="leading" secondItem="fYk-4o-cpC" secondAttribute="leading" constant="16" id="jKU-X2-PIu"/>
+                            <constraint firstItem="o2n-Ce-JVg" firstAttribute="top" secondItem="HL4-CY-wvi" secondAttribute="bottom" constant="8" id="ri7-Xb-vlB"/>
+                            <constraint firstItem="NU7-Ym-ZjW" firstAttribute="top" secondItem="gD2-eo-W56" secondAttribute="bottom" constant="16" id="uuR-7S-uRg"/>
+                            <constraint firstItem="ABX-Cu-nov" firstAttribute="leading" secondItem="4df-W1-IKx" secondAttribute="leading" id="wTe-5z-079"/>
+                            <constraint firstItem="yf7-hR-Lwg" firstAttribute="leading" secondItem="AXi-nq-CEw" secondAttribute="trailing" constant="24" id="x5A-hV-fjr"/>
+                            <constraint firstItem="o2n-Ce-JVg" firstAttribute="top" secondItem="BDC-As-hSJ" secondAttribute="bottom" constant="8" id="yuN-UQ-3mL"/>
+                        </constraints>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="240" height="216"/>
+                    <size key="freeformSize" width="240" height="216"/>
+                    <connections>
+                        <outlet property="agreeButton" destination="BDC-As-hSJ" id="7bU-iW-MNc"/>
+                        <outlet property="dismissButton" destination="HL4-CY-wvi" id="S8h-Ek-xKM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FzF-Jt-GdZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="56" y="171.81409295352324"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="ic_radio_button_unchecked.png" width="24" height="24"/>
+    </resources>
+</document>

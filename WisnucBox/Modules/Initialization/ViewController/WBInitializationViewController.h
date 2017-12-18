@@ -11,4 +11,5 @@
 
 @interface WBInitializationViewController : FABaseVC
 @property (nonatomic) FMSerachService *searchModel;
+- (void)weChatCallBackRespCode:(NSString *)code;
 @end

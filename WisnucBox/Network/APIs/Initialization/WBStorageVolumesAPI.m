@@ -28,7 +28,7 @@
 
 - (id)requestArgument{
     NSDictionary *dic = @{
-        @"taget":_target,
+        @"target":_target,
         @"mode":_mode
     };
     return dic;

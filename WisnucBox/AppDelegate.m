@@ -15,6 +15,7 @@
 #import "CSUploadHelper.h"
 #import "LocalDownloadViewController.h"
 #import "WBLoginViewController.h"
+#import "WBInitializationViewController.h"
 
 @interface AppDelegate () <WXApiDelegate>
 @property (nonatomic,strong) FMLoginViewController *loginController;
@@ -220,6 +221,10 @@
             }else  if([[UIViewController getCurrentVC] isKindOfClass:[FMUserEditVC class]]){
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [(FMUserEditVC *)[UIViewController getCurrentVC] weChatCallBackRespCode:aresp.code];
+                });
+            }else  if([[UIViewController getCurrentVC] isKindOfClass:[WBInitializationViewController class]]){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [(WBInitializationViewController *)[UIViewController getCurrentVC] weChatCallBackRespCode:aresp.code];
                 });
             }else{
                 [SXLoadingView hideProgressHUD];

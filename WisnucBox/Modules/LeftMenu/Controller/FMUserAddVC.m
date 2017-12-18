@@ -78,9 +78,9 @@
     }
     if (self.userNameTF.text.length<=0)
         [SXLoadingView  showProgressHUDText:WBLocalizedString(@"empty_username", nil) duration:1];
-    else if(self.userNameTF.text.length >= 16)
+    else if(self.userNameTF.text.length > 16)
      [SXLoadingView  showProgressHUDText:WBLocalizedString(@"username_exceed_character", nil) duration:1];
-    else if(self.passwordTF.text.length >= 30)
+    else if(self.passwordTF.text.length > 30)
      [SXLoadingView  showProgressHUDText:WBLocalizedString(@"password_exceed_character", nil) duration:1];
     else if(!IsEquallString(self.passwordTF.text, self.doubleCheckTF.text))
      [SXLoadingView  showProgressHUDText:WBLocalizedString(@"new_password_inconsistent",nil) duration:1];
