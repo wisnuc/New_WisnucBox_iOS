@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -47,13 +47,19 @@
                                     <action selector="dismissButtonClick:" destination="MyR-9H-xq2" eventType="touchUpInside" id="bZ7-Uj-LE0"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4df-W1-IKx">
+                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4df-W1-IKx">
                                 <rect key="frame" x="16" y="60.5" width="24" height="24"/>
                                 <state key="normal" image="ic_radio_button_unchecked.png"/>
+                                <connections>
+                                    <action selector="singleRadioButtonClick:" destination="MyR-9H-xq2" eventType="touchUpInside" id="N7F-ZE-qEk"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ABX-Cu-nov">
                                 <rect key="frame" x="16" y="100.5" width="24" height="24"/>
                                 <state key="normal" image="ic_radio_button_unchecked.png"/>
+                                <connections>
+                                    <action selector="raid0RadioButtonClick:" destination="MyR-9H-xq2" eventType="touchUpInside" id="rM1-3y-IjB"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="single 模式" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iiH-Qy-eTD">
                                 <rect key="frame" x="61" y="64" width="75" height="18"/>
@@ -70,6 +76,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AXi-nq-CEw">
                                 <rect key="frame" x="16" y="140.5" width="24" height="24"/>
                                 <state key="normal" image="ic_radio_button_unchecked.png"/>
+                                <connections>
+                                    <action selector="raid1RadioButtonClick:" destination="MyR-9H-xq2" eventType="touchUpInside" id="hND-Vq-4aa"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="raid0 模式" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5sx-mJ-Son">
                                 <rect key="frame" x="63.5" y="104" width="70" height="18"/>
@@ -106,6 +115,9 @@
                     <connections>
                         <outlet property="agreeButton" destination="BDC-As-hSJ" id="7bU-iW-MNc"/>
                         <outlet property="dismissButton" destination="HL4-CY-wvi" id="S8h-Ek-xKM"/>
+                        <outlet property="raid0RadioButton" destination="ABX-Cu-nov" id="XAv-E4-rez"/>
+                        <outlet property="raid1RadioButton" destination="AXi-nq-CEw" id="fJS-f6-Jqo"/>
+                        <outlet property="singleRadioButton" destination="4df-W1-IKx" id="N9R-ha-Esz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FzF-Jt-GdZ" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface WBInitChangeDiskTypeAlertViewController : UIViewController
-
+@property (nonatomic)NSString *typeString;
 @end

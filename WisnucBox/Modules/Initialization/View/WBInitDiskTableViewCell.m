@@ -29,6 +29,11 @@
         _cellCheckBoxBlock(checkBox);
     }
 }
+- (IBAction)detailButtonClick:(UIButton *)sender {
+    if (self.cellDetailButtonBlock) {
+        _cellDetailButtonBlock(sender);
+    }
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

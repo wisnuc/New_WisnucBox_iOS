@@ -25,6 +25,7 @@
 #import "WBTicketsUserAPI.h"
 #import "WBStationTicketsWechatAPI.h"
 #import "FMUserEditVC.h"
+#import "WBInitDiskDetailAlertViewController.h"
 
 #define WarningDetailColor UICOLOR_RGB(0xf44336)
 #define IgnoreColor RGBACOLOR(0, 0, 0, 0.54f)
@@ -210,10 +211,11 @@
     
     UIViewController *viewController =
     [storyboard instantiateViewControllerWithIdentifier:identifier];
-    
+   
     viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
-    
+    viewController.title = _diskTypeLabel.text ;
     [self presentViewController:viewController animated:YES completion:NULL];
+
 }
 
 - (void)firstStepButtonClick:(UIButton *)sender{
@@ -402,7 +404,15 @@
     _diskSelectedTableView.frame = CGRectMake(CGRectGetMinX(_thirdStepTitle.frame), CGRectGetMaxY(_thirdStepTitle.frame) + 8,__kWidth - CGRectGetMinX(_thirdStepTitle.frame) - 56 ,56 *self.diskSelectedArray.count + 8);
     _diskSelectedTableView.alpha = 1;
     _thirdUserNameLabel.text = [NSString stringWithFormat:@"用户名：%@",_userNameTextField.text];
-    _thirdDiskTypeLabel.text = [NSString stringWithFormat:@"模式：%@",@"single"];
+    NSString *typeString ;
+    if ([_diskTypeLabel.text isEqualToString:@"single模式"]) {
+        typeString = @"single";
+    }else  if ([_diskTypeLabel.text isEqualToString:@"raid0模式"]) {
+        typeString = @"raid0";
+    }else  if ([_diskTypeLabel.text isEqualToString:@"raid1模式"]) {
+        typeString = @"raid1";
+    }
+    _thirdDiskTypeLabel.text = [NSString stringWithFormat:@"模式：%@",typeString];
     _thirdUserNameLabel.center = CGPointMake(_thirdUserNameLabel.center.x,  _diskSelectedTableView.center.y + 8 + _thirdUserNameLabel.bounds.size.height/2 + _diskSelectedTableView.bounds.size.height/2);
     _thirdDiskTypeLabel.center = CGPointMake(_thirdDiskTypeLabel.center.x,  _thirdUserNameLabel.center.y + 8 + _thirdUserNameLabel.bounds.size.height/2 + _thirdDiskTypeLabel.bounds.size.height/2);
     _thirdUserNameLabel.alpha = 1.0f;
@@ -488,8 +498,15 @@
     }];
     NSArray *tagetArray = [NSArray arrayWithArray:targetMutableArray];
     NSLog(@"%@",tagetArray);
-    
-    [[WBStorageVolumesAPI apiWithURLPath:_searchModel.path Target:tagetArray Mode:_diskTypeLabel.text]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+    NSString *typeString ;
+    if ([_diskTypeLabel.text isEqualToString:@"single模式"]) {
+        typeString = @"single";
+    }else  if ([_diskTypeLabel.text isEqualToString:@"raid0模式"]) {
+        typeString = @"raid0";
+    }else  if ([_diskTypeLabel.text isEqualToString:@"raid1模式"]) {
+        typeString = @"raid1";
+    }
+    [[WBStorageVolumesAPI apiWithURLPath:_searchModel.path Target:tagetArray Mode:typeString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
         NSDictionary *dic= request.responseJsonObject;
         //        NSDictionary *dic = dataArray[0];
@@ -590,8 +607,8 @@
     }];
 }
 
-- (void)thirdStepNextButtonClick:(UIButton *)sender{
-    @weaky(self)
+- (void)fourthStepNextButtonClick:(UIButton *)sender{
+   @weaky(self)
     UserModel *model = [self.loginDataDic valueForKey:@"userModel"];
     NSString *stationName = [self.loginDataDic valueForKey:@"stationName"];
     NSString * UUID = [NSString stringWithFormat:@"%@:%@",model.uuid,_confirmPasswordTextField.text];
@@ -616,11 +633,18 @@
         }
         [WB_UserService setCurrentUser:user];
         [WB_UserService synchronizedCurrentUser];
+        [weak_self requestWechat];
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         error.wbCode = 10001;
        
     }];
     
+    
+}
+
+- (void)requestWechat{
+     @weaky(self)
     [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
     [[WBStationTicketsAPI apiWithRequestMethodString:@"POST" Type:@"bind"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         [SXLoadingView hideProgressHUD];
@@ -840,12 +864,26 @@
         }
         
         if (self.diskSelectedArray.count == 1) {
-            _diskTypeLabel.text = @"single";
+            _diskTypeLabel.text = @"single模式";
         }else if (self.diskSelectedArray.count >1){
 //             _diskTypeLabel.text = @"未设置";
             _diskTypeChangeButton.enabled = YES;
         }
     };
+        
+        cell.cellDetailButtonBlock = ^(UIButton *button) {
+            NSBundle *bundle = [NSBundle bundleForClass:[WBInitDiskDetailAlertViewController class]];
+            UIStoryboard *storyboard =
+            [UIStoryboard storyboardWithName:@"WBInitDiskDetailAlertViewController" bundle:bundle];
+            NSString *identifier = @"diskDetail";
+            
+            UIViewController *viewController =
+            [storyboard instantiateViewControllerWithIdentifier:identifier];
+            
+            viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
+            
+            [self presentViewController:viewController animated:YES completion:NULL];
+        };
  
     return cell;
     }else{
@@ -1470,7 +1508,7 @@
         _fourthStepNextButton.layer.masksToBounds = YES;
         _fourthStepNextButton.layer.cornerRadius = 2;
         //        _fourthStepNextButton.contentVerticalAlignment = NSTextAlignmentCenter;
-        [_fourthStepNextButton addTarget:self action:@selector(thirdStepNextButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        [_fourthStepNextButton addTarget:self action:@selector(fourthStepNextButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         _fourthStepNextButton.alpha = 0;
         
     }

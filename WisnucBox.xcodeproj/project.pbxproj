@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0693AED01FE7FFB2005CCEA1 /* WBInitDiskDetailAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0693AECF1FE7FFB2005CCEA1 /* WBInitDiskDetailAlertViewController.m */; };
+		0693AED21FE7FFC0005CCEA1 /* WBInitDiskDetailAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0693AED11FE7FFC0005CCEA1 /* WBInitDiskDetailAlertViewController.storyboard */; };
 		1F0898DC1FB05FF900B86723 /* eye_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0898DB1FB05FF800B86723 /* eye_off.png */; };
 		1F1AB9EC1FB968CA006EB1FC /* FLFilesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AB9EA1FB968C9006EB1FC /* FLFilesCell.m */; };
 		1F1AB9ED1FB968CA006EB1FC /* FLFilesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F1AB9EB1FB968C9006EB1FC /* FLFilesCell.xib */; };
@@ -724,6 +726,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0693AECE1FE7FFB2005CCEA1 /* WBInitDiskDetailAlertViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBInitDiskDetailAlertViewController.h; sourceTree = "<group>"; };
+		0693AECF1FE7FFB2005CCEA1 /* WBInitDiskDetailAlertViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBInitDiskDetailAlertViewController.m; sourceTree = "<group>"; };
+		0693AED11FE7FFC0005CCEA1 /* WBInitDiskDetailAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WBInitDiskDetailAlertViewController.storyboard; sourceTree = "<group>"; };
 		1F0898DB1FB05FF800B86723 /* eye_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye_off.png; sourceTree = "<group>"; };
 		1F1AB9E91FB968C8006EB1FC /* FLFilesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLFilesCell.h; sourceTree = "<group>"; };
 		1F1AB9EA1FB968C9006EB1FC /* FLFilesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLFilesCell.m; sourceTree = "<group>"; };
@@ -2075,6 +2080,9 @@
 				1FEFCDE31FE7914900DEC866 /* WBInitChangeDiskTypeAlertViewController.h */,
 				1FEFCDE41FE7914900DEC866 /* WBInitChangeDiskTypeAlertViewController.m */,
 				1FEFCDEA1FE799C500DEC866 /* WBInitChangeDiskTypeAlertViewController.storyboard */,
+				0693AECE1FE7FFB2005CCEA1 /* WBInitDiskDetailAlertViewController.h */,
+				0693AECF1FE7FFB2005CCEA1 /* WBInitDiskDetailAlertViewController.m */,
+				0693AED11FE7FFC0005CCEA1 /* WBInitDiskDetailAlertViewController.storyboard */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -3879,6 +3887,7 @@
 				1FAD74631FD0EDDF00A5D880 /* gif_symbol.png in Resources */,
 				F68311A51FB30AAF005AC578 /* tabbar_normal_background@2x.png in Resources */,
 				F68311CE1FB30AAF005AC578 /* send@2x.png in Resources */,
+				0693AED21FE7FFC0005CCEA1 /* WBInitDiskDetailAlertViewController.storyboard in Resources */,
 				1F922ED51FCE971B00A7614B /* ic_memory@2x.png in Resources */,
 				1FAD74601FD0EDDF00A5D880 /* gif_icon.png in Resources */,
 				F68310CE1FB30AAE005AC578 /* file_more.png in Resources */,
@@ -4131,7 +4140,6 @@
 				"${BUILT_PRODUCTS_DIR}/DACircularProgress/DACircularProgress.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
-				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFTextAccessibility/MDFTextAccessibility.framework",
 				"${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework",
 				"${BUILT_PRODUCTS_DIR}/MWPhotoBrowser/MWPhotoBrowser.framework",
@@ -4165,7 +4173,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DACircularProgress.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFInternationalization.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFTextAccessibility.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJRefresh.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MWPhotoBrowser.framework",
@@ -4253,6 +4260,7 @@
 				F67D643A1FAC7E5600E23D16 /* FirstDecorationSectionView.m in Sources */,
 				1FFADF8A1FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.m in Sources */,
 				F6830EBD1FB2FD10005AC578 /* FMUserLoginSettingVC.m in Sources */,
+				0693AED01FE7FFB2005CCEA1 /* WBInitDiskDetailAlertViewController.m in Sources */,
 				C11EAB2E1FC43611007C9BA7 /* WBCloudGetStationsAPI.m in Sources */,
 				F6D8CC3D1FB42D6500673824 /* UIApplication+JYTopVC.m in Sources */,
 				1F922EAF1FCD740700A7614B /* WBStationManageNetworkViewController.m in Sources */,
