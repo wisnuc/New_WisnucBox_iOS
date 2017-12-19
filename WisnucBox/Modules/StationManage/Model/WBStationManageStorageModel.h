@@ -28,6 +28,9 @@
 @property (nonatomic,copy) NSNumber *isFileSystem;
 @property (nonatomic,copy) NSString *unformattable;
 @property (nonatomic,copy) NSString *idBus;
+@property (nonatomic,copy) NSString *fileSystemType;
+@property (nonatomic,copy) NSNumber *isPartitioned;
+@property (nonatomic,copy) NSNumber *removable;
 
 @end
 

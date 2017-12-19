@@ -22,6 +22,7 @@
     self.checkBox.onTintColor = COR1;
     self.checkBox.onCheckColor = [UIColor whiteColor];
     self.checkBox.delegate = self;
+    [self.detailButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
 }
 
 - (void)didTapCheckBox:(BEMCheckBox*)checkBox{

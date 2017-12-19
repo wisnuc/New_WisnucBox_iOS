@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "RadioButton.h"
+@class RadioButton;
 @interface WBInitChangeDiskTypeAlertViewController : UIViewController
 @property (nonatomic)NSString *typeString;
 @end

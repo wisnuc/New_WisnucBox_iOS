@@ -204,6 +204,7 @@
 		1FCFB3DB1FE7B34C00BD3375 /* ic_radio_button_unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FCFB3D51FE7B34B00BD3375 /* ic_radio_button_unchecked.png */; };
 		1FCFB3DC1FE7B34C00BD3375 /* ic_radio_button@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FCFB3D61FE7B34B00BD3375 /* ic_radio_button@3x.png */; };
 		1FCFB3DD1FE7B34C00BD3375 /* ic_radio_button_unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FCFB3D71FE7B34C00BD3375 /* ic_radio_button_unchecked@2x.png */; };
+		1FCFB3E11FE8B43700BD3375 /* RadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFB3DF1FE8B43700BD3375 /* RadioButton.m */; };
 		1FD7A0EA1FB05A45000D4CB3 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E41FB05A45000D4CB3 /* back@2x.png */; };
 		1FD7A0EB1FB05A45000D4CB3 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E51FB05A45000D4CB3 /* back.png */; };
 		1FD7A0EC1FB05A45000D4CB3 /* back_gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E61FB05A45000D4CB3 /* back_gray@3x.png */; };
@@ -1023,6 +1024,8 @@
 		1FCFB3D51FE7B34B00BD3375 /* ic_radio_button_unchecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_radio_button_unchecked.png; sourceTree = "<group>"; };
 		1FCFB3D61FE7B34B00BD3375 /* ic_radio_button@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_radio_button@3x.png"; sourceTree = "<group>"; };
 		1FCFB3D71FE7B34C00BD3375 /* ic_radio_button_unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_radio_button_unchecked@2x.png"; sourceTree = "<group>"; };
+		1FCFB3DF1FE8B43700BD3375 /* RadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioButton.m; sourceTree = "<group>"; };
+		1FCFB3E01FE8B43700BD3375 /* RadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioButton.h; sourceTree = "<group>"; };
 		1FD7A0E41FB05A45000D4CB3 /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
 		1FD7A0E51FB05A45000D4CB3 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		1FD7A0E61FB05A45000D4CB3 /* back_gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_gray@3x.png"; sourceTree = "<group>"; };
@@ -1818,6 +1821,7 @@
 		1F4D75581FAC4BB700E6516C /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				1FCFB3DE1FE8B42200BD3375 /* RadioButton */,
 				1F1AB9F31FB97170006EB1FC /* FileUtil */,
 				F675614F1FB342AE00E3277F /* MXParallaxHeader */,
 				F675613E1FB3428F00E3277F /* MaterialTextField */,
@@ -2442,6 +2446,15 @@
 				1FAD74761FD1049900A5D880 /* WBInviteWechatViewController.m */,
 			);
 			name = InviteWechat;
+			sourceTree = "<group>";
+		};
+		1FCFB3DE1FE8B42200BD3375 /* RadioButton */ = {
+			isa = PBXGroup;
+			children = (
+				1FCFB3E01FE8B43700BD3375 /* RadioButton.h */,
+				1FCFB3DF1FE8B43700BD3375 /* RadioButton.m */,
+			);
+			path = RadioButton;
 			sourceTree = "<group>";
 		};
 		1FEFCDDC1FE3C7DD00DEC866 /* Initialization */ = {
@@ -4275,6 +4288,7 @@
 				C138D0781FB9A4B0000CF518 /* DriveModel.m in Sources */,
 				F6830F181FB300D2005AC578 /* FMLeftUserCell.m in Sources */,
 				C183CE041FD006A9002E29CD /* WBCloudLocalTokenAPI.m in Sources */,
+				1FCFB3E11FE8B43700BD3375 /* RadioButton.m in Sources */,
 				F6830EB51FB2FAE0005AC578 /* RDVTabBarItem.m in Sources */,
 				F6830EB31FB2FAE0005AC578 /* RDVTabBar.m in Sources */,
 				C183CDE21FCE8D84002E29CD /* FMUserEditVC.m in Sources */,

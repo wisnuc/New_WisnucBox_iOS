@@ -231,6 +231,7 @@ static BOOL needHide = YES;
         [self getBootInfoWithPath:urlString completeBlock:^(BootModel *model) {
             if (IsEquallString(model.error, @"ENOALT")) {
                 [[WBStationManageStorageAPI apiWithURLPath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+                    
                     WBStationManageStorageModel *model = [WBStationManageStorageModel yy_modelWithJSON:request.responseJsonObject];
                     NSLog(@"%@",request.responseJsonObject);
                     if (model.volumes && model.volumes.count == 0) {
@@ -672,15 +673,20 @@ static BOOL needHide = YES;
 
 - (void)initializationLayoutUpdateWithModel:(FMSerachService *)model{
     if (model.isNormal || _userDataSource.count !=0) {
-        [_userView setHidden:NO];
+        _userView.alpha = 1;
         [_userListTableViwe removeEmptyView];
         _userListTableViwe.bounces = YES;
     }else{
         [_userListTableViwe removeEmptyView];
-        [_userView setHidden:YES];
+        _userView.alpha = 0;
         _userListTableViwe.bounces = NO;
         _userListTableViwe.noDataImageName = @"disk_settings";
-        CGRect rect = CGRectMake(0, 0, self.userListTableViwe.bounds.size.width, self.userListTableViwe.bounds.size.height);
+        CGRect rect;
+        if (__kWidth == 320) {
+        rect = CGRectMake(0, 16, self.userListTableViwe.bounds.size.width, self.userListTableViwe.bounds.size.height);
+        }else{
+        rect = CGRectMake(0, 0, self.userListTableViwe.bounds.size.width, self.userListTableViwe.bounds.size.height);
+        }
         NSLog(@"%@--- %@",NSStringFromCGRect(rect),NSStringFromCGRect(self.userListTableViwe.bounds));
         [_userListTableViwe displayWithMsg:WBLocalizedString(@"initialization", nil) withRowCount:0 andIsNoData:YES  andTableViewFrame:rect
                              andTouchBlock:^(UIButton *btn) {
