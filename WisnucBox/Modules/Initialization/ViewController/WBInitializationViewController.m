@@ -249,17 +249,8 @@
         @weaky(self)
         [weak_self creatDiskBackOriginModuleAnimateLayout];
         [weak_self creatUserBackOriginModuleAnimateLayout];
-        
-        _thirdStepIconView.frame = CGRectMake(CGRectGetMinX(self.secondStepIconView.frame),CGRectGetMaxY(self.secondStepDetailLabel.frame)+ 24, 20, 28);
-        
-        _thirdStepTitle.frame = CGRectMake(CGRectGetMinX(_secondStepTitle.frame), CGRectGetMinY(_thirdStepIconView.frame),_secondStepTitle.jy_Width, 17);
-        _fourthStepIconView.frame = CGRectMake(CGRectGetMinX(self.thirdStepIconView.frame),CGRectGetMaxY(self.thirdStepTitle.frame)+ 24, 20, 28);
-        _fourthStepTitle.frame = CGRectMake(CGRectGetMinX(_thirdStepTitle.frame), CGRectGetMinY(_fourthStepIconView.frame),_thirdStepTitle.jy_Width, 17);
-        
-        
-        _fifthStepIconView.frame = CGRectMake(CGRectGetMinX(self.fourthStepIconView.frame),CGRectGetMaxY(self.fourthStepTitle.frame)+ 24, 20, 28);
-        
-        _fifthStepTitle.frame =CGRectMake(CGRectGetMinX(_fourthStepTitle.frame), CGRectGetMinY(_fifthStepIconView.frame),_fourthStepTitle.jy_Width, 17);
+        [weak_self secondPreviousfourthAndFifthStepAnimateLayout];
+        [weak_self lineViewAnimateLayout];
         
     } completion:^(BOOL finished) {
         
@@ -308,12 +299,15 @@
         [weak_self creatUserModuleConfirmInstallAnimateLayout];
         [weak_self confirmInstallAnimateLayout];
         [weak_self fourthAndFifthStepAnimateLayout];
-        
-    } completion:^(BOOL finished) {
+        [weak_self lineViewAnimateLayout];
+            } completion:^(BOOL finished) {
         
     }];
 }
 
+- (void)lineViewAnimateLayout{
+    _lineView.frame = CGRectMake(26, 14, 1,CGRectGetMaxY(self.fifthStepIconView.frame) -CGRectGetMinY(self.firstStepIconView.frame) - 6);
+}
 
 - (void)thirdPreviousButtonClick:(UIButton *)sender{
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut  animations:^{
@@ -321,11 +315,24 @@
         [weak_self creatUserModuleBackSecondStepAnimateLayout];
         [weak_self installModuleBackOriginAnimateLayout];
         [weak_self otherAnimateLayout];
+        [weak_self lineViewAnimateLayout];
     } completion:^(BOOL finished) {
         
     }];
 }
 
+- (void)secondPreviousfourthAndFifthStepAnimateLayout{
+    _thirdStepIconView.frame = CGRectMake(CGRectGetMinX(self.secondStepIconView.frame),CGRectGetMaxY(self.secondStepDetailLabel.frame)+ 24, 20, 28);
+    
+    _thirdStepTitle.frame = CGRectMake(CGRectGetMinX(_secondStepTitle.frame), CGRectGetMinY(_thirdStepIconView.frame),_secondStepTitle.jy_Width, 17);
+    _fourthStepIconView.frame = CGRectMake(CGRectGetMinX(self.thirdStepIconView.frame),CGRectGetMaxY(self.thirdStepTitle.frame)+ 24, 20, 28);
+    _fourthStepTitle.frame = CGRectMake(CGRectGetMinX(_thirdStepTitle.frame), CGRectGetMinY(_fourthStepIconView.frame),_thirdStepTitle.jy_Width, 17);
+    
+    
+    _fifthStepIconView.frame = CGRectMake(CGRectGetMinX(self.fourthStepIconView.frame),CGRectGetMaxY(self.fourthStepTitle.frame)+ 24, 20, 28);
+    
+    _fifthStepTitle.frame =CGRectMake(CGRectGetMinX(_fourthStepTitle.frame), CGRectGetMinY(_fifthStepIconView.frame),_fourthStepTitle.jy_Width, 17);
+}
 
 - (void)creatDiskModuleAnimateLayout{
     _firstStepButton.alpha = 0;
@@ -593,6 +600,7 @@
         [UIView animateWithDuration:0.3 animations:^{
             [weak_self confirmInstallCompleteAnimateLayout];
             [weak_self bindWechatAnimiteLayout];
+            [weak_self lineViewAnimateLayout];
         }];
         
     } failure:^(__kindof JYBaseRequest *request) {
@@ -760,6 +768,7 @@
 
 - (void)animiteForLastAction{
     [UIView animateWithDuration:0.3f animations:^{
+        
         [_fourthCheckBox setHidden:NO];
         _fourthStepTitle.font = [UIFont systemFontOfSize:16];
         _fourthStepTitle.textColor = IgnoreColor;
@@ -777,6 +786,7 @@
         _fifthStepDetailLabel.alpha = 1.0f;
         _fifthStepEnterButton.alpha = 1.0f;
         _fifthPreviousButton.alpha = 1.0f;
+        [self lineViewAnimateLayout];
     }];
 
 }
@@ -833,6 +843,7 @@
 
 - (void)fifthPreviousButtonClick:(UIButton *)sender{
     [UIView animateWithDuration:0.3 animations:^{
+      
         [_fourthCheckBox setHidden:YES];
         _fourthStepNextButton.alpha = 1.0f;
         _fourthIgnoreButton.alpha = 1.0f;
@@ -847,6 +858,7 @@
         _fifthStepLabel.backgroundColor = IgnoreColor;
         _fifthStepIconView.frame = CGRectMake(CGRectGetMinX(self.fourthStepIconView.frame),CGRectGetMaxY(self.fourthStepNextButton.frame)+ 24, 20, 28);
         _fifthStepTitle.frame = CGRectMake(CGRectGetMinX(_fourthStepTitle.frame), CGRectGetMinY(_fifthStepIconView.frame),_fourthStepTitle.jy_Width, 17);
+        [self lineViewAnimateLayout];
     }];
 }
 
