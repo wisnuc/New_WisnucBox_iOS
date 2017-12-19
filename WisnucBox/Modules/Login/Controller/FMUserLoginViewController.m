@@ -187,7 +187,7 @@
 
 - (UIButton *)loginButton{
     if (!_loginButton) {
-        _loginButton = [UIButton buttionWithTitle:@"登录" target:self action:@selector(loginButtonClick:)];
+        _loginButton = [UIButton buttionWithTitle:WBLocalizedString(@"login", nil) target:self action:@selector(loginButtonClick:)];
     }
     return _loginButton;
 }

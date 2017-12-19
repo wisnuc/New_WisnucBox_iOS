@@ -67,6 +67,9 @@ ReNameDelegate
 //         NSLog(@"%@",request.responseJsonObject);
         WBStationInfoModel *model = [WBStationInfoModel yy_modelWithJSON:request.responseJsonObject];
         [self.dataStationInfoArray addObject:model];
+        NSString *stationName = model.name;
+        WB_UserService.currentUser.bonjour_name =  stationName;
+        [WB_UserService synchronizedCurrentUser];
         [self.tableView reloadData];
     } failure:^(__kindof JYBaseRequest *request) {
          NSLog(@"%@",request.error);
@@ -128,6 +131,7 @@ ReNameDelegate
     [self getData];
     [SXLoadingView showProgressHUDText:WBLocalizedString(@"device_name_modified_successfully", nil) duration:1.5];
     [self.tableView reloadData];
+
 }
 
 
@@ -213,7 +217,7 @@ ReNameDelegate
                     case 0:
                     {
                         NSString *memTotal = [model.memInfo.memTotal substringToIndex:model.memInfo.memTotal.length-3];
-                        cell.normalLabel.text = [NSString stringWithFormat:@"%.2f GB",[memTotal floatValue]/1024/1024];
+                        cell.normalLabel.text = [NSString transformedValue:[NSNumber numberWithFloat:[memTotal floatValue] *1024]];
                         cell.detailLabel.text = WBLocalizedString(@"total_memory_size", nil);
                         cell.leftImageView.image = [UIImage imageNamed:@"ic_sd_storage"];
                     }
@@ -221,14 +225,14 @@ ReNameDelegate
                     case 1:
                     {
                         NSString *memFree = [model.memInfo.memFree substringToIndex:model.memInfo.memFree.length-3];
-                        cell.normalLabel.text = [NSString stringWithFormat:@"%.2f GB",[memFree floatValue]/1024/1024];
+                        cell.normalLabel.text = [NSString transformedValue:[NSNumber numberWithFloat:[memFree floatValue]*1024]];
                         cell.detailLabel.text = WBLocalizedString(@"free_memory_size", nil);
                     }
                         break;
                     case 2:
                     {
                         NSString *memAvailable = [model.memInfo.memAvailable substringToIndex:model.memInfo.memAvailable.length-3];
-                        cell.normalLabel.text = [NSString stringWithFormat:@"%.2f GB",[memAvailable floatValue]/1024/1024];
+                        cell.normalLabel.text = [NSString transformedValue:[NSNumber numberWithFloat:[memAvailable floatValue]*1024]];
                         cell.detailLabel.text = WBLocalizedString(@"available_memory_size", nil);
                     }
                         break;
@@ -245,7 +249,7 @@ ReNameDelegate
                     case 0:
                     {
                         NSString *memTotal = [model.memInfo.memTotal substringToIndex:model.memInfo.memTotal.length-3];
-                        cell.normalLabel.text = [NSString stringWithFormat:@"%.2f GB",[memTotal floatValue]/1024/1024];
+                        cell.normalLabel.text = [NSString transformedValue:[NSNumber numberWithFloat:[memTotal floatValue]*1024]];
                         cell.detailLabel.text = WBLocalizedString(@"total_memory_size", nil);;
                         cell.leftImageView.image = [UIImage imageNamed:@"ic_sd_storage"];
                     }
@@ -253,14 +257,14 @@ ReNameDelegate
                     case 1:
                     {
                         NSString *memFree = [model.memInfo.memFree substringToIndex:model.memInfo.memFree.length-3];
-                        cell.normalLabel.text = [NSString stringWithFormat:@"%.2f GB",[memFree floatValue]/1024/1024];
+                        cell.normalLabel.text = [NSString transformedValue:[NSNumber numberWithFloat: [memFree floatValue]*1024]];
                         cell.detailLabel.text = WBLocalizedString(@"free_memory_size", nil);
                     }
                         break;
                     case 2:
                     {
                         NSString *memAvailable = [model.memInfo.memAvailable substringToIndex:model.memInfo.memAvailable.length-3];
-                        cell.normalLabel.text = [NSString stringWithFormat:@"%.2f GB",[memAvailable floatValue]/1024/1024];
+                        cell.normalLabel.text = [NSString transformedValue:[NSNumber numberWithFloat:[memAvailable floatValue]*1024]];
                         cell.detailLabel.text = WBLocalizedString(@"available_memory_size", nil);
                     }
                         break;
@@ -376,20 +380,20 @@ ReNameDelegate
               switch (indexPath.row) {
                   case 0:
                   {
-                      cell.normalLabel.text = [NSString stringWithFormat:@"%@",volumesModel.usage.overall[@"deviceSize"]];
+                      cell.normalLabel.text = [NSString transformedValue:volumesModel.usage.overall[@"deviceSize"]];
                       cell.detailLabel.text = WBLocalizedString(@"total_space", nil);
                       cell.leftImageView.image = [UIImage imageNamed:@"ic_storage"];
                   }
                       break;
                   case 1:
                   {
-                      cell.normalLabel.text = [NSString stringWithFormat:@"%@",volumesModel.usage.data[@"size"]];
+                      cell.normalLabel.text = [NSString transformedValue:volumesModel.usage.data[@"size"]];
                       cell.detailLabel.text = WBLocalizedString(@"user_data_space", nil);
                   }
                       break;
                   case 2:
                   {
-                      cell.normalLabel.text =  cell.normalLabel.text = [NSString stringWithFormat:@"%@",volumesModel.usage.overall[@"free"]];
+                      cell.normalLabel.text =  cell.normalLabel.text = [NSString transformedValue: volumesModel.usage.overall[@"free"]];
                       cell.detailLabel.text = WBLocalizedString(@"available_space", nil);
                   }
                       break;
@@ -402,20 +406,20 @@ ReNameDelegate
             switch (indexPath.row) {
                 case 0:
                 {
-                    cell.normalLabel.text = [NSString stringWithFormat:@"%@",volumesModel.usage.overall[@"deviceSize"]];
+                    cell.normalLabel.text = [NSString transformedValue:volumesModel.usage.overall[@"deviceSize"]];
                     cell.detailLabel.text = WBLocalizedString(@"total_space", nil);
                     cell.leftImageView.image = [UIImage imageNamed:@"ic_storage"];
                 }
                     break;
                 case 1:
                 {
-                    cell.normalLabel.text = [NSString stringWithFormat:@"%@",volumesModel.usage.data[@"size"]];
+                    cell.normalLabel.text = [NSString transformedValue:volumesModel.usage.data[@"size"]];
                     cell.detailLabel.text = WBLocalizedString(@"user_data_space", nil);
                 }
                     break;
                 case 2:
                 {
-                    cell.normalLabel.text =  cell.normalLabel.text = [NSString stringWithFormat:@"%@",volumesModel.usage.overall[@"free"]];
+                    cell.normalLabel.text =  cell.normalLabel.text = [NSString transformedValue:volumesModel.usage.overall[@"free"]];
                     cell.detailLabel.text = WBLocalizedString(@"available_space", nil);
                 }
                     break;
@@ -449,7 +453,9 @@ ReNameDelegate
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+ 
     return 8;
+
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -502,12 +508,13 @@ ReNameDelegate
 
 - (UITableView *)tableView{
     if (!_tableView) {
-        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight - 64) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight - 64) style:UITableViewStyleGrouped];
+        _tableView.backgroundColor = [UIColor whiteColor];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
         _tableView.separatorStyle = UITableViewCellAccessoryNone;
-        _tableView.contentInset = UIEdgeInsetsMake(KDefaultOffset, 0, 0, 0);
+//        _tableView.contentInset = UIEdgeInsetsMake(KDefaultOffset, 0, 0, 0);
     }
     return _tableView;
 }

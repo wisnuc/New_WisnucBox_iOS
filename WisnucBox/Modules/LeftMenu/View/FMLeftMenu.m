@@ -71,7 +71,7 @@
     [self getUserInfo];
     WBUser * currentUser = [AppServices sharedService].userServices.currentUser;
     if(!currentUser.autoBackUp)
-        self.backupLabel.text = @"备份已关闭";
+        self.backupLabel.text = WBLocalizedString(@"backup_closed", nil);
     
     if (WB_UserService.currentUser.avaterURL) {
         self.nameLabel.text = _userInfo.userName;

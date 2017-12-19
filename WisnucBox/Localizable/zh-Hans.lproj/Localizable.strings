@@ -185,6 +185,7 @@
 "WeChat_is_not_bound" = "微信未绑定";
 
 //Login
+"login" = "登录";
 "logging_in" = "正在登录...";
 "wechat_login" = "微信登录";
 "password_text" = "密码";

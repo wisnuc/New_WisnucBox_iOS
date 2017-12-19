@@ -676,6 +676,10 @@ static BOOL needHide = YES;
         _userView.alpha = 1;
         [_userListTableViwe removeEmptyView];
         _userListTableViwe.bounces = YES;
+    }else if(_userDataSource.count ==0){
+        _userView.alpha = 0;
+        [_userListTableViwe removeEmptyView];
+        _userListTableViwe.bounces = YES;
     }else{
         [_userListTableViwe removeEmptyView];
         _userView.alpha = 0;
