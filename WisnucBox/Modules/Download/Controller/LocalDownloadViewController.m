@@ -267,7 +267,7 @@ UIDocumentInteractionControllerDelegate
                 LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:nil
                                                                          delegate:nil
                                                                 cancelButtonTitle:cancelTitle
-                                                            otherButtonTitleArray:@[@"取消下载"]];
+                                                            otherButtonTitleArray:@[WBLocalizedString(@"cancel_download", nil)]];
                 actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
                     if (buttonIndex == 1) {
                         if (self.transmitingArray.count == 0) {
@@ -338,7 +338,7 @@ UIDocumentInteractionControllerDelegate
                 LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:nil
                                                                          delegate:nil
                                                                 cancelButtonTitle:cancelTitle
-                                                            otherButtonTitleArray:@[@"取消上传"]];
+                                                            otherButtonTitleArray:@[WBLocalizedString(@"Cancel Upload", nil)]];
                 actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
                     if (buttonIndex == 1) {
                         if (self.transmitingArray.count == 0) {
@@ -393,11 +393,11 @@ UIDocumentInteractionControllerDelegate
         cell.fileNameLabel.text = data.fileName;
         NSString *typeString;
         if ([data.actionType isEqualToString:@"上传"]) {
-            typeString = @"上传成功";
+            typeString = WBLocalizedString(@"upload_successfully", nil);
         }else if ([data.actionType isEqualToString:@"下载"]){
-            typeString = @"下载成功";
+            typeString = WBLocalizedString(@"download_successfully", nil);
         }else{
-            typeString = @"下载成功";
+            typeString = WBLocalizedString(@"download_successfully", nil);
         }
         cell.transmitTypeLabel.text = typeString;
 //        [CSDateUtil stringWithDate:data.timeDate withFormat:@"yyyy-MM-dd HH:mm:ss"];

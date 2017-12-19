@@ -249,11 +249,11 @@ static BOOL needHide = YES;
                 NSDictionary *rootDic =  request.responseJsonObject;
                 NSString *nameString = [rootDic objectForKey:@"name"];
                 if (nameString.length == 0) {
-                    nameString = @"闻上盒子";
+                    nameString = WBLocalizedString(@"wisnuc_box", nil);
                 }
                [weak_self getSystemInformationWithURL:addressString Service:service Name:nameString FMSerachServiceModel:ser NASType:NASTypeNormal];
             } failure:^(__kindof JYBaseRequest *request) {
-                NSString *nameString = @"闻上盒子";
+                NSString *nameString = WBLocalizedString(@"wisnuc_box", nil);
                 [weak_self getSystemInformationWithURL:addressString Service:service Name:nameString FMSerachServiceModel:ser NASType:NASTypeNormal];
                 NSLog(@"%@",request.error);
                 NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
@@ -672,15 +672,16 @@ static BOOL needHide = YES;
 }
 
 - (void)initializationLayoutUpdateWithModel:(FMSerachService *)model{
+    if(model.isNormal && _userDataSource.count ==0){
+        _userView.alpha = 0;
+        [_userListTableViwe removeEmptyView];
+        _userListTableViwe.bounces = YES;
+    }else
     if (model.isNormal || _userDataSource.count !=0) {
         _userView.alpha = 1;
         [_userListTableViwe removeEmptyView];
         _userListTableViwe.bounces = YES;
-    }else if(_userDataSource.count ==0){
-        _userView.alpha = 0;
-        [_userListTableViwe removeEmptyView];
-        _userListTableViwe.bounces = YES;
-    }else{
+    }else {
         [_userListTableViwe removeEmptyView];
         _userView.alpha = 0;
         _userListTableViwe.bounces = NO;
@@ -771,7 +772,7 @@ static BOOL needHide = YES;
        NSLog(@"%@",model);
        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
        cell.userNameLabel.text = [NSString stringWithFormat:@"%@",model.username];
-       cell.stationName.text = [NSString stringWithFormat:@"在%@上",model.name];
+       cell.stationName.text = [NSString stringWithFormat:@"%@",model.name];
         return cell;
     }
     

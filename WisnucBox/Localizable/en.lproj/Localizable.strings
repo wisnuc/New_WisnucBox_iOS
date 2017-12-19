@@ -6,6 +6,8 @@
   Copyright © 2017年 JackYang. All rights reserved.
 */
 
+"wisnuc_box" = "WISNUC Box";
+
 "confirm" = "Confirm";
 "cancel" = "Cancel";
 "choose_text" = "Select";
@@ -39,6 +41,7 @@
 "file" = "Files";
 
 //Upload
+"cancel_upload" = "Cancel ";
 "upload_failed" = "Upload Failed";
 "this_file_does_not_exist" = "This file does not exist.";
 //Photos
@@ -46,6 +49,8 @@
 "download_completed" = "Download completed";
 "play_failed" = "Play failed";
 "sharing_failed" = "Sharing failed";
+"preparing_photos" = "Preparing photos";
+
 
 //Files
 "my_file" = "My Files";
@@ -59,6 +64,11 @@
 "file_downloaded" = "This file has been downloaded";
 "no_file" = "No file to choose from";
 "no_files" = "No files";
+"cancel_download" = "Cancel download";
+"upload_successfully" = "Upload successfully";
+"download_successfully" = "Download successfully";
+"downloading_file" = "Downloading file";
+"added_download_queue"  = "%ld file has been added to the download queue";
 
 // Transmission
 "completed" = "Completed";
@@ -209,4 +219,14 @@
 "WeChat_not_support" = "WeChat does not support it";
 "initialization" = "Initialization";
 "initialization_guide" = "Initialization guide";
+"select_device" = "Please select a WISNUC device";
+
+
+//init
+
+"next_step" = "Next";
+"previous_step" = "Previous";
+"single_mode" = "Single Mode";
+"raid0_mode" = "Raid0 Mode";
+"raid1_mode" = "Raid1 Mode";
 

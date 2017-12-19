@@ -828,7 +828,7 @@ bool isDecelerating = NO;
     NSArray * chooseItems = [self.choosePhotos copy];
     if (!_pv)
         _pv = [JYProcessView processViewWithType:ProcessTypeLine];
-    _pv.descLb.text = share?@"正在准备照片":@"正在下载文件";
+    _pv.descLb.text = share?WBLocalizedString(@"preparing_photos", nil):WBLocalizedString(@"downloading_file", nil);
     _pv.subDescLb.text = [NSString stringWithFormat:@"%lu个项目 ",(unsigned long)chooseItems.count];
     [_pv show];
     _isDownloading = YES;

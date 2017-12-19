@@ -112,7 +112,7 @@ static dispatch_once_t onceToken;
             [[CSDownloadHelper shareManager] downloadFileWithFileModel:model RootUUID:rootUUID UUID:uuid];
         }
     }
-     NSString * string  = [NSString stringWithFormat:@"%ld个文件已添加到下载队列",(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
+     NSString * string  = [NSString stringWithFormat:WBLocalizedString(@"added_download_queue", nil),(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
     [SXLoadingView showProgressHUDText:string duration:1.5];
     [[FLFIlesHelper helper] removeAllChooseFile];
 }

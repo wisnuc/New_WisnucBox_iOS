@@ -19,7 +19,8 @@
 */
 -(void)awakeFromNib{
   [super awakeFromNib];
-    
+    self.TitleLabel.text = WBLocalizedString(@"select_device", nil);
+    [self.loginButton setTitle:WBLocalizedString(@"login", nil) forState:UIControlStateNormal];
 }
 
 

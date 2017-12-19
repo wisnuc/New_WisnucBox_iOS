@@ -60,17 +60,17 @@
     NSString * typeString;
     switch (_selectedTag) {
         case 0:
-            typeString = @"single模式";
+            typeString = WBLocalizedString(@"single_mode", nil);
             break;
         case 1:
-            typeString = @"raid0模式";
+            typeString = WBLocalizedString(@"raid0_mode", nil);;
             break;
         case 2:
-            typeString = @"raid1模式";
+            typeString = WBLocalizedString(@"raid1_mode", nil);;
             break;
 
         default:{
-            typeString = @"single模式";
+            typeString = WBLocalizedString(@"single_mode", nil);;
         }
             break;
     }

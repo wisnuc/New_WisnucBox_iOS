@@ -428,11 +428,11 @@
     _diskSelectedTableView.alpha = 1;
     _thirdUserNameLabel.text = [NSString stringWithFormat:@"用户名：%@",_userNameTextField.text];
     NSString *typeString ;
-    if ([_diskTypeLabel.text isEqualToString:@"single模式"]) {
+    if ([_diskTypeLabel.text containsString:@"Single"]) {
         typeString = @"single";
-    }else  if ([_diskTypeLabel.text isEqualToString:@"raid0模式"]) {
+    }else  if ([_diskTypeLabel.text containsString:@"Raid0"]) {
         typeString = @"raid0";
-    }else  if ([_diskTypeLabel.text isEqualToString:@"raid1模式"]) {
+    }else  if ([_diskTypeLabel.text containsString:@"Raid1"]) {
         typeString = @"raid1";
     }
     _thirdDiskTypeLabel.text = [NSString stringWithFormat:@"模式：%@",typeString];
@@ -532,11 +532,11 @@
     NSArray *tagetArray = [NSArray arrayWithArray:targetMutableArray];
     NSLog(@"%@",tagetArray);
     NSString *typeString ;
-    if ([_diskTypeLabel.text isEqualToString:@"single模式"]) {
+    if ([_diskTypeLabel.text containsString:@"Single"]) {
         typeString = @"single";
-    }else  if ([_diskTypeLabel.text isEqualToString:@"raid0模式"]) {
+    }else  if ([_diskTypeLabel.text containsString:@"Raid0"]) {
         typeString = @"raid0";
-    }else  if ([_diskTypeLabel.text isEqualToString:@"raid1模式"]) {
+    }else  if ([_diskTypeLabel.text containsString:@"Raid1"]) {
         typeString = @"raid1";
     }
     [[WBStorageVolumesAPI apiWithURLPath:_searchModel.path Target:tagetArray Mode:typeString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
@@ -798,11 +798,11 @@
         NSDictionary *rootDic =  request.responseJsonObject;
         NSString *nameString = [rootDic objectForKey:@"name"];
         if (nameString.length == 0) {
-            nameString = @"闻上盒子";
+            nameString = WBLocalizedString(@"wisnuc_box", nil);
         }
         [weak_self loaginWithStationName:nameString];
     } failure:^(__kindof JYBaseRequest *request) {
-        NSString *nameString = @"闻上盒子";
+        NSString *nameString = WBLocalizedString(@"wisnuc_box", nil);
         [weak_self loaginWithStationName:nameString];
         NSLog(@"%@",request.error);
         NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
@@ -876,6 +876,7 @@
     if (!cell) {
         cell = (WBInitDiskTableViewCell *)[[[NSBundle mainBundle]loadNibNamed:NSStringFromClass([WBInitDiskTableViewCell class]) owner:self options:nil]lastObject];
     }
+    cell.backgroundColor = UICOLOR_RGB(0xfafafa);
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     WBStationManageBlocksModel *model = self.diskDataArray[indexPath.row];
     cell.nameLabel.text = model.model?model.model:@"未知设备";
@@ -912,7 +913,7 @@
         }
         
         if (self.diskSelectedArray.count == 1) {
-            _diskTypeLabel.text = @"single模式";
+            _diskTypeLabel.text = WBLocalizedString(@"single_mode", nil);
         }else if (self.diskSelectedArray.count >1){
 //             _diskTypeLabel.text = @"未设置";
             _diskTypeChangeButton.enabled = YES;
@@ -940,6 +941,7 @@
         if (!cell) {
             cell = (WBInitDiskSelectedTableViewCell *)[[[NSBundle mainBundle]loadNibNamed:NSStringFromClass([WBInitDiskSelectedTableViewCell class]) owner:self options:nil]lastObject];
         }
+        cell.backgroundColor = UICOLOR_RGB(0xfafafa);
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         WBStationManageBlocksModel *model = self.diskSelectedArray[indexPath.row];
         cell.nameLabel.text = model.model?model.model:@"未知设备";
@@ -1041,6 +1043,7 @@
         _mainScrollView= [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, __kWidth,__kHeight - 64)];
         _mainScrollView.delegate = self;
         _mainScrollView.scrollEnabled = YES;
+        _mainScrollView.backgroundColor = UICOLOR_RGB(0xfafafa);
     }
     return _mainScrollView;
 }
@@ -1131,10 +1134,11 @@
         _diskTableView = [[UITableView alloc]initWithFrame:CGRectMake(CGRectGetMinX(_firstStepDetailLabel.frame), CGRectGetMaxY(_firstStepDetailLabel.frame) + 8,__kWidth - CGRectGetMinX(_firstStepDetailLabel.frame) - 56 ,56 *self.diskDataArray.count + 8) style:UITableViewStylePlain];
         _diskTableView.delegate = self;
         _diskTableView.dataSource = self;
+        _diskTableView.backgroundColor = UICOLOR_RGB(0xfafafa);
         UIView *footBackgroudView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 8)];
         UIView *footlineView  = [[UIView alloc]initWithFrame:CGRectMake(0, 7, __kWidth, 0.5)];
         footlineView.backgroundColor = RGBCOLOR(222, 222, 224);
-        footBackgroudView.backgroundColor = [UIColor whiteColor];
+        footBackgroudView.backgroundColor = UICOLOR_RGB(0xfafafa);
         [footBackgroudView addSubview:footlineView];
         _diskTableView.tableFooterView = footBackgroudView;
         _diskTableView.separatorStyle = UITableViewCellAccessoryNone;
@@ -1182,7 +1186,7 @@
 - (UIButton *)firstStepButton{
     if (!_firstStepButton) {
         _firstStepButton = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMinX(_firstStepTitle.frame),CGRectGetMaxY(_diskTypeTitle.frame) +8, 86, 36)];
-        [_firstStepButton setTitle:@"下一步" forState:UIControlStateNormal];
+        [_firstStepButton setTitle:WBLocalizedString(@"next_step", nil) forState:UIControlStateNormal];
         [_firstStepButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _firstStepButton.titleLabel.font = [UIFont systemFontOfSize:14];
         _firstStepButton.backgroundColor = COR1;
@@ -1338,7 +1342,7 @@
 - (MDCButton *)secondStepNextButton{
     if (!_secondStepNextButton) {
     _secondStepNextButton = [[MDCButton alloc]initWithFrame:CGRectMake(CGRectGetMinX(_secondStepTitle.frame),CGRectGetMaxY(_confirmPasswordTextField.frame) +28, 86, 36)];
-    [_secondStepNextButton setTitle:@"下一步" forState:UIControlStateNormal];
+    [_secondStepNextButton setTitle:WBLocalizedString(@"next_step", nil) forState:UIControlStateNormal];
     [_secondStepNextButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _secondStepNextButton.titleLabel.font = [UIFont systemFontOfSize:14];
     _secondStepNextButton.backgroundColor = COR1;
@@ -1355,7 +1359,8 @@
 - (MDCButton *)secondPreviousButton{
     if (!_secondPreviousButton) {
         _secondPreviousButton = [[MDCButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_secondStepNextButton.frame) + 8,CGRectGetMaxY(_confirmPasswordTextField.frame) +28, 86, 36)];
-        [_secondPreviousButton setTitle:@"上一步" forState:UIControlStateNormal];
+        [_secondPreviousButton setTitle:WBLocalizedString(@"previous_step", nil) forState:UIControlStateNormal];
+        _secondPreviousButton.titleLabel.adjustsFontSizeToFitWidth = YES;
         [_secondPreviousButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
         _secondPreviousButton.titleLabel.font = [UIFont systemFontOfSize:14];
         _secondPreviousButton.backgroundColor = [UIColor whiteColor];
@@ -1408,10 +1413,11 @@
         _diskSelectedTableView = [[UITableView alloc]initWithFrame:CGRectMake(CGRectGetMinX(_thirdStepTitle.frame), CGRectGetMaxY(_thirdStepTitle.frame) + 8,__kWidth - CGRectGetMinX(_thirdStepTitle.frame) - 56 ,56 *self.diskSelectedArray.count + 8) style:UITableViewStylePlain];
         _diskSelectedTableView.delegate = self;
         _diskSelectedTableView.dataSource = self;
+        _diskSelectedTableView.backgroundColor = UICOLOR_RGB(0xfafafa);
         UIView *footBackgroudView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 8)];
         UIView *footlineView  = [[UIView alloc]initWithFrame:CGRectMake(0, 7, __kWidth, 0.5)];
         footlineView.backgroundColor = RGBCOLOR(222, 222, 224);
-        footBackgroudView.backgroundColor = [UIColor whiteColor];
+        footBackgroudView.backgroundColor = UICOLOR_RGB(0xfafafa);
         [footBackgroudView addSubview:footlineView];
         _diskSelectedTableView.tableFooterView = footBackgroudView;
         _diskSelectedTableView.separatorStyle = UITableViewCellAccessoryNone;
@@ -1461,7 +1467,8 @@
 - (MDCButton *)thirdPreviousButton{
     if (!_thirdPreviousButton) {
         _thirdPreviousButton = [[MDCButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_thirdStepNextButton.frame) + 8,CGRectGetMaxY(_thirdDiskTypeLabel.frame) +28, 86, 36)];
-        [_thirdPreviousButton setTitle:@"上一步" forState:UIControlStateNormal];
+        [_thirdPreviousButton setTitle:WBLocalizedString(@"previous_step", nil) forState:UIControlStateNormal];
+        _thirdPreviousButton.titleLabel.adjustsFontSizeToFitWidth = YES;
         [_thirdPreviousButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
         _thirdPreviousButton.titleLabel.font = [UIFont systemFontOfSize:14];
         _thirdPreviousButton.backgroundColor = [UIColor whiteColor];
@@ -1550,7 +1557,7 @@
 - (MDCButton *)fourthStepNextButton{
     if (!_fourthStepNextButton) {
         _fourthStepNextButton = [[MDCButton alloc]initWithFrame:CGRectMake(CGRectGetMinX(_fourthStepDetailLabel.frame),CGRectGetMaxY(_fourthStepDetailLabel.frame) +28, 86, 36)];
-        [_fourthStepNextButton setTitle:@"下一步" forState:UIControlStateNormal];
+        [_fourthStepNextButton setTitle:WBLocalizedString(@"next_step", nil) forState:UIControlStateNormal];
         [_fourthStepNextButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _fourthStepNextButton.titleLabel.font = [UIFont systemFontOfSize:14];
         _fourthStepNextButton.backgroundColor = COR1;
@@ -1649,7 +1656,9 @@
 - (MDCButton *)fifthPreviousButton{
     if (!_fifthPreviousButton) {
         _fifthPreviousButton = [[MDCButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_fifthStepEnterButton.frame) + 8,CGRectGetMaxY(_fifthStepDetailLabel.frame) +28, 86, 36)];
-        [_fifthPreviousButton setTitle:@"上一步" forState:UIControlStateNormal];
+        _fifthPreviousButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+        [_fifthPreviousButton setTitle:WBLocalizedString(@"previous_step", nil) forState:UIControlStateNormal];
+        _fifthPreviousButton.titleLabel.adjustsFontSizeToFitWidth = YES;
         [_fifthPreviousButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
         _fifthPreviousButton.titleLabel.font = [UIFont systemFontOfSize:14];
         _fifthPreviousButton.backgroundColor = [UIColor whiteColor];
