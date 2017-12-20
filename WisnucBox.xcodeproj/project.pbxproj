@@ -205,6 +205,11 @@
 		1FCFB3DC1FE7B34C00BD3375 /* ic_radio_button@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FCFB3D61FE7B34B00BD3375 /* ic_radio_button@3x.png */; };
 		1FCFB3DD1FE7B34C00BD3375 /* ic_radio_button_unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FCFB3D71FE7B34C00BD3375 /* ic_radio_button_unchecked@2x.png */; };
 		1FCFB3E11FE8B43700BD3375 /* RadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFB3DF1FE8B43700BD3375 /* RadioButton.m */; };
+		1FCFB3E51FEA062100BD3375 /* WBDownloadTorrentAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFB3E41FEA062100BD3375 /* WBDownloadTorrentAPI.m */; };
+		1FCFB3E81FEA076A00BD3375 /* WBDownloadMagnetAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFB3E71FEA076A00BD3375 /* WBDownloadMagnetAPI.m */; };
+		1FCFB3EB1FEA15DE00BD3375 /* WBTorrentDownloadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFB3EA1FEA15DE00BD3375 /* WBTorrentDownloadHelper.m */; };
+		1FCFB3EF1FEA173C00BD3375 /* WBTorrentDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFB3ED1FEA173C00BD3375 /* WBTorrentDownloadViewController.m */; };
+		1FCFB3F01FEA173C00BD3375 /* WBTorrentDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FCFB3EE1FEA173C00BD3375 /* WBTorrentDownloadViewController.xib */; };
 		1FD7A0EA1FB05A45000D4CB3 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E41FB05A45000D4CB3 /* back@2x.png */; };
 		1FD7A0EB1FB05A45000D4CB3 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E51FB05A45000D4CB3 /* back.png */; };
 		1FD7A0EC1FB05A45000D4CB3 /* back_gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E61FB05A45000D4CB3 /* back_gray@3x.png */; };
@@ -1026,6 +1031,15 @@
 		1FCFB3D71FE7B34C00BD3375 /* ic_radio_button_unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_radio_button_unchecked@2x.png"; sourceTree = "<group>"; };
 		1FCFB3DF1FE8B43700BD3375 /* RadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioButton.m; sourceTree = "<group>"; };
 		1FCFB3E01FE8B43700BD3375 /* RadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioButton.h; sourceTree = "<group>"; };
+		1FCFB3E31FEA062100BD3375 /* WBDownloadTorrentAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBDownloadTorrentAPI.h; sourceTree = "<group>"; };
+		1FCFB3E41FEA062100BD3375 /* WBDownloadTorrentAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBDownloadTorrentAPI.m; sourceTree = "<group>"; };
+		1FCFB3E61FEA076A00BD3375 /* WBDownloadMagnetAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBDownloadMagnetAPI.h; sourceTree = "<group>"; };
+		1FCFB3E71FEA076A00BD3375 /* WBDownloadMagnetAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBDownloadMagnetAPI.m; sourceTree = "<group>"; };
+		1FCFB3E91FEA15DE00BD3375 /* WBTorrentDownloadHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBTorrentDownloadHelper.h; sourceTree = "<group>"; };
+		1FCFB3EA1FEA15DE00BD3375 /* WBTorrentDownloadHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBTorrentDownloadHelper.m; sourceTree = "<group>"; };
+		1FCFB3EC1FEA173C00BD3375 /* WBTorrentDownloadViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBTorrentDownloadViewController.h; sourceTree = "<group>"; };
+		1FCFB3ED1FEA173C00BD3375 /* WBTorrentDownloadViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBTorrentDownloadViewController.m; sourceTree = "<group>"; };
+		1FCFB3EE1FEA173C00BD3375 /* WBTorrentDownloadViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBTorrentDownloadViewController.xib; sourceTree = "<group>"; };
 		1FD7A0E41FB05A45000D4CB3 /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
 		1FD7A0E51FB05A45000D4CB3 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		1FD7A0E61FB05A45000D4CB3 /* back_gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_gray@3x.png"; sourceTree = "<group>"; };
@@ -1763,6 +1777,8 @@
 				1F1ABA091FB97C67006EB1FC /* CSDownloadEvenHandler.h */,
 				1F1ABA111FB99882006EB1FC /* CSDownloadHelper.h */,
 				1F1ABA121FB99882006EB1FC /* CSDownloadHelper.m */,
+				1FCFB3E91FEA15DE00BD3375 /* WBTorrentDownloadHelper.h */,
+				1FCFB3EA1FEA15DE00BD3375 /* WBTorrentDownloadHelper.m */,
 			);
 			path = Handler;
 			sourceTree = "<group>";
@@ -1790,6 +1806,9 @@
 				1F3F997D1FB0312300D6CC64 /* LocalDownloadViewController.h */,
 				1F3F997E1FB0312300D6CC64 /* LocalDownloadViewController.m */,
 				1F3F997F1FB0312300D6CC64 /* LocalDownloadViewController.xib */,
+				1FCFB3EC1FEA173C00BD3375 /* WBTorrentDownloadViewController.h */,
+				1FCFB3ED1FEA173C00BD3375 /* WBTorrentDownloadViewController.m */,
+				1FCFB3EE1FEA173C00BD3375 /* WBTorrentDownloadViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2457,6 +2476,17 @@
 			path = RadioButton;
 			sourceTree = "<group>";
 		};
+		1FCFB3E21FEA05D500BD3375 /* Download */ = {
+			isa = PBXGroup;
+			children = (
+				1FCFB3E31FEA062100BD3375 /* WBDownloadTorrentAPI.h */,
+				1FCFB3E41FEA062100BD3375 /* WBDownloadTorrentAPI.m */,
+				1FCFB3E61FEA076A00BD3375 /* WBDownloadMagnetAPI.h */,
+				1FCFB3E71FEA076A00BD3375 /* WBDownloadMagnetAPI.m */,
+			);
+			path = Download;
+			sourceTree = "<group>";
+		};
 		1FEFCDDC1FE3C7DD00DEC866 /* Initialization */ = {
 			isa = PBXGroup;
 			children = (
@@ -2562,6 +2592,7 @@
 		71A3D66B1FB57D8C0002B8B1 /* APIs */ = {
 			isa = PBXGroup;
 			children = (
+				1FCFB3E21FEA05D500BD3375 /* Download */,
 				1FEFCDDC1FE3C7DD00DEC866 /* Initialization */,
 				1F922EA51FCD5C4F00A7614B /* StationManage */,
 				C1196BB81FC3BFC100E96973 /* Cloud */,
@@ -4007,6 +4038,7 @@
 				C139DFCE1FC7DFC7007098E5 /* ic_pause@3x.png in Resources */,
 				F683118A1FB30AAF005AC578 /* share_red@2x.png in Resources */,
 				1F922F071FCFB40600A7614B /* ic_build@2x.png in Resources */,
+				1FCFB3F01FEA173C00BD3375 /* WBTorrentDownloadViewController.xib in Resources */,
 				F68311DD1FB31369005AC578 /* LCActionSheet.bundle in Resources */,
 				F68311901FB30AAF005AC578 /* share_select@2x.png in Resources */,
 				F683110B1FB30AAE005AC578 /* icon_del@3x.png in Resources */,
@@ -4223,6 +4255,7 @@
 			files = (
 				1F922EA41FCD4D5D00A7614B /* WBStationManageTimeViewController.m in Sources */,
 				1F922E7C1FCD3E1400A7614B /* WBStationManageRootTableViewCell.m in Sources */,
+				1FCFB3E51FEA062100BD3375 /* WBDownloadTorrentAPI.m in Sources */,
 				C139DFBE1FC6B9F3007098E5 /* FMMediaRamdomKeyAPI.m in Sources */,
 				1FF3AD541FD63F5C00E1E536 /* WBLoginViewController.m in Sources */,
 				1F5D21831FBC3DB0006C65AA /* FilesModel.m in Sources */,
@@ -4239,6 +4272,7 @@
 				1F4D75AD1FAC4BB800E6516C /* WBLocalAsset+CoreDataProperties.m in Sources */,
 				F67D64061FAC7D3600E23D16 /* JYAsset.m in Sources */,
 				F67D64081FAC7D3600E23D16 /* PHFetchResult+JYEXT.m in Sources */,
+				1FCFB3EF1FEA173C00BD3375 /* WBTorrentDownloadViewController.m in Sources */,
 				1F2BE3011FBC129700776DB3 /* FilesNextViewController.m in Sources */,
 				F671F1031FB4B3B50051DF93 /* floatTableViewCell.m in Sources */,
 				1F4D75B01FAC4BB800E6516C /* AssetsServices.m in Sources */,
@@ -4315,6 +4349,7 @@
 				1FAD74421FD01F6300A5D880 /* CSFileUploadManager.m in Sources */,
 				F6D8CC441FB448B800673824 /* UIImage+imageWithColor.m in Sources */,
 				1F3F99801FB0312300D6CC64 /* LocalDownloadViewController.m in Sources */,
+				1FCFB3EB1FEA15DE00BD3375 /* WBTorrentDownloadHelper.m in Sources */,
 				F6830F131FB300D2005AC578 /* FMLeftMenu.m in Sources */,
 				F68311DF1FB31369005AC578 /* LCActionSheetCell.m in Sources */,
 				F67D643C1FAC7E5600E23D16 /* FMHeadView.m in Sources */,
@@ -4367,6 +4402,7 @@
 				C183CDF41FCFD859002E29CD /* NSObject+SXRuntime.m in Sources */,
 				F6830EC41FB2FD1D005AC578 /* FMUserLoginHeaderView.m in Sources */,
 				F6D8CC3A1FB402CB00673824 /* FMBaseFirstVC.m in Sources */,
+				1FCFB3E81FEA076A00BD3375 /* WBDownloadMagnetAPI.m in Sources */,
 				1F4D75D01FAC604100E6516C /* LoginTableViewCell.m in Sources */,
 				F679336D1FB00D9B00C9A7DC /* WBUser+CoreDataClass.m in Sources */,
 				1FF3AD511FD5254C00E1E536 /* LoginSeverPathModel.m in Sources */,

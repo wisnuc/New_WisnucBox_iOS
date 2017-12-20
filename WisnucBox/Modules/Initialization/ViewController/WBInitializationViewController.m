@@ -235,7 +235,8 @@
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut  animations:^{
         [weak_self creatDiskModuleAnimateLayout];
         [weak_self creatUserModuleAnimateLayout];
-        
+        [weak_self thirdFourthFifthAnimateLayout];
+        [weak_self lineViewAnimateLayout];
     } completion:^(BOOL finished) {
        
 //        _firstStepButton.hidden = YES;
@@ -346,6 +347,22 @@
     [_firstCheckBox  setHidden:NO];
 }
 
+- (void)thirdFourthFifthAnimateLayout{
+    [UIView animateWithDuration:0.3 animations:^{
+        _thirdStepIconView.frame = CGRectMake(CGRectGetMinX(self.secondStepIconView.frame),CGRectGetMaxY(self.secondStepNextButton.frame)+ 24, 20, 28);
+        _thirdStepTitle.frame = CGRectMake(CGRectGetMinX(_secondStepTitle.frame), CGRectGetMinY(_thirdStepIconView.frame),_secondStepTitle.jy_Width, 17);
+        _fourthStepIconView.frame = CGRectMake(CGRectGetMinX(self.thirdStepIconView.frame),CGRectGetMaxY(self.thirdStepTitle.frame)+ 24, 20, 28);
+        _fourthStepTitle.frame = CGRectMake(CGRectGetMinX(_thirdStepTitle.frame), CGRectGetMinY(_fourthStepIconView.frame),_thirdStepTitle.jy_Width, 17);
+        
+        
+        _fifthStepIconView.frame = CGRectMake(CGRectGetMinX(self.fourthStepIconView.frame),CGRectGetMaxY(self.fourthStepTitle.frame)+ 24, 20, 28);
+        
+        _fifthStepTitle.frame =CGRectMake(CGRectGetMinX(_fourthStepTitle.frame), CGRectGetMinY(_fifthStepIconView.frame),_fourthStepTitle.jy_Width, 17);
+        
+        }];
+
+}
+
 - (void)creatUserModuleAnimateLayout{
     _secondStepLabel.backgroundColor = COR1;
     _secondStepDetailLabel.textColor = WarningDetailColor;
@@ -421,7 +438,7 @@
 
 - (void)confirmInstallAnimateLayout{
     _thirdStepLabel.backgroundColor = COR1;
-    _thirdStepIconView.center = CGPointMake(_thirdStepIconView.center.x,  _secondStepDetailLabel. center.y + 36 + _secondStepDetailLabel.bounds.size.height/2 + _thirdStepIconView.bounds.size.height/2);
+    _thirdStepIconView.center = CGPointMake(_secondStepIconView.center.x,  _secondStepDetailLabel. center.y + 36 + _secondStepDetailLabel.bounds.size.height/2 + _thirdStepIconView.bounds.size.height/2);
     _thirdStepTitle.font = [UIFont boldSystemFontOfSize:16];
     _thirdStepTitle.center = CGPointMake(_thirdStepTitle.center.x,_thirdStepIconView.center.y - 4);
     _diskSelectedTableView.frame = CGRectMake(CGRectGetMinX(_thirdStepTitle.frame), CGRectGetMaxY(_thirdStepTitle.frame) + 8,__kWidth - CGRectGetMinX(_thirdStepTitle.frame) - 56 ,56 *self.diskSelectedArray.count + 8);
