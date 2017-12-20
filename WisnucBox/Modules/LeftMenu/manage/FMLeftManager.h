@@ -12,14 +12,14 @@
 #import "MenuView.h"
 
 
-#define LeftMenu_NotAdminTitles [NSMutableArray arrayWithObjects:LeftMenuTransmissionManageString,LeftMenuSettingString,nil]
-#define LeftMenu_NotAdminImages [NSMutableArray arrayWithObjects:@"upload_download",@"ic_dns_black",@"set",nil]
+#define LeftMenu_NotAdminTitles [NSMutableArray arrayWithObjects:LeftMenuTransmissionManageString,LeftMenuTorrentDownloadManageString,LeftMenuSettingString,nil]
+#define LeftMenu_NotAdminImages [NSMutableArray arrayWithObjects:@"upload_download",@"upload_download",@"set",nil]
 
-#define LeftMenu_AdminTitles [NSMutableArray arrayWithObjects:LeftMenuTransmissionManageString,LeftMenuEquipmentManageString,LeftMenuSettingString,nil]
-#define LeftMenu_AdminImages [NSMutableArray arrayWithObjects:@"upload_download",@"ic_dns_black",@"set",nil]
+#define LeftMenu_AdminTitles [NSMutableArray arrayWithObjects:LeftMenuTransmissionManageString,LeftMenuEquipmentManageString,LeftMenuTorrentDownloadManageString,LeftMenuSettingString,nil]
+#define LeftMenu_AdminImages [NSMutableArray arrayWithObjects:@"upload_download",@"ic_dns_black",@"upload_download",@"set",nil]
 
-#define LeftMenu_AdminBindWechetTitles [NSMutableArray arrayWithObjects:LeftMenuTransmissionManageString,LeftMenuEquipmentManageString,LeftMenuInvitationString,LeftMenuSettingString,nil]
-#define LeftMenu_AdminBindWechetImages [NSMutableArray arrayWithObjects:@"upload_download",@"ic_dns_black",@"weChat_add",@"set",nil]
+#define LeftMenu_AdminBindWechetTitles [NSMutableArray arrayWithObjects:LeftMenuTransmissionManageString,LeftMenuEquipmentManageString,LeftMenuTorrentDownloadManageString,LeftMenuInvitationString,LeftMenuSettingString,nil]
+#define LeftMenu_AdminBindWechetImages [NSMutableArray arrayWithObjects:@"upload_download",@"ic_dns_black",@"upload_download",@"weChat_add",@"set",nil]
 
 @interface FMLeftManager : NSObject
 

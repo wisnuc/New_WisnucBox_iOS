@@ -24,6 +24,6 @@
     return dic;
 }
 -(NSTimeInterval)requestTimeoutInterval{
-    return 200;
+    return 200000;
 }
 @end

@@ -69,6 +69,8 @@
 #define kStationManageRebootShutdownString WBLocalizedString(@"reboot_shutdown", nil)
 
 #define LeftMenuTransmissionManageString WBLocalizedString(@"transmission_manage", nil)
+#define LeftMenuTorrentDownloadManageString WBLocalizedString(@"download_manage", nil)
+
 #define LeftMenuSettingString WBLocalizedString(@"setting", nil)
 #define LeftMenuEquipmentManageString WBLocalizedString(@"equipment_manage", nil)
 #define LeftMenuInvitationString WBLocalizedString(@"invitation", nil)

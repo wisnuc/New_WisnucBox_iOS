@@ -99,7 +99,7 @@ UITableViewDataSource
                         if (i == 1) {
                             FirstFilesModel *shareModel =  [FirstFilesModel new];
                             shareModel.type = WBFilesFirstDirectoryShare;
-                            shareModel.name = @"共享盘";
+                            shareModel.name = WBLocalizedString(@"shared_drive",nil);
                             [self.dataSouceArray addObject:shareModel];
                         }
                         [self.shareDataArray addObject:model];

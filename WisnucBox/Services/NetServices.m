@@ -257,6 +257,9 @@
     }];
 }
 
+- (void)getDirUUIDWithDirName:(NSString *)name BaseDir:(void(^)(NSError *, NSString * dirUUID))callback{
+    [self getUserBackupDirName:name BaseDir:callback];
+}
 // 获取backup 目录 ，如果没有就创建
 // backupBaseDir 就是 “上传的图片” 文件夹 , backupDir 就是 “来自xxx” 文件夹
 - (void)getUserBackupDirWithBackUpBaseDir:(NSString *)baseUUID complete:(void(^)(NSError *, NSString *backupDirUUID))callback {

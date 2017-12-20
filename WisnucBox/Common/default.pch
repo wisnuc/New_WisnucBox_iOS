@@ -35,6 +35,7 @@
 #import <MaterialComponents/MaterialButtons.h>
 #import <MaterialComponents/MaterialDialogs.h>
 #import <MotionTransitioning/MDMTransition.h>
+#import <MaterialComponents/MaterialProgressView.h>
 
 //Base
 //#import "RDVTabBarController.h"

@@ -16,6 +16,7 @@
 #import "WBStationManageRootViewController.h"
 #import "FMUserEditVC.h"
 #import "WBInviteWechatViewController.h"
+#import "WBTorrentDownloadViewController.h"
 
 @interface FMLeftManager ()<FMLeftMenuDelegate>
 
@@ -219,6 +220,13 @@
     
     if (IsEquallString(title,LeftMenuTransmissionManageString)){
         vc = [[LocalDownloadViewController alloc]init];
+        if ([selectVC isKindOfClass:[NavViewController class]]) {
+            [selectVC  pushViewController:vc animated:YES];
+        }
+    }
+    
+    if (IsEquallString(title,LeftMenuTorrentDownloadManageString)){
+        vc = [[WBTorrentDownloadViewController alloc]init];
         if ([selectVC isKindOfClass:[NavViewController class]]) {
             [selectVC  pushViewController:vc animated:YES];
         }

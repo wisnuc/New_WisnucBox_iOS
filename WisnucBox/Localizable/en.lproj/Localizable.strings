@@ -32,6 +32,7 @@
 // LeftMenu Title
 "setting" = "Setting";
 "transmission_manage" = "Transfer";
+"download_manage" = "Download";
 "equipment_manage" = "Station";
 "invitation" = "Invite a friend";
 "operation_not_support" = "Operation not supported";
@@ -69,6 +70,8 @@
 "download_successfully" = "Download successfully";
 "downloading_file" = "Downloading file";
 "added_download_queue"  = "%ld file has been added to the download queue";
+"shared_drive" = "Shared Drive";
+"create_new_download_task" = "Create new download";
 
 // Transmission
 "completed" = "Completed";

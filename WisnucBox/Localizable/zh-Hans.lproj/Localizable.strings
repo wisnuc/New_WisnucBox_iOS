@@ -30,6 +30,7 @@
 // LeftMenu Title
 "setting" = "设置";
 "transmission_manage" = "传输管理";
+"download_manage" = "下载管理";
 "equipment_manage" = "设备管理";
 "invitation" = "邀请微信好友";
 "operation_not_support" = "目前仅支持局域网操作";
@@ -68,6 +69,8 @@
 "download_successfully" = "下载成功";
 "downloading_file" = "正在下载文件";
 "added_download_queue"  = "%ld个文件已添加到下载队列";
+"shared_drive" = "共享盘";
+"create_new_download_task" = "新建下载任务";
 
 //transmission
 "completed" = "已完成";
