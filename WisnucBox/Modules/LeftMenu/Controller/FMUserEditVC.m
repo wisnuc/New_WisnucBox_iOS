@@ -204,6 +204,12 @@
         NSLog(@"%@",request.responseJsonObject);
     } failure:^(__kindof JYBaseRequest *request) {
          NSLog(@"%@",request.error);
+        NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+        if(errorData.length >0){
+            NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+            
+            NSLog(@"%@",serializedData);
+        }
         [SXLoadingView hideProgressHUD];
     }];
 }
@@ -278,6 +284,8 @@
         if (isBind) {
             [SXLoadingView showProgressHUDText:WBLocalizedString(@"success", nil) duration:1.5];
         }
+        [_bindWechatImageView setHidden:YES];
+        [_bindWechatButton setHidden:YES];
     } failure:^(__kindof JYBaseRequest *request) {
         [SXLoadingView hideProgressHUD];
         NSLog(@"%@",request.error);

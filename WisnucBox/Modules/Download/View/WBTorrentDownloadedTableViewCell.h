@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class WBTorrentDownloadedTableViewCell;
+typedef void(^moreButtonClockBlock)(WBTorrentDownloadedTableViewCell * cell);
 @interface WBTorrentDownloadedTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIButton *moreButton;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
+@property (nonatomic) moreButtonClockBlock clickBlock;
 
 @end

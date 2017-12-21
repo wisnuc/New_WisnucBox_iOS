@@ -40,6 +40,8 @@
 
 #define BackUpAssetDirName @"上传的照片"
 #define BackUpFilesDirName @"上传的文件"
+#define BackUpTorrentDirName @"Download"
+
 
 #define KUploadFilesDocument [NSString stringWithFormat:@"Upload/%@",WB_UserService.currentUser.uuid]
 

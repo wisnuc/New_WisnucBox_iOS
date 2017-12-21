@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Setting SelectBT Alert View Controller-->
+        <scene sceneID="9Nr-oC-nzY">
+            <objects>
+                <viewController storyboardIdentifier="WBSettingSelectBTAlertViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="D7P-SD-HgZ" customClass="WBSettingSelectBTAlertViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3ep-6r-eBK"/>
+                        <viewControllerLayoutGuide type="bottom" id="qFP-U9-BTP"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ttd-FK-7qM">
+                        <rect key="frame" x="0.0" y="0.0" width="240" height="210"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="240" height="210"/>
+                    <size key="freeformSize" width="240" height="210"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pea-gi-d74" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-55" y="155"/>
+        </scene>
+    </scenes>
+</document>

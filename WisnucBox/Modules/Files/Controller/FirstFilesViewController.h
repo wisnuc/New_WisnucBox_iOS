@@ -14,6 +14,7 @@
 typedef NS_ENUM(NSInteger,WBFilesFirstDirectoryType) {
     WBFilesFirstDirectoryMyFiles,//默认从0开始
     WBFilesFirstDirectoryShare,
+    WBFilesFirstDirectoryPublic
 };
 
 @interface FirstFilesViewController : FMBaseFirstVC
@@ -23,6 +24,7 @@ typedef NS_ENUM(NSInteger,WBFilesFirstDirectoryType) {
 @interface FirstFilesModel : NSObject
 
 @property (nonatomic,strong) NSString *name;
+@property (nonatomic,strong) NSString *uuid;
 @property (nonatomic) WBFilesFirstDirectoryType type;
 
 @end

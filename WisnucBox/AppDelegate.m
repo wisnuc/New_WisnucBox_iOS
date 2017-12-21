@@ -16,9 +16,12 @@
 #import "LocalDownloadViewController.h"
 #import "WBLoginViewController.h"
 #import "WBInitializationViewController.h"
+#import "WBTorrentDownloadViewController.h"
+#import "WBTorrentAskToUploadAlertViewController.h"
 
-@interface AppDelegate () <WXApiDelegate>
+@interface AppDelegate () <WXApiDelegate,WBTorrentAskToUploadAlertDelegate>
 @property (nonatomic,strong) FMLoginViewController *loginController;
+@property (nonatomic,strong) NSString *filePath;
 @end
 
 @implementation AppDelegate
@@ -149,9 +152,30 @@
     self.leftManager = [[FMLeftManager alloc] initLeftMenuWithTitles:@[] andImages:@[]];
 }
 
+
+- (void)torrentDownloadActionWithFilePath:(NSString *)filePath{
+    NSBundle *bundle = [NSBundle bundleForClass:[WBTorrentAskToUploadAlertViewController class]];
+    UIStoryboard *storyboard =
+    [UIStoryboard storyboardWithName:NSStringFromClass([WBTorrentAskToUploadAlertViewController class])bundle:bundle];
+    NSString *identifier = NSStringFromClass([WBTorrentAskToUploadAlertViewController class]);
+    
+    UIViewController *viewController =
+    [storyboard instantiateViewControllerWithIdentifier:identifier];
+    WBTorrentAskToUploadAlertViewController *vc = (WBTorrentAskToUploadAlertViewController *)viewController;
+    vc.delegate = self;
+    viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
+  
+    //    viewController
+    [self.window.rootViewController presentViewController:viewController animated:YES completion:NULL];
+    
+    
+
+}
+
+
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
     NSLog(@"%@",NSStringFromClass([[UIViewController getCurrentVC] class]));
-    NSString *controllerString = NSStringFromClass([[UIViewController getCurrentVC] class]);
+//    NSString *controllerString = NSStringFromClass([[UIViewController getCurrentVC] class]);
     if (self.window) {
         if (url) {
             NSString *fileNameStr = [url lastPathComponent];
@@ -167,21 +191,13 @@
             {
                 NSLog(@"%@写入失败",saveFile);
             }else{
-               
-               NSNumber* fileSize = [NSNumber numberWithLongLong:[[manager attributesOfItemAtPath:saveFile error:nil]fileSize]];
-                NSLog(@"%@",fileSize);
-            
-                [[CSUploadHelper shareManager] readyUploadFilesWithFilePath:saveFile];
-                if (![controllerString isEqualToString:NSStringFromClass([LocalDownloadViewController class])]) {
-                    CYLTabBarController * tVC = (CYLTabBarController *)MyAppDelegate.window.rootViewController;
-                    NavViewController * selectVC = (NavViewController *)tVC.selectedViewController;
-                    LocalDownloadViewController *localViewController  = [[LocalDownloadViewController alloc]init];
-                    
-                    if ([selectVC isKindOfClass:[NavViewController class]]) {
-                        [selectVC  pushViewController:localViewController animated:YES];
-                    }
+                 NSLog(@"%@写入成功",saveFile);
+                _filePath = saveFile;
+                if (url && [url.pathExtension isEqualToString:@"torrent"]) {
+                    [self torrentDownloadActionWithFilePath:saveFile];
+                }else{
+                    [self uploadWithFilePath:saveFile];
                 }
-                NSLog(@"%@写入成功",saveFile);
             }
         }
     }
@@ -262,5 +278,55 @@
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)(void))completionHandler {
     self.completeBlock = completionHandler;
 }
+
+- (void)uploadWithFilePath:(NSString *)filePath{
+    NSString *controllerString = NSStringFromClass([[UIViewController getCurrentVC] class]);
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSNumber* fileSize = [NSNumber numberWithLongLong:[[manager attributesOfItemAtPath:filePath error:nil]fileSize]];
+    NSLog(@"%@",fileSize);
+    
+    [[CSUploadHelper shareManager] readyUploadFilesWithFilePath:filePath];
+    if (![controllerString isEqualToString:NSStringFromClass([LocalDownloadViewController class])]) {
+        CYLTabBarController * tVC = (CYLTabBarController *)MyAppDelegate.window.rootViewController;
+        NavViewController * selectVC = (NavViewController *)tVC.selectedViewController;
+        LocalDownloadViewController *localViewController  = [[LocalDownloadViewController alloc]init];
+        
+        if ([selectVC isKindOfClass:[NavViewController class]]) {
+            [selectVC  pushViewController:localViewController animated:YES];
+        }
+    }
+}
+
+- (void)confirmWithTypeString:(NSString *)typeString isAlways:(BOOL)always{
+    if ([typeString isEqualToString:@"新建下载任务"]) {
+            NSString *controllerString = NSStringFromClass([[UIViewController getCurrentVC] class]);
+            [WB_NetService getDirUUIDWithDirName:BackUpTorrentDirName BaseDir:^(NSError *error, NSString *dirUUID) {
+                if (error) {
+                    NSLog(@"%@",error);
+                }else{
+                    NSLog(@"%@",dirUUID);
+                    [[CSUploadHelper shareManager] readyUploadTorrentFilesWithFilePath:_filePath DirUUID:dirUUID Complete:^(BOOL isComplete) {
+                        if (isComplete) {
+                        if (![controllerString isEqualToString:NSStringFromClass([WBTorrentDownloadViewController class])]) {
+                            CYLTabBarController * tVC = (CYLTabBarController *)MyAppDelegate.window.rootViewController;
+                            NavViewController * selectVC = (NavViewController *)tVC.selectedViewController;
+                            WBTorrentDownloadViewController *localViewController  = [[WBTorrentDownloadViewController alloc]init];
+        
+                            if ([selectVC isKindOfClass:[NavViewController class]]) {
+                                [selectVC  pushViewController:localViewController animated:YES];
+                            }
+                        }
+                    }
+                    }];
+                }
+            }];
+    }else{
+        if (_filePath) {
+             [self uploadWithFilePath:_filePath];
+        }
+    }
+}
+
+
 
 @end

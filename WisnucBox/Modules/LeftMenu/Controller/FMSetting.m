@@ -8,6 +8,7 @@
 
 #import "FMSetting.h"
 #import "LCActionSheet.h"
+#import "WBSettingSelectBTAlertViewController.h"
 
 @interface FMSetting ()<UITableViewDelegate,UITableViewDataSource,LCActionSheetDelegate>
 @property (nonatomic) BOOL displayProgress;
@@ -53,7 +54,7 @@
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 2;
+    return 3;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -77,20 +78,27 @@
         titleLb.font = [UIFont systemFontOfSize:17];
         [cell.contentView addSubview:titleLb];
         
-        UIButton * cleanBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 70, 40)];
-        cleanBtn.userInteractionEnabled = NO;
-        [cleanBtn setTitle:WBLocalizedString(@"calculating", nil) forState:UIControlStateNormal];
-        cleanBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-        [cleanBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//        UIButton * cleanBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 70, 40)];
+//        cleanBtn.userInteractionEnabled = NO;
+//        [cleanBtn setTitle:WBLocalizedString(@"calculating", nil) forState:UIControlStateNormal];
+//        cleanBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+//        [cleanBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             NSUInteger  i = [SDImageCache sharedImageCache].getSize;
             NSLog(@"%ld",(long)[[YYImageCache sharedCache].diskCache totalCost]);
             i = i + [[YYImageCache sharedCache].diskCache totalCost];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%luM",(unsigned long)i/(1024*1024)];
             dispatch_async(dispatch_get_main_queue(), ^{
-                [cleanBtn setTitle:[NSString stringWithFormat:@"%luM",(unsigned long)i/(1024*1024)] forState:UIControlStateNormal];
+//                [cleanBtn setTitle:[NSString stringWithFormat:@"%luM",(unsigned long)i/(1024*1024)] forState:UIControlStateNormal];
             });
         });        
-        cell.accessoryView = cleanBtn;
+//        cell.accessoryView = cleanBtn;
+    }else{
+//        UILabel * titleLb = [[UILabel alloc] initWithFrame:CGRectMake(16, 23, 200, 17)];
+//        titleLb.text = @"如何处理来自第三方应用的BT文件";
+//        titleLb.font = [UIFont systemFontOfSize:17];
+//        [cell.contentView addSubview:titleLb];
+        cell.textLabel.text =  @"如何处理来自第三方应用的BT文件";
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -115,6 +123,18 @@
             actionSheet.visibleButtonCount = 3.6f;
             [actionSheet show];
         }
+    }else if (indexPath.row == 2){
+        NSBundle *bundle = [NSBundle bundleForClass:[WBSettingSelectBTAlertViewController class]];
+        UIStoryboard *storyboard =
+        [UIStoryboard storyboardWithName:NSStringFromClass([WBSettingSelectBTAlertViewController class]) bundle:bundle];
+        NSString *identifier = NSStringFromClass([WBSettingSelectBTAlertViewController class]);
+        
+        UIViewController *viewController =
+        [storyboard instantiateViewControllerWithIdentifier:identifier];
+        
+        viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
+        WBSettingSelectBTAlertViewController *vc = (WBSettingSelectBTAlertViewController *)viewController;
+        [self presentViewController:viewController animated:YES completion:NULL];
     }
 }
 

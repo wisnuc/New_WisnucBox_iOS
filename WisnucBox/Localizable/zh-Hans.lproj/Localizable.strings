@@ -70,11 +70,23 @@
 "downloading_file" = "正在下载文件";
 "added_download_queue"  = "%ld个文件已添加到下载队列";
 "shared_drive" = "共享盘";
-"create_new_download_task" = "新建下载任务";
+"public_drive" = "公共盘";
+
 
 //transmission
 "completed" = "已完成";
 "incomplete" = "未完成";
+
+//Download
+"create_new_download_task" = "新建下载任务";
+"downloading" = "正在下载";
+"delete_task" = "删除任务";
+"paused" = "已暂停";
+"pause" = "暂停";
+"resume" = "继续";
+"clear_record" = "清除记录";
+"delete_file" = "删除已下载文件";
+"download_manage" = "下载管理";
 
 //Setting
 "photo_auto_upload_setting_text" = "照片自动备份";

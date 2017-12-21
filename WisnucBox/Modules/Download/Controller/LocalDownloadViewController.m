@@ -338,7 +338,7 @@ UIDocumentInteractionControllerDelegate
                 LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:nil
                                                                          delegate:nil
                                                                 cancelButtonTitle:cancelTitle
-                                                            otherButtonTitleArray:@[WBLocalizedString(@"Cancel Upload", nil)]];
+                                                            otherButtonTitleArray:@[WBLocalizedString(@"cancel_upload", nil)]];
                 actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
                     if (buttonIndex == 1) {
                         if (self.transmitingArray.count == 0) {

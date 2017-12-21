@@ -1539,7 +1539,7 @@
     if (!_fourthStepTitle) {
         _fourthStepTitle = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(_thirdStepTitle.frame), CGRectGetMinY(_fourthStepIconView.frame),_thirdStepTitle.jy_Width, 17)];
         _fourthStepTitle.textColor = OriginTitleColor;
-        _fourthStepTitle.text = @"绑定微信用户";
+        _fourthStepTitle.text = WBLocalizedString(@"bind_wechat_user", nil);
         _fourthStepTitle.font = [UIFont systemFontOfSize:16];
     }
     return _fourthStepTitle;

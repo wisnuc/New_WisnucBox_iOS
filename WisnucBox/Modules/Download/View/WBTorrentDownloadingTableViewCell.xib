@@ -41,14 +41,17 @@
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ATf-ss-z4t">
-                        <rect key="frame" x="72" y="31" width="0.0" height="0.0"/>
+                        <rect key="frame" x="72" y="31" width="108" height="0.0"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.1267565356" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T3R-5O-tZJ">
-                        <rect key="frame" x="248" y="31" width="0.0" height="0.0"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T3R-5O-tZJ">
+                        <rect key="frame" x="188" y="31" width="60" height="0.0"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="LL2-oC-U65"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
                         <color key="textColor" white="0.46095792452494305" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -76,6 +79,7 @@
                     <constraint firstItem="tU8-J4-Dk8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="WNk-7Z-0TV"/>
                     <constraint firstItem="T3R-5O-tZJ" firstAttribute="trailing" secondItem="LmP-Yv-ukw" secondAttribute="trailing" id="YcU-SJ-YI3"/>
                     <constraint firstItem="LmP-Yv-ukw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="72" id="alO-hv-Uow"/>
+                    <constraint firstItem="T3R-5O-tZJ" firstAttribute="leading" secondItem="ATf-ss-z4t" secondAttribute="trailing" constant="8" id="cSg-Mi-M3S"/>
                     <constraint firstItem="XZ8-S8-eFH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="oNx-Mw-CM0"/>
                     <constraint firstItem="LmP-Yv-ukw" firstAttribute="top" secondItem="T3R-5O-tZJ" secondAttribute="bottom" constant="4" id="q9S-rP-5Vq"/>
                     <constraint firstAttribute="trailing" secondItem="XZ8-S8-eFH" secondAttribute="trailing" constant="16" id="ssH-Wx-hHh"/>

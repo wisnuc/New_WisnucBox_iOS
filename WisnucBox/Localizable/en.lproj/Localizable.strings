@@ -71,11 +71,22 @@
 "downloading_file" = "Downloading file";
 "added_download_queue"  = "%ld file has been added to the download queue";
 "shared_drive" = "Shared Drive";
-"create_new_download_task" = "Create new download";
+"public_drive" = "Public Drive";
+
 
 // Transmission
 "completed" = "Completed";
 "incomplete" = "InComplete";
+//Download
+"create_new_download_task" = "Create new download";
+"downloading" = "Downloading";
+"delete_task" = "Delete task";
+"paused" = "Paused";
+"pause" = "Pause";
+"resume" = "Resume";
+"clear_record" = "Clear Record";
+"delete_file" = "Delete downloaded file";
+"download_manage" = "Download Manage";
 
 //Setting
 "photo_auto_upload_setting_text" = "Automatic backup";
@@ -86,6 +97,7 @@
 "clear_completed" = "Clear completed";
 "clearing_cache" = "Clearing cache";
 "already_upload_media_percent_text" = "Backup";
+
 
 //Station
 "user_manage" = "Users";

@@ -10,6 +10,8 @@
 		0693AED01FE7FFB2005CCEA1 /* WBInitDiskDetailAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0693AECF1FE7FFB2005CCEA1 /* WBInitDiskDetailAlertViewController.m */; };
 		0693AED21FE7FFC0005CCEA1 /* WBInitDiskDetailAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0693AED11FE7FFC0005CCEA1 /* WBInitDiskDetailAlertViewController.storyboard */; };
 		1F0898DC1FB05FF900B86723 /* eye_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0898DB1FB05FF800B86723 /* eye_off.png */; };
+		1F178EBC1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F178EBB1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.m */; };
+		1F178EBE1FEBF047001650E5 /* WBSettingSelectBTAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F178EBD1FEBF047001650E5 /* WBSettingSelectBTAlertViewController.storyboard */; };
 		1F1AB9EC1FB968CA006EB1FC /* FLFilesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AB9EA1FB968C9006EB1FC /* FLFilesCell.m */; };
 		1F1AB9ED1FB968CA006EB1FC /* FLFilesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F1AB9EB1FB968C9006EB1FC /* FLFilesCell.xib */; };
 		1F1AB9F21FB97092006EB1FC /* NSObject+KVOBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AB9F11FB97092006EB1FC /* NSObject+KVOBlock.m */; };
@@ -221,6 +223,9 @@
 		1FCFB40B1FEA695300BD3375 /* WBTorrentDownloadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FCFB4091FEA695300BD3375 /* WBTorrentDownloadingTableViewCell.xib */; };
 		1FCFB40F1FEA696B00BD3375 /* WBTorrentDownloadedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFB40D1FEA696B00BD3375 /* WBTorrentDownloadedTableViewCell.m */; };
 		1FCFB4101FEA696B00BD3375 /* WBTorrentDownloadedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FCFB40E1FEA696B00BD3375 /* WBTorrentDownloadedTableViewCell.xib */; };
+		1FCFB4131FEB553200BD3375 /* WBTorrentDownloadActionAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFB4121FEB553200BD3375 /* WBTorrentDownloadActionAPI.m */; };
+		1FCFB4161FEBD85B00BD3375 /* WBTorrentAskToUploadAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFB4151FEBD85A00BD3375 /* WBTorrentAskToUploadAlertViewController.m */; };
+		1FCFB4181FEBD8B500BD3375 /* WBTorrentAskToUploadAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FCFB4171FEBD8B500BD3375 /* WBTorrentAskToUploadAlertViewController.storyboard */; };
 		1FD7A0EA1FB05A45000D4CB3 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E41FB05A45000D4CB3 /* back@2x.png */; };
 		1FD7A0EB1FB05A45000D4CB3 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E51FB05A45000D4CB3 /* back.png */; };
 		1FD7A0EC1FB05A45000D4CB3 /* back_gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E61FB05A45000D4CB3 /* back_gray@3x.png */; };
@@ -747,6 +752,9 @@
 		0693AECF1FE7FFB2005CCEA1 /* WBInitDiskDetailAlertViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBInitDiskDetailAlertViewController.m; sourceTree = "<group>"; };
 		0693AED11FE7FFC0005CCEA1 /* WBInitDiskDetailAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WBInitDiskDetailAlertViewController.storyboard; sourceTree = "<group>"; };
 		1F0898DB1FB05FF800B86723 /* eye_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye_off.png; sourceTree = "<group>"; };
+		1F178EBA1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBSettingSelectBTAlertViewController.h; sourceTree = "<group>"; };
+		1F178EBB1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBSettingSelectBTAlertViewController.m; sourceTree = "<group>"; };
+		1F178EBD1FEBF047001650E5 /* WBSettingSelectBTAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WBSettingSelectBTAlertViewController.storyboard; sourceTree = "<group>"; };
 		1F1AB9E91FB968C8006EB1FC /* FLFilesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLFilesCell.h; sourceTree = "<group>"; };
 		1F1AB9EA1FB968C9006EB1FC /* FLFilesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLFilesCell.m; sourceTree = "<group>"; };
 		1F1AB9EB1FB968C9006EB1FC /* FLFilesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FLFilesCell.xib; sourceTree = "<group>"; };
@@ -1067,6 +1075,11 @@
 		1FCFB40C1FEA696B00BD3375 /* WBTorrentDownloadedTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBTorrentDownloadedTableViewCell.h; sourceTree = "<group>"; };
 		1FCFB40D1FEA696B00BD3375 /* WBTorrentDownloadedTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBTorrentDownloadedTableViewCell.m; sourceTree = "<group>"; };
 		1FCFB40E1FEA696B00BD3375 /* WBTorrentDownloadedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBTorrentDownloadedTableViewCell.xib; sourceTree = "<group>"; };
+		1FCFB4111FEB553200BD3375 /* WBTorrentDownloadActionAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBTorrentDownloadActionAPI.h; sourceTree = "<group>"; };
+		1FCFB4121FEB553200BD3375 /* WBTorrentDownloadActionAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBTorrentDownloadActionAPI.m; sourceTree = "<group>"; };
+		1FCFB4141FEBD85A00BD3375 /* WBTorrentAskToUploadAlertViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBTorrentAskToUploadAlertViewController.h; sourceTree = "<group>"; };
+		1FCFB4151FEBD85A00BD3375 /* WBTorrentAskToUploadAlertViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBTorrentAskToUploadAlertViewController.m; sourceTree = "<group>"; };
+		1FCFB4171FEBD8B500BD3375 /* WBTorrentAskToUploadAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WBTorrentAskToUploadAlertViewController.storyboard; sourceTree = "<group>"; };
 		1FD7A0E41FB05A45000D4CB3 /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
 		1FD7A0E51FB05A45000D4CB3 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		1FD7A0E61FB05A45000D4CB3 /* back_gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_gray@3x.png"; sourceTree = "<group>"; };
@@ -1719,6 +1732,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F178EB91FEBF00D001650E5 /* AlertController */ = {
+			isa = PBXGroup;
+			children = (
+				1F178EBA1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.h */,
+				1F178EBB1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.m */,
+				1F178EBD1FEBF047001650E5 /* WBSettingSelectBTAlertViewController.storyboard */,
+			);
+			path = AlertController;
+			sourceTree = "<group>";
+		};
 		1F196F351FB9416A004D5EB7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -2522,6 +2545,8 @@
 				1FCFB3E71FEA076A00BD3375 /* WBDownloadMagnetAPI.m */,
 				1FCFB4011FEA617100BD3375 /* WBGetDownloadAPI.h */,
 				1FCFB4021FEA617100BD3375 /* WBGetDownloadAPI.m */,
+				1FCFB4111FEB553200BD3375 /* WBTorrentDownloadActionAPI.h */,
+				1FCFB4121FEB553200BD3375 /* WBTorrentDownloadActionAPI.m */,
 			);
 			path = Download;
 			sourceTree = "<group>";
@@ -2532,6 +2557,9 @@
 				1FCFB3F81FEA45B200BD3375 /* WBTorrentMagnetAlertViewController.h */,
 				1FCFB3F91FEA45B200BD3375 /* WBTorrentMagnetAlertViewController.m */,
 				1FCFB3FF1FEA4A8200BD3375 /* WBTorrentMagnetAlertViewController.storyboard */,
+				1FCFB4141FEBD85A00BD3375 /* WBTorrentAskToUploadAlertViewController.h */,
+				1FCFB4151FEBD85A00BD3375 /* WBTorrentAskToUploadAlertViewController.m */,
+				1FCFB4171FEBD8B500BD3375 /* WBTorrentAskToUploadAlertViewController.storyboard */,
 			);
 			path = AltertController;
 			sourceTree = "<group>";
@@ -3049,6 +3077,7 @@
 		F6830EB61FB2FC40005AC578 /* LeftMenu */ = {
 			isa = PBXGroup;
 			children = (
+				1F178EB91FEBF00D001650E5 /* AlertController */,
 				1FAD74231FCFE98D00A5D880 /* Model */,
 				F6D8CC2D1FB3F90100673824 /* manage */,
 				F6830EB71FB2FC40005AC578 /* Controller */,
@@ -3827,6 +3856,7 @@
 				F68311B01FB30AAF005AC578 /* up@2x.png in Resources */,
 				F68310941FB30AAE005AC578 /* back_grayhighlight@2x.png in Resources */,
 				F68311361FB30AAE005AC578 /* more@3x.png in Resources */,
+				1F178EBE1FEBF047001650E5 /* WBSettingSelectBTAlertViewController.storyboard in Resources */,
 				F6830F191FB300D2005AC578 /* FMLeftUserCell.xib in Resources */,
 				F68310A31FB30AAE005AC578 /* check_circle@2x.png in Resources */,
 				1F922EE01FCE993900A7614B /* ic_storage.png in Resources */,
@@ -3903,6 +3933,7 @@
 				F68310AA1FB30AAE005AC578 /* comment@3x.png in Resources */,
 				F68311941FB30AAF005AC578 /* small_0@3x.png in Resources */,
 				1FD7A0EE1FB05A45000D4CB3 /* back_gray@2x.png in Resources */,
+				1FCFB4181FEBD8B500BD3375 /* WBTorrentAskToUploadAlertViewController.storyboard in Resources */,
 				F68311111FB30AAE005AC578 /* info@2x.png in Resources */,
 				F68310971FB30AAE005AC578 /* bg_pic@2x.jpg in Resources */,
 				1F922E811FCD3FC100A7614B /* ic_chevron_right@3x.png in Resources */,
@@ -4392,6 +4423,7 @@
 				1FC2AFF81FC6684100E8C9DE /* WBgetStationInfoAPI.m in Sources */,
 				1F922EFB1FCEC3C800A7614B /* WBReNameAPI.m in Sources */,
 				1F5D21801FBC3CC6006C65AA /* WBBaseModel.m in Sources */,
+				1F178EBC1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.m in Sources */,
 				1F4D75B41FAC4BB800E6516C /* AppServices.m in Sources */,
 				F6830EE61FB2FEC4005AC578 /* FMSetting.m in Sources */,
 				1F4D75AB1FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.m in Sources */,
@@ -4407,6 +4439,7 @@
 				F675614D1FB3428F00E3277F /* UIImage+MFTint.m in Sources */,
 				1F5D217D1FBC351A006C65AA /* FilesDataSourceManager.m in Sources */,
 				1FAD74421FD01F6300A5D880 /* CSFileUploadManager.m in Sources */,
+				1FCFB4161FEBD85B00BD3375 /* WBTorrentAskToUploadAlertViewController.m in Sources */,
 				F6D8CC441FB448B800673824 /* UIImage+imageWithColor.m in Sources */,
 				1F3F99801FB0312300D6CC64 /* LocalDownloadViewController.m in Sources */,
 				1FCFB3EB1FEA15DE00BD3375 /* WBTorrentDownloadHelper.m in Sources */,
@@ -4447,6 +4480,7 @@
 				1F1ABA041FB97A0D006EB1FC /* CSDownloadTask.m in Sources */,
 				F675614C1FB3428F00E3277F /* UIFont+MaterialTextField.m in Sources */,
 				F6D8CC301FB3F91600673824 /* FMLeftManager.m in Sources */,
+				1FCFB4131FEB553200BD3375 /* WBTorrentDownloadActionAPI.m in Sources */,
 				F67D64401FAC7E5600E23D16 /* TYDecorationSectionLayout.m in Sources */,
 				F67D64261FAC7D9A00E23D16 /* UIScrollView+IndicatorExt.m in Sources */,
 				71A3D6671FB57AC30002B8B1 /* JYBaseRequest.m in Sources */,

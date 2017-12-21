@@ -24,5 +24,6 @@
 
 @property(weak,nonatomic)id<UploadHelperDelegate> delegate;
 - (void)readyUploadFilesWithFilePath:(NSString *)filePath;
+- (void)readyUploadTorrentFilesWithFilePath:(NSString *)filePath DirUUID:(NSString *)dirUUID Complete:(void (^)(BOOL isComplete))complete;
 - (void)startUploadAction;
 @end

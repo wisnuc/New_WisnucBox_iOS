@@ -84,6 +84,12 @@ UITableViewDataSource
                 filesModel.type = WBFilesFirstDirectoryMyFiles;
                 filesModel.name = WBLocalizedString(@"my_file", nil);
                 [self.dataSouceArray addObject:filesModel];
+            }else if(IsEquallString(model.tag, @"built-in")){
+                FirstFilesModel *publicModel =  [FirstFilesModel new];
+                publicModel.type = WBFilesFirstDirectoryPublic;
+                publicModel.name = WBLocalizedString(@"public_drive",nil);
+                publicModel.uuid = model.uuid;
+                [self.dataSouceArray addObject:publicModel];
             }else{
                 NSString *string = WB_UserService.currentUser.uuid;
                 //                NSRange iStart = [string rangeOfString: @":" options:NSCaseInsensitiveSearch];
@@ -132,6 +138,8 @@ UITableViewDataSource
     cell.nameLabel.text = model.name;
     if (model.type == WBFilesFirstDirectoryShare) {
         cell.f_ImageView.image = [UIImage imageNamed:@"share_files"];
+    }else if(model.type == WBFilesFirstDirectoryPublic) {
+        cell.f_ImageView.image = [UIImage imageNamed:@"share_files"];
     }else{
         cell.f_ImageView.image = [UIImage imageNamed:@"folder_icon"];
     }
@@ -153,6 +161,12 @@ UITableViewDataSource
         filesVC.name = model.name;
         filesVC.parentUUID = WB_UserService.currentUser.userHome;
         filesVC.driveUUID = WB_UserService.currentUser.userHome;
+        [self.navigationController pushViewController:filesVC animated:YES];
+    }else if (model.type == WBFilesFirstDirectoryPublic){
+        FilesNextViewController *filesVC = [[FilesNextViewController alloc]init];
+        filesVC.name = model.name;
+        filesVC.parentUUID = model.uuid;
+        filesVC.driveUUID = model.uuid;
         [self.navigationController pushViewController:filesVC animated:YES];
     }else{
         FilesShareViewController * filesVC = [[FilesShareViewController alloc]init];

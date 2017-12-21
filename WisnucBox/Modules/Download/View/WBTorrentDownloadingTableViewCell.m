@@ -12,7 +12,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [self.moreButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:10];
+    [self.moreButton setEnlargeEdgeWithTop:7 right:10 bottom:7 left:10];
     // Initialization code
     
 }

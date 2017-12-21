@@ -207,9 +207,9 @@
     [super layoutSubviews];
     [self getUserInfo];
     self.bonjourLabel.text = _userInfo.bonjour_name;
-    if (![AppServices sharedService].userServices.currentUser.isCloudLogin) {
-        self.userHeaderIV.image = [UIImage imageForName:self.nameLabel.text size:self.userHeaderIV.bounds.size];
-    }
+//    if (![AppServices sharedService].userServices.currentUser.isCloudLogin) {
+//        self.userHeaderIV.image = [UIImage imageForName:self.nameLabel.text size:self.userHeaderIV.bounds.size];
+//    }
     self.nameLabel.text = [AppServices sharedService].userServices.currentUser.userName;
 //    [cell.contentView addSubview:progressLb];
 //    progressLb.hidden = !_displayProgress;
