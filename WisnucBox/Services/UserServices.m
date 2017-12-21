@@ -66,6 +66,7 @@
     _isUserLogin = false;
     _currentUser = nil;
     [kUserDefaults removeObjectForKey:WBCURRENTUSER_UUID];
+    [kUserDefaults removeObjectForKey:kTorrentType];
     kUD_Synchronize;
 }
 

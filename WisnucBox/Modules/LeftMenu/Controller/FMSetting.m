@@ -10,7 +10,9 @@
 #import "LCActionSheet.h"
 #import "WBSettingSelectBTAlertViewController.h"
 
-@interface FMSetting ()<UITableViewDelegate,UITableViewDataSource,LCActionSheetDelegate>
+
+
+@interface FMSetting ()<UITableViewDelegate,UITableViewDataSource,LCActionSheetDelegate,SettingSelectBTAlertViewDelegate>
 @property (nonatomic) BOOL displayProgress;
 
 @property (nonatomic,strong)UISwitch * switchBtn;
@@ -134,6 +136,7 @@
         
         viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
         WBSettingSelectBTAlertViewController *vc = (WBSettingSelectBTAlertViewController *)viewController;
+        vc.typeString = [NSString stringWithFormat:@"%@",GetUserDefaultForKey(kTorrentType)];
         [self presentViewController:viewController animated:YES completion:NULL];
     }
 }
@@ -195,6 +198,18 @@
 
 -(void)backbtnClick:(UIButton *)back{
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)confirmWithTypeString:(NSString *)typeString {
+    if ([typeString containsString:@"询问"]) {
+        SaveToUserDefault(kTorrentType, [NSNumber numberWithInt: TorrentTypeAskAllTime]);
+       
+    }else if ([typeString containsString:@"新建"]){
+        SaveToUserDefault(kTorrentType, [NSNumber numberWithInt:TorrentTypeCreatNewTask]);
+       
+    } else if ([typeString containsString:@"上传"]){
+        SaveToUserDefault(kTorrentType, [NSNumber numberWithInt:TorrentTypeUpload]);
+    }
 }
 
 @end

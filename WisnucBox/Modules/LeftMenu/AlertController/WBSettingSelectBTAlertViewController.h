@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol SettingSelectBTAlertViewDelegate <NSObject>
 
+- (void)confirmWithTypeString:(NSString *)typeString;
+
+@end
 @interface WBSettingSelectBTAlertViewController : UIViewController
-
+@property (nonatomic,weak) id<SettingSelectBTAlertViewDelegate> delegate;
+@property (nonatomic) NSString *typeString;
 @end

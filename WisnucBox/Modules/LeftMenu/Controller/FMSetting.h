@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum
+{
+    TorrentTypeAskAllTime = 0,
+    TorrentTypeCreatNewTask,
+    TorrentTypeUpload
+    
+} TorrentType;
+
 @interface FMSetting : FABaseVC
 @property (weak, nonatomic) IBOutlet UITableView *settingTableView;
 - (instancetype)initPrivate;

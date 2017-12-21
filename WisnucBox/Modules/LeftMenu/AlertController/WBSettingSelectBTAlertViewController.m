@@ -7,8 +7,15 @@
 //
 
 #import "WBSettingSelectBTAlertViewController.h"
+#import "FMSetting.h"
 
 @interface WBSettingSelectBTAlertViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet RadioButton *askAllTimeRadioButton;
+@property (weak, nonatomic) IBOutlet RadioButton *creatNewTaskRadioButton;
+@property (weak, nonatomic) IBOutlet RadioButton *uploadRadioButton;
+@property (weak, nonatomic) IBOutlet UIButton *confirmButton;
+
 
 @end
 
@@ -16,7 +23,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if ([_typeString isEqualToString:[NSString stringWithFormat:@"%d", TorrentTypeCreatNewTask]]) {
+        [self.creatNewTaskRadioButton setSelected:YES];
+    }else if ([_typeString isEqualToString:[NSString stringWithFormat:@"%d", TorrentTypeUpload]]){
+          [self.uploadRadioButton setSelected:YES];
+    }else{
+          [self.askAllTimeRadioButton setSelected:YES];
+    }
     // Do any additional setup after loading the view.
+}
+- (IBAction)confirmButtonClick:(UIButton *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    if ([_delegate respondsToSelector:@selector(confirmWithTypeString:)]) { // 如果协议响应了sendValue:方法
+        
+        NSLog(@"%@",_typeString);
+        [_delegate confirmWithTypeString:_typeString]; // 通知执行协议方法
+    }
+}
+- (IBAction)radioButtonClick:(RadioButton *)sender {
+    _typeString = sender.titleLabel.text;
 }
 
 - (void)didReceiveMemoryWarning {
