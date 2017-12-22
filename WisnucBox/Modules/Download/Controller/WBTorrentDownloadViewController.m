@@ -15,6 +15,7 @@
 #import "WBTorrentDownloadedTableViewCell.h"
 #import "WBTorrentDownloadActionAPI.h"
 #import "CSDateUtil.h"
+#import "WBTorrentDownloadSwitchAPI.h"
 
 @interface WBTorrentDownloadViewController ()
 <TorrentMagnetAlertViewDelegate,
@@ -54,7 +55,7 @@ UITableViewDataSource
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.timer fire];
+    [self checkSwitch];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:UICOLOR_RGB(0x03a9f4)] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.backgroundColor = UICOLOR_RGB(0x03a9f4);
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
@@ -62,6 +63,21 @@ UITableViewDataSource
     //    [self.navigationController.navigationItem.leftBarButtonItem setImage:[UIImage imageNamed:@"back"]];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self addLeftBarButtonWithImage:[UIImage imageNamed:@"back"] andHighlightButtonImage:nil andSEL:@selector(backbtnClick:)];
+}
+
+- (void)checkSwitch{
+    [SXLoadingView showProgressHUD:@""];
+    [[WBTorrentDownloadSwitchAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSDictionary *dic = request.responseJsonObject;
+        NSNumber *number = dic[@"switch"];
+        BOOL swichOn = [number boolValue];
+        if (swichOn) {
+           [self.timer fire];
+        }
+         [SXLoadingView hideProgressHUD];
+    } failure:^(__kindof JYBaseRequest *request) {
+         [SXLoadingView hideProgressHUD];
+    }];
 }
 
 - (void)dealloc{

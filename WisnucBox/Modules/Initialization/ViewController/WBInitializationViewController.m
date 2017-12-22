@@ -27,6 +27,7 @@
 #import "FMUserEditVC.h"
 #import "WBInitDiskDetailAlertViewController.h"
 #import "NetServices.h"
+#import "WBStationBootAPI.h"
 
 #define WarningDetailColor UICOLOR_RGB(0xf44336)
 #define IgnoreColor RGBACOLOR(0, 0, 0, 0.54f)
@@ -634,38 +635,40 @@
 
 - (void)fourthStepNextButtonClick:(UIButton *)sender{
    @weaky(self)
-    [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
-    UserModel *model = [self.loginDataDic valueForKey:@"userModel"];
-//    NSString *stationName = [self.loginDataDic valueForKey:@"stationName"];
-    NSString * UUID = [NSString stringWithFormat:@"%@:%@",model.uuid,_confirmPasswordTextField.text];
-    NSString * Basic = [UUID base64EncodedString];
-    AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
-    NSString* urlString = [NSString stringWithFormat:@"http://%@:3000/", _searchModel.displayPath];
-
-    [manager.requestSerializer setValue:[NSString stringWithFormat:@"Basic %@",Basic] forHTTPHeaderField:@"Authorization"];
-    [manager GET:[NSString stringWithFormat:@"%@token",urlString] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSString * token = responseObject[@"token"];
+   
+    [self bootCheckForLastActionCompleteBlock:^(BootModel *bootModel) {
+        UserModel *model = [self.loginDataDic valueForKey:@"userModel"];
+        //    NSString *stationName = [self.loginDataDic valueForKey:@"stationName"];
+        NSString * UUID = [NSString stringWithFormat:@"%@:%@",model.uuid,_confirmPasswordTextField.text];
+        NSString * Basic = [UUID base64EncodedString];
+        AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
+        NSString* urlString = [NSString stringWithFormat:@"http://%@:3000/", _searchModel.displayPath];
         
-        self.netServices = [[NetServices alloc]initWithLocalURL:urlString andCloudURL:nil];
-        WBUser *user = [WB_UserService createUserWithUserUUID:model.uuid];
-        user.userName = model.username;
-        user.localAddr = urlString;
-        user.localToken = token;
-        user.isFirstUser = NO;
-        user.isAdmin = NO;
-        user.isCloudLogin = NO;
-//        user.bonjour_name = stationName;
-        user.sn_address = _searchModel.displayPath;
-        if (model.avatar) {
-            user.avaterURL = model.avatar;
-        }
-        [WB_UserService setCurrentUser:user];
-        [WB_UserService synchronizedCurrentUser];
-        [weak_self requestWechat];
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        error.wbCode = 10001;
-       
+        [manager.requestSerializer setValue:[NSString stringWithFormat:@"Basic %@",Basic] forHTTPHeaderField:@"Authorization"];
+        [manager GET:[NSString stringWithFormat:@"%@token",urlString] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSString * token = responseObject[@"token"];
+            
+            self.netServices = [[NetServices alloc]initWithLocalURL:urlString andCloudURL:nil];
+            WBUser *user = [WB_UserService createUserWithUserUUID:model.uuid];
+            user.userName = model.username;
+            user.localAddr = urlString;
+            user.localToken = token;
+            user.isFirstUser = NO;
+            user.isAdmin = NO;
+            user.isCloudLogin = NO;
+            //        user.bonjour_name = stationName;
+            user.sn_address = _searchModel.displayPath;
+            if (model.avatar) {
+                user.avaterURL = model.avatar;
+            }
+            [WB_UserService setCurrentUser:user];
+            [WB_UserService synchronizedCurrentUser];
+            [weak_self requestWechat];
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            error.wbCode = 10001;
+            
+        }];
     }];
     
 }
@@ -781,7 +784,37 @@
 }
 
 - (void)fourthIgnoreButtonClick:(UIButton *)sender{
-    [self animiteForLastAction];
+    
+    [self bootCheckForLastActionCompleteBlock:^(BootModel *model) {
+         [self animiteForLastAction];
+    }];
+}
+
+- (void)bootCheckForLastActionCompleteBlock:(void(^)(BootModel *model))block{
+    [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
+    [[WBStationBootAPI apiWithPath:_searchModel.path RequestMethod:@"GET"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        @weaky(self)
+        NSLog(@"%@",request.responseJsonObject);
+        BootModel *bootModel = [BootModel yy_modelWithJSON:request.responseJsonObject];
+        //        if (bootModel.current) {
+        if ([bootModel.state isEqualToString:@"started"]) {
+            [SXLoadingView hideProgressHUD];
+            block(bootModel);
+        }else if ([bootModel.state isEqualToString:@"stopping"]){
+             [SXLoadingView showProgressHUDText:@"设备已停止服务" duration:1.0f];
+//             block(bootModel);
+        }else{
+            
+            dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0/*延迟执行时间*/ * NSEC_PER_SEC));
+            
+            dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+                [weak_self bootCheckForLastActionCompleteBlock:block];
+            });
+        }
+        //        }
+    } failure:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.error);
+    }];
 }
 
 - (void)animiteForLastAction{
@@ -1307,7 +1340,7 @@
 - (MDCTextField *)passwordTextField{
     if (!_passwordTextField) {
         _passwordTextField = [[MDCTextField alloc] initWithFrame:CGRectMake(CGRectGetMinX(_secondStepDetailLabel.frame)  , CGRectGetMaxY(_userNameTextField.frame) + 8,__kWidth  - 32 -CGRectGetMinX(_secondStepDetailLabel.frame) , 80)];
-        
+        _passwordTextField.secureTextEntry = YES;
         _passwordTextField.delegate = self;
         _passwordTextField.clearButtonMode = UITextFieldViewModeAlways;
         _passwordTextField.cursorColor = COR1;
@@ -1333,7 +1366,7 @@
 - (MDCTextField *)confirmPasswordTextField{
     if (!_confirmPasswordTextField) {
         _confirmPasswordTextField = [[MDCTextField alloc] initWithFrame:CGRectMake(CGRectGetMinX(_secondStepDetailLabel.frame) , CGRectGetMaxY(_passwordTextField.frame) + 8,__kWidth  - 32 -CGRectGetMinX(_secondStepDetailLabel.frame) , 80)];
-        
+        _confirmPasswordTextField.secureTextEntry = YES;
         _confirmPasswordTextField.delegate = self;
         _confirmPasswordTextField.clearButtonMode = UITextFieldViewModeAlways;
         _confirmPasswordTextField.cursorColor = COR1;
