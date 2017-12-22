@@ -42,7 +42,10 @@
 #define BackUpFilesDirName @"上传的文件"
 #define BackUpTorrentDirName @"Download"
 
-#define kTorrentType NSLocalizedString(@"torrentType", @"")
+#define kTorrentType @"torrentType"
+#define kSambaSwich @"SambaSwich"
+#define kminiDLNASwich @"miniDLNASwich"
+#define kBTSwich @"BTSwich"
 
 #define KUploadFilesDocument [NSString stringWithFormat:@"Upload/%@",WB_UserService.currentUser.uuid]
 

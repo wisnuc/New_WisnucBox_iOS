@@ -29,13 +29,16 @@
 "error" = "Error, operation failed";
 "success" = "The operation is successful";
 
-// LeftMenu Title
+// LeftMenu
 "setting" = "Setting";
 "transmission_manage" = "Transfer";
 "download_manage" = "Download";
 "equipment_manage" = "Station";
 "invitation" = "Invite a friend";
 "operation_not_support" = "Operation not supported";
+"samba_service" = "Samba Service";
+"miniDLNA_service" = "miniDLNA Service";
+"BT_download_service" = "BT Download Service";
 
 //TabBar Title
 "photo" = "Photos";

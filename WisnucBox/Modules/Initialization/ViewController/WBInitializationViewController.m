@@ -218,7 +218,8 @@
     [storyboard instantiateViewControllerWithIdentifier:identifier];
    
     viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
-    viewController.title = _diskTypeLabel.text ;
+    WBInitChangeDiskTypeAlertViewController *vc = (WBInitChangeDiskTypeAlertViewController *)viewController;
+    vc.typeString = _diskTypeLabel.text;
 //    viewController
     [self presentViewController:viewController animated:YES completion:NULL];
 }

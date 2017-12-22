@@ -244,14 +244,14 @@
     }
     
     else if (IsEquallString(title, LeftMenuInvitationString)){
-        if (!WB_UserService.currentUser.isCloudLogin) {
+//        if (!WB_UserService.currentUser.isCloudLogin) {
         vc = [[WBInviteWechatViewController alloc]init];
         if ([selectVC isKindOfClass:[NavViewController class]]) {
             [selectVC  pushViewController:vc animated:YES];
         }
-        }else{
-            [SXLoadingView showProgressHUDText:WBLocalizedString(@"operation_not_support", nil) duration:1.5];
-        }
+//        }else{
+//            [SXLoadingView showProgressHUDText:WBLocalizedString(@"operation_not_support", nil) duration:1.5];
+//        }
     }
     
     else if (IsEquallString(title, LeftMenuSettingString)){

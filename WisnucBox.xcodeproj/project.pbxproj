@@ -12,6 +12,13 @@
 		1F0898DC1FB05FF900B86723 /* eye_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0898DB1FB05FF800B86723 /* eye_off.png */; };
 		1F178EBC1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F178EBB1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.m */; };
 		1F178EBE1FEBF047001650E5 /* WBSettingSelectBTAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F178EBD1FEBF047001650E5 /* WBSettingSelectBTAlertViewController.storyboard */; };
+		1F178EC21FECABAE001650E5 /* WBTorrentDownloadSwitchAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F178EC11FECABAE001650E5 /* WBTorrentDownloadSwitchAPI.m */; };
+		1F178EC81FECB076001650E5 /* WBFeaturesDlnaStatusAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F178EC71FECB076001650E5 /* WBFeaturesDlnaStatusAPI.m */; };
+		1F178ECB1FECB094001650E5 /* WBFeaturesSambaStatusAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F178ECA1FECB094001650E5 /* WBFeaturesSambaStatusAPI.m */; };
+		1F178ECE1FECB6A2001650E5 /* WBFeaturesChangeAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F178ECD1FECB6A2001650E5 /* WBFeaturesChangeAPI.m */; };
+		1F178ED31FECD492001650E5 /* ic_content_paste@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F178ED01FECD490001650E5 /* ic_content_paste@3x.png */; };
+		1F178ED41FECD492001650E5 /* ic_content_paste.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F178ED11FECD490001650E5 /* ic_content_paste.png */; };
+		1F178ED51FECD492001650E5 /* ic_content_paste@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F178ED21FECD491001650E5 /* ic_content_paste@2x.png */; };
 		1F1AB9EC1FB968CA006EB1FC /* FLFilesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AB9EA1FB968C9006EB1FC /* FLFilesCell.m */; };
 		1F1AB9ED1FB968CA006EB1FC /* FLFilesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F1AB9EB1FB968C9006EB1FC /* FLFilesCell.xib */; };
 		1F1AB9F21FB97092006EB1FC /* NSObject+KVOBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AB9F11FB97092006EB1FC /* NSObject+KVOBlock.m */; };
@@ -755,6 +762,17 @@
 		1F178EBA1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBSettingSelectBTAlertViewController.h; sourceTree = "<group>"; };
 		1F178EBB1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBSettingSelectBTAlertViewController.m; sourceTree = "<group>"; };
 		1F178EBD1FEBF047001650E5 /* WBSettingSelectBTAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WBSettingSelectBTAlertViewController.storyboard; sourceTree = "<group>"; };
+		1F178EC01FECABAE001650E5 /* WBTorrentDownloadSwitchAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBTorrentDownloadSwitchAPI.h; sourceTree = "<group>"; };
+		1F178EC11FECABAE001650E5 /* WBTorrentDownloadSwitchAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBTorrentDownloadSwitchAPI.m; sourceTree = "<group>"; };
+		1F178EC61FECB076001650E5 /* WBFeaturesDlnaStatusAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBFeaturesDlnaStatusAPI.h; sourceTree = "<group>"; };
+		1F178EC71FECB076001650E5 /* WBFeaturesDlnaStatusAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBFeaturesDlnaStatusAPI.m; sourceTree = "<group>"; };
+		1F178EC91FECB094001650E5 /* WBFeaturesSambaStatusAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBFeaturesSambaStatusAPI.h; sourceTree = "<group>"; };
+		1F178ECA1FECB094001650E5 /* WBFeaturesSambaStatusAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBFeaturesSambaStatusAPI.m; sourceTree = "<group>"; };
+		1F178ECC1FECB6A2001650E5 /* WBFeaturesChangeAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBFeaturesChangeAPI.h; sourceTree = "<group>"; };
+		1F178ECD1FECB6A2001650E5 /* WBFeaturesChangeAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBFeaturesChangeAPI.m; sourceTree = "<group>"; };
+		1F178ED01FECD490001650E5 /* ic_content_paste@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_content_paste@3x.png"; sourceTree = "<group>"; };
+		1F178ED11FECD490001650E5 /* ic_content_paste.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_content_paste.png; sourceTree = "<group>"; };
+		1F178ED21FECD491001650E5 /* ic_content_paste@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_content_paste@2x.png"; sourceTree = "<group>"; };
 		1F1AB9E91FB968C8006EB1FC /* FLFilesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLFilesCell.h; sourceTree = "<group>"; };
 		1F1AB9EA1FB968C9006EB1FC /* FLFilesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLFilesCell.m; sourceTree = "<group>"; };
 		1F1AB9EB1FB968C9006EB1FC /* FLFilesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FLFilesCell.xib; sourceTree = "<group>"; };
@@ -1742,6 +1760,31 @@
 			path = AlertController;
 			sourceTree = "<group>";
 		};
+		1F178EBF1FECAB66001650E5 /* LeftMenu */ = {
+			isa = PBXGroup;
+			children = (
+				1F178EC01FECABAE001650E5 /* WBTorrentDownloadSwitchAPI.h */,
+				1F178EC11FECABAE001650E5 /* WBTorrentDownloadSwitchAPI.m */,
+				1F178EC61FECB076001650E5 /* WBFeaturesDlnaStatusAPI.h */,
+				1F178EC71FECB076001650E5 /* WBFeaturesDlnaStatusAPI.m */,
+				1F178EC91FECB094001650E5 /* WBFeaturesSambaStatusAPI.h */,
+				1F178ECA1FECB094001650E5 /* WBFeaturesSambaStatusAPI.m */,
+				1F178ECC1FECB6A2001650E5 /* WBFeaturesChangeAPI.h */,
+				1F178ECD1FECB6A2001650E5 /* WBFeaturesChangeAPI.m */,
+			);
+			path = LeftMenu;
+			sourceTree = "<group>";
+		};
+		1F178ECF1FECD481001650E5 /* Download */ = {
+			isa = PBXGroup;
+			children = (
+				1F178ED11FECD490001650E5 /* ic_content_paste.png */,
+				1F178ED21FECD491001650E5 /* ic_content_paste@2x.png */,
+				1F178ED01FECD490001650E5 /* ic_content_paste@3x.png */,
+			);
+			path = Download;
+			sourceTree = "<group>";
+		};
 		1F196F351FB9416A004D5EB7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -2200,6 +2243,7 @@
 		1F61E52C1FAC7AEB008ACEFB /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				1F178ECF1FECD481001650E5 /* Download */,
 				1FFAE3861FE141B20054C393 /* Initialization */,
 				1FAD74481FD0EDA900A5D880 /* Files */,
 				1F922E711FCD340700A7614B /* StationManage */,
@@ -2671,6 +2715,7 @@
 		71A3D66B1FB57D8C0002B8B1 /* APIs */ = {
 			isa = PBXGroup;
 			children = (
+				1F178EBF1FECAB66001650E5 /* LeftMenu */,
 				1FCFB3E21FEA05D500BD3375 /* Download */,
 				1FEFCDDC1FE3C7DD00DEC866 /* Initialization */,
 				1F922EA51FCD5C4F00A7614B /* StationManage */,
@@ -3912,6 +3957,7 @@
 				F68310F21FB30AAE005AC578 /* ic_account_circle@2x.png in Resources */,
 				1FAD744C1FD0EDC700A5D880 /* wechat_icon@3x.png in Resources */,
 				F6830F141FB300D2005AC578 /* FMLeftMenu.xib in Resources */,
+				1F178ED41FECD492001650E5 /* ic_content_paste.png in Resources */,
 				1FAD74711FD0EDED00A5D880 /* mov_icon@3x.png in Resources */,
 				1FD7A0ED1FB05A45000D4CB3 /* back@3x.png in Resources */,
 				F68310B91FB30AAE005AC578 /* del_user@2x.png in Resources */,
@@ -3967,8 +4013,10 @@
 				F683117E1FB30AAF005AC578 /* select@2x.png in Resources */,
 				F68311CA1FB30AAF005AC578 /* send-_select.png in Resources */,
 				F68310BA1FB30AAE005AC578 /* del_user@3x.png in Resources */,
+				1F178ED51FECD492001650E5 /* ic_content_paste@2x.png in Resources */,
 				F68310861FB30AAE005AC578 /* all@3x.png in Resources */,
 				F68310961FB30AAE005AC578 /* bg_pic.jpg in Resources */,
+				1F178ED31FECD492001650E5 /* ic_content_paste@3x.png in Resources */,
 				1F922E881FCD426000A7614B /* ic_dns@3x.png in Resources */,
 				F68311991FB30AAF005AC578 /* small_3@2x.png in Resources */,
 				F68310841FB30AAE005AC578 /* all.png in Resources */,
@@ -4435,6 +4483,7 @@
 				1F4D759C1FAC4BB800E6516C /* UIButton+EnlargeEdge.m in Sources */,
 				1FC2AFF21FC52B4800E8C9DE /* CloudLoginModel.m in Sources */,
 				1F4D75CB1FAC5FF900E6516C /* FMCloudUserTableViewCell.m in Sources */,
+				1F178EC21FECABAE001650E5 /* WBTorrentDownloadSwitchAPI.m in Sources */,
 				1F922EB51FCD758C00A7614B /* WBStationManageNetInterfacesModel.m in Sources */,
 				F675614D1FB3428F00E3277F /* UIImage+MFTint.m in Sources */,
 				1F5D217D1FBC351A006C65AA /* FilesDataSourceManager.m in Sources */,
@@ -4448,6 +4497,7 @@
 				F67D643C1FAC7E5600E23D16 /* FMHeadView.m in Sources */,
 				1F4D75A51FAC4BB800E6516C /* FMSerachService.m in Sources */,
 				F6830F1E1FB308C8005AC578 /* NSString+Validate.m in Sources */,
+				1F178EC81FECB076001650E5 /* WBFeaturesDlnaStatusAPI.m in Sources */,
 				1F4D759B1FAC4BB800E6516C /* UIImage+GKContact.m in Sources */,
 				1F4D75AE1FAC4BB800E6516C /* WisnucBox.xcdatamodeld in Sources */,
 				F6830EB41FB2FAE0005AC578 /* RDVTabBarController.m in Sources */,
@@ -4476,6 +4526,7 @@
 				1F922EAC1FCD5D2100A7614B /* WBStationManageTimeDateModel.m in Sources */,
 				F6830F011FB2FF8C005AC578 /* BaseTableViewCell.m in Sources */,
 				1FC2AFEF1FC5299300E8C9DE /* WBCloudLoginAPI.m in Sources */,
+				1F178ECB1FECB094001650E5 /* WBFeaturesSambaStatusAPI.m in Sources */,
 				F67D64271FAC7D9A00E23D16 /* UIView+JY_ExtendTouchRect.m in Sources */,
 				1F1ABA041FB97A0D006EB1FC /* CSDownloadTask.m in Sources */,
 				F675614C1FB3428F00E3277F /* UIFont+MaterialTextField.m in Sources */,
@@ -4540,6 +4591,7 @@
 				1FAD74261FCFE99C00A5D880 /* TicketUserModel.m in Sources */,
 				F65035611FAC00A60007979D /* main.m in Sources */,
 				1F4D759D1FAC4BB800E6516C /* UIButton+Universal.m in Sources */,
+				1F178ECE1FECB6A2001650E5 /* WBFeaturesChangeAPI.m in Sources */,
 				C183CDF11FCEA2E9002E29CD /* FMUpdateUserPasswordAPI.m in Sources */,
 				C138D0791FB9A4B0000CF518 /* EntriesModel.m in Sources */,
 				F67D643E1FAC7E5600E23D16 /* JYCollectionViewCell.m in Sources */,

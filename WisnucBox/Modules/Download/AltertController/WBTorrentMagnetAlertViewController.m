@@ -40,6 +40,12 @@
 - (IBAction)cancelButtonClick:(UIButton *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+- (IBAction)magnetPastButtonClick:(UIButton *)sender {
+    
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    NSLog(@"%@",pasteboard.string);
+    _magnetTextView.text = pasteboard.string;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

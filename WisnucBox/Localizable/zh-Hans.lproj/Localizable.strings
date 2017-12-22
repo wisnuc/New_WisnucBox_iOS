@@ -27,13 +27,18 @@
 "error" = "发生错误，操作失败";
 "success" = "操作成功";
 
-// LeftMenu Title
+// LeftMenu
 "setting" = "设置";
 "transmission_manage" = "传输管理";
 "download_manage" = "下载管理";
 "equipment_manage" = "设备管理";
 "invitation" = "邀请微信好友";
 "operation_not_support" = "目前仅支持局域网操作";
+"samba_service" = "Samba 服务";
+"miniDLNA_service" = "miniDLNA 服务";
+"BT_download_service" = "BT下载服务";
+
+
 
 //TabBar Title
 "photo" = "照片";

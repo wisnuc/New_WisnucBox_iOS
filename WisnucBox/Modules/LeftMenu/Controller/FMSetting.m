@@ -9,7 +9,10 @@
 #import "FMSetting.h"
 #import "LCActionSheet.h"
 #import "WBSettingSelectBTAlertViewController.h"
-
+#import "WBTorrentDownloadSwitchAPI.h"
+#import "WBFeaturesDlnaStatusAPI.h"
+#import "WBFeaturesSambaStatusAPI.h"
+#import "WBFeaturesChangeAPI.h"
 
 
 @interface FMSetting ()<UITableViewDelegate,UITableViewDataSource,LCActionSheetDelegate,SettingSelectBTAlertViewDelegate>
@@ -18,6 +21,10 @@
 @property (nonatomic,strong)UISwitch * switchBtn;
 
 @property (nonatomic,assign)BOOL switchOn;
+
+@property (nonatomic,assign)BOOL btSwitchOn;
+@property (nonatomic,assign)BOOL sambaSwitchOn;
+@property (nonatomic,assign)BOOL miniDlnaSwitchOn;
 @end
 
 @implementation FMSetting
@@ -40,8 +47,57 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.displayProgress = NO;
+    [self getBTData];
     [self.settingTableView reloadData];
 
+}
+
+- (void)getBTData{
+    [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
+    [[WBTorrentDownloadSwitchAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSDictionary *dic = request.responseJsonObject;
+        NSNumber *number = dic[@"switch"];
+        BOOL swichOn = [number boolValue];
+        _btSwitchOn = swichOn;
+        [self.settingTableView reloadData];
+        [SXLoadingView hideProgressHUD];
+    } failure:^(__kindof JYBaseRequest *request) {
+        [SXLoadingView hideProgressHUD];
+    }];
+    
+    [[WBFeaturesDlnaStatusAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSDictionary *dic = request.responseJsonObject;
+        NSString *status = dic[@"status"];
+        BOOL swichOn;
+        if ([status isEqualToString:@"active"]) {
+            swichOn = YES;
+        }else{
+            swichOn = NO;
+        }
+    
+        _miniDlnaSwitchOn = swichOn;
+        [self.settingTableView reloadData];
+       
+    } failure:^(__kindof JYBaseRequest *request) {
+      
+    }];
+    
+    [[WBFeaturesSambaStatusAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSDictionary *dic = request.responseJsonObject;
+        NSString *status = dic[@"status"];
+        BOOL swichOn;
+        if ([status isEqualToString:@"active"]) {
+            swichOn = YES;
+        }else{
+            swichOn = NO;
+        }
+        
+        _sambaSwitchOn = swichOn;
+       [self.settingTableView reloadData];
+    } failure:^(__kindof JYBaseRequest *request) {
+ 
+    }];
+    
 }
 
 - (void)setSwitch{
@@ -56,52 +112,82 @@
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 3;
+    return 6;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell * cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"123"];
-    if (indexPath.row == 0) {
-        UILabel * titleLb = [[UILabel alloc] initWithFrame:CGRectMake(16, 23, 200, 17)];
-        titleLb.text = WBLocalizedString(@"photo_auto_upload_setting_text", nil);
-        titleLb.font = [UIFont systemFontOfSize:17];
-        
-        [cell.contentView addSubview:titleLb];
-        cell.contentView.layer.masksToBounds = YES;
-        UISwitch *switchBtn = [[UISwitch alloc]initWithFrame:CGRectMake(__kWidth - 70, 16, 50, 40)];
-        switchBtn.on = _switchOn;
-        [switchBtn addTarget:self  action:@selector(switchBtnHandleForSync:) forControlEvents:UIControlEventValueChanged];
-        if(!WB_UserService.isUserLogin) switchBtn.enabled = NO;
-        [cell.contentView addSubview:switchBtn];
-    }
-    else if(indexPath.row == 1){
-        UILabel * titleLb = [[UILabel alloc] initWithFrame:CGRectMake(16, 23, 200, 17)];
-        titleLb.text = WBLocalizedString(@"clear_cache", nil);
-        titleLb.font = [UIFont systemFontOfSize:17];
-        [cell.contentView addSubview:titleLb];
-        
-//        UIButton * cleanBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 70, 40)];
-//        cleanBtn.userInteractionEnabled = NO;
-//        [cleanBtn setTitle:WBLocalizedString(@"calculating", nil) forState:UIControlStateNormal];
-//        cleanBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-//        [cleanBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    UITableViewCell * cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"123"];
+    switch (indexPath.row) {
+        case 0:{
+            UILabel * titleLb = [[UILabel alloc] initWithFrame:CGRectMake(16, 23, 200, 17)];
+            titleLb.text = WBLocalizedString(@"photo_auto_upload_setting_text", nil);
+            titleLb.font = [UIFont systemFontOfSize:17];
+            
+            [cell.contentView addSubview:titleLb];
+            cell.contentView.layer.masksToBounds = YES;
+            UISwitch *switchBtn = [[UISwitch alloc]initWithFrame:CGRectMake(__kWidth - 70, 16, 50, 40)];
+            switchBtn.on = _switchOn;
+            [switchBtn addTarget:self  action:@selector(switchBtnHandleForSync:) forControlEvents:UIControlEventValueChanged];
+            if(!WB_UserService.isUserLogin) switchBtn.enabled = NO;
+            [cell.contentView addSubview:switchBtn];
+        }
+            
+            break;
+        case 1:{
+            cell.textLabel.text = WBLocalizedString(@"clear_cache", nil);
             NSUInteger  i = [SDImageCache sharedImageCache].getSize;
             NSLog(@"%ld",(long)[[YYImageCache sharedCache].diskCache totalCost]);
             i = i + [[YYImageCache sharedCache].diskCache totalCost];
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%luM",(unsigned long)i/(1024*1024)];
-            dispatch_async(dispatch_get_main_queue(), ^{
-//                [cleanBtn setTitle:[NSString stringWithFormat:@"%luM",(unsigned long)i/(1024*1024)] forState:UIControlStateNormal];
-            });
-        });        
-//        cell.accessoryView = cleanBtn;
-    }else{
-//        UILabel * titleLb = [[UILabel alloc] initWithFrame:CGRectMake(16, 23, 200, 17)];
-//        titleLb.text = @"如何处理来自第三方应用的BT文件";
-//        titleLb.font = [UIFont systemFontOfSize:17];
-//        [cell.contentView addSubview:titleLb];
-        cell.textLabel.text =  @"如何处理来自第三方应用的BT文件";
+        }
+            
+            break;
+        case 2:{
+             cell.textLabel.text =  @"如何处理来自第三方应用的BT文件";
+        }
+            
+            break;
+        case 3:{
+//            UILabel * titleLb = [[UILabel alloc] initWithFrame:CGRectMake(16, 23, 200, 17)];
+//            titleLb.text = WBLocalizedString(@"photo_auto_upload_setting_text", nil);
+//            titleLb.font = [UIFont systemFontOfSize:17];
+//
+//            [cell.contentView addSubview:titleLb];
+            cell.textLabel.text =  WBLocalizedString(@"samba_service", nil);
+            cell.contentView.layer.masksToBounds = YES;
+            UISwitch *switchBtn = [[UISwitch alloc]initWithFrame:CGRectMake(__kWidth - 70, 16, 50, 40)];
+            [switchBtn addTarget:self  action:@selector(sambaSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+             [switchBtn setOn:_sambaSwitchOn];
+            if(!WB_UserService.isUserLogin) switchBtn.enabled = NO;
+            [cell.contentView addSubview:switchBtn];
+        }
+            
+            break;
+        case 4:{
+             cell.textLabel.text =  WBLocalizedString(@"miniDLNA_service", nil);
+            UISwitch *switchBtn = [[UISwitch alloc]initWithFrame:CGRectMake(__kWidth - 70, 16, 50, 40)];
+            [switchBtn addTarget:self  action:@selector(miniDLNASwitchChanged:) forControlEvents:UIControlEventValueChanged];
+            [switchBtn setOn:_miniDlnaSwitchOn];
+            if(!WB_UserService.isUserLogin) switchBtn.enabled = NO;
+            [cell.contentView addSubview:switchBtn];
+        }
+            
+            break;
+        case 5:{
+             cell.textLabel.text =  WBLocalizedString(@"BT_download_service", nil);
+            UISwitch *switchBtn = [[UISwitch alloc]initWithFrame:CGRectMake(__kWidth - 70, 16, 50, 40)];
+            [switchBtn addTarget:self  action:@selector(btSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+            [switchBtn setOn:_btSwitchOn];
+            if(!WB_UserService.isUserLogin) switchBtn.enabled = NO;
+            [cell.contentView addSubview:switchBtn];
+        }
+            
+            break;
+            
+        default:
+            break;
     }
+  
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -137,6 +223,7 @@
         viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
         WBSettingSelectBTAlertViewController *vc = (WBSettingSelectBTAlertViewController *)viewController;
         vc.typeString = [NSString stringWithFormat:@"%@",GetUserDefaultForKey(kTorrentType)];
+        vc.delegate = self;
         [self presentViewController:viewController animated:YES completion:NULL];
     }
 }
@@ -190,6 +277,69 @@
         }];
     } else
         [WB_AppServices.photoUploadManager stop];
+}
+
+-(void)sambaSwitchChanged:(UISwitch *)paramSender{
+    BOOL isOn = paramSender.on;
+    if (isOn) {
+        [[WBFeaturesChangeAPI apiWithType:@"samba" Action:@"start"]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+            _sambaSwitchOn = YES;
+            [self.settingTableView reloadData];
+        } failure:^(__kindof JYBaseRequest *request) {
+            _sambaSwitchOn = NO;
+            [self.settingTableView reloadData];
+        }];
+    }else{
+        [[WBFeaturesChangeAPI apiWithType:@"samba" Action:@"stop"]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+            _sambaSwitchOn = NO;
+            [self.settingTableView reloadData];
+        } failure:^(__kindof JYBaseRequest *request) {
+            _sambaSwitchOn = YES;
+            [self.settingTableView reloadData];
+        }];
+    }
+}
+
+-(void)btSwitchChanged:(UISwitch *)paramSender{
+    BOOL isOn = paramSender.on;
+    if (isOn) {
+        [[WBTorrentDownloadSwitchAPI apiWithRequestMethod:@"PATCH" Option:@"start"]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+            _btSwitchOn = YES;
+            [self.settingTableView reloadData];
+        } failure:^(__kindof JYBaseRequest *request) {
+            _btSwitchOn = NO;
+            [self.settingTableView reloadData];
+        }];
+    }else{
+        [[WBTorrentDownloadSwitchAPI apiWithRequestMethod:@"PATCH" Option:@"close"]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+            _btSwitchOn = NO;
+            [self.settingTableView reloadData];
+        } failure:^(__kindof JYBaseRequest *request) {
+            _btSwitchOn = YES;
+            [self.settingTableView reloadData];
+        }];
+    }
+}
+
+-(void)miniDLNASwitchChanged:(UISwitch *)paramSender{
+    BOOL isOn = paramSender.on;
+    if (isOn) {
+        [[WBFeaturesChangeAPI apiWithType:@"dlna" Action:@"start"]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+            _miniDlnaSwitchOn = YES;
+            [self.settingTableView reloadData];
+        } failure:^(__kindof JYBaseRequest *request) {
+            _miniDlnaSwitchOn = NO;
+            [self.settingTableView reloadData];
+        }];
+    }else{
+        [[WBFeaturesChangeAPI apiWithType:@"dlna" Action:@"stop"]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+            _miniDlnaSwitchOn = NO;
+            [self.settingTableView reloadData];
+        } failure:^(__kindof JYBaseRequest *request) {
+            _miniDlnaSwitchOn = YES;
+            [self.settingTableView reloadData];
+        }];
+    }
 }
 
 - (IBAction)cleanBtnClick:(id)sender {
