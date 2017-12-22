@@ -27,6 +27,7 @@ UITableViewDataSource
 @property (nonatomic)NSMutableArray *runningDataArray;
 @property (nonatomic)NSMutableArray *finishDataArray;
 @property (nonatomic,strong) UITableView *tableView;
+@property (nonatomic) BOOL switchOn;
 @end
 
 @implementation WBTorrentDownloadViewController
@@ -71,8 +72,15 @@ UITableViewDataSource
         NSDictionary *dic = request.responseJsonObject;
         NSNumber *number = dic[@"switch"];
         BOOL swichOn = [number boolValue];
+        _switchOn = swichOn;
         if (swichOn) {
            [self.timer fire];
+        }else{
+            UILabel *label =  [[UILabel alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 80)];
+            label.text = @"BT下载服务已关闭";
+            label.textColor = COR1;
+            label.textAlignment = NSTextAlignmentCenter;
+            self.tableView.tableFooterView =label;
         }
          [SXLoadingView hideProgressHUD];
     } failure:^(__kindof JYBaseRequest *request) {

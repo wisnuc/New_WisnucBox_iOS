@@ -19,6 +19,7 @@
 #import "WBTorrentDownloadViewController.h"
 #import "WBTorrentAskToUploadAlertViewController.h"
 #import "FMSetting.h"
+#import "WBTorrentDownloadSwitchAPI.h"
 
 @interface AppDelegate () <WXApiDelegate,WBTorrentAskToUploadAlertDelegate>
 @property (nonatomic,strong) FMLoginViewController *loginController;
@@ -311,7 +312,7 @@
 }
 
 - (void)confirmWithTypeString:(NSString *)typeString isAlways:(BOOL)always{
-    if ([typeString isEqualToString:@"新建下载任务"]) {
+    if ([typeString containsString:@"新建"]) {
         [self torrentDownloadActionWithFilePath:_filePath];
     }else{
         if (_filePath) {
@@ -330,6 +331,35 @@
 }
 
 - (void)torrentDownloadActionWithFilePath:(NSString *)filePath{
+    @weaky(self)
+     NSString *controllerString = NSStringFromClass([[UIViewController getCurrentVC] class]);
+    [SXLoadingView showProgressHUD:@""];
+    [[WBTorrentDownloadSwitchAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSDictionary *dic = request.responseJsonObject;
+        NSNumber *number = dic[@"switch"];
+        BOOL swichOn = [number boolValue];
+        if (swichOn) {
+            [weak_self startTorrentDownloadWithFilePath:filePath];
+        }else{
+            if (![controllerString isEqualToString:NSStringFromClass([WBTorrentDownloadViewController class])]) {
+                CYLTabBarController * tVC = (CYLTabBarController *)MyAppDelegate.window.rootViewController;
+                NavViewController * selectVC = (NavViewController *)tVC.selectedViewController;
+                WBTorrentDownloadViewController *localViewController  = [[WBTorrentDownloadViewController alloc]init];
+                
+                if ([selectVC isKindOfClass:[NavViewController class]]) {
+                    [selectVC  pushViewController:localViewController animated:YES];
+                }
+            }
+        }
+        [SXLoadingView hideProgressHUD];
+    } failure:^(__kindof JYBaseRequest *request) {
+        [SXLoadingView hideProgressHUD];
+    }];
+    
+    
+}
+
+- (void)startTorrentDownloadWithFilePath:(NSString *)filePath{
     NSString *controllerString = NSStringFromClass([[UIViewController getCurrentVC] class]);
     [WB_NetService getDirUUIDWithDirName:BackUpTorrentDirName BaseDir:^(NSError *error, NSString *dirUUID) {
         if (error) {
@@ -352,5 +382,4 @@
         }
     }];
 }
-
 @end
