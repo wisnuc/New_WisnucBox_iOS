@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "WBTorrentDownloadSwitchAPI.h"
+#import "WBFeaturesDlnaStatusAPI.h"
+#import "WBFeaturesSambaStatusAPI.h"
+#import "WBFeaturesChangeAPI.h"
+#import "WBSettingSelectBTAlertViewController.h"
 typedef enum
 {
     TorrentTypeAskAllTime = 0,

@@ -17,21 +17,34 @@
 }
 
 - (JYRequestMethod)requestMethod{
+    if (WB_UserService.currentUser.isCloudLogin) {
+       return JYRequestMethodPost;
+    }else{
     return JYRequestMethodPatch;
+    }
 }
 
 - (id)requestArgument{
     NSDictionary * dic;
-    dic = @{
-            @"op" :_op,
-            };
+    if (WB_UserService.currentUser.isCloudLogin) {
+        dic = @{
+                @"resource": [[NSString stringWithFormat:@"download/%@",_torrentId] base64EncodedString],
+                @"method": @"PATCH",
+                @"op" :_op,
+                };
+    }else{
+        dic = @{
+                @"op" :_op,
+                };
+    }
+   
     return dic;
 }
 
 
 /// 请求的URL
 - (NSString *)requestUrl{
-    return WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@?resource=%@&method=GET", kCloudAddr, kCloudCommonJsonUrl, [[NSString stringWithFormat:@"download/%@",_torrentId] base64EncodedString]] : [NSString stringWithFormat:@"download/%@",_torrentId];
+    return WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@", kCloudAddr, kCloudCommonJsonUrl] : [NSString stringWithFormat:@"download/%@",_torrentId];
 }
 
 - (NSDictionary *)requestHeaderFieldValueDictionary{

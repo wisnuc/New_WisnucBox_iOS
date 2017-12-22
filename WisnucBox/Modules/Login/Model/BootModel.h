@@ -12,4 +12,5 @@
 @property (nonatomic,copy) NSString *current;
 @property (nonatomic,copy) NSString *state;
 @property (nonatomic,copy) NSString *error;
+@property (nonatomic,copy) NSString *mode;
 @end

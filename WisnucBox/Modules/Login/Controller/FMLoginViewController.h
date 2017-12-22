@@ -13,7 +13,9 @@
 typedef enum
 {
     NASTypeNormal = 0,
-    NASTypeUninitialized
+    NASTypeUninitialized,
+    NASTypeMaintain,
+    NASTypeError
 } NASType;
 
 

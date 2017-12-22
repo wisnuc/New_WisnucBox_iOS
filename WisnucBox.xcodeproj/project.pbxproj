@@ -19,6 +19,8 @@
 		1F178ED31FECD492001650E5 /* ic_content_paste@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F178ED01FECD490001650E5 /* ic_content_paste@3x.png */; };
 		1F178ED41FECD492001650E5 /* ic_content_paste.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F178ED11FECD490001650E5 /* ic_content_paste.png */; };
 		1F178ED51FECD492001650E5 /* ic_content_paste@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F178ED21FECD491001650E5 /* ic_content_paste@2x.png */; };
+		1F178ED91FED188F001650E5 /* WBServiceSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F178ED71FED188F001650E5 /* WBServiceSettingViewController.m */; };
+		1F178EDA1FED188F001650E5 /* WBServiceSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F178ED81FED188F001650E5 /* WBServiceSettingViewController.xib */; };
 		1F1AB9EC1FB968CA006EB1FC /* FLFilesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AB9EA1FB968C9006EB1FC /* FLFilesCell.m */; };
 		1F1AB9ED1FB968CA006EB1FC /* FLFilesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F1AB9EB1FB968C9006EB1FC /* FLFilesCell.xib */; };
 		1F1AB9F21FB97092006EB1FC /* NSObject+KVOBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AB9F11FB97092006EB1FC /* NSObject+KVOBlock.m */; };
@@ -773,6 +775,9 @@
 		1F178ED01FECD490001650E5 /* ic_content_paste@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_content_paste@3x.png"; sourceTree = "<group>"; };
 		1F178ED11FECD490001650E5 /* ic_content_paste.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_content_paste.png; sourceTree = "<group>"; };
 		1F178ED21FECD491001650E5 /* ic_content_paste@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_content_paste@2x.png"; sourceTree = "<group>"; };
+		1F178ED61FED188F001650E5 /* WBServiceSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBServiceSettingViewController.h; sourceTree = "<group>"; };
+		1F178ED71FED188F001650E5 /* WBServiceSettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBServiceSettingViewController.m; sourceTree = "<group>"; };
+		1F178ED81FED188F001650E5 /* WBServiceSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBServiceSettingViewController.xib; sourceTree = "<group>"; };
 		1F1AB9E91FB968C8006EB1FC /* FLFilesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLFilesCell.h; sourceTree = "<group>"; };
 		1F1AB9EA1FB968C9006EB1FC /* FLFilesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLFilesCell.m; sourceTree = "<group>"; };
 		1F1AB9EB1FB968C9006EB1FC /* FLFilesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FLFilesCell.xib; sourceTree = "<group>"; };
@@ -3192,9 +3197,12 @@
 		F6830EE21FB2FE9F005AC578 /* setting */ = {
 			isa = PBXGroup;
 			children = (
-				F6830EE31FB2FEC4005AC578 /* FMSetting.m */,
 				F6830EE41FB2FEC4005AC578 /* FMSetting.h */,
+				F6830EE31FB2FEC4005AC578 /* FMSetting.m */,
 				F6830EE51FB2FEC4005AC578 /* FMSetting.xib */,
+				1F178ED61FED188F001650E5 /* WBServiceSettingViewController.h */,
+				1F178ED71FED188F001650E5 /* WBServiceSettingViewController.m */,
+				1F178ED81FED188F001650E5 /* WBServiceSettingViewController.xib */,
 			);
 			name = setting;
 			sourceTree = "<group>";
@@ -3958,6 +3966,7 @@
 				1FAD744C1FD0EDC700A5D880 /* wechat_icon@3x.png in Resources */,
 				F6830F141FB300D2005AC578 /* FMLeftMenu.xib in Resources */,
 				1F178ED41FECD492001650E5 /* ic_content_paste.png in Resources */,
+				1F178EDA1FED188F001650E5 /* WBServiceSettingViewController.xib in Resources */,
 				1FAD74711FD0EDED00A5D880 /* mov_icon@3x.png in Resources */,
 				1FD7A0ED1FB05A45000D4CB3 /* back@3x.png in Resources */,
 				F68310B91FB30AAE005AC578 /* del_user@2x.png in Resources */,
@@ -4529,6 +4538,7 @@
 				1F178ECB1FECB094001650E5 /* WBFeaturesSambaStatusAPI.m in Sources */,
 				F67D64271FAC7D9A00E23D16 /* UIView+JY_ExtendTouchRect.m in Sources */,
 				1F1ABA041FB97A0D006EB1FC /* CSDownloadTask.m in Sources */,
+				1F178ED91FED188F001650E5 /* WBServiceSettingViewController.m in Sources */,
 				F675614C1FB3428F00E3277F /* UIFont+MaterialTextField.m in Sources */,
 				F6D8CC301FB3F91600673824 /* FMLeftManager.m in Sources */,
 				1FCFB4131FEB553200BD3375 /* WBTorrentDownloadActionAPI.m in Sources */,

@@ -146,6 +146,9 @@
             break;
         case JYAssetTypeGIF: {
             [self addSubview:self.imageGifView];
+            if([model isKindOfClass:[WBAsset class]]) {
+                return [self.imageGifView loadImage:model];
+            }
             [self.imageGifView loadNormalImage:model];
         }
             break;

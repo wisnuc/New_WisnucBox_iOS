@@ -8,11 +8,7 @@
 
 #import "FMSetting.h"
 #import "LCActionSheet.h"
-#import "WBSettingSelectBTAlertViewController.h"
-#import "WBTorrentDownloadSwitchAPI.h"
-#import "WBFeaturesDlnaStatusAPI.h"
-#import "WBFeaturesSambaStatusAPI.h"
-#import "WBFeaturesChangeAPI.h"
+#import "WBServiceSettingViewController.h"
 
 
 @interface FMSetting ()<UITableViewDelegate,UITableViewDataSource,LCActionSheetDelegate,SettingSelectBTAlertViewDelegate>
@@ -47,7 +43,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.displayProgress = NO;
-    [self getBTData];
+//    [self getBTData];
     [self.settingTableView reloadData];
 
 }
@@ -62,6 +58,7 @@
         [self.settingTableView reloadData];
         [SXLoadingView hideProgressHUD];
     } failure:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.error);
         [SXLoadingView hideProgressHUD];
     }];
     
@@ -112,7 +109,7 @@
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 6;
+    return 4;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -148,42 +145,12 @@
             
             break;
         case 3:{
-//            UILabel * titleLb = [[UILabel alloc] initWithFrame:CGRectMake(16, 23, 200, 17)];
-//            titleLb.text = WBLocalizedString(@"photo_auto_upload_setting_text", nil);
-//            titleLb.font = [UIFont systemFontOfSize:17];
-//
-//            [cell.contentView addSubview:titleLb];
-            cell.textLabel.text =  WBLocalizedString(@"samba_service", nil);
-            cell.contentView.layer.masksToBounds = YES;
-            UISwitch *switchBtn = [[UISwitch alloc]initWithFrame:CGRectMake(__kWidth - 70, 16, 50, 40)];
-            [switchBtn addTarget:self  action:@selector(sambaSwitchChanged:) forControlEvents:UIControlEventValueChanged];
-             [switchBtn setOn:_sambaSwitchOn];
-            if(!WB_UserService.isUserLogin) switchBtn.enabled = NO;
-            [cell.contentView addSubview:switchBtn];
+            
+            cell.textLabel.text = @"服务管理";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
         }
-            
-            break;
-        case 4:{
-             cell.textLabel.text =  WBLocalizedString(@"miniDLNA_service", nil);
-            UISwitch *switchBtn = [[UISwitch alloc]initWithFrame:CGRectMake(__kWidth - 70, 16, 50, 40)];
-            [switchBtn addTarget:self  action:@selector(miniDLNASwitchChanged:) forControlEvents:UIControlEventValueChanged];
-            [switchBtn setOn:_miniDlnaSwitchOn];
-            if(!WB_UserService.isUserLogin) switchBtn.enabled = NO;
-            [cell.contentView addSubview:switchBtn];
-        }
-            
-            break;
-        case 5:{
-             cell.textLabel.text =  WBLocalizedString(@"BT_download_service", nil);
-            UISwitch *switchBtn = [[UISwitch alloc]initWithFrame:CGRectMake(__kWidth - 70, 16, 50, 40)];
-            [switchBtn addTarget:self  action:@selector(btSwitchChanged:) forControlEvents:UIControlEventValueChanged];
-            [switchBtn setOn:_btSwitchOn];
-            if(!WB_UserService.isUserLogin) switchBtn.enabled = NO;
-            [cell.contentView addSubview:switchBtn];
-        }
-            
-            break;
-            
+
         default:
             break;
     }
@@ -225,6 +192,9 @@
         vc.typeString = [NSString stringWithFormat:@"%@",GetUserDefaultForKey(kTorrentType)];
         vc.delegate = self;
         [self presentViewController:viewController animated:YES completion:NULL];
+    }if (indexPath.row == 3){
+        WBServiceSettingViewController *vc = [[WBServiceSettingViewController alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 
@@ -309,6 +279,7 @@
         } failure:^(__kindof JYBaseRequest *request) {
             _btSwitchOn = NO;
             [self.settingTableView reloadData];
+            NSLog(@"%@",request.error);
         }];
     }else{
         [[WBTorrentDownloadSwitchAPI apiWithRequestMethod:@"PATCH" Option:@"close"]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
@@ -317,6 +288,7 @@
         } failure:^(__kindof JYBaseRequest *request) {
             _btSwitchOn = YES;
             [self.settingTableView reloadData];
+              NSLog(@"%@",request.error);
         }];
     }
 }

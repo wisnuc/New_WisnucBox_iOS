@@ -21,5 +21,6 @@
 @property (nonatomic) BOOL isReadly;
 @property (nonatomic) NSURLSessionDataTask *task;
 @property (nonatomic) BOOL isNormal;
+@property (nonatomic) NASType NASType;
 @property (nonatomic) WBStationManageStorageModel *storageModel;
 @end

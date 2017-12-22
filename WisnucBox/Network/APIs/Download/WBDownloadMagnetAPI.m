@@ -23,17 +23,27 @@
 
 - (id)requestArgument{
     NSDictionary * dic;
+    if (WB_UserService.currentUser.isCloudLogin) {
+        dic = @{
+                @"dirUUID" :_dirUUID,
+                @"magnetURL" :_magnetURL,
+                @"resource" : [@"download/magnet" base64EncodedString],
+                @"method" : @"POST"
+                };
+        
+    }else{
     dic = @{
             @"dirUUID" :_dirUUID,
             @"magnetURL" :_magnetURL
             };
+    }
     return dic;
 }
 
 
 /// 请求的URL
 - (NSString *)requestUrl{
-    return WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@?resource=%@&method=GET", kCloudAddr, kCloudCommonJsonUrl, [@"download/magnet" base64EncodedString]] : @"download/magnet";
+    return WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@", kCloudAddr, kCloudCommonJsonUrl] : @"download/magnet";
 }
 
 - (NSDictionary *)requestHeaderFieldValueDictionary{

@@ -208,6 +208,7 @@ static BOOL needHide = YES;
     @weaky(self)
     vc.block = ^(FMSerachService * ser){
         ser.isReadly = YES;
+        ser.isNormal = YES;
         [_dataSource addObject:ser];
         [weak_self refreshDatasource];
     };
@@ -229,19 +230,29 @@ static BOOL needHide = YES;
     
 //    if ([urlString isEqualToString:@"http://10.10.9.141:3000/"]) {
         [self getBootInfoWithPath:urlString completeBlock:^(BootModel *model) {
+            if ([model.mode isEqualToString:@"maintenance"]) {
+                [weak_self getSystemInformationWithURL:addressString Service:service Name:nil FMSerachServiceModel:ser NASType:NASTypeMaintain];
+
+                 return ;
+            }else if ([model.error isEqualToString:@"ELASTNOTMOUNT"] || [model.error isEqualToString:@"ELASTMISSING"]|| [model.error isEqualToString:@"ELASTDAMAGED"]) {
+                  [weak_self getSystemInformationWithURL:addressString Service:service Name:nil FMSerachServiceModel:ser NASType:NASTypeError];
+                 return ;
+            }else
             if (IsEquallString(model.error, @"ENOALT")) {
                 [[WBStationManageStorageAPI apiWithURLPath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
                     
-                    WBStationManageStorageModel *model = [WBStationManageStorageModel yy_modelWithJSON:request.responseJsonObject];
+                    WBStationManageStorageModel *storageModel = [WBStationManageStorageModel yy_modelWithJSON:request.responseJsonObject];
                     NSLog(@"%@",request.responseJsonObject);
-                    if (model.volumes && model.volumes.count == 0) {
-                    ser.storageModel = model;
+                    if (storageModel.volumes && storageModel.volumes.count == 0) {
+                    ser.storageModel = storageModel;
                     [weak_self getSystemInformationWithURL:addressString Service:service Name:nil FMSerachServiceModel:ser NASType:NASTypeUninitialized];
                     }
                 } failure:^(__kindof JYBaseRequest *request) {
                     
                 }];
                 return ;
+            }else{
+               
             }
             
             [[WBgetStationInfoAPI apiWithServicePath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
@@ -672,16 +683,16 @@ static BOOL needHide = YES;
 }
 
 - (void)initializationLayoutUpdateWithModel:(FMSerachService *)model{
-    if(model.isNormal && _userDataSource.count ==0){
+    if(_userDataSource.count ==0){
         _userView.alpha = 0;
         [_userListTableViwe removeEmptyView];
         _userListTableViwe.bounces = YES;
     }else
-    if (model.isNormal || _userDataSource.count !=0) {
+    if (model.isNormal && _userDataSource.count !=0) {
         _userView.alpha = 1;
         [_userListTableViwe removeEmptyView];
         _userListTableViwe.bounces = YES;
-    }else {
+    }else if (!model.isNormal && _userDataSource.count !=0) {
         [_userListTableViwe removeEmptyView];
         _userView.alpha = 0;
         _userListTableViwe.bounces = NO;
@@ -700,6 +711,8 @@ static BOOL needHide = YES;
                                  initializationVC.searchModel = model;
                                  [self.navigationController pushViewController:initializationVC animated:YES];
                              }];
+    }else{
+        
     }
 }
 

@@ -28,15 +28,34 @@
 }
 /// 请求的URL
 - (NSString *)requestUrl{
-    return @"station/tickets";
+    if ([_requestMethodString isEqualToString:@"GET"]) {
+        return WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@?resource=%@&method=GET", kCloudAddr, kCloudCommonJsonUrl, [@"station/tickets" base64EncodedString]] : @"station/tickets";
+    }else if ([_requestMethodString isEqualToString:@"POST"]){
+        return WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@", kCloudAddr, kCloudCommonJsonUrl]: @"station/tickets";
+    }else{
+        return WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@?resource=%@&method=GET", kCloudAddr, kCloudCommonJsonUrl, [@"station/tickets" base64EncodedString]] : @"station/tickets";
+    }
 }
+
 - (id)requestArgument{
     NSDictionary *dic;
+    
     if (_type) {
-        dic = @{
-                @"type":_type
-                };
+        if (WB_UserService.currentUser.isCloudLogin) {
+            
+            dic = @{
+                    @"resource":[@"station/tickets" base64EncodedString],
+                    @"type":_type,
+                    @"method": @"POST"
+                    };
+            
+        }else{
+            dic = @{
+                    @"type":_type
+                    };
+        }
     }
+   
     return dic;
 }
 

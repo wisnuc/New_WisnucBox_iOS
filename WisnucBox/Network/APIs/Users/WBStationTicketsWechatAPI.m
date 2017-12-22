@@ -25,14 +25,27 @@
 }
 /// 请求的URL
 - (NSString *)requestUrl{
-    return [NSString stringWithFormat:@"station/tickets/wechat/%@",_ticketId] ;
+    
+    return WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@",kCloudAddr, kCloudCommonJsonUrl]: [NSString stringWithFormat:@"station/tickets/wechat/%@",_ticketId];
+    
 }
 - (id)requestArgument{
-    NSDictionary *dic = @{
-                          @"type":@"bind",
-                          @"guid":_guid,
-                          @"state":_isBind
-                          };
+    NSDictionary *dic;
+    if (WB_UserService.currentUser.isCloudLogin) {
+        dic = @{
+                @"resource":[[NSString stringWithFormat:@"station/tickets/wechat/%@",_ticketId] base64EncodedString],
+                @"type":@"bind",
+                @"guid":_guid,
+                @"state":_isBind,
+                @"method": @"POST"
+                };
+    }else{
+        dic = @{
+                @"type":@"bind",
+                @"guid":_guid,
+                @"state":_isBind
+                };
+    }
     return dic;
 }
 

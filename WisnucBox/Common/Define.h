@@ -17,7 +17,7 @@
 #define RGBCOLOR(r, g, b)      [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:1.0f]
 #define RGBACOLOR(r, g, b ,a)      [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:a]
 
-#define kCloudAddr    @"http://www.siyouqun.org/"
+#define kCloudAddr    @"http://www.siyouqun.com/"
 #define kCloudCommonJsonUrl [NSString stringWithFormat:@"c/v1/stations/%@/json", WB_UserService.currentUser.stationId]
 #define kCloudCommonPipeUrl [NSString stringWithFormat:@"c/v1/stations/%@/pipe", WB_UserService.currentUser.stationId]
 
@@ -33,7 +33,7 @@
 #define kCloudBodyToName   @"toName"
 #define kCloudBodyFromName @"fromName"
 
-#define WX_BASE_URL   @"http://www.siyouqun.org/c/v1/"
+#define WX_BASE_URL   @"http://www.siyouqun.com/c/v1/"
 #define WX_MiniProgram_OriginID @"gh_37b3425fe189"
 
 #define kVideoTypes @[@"MOV", @"MP4", @"3GP"]

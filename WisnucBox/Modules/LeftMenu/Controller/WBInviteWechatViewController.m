@@ -61,8 +61,8 @@ UITableViewDataSource
     [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
     [[WBStationTicketsAPI apiWithRequestMethodString:@"GET" Type:nil] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
          NSLog(@"%@",request.responseJsonObject);
-        NSArray *arr = request.responseJsonObject;
-        [arr enumerateObjectsUsingBlock:^(NSDictionary *dic, NSUInteger idx, BOOL * _Nonnull stop) {
+         NSArray * responseArr = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+        [responseArr enumerateObjectsUsingBlock:^(NSDictionary *dic, NSUInteger idx, BOOL * _Nonnull stop) {
             TicketStationModel *model = [TicketStationModel yy_modelWithDictionary:dic];
             [model.users enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 TicketUserModel *usersModel = obj;
@@ -109,13 +109,19 @@ UITableViewDataSource
     [SXLoadingView showProgressHUD:@""];
     [[WBStationTicketsAPI apiWithRequestMethodString:@"POST" Type:@"invite"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
-        NSDictionary *requestDic = request.responseJsonObject;
+        NSDictionary *requestDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
         NSString *urlString = requestDic[@"url"];
         NSString * ticketId = [urlString substringFromIndex:12];
         NSLog(@"%@",ticketId);
         [weak_self invitWechatWithTicketId:ticketId];
     } failure:^(__kindof JYBaseRequest *request) {
          NSLog(@"%@",request.error);
+        NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+        if(errorData.length>0){
+            NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+            NSLog(@"%@",serializedData);
+            [SXLoadingView showProgressHUDText:[NSString stringWithFormat:@"error，reason：%@",serializedData[@"message"]] duration:1.5];
+        }
          [SXLoadingView hideProgressHUD];
          [SXLoadingView showProgressHUDText:WBLocalizedString(@"sharing_failed", nil) duration:1.3];
     }];
@@ -196,7 +202,7 @@ UITableViewDataSource
             [SXLoadingView hideProgressHUD];
             [SXLoadingView showProgressHUDText:WBLocalizedString(@"error", nil) duration:1.5];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [weak_self getData];
+//                [weak_self getData];
             });
         }];
     };
@@ -215,8 +221,15 @@ UITableViewDataSource
             [SXLoadingView hideProgressHUD];
             [SXLoadingView showProgressHUDText:WBLocalizedString(@"error", nil) duration:1.5];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [weak_self getData];
+//                [weak_self getData];
             });
+            
+            NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+            if(errorData.length>0){
+                NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+                NSLog(@"%@",serializedData);
+                [SXLoadingView showProgressHUDText:[NSString stringWithFormat:@"error，reason：%@",serializedData[@"message"]] duration:1.5];
+            }
             NSLog(@"%@",request.error);
         }];;
     } ;

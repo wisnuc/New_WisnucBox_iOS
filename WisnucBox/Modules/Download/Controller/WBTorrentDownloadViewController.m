@@ -69,8 +69,8 @@ UITableViewDataSource
 - (void)checkSwitch{
     [SXLoadingView showProgressHUD:@""];
     [[WBTorrentDownloadSwitchAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        NSDictionary *dic = request.responseJsonObject;
-        NSNumber *number = dic[@"switch"];
+       NSDictionary *requestDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+        NSNumber *number = requestDic[@"switch"];
         BOOL swichOn = [number boolValue];
         _switchOn = swichOn;
         if (swichOn) {
@@ -84,6 +84,7 @@ UITableViewDataSource
         }
          [SXLoadingView hideProgressHUD];
     } failure:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.error);
          [SXLoadingView hideProgressHUD];
     }];
 }
@@ -100,9 +101,10 @@ UITableViewDataSource
                 NSLog(@"%@",error);
             }else{
                 [[WBDownloadMagnetAPI apiWithDirUUID:dirUUID MagnetURL:magnetUrl]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+                    NSDictionary *requestDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
                     NSLog(@"%@",request.responseJsonObject);
-                    NSDictionary *dic = request.responseJsonObject;
-                    NSString *torrentId = dic[@"torrentId"];
+                   
+                    NSString *torrentId = requestDic[@"torrentId"];
                     [weak_self startGetMagnetDownloadInfoWithTorrentId:torrentId];
                 } failure:^(__kindof JYBaseRequest *request) {
                     NSLog(@"%@",request.error);
@@ -127,7 +129,9 @@ UITableViewDataSource
     @weaky(self)
     [[WBGetDownloadAPI apiWithType:nil TorrentId:nil]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
-        WBGetDownloadModel *model = [WBGetDownloadModel yy_modelWithJSON:request.responseJsonObject];
+        NSDictionary *requestDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+    
+        WBGetDownloadModel *model = [WBGetDownloadModel yy_modelWithDictionary:requestDic];
         [self.runningDataArray removeAllObjects];
         [self.runningDataArray addObjectsFromArray:model.running];
         [self.finishDataArray removeAllObjects];
@@ -147,7 +151,8 @@ UITableViewDataSource
      @weaky(self)
     [[WBGetDownloadAPI apiWithType:nil TorrentId:nil]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
-        WBGetDownloadModel *model = [WBGetDownloadModel yy_modelWithJSON:request.responseJsonObject];
+         NSDictionary *requestDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+        WBGetDownloadModel *model = [WBGetDownloadModel yy_modelWithDictionary:requestDic];
         [self.runningDataArray removeAllObjects];
         [self.runningDataArray addObjectsFromArray:model.running];
         [self.finishDataArray removeAllObjects];
@@ -207,6 +212,7 @@ UITableViewDataSource
 
 - (void)fnishAllClearButtonClick:(UIButton *)sender{
     [SXLoadingView showProgressHUD:@""];
+    if (self.finishDataArray.count>0) {
     [_finishDataArray enumerateObjectsUsingBlock:^(WBGetDownloadFinishModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [[WBTorrentDownloadActionAPI apiWithTorrentId:obj.infoHash Option:@"destroy"]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
             [SXLoadingView hideProgressHUD];
@@ -216,6 +222,9 @@ UITableViewDataSource
             [SXLoadingView hideProgressHUD];
         }];
     }];
+    }else{
+         [SXLoadingView hideProgressHUD];
+    }
    
 }
 
