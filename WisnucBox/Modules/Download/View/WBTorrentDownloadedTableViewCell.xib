@@ -70,6 +70,7 @@
             </tableViewCellContentView>
             <inset key="separatorInset" minX="76" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
+                <outlet property="leftImageView" destination="gOu-MB-Mgq" id="4Pd-9X-nAe"/>
                 <outlet property="moreButton" destination="L2z-xY-8xy" id="22c-7g-jJ9"/>
                 <outlet property="nameLabel" destination="jFz-95-cAx" id="CIi-Uj-asA"/>
                 <outlet property="sizeLabel" destination="g3T-5p-vju" id="sgr-8l-UPd"/>

@@ -79,6 +79,7 @@
 {
 
     self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.leftBarButtonItem = nil;
 //    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back_gray"] style:UIBarButtonItemStyleDone target:self action:@selector(backBtnClick)];
     
 //    self.navigationItem.leftItemsSupplementBackButton = YES;

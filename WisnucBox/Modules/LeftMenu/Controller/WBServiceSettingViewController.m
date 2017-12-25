@@ -23,6 +23,7 @@
     self.title = @"服务管理";
     self.tableView.delegate =self;
     self.tableView.dataSource =self;
+    self.tableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
     // Do any additional setup after loading the view from its nib.
 }
 

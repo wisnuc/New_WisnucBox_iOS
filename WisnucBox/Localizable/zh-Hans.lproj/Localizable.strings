@@ -129,6 +129,7 @@
 "shutdown_failed" = "关机失败";
 "reboot_failed" = "重启失败";
 "enter_maintenance_mode_failed" = "进入维护模式失败";
+"equipment_system_error" = "系统错误";
 
 //station time
 "local_time" = "本地时间";

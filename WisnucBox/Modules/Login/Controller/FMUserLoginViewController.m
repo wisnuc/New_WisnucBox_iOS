@@ -90,6 +90,7 @@
             [SXLoadingView showAlertHUD:[NSString stringWithFormat:@"%@ code: %ld", WBLocalizedString(@"login_failed", nil),(long)error.wbCode] duration:1];
             sender.userInteractionEnabled = YES;
         }else{
+//            [self.navigationController popViewControllerAnimated:NO];
             AppDelegate * app = (AppDelegate *)[UIApplication sharedApplication].delegate ;
             app.window.rootViewController = nil;
             [app.window resignKeyWindow];

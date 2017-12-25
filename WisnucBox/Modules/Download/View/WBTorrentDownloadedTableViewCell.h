@@ -15,5 +15,6 @@ typedef void(^moreButtonClockBlock)(WBTorrentDownloadedTableViewCell * cell);
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
 @property (nonatomic) moreButtonClockBlock clickBlock;
+@property (weak, nonatomic) IBOutlet UIImageView *leftImageView;
 
 @end

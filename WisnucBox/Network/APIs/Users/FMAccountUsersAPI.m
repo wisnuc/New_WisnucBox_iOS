@@ -19,6 +19,15 @@
     return api;
 }
 
++ (instancetype)apiWithRequestMethod:(NSString *)method IsAdmin:(BOOL)isAdmin UUID:(NSString *)uuid{
+    FMAccountUsersAPI *api = [FMAccountUsersAPI new];
+    api.method = method;
+    api.isAdmin = [NSNumber numberWithBool:isAdmin];
+    api.uuid = uuid;
+    NSLog(@"%@",api.disabled);
+    return api;
+}
+
 /// Http请求的方法
 - (JYRequestMethod)requestMethod{
     JYRequestMethod method = JYRequestMethodGet;
@@ -35,6 +44,12 @@
     if (_disabled) {
         param = @{
                   @"disabled":_disabled
+                  };
+    }
+    
+    if (_isAdmin) {
+        param = @{
+                  @"isAdmin":_isAdmin
                   };
     }
     return param;

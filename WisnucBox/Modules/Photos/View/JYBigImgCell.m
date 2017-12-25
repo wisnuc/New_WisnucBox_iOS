@@ -189,6 +189,7 @@
 {
     if (self.showGif &&
         self.model.type == JYAssetTypeGIF) {
+        if([self.model isKindOfClass:[WBAsset class]]) return [self.imageGifView loadImage:self.model];
         [self.imageGifView loadGifImage:self.model];
     } else if (self.showLivePhoto &&
                self.model.type == JYAssetTypeLivePhoto) {
@@ -489,6 +490,7 @@
         } else {
             strongSelf->_loadOK = YES;
             strongSelf.imageView.image = img;
+            if(asset.type == JYAssetTypeGIF) [strongSelf resumeGif];
             [strongSelf resetSubviewSize:img];
         }
         strongSelf.operation = nil;

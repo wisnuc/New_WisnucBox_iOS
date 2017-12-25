@@ -89,6 +89,7 @@
             </tableViewCellContentView>
             <inset key="separatorInset" minX="76" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
+                <outlet property="leftImageView" destination="tU8-J4-Dk8" id="GST-jJ-Q17"/>
                 <outlet property="moreButton" destination="XZ8-S8-eFH" id="3nS-TO-aRc"/>
                 <outlet property="nameLabel" destination="ATf-ss-z4t" id="F3b-2O-6jc"/>
                 <outlet property="progressLabel" destination="RNa-VT-wgK" id="i2n-rn-gvJ"/>

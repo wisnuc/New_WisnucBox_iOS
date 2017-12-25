@@ -81,6 +81,17 @@
 		1F5D217D1FBC351A006C65AA /* FilesDataSourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D217C1FBC351A006C65AA /* FilesDataSourceManager.m */; };
 		1F5D21801FBC3CC6006C65AA /* WBBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D217F1FBC3CC6006C65AA /* WBBaseModel.m */; };
 		1F5D21831FBC3DB0006C65AA /* FilesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D21821FBC3DB0006C65AA /* FilesModel.m */; };
+		1F611CAC1FF0CEFD00E34379 /* WBSettingSelectRolesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F611CAB1FF0CEFD00E34379 /* WBSettingSelectRolesViewController.m */; };
+		1F611CAE1FF0CF2000E34379 /* WBSettingSelectRolesViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F611CAD1FF0CF2000E34379 /* WBSettingSelectRolesViewController.storyboard */; };
+		1F611CB81FF0E8D500E34379 /* magnet@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F611CAF1FF0E8CF00E34379 /* magnet@3x.png */; };
+		1F611CB91FF0E8D500E34379 /* bt.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F611CB01FF0E8CF00E34379 /* bt.png */; };
+		1F611CBA1FF0E8D500E34379 /* magnet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F611CB11FF0E8CF00E34379 /* magnet@2x.png */; };
+		1F611CBB1FF0E8D500E34379 /* bt_download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F611CB21FF0E8D200E34379 /* bt_download@2x.png */; };
+		1F611CBC1FF0E8D500E34379 /* magnet.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F611CB31FF0E8D300E34379 /* magnet.png */; };
+		1F611CBD1FF0E8D500E34379 /* bt_download@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F611CB41FF0E8D400E34379 /* bt_download@3x.png */; };
+		1F611CBE1FF0E8D500E34379 /* bt@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F611CB51FF0E8D400E34379 /* bt@3x.png */; };
+		1F611CBF1FF0E8D500E34379 /* bt_download.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F611CB61FF0E8D500E34379 /* bt_download.png */; };
+		1F611CC01FF0E8D500E34379 /* bt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F611CB71FF0E8D500E34379 /* bt@2x.png */; };
 		1F8EAF241FB9A7C100FEED19 /* LocalDownloadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F8EAF211FB9A7C000FEED19 /* LocalDownloadingTableViewCell.xib */; };
 		1F8EAF251FB9A7C100FEED19 /* LocalDownloadingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EAF221FB9A7C000FEED19 /* LocalDownloadingTableViewCell.m */; };
 		1F8EAF291FBACD5000FEED19 /* FLFIlesHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EAF281FBACD5000FEED19 /* FLFIlesHelper.m */; };
@@ -893,6 +904,18 @@
 		1F5D217F1FBC3CC6006C65AA /* WBBaseModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBBaseModel.m; sourceTree = "<group>"; };
 		1F5D21811FBC3DB0006C65AA /* FilesModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilesModel.h; sourceTree = "<group>"; };
 		1F5D21821FBC3DB0006C65AA /* FilesModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilesModel.m; sourceTree = "<group>"; };
+		1F611CAA1FF0CEFD00E34379 /* WBSettingSelectRolesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBSettingSelectRolesViewController.h; sourceTree = "<group>"; };
+		1F611CAB1FF0CEFD00E34379 /* WBSettingSelectRolesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBSettingSelectRolesViewController.m; sourceTree = "<group>"; };
+		1F611CAD1FF0CF2000E34379 /* WBSettingSelectRolesViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WBSettingSelectRolesViewController.storyboard; sourceTree = "<group>"; };
+		1F611CAF1FF0E8CF00E34379 /* magnet@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "magnet@3x.png"; sourceTree = "<group>"; };
+		1F611CB01FF0E8CF00E34379 /* bt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bt.png; sourceTree = "<group>"; };
+		1F611CB11FF0E8CF00E34379 /* magnet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "magnet@2x.png"; sourceTree = "<group>"; };
+		1F611CB21FF0E8D200E34379 /* bt_download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bt_download@2x.png"; sourceTree = "<group>"; };
+		1F611CB31FF0E8D300E34379 /* magnet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = magnet.png; sourceTree = "<group>"; };
+		1F611CB41FF0E8D400E34379 /* bt_download@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bt_download@3x.png"; sourceTree = "<group>"; };
+		1F611CB51FF0E8D400E34379 /* bt@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bt@3x.png"; sourceTree = "<group>"; };
+		1F611CB61FF0E8D500E34379 /* bt_download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bt_download.png; sourceTree = "<group>"; };
+		1F611CB71FF0E8D500E34379 /* bt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bt@2x.png"; sourceTree = "<group>"; };
 		1F8EAF211FB9A7C000FEED19 /* LocalDownloadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalDownloadingTableViewCell.xib; sourceTree = "<group>"; };
 		1F8EAF221FB9A7C000FEED19 /* LocalDownloadingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalDownloadingTableViewCell.m; sourceTree = "<group>"; };
 		1F8EAF231FB9A7C000FEED19 /* LocalDownloadingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalDownloadingTableViewCell.h; sourceTree = "<group>"; };
@@ -1761,6 +1784,9 @@
 				1F178EBA1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.h */,
 				1F178EBB1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.m */,
 				1F178EBD1FEBF047001650E5 /* WBSettingSelectBTAlertViewController.storyboard */,
+				1F611CAA1FF0CEFD00E34379 /* WBSettingSelectRolesViewController.h */,
+				1F611CAB1FF0CEFD00E34379 /* WBSettingSelectRolesViewController.m */,
+				1F611CAD1FF0CF2000E34379 /* WBSettingSelectRolesViewController.storyboard */,
 			);
 			path = AlertController;
 			sourceTree = "<group>";
@@ -1783,6 +1809,15 @@
 		1F178ECF1FECD481001650E5 /* Download */ = {
 			isa = PBXGroup;
 			children = (
+				1F611CB61FF0E8D500E34379 /* bt_download.png */,
+				1F611CB21FF0E8D200E34379 /* bt_download@2x.png */,
+				1F611CB41FF0E8D400E34379 /* bt_download@3x.png */,
+				1F611CB01FF0E8CF00E34379 /* bt.png */,
+				1F611CB71FF0E8D500E34379 /* bt@2x.png */,
+				1F611CB51FF0E8D400E34379 /* bt@3x.png */,
+				1F611CB31FF0E8D300E34379 /* magnet.png */,
+				1F611CB11FF0E8CF00E34379 /* magnet@2x.png */,
+				1F611CAF1FF0E8CF00E34379 /* magnet@3x.png */,
 				1F178ED11FECD490001650E5 /* ic_content_paste.png */,
 				1F178ED21FECD491001650E5 /* ic_content_paste@2x.png */,
 				1F178ED01FECD490001650E5 /* ic_content_paste@3x.png */,
@@ -3757,6 +3792,7 @@
 				F6830F051FB2FF8C005AC578 /* FMUserSettingCell.xib in Resources */,
 				F68311AA1FB30AAF005AC578 /* transparency_bg@2x.png in Resources */,
 				1FAD745B1FD0EDDF00A5D880 /* mp4_icon.png in Resources */,
+				1F611CBA1FF0E8D500E34379 /* magnet@2x.png in Resources */,
 				F68310DC1FB30AAE005AC578 /* good_red@3x.png in Resources */,
 				1F922E5B1FC80F3400A7614B /* lauchScreen.png in Resources */,
 				F68311431FB30AAE005AC578 /* no_photo@3x.png in Resources */,
@@ -3764,6 +3800,7 @@
 				F68311271FB30AAE005AC578 /* login@3x.png in Resources */,
 				F68310BD1FB30AAE005AC578 /* dot@3x.png in Resources */,
 				F68310BE1FB30AAE005AC578 /* download.png in Resources */,
+				1F611CB91FF0E8D500E34379 /* bt.png in Resources */,
 				F683109E1FB30AAE005AC578 /* check-box@3x.png in Resources */,
 				F68310CC1FB30AAE005AC578 /* file_icon@2x.png in Resources */,
 				1FD7A1151FB05A51000D4CB3 /* eye@2x.png in Resources */,
@@ -3846,6 +3883,7 @@
 				F68311BB1FB30AAF005AC578 /* album_comment.png in Resources */,
 				1FCFB4001FEA4A8200BD3375 /* WBTorrentMagnetAlertViewController.storyboard in Resources */,
 				1FD7A10B1FB05A51000D4CB3 /* PLUS@3x.png in Resources */,
+				1F611CBC1FF0E8D500E34379 /* magnet.png in Resources */,
 				C139DFD21FC7DFC7007098E5 /* play2.png in Resources */,
 				F683110D1FB30AAE005AC578 /* icon_down@2x.png in Resources */,
 				F683115B1FB30AAE005AC578 /* photo_placeholder@3x.png in Resources */,
@@ -3931,6 +3969,7 @@
 				F68311861FB30AAF005AC578 /* share_photo.png in Resources */,
 				F68311501FB30AAE005AC578 /* photo-album.png in Resources */,
 				F68311191FB30AAE005AC578 /* local.png in Resources */,
+				1F611CBD1FF0E8D500E34379 /* bt_download@3x.png in Resources */,
 				F68310DD1FB30AAE005AC578 /* good_red_select.png in Resources */,
 				1F922E771FCD342000A7614B /* ic_dns_black@2x.png in Resources */,
 				F68311001FB30AAE005AC578 /* ic_mode_edit_18pt.png in Resources */,
@@ -4069,7 +4108,9 @@
 				F683107E1FB30AAE005AC578 /* add_album@2x.png in Resources */,
 				F68311BC1FB30AAF005AC578 /* album_comment@2x.png in Resources */,
 				F683113E1FB30AAE005AC578 /* no_file.png in Resources */,
+				1F611CC01FF0E8D500E34379 /* bt@2x.png in Resources */,
 				F68310EE1FB30AAE005AC578 /* help@3x.png in Resources */,
+				1F611CAE1FF0CF2000E34379 /* WBSettingSelectRolesViewController.storyboard in Resources */,
 				F68310F71FB30AAE005AC578 /* ic_delete.png in Resources */,
 				1F922ED31FCE971B00A7614B /* ic_memory@3x.png in Resources */,
 				1FD8ACF11FB05F7500F19F1C /* eye.png in Resources */,
@@ -4145,6 +4186,7 @@
 				F68311B71FB30AAF005AC578 /* virtual_machine@3x.png in Resources */,
 				F68311471FB30AAE005AC578 /* person.png in Resources */,
 				F68311C31FB30AAF005AC578 /* circle@3x.png in Resources */,
+				1F611CB81FF0E8D500E34379 /* magnet@3x.png in Resources */,
 				F68311A11FB30AAF005AC578 /* storage_select.png in Resources */,
 				F68311101FB30AAE005AC578 /* info.png in Resources */,
 				F68311481FB30AAE005AC578 /* person@2x.png in Resources */,
@@ -4211,6 +4253,7 @@
 				F68311121FB30AAE005AC578 /* info@3x.png in Resources */,
 				F68310A21FB30AAE005AC578 /* check_circle.png in Resources */,
 				F68310E61FB30AAE005AC578 /* hard_select.png in Resources */,
+				1F611CBB1FF0E8D500E34379 /* bt_download@2x.png in Resources */,
 				F68311631FB30AAE005AC578 /* photo_select@2x.png in Resources */,
 				F68311491FB30AAE005AC578 /* person@3x.png in Resources */,
 				F68311391FB30AAE005AC578 /* more_highlight@3x.png in Resources */,
@@ -4262,6 +4305,8 @@
 				F6830F031FB2FF8C005AC578 /* ImageHeaderView.xib in Resources */,
 				C183CDDE1FCE8D84002E29CD /* FMChangePwdVC.xib in Resources */,
 				1F58DEE61FDFDC6B00768DD7 /* disk_settings.png in Resources */,
+				1F611CBE1FF0E8D500E34379 /* bt@3x.png in Resources */,
+				1F611CBF1FF0E8D500E34379 /* bt_download.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4578,6 +4623,7 @@
 				F67933711FB0142900C9A7DC /* WBAsset.m in Sources */,
 				1F4D75A31FAC4BB800E6516C /* FMHandLoginVC.m in Sources */,
 				F6830F161FB300D2005AC578 /* FMLeftMenuCell.m in Sources */,
+				1F611CAC1FF0CEFD00E34379 /* WBSettingSelectRolesViewController.m in Sources */,
 				1F4D75BB1FAC5D2400E6516C /* ServerBrowser.m in Sources */,
 				1FAD742D1FD00DBF00A5D880 /* CSUploadTaskQueue.m in Sources */,
 				C183CDEA1FCE9CE8002E29CD /* FMChangeNameVC.m in Sources */,

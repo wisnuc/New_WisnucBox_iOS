@@ -18,4 +18,5 @@ typedef void(^moreBtnClockBlock)(WBTorrentDownloadingTableViewCell * cell);
 @property (weak, nonatomic) IBOutlet UILabel *progressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
 @property (nonatomic) moreBtnClockBlock clickBlock;
+@property (weak, nonatomic) IBOutlet UIImageView *leftImageView;
 @end

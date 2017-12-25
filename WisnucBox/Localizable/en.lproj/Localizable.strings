@@ -128,6 +128,7 @@
 "shutdown_failed" = "Shutdown failed";
 "reboot_failed" = "Reboot_failed";
 "enter_maintenance_mode_failed" = "Enter maintenance mode failed";
+"equipment_system_error" = "System Error";
 
 
 //station time

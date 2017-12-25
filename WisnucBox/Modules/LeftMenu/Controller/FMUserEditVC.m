@@ -19,9 +19,12 @@
 #import "AppDelegate.h"
 #import "FMAccountUsersAPI.h"
 #import "UserModel.h"
+#import "WBSettingSelectRolesViewController.h"
 
 
-@interface FMUserEditVC ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+#define LogOutButtonColor UICOLOR_RGB(0xf44336)
+
+@interface FMUserEditVC ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,SettingSelectRolesAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *navigationTitle;
 @property (weak, nonatomic) IBOutlet UIImageView *userHeaderImageView;
 
@@ -54,6 +57,7 @@
     [self.userHeaderImageView setImage:[UIImage imageForName:WB_UserService.currentUser.userName size:self.userHeaderImageView.bounds.size]];
     [self.userName setTitle:WB_UserService.currentUser.userName forState:UIControlStateNormal];
     [self.userName setEnlargeEdgeWithTop:3 right:10 bottom:3 left:2];
+    [self.passwordButton setEnlargeEdgeWithTop:3 right:10 bottom:3 left:2];
     [self.headerEditBtn setEnlargeEdgeWithTop:3 right:10 bottom:3 left:2];
     [self.bindWechatButton setEnlargeEdgeWithTop:3 right:10 bottom:3 left:2];
     [self.bindWechatButton setTitle:WBLocalizedString(@"bind_wechat_user", nil) forState:UIControlStateNormal];
@@ -120,10 +124,7 @@
 }
 
 - (void)setDetailType{
-    if ([_userModel.isAdmin boolValue] || [_userModel.isFirstUser boolValue]) {
-        [_logoutButton setBackgroundColor:[UIColor lightGrayColor]];
-        [_logoutButton setUserInteractionEnabled:NO];
-    }
+
     [self.userName setTitle:_userModel.username forState:UIControlStateNormal];
     [self.userHeaderImageView setImage:[UIImage imageForName:_userModel.username size:self.userHeaderImageView.bounds.size]];
     [self.userName setUserInteractionEnabled:NO];
@@ -134,13 +135,28 @@
     }else{
         [_bindWechatButton setTitle:WBLocalizedString(@"WeChat_is_not_bound", nil) forState:UIControlStateNormal];
     }
+    [_firstEditButton setHidden:YES];
+    [_secondEditButton setHidden:YES];
     _secondImageView.image = [UIImage imageNamed:@"ic_account_circle"];
     if ([_userModel.isAdmin boolValue]&& [_userModel.isFirstUser boolValue]) {
+        [_logoutButton setBackgroundColor:[UIColor lightGrayColor]];
+        [_logoutButton setUserInteractionEnabled:NO];
         [_passwordButton setTitle:WBLocalizedString(@"super_administrator", nil) forState:UIControlStateNormal];
     }else if ([_userModel.isAdmin boolValue]&& ![_userModel.isFirstUser boolValue]){
         [_passwordButton setTitle:WBLocalizedString(@"administrator", nil) forState:UIControlStateNormal];
+        if (WB_UserService.currentUser.isAdmin && WB_UserService.currentUser.isFirstUser) {
+            [self.passwordButton setUserInteractionEnabled:YES];
+            [_secondEditButton setHidden:NO];
+        }else if(WB_UserService.currentUser.isAdmin && !WB_UserService.currentUser.isFirstUser){
+            [_logoutButton setBackgroundColor:[UIColor lightGrayColor]];
+            [_logoutButton setUserInteractionEnabled:NO];
+        }
     }else if (![_userModel.isAdmin boolValue]&& ![_userModel.isFirstUser boolValue]){
         [_passwordButton setTitle:WBLocalizedString(@"general_user", nil) forState:UIControlStateNormal];
+        if (WB_UserService.currentUser.isAdmin && WB_UserService.currentUser.isFirstUser) {
+          [self.passwordButton setUserInteractionEnabled:YES];
+          [_secondEditButton setHidden:NO];
+        }
     }
     if ([_userModel.disabled boolValue]) {
         [_userTypeLabel setText:WBLocalizedString(@"disabled", nil)];
@@ -150,8 +166,56 @@
         [_userTypeLabel setHidden:YES];
         [_logoutButton setTitle:WBLocalizedString(@"disable", nil) forState:UIControlStateNormal];
     }
-    [_firstEditButton setHidden:YES];
-    [_secondEditButton setHidden:YES];
+
+}
+
+- (void)confirmWithTypeString:(NSString *)typeString{
+
+    if ([typeString containsString:WBLocalizedString(@"administrator", nil)]) {
+        if (![_userModel.isAdmin boolValue]) {
+            [SXLoadingView showProgressHUD:@""];
+            [[FMAccountUsersAPI apiWithRequestMethod:@"PATCH" IsAdmin:YES UUID:_userModel.uuid] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+                NSLog(@"%@",request.responseJsonObject);
+                NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+                UserModel *userModel = [UserModel yy_modelWithDictionary:dic];
+                _userModel = userModel;
+                [_passwordButton setTitle:WBLocalizedString(@"administrator", nil) forState:UIControlStateNormal];
+                [SXLoadingView hideProgressHUD];
+//                [SXLoadingView showProgressHUDText:WBLocalizedString(@"enabled", nil) duration:1.2f];
+            } failure:^(__kindof JYBaseRequest *request) {
+                [SXLoadingView showProgressHUDText:WBLocalizedString(@"error", nil) duration:1.2f];
+                NSLog(@"%@",request.error);
+                NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+                if(errorData.length >0){
+                    NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+                    NSLog(@"失败,%@",serializedData);
+                }
+            }];
+        }
+    }else{
+        if ([_userModel.isAdmin boolValue]) {
+            [SXLoadingView showProgressHUD:@""];
+            [[FMAccountUsersAPI apiWithRequestMethod:@"PATCH" IsAdmin:NO UUID:_userModel.uuid] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+                NSLog(@"%@",request.responseJsonObject);
+                NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+                UserModel *userModel = [UserModel yy_modelWithDictionary:dic];
+                _userModel = userModel;
+                [_passwordButton setTitle:WBLocalizedString(@"general_user", nil) forState:UIControlStateNormal];
+                [SXLoadingView hideProgressHUD];
+//                [_logoutButton setBackgroundColor:[UIColor lightGrayColor]];
+//                [_logoutButton setUserInteractionEnabled:NO];
+                //                [SXLoadingView showProgressHUDText:WBLocalizedString(@"enabled", nil) duration:1.2f];
+            } failure:^(__kindof JYBaseRequest *request) {
+                [SXLoadingView showProgressHUDText:WBLocalizedString(@"error", nil) duration:1.2f];
+                NSLog(@"%@",request.error);
+                NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+                if(errorData.length >0){
+                    NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+                    NSLog(@"失败,%@",serializedData);
+                }
+            }];
+        }
+    }
 }
 
 
@@ -161,8 +225,29 @@
 }
 
 - (IBAction)changePwdBtn:(id)sender {
+    if ((![_userModel.isAdmin boolValue]&& ![_userModel.isFirstUser boolValue]) ||([_userModel.isAdmin boolValue]&& ![_userModel.isFirstUser boolValue]) ) {
+        NSBundle *bundle = [NSBundle bundleForClass:[WBSettingSelectRolesViewController class]];
+        UIStoryboard *storyboard =
+        [UIStoryboard storyboardWithName:NSStringFromClass([WBSettingSelectRolesViewController class]) bundle:bundle];
+        NSString *identifier = NSStringFromClass([WBSettingSelectRolesViewController class]);
+        
+        UIViewController *viewController =
+        [storyboard instantiateViewControllerWithIdentifier:identifier];
+        
+        viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
+        WBSettingSelectRolesViewController *vc = (WBSettingSelectRolesViewController *)viewController;
+        if ([_userModel.isAdmin boolValue]) {
+            vc.typeString =  WBLocalizedString(@"administrator", nil);
+    
+        }else{
+            vc.typeString =  WBLocalizedString(@"general_user", nil);
+        }
+        vc.delegate = self;
+        [self presentViewController:viewController animated:YES completion:NULL];
+    }else{
     FMChangePwdVC * vc = [[FMChangePwdVC alloc]init];
     [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{

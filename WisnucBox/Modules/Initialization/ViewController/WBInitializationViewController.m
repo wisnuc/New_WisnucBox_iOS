@@ -1088,6 +1088,30 @@
     
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if ([_userNameTextField isFirstResponder]) {
+        [_passwordTextField becomeFirstResponder];
+    } else if([_passwordTextField isFirstResponder]) {
+        [_confirmPasswordTextField becomeFirstResponder];
+    }else if([_confirmPasswordTextField isFirstResponder]){
+        [self.view endEditing:YES];
+        
+        NSTimeInterval animationDuration = 0.30f;
+        
+        [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+        
+        [UIView setAnimationDuration:animationDuration];
+        
+        CGRect rect = CGRectMake(0.0f, 0.0f, self.mainScrollView.frame.size.width, self.mainScrollView.frame.size.height);
+        
+        self.mainScrollView.frame = rect;
+        
+        [UIView commitAnimations];
+    }
+    return YES;
+}
+
 
 - (UIScrollView *)mainScrollView{
     if (!_mainScrollView) {
@@ -1313,7 +1337,7 @@
 - (MDCTextField *)userNameTextField{
     if (!_userNameTextField) {
         _userNameTextField = [[MDCTextField alloc] initWithFrame:CGRectMake(CGRectGetMinX(_secondStepDetailLabel.frame) , CGRectGetMaxY(_secondStepDetailLabel.frame) + 8,__kWidth  - 32 -CGRectGetMinX(_secondStepDetailLabel.frame) , 80)];
-        
+        _userNameTextField.returnKeyType = UIReturnKeyNext;
         _userNameTextField.delegate = self;
         _userNameTextField.clearButtonMode = UITextFieldViewModeAlways;
         _userNameTextField.cursorColor = COR1;
@@ -1342,6 +1366,7 @@
         _passwordTextField = [[MDCTextField alloc] initWithFrame:CGRectMake(CGRectGetMinX(_secondStepDetailLabel.frame)  , CGRectGetMaxY(_userNameTextField.frame) + 8,__kWidth  - 32 -CGRectGetMinX(_secondStepDetailLabel.frame) , 80)];
         _passwordTextField.secureTextEntry = YES;
         _passwordTextField.delegate = self;
+        _passwordTextField.returnKeyType = UIReturnKeyNext;
         _passwordTextField.clearButtonMode = UITextFieldViewModeAlways;
         _passwordTextField.cursorColor = COR1;
         NSOperatingSystemVersion iOS10Version = {10, 0, 0};
@@ -1367,6 +1392,7 @@
     if (!_confirmPasswordTextField) {
         _confirmPasswordTextField = [[MDCTextField alloc] initWithFrame:CGRectMake(CGRectGetMinX(_secondStepDetailLabel.frame) , CGRectGetMaxY(_passwordTextField.frame) + 8,__kWidth  - 32 -CGRectGetMinX(_secondStepDetailLabel.frame) , 80)];
         _confirmPasswordTextField.secureTextEntry = YES;
+        _confirmPasswordTextField.returnKeyType = UIReturnKeyDone;
         _confirmPasswordTextField.delegate = self;
         _confirmPasswordTextField.clearButtonMode = UITextFieldViewModeAlways;
         _confirmPasswordTextField.cursorColor = COR1;

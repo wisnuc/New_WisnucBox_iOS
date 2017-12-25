@@ -81,6 +81,7 @@ UITableViewDataSource
             label.textColor = COR1;
             label.textAlignment = NSTextAlignmentCenter;
             self.tableView.tableFooterView =label;
+            self.addButton.enabled = NO;
         }
          [SXLoadingView hideProgressHUD];
     } failure:^(__kindof JYBaseRequest *request) {
@@ -157,6 +158,7 @@ UITableViewDataSource
         [self.runningDataArray addObjectsFromArray:model.running];
         [self.finishDataArray removeAllObjects];
         [self.finishDataArray addObjectsFromArray:model.finish];
+       
         [weak_self reloadData];
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
@@ -217,6 +219,7 @@ UITableViewDataSource
         [[WBTorrentDownloadActionAPI apiWithTorrentId:obj.infoHash Option:@"destroy"]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
             [SXLoadingView hideProgressHUD];
             NSLog(@"%@",request.responseJsonObject);
+         
         } failure:^(__kindof JYBaseRequest *request) {
             NSLog(@"%@",request.error);
             [SXLoadingView hideProgressHUD];
@@ -241,7 +244,6 @@ UITableViewDataSource
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         WBGetDownloadRunnngModel * model = self.runningDataArray[indexPath.row];
-   
         if ([model.state isEqualToString:@"downloading"]) {
             cell.progressView.progress = [model.progress  floatValue];
             cell.nameLabel.text = model.name;
@@ -249,6 +251,12 @@ UITableViewDataSource
             NSNumber *allSizeNumber = [NSNumber numberWithDouble:[model.downloaded doubleValue] / [model.progress doubleValue]];
             if ([model.downloaded doubleValue] == 0.0000000000) {
                 allSizeNumber = [NSNumber numberWithInt:0];
+            }
+            
+            if (model.magnetURL && model.magnetURL>0) {
+                  cell.leftImageView.image = [UIImage imageNamed:@"magnet.png"];
+            }else if (model.torrentPath && model.torrentPath>0){
+                cell.leftImageView.image = [UIImage imageNamed:@"bt.png"];
             }
 //            NSNumber *allSizeNumber = [NSNumber numberWithLongLong:[number longLongValue]];
             cell.sizeLabel.text = [NSString stringWithFormat:@"%@/%@",[NSString transformedValue: model.downloaded],[NSString transformedValue:allSizeNumber]];
@@ -343,7 +351,11 @@ UITableViewDataSource
         cell.timeLabel.text = [self getTimeWithTime:[model.finishTime longLongValue]];
         
         cell.sizeLabel.text = [NSString transformedValue:model.downloaded];
-        
+        if (model.magnetURL && model.magnetURL>0) {
+            cell.leftImageView.image = [UIImage imageNamed:@"magnet.png"];
+        }else if (model.torrentPath && model.torrentPath>0){
+            cell.leftImageView.image = [UIImage imageNamed:@"bt.png"];
+        }
         cell.clickBlock = ^(WBTorrentDownloadedTableViewCell *cell) {
             NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
             NSString *actionTitle = WBLocalizedString(@"delete_file", nil);
