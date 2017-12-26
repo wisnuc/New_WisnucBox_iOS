@@ -224,6 +224,7 @@
     self.imageView.image = nil;
     if(model.asset)
         self.imageRequestID = [PHPhotoLibrary requestImageForAsset:model.asset size:size completion:^(UIImage *image, NSDictionary *info) {
+            if(!weakSelf) return;
             if ([weakSelf.identifier isEqualToString:model.asset.localIdentifier]) {
                 weakSelf.imageView.image = image;
             }
@@ -233,6 +234,7 @@
         }];
     else {
         id <SDWebImageOperation> thumbnailRequestOperation = [WB_NetService getThumbnailWithHash:[(WBAsset *)model fmhash] complete:^(NSError *error, UIImage *img) {
+            if(!weakSelf) return;
             if (!error && [weakSelf.identifier isEqualToString:[(WBAsset *)model fmhash]]) {
                 weakSelf.imageView.image = img;
             }else

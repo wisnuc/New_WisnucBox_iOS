@@ -11,12 +11,12 @@
 
 @implementation FMSerachService
 
--(void)setPath:(NSString *)path{
-    _path = path;
-    self.isReadly = NO;
-    [self getData];
-    
-}
+//-(void)setPath:(NSString *)path{
+//    _path = path;
+//    self.isReadly = NO;
+//    [self getData];
+//
+//}
 -(NSArray *)users{
     if (!_users) {
         _users = [NSMutableArray array];
@@ -24,10 +24,11 @@
     return _users;
 }
 
--(void)getData{
+-(void)getDataWithPath:(NSString *)path Block:(void(^)(NSArray *dataArray))block{
+    self.isReadly = NO;
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = 40;
-    _task = [manager GET:[NSString stringWithFormat:@"%@users",_path] parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+    _task = [manager GET:[NSString stringWithFormat:@"%@users",path] parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"%@",responseObject);
         NSArray * userArr = responseObject;
@@ -40,8 +41,10 @@
         }
         self.users = tempArr;
         self.isReadly = YES;
+        block(tempArr);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
+    block(nil);
     }];
 }
 @end

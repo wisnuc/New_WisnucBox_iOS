@@ -23,7 +23,7 @@
 
 @property (nonatomic, strong) NSArray<JYAsset *> *models;
 
-@property (nonatomic, assign) NSInteger selectIndex; //选中的图片下标
+@property (nonatomic, assign) NSUInteger selectIndex; //选中的图片下标
 
 @property (nonatomic, copy) void (^btnBackBlock)(NSArray<JYAsset *> *selectedModels, BOOL isOriginal);
 

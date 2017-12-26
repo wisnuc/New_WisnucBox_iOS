@@ -117,11 +117,17 @@
 }
 
 - (void)addNetAssets:(NSArray<WBAsset *> *)assetsArr {
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
         self.netArrDataSourcesBackup = [NSMutableArray arrayWithArray: assetsArr];
         [self sort:[self merge]];
-        [self.collectionView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.collectionView reloadData];
+        });
     });
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//
+//        [self.collectionView reloadData];
+//    });
 }
 
 // merge localAssets and netAssets, delete net same asset which local had

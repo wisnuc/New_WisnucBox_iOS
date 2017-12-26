@@ -10,6 +10,8 @@
 		0693AED01FE7FFB2005CCEA1 /* WBInitDiskDetailAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0693AECF1FE7FFB2005CCEA1 /* WBInitDiskDetailAlertViewController.m */; };
 		0693AED21FE7FFC0005CCEA1 /* WBInitDiskDetailAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0693AED11FE7FFC0005CCEA1 /* WBInitDiskDetailAlertViewController.storyboard */; };
 		1F0898DC1FB05FF900B86723 /* eye_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0898DB1FB05FF800B86723 /* eye_off.png */; };
+		1F114A111FF2558F007F6D15 /* WBMaintenanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F114A0F1FF2558F007F6D15 /* WBMaintenanceViewController.m */; };
+		1F114A121FF2558F007F6D15 /* WBMaintenanceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A101FF2558F007F6D15 /* WBMaintenanceViewController.xib */; };
 		1F178EBC1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F178EBB1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.m */; };
 		1F178EBE1FEBF047001650E5 /* WBSettingSelectBTAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F178EBD1FEBF047001650E5 /* WBSettingSelectBTAlertViewController.storyboard */; };
 		1F178EC21FECABAE001650E5 /* WBTorrentDownloadSwitchAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F178EC11FECABAE001650E5 /* WBTorrentDownloadSwitchAPI.m */; };
@@ -772,6 +774,9 @@
 		0693AECF1FE7FFB2005CCEA1 /* WBInitDiskDetailAlertViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBInitDiskDetailAlertViewController.m; sourceTree = "<group>"; };
 		0693AED11FE7FFC0005CCEA1 /* WBInitDiskDetailAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WBInitDiskDetailAlertViewController.storyboard; sourceTree = "<group>"; };
 		1F0898DB1FB05FF800B86723 /* eye_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye_off.png; sourceTree = "<group>"; };
+		1F114A0E1FF2558F007F6D15 /* WBMaintenanceViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBMaintenanceViewController.h; sourceTree = "<group>"; };
+		1F114A0F1FF2558F007F6D15 /* WBMaintenanceViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBMaintenanceViewController.m; sourceTree = "<group>"; };
+		1F114A101FF2558F007F6D15 /* WBMaintenanceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBMaintenanceViewController.xib; sourceTree = "<group>"; };
 		1F178EBA1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBSettingSelectBTAlertViewController.h; sourceTree = "<group>"; };
 		1F178EBB1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBSettingSelectBTAlertViewController.m; sourceTree = "<group>"; };
 		1F178EBD1FEBF047001650E5 /* WBSettingSelectBTAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WBSettingSelectBTAlertViewController.storyboard; sourceTree = "<group>"; };
@@ -1778,6 +1783,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F114A0C1FF25545007F6D15 /* Maintenance */ = {
+			isa = PBXGroup;
+			children = (
+				1F114A0D1FF2555B007F6D15 /* ViewController */,
+			);
+			path = Maintenance;
+			sourceTree = "<group>";
+		};
+		1F114A0D1FF2555B007F6D15 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1F114A0E1FF2558F007F6D15 /* WBMaintenanceViewController.h */,
+				1F114A0F1FF2558F007F6D15 /* WBMaintenanceViewController.m */,
+				1F114A101FF2558F007F6D15 /* WBMaintenanceViewController.xib */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		1F178EB91FEBF00D001650E5 /* AlertController */ = {
 			isa = PBXGroup;
 			children = (
@@ -2058,6 +2081,7 @@
 		1F4D756A1FAC4BB700E6516C /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				1F114A0C1FF25545007F6D15 /* Maintenance */,
 				1F58DEE81FDFF22C00768DD7 /* Initialization */,
 				1FAD742A1FD00B8F00A5D880 /* Upload */,
 				1F922E6C1FCD310E00A7614B /* StationManage */,
@@ -3987,6 +4011,7 @@
 				F68311511FB30AAE005AC578 /* photo-album@2x.png in Resources */,
 				F68311A31FB30AAF005AC578 /* storage_select@3x.png in Resources */,
 				1F58DEED1FDFF25900768DD7 /* WBInitializationViewController.xib in Resources */,
+				1F114A121FF2558F007F6D15 /* WBMaintenanceViewController.xib in Resources */,
 				F68311BE1FB30AAF005AC578 /* album_praise.png in Resources */,
 				F68310F51FB30AAE005AC578 /* ic_arrow_drop_down@2x.png in Resources */,
 				F68310801FB30AAE005AC578 /* album_balloon.png in Resources */,
@@ -4650,6 +4675,7 @@
 				1F178ECE1FECB6A2001650E5 /* WBFeaturesChangeAPI.m in Sources */,
 				C183CDF11FCEA2E9002E29CD /* FMUpdateUserPasswordAPI.m in Sources */,
 				C138D0791FB9A4B0000CF518 /* EntriesModel.m in Sources */,
+				1F114A111FF2558F007F6D15 /* WBMaintenanceViewController.m in Sources */,
 				F67D643E1FAC7E5600E23D16 /* JYCollectionViewCell.m in Sources */,
 				F6830EF11FB2FEF3005AC578 /* FMUserSetting.m in Sources */,
 				1FCFB40F1FEA696B00BD3375 /* WBTorrentDownloadedTableViewCell.m in Sources */,

@@ -18,7 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationBar.backgroundColor = [UIColor whiteColor];
+//    self.navigationBar.backgroundColor = [UIColor whiteColor];
     self.navigationBar.titleTextAttributes=@{NSForegroundColorAttributeName:[UIColor darkTextColor]};
     self.currentDelegate = self.interactivePopGestureRecognizer.delegate;
 //    self.transferNavigationBarAttributes = YES;
@@ -83,10 +83,12 @@
 //    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back_gray"] style:UIBarButtonItemStyleDone target:self action:@selector(backBtnClick)];
     
 //    self.navigationItem.leftItemsSupplementBackButton = YES;
+    if ([self.navigationBar.backgroundColor isEqual:COR1]) {
+        NSLog(@"🌶");
+    }
     //左按钮
     UIButton *leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 24, 24)];
     [leftBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];//设置按钮点击事件
-
 
     [leftBtn setImage:[UIImage imageNamed:@"back_gray"] forState:UIControlStateNormal];
     [leftBtn setImage:[UIImage imageNamed:@"back_grayhighlight"] forState:UIControlStateHighlighted];
@@ -107,6 +109,8 @@
         self.interactivePopGestureRecognizer.delegate = self.currentDelegate;
     }
 }
+
+
 
 - (BOOL)shouldAutorotate
 {

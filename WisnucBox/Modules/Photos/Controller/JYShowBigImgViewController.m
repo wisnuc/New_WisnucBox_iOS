@@ -28,7 +28,7 @@
     
     //双击的scrollView
     UIScrollView *_selectScrollView;
-    NSInteger _currentPage;
+    NSUInteger _currentPage;
     
     UIPanGestureRecognizer *_panGesture;
     
@@ -39,7 +39,7 @@
     BOOL _isdraggingPhoto;
     
     //设备旋转前的index
-    NSInteger _indexBeforeRotation;
+    NSUInteger _indexBeforeRotation;
     UICollectionViewFlowLayout *_layout;
     
     id _currentModelForRecord;
@@ -419,7 +419,7 @@
         if(self.delegate && !_isFirstAppear)
            [self.delegate photoBrowser:self scrollToIndexPath:m.indexPath];
         //!!!!!: change Title
-        _titleLabel.text = [NSString stringWithFormat:@"%ld/%ld", _currentPage, self.models.count];
+        _titleLabel.text = [NSString stringWithFormat:@"%lu/%ld", (unsigned long)_currentPage, (unsigned long)self.models.count];
         if (m.type == JYAssetTypeGIF ||
             m.type == JYAssetTypeLivePhoto ||
             m.type == JYAssetTypeVideo || m.type == JYAssetTypeNetVideo) {
@@ -562,8 +562,10 @@
 - (void)performDismissAnimation
 {
     float fadeAlpha = 1 - fabs(_collectionView.frame.origin.y)/_collectionView.frame.size.height;
-    JYBigImgCell * cell = _collectionView.visibleCells[0];
-    
+
+//    JYBigImgCell * cell = _collectionView.visibleCells[0];
+    NSIndexPath *indexP = [NSIndexPath indexPathForRow:_currentPage - 1 inSection:0];
+    JYBigImgCell * cell = (JYBigImgCell *)[_collectionView cellForItemAtIndexPath:indexP];
     UIWindow * mainWindow = [UIApplication sharedApplication].keyWindow;
     
     CGRect rect = [cell.previewView convertRect:cell.previewView.imageViewFrame toView:self.view];

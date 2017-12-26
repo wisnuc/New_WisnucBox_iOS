@@ -32,6 +32,7 @@
 #define WarningDetailColor UICOLOR_RGB(0xf44336)
 #define IgnoreColor RGBACOLOR(0, 0, 0, 0.54f)
 #define OriginTitleColor RGBACOLOR(0, 0, 0, 0.87f)
+#define MainBackgroudColor  UICOLOR_RGB(0xfafafa)
 #define userNameMax 16
 #define passwordMax 30
 
@@ -178,8 +179,9 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:COR1] forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.backgroundColor = UICOLOR_RGB(0x03a9f4);
+    [self.navigationController.navigationBar setBarTintColor:COR1];
+ 
+//    self.navigationController.navigationBar.backgroundColor = UICOLOR_RGB(0x03a9f4);
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     [self.navigationController setNavigationBarHidden:NO animated:YES];
@@ -188,7 +190,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forBarMetrics:UIBarMetricsDefault];
+//   [self.navigationController.navigationBar setBarTintColor:COR1];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName :[UIColor darkTextColor]}];
 //    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }
@@ -1118,7 +1120,7 @@
         _mainScrollView= [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, __kWidth,__kHeight - 64)];
         _mainScrollView.delegate = self;
         _mainScrollView.scrollEnabled = YES;
-        _mainScrollView.backgroundColor = UICOLOR_RGB(0xfafafa);
+        _mainScrollView.backgroundColor = MainBackgroudColor;
     }
     return _mainScrollView;
 }
@@ -1174,7 +1176,7 @@
 - (UIView *)firstStepIconView{
     if (!_firstStepIconView) {
         _firstStepIconView = [[UIView alloc]initWithFrame:CGRectMake(16, 8, 20, 28)];
-        _firstStepIconView.backgroundColor = [UIColor whiteColor];
+        _firstStepIconView.backgroundColor = MainBackgroudColor;
         [_firstStepIconView addSubview:self.firstStepLabel];
         [_firstStepIconView addSubview:self.firstCheckBox];
         self.firstCheckBox.center =  _firstStepLabel.center;
@@ -1304,7 +1306,7 @@
 - (UIView *)secondStepIconView{
     if (!_secondStepIconView) {
         _secondStepIconView = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.firstStepIconView.frame),CGRectGetMaxY(self.firstStepButton.frame)+ 24, 20, 28)];
-        _secondStepIconView.backgroundColor = [UIColor whiteColor];
+        _secondStepIconView.backgroundColor = MainBackgroudColor;
         [_secondStepIconView addSubview:self.secondStepLabel];
         [_secondStepIconView addSubview:self.secondCheckBox];
     }
@@ -1468,7 +1470,7 @@
 - (UIView *)thirdStepIconView{
     if (!_thirdStepIconView) {
         _thirdStepIconView = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.secondStepIconView.frame),CGRectGetMaxY(self.secondStepDetailLabel.frame)+ 24, 20, 28)];
-        _thirdStepIconView.backgroundColor = [UIColor whiteColor];
+        _thirdStepIconView.backgroundColor = MainBackgroudColor;
         [_thirdStepIconView addSubview:self.thirdStepLabel];
         [_thirdStepIconView addSubview:self.thirdCheckBox];
     }
@@ -1588,7 +1590,7 @@
 - (UIView *)fourthStepIconView{
     if (!_fourthStepIconView) {
         _fourthStepIconView = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.thirdStepIconView.frame),CGRectGetMaxY(self.thirdStepTitle.frame)+ 24, 20, 28)];
-        _fourthStepIconView.backgroundColor = [UIColor whiteColor];
+        _fourthStepIconView.backgroundColor = MainBackgroudColor;
         [_fourthStepIconView addSubview:self.fourthStepLabel];
         [_fourthStepIconView addSubview:self.fourthCheckBox];
     }
@@ -1682,7 +1684,7 @@
 - (UIView *)fifthStepIconView{
     if (!_fifthStepIconView) {
         _fifthStepIconView = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.fourthStepIconView.frame),CGRectGetMaxY(self.fourthStepTitle.frame)+ 24, 20, 28)];
-        _fifthStepIconView.backgroundColor = [UIColor whiteColor];
+        _fifthStepIconView.backgroundColor = MainBackgroudColor;
         [_fifthStepIconView addSubview:self.fifthStepLabel];
         _lineView.frame = CGRectMake(26, 14, 1,CGRectGetMaxY(self.fifthStepIconView.frame) -CGRectGetMinY(self.firstStepIconView.frame) - 6);
     }

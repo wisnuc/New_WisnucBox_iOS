@@ -29,7 +29,7 @@
 #import "WBStationManageStorageAPI.h"
 #import "WBStationManageStorageModel.h"
 #import "WBInitializationViewController.h"
-
+#import "WBMaintenanceViewController.h"
 
 @interface FMLoginViewController ()
 <
@@ -144,7 +144,9 @@ WXApiDelegate
 }
 
 - (void)beginSearching {
-   
+    [self.browser stopServerBrowser];
+     _browser.delegate = nil;
+     _browser = nil;
 //    double delayInSeconds = 2;
 //    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 //    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -185,7 +187,7 @@ static BOOL needHide = YES;
 }
 
 - (void)serverBrowserFoundService:(NSNetService *)service {
-//    NSLog(@"%@",service.hostName);
+    NSLog(@"%@",service.hostName);
         if ([service.hostName rangeOfString:@"wisnuc-"].location !=NSNotFound) {
             for (NSData * address in service.addresses) {
                 NSString* addressString = [GCDAsyncSocket hostFromAddress:address];
@@ -228,37 +230,35 @@ static BOOL needHide = YES;
         return;
     }
     FMSerachService * ser = [FMSerachService new];
-    
-    
-//    if ([urlString isEqualToString:@"http://10.10.9.141:3000/"]) {
+    [ser getDataWithPath:urlString Block:^(NSArray *dataArray) {
         [self getBootInfoWithPath:urlString completeBlock:^(BootModel *model) {
             NSLog(@"%@",model.error);
             if ([model.mode isEqualToString:@"maintenance"]) {
                 [weak_self getSystemInformationWithURL:addressString Service:service Name:nil FMSerachServiceModel:ser NASType:NASTypeMaintain];
-
-                 return ;
-            }else if ([model.error isEqualToString:@"ELASTNOTMOUNT"] || [model.error isEqualToString:@"ELASTMISSING"]|| [model.error isEqualToString:@"ELASTDAMAGED"]) {
-                  [weak_self getSystemInformationWithURL:addressString Service:service Name:nil FMSerachServiceModel:ser NASType:NASTypeError];
-                 return ;
-            }else
-            if (IsEquallString(model.error, @"ENOALT")) {
-                [[WBStationManageStorageAPI apiWithURLPath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-                    
-                    WBStationManageStorageModel *storageModel = [WBStationManageStorageModel yy_modelWithJSON:request.responseJsonObject];
-                    NSLog(@"%@",request.responseJsonObject);
-                    if (storageModel.volumes && storageModel.volumes.count == 0) {
-                    ser.storageModel = storageModel;
-                    [weak_self getSystemInformationWithURL:addressString Service:service Name:nil FMSerachServiceModel:ser NASType:NASTypeUninitialized];
-                    }else{
-                        [weak_self getSystemInformationWithURL:addressString Service:service Name:nil FMSerachServiceModel:ser NASType:NASTypeError];
-                    }
-                } failure:^(__kindof JYBaseRequest *request) {
-                    
-                }];
+                
                 return ;
-            }else{
-               
-            }
+            }else if ([model.error isEqualToString:@"ELASTNOTMOUNT"] || [model.error isEqualToString:@"ELASTMISSING"]|| [model.error isEqualToString:@"ELASTDAMAGED"]) {
+                [weak_self getSystemInformationWithURL:addressString Service:service Name:nil FMSerachServiceModel:ser NASType:NASTypeError];
+                return ;
+            }else
+                if (IsEquallString(model.error, @"ENOALT")) {
+                    [[WBStationManageStorageAPI apiWithURLPath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+                        
+                        WBStationManageStorageModel *storageModel = [WBStationManageStorageModel yy_modelWithJSON:request.responseJsonObject];
+                        NSLog(@"%@",request.responseJsonObject);
+                        if (storageModel.volumes && storageModel.volumes.count == 0) {
+                            ser.storageModel = storageModel;
+                            [weak_self getSystemInformationWithURL:addressString Service:service Name:nil FMSerachServiceModel:ser NASType:NASTypeUninitialized];
+                        }else{
+                            [weak_self getSystemInformationWithURL:addressString Service:service Name:nil FMSerachServiceModel:ser NASType:NASTypeError];
+                        }
+                    } failure:^(__kindof JYBaseRequest *request) {
+                        
+                    }];
+                    return ;
+                }else{
+                    
+                }
             
             [[WBgetStationInfoAPI apiWithServicePath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
                 //            NSLog(@"%@",request.responseJsonObject);
@@ -267,7 +267,7 @@ static BOOL needHide = YES;
                 if (nameString.length == 0) {
                     nameString = WBLocalizedString(@"wisnuc_box", nil);
                 }
-               [weak_self getSystemInformationWithURL:addressString Service:service Name:nameString FMSerachServiceModel:ser NASType:NASTypeNormal];
+                [weak_self getSystemInformationWithURL:addressString Service:service Name:nameString FMSerachServiceModel:ser NASType:NASTypeNormal];
             } failure:^(__kindof JYBaseRequest *request) {
                 NSString *nameString = WBLocalizedString(@"wisnuc_box", nil);
                 [weak_self getSystemInformationWithURL:addressString Service:service Name:nameString FMSerachServiceModel:ser NASType:NASTypeNormal];
@@ -279,6 +279,10 @@ static BOOL needHide = YES;
                 }
             }];
         }];
+    }];
+    
+//    if ([urlString isEqualToString:@"http://10.10.9.141:3000/"]) {
+
 //    }
 }
 
@@ -322,6 +326,8 @@ static BOOL needHide = YES;
         }else{
             type = WBLocalizedString(@"virtual_machine",nil);
         }
+        
+       
         FMSerachService *ser = model;
         if (name) {
             ser.name = name;
@@ -354,12 +360,11 @@ static BOOL needHide = YES;
         ser.displayPath = url;
         ser.hostName = service.hostName;
         _expandCell = ser;
-        if (_dataSource.count == 0) {
-            [_dataSource addObject:ser];
-           [weak_self refreshDatasource];
-           [self.userListTableViwe reloadData];
-            return ;
-        }
+//        if (_dataSource.count == 0) {
+//           [_dataSource addObject:ser];
+//           [weak_self refreshDatasource];
+//            return ;
+//        }
         BOOL isNew = YES;
         for (FMSerachService * s in _dataSource) {
             if (IsEquallString(s.path, ser.path)) {
@@ -370,7 +375,6 @@ static BOOL needHide = YES;
         if (isNew) {
             [_dataSource addObject:ser];
             [weak_self refreshDatasource];
-              [self.userListTableViwe reloadData];
         }
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
@@ -379,26 +383,33 @@ static BOOL needHide = YES;
 }
 
 - (void)refreshDatasource{
-    NSMutableArray * temp = [NSMutableArray arrayWithCapacity:0];
+//    NSMutableArray * temp = [NSMutableArray arrayWithCapacity:0];
     _userDataSource = [NSMutableArray arrayWithCapacity:0];
-    [_dataSource enumerateObjectsUsingBlock:^( FMSerachService * ser, NSUInteger idx, BOOL * _Nonnull stop) {
-//        NSLog(@"%ld",ser.isReadly);
-//        if (ser.isReadly) {
-            [temp addObject:ser];
-//        }
+     [self.tempDataSource removeAllObjects];
+    [_dataSource enumerateObjectsUsingBlock:^(FMSerachService * ser, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (ser.NASType == NASTypeNormal) {
+//            if (ser.isReadly) {
+                [self.tempDataSource addObject:ser];
+//            wd}
+        }else{
+            [self.tempDataSource addObject:ser];
+        }
     }];
-
-
+//    for ( in _dataSource) {
+//
+//    }
+   
 //    if(self.tempDataSource.count != temp.count){
-//        self.tempDataSource = temp;
+//        [self.tempDataSource addObjectsFromArray:temp];
 //        [self.userListTableViwe reloadData];
 //    }else if (self.tempDataSource && self.tempDataSource.count ==0){
-        self.tempDataSource = temp;
-        [self.userListTableViwe reloadData];
+//        [e addObjectsFromArray:temp];
+//        [self.userListTableViwe reloadData];
 //    }
     if (_stationScrollView) {
         [_stationScrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }
+    
     [self updateInfo];
     [self setStationCardView];
     [SXLoadingView  hideProgressHUD];
@@ -410,7 +421,7 @@ static BOOL needHide = YES;
 }
 
 - (void)setStationCardView{
-//    NSLog(@"%@",self.tempDataSource);
+    
     if (self.tempDataSource.count ==0) {
         _stationCardView = [[UIView alloc]init];
         _stationCardView.backgroundColor =  UICOLOR_RGB(0x03a9f4);
@@ -432,7 +443,7 @@ static BOOL needHide = YES;
             //        [self setInfoButton];
             [self setStationLogoImageView];
             [self setInfo];
-            FMSerachService *ser = _tempDataSource[i];
+            FMSerachService *ser = self.tempDataSource[i];
             if ([NSThread isMainThread]){
                 [self reloadDataWithService:ser];
             }else{
@@ -444,14 +455,14 @@ static BOOL needHide = YES;
         
         FMSerachService *serforUser;
         if (_userDataCount > 0) {
-            serforUser  = _tempDataSource[_userDataCount];
+            serforUser  = self.tempDataSource[_userDataCount];
             
         }else{
-            serforUser  = _tempDataSource[0];
+            serforUser  = self.tempDataSource[0];
         }
         _userDataSource = serforUser.users;
         [self initializationLayoutUpdateWithModel:serforUser];
-      
+        [self.userListTableViwe reloadData];
     }
 }
 
@@ -733,7 +744,12 @@ static BOOL needHide = YES;
         }
         NSLog(@"%@--- %@",NSStringFromCGRect(rect),NSStringFromCGRect(self.userListTableViwe.bounds));
         [_userListTableViwe displayWithMsg:WBLocalizedString(@"enter_maintenance", nil) withRowCount:0 andIsNoData:YES  andTableViewFrame:rect
-                             andTouchBlock:nil];
+                             andTouchBlock:^(UIButton *btn) {
+                                 WBMaintenanceViewController *maintenanceVC = [[WBMaintenanceViewController alloc]init];
+//                                 initializationVC.searchModel = model;
+                                 [self.navigationController pushViewController:maintenanceVC animated:YES];
+//
+                             }];
     }else if (model.NASType == NASTypeError){
             [_userListTableViwe removeEmptyView];
             _userView.alpha = 0;
@@ -756,9 +772,7 @@ static BOOL needHide = YES;
         _userView.alpha = 1;
         [_userListTableViwe removeEmptyView];
         _userListTableViwe.bounces = YES;
-         [self.userListTableViwe reloadData];
     }
-      [self.userListTableViwe reloadData];
 }
 
 #pragma mark ScrollView delegate
@@ -768,10 +782,10 @@ static BOOL needHide = YES;
         int page = scrollView.contentOffset.x/__kWidth;
         _stationPageControl.currentPage = page;
         _currentPage = page;
-        if (page > _tempDataSource.count) {
+        if (page > self.tempDataSource.count) {
             return;
         }
-        FMSerachService *ser = _tempDataSource[page];
+        FMSerachService *ser = self.tempDataSource[page];
         _userDataSource = ser.users;
         _userDataCount = page;
     }
@@ -780,9 +794,13 @@ static BOOL needHide = YES;
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     if (scrollView == self.stationScrollView) {
-        FMSerachService *ser = _tempDataSource[_currentPage];
+        FMSerachService *ser = self.tempDataSource[_currentPage];
         [self initializationLayoutUpdateWithModel:ser];
-        [_userListTableViwe reloadData];
+        [self.userListTableViwe reloadData];
+        if (_userDataSource.count >0) {
+             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+            [self.userListTableViwe scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:true];
+        }
     }
 }
 
@@ -877,6 +895,14 @@ static BOOL needHide = YES;
     }
 
 }
+
+- (NSMutableArray *)tempDataSource{
+    if (!_tempDataSource) {
+        _tempDataSource = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _tempDataSource;
+}
+
 - (UIScrollView *)stationScrollView{
     if (!_stationScrollView) {
         _stationScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, __kWidth,448/2 + 64)];
@@ -934,13 +960,6 @@ static BOOL needHide = YES;
 //        _userListTableViwe.backgroundColor = [UIColor orangeColor];
     }
     return _userListTableViwe;
-}
-
-- (NSMutableArray *)tempDataSource{
-    if (!_tempDataSource) {
-        _tempDataSource = [NSMutableArray arrayWithCapacity:0];
-    }
-    return _tempDataSource;
 }
 
 - (UIView *)wechatView{
