@@ -83,7 +83,7 @@
 //    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back_gray"] style:UIBarButtonItemStyleDone target:self action:@selector(backBtnClick)];
     
 //    self.navigationItem.leftItemsSupplementBackButton = YES;
-    if ([self.navigationBar.backgroundColor isEqual:COR1]) {
+    if ([self.navigationBar.barTintColor isEqual:COR1]) {
         NSLog(@"🌶");
     }
     //左按钮

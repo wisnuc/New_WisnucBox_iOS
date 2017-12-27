@@ -95,6 +95,7 @@
 
         case 0:{
             cell.textLabel.text =  WBLocalizedString(@"samba_service", nil);
+            cell.imageView.image = [UIImage imageNamed:@"samba_switch.png"];
             cell.contentView.layer.masksToBounds = YES;
             UISwitch *switchBtn = [[UISwitch alloc]initWithFrame:CGRectMake(__kWidth - 70, 16, 50, 40)];
             [switchBtn addTarget:self  action:@selector(sambaSwitchChanged:) forControlEvents:UIControlEventValueChanged];
@@ -110,6 +111,7 @@
             break;
         case 1:{
             cell.textLabel.text =  WBLocalizedString(@"miniDLNA_service", nil);
+            cell.imageView.image = [UIImage imageNamed:@"dlna_switch.png"];
             UISwitch *switchBtn = [[UISwitch alloc]initWithFrame:CGRectMake(__kWidth - 70, 16, 50, 40)];
             [switchBtn addTarget:self  action:@selector(miniDLNASwitchChanged:) forControlEvents:UIControlEventValueChanged];
             [switchBtn setOn:_miniDlnaSwitchOn];
@@ -123,6 +125,7 @@
             break;
         case 2:{
             cell.textLabel.text =  WBLocalizedString(@"BT_download_service", nil);
+            cell.imageView.image = [UIImage imageNamed:@"bt_switch.png"];
             UISwitch *switchBtn = [[UISwitch alloc]initWithFrame:CGRectMake(__kWidth - 70, 16, 50, 40)];
             [switchBtn addTarget:self  action:@selector(btSwitchChanged:) forControlEvents:UIControlEventValueChanged];
             [switchBtn setOn:_btSwitchOn];

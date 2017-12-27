@@ -155,7 +155,7 @@
      [self.mainScrollView addSubview:self.fifthStepEnterButton];
      [self.mainScrollView addSubview:self.fifthPreviousButton];
     
-    _mainScrollView.contentSize = CGSizeMake(__kWidth,CGRectGetMaxY( _fifthStepTitle.frame) +8);
+    _mainScrollView.contentSize = CGSizeMake(__kWidth,CGRectGetMaxY( _fifthStepDetailLabel.frame) +8);
 }
 
 - (void)keyboardDidShow
@@ -1117,7 +1117,7 @@
 
 - (UIScrollView *)mainScrollView{
     if (!_mainScrollView) {
-        _mainScrollView= [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, __kWidth,__kHeight - 64)];
+        _mainScrollView= [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, __kWidth,__kHeight)];
         _mainScrollView.delegate = self;
         _mainScrollView.scrollEnabled = YES;
         _mainScrollView.backgroundColor = MainBackgroudColor;
@@ -1775,8 +1775,6 @@
     
     [UIView commitAnimations];
 }
-
-
 
 @end
 

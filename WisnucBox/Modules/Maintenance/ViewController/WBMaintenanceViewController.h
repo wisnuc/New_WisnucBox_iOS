@@ -7,7 +7,8 @@
 //
 
 #import "FABaseVC.h"
+#import "FMSerachService.h"
 
 @interface WBMaintenanceViewController : FABaseVC
-
+@property (nonatomic) FMSerachService *searchModel;
 @end

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="64" id="KGk-i7-Jjw" customClass="WBMaintenanceStorageInfoTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="63.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="disk_array.png" translatesAutoresizingMaskIntoConstraints="NO" id="MJg-JK-XSc">
+                        <rect key="frame" x="16" y="12" width="40" height="40"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SNF-Cx-aXs">
+                        <rect key="frame" x="88" y="21" width="0.0" height="0.0"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" white="0.1267565356" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8FO-2M-QOl">
+                        <rect key="frame" x="88" y="43" width="0.0" height="0.0"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.4624023437" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vbd-a9-m2l">
+                        <rect key="frame" x="271" y="16" width="33" height="32"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                        <state key="normal" title="启动">
+                            <color key="titleColor" red="0.01176470588" green="0.66274509800000003" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="startButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="o1x-T3-pZY"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="SNF-Cx-aXs" firstAttribute="leading" secondItem="8FO-2M-QOl" secondAttribute="leading" id="6u3-2D-xN8"/>
+                    <constraint firstItem="SNF-Cx-aXs" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="-11" id="DRe-du-d93"/>
+                    <constraint firstItem="MJg-JK-XSc" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="XG6-KB-e33"/>
+                    <constraint firstItem="vbd-a9-m2l" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="fcM-Mw-3QX"/>
+                    <constraint firstItem="MJg-JK-XSc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="hDy-uU-CRG"/>
+                    <constraint firstItem="8FO-2M-QOl" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="11" id="ih5-kv-OOI"/>
+                    <constraint firstAttribute="trailing" secondItem="vbd-a9-m2l" secondAttribute="trailing" constant="16" id="jyh-BI-G8p"/>
+                    <constraint firstItem="SNF-Cx-aXs" firstAttribute="leading" secondItem="MJg-JK-XSc" secondAttribute="trailing" constant="32" id="yid-Fv-VFb"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="diskDetailInfoLabel" destination="8FO-2M-QOl" id="lI7-CJ-YID"/>
+                <outlet property="diskTitleLabel" destination="SNF-Cx-aXs" id="dU4-xJ-qft"/>
+                <outlet property="startButton" destination="vbd-a9-m2l" id="206-1L-ksh"/>
+            </connections>
+            <point key="canvasLocation" x="34" y="64"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="disk_array.png" width="40" height="40"/>
+    </resources>
+</document>

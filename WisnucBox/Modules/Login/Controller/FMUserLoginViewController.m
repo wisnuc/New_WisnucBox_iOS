@@ -95,7 +95,6 @@
             app.window.rootViewController = nil;
             [app.window resignKeyWindow];
             [app.window removeFromSuperview];
-            sender.userInteractionEnabled = YES;
             [MyAppDelegate initRootVC];
             [SXLoadingView hideProgressHUD];
             sender.userInteractionEnabled = YES;

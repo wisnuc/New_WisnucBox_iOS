@@ -104,15 +104,22 @@ WXApiDelegate
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     [_reachabilityTimer invalidate];
     _reachabilityTimer = nil;
-    self.browser.delegate = nil;
-    [self.browser stopServerBrowser];
+    if (_browser) {
+        _browser.delegate = nil;
+        [_browser stopServerBrowser];
+        _browser = nil;
+    }
 }
 
 - (void)dealloc{
     [_reachabilityTimer invalidate];
     _reachabilityTimer = nil;
-    self.browser.delegate = nil;
-    [self.browser stopServerBrowser];
+    if (_browser) {
+        _browser.delegate = nil;
+        [_browser stopServerBrowser];
+        _browser = nil;
+    }
+   
 }
 
 - (instancetype)init{
@@ -203,7 +210,7 @@ static BOOL needHide = YES;
 }
 
 - (void)searchingAndRefresh{
-//    [self beginSearching];
+    [self beginSearching];
     [self refreshDatasource];
 }
 
@@ -232,29 +239,16 @@ static BOOL needHide = YES;
     FMSerachService * ser = [FMSerachService new];
     [ser getDataWithPath:urlString Block:^(NSArray *dataArray) {
         [self getBootInfoWithPath:urlString completeBlock:^(BootModel *model) {
-            NSLog(@"%@",model.error);
+            NSLog(@"%@",model.mode);
             if ([model.mode isEqualToString:@"maintenance"]) {
                 [weak_self getSystemInformationWithURL:addressString Service:service Name:nil FMSerachServiceModel:ser NASType:NASTypeMaintain];
-                
                 return ;
             }else if ([model.error isEqualToString:@"ELASTNOTMOUNT"] || [model.error isEqualToString:@"ELASTMISSING"]|| [model.error isEqualToString:@"ELASTDAMAGED"]) {
                 [weak_self getSystemInformationWithURL:addressString Service:service Name:nil FMSerachServiceModel:ser NASType:NASTypeError];
                 return ;
             }else
                 if (IsEquallString(model.error, @"ENOALT")) {
-                    [[WBStationManageStorageAPI apiWithURLPath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-                        
-                        WBStationManageStorageModel *storageModel = [WBStationManageStorageModel yy_modelWithJSON:request.responseJsonObject];
-                        NSLog(@"%@",request.responseJsonObject);
-                        if (storageModel.volumes && storageModel.volumes.count == 0) {
-                            ser.storageModel = storageModel;
-                            [weak_self getSystemInformationWithURL:addressString Service:service Name:nil FMSerachServiceModel:ser NASType:NASTypeUninitialized];
-                        }else{
-                            [weak_self getSystemInformationWithURL:addressString Service:service Name:nil FMSerachServiceModel:ser NASType:NASTypeError];
-                        }
-                    } failure:^(__kindof JYBaseRequest *request) {
-                        
-                    }];
+                    [weak_self initializeActionWithURLString:urlString SearchModel:ser AddressString:addressString Service:service];
                     return ;
                 }else{
                     
@@ -284,6 +278,22 @@ static BOOL needHide = YES;
 //    if ([urlString isEqualToString:@"http://10.10.9.141:3000/"]) {
 
 //    }
+}
+
+- (void)initializeActionWithURLString:(NSString *)urlString SearchModel:(FMSerachService *)ser AddressString:(NSString *)addressString  Service:(NSNetService *)service{
+    @weaky(self)
+    [[WBStationManageStorageAPI apiWithURLPath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        WBStationManageStorageModel *storageModel = [WBStationManageStorageModel yy_modelWithJSON:request.responseJsonObject];
+        NSLog(@"%@",request.responseJsonObject);
+        if (storageModel.volumes && storageModel.volumes.count == 0) {
+            ser.storageModel = storageModel;
+            [weak_self getSystemInformationWithURL:addressString Service:service Name:nil FMSerachServiceModel:ser NASType:NASTypeUninitialized];
+        }else{
+            [weak_self getSystemInformationWithURL:addressString Service:service Name:nil FMSerachServiceModel:ser NASType:NASTypeError];
+        }
+    } failure:^(__kindof JYBaseRequest *request) {
+        
+    }];
 }
 
 - (void)getBootInfoWithPath:(NSString *)path completeBlock:(void(^)(BootModel *model))block{
@@ -331,12 +341,14 @@ static BOOL needHide = YES;
         FMSerachService *ser = model;
         if (name) {
             ser.name = name;
+        }else{
+            ser.name =  WBLocalizedString(@"wisnuc_box", nil);
         }
         
         if (NAStype == NASTypeUninitialized) {
-            if (!ser.name) {
-                 ser.name = WBLocalizedString(@"wisnuc_box", nil);
-            }
+//            if (!ser.name) {
+//                 ser.name = WBLocalizedString(@"wisnuc_box", nil);
+//            }
             ser.NASType = NASTypeUninitialized;
             if (_storageModel) {
                 ser.storageModel = _storageModel;
@@ -746,7 +758,7 @@ static BOOL needHide = YES;
         [_userListTableViwe displayWithMsg:WBLocalizedString(@"enter_maintenance", nil) withRowCount:0 andIsNoData:YES  andTableViewFrame:rect
                              andTouchBlock:^(UIButton *btn) {
                                  WBMaintenanceViewController *maintenanceVC = [[WBMaintenanceViewController alloc]init];
-//                                 initializationVC.searchModel = model;
+                                 maintenanceVC.searchModel = model;
                                  [self.navigationController pushViewController:maintenanceVC animated:YES];
 //
                              }];
@@ -762,8 +774,13 @@ static BOOL needHide = YES;
                 rect = CGRectMake(0, 0, self.userListTableViwe.bounds.size.width, self.userListTableViwe.bounds.size.height);
             }
             NSLog(@"%@--- %@",NSStringFromCGRect(rect),NSStringFromCGRect(self.userListTableViwe.bounds));
-            [_userListTableViwe displayWithMsg:WBLocalizedString(@"equipment_system_error", nil) withRowCount:0 andIsNoData:YES  andTableViewFrame:rect
-                                 andTouchBlock:nil];
+            [_userListTableViwe displayWithMsg:WBLocalizedString(@"enter_maintenance", nil) withRowCount:0 andIsNoData:YES  andTableViewFrame:rect
+                                 andTouchBlock:^(UIButton *btn) {
+                                     WBMaintenanceViewController *maintenanceVC = [[WBMaintenanceViewController alloc]init];
+                                     maintenanceVC.searchModel = model;
+                                     [self.navigationController pushViewController:maintenanceVC animated:YES];
+                                     //
+                                 }];
     }else if (model.NASType == NASTypeNormal) {
         _userView.alpha = 1;
         [_userListTableViwe removeEmptyView];

@@ -8,6 +8,7 @@
 
 #import "WBStationManageRebotViewController.h"
 #import "WBStationBootAPI.h"
+#import "AppDelegate.h"
 
 @interface WBStationManageRebotViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *rebotButton;
@@ -133,6 +134,7 @@
         [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
             [SXLoadingView hideProgressHUD];
             [SXLoadingView showProgressHUDText:WBLocalizedString(@"enter_maintenance_mode_successfully", nil) duration:1.5];
+            [self logOutAction];
         } failure:^(__kindof JYBaseRequest *request) {
             [SXLoadingView hideProgressHUD];
             [SXLoadingView showProgressHUDText:WBLocalizedString(@"enter_maintenance_mode_failed", nil) duration:1.5];
@@ -143,6 +145,34 @@
     [self presentViewController:alertVc animated:YES completion:^{
     }];
 }
+
+- (void)logOutAction{
+    [SXLoadingView showProgressHUD:WBLocalizedString(@"logout...", nil)];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self skipToLogin];
+    });
+}
+
+
+-(void)skipToLogin{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        MyAppDelegate.window.rootViewController = nil;
+        [MyAppDelegate.window resignKeyWindow];
+        [WB_UserService logoutUser];
+        [WB_AppServices rebulid];
+        for (UIView *view in MyAppDelegate.window.subviews) {
+            [view removeFromSuperview];
+        }
+        //reload menu
+        //        [self reloadWithTitles:LeftMenu_NotAdminTitles andImages:LeftMenu_NotAdminImages];
+        
+        FMLoginViewController * vc = [[FMLoginViewController alloc]init];
+        NavViewController *nav = [[NavViewController alloc] initWithRootViewController:vc];
+        MyAppDelegate.window.rootViewController = nav;
+        [MyAppDelegate.window makeKeyAndVisible];
+    });
+}
+
 
 - (void)backbtnClick:(UIButton *)sender {
     [self.navigationController popViewControllerAnimated:YES];

@@ -16,6 +16,10 @@
 @interface WBStationManageVolumesModel : NSObject
 @property (nonatomic,copy) NSNumber *total;
 @property (nonatomic,copy) NSNumber *isBtrfs;
+@property (nonatomic,copy) NSNumber *isMissing;
+@property (nonatomic,copy) NSNumber *isMounted;
+@property (nonatomic,copy) NSString *uuid;
+@property (nonatomic,copy) id users;
 @property (nonatomic)WBStationManageVolumesUsageModel *usage;
 @end
 

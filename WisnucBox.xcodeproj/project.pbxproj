@@ -12,6 +12,28 @@
 		1F0898DC1FB05FF900B86723 /* eye_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0898DB1FB05FF800B86723 /* eye_off.png */; };
 		1F114A111FF2558F007F6D15 /* WBMaintenanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F114A0F1FF2558F007F6D15 /* WBMaintenanceViewController.m */; };
 		1F114A121FF2558F007F6D15 /* WBMaintenanceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A101FF2558F007F6D15 /* WBMaintenanceViewController.xib */; };
+		1F114A1D1FF33463007F6D15 /* bt_switch.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A141FF33461007F6D15 /* bt_switch.png */; };
+		1F114A1E1FF33463007F6D15 /* bt_switch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A151FF33461007F6D15 /* bt_switch@2x.png */; };
+		1F114A1F1FF33463007F6D15 /* samba_switch.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A161FF33461007F6D15 /* samba_switch.png */; };
+		1F114A201FF33463007F6D15 /* samba_switch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A171FF33462007F6D15 /* samba_switch@2x.png */; };
+		1F114A211FF33463007F6D15 /* bt_switch@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A181FF33462007F6D15 /* bt_switch@3x.png */; };
+		1F114A221FF33463007F6D15 /* dlna_switch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A191FF33462007F6D15 /* dlna_switch@2x.png */; };
+		1F114A231FF33463007F6D15 /* dlna_switch.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A1A1FF33462007F6D15 /* dlna_switch.png */; };
+		1F114A241FF33463007F6D15 /* samba_switch@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A1B1FF33463007F6D15 /* samba_switch@3x.png */; };
+		1F114A251FF33463007F6D15 /* dlna_switch@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A1C1FF33463007F6D15 /* dlna_switch@3x.png */; };
+		1F114A2A1FF3457B007F6D15 /* WBMaintenanceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F114A281FF3457B007F6D15 /* WBMaintenanceTableViewCell.m */; };
+		1F114A2B1FF3457B007F6D15 /* WBMaintenanceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A291FF3457B007F6D15 /* WBMaintenanceTableViewCell.xib */; };
+		1F114A321FF34D9B007F6D15 /* WBMaintenanceStorageInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F114A301FF34D9B007F6D15 /* WBMaintenanceStorageInfoTableViewCell.m */; };
+		1F114A331FF34D9B007F6D15 /* WBMaintenanceStorageInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A311FF34D9B007F6D15 /* WBMaintenanceStorageInfoTableViewCell.xib */; };
+		1F114A3B1FF368FF007F6D15 /* yes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A351FF368FB007F6D15 /* yes@2x.png */; };
+		1F114A3C1FF368FF007F6D15 /* no@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A361FF368FB007F6D15 /* no@3x.png */; };
+		1F114A3D1FF368FF007F6D15 /* no@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A371FF368FB007F6D15 /* no@2x.png */; };
+		1F114A3E1FF368FF007F6D15 /* no.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A381FF368FD007F6D15 /* no.png */; };
+		1F114A3F1FF368FF007F6D15 /* yes@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A391FF368FE007F6D15 /* yes@3x.png */; };
+		1F114A401FF368FF007F6D15 /* yes.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A3A1FF368FF007F6D15 /* yes.png */; };
+		1F114A441FF38578007F6D15 /* disk_array.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A411FF38577007F6D15 /* disk_array.png */; };
+		1F114A451FF38578007F6D15 /* disk_array@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A421FF38578007F6D15 /* disk_array@2x.png */; };
+		1F114A461FF38578007F6D15 /* disk_array@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A431FF38578007F6D15 /* disk_array@3x.png */; };
 		1F178EBC1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F178EBB1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.m */; };
 		1F178EBE1FEBF047001650E5 /* WBSettingSelectBTAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F178EBD1FEBF047001650E5 /* WBSettingSelectBTAlertViewController.storyboard */; };
 		1F178EC21FECABAE001650E5 /* WBTorrentDownloadSwitchAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F178EC11FECABAE001650E5 /* WBTorrentDownloadSwitchAPI.m */; };
@@ -777,6 +799,30 @@
 		1F114A0E1FF2558F007F6D15 /* WBMaintenanceViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBMaintenanceViewController.h; sourceTree = "<group>"; };
 		1F114A0F1FF2558F007F6D15 /* WBMaintenanceViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBMaintenanceViewController.m; sourceTree = "<group>"; };
 		1F114A101FF2558F007F6D15 /* WBMaintenanceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBMaintenanceViewController.xib; sourceTree = "<group>"; };
+		1F114A141FF33461007F6D15 /* bt_switch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bt_switch.png; sourceTree = "<group>"; };
+		1F114A151FF33461007F6D15 /* bt_switch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bt_switch@2x.png"; sourceTree = "<group>"; };
+		1F114A161FF33461007F6D15 /* samba_switch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = samba_switch.png; sourceTree = "<group>"; };
+		1F114A171FF33462007F6D15 /* samba_switch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "samba_switch@2x.png"; sourceTree = "<group>"; };
+		1F114A181FF33462007F6D15 /* bt_switch@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bt_switch@3x.png"; sourceTree = "<group>"; };
+		1F114A191FF33462007F6D15 /* dlna_switch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dlna_switch@2x.png"; sourceTree = "<group>"; };
+		1F114A1A1FF33462007F6D15 /* dlna_switch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dlna_switch.png; sourceTree = "<group>"; };
+		1F114A1B1FF33463007F6D15 /* samba_switch@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "samba_switch@3x.png"; sourceTree = "<group>"; };
+		1F114A1C1FF33463007F6D15 /* dlna_switch@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dlna_switch@3x.png"; sourceTree = "<group>"; };
+		1F114A271FF3457B007F6D15 /* WBMaintenanceTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBMaintenanceTableViewCell.h; sourceTree = "<group>"; };
+		1F114A281FF3457B007F6D15 /* WBMaintenanceTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBMaintenanceTableViewCell.m; sourceTree = "<group>"; };
+		1F114A291FF3457B007F6D15 /* WBMaintenanceTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBMaintenanceTableViewCell.xib; sourceTree = "<group>"; };
+		1F114A2F1FF34D9B007F6D15 /* WBMaintenanceStorageInfoTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBMaintenanceStorageInfoTableViewCell.h; sourceTree = "<group>"; };
+		1F114A301FF34D9B007F6D15 /* WBMaintenanceStorageInfoTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBMaintenanceStorageInfoTableViewCell.m; sourceTree = "<group>"; };
+		1F114A311FF34D9B007F6D15 /* WBMaintenanceStorageInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBMaintenanceStorageInfoTableViewCell.xib; sourceTree = "<group>"; };
+		1F114A351FF368FB007F6D15 /* yes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yes@2x.png"; sourceTree = "<group>"; };
+		1F114A361FF368FB007F6D15 /* no@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no@3x.png"; sourceTree = "<group>"; };
+		1F114A371FF368FB007F6D15 /* no@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no@2x.png"; sourceTree = "<group>"; };
+		1F114A381FF368FD007F6D15 /* no.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no.png; sourceTree = "<group>"; };
+		1F114A391FF368FE007F6D15 /* yes@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yes@3x.png"; sourceTree = "<group>"; };
+		1F114A3A1FF368FF007F6D15 /* yes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yes.png; sourceTree = "<group>"; };
+		1F114A411FF38577007F6D15 /* disk_array.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = disk_array.png; sourceTree = "<group>"; };
+		1F114A421FF38578007F6D15 /* disk_array@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "disk_array@2x.png"; sourceTree = "<group>"; };
+		1F114A431FF38578007F6D15 /* disk_array@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "disk_array@3x.png"; sourceTree = "<group>"; };
 		1F178EBA1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBSettingSelectBTAlertViewController.h; sourceTree = "<group>"; };
 		1F178EBB1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBSettingSelectBTAlertViewController.m; sourceTree = "<group>"; };
 		1F178EBD1FEBF047001650E5 /* WBSettingSelectBTAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WBSettingSelectBTAlertViewController.storyboard; sourceTree = "<group>"; };
@@ -1786,6 +1832,7 @@
 		1F114A0C1FF25545007F6D15 /* Maintenance */ = {
 			isa = PBXGroup;
 			children = (
+				1F114A261FF3455C007F6D15 /* View */,
 				1F114A0D1FF2555B007F6D15 /* ViewController */,
 			);
 			path = Maintenance;
@@ -1799,6 +1846,51 @@
 				1F114A101FF2558F007F6D15 /* WBMaintenanceViewController.xib */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		1F114A131FF33435007F6D15 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				1F114A141FF33461007F6D15 /* bt_switch.png */,
+				1F114A151FF33461007F6D15 /* bt_switch@2x.png */,
+				1F114A181FF33462007F6D15 /* bt_switch@3x.png */,
+				1F114A1A1FF33462007F6D15 /* dlna_switch.png */,
+				1F114A191FF33462007F6D15 /* dlna_switch@2x.png */,
+				1F114A1C1FF33463007F6D15 /* dlna_switch@3x.png */,
+				1F114A161FF33461007F6D15 /* samba_switch.png */,
+				1F114A171FF33462007F6D15 /* samba_switch@2x.png */,
+				1F114A1B1FF33463007F6D15 /* samba_switch@3x.png */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		1F114A261FF3455C007F6D15 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1F114A271FF3457B007F6D15 /* WBMaintenanceTableViewCell.h */,
+				1F114A281FF3457B007F6D15 /* WBMaintenanceTableViewCell.m */,
+				1F114A291FF3457B007F6D15 /* WBMaintenanceTableViewCell.xib */,
+				1F114A2F1FF34D9B007F6D15 /* WBMaintenanceStorageInfoTableViewCell.h */,
+				1F114A301FF34D9B007F6D15 /* WBMaintenanceStorageInfoTableViewCell.m */,
+				1F114A311FF34D9B007F6D15 /* WBMaintenanceStorageInfoTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1F114A341FF36899007F6D15 /* Maintenance */ = {
+			isa = PBXGroup;
+			children = (
+				1F114A411FF38577007F6D15 /* disk_array.png */,
+				1F114A421FF38578007F6D15 /* disk_array@2x.png */,
+				1F114A431FF38578007F6D15 /* disk_array@3x.png */,
+				1F114A381FF368FD007F6D15 /* no.png */,
+				1F114A371FF368FB007F6D15 /* no@2x.png */,
+				1F114A361FF368FB007F6D15 /* no@3x.png */,
+				1F114A3A1FF368FF007F6D15 /* yes.png */,
+				1F114A351FF368FB007F6D15 /* yes@2x.png */,
+				1F114A391FF368FE007F6D15 /* yes@3x.png */,
+			);
+			path = Maintenance;
 			sourceTree = "<group>";
 		};
 		1F178EB91FEBF00D001650E5 /* AlertController */ = {
@@ -2307,6 +2399,8 @@
 		1F61E52C1FAC7AEB008ACEFB /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				1F114A341FF36899007F6D15 /* Maintenance */,
+				1F114A131FF33435007F6D15 /* Setting */,
 				1F178ECF1FECD481001650E5 /* Download */,
 				1FFAE3861FE141B20054C393 /* Initialization */,
 				1FAD74481FD0EDA900A5D880 /* Files */,
@@ -3812,6 +3906,7 @@
 			files = (
 				F683115C1FB30AAE005AC578 /* photo_plus_close.png in Resources */,
 				F683107B1FB30AAE005AC578 /* About@2x.png in Resources */,
+				1F114A251FF33463007F6D15 /* dlna_switch@3x.png in Resources */,
 				F68310A91FB30AAE005AC578 /* comment@2x.png in Resources */,
 				F6830F051FB2FF8C005AC578 /* FMUserSettingCell.xib in Resources */,
 				F68311AA1FB30AAF005AC578 /* transparency_bg@2x.png in Resources */,
@@ -3828,6 +3923,7 @@
 				F683109E1FB30AAE005AC578 /* check-box@3x.png in Resources */,
 				F68310CC1FB30AAE005AC578 /* file_icon@2x.png in Resources */,
 				1FD7A1151FB05A51000D4CB3 /* eye@2x.png in Resources */,
+				1F114A3F1FF368FF007F6D15 /* yes@3x.png in Resources */,
 				F68311AD1FB30AAF005AC578 /* unselected@2x.png in Resources */,
 				F68310B21FB30AAE005AC578 /* Default-667h@2x.png in Resources */,
 				F68311031FB30AAE005AC578 /* ic_person.png in Resources */,
@@ -3843,6 +3939,7 @@
 				F68310881FB30AAE005AC578 /* Arrow@2x.png in Resources */,
 				1F922EE11FCE993900A7614B /* ic_storage@2x.png in Resources */,
 				F683107F1FB30AAE005AC578 /* add_album@3x.png in Resources */,
+				1F114A201FF33463007F6D15 /* samba_switch@2x.png in Resources */,
 				F68311B21FB30AAF005AC578 /* user.png in Resources */,
 				1FEFCDEB1FE799C500DEC866 /* WBInitChangeDiskTypeAlertViewController.storyboard in Resources */,
 				F683113F1FB30AAE005AC578 /* no_file@2x.png in Resources */,
@@ -3851,6 +3948,7 @@
 				F68311681FB30AAE005AC578 /* pic_线型.png in Resources */,
 				F68311041FB30AAE005AC578 /* ic_person@2x.png in Resources */,
 				1FD7A0EC1FB05A45000D4CB3 /* back_gray@3x.png in Resources */,
+				1F114A451FF38578007F6D15 /* disk_array@2x.png in Resources */,
 				F68310D41FB30AAE005AC578 /* folder_icon.png in Resources */,
 				F683110E1FB30AAE005AC578 /* icon_down@3x.png in Resources */,
 				F68310AC1FB30AAE005AC578 /* comment_share@2x.png in Resources */,
@@ -3863,10 +3961,12 @@
 				F683109A1FB30AAE005AC578 /* cancel@2x.png in Resources */,
 				1FAD74611FD0EDDF00A5D880 /* png_icon@2x.png in Resources */,
 				F683108C1FB30AAE005AC578 /* Arrow_down@3x.png in Resources */,
+				1F114A231FF33463007F6D15 /* dlna_switch.png in Resources */,
 				F68311201FB30AAE005AC578 /* lock_line@2x.png in Resources */,
 				1F922E991FCD42F900A7614B /* ic_power_settings@2x.png in Resources */,
 				F68310E31FB30AAE005AC578 /* hard.png in Resources */,
 				1FFAE3901FE141C90054C393 /* disk_disable@3x.png in Resources */,
+				1F114A3C1FF368FF007F6D15 /* no@3x.png in Resources */,
 				1FD7A1041FB05A51000D4CB3 /* key.png in Resources */,
 				F6830EF21FB2FEF3005AC578 /* FMUserSetting.xib in Resources */,
 				F68311351FB30AAE005AC578 /* more@2x.png in Resources */,
@@ -3919,6 +4019,7 @@
 				1F4D75C01FAC5E3400E6516C /* ChooseAlertView.xib in Resources */,
 				1F4D75D11FAC604100E6516C /* LoginTableViewCell.xib in Resources */,
 				F68311A41FB30AAF005AC578 /* tabbar_normal_background.png in Resources */,
+				1F114A441FF38578007F6D15 /* disk_array.png in Resources */,
 				1FFAE3911FE141C90054C393 /* disk_disable.png in Resources */,
 				F68311751FB30AAE005AC578 /* recommend@2x.png in Resources */,
 				1FD7A0EA1FB05A45000D4CB3 /* back@2x.png in Resources */,
@@ -3936,6 +4037,7 @@
 				F68311151FB30AAE005AC578 /* info_user@3x.png in Resources */,
 				F68310A41FB30AAE005AC578 /* check_circle@3x.png in Resources */,
 				1FAD748F1FD15F3300A5D880 /* weChat_add.png in Resources */,
+				1F114A221FF33463007F6D15 /* dlna_switch@2x.png in Resources */,
 				F683107D1FB30AAE005AC578 /* add_album.png in Resources */,
 				F68311821FB30AAF005AC578 /* set@3x.png in Resources */,
 				F68311401FB30AAE005AC578 /* no_file@3x.png in Resources */,
@@ -3966,6 +4068,7 @@
 				F68310FF1FB30AAE005AC578 /* ic_lock_outline@3x.png in Resources */,
 				1FCFB3D81FE7B34C00BD3375 /* ic_radio_button.png in Resources */,
 				F68310AB1FB30AAE005AC578 /* comment_share.png in Resources */,
+				1F114A1E1FF33463007F6D15 /* bt_switch@2x.png in Resources */,
 				F68311261FB30AAE005AC578 /* login@2x.png in Resources */,
 				F68310CD1FB30AAE005AC578 /* file_icon@3x.png in Resources */,
 				F68311B01FB30AAF005AC578 /* up@2x.png in Resources */,
@@ -3988,6 +4091,7 @@
 				F68311441FB30AAE005AC578 /* open_in.png in Resources */,
 				F68311BF1FB30AAF005AC578 /* album_praise@2x.png in Resources */,
 				F683111A1FB30AAE005AC578 /* local@2x.png in Resources */,
+				1F114A401FF368FF007F6D15 /* yes.png in Resources */,
 				1FAD74901FD15F3300A5D880 /* weChat_add@3x.png in Resources */,
 				F683116F1FB30AAE005AC578 /* praise@2x.png in Resources */,
 				F68311861FB30AAF005AC578 /* share_photo.png in Resources */,
@@ -4013,6 +4117,7 @@
 				1F58DEED1FDFF25900768DD7 /* WBInitializationViewController.xib in Resources */,
 				1F114A121FF2558F007F6D15 /* WBMaintenanceViewController.xib in Resources */,
 				F68311BE1FB30AAF005AC578 /* album_praise.png in Resources */,
+				1F114A1F1FF33463007F6D15 /* samba_switch.png in Resources */,
 				F68310F51FB30AAE005AC578 /* ic_arrow_drop_down@2x.png in Resources */,
 				F68310801FB30AAE005AC578 /* album_balloon.png in Resources */,
 				C183CDEB1FCE9CE8002E29CD /* FMChangeNameVC.xib in Resources */,
@@ -4025,8 +4130,11 @@
 				F68311AF1FB30AAF005AC578 /* up.png in Resources */,
 				F68311AB1FB30AAF005AC578 /* transparency_bg@3x.png in Resources */,
 				F683115A1FB30AAE005AC578 /* photo_placeholder@2x.png in Resources */,
+				1F114A461FF38578007F6D15 /* disk_array@3x.png in Resources */,
 				F671F1041FB4B3B50051DF93 /* floatTableViewCell.xib in Resources */,
+				1F114A2B1FF3457B007F6D15 /* WBMaintenanceTableViewCell.xib in Resources */,
 				F68310F21FB30AAE005AC578 /* ic_account_circle@2x.png in Resources */,
+				1F114A211FF33463007F6D15 /* bt_switch@3x.png in Resources */,
 				1FAD744C1FD0EDC700A5D880 /* wechat_icon@3x.png in Resources */,
 				F6830F141FB300D2005AC578 /* FMLeftMenu.xib in Resources */,
 				1F178ED41FECD492001650E5 /* ic_content_paste.png in Resources */,
@@ -4070,7 +4178,9 @@
 				F683118F1FB30AAF005AC578 /* share_select.png in Resources */,
 				F68310BB1FB30AAE005AC578 /* dot.png in Resources */,
 				1FCFB3F51FEA425400BD3375 /* ic_add_white@2x.png in Resources */,
+				1F114A241FF33463007F6D15 /* samba_switch@3x.png in Resources */,
 				F68311321FB30AAE005AC578 /* menu_select@2x.png in Resources */,
+				1F114A331FF34D9B007F6D15 /* WBMaintenanceStorageInfoTableViewCell.xib in Resources */,
 				F683119A1FB30AAF005AC578 /* small_3@3x.png in Resources */,
 				1F3F99811FB0312300D6CC64 /* LocalDownloadViewController.xib in Resources */,
 				F68311571FB30AAE005AC578 /* photo@2x.png in Resources */,
@@ -4122,10 +4232,12 @@
 				F68311311FB30AAE005AC578 /* menu_select.png in Resources */,
 				F68311011FB30AAE005AC578 /* ic_mode_edit_18pt@2x.png in Resources */,
 				F68311691FB30AAE005AC578 /* pic_线型@2x.png in Resources */,
+				1F114A3D1FF368FF007F6D15 /* no@2x.png in Resources */,
 				1F922ECD1FCE93DF00A7614B /* ic_sd_storage.png in Resources */,
 				F68311841FB30AAF005AC578 /* share@2x.png in Resources */,
 				F68311801FB30AAF005AC578 /* set.png in Resources */,
 				F68310FB1FB30AAE005AC578 /* ic_https@2x.png in Resources */,
+				1F114A3B1FF368FF007F6D15 /* yes@2x.png in Resources */,
 				F683114A1FB30AAE005AC578 /* person_add.png in Resources */,
 				F68311371FB30AAE005AC578 /* more_highlight@.png in Resources */,
 				F68310F41FB30AAE005AC578 /* ic_arrow_drop_down.png in Resources */,
@@ -4211,6 +4323,7 @@
 				F68311B71FB30AAF005AC578 /* virtual_machine@3x.png in Resources */,
 				F68311471FB30AAE005AC578 /* person.png in Resources */,
 				F68311C31FB30AAF005AC578 /* circle@3x.png in Resources */,
+				1F114A3E1FF368FF007F6D15 /* no.png in Resources */,
 				1F611CB81FF0E8D500E34379 /* magnet@3x.png in Resources */,
 				F68311A11FB30AAF005AC578 /* storage_select.png in Resources */,
 				F68311101FB30AAE005AC578 /* info.png in Resources */,
@@ -4262,6 +4375,7 @@
 				F68311611FB30AAE005AC578 /* photo_plus_open@3x.png in Resources */,
 				F683117D1FB30AAF005AC578 /* select.png in Resources */,
 				F68310A11FB30AAE005AC578 /* check-box_select@3x.png in Resources */,
+				1F114A1D1FF33463007F6D15 /* bt_switch.png in Resources */,
 				1F58DEE51FDFDC6B00768DD7 /* disk_settings@3x.png in Resources */,
 				F683114C1FB30AAE005AC578 /* person_add@3x.png in Resources */,
 				F68310831FB30AAE005AC578 /* album_share@3x.png in Resources */,
@@ -4490,6 +4604,7 @@
 				1FCFB3EF1FEA173C00BD3375 /* WBTorrentDownloadViewController.m in Sources */,
 				1F2BE3011FBC129700776DB3 /* FilesNextViewController.m in Sources */,
 				F671F1031FB4B3B50051DF93 /* floatTableViewCell.m in Sources */,
+				1F114A2A1FF3457B007F6D15 /* WBMaintenanceTableViewCell.m in Sources */,
 				1F4D75B01FAC4BB800E6516C /* AssetsServices.m in Sources */,
 				F675614B1FB3428F00E3277F /* UIColor+MaterialTextField.m in Sources */,
 				71A3D6741FB584360002B8B1 /* FMCreateUserAPI.m in Sources */,
@@ -4629,6 +4744,7 @@
 				F6830EC41FB2FD1D005AC578 /* FMUserLoginHeaderView.m in Sources */,
 				F6D8CC3A1FB402CB00673824 /* FMBaseFirstVC.m in Sources */,
 				1FCFB3E81FEA076A00BD3375 /* WBDownloadMagnetAPI.m in Sources */,
+				1F114A321FF34D9B007F6D15 /* WBMaintenanceStorageInfoTableViewCell.m in Sources */,
 				1F4D75D01FAC604100E6516C /* LoginTableViewCell.m in Sources */,
 				F679336D1FB00D9B00C9A7DC /* WBUser+CoreDataClass.m in Sources */,
 				1FF3AD511FD5254C00E1E536 /* LoginSeverPathModel.m in Sources */,
