@@ -94,8 +94,11 @@
         @weaky(self);
         FMSerachService * ser = [[FMSerachService alloc]init];
         ser.path = [NSString stringWithFormat:@"http://%@:3000/",self.textView.textField.text];
-        [ser getData];
-         weak_self.block(ser);
+        [ser getDataWithPath:ser.path  Block:^(NSArray *dataArray) {
+            
+        }];
+        ser.displayPath = self.textView.textField.text;
+        self.block(ser);
     }
     self.block = nil;
     [self.navigationController popToRootViewControllerAnimated:YES];
