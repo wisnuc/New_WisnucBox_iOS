@@ -12,6 +12,7 @@
 #define UICOLOR_RGB(RGB)     ([UIColor colorWithRed:((float)((RGB & 0xFF0000) >> 16))/255.0 green:((float)((RGB & 0xFF00) >> 8))/255.0 blue:((float)(RGB & 0xFF))/255.0 alpha:1.0])
 
 #define COR1  UICOLOR_RGB(0x03a9f4)
+#define LINECOLOR  RGBACOLOR(0, 0, 0, 0.12f)
 #define kWhiteColor  [UIColor whiteColor]
 #define kBlackColor  [UIColor blackColor]
 

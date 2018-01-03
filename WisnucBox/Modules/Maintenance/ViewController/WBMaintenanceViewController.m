@@ -35,6 +35,7 @@ UITableViewDelegate
     [super viewDidLoad];
     self.title = @"维护模式";
     [self getData];
+    
     [self.view addSubview:self.tableView];
     // Do any additional setup after loading the view from its nib.
 }
@@ -460,8 +461,6 @@ UITableViewDelegate
         return 40;
     }
 }
-
-
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     if (self.rootDataSource.count >1) {

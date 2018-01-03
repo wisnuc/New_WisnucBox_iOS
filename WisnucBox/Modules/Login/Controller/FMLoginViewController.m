@@ -151,7 +151,7 @@ WXApiDelegate
 }
 
 - (void)beginSearching {
-    [self.browser stopServerBrowser];
+    [_browser stopServerBrowser];
      _browser.delegate = nil;
      _browser = nil;
 //    double delayInSeconds = 2;
@@ -564,7 +564,7 @@ static BOOL needHide = YES;
          _stationLogoImageView.image = [UIImage imageNamed:@"virtual_machine"];
     }
     _stationNameLabel.text = ser.name;
-     _stationIpLabel.text = ser.displayPath;
+    _stationIpLabel.text = ser.displayPath;
  
 //      [self viewOfSeaching:NO];
 }
@@ -743,6 +743,7 @@ static BOOL needHide = YES;
                                  initializationVC.searchModel = model;
                                  [self.navigationController pushViewController:initializationVC animated:YES];
                              }];
+       [_userListTableViwe reloadData];
     }else if (model.NASType == NASTypeMaintain){
         [_userListTableViwe removeEmptyView];
         _userView.alpha = 0;
@@ -762,6 +763,7 @@ static BOOL needHide = YES;
                                  [self.navigationController pushViewController:maintenanceVC animated:YES];
 //
                              }];
+         [_userListTableViwe reloadData];
     }else if (model.NASType == NASTypeError){
             [_userListTableViwe removeEmptyView];
             _userView.alpha = 0;
@@ -781,6 +783,8 @@ static BOOL needHide = YES;
                                      [self.navigationController pushViewController:maintenanceVC animated:YES];
                                      //
                                  }];
+        
+        [_userListTableViwe reloadData];
     }else if (model.NASType == NASTypeNormal) {
         _userView.alpha = 1;
         [_userListTableViwe removeEmptyView];
@@ -811,12 +815,14 @@ static BOOL needHide = YES;
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     if (scrollView == self.stationScrollView) {
-        FMSerachService *ser = self.tempDataSource[_currentPage];
-        [self initializationLayoutUpdateWithModel:ser];
-        [self.userListTableViwe reloadData];
-        if (_userDataSource.count >0) {
-             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-            [self.userListTableViwe scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:true];
+        if (self.tempDataSource.count>0) {
+            FMSerachService *ser = self.tempDataSource[_currentPage];
+            [self initializationLayoutUpdateWithModel:ser];
+            [self.userListTableViwe reloadData];
+            if (_userDataSource.count >0) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                [self.userListTableViwe scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:true];
+            }
         }
     }
 }
@@ -849,7 +855,11 @@ static BOOL needHide = YES;
         }
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        UserModel *model = _userDataSource[indexPath.row];
+        UserModel *model;
+        if (_userDataSource.count >0) {
+          model  = _userDataSource[indexPath.row];
+        }
+        
         NSLog(@"%@======%lu",model.username,(unsigned long)_userDataSource.count);
         cell.userNameLabel.text = model.username;
         cell.userNameImageView.image = [UIImage imageForName:model.username size:cell.userNameImageView.bounds.size];

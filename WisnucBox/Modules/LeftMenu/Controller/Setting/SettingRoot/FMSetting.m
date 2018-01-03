@@ -9,6 +9,7 @@
 #import "FMSetting.h"
 #import "LCActionSheet.h"
 #import "WBServiceSettingViewController.h"
+#import "WBUpgradeAppfiViewController.h"
 
 
 @interface FMSetting ()<UITableViewDelegate,UITableViewDataSource,LCActionSheetDelegate,SettingSelectBTAlertViewDelegate>
@@ -109,7 +110,7 @@
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 4;
+    return 5;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -150,6 +151,15 @@
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
         }
+             break;
+        case 4:{
+            
+            cell.textLabel.text = @"固件升级";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+        }
+             break;
+           
 
         default:
             break;
@@ -192,9 +202,14 @@
         vc.typeString = [NSString stringWithFormat:@"%@",GetUserDefaultForKey(kTorrentType)];
         vc.delegate = self;
         [self presentViewController:viewController animated:YES completion:NULL];
-    }if (indexPath.row == 3){
+    }else if (indexPath.row == 3){
         WBServiceSettingViewController *vc = [[WBServiceSettingViewController alloc]init];
         [self.navigationController pushViewController:vc animated:YES];
+    }else{
+        if (!WB_UserService.currentUser.isCloudLogin) {
+            WBUpgradeAppfiViewController *vc = [[WBUpgradeAppfiViewController alloc]init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }
 }
 

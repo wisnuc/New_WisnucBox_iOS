@@ -225,6 +225,7 @@
 }
 
 - (IBAction)changePwdBtn:(id)sender {
+    if (self.type == UserDetail) {
     if ((![_userModel.isAdmin boolValue]&& ![_userModel.isFirstUser boolValue]) ||([_userModel.isAdmin boolValue]&& ![_userModel.isFirstUser boolValue]) ) {
         NSBundle *bundle = [NSBundle bundleForClass:[WBSettingSelectRolesViewController class]];
         UIStoryboard *storyboard =
@@ -244,9 +245,10 @@
         }
         vc.delegate = self;
         [self presentViewController:viewController animated:YES completion:NULL];
+    }
     }else{
-    FMChangePwdVC * vc = [[FMChangePwdVC alloc]init];
-    [self.navigationController pushViewController:vc animated:YES];
+        FMChangePwdVC * vc = [[FMChangePwdVC alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 

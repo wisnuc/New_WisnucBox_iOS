@@ -129,15 +129,18 @@
     }];
     UIAlertAction *confirm = [UIAlertAction actionWithTitle:confirmTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSLog(@"点击了确定按钮");
+        [self.view setUserInteractionEnabled:NO];
         [SXLoadingView showProgressHUD:WBLocalizedString(@"entering_maintenance_mode", nil)];
         WBStationBootAPI *api = [WBStationBootAPI apiWithState:@"reboot" Mode:@"maintenance"];
         [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
             [SXLoadingView hideProgressHUD];
             [SXLoadingView showProgressHUDText:WBLocalizedString(@"enter_maintenance_mode_successfully", nil) duration:1.5];
             [self logOutAction];
+            [self.view setUserInteractionEnabled:YES];
         } failure:^(__kindof JYBaseRequest *request) {
             [SXLoadingView hideProgressHUD];
             [SXLoadingView showProgressHUDText:WBLocalizedString(@"enter_maintenance_mode_failed", nil) duration:1.5];
+            [self.view setUserInteractionEnabled:YES];
         }];
     }];
     [alertVc addAction:cancle];

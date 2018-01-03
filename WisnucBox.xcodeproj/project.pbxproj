@@ -34,6 +34,21 @@
 		1F114A441FF38578007F6D15 /* disk_array.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A411FF38577007F6D15 /* disk_array.png */; };
 		1F114A451FF38578007F6D15 /* disk_array@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A421FF38578007F6D15 /* disk_array@2x.png */; };
 		1F114A461FF38578007F6D15 /* disk_array@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A431FF38578007F6D15 /* disk_array@3x.png */; };
+		1F114A571FF48AB8007F6D15 /* WBUpgradeAppfiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F114A551FF48AB8007F6D15 /* WBUpgradeAppfiViewController.m */; };
+		1F114A581FF48AB8007F6D15 /* WBUpgradeAppfiViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A561FF48AB8007F6D15 /* WBUpgradeAppfiViewController.xib */; };
+		1F114A5C1FF48B94007F6D15 /* WBGetUpgradStateAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F114A5B1FF48B94007F6D15 /* WBGetUpgradStateAPI.m */; };
+		1F114A5F1FF48D49007F6D15 /* WBGetUpgradStateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F114A5E1FF48D49007F6D15 /* WBGetUpgradStateModel.m */; };
+		1F114A661FF4BA6C007F6D15 /* new_releases.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A601FF4BA68007F6D15 /* new_releases.png */; };
+		1F114A671FF4BA6C007F6D15 /* new_releases@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A611FF4BA68007F6D15 /* new_releases@2x.png */; };
+		1F114A681FF4BA6C007F6D15 /* new_releases@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A621FF4BA69007F6D15 /* new_releases@3x.png */; };
+		1F114A691FF4BA6C007F6D15 /* system_update.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A631FF4BA69007F6D15 /* system_update.png */; };
+		1F114A6A1FF4BA6C007F6D15 /* system_update@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A641FF4BA6B007F6D15 /* system_update@2x.png */; };
+		1F114A6B1FF4BA6C007F6D15 /* system_update@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A651FF4BA6C007F6D15 /* system_update@3x.png */; };
+		1F114A6E1FF4C8A1007F6D15 /* WBInstallUpgradeAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F114A6D1FF4C8A1007F6D15 /* WBInstallUpgradeAPI.m */; };
+		1F114A721FF4D223007F6D15 /* update_done@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A6F1FF4D222007F6D15 /* update_done@2x.png */; };
+		1F114A731FF4D223007F6D15 /* update_done@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A701FF4D222007F6D15 /* update_done@3x.png */; };
+		1F114A741FF4D223007F6D15 /* update_done.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A711FF4D223007F6D15 /* update_done.png */; };
+		1F114A771FF4D56C007F6D15 /* WBUpgradeDownloadAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F114A761FF4D56C007F6D15 /* WBUpgradeDownloadAPI.m */; };
 		1F178EBC1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F178EBB1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.m */; };
 		1F178EBE1FEBF047001650E5 /* WBSettingSelectBTAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F178EBD1FEBF047001650E5 /* WBSettingSelectBTAlertViewController.storyboard */; };
 		1F178EC21FECABAE001650E5 /* WBTorrentDownloadSwitchAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F178EC11FECABAE001650E5 /* WBTorrentDownloadSwitchAPI.m */; };
@@ -823,6 +838,26 @@
 		1F114A411FF38577007F6D15 /* disk_array.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = disk_array.png; sourceTree = "<group>"; };
 		1F114A421FF38578007F6D15 /* disk_array@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "disk_array@2x.png"; sourceTree = "<group>"; };
 		1F114A431FF38578007F6D15 /* disk_array@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "disk_array@3x.png"; sourceTree = "<group>"; };
+		1F114A541FF48AB8007F6D15 /* WBUpgradeAppfiViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBUpgradeAppfiViewController.h; sourceTree = "<group>"; };
+		1F114A551FF48AB8007F6D15 /* WBUpgradeAppfiViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBUpgradeAppfiViewController.m; sourceTree = "<group>"; };
+		1F114A561FF48AB8007F6D15 /* WBUpgradeAppfiViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBUpgradeAppfiViewController.xib; sourceTree = "<group>"; };
+		1F114A5A1FF48B94007F6D15 /* WBGetUpgradStateAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBGetUpgradStateAPI.h; sourceTree = "<group>"; };
+		1F114A5B1FF48B94007F6D15 /* WBGetUpgradStateAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBGetUpgradStateAPI.m; sourceTree = "<group>"; };
+		1F114A5D1FF48D49007F6D15 /* WBGetUpgradStateModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBGetUpgradStateModel.h; sourceTree = "<group>"; };
+		1F114A5E1FF48D49007F6D15 /* WBGetUpgradStateModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBGetUpgradStateModel.m; sourceTree = "<group>"; };
+		1F114A601FF4BA68007F6D15 /* new_releases.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = new_releases.png; sourceTree = "<group>"; };
+		1F114A611FF4BA68007F6D15 /* new_releases@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "new_releases@2x.png"; sourceTree = "<group>"; };
+		1F114A621FF4BA69007F6D15 /* new_releases@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "new_releases@3x.png"; sourceTree = "<group>"; };
+		1F114A631FF4BA69007F6D15 /* system_update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = system_update.png; sourceTree = "<group>"; };
+		1F114A641FF4BA6B007F6D15 /* system_update@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "system_update@2x.png"; sourceTree = "<group>"; };
+		1F114A651FF4BA6C007F6D15 /* system_update@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "system_update@3x.png"; sourceTree = "<group>"; };
+		1F114A6C1FF4C8A1007F6D15 /* WBInstallUpgradeAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBInstallUpgradeAPI.h; sourceTree = "<group>"; };
+		1F114A6D1FF4C8A1007F6D15 /* WBInstallUpgradeAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBInstallUpgradeAPI.m; sourceTree = "<group>"; };
+		1F114A6F1FF4D222007F6D15 /* update_done@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "update_done@2x.png"; sourceTree = "<group>"; };
+		1F114A701FF4D222007F6D15 /* update_done@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "update_done@3x.png"; sourceTree = "<group>"; };
+		1F114A711FF4D223007F6D15 /* update_done.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = update_done.png; sourceTree = "<group>"; };
+		1F114A751FF4D56C007F6D15 /* WBUpgradeDownloadAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBUpgradeDownloadAPI.h; sourceTree = "<group>"; };
+		1F114A761FF4D56C007F6D15 /* WBUpgradeDownloadAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBUpgradeDownloadAPI.m; sourceTree = "<group>"; };
 		1F178EBA1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBSettingSelectBTAlertViewController.h; sourceTree = "<group>"; };
 		1F178EBB1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBSettingSelectBTAlertViewController.m; sourceTree = "<group>"; };
 		1F178EBD1FEBF047001650E5 /* WBSettingSelectBTAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WBSettingSelectBTAlertViewController.storyboard; sourceTree = "<group>"; };
@@ -1893,6 +1928,78 @@
 			path = Maintenance;
 			sourceTree = "<group>";
 		};
+		1F114A491FF487BC007F6D15 /* ServiceSetting */ = {
+			isa = PBXGroup;
+			children = (
+				1F178ED61FED188F001650E5 /* WBServiceSettingViewController.h */,
+				1F178ED71FED188F001650E5 /* WBServiceSettingViewController.m */,
+				1F178ED81FED188F001650E5 /* WBServiceSettingViewController.xib */,
+			);
+			path = ServiceSetting;
+			sourceTree = "<group>";
+		};
+		1F114A4A1FF487E3007F6D15 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				1F114A4E1FF48837007F6D15 /* Upgrade */,
+				1F114A4B1FF487FA007F6D15 /* SettingRoot */,
+				1F114A491FF487BC007F6D15 /* ServiceSetting */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		1F114A4B1FF487FA007F6D15 /* SettingRoot */ = {
+			isa = PBXGroup;
+			children = (
+				F6830EE41FB2FEC4005AC578 /* FMSetting.h */,
+				F6830EE31FB2FEC4005AC578 /* FMSetting.m */,
+				F6830EE51FB2FEC4005AC578 /* FMSetting.xib */,
+			);
+			path = SettingRoot;
+			sourceTree = "<group>";
+		};
+		1F114A4E1FF48837007F6D15 /* Upgrade */ = {
+			isa = PBXGroup;
+			children = (
+				1F114A541FF48AB8007F6D15 /* WBUpgradeAppfiViewController.h */,
+				1F114A551FF48AB8007F6D15 /* WBUpgradeAppfiViewController.m */,
+				1F114A561FF48AB8007F6D15 /* WBUpgradeAppfiViewController.xib */,
+			);
+			path = Upgrade;
+			sourceTree = "<group>";
+		};
+		1F114A521FF48A0D007F6D15 /* InviteWechat */ = {
+			isa = PBXGroup;
+			children = (
+				1FAD74751FD1049900A5D880 /* WBInviteWechatViewController.h */,
+				1FAD74761FD1049900A5D880 /* WBInviteWechatViewController.m */,
+			);
+			path = InviteWechat;
+			sourceTree = "<group>";
+		};
+		1F114A531FF48A2E007F6D15 /* LoginManage */ = {
+			isa = PBXGroup;
+			children = (
+				F6830EBA1FB2FD10005AC578 /* FMUserLoginSettingVC.h */,
+				F6830EBB1FB2FD10005AC578 /* FMUserLoginSettingVC.m */,
+				F6830EBC1FB2FD10005AC578 /* FMUserLoginSettingVC.xib */,
+			);
+			path = LoginManage;
+			sourceTree = "<group>";
+		};
+		1F114A591FF48B49007F6D15 /* Upgrad */ = {
+			isa = PBXGroup;
+			children = (
+				1F114A5A1FF48B94007F6D15 /* WBGetUpgradStateAPI.h */,
+				1F114A5B1FF48B94007F6D15 /* WBGetUpgradStateAPI.m */,
+				1F114A6C1FF4C8A1007F6D15 /* WBInstallUpgradeAPI.h */,
+				1F114A6D1FF4C8A1007F6D15 /* WBInstallUpgradeAPI.m */,
+				1F114A751FF4D56C007F6D15 /* WBUpgradeDownloadAPI.h */,
+				1F114A761FF4D56C007F6D15 /* WBUpgradeDownloadAPI.m */,
+			);
+			path = Upgrad;
+			sourceTree = "<group>";
+		};
 		1F178EB91FEBF00D001650E5 /* AlertController */ = {
 			isa = PBXGroup;
 			children = (
@@ -2415,6 +2522,12 @@
 		1F7CE62C1FAC824E004467C8 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				1F114A601FF4BA68007F6D15 /* new_releases.png */,
+				1F114A611FF4BA68007F6D15 /* new_releases@2x.png */,
+				1F114A621FF4BA69007F6D15 /* new_releases@3x.png */,
+				1F114A631FF4BA69007F6D15 /* system_update.png */,
+				1F114A641FF4BA6B007F6D15 /* system_update@2x.png */,
+				1F114A651FF4BA6C007F6D15 /* system_update@3x.png */,
 				1F58DEE31FDFDC6A00768DD7 /* disk_settings.png */,
 				1F58DEE41FDFDC6B00768DD7 /* disk_settings@2x.png */,
 				1F58DEE21FDFDC6A00768DD7 /* disk_settings@3x.png */,
@@ -2623,6 +2736,8 @@
 			children = (
 				1FAD74241FCFE99C00A5D880 /* TicketUserModel.h */,
 				1FAD74251FCFE99C00A5D880 /* TicketUserModel.m */,
+				1F114A5D1FF48D49007F6D15 /* WBGetUpgradStateModel.h */,
+				1F114A5E1FF48D49007F6D15 /* WBGetUpgradStateModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2718,15 +2833,6 @@
 				1FAD74581FD0EDDC00A5D880 /* png_icon@3x.png */,
 			);
 			path = Files;
-			sourceTree = "<group>";
-		};
-		1FAD74741FD1046700A5D880 /* InviteWechat */ = {
-			isa = PBXGroup;
-			children = (
-				1FAD74751FD1049900A5D880 /* WBInviteWechatViewController.h */,
-				1FAD74761FD1049900A5D880 /* WBInviteWechatViewController.m */,
-			);
-			name = InviteWechat;
 			sourceTree = "<group>";
 		};
 		1FCFB3DE1FE8B42200BD3375 /* RadioButton */ = {
@@ -2873,6 +2979,7 @@
 		71A3D66B1FB57D8C0002B8B1 /* APIs */ = {
 			isa = PBXGroup;
 			children = (
+				1F114A591FF48B49007F6D15 /* Upgrad */,
 				1F178EBF1FECAB66001650E5 /* LeftMenu */,
 				1FCFB3E21FEA05D500BD3375 /* Download */,
 				1FEFCDDC1FE3C7DD00DEC866 /* Initialization */,
@@ -3292,11 +3399,11 @@
 		F6830EB71FB2FC40005AC578 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				1FAD74741FD1046700A5D880 /* InviteWechat */,
+				1F114A531FF48A2E007F6D15 /* LoginManage */,
+				1F114A521FF48A0D007F6D15 /* InviteWechat */,
+				1F114A4A1FF487E3007F6D15 /* Setting */,
 				C183CDD01FCE8C5A002E29CD /* userInfo */,
 				F6830EE81FB2FEE0005AC578 /* userMange */,
-				F6830EE21FB2FE9F005AC578 /* setting */,
-				F6830EE11FB2FE77005AC578 /* loginManage */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -3337,29 +3444,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		F6830EE11FB2FE77005AC578 /* loginManage */ = {
-			isa = PBXGroup;
-			children = (
-				F6830EBA1FB2FD10005AC578 /* FMUserLoginSettingVC.h */,
-				F6830EBB1FB2FD10005AC578 /* FMUserLoginSettingVC.m */,
-				F6830EBC1FB2FD10005AC578 /* FMUserLoginSettingVC.xib */,
-			);
-			name = loginManage;
-			sourceTree = "<group>";
-		};
-		F6830EE21FB2FE9F005AC578 /* setting */ = {
-			isa = PBXGroup;
-			children = (
-				F6830EE41FB2FEC4005AC578 /* FMSetting.h */,
-				F6830EE31FB2FEC4005AC578 /* FMSetting.m */,
-				F6830EE51FB2FEC4005AC578 /* FMSetting.xib */,
-				1F178ED61FED188F001650E5 /* WBServiceSettingViewController.h */,
-				1F178ED71FED188F001650E5 /* WBServiceSettingViewController.m */,
-				1F178ED81FED188F001650E5 /* WBServiceSettingViewController.xib */,
-			);
-			name = setting;
-			sourceTree = "<group>";
-		};
 		F6830EE81FB2FEE0005AC578 /* userMange */ = {
 			isa = PBXGroup;
 			children = (
@@ -3391,6 +3475,9 @@
 		F6830F1F1FB30AAD005AC578 /* LeftMenu */ = {
 			isa = PBXGroup;
 			children = (
+				1F114A711FF4D223007F6D15 /* update_done.png */,
+				1F114A6F1FF4D222007F6D15 /* update_done@2x.png */,
+				1F114A701FF4D222007F6D15 /* update_done@3x.png */,
 				1FAD748C1FD15F3200A5D880 /* weChat_add.png */,
 				1FAD748B1FD15F3100A5D880 /* weChat_add@2x.png */,
 				1FAD748D1FD15F3300A5D880 /* weChat_add@3x.png */,
@@ -3941,6 +4028,7 @@
 				F683107F1FB30AAE005AC578 /* add_album@3x.png in Resources */,
 				1F114A201FF33463007F6D15 /* samba_switch@2x.png in Resources */,
 				F68311B21FB30AAF005AC578 /* user.png in Resources */,
+				1F114A671FF4BA6C007F6D15 /* new_releases@2x.png in Resources */,
 				1FEFCDEB1FE799C500DEC866 /* WBInitChangeDiskTypeAlertViewController.storyboard in Resources */,
 				F683113F1FB30AAE005AC578 /* no_file@2x.png in Resources */,
 				F683115E1FB30AAE005AC578 /* photo_plus_close@3x.png in Resources */,
@@ -4032,6 +4120,8 @@
 				F68311A91FB30AAF005AC578 /* transparency_bg.png in Resources */,
 				1F922E5A1FC80F3400A7614B /* lauchScreen@2x.png in Resources */,
 				C139DFD41FC7F76C007098E5 /* F5F5F5.png in Resources */,
+				1F114A731FF4D223007F6D15 /* update_done@3x.png in Resources */,
+				1F114A661FF4BA6C007F6D15 /* new_releases.png in Resources */,
 				1FAD745F1FD0EDDF00A5D880 /* png_icon.png in Resources */,
 				F68310931FB30AAE005AC578 /* back_grayhighlight.png in Resources */,
 				F68311151FB30AAE005AC578 /* info_user@3x.png in Resources */,
@@ -4058,6 +4148,7 @@
 				F683118E1FB30AAF005AC578 /* share_red_select@3x.png in Resources */,
 				F68311891FB30AAF005AC578 /* share_red.png in Resources */,
 				F68310D71FB30AAE005AC578 /* folder_shared.png in Resources */,
+				1F114A691FF4BA6C007F6D15 /* system_update.png in Resources */,
 				F68311421FB30AAE005AC578 /* no_photo@2x.png in Resources */,
 				1FCFB4101FEA696B00BD3375 /* WBTorrentDownloadedTableViewCell.xib in Resources */,
 				F68310D31FB30AAE005AC578 /* float_btn_del@3x.png in Resources */,
@@ -4081,6 +4172,7 @@
 				F6830EE71FB2FEC4005AC578 /* FMSetting.xib in Resources */,
 				1F922EC01FCE816800A7614B /* WBStationManageEquipmentTableViewCell.xib in Resources */,
 				F68311141FB30AAE005AC578 /* info_user@2x.png in Resources */,
+				1F114A581FF48AB8007F6D15 /* WBUpgradeAppfiViewController.xib in Resources */,
 				F683112D1FB30AAE005AC578 /* mask-layer@3x.png in Resources */,
 				F68310A71FB30AAE005AC578 /* check_circle_select@3x.png in Resources */,
 				1FFAE38A1FE141BE0054C393 /* disk@3x.png in Resources */,
@@ -4122,6 +4214,7 @@
 				F68310801FB30AAE005AC578 /* album_balloon.png in Resources */,
 				C183CDEB1FCE9CE8002E29CD /* FMChangeNameVC.xib in Resources */,
 				F68310D21FB30AAE005AC578 /* float_btn_del@2x.png in Resources */,
+				1F114A6B1FF4BA6C007F6D15 /* system_update@3x.png in Resources */,
 				C139DFCA1FC7DFC7007098E5 /* ic_pause.png in Resources */,
 				F68311921FB30AAF005AC578 /* small_0.png in Resources */,
 				1F922E9B1FCD42F900A7614B /* ic_power_settings.png in Resources */,
@@ -4154,6 +4247,7 @@
 				1FAD745C1FD0EDDF00A5D880 /* gif_symbol@3x.png in Resources */,
 				1FFAE38B1FE141BE0054C393 /* disk@2x.png in Resources */,
 				F683111C1FB30AAE005AC578 /* local_select.png in Resources */,
+				1F114A721FF4D223007F6D15 /* update_done@2x.png in Resources */,
 				F683114E1FB30AAE005AC578 /* personal@2x.png in Resources */,
 				F68310DB1FB30AAE005AC578 /* good_red@2x.png in Resources */,
 				C139DFCF1FC7DFC7007098E5 /* ic_play.png in Resources */,
@@ -4275,6 +4369,7 @@
 				F68310FD1FB30AAE005AC578 /* ic_lock_outline.png in Resources */,
 				F683112E1FB30AAE005AC578 /* menu.png in Resources */,
 				1F922EC91FCE931A00A7614B /* ic_tv.png in Resources */,
+				1F114A741FF4D223007F6D15 /* update_done.png in Resources */,
 				F68311961FB30AAF005AC578 /* small_1@2x.png in Resources */,
 				F68311AE1FB30AAF005AC578 /* unselected@3x.png in Resources */,
 				F68310D11FB30AAE005AC578 /* float_btn_del.png in Resources */,
@@ -4288,6 +4383,7 @@
 				F68310B41FB30AAE005AC578 /* Default@2x.png in Resources */,
 				F68311C61FB30AAF005AC578 /* praise_line@3x.png in Resources */,
 				1FCFB3DC1FE7B34C00BD3375 /* ic_radio_button@3x.png in Resources */,
+				1F114A6A1FF4BA6C007F6D15 /* system_update@2x.png in Resources */,
 				F68310F81FB30AAE005AC578 /* ic_delete@2x.png in Resources */,
 				F68310D81FB30AAE005AC578 /* folder_shared@2x.png in Resources */,
 				F68310851FB30AAE005AC578 /* all@2x.png in Resources */,
@@ -4353,6 +4449,7 @@
 				F68311C81FB30AAF005AC578 /* praise_solid_select@2x.png in Resources */,
 				1FAD745D1FD0EDDF00A5D880 /* gif_icon@2x.png in Resources */,
 				F683109C1FB30AAE005AC578 /* check-box.png in Resources */,
+				1F114A681FF4BA6C007F6D15 /* new_releases@3x.png in Resources */,
 				F68311711FB30AAE005AC578 /* praise_share.png in Resources */,
 				F68310D91FB30AAE005AC578 /* folder_shared@3x.png in Resources */,
 				1FAD74661FD0EDDF00A5D880 /* gif_symbol@2x.png in Resources */,
@@ -4584,6 +4681,7 @@
 			files = (
 				1F922EA41FCD4D5D00A7614B /* WBStationManageTimeViewController.m in Sources */,
 				1F922E7C1FCD3E1400A7614B /* WBStationManageRootTableViewCell.m in Sources */,
+				1F114A6E1FF4C8A1007F6D15 /* WBInstallUpgradeAPI.m in Sources */,
 				1FCFB3E51FEA062100BD3375 /* WBDownloadTorrentAPI.m in Sources */,
 				C139DFBE1FC6B9F3007098E5 /* FMMediaRamdomKeyAPI.m in Sources */,
 				1FF3AD541FD63F5C00E1E536 /* WBLoginViewController.m in Sources */,
@@ -4687,6 +4785,7 @@
 				1F3F99801FB0312300D6CC64 /* LocalDownloadViewController.m in Sources */,
 				1FCFB3EB1FEA15DE00BD3375 /* WBTorrentDownloadHelper.m in Sources */,
 				F6830F131FB300D2005AC578 /* FMLeftMenu.m in Sources */,
+				1F114A571FF48AB8007F6D15 /* WBUpgradeAppfiViewController.m in Sources */,
 				F68311DF1FB31369005AC578 /* LCActionSheetCell.m in Sources */,
 				F67D643C1FAC7E5600E23D16 /* FMHeadView.m in Sources */,
 				1F4D75A51FAC4BB800E6516C /* FMSerachService.m in Sources */,
@@ -4696,6 +4795,7 @@
 				1F4D75AE1FAC4BB800E6516C /* WisnucBox.xcdatamodeld in Sources */,
 				F6830EB41FB2FAE0005AC578 /* RDVTabBarController.m in Sources */,
 				1FAD74471FD0268C00A5D880 /* CSUploadHelper.m in Sources */,
+				1F114A5C1FF48B94007F6D15 /* WBGetUpgradStateAPI.m in Sources */,
 				71A3D66A1FB57AC30002B8B1 /* JYRequestConfig.m in Sources */,
 				1F922F0C1FCFB5FE00A7614B /* WBStationBootAPI.m in Sources */,
 				F6830EEF1FB2FEF3005AC578 /* FMUserAddVC.m in Sources */,
@@ -4707,6 +4807,7 @@
 				1F4D75A21FAC4BB800E6516C /* FMLoginViewController.m in Sources */,
 				F6D8CC411FB42E1300673824 /* UIView+JYExtension.m in Sources */,
 				1FAD741C1FCFE0BC00A5D880 /* WBStationTicketsAPI.m in Sources */,
+				1F114A5F1FF48D49007F6D15 /* WBGetUpgradStateModel.m in Sources */,
 				1F4D759F1FAC4BB800E6516C /* UIColor+fm_color.m in Sources */,
 				1F1ABA131FB99882006EB1FC /* CSDownloadHelper.m in Sources */,
 				1FFEADB51FB1594900CD3068 /* CSDownloadModel.m in Sources */,
@@ -4777,6 +4878,7 @@
 				C11EAB2B1FC42AF1007C9BA7 /* WBCloudTokenAPI.m in Sources */,
 				F6AAD1881FB049E100DEDBDC /* WBFile+CoreDataClass.m in Sources */,
 				1F4D75A11FAC4BB800E6516C /* FMUserLoginViewController.m in Sources */,
+				1F114A771FF4D56C007F6D15 /* WBUpgradeDownloadAPI.m in Sources */,
 				F679336E1FB00D9B00C9A7DC /* WBUser+CoreDataProperties.m in Sources */,
 				1FFADF911FDFB33600FA3F6E /* BootModel.m in Sources */,
 				C183CDEE1FCEA20C002E29CD /* FMUpdateUserAPI.m in Sources */,

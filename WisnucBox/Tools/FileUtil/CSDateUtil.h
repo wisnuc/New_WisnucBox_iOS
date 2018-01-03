@@ -10,4 +10,6 @@
 
 @interface CSDateUtil : NSObject
 + (NSString*)stringWithDate:(NSDate*)date withFormat:(NSString*)format;
++ (NSString *)getUTCFormateLocalDate:(NSString *)localDate;
++ (NSString *)getLocalDateFormateUTCDate:(NSString *)utcDate;
 @end
