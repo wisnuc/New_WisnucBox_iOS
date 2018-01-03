@@ -167,6 +167,15 @@ WXApiDelegate
 
 - (void)firstbeginSearching {
     [SXLoadingView showProgressHUD:@""];
+    if (_reachabilityTimer) {
+        [_reachabilityTimer invalidate];
+
+    }
+   
+    if (_browser) {
+        _browser.delegate = nil;
+        _browser = nil;
+    }
 //    [self viewOfSeaching:YES];
 //    double delayInSeconds = 1;
 //    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));

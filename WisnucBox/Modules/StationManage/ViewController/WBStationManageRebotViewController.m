@@ -9,8 +9,17 @@
 #import "WBStationManageRebotViewController.h"
 #import "WBStationBootAPI.h"
 #import "AppDelegate.h"
+#import "GCDAsyncSocket.h"
+#import "WBStationEnterMaintanceAlertViewController.h"
+#import "WBStationEnterMaintanceConfirmAVC.h"
+#import "ServerBrowser.h"
+#import "WBStationBootAPI.h"
+#import "BootModel.h"
 
-@interface WBStationManageRebotViewController ()
+@interface WBStationManageRebotViewController ()<NSNetServiceBrowserDelegate,NSNetServiceDelegate,ServerBrowserDelegate>
+{
+     NSTimer* _reachabilityTimer;
+}
 @property (weak, nonatomic) IBOutlet UIButton *rebotButton;
 @property (weak, nonatomic) IBOutlet UIButton *shutDownButton;
 @property (weak, nonatomic) IBOutlet UIButton *maintainButton;
@@ -18,6 +27,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *miantainLabel;
 @property (weak, nonatomic) IBOutlet UILabel *miantainDetailLabel;
 
+@property (nonatomic) ServerBrowser* browser;
+@property (nonatomic) UIViewController *alertViewController1;
+@property (nonatomic) UIViewController *alertViewController2;
 @end
 
 @implementation WBStationManageRebotViewController
@@ -48,6 +60,8 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor darkTextColor]}];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+    [_reachabilityTimer invalidate];
+    _reachabilityTimer = nil;
 }
 
 - (IBAction)shutDownButtonClick:(UIButton *)sender {
@@ -118,6 +132,7 @@
 }
 
 - (IBAction)miantainButtonClick:(UIButton *)sender {
+    @weaky(self);
     NSString *confirmTitle = WBLocalizedString(@"confirm", nil);
     NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
     NSString *titileString = WBLocalizedString(@"confirm_maintenance_title", nil);
@@ -130,12 +145,37 @@
     UIAlertAction *confirm = [UIAlertAction actionWithTitle:confirmTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSLog(@"点击了确定按钮");
         [self.view setUserInteractionEnabled:NO];
-        [SXLoadingView showProgressHUD:WBLocalizedString(@"entering_maintenance_mode", nil)];
+//        [SXLoadingView showProgressHUD:WBLocalizedString(@"entering_maintenance_mode", nil) duration:180.0f];
+        
+        NSBundle *bundle = [NSBundle bundleForClass:[WBStationEnterMaintanceAlertViewController class]];
+        UIStoryboard *storyboard =
+        [UIStoryboard storyboardWithName:NSStringFromClass([WBStationEnterMaintanceAlertViewController class]) bundle:bundle];
+        NSString *identifier = NSStringFromClass([WBStationEnterMaintanceAlertViewController class]);
+        
+        UIViewController *alertViewController1 =
+        [storyboard instantiateViewControllerWithIdentifier:identifier];
+        
+        alertViewController1.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
+        _alertViewController1 = alertViewController1;
+        [self presentViewController:alertViewController1 animated:YES completion:nil];
+        
+        MDCDialogPresentationController *presentationController =
+        alertViewController1.mdc_dialogPresentationController;
+        if (presentationController) {
+            presentationController.dismissOnBackgroundTap = NO;
+        }
+        
         WBStationBootAPI *api = [WBStationBootAPI apiWithState:@"reboot" Mode:@"maintenance"];
         [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-            [SXLoadingView hideProgressHUD];
-            [SXLoadingView showProgressHUDText:WBLocalizedString(@"enter_maintenance_mode_successfully", nil) duration:1.5];
-            [self logOutAction];
+//            [SXLoadingView hideProgressHUD];
+//            [SXLoadingView showProgressHUDText:WBLocalizedString(@"enter_maintenance_mode_successfully", nil) duration:1.5];
+//            [self logOutAction];
+            dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0/*延迟执行时间*/ * NSEC_PER_SEC));
+
+            dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+                 [weak_self getNetService];
+            });
+           
             [self.view setUserInteractionEnabled:YES];
         } failure:^(__kindof JYBaseRequest *request) {
             [SXLoadingView hideProgressHUD];
@@ -149,30 +189,116 @@
     }];
 }
 
-- (void)logOutAction{
-    [SXLoadingView showProgressHUD:WBLocalizedString(@"logout...", nil)];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self skipToLogin];
-    });
+- (void)getNetService{
+    
+   
+    _browser = [[ServerBrowser alloc] initWithServerType:@"_http._tcp" port:-1];
+    _browser.delegate = self;
+    _reachabilityTimer =  [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(refresh) userInfo:nil repeats:YES];
+    [_reachabilityTimer fire];
 }
 
--(void)skipToLogin{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        MyAppDelegate.window.rootViewController = nil;
-        [MyAppDelegate.window resignKeyWindow];
-        [WB_UserService logoutUser];
-        [WB_AppServices rebulid];
-        for (UIView *view in MyAppDelegate.window.subviews) {
-            [view removeFromSuperview];
+- (void)refresh{
+    if (_browser) {
+        _browser = nil;
+    }
+    _browser = [[ServerBrowser alloc] initWithServerType:@"_http._tcp" port:-1];
+    _browser.delegate = self;
+}
+
+/*
+ * 发现客户端服务
+ */
+//- (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didFindService:(NSNetService *)aNetService moreComing:(BOOL)moreComing {
+//    aNetService.delegate = self;
+//    [aNetService resolveWithTimeout:6.0];
+//    if ([aNetService.hostName rangeOfString:@"wisnuc-"].location !=NSNotFound) {
+//        for (NSData * address in aNetService.addresses) {
+//            NSString* addressString = [GCDAsyncSocket hostFromAddress:address];
+//            if ([addressString isEqualToString:WB_UserService.currentUser.sn_address]) {
+//
+//                //                [SXLoadingView hideProgressHUD];
+//            }
+//        }
+//    }
+//}
+
+- (void)netServiceDidResolveAddress:(NSNetService *)sender {
+   
+}
+
+- (void)dealloc{
+    
+}
+
+- (void)serverBrowserFoundService:(NSNetService *)service {
+    NSLog(@"%@",service.hostName);
+    if ([service.hostName rangeOfString:@"wisnuc-"].location !=NSNotFound) {
+        for (NSData * address in service.addresses) {
+            NSString* addressString = [GCDAsyncSocket hostFromAddress:address];
+            if ([addressString isEqualToString:WB_UserService.currentUser.sn_address]) {
+                NSLog(@"%@/%@",WB_UserService.currentUser.sn_address,addressString);
+             NSString* urlString = [NSString stringWithFormat:@"http://%@:3000/", addressString];
+                [self getBootInfoWithPath:urlString completeBlock:^(BootModel *model) {
+                    if ([model.mode isEqualToString:@"maintenance"]) {
+                    
+                    [_alertViewController1 dismissViewControllerAnimated:YES completion:nil];
+                    
+                    NSBundle *bundle = [NSBundle bundleForClass:[WBStationEnterMaintanceConfirmAVC class]];
+                    UIStoryboard *storyboard =
+                    [UIStoryboard storyboardWithName:NSStringFromClass([WBStationEnterMaintanceConfirmAVC class]) bundle:bundle];
+                    NSString *identifier = NSStringFromClass([WBStationEnterMaintanceConfirmAVC class]);
+                    
+                    UIViewController *alertViewController2 =
+                    [storyboard instantiateViewControllerWithIdentifier:identifier];
+                    
+                    alertViewController2.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
+                    _alertViewController2 = alertViewController2;
+                    [self presentViewController:alertViewController2 animated:YES completion:NULL];
+                    
+                    MDCDialogPresentationController *presentationController =
+                    alertViewController2.mdc_dialogPresentationController;
+                    if (presentationController) {
+                        presentationController.dismissOnBackgroundTap = NO;
+                    }
+                    [_reachabilityTimer invalidate];
+                    _reachabilityTimer = nil;
+                    }
+                }];
+                 break;
+            }
         }
-        //reload menu
-        //        [self reloadWithTitles:LeftMenu_NotAdminTitles andImages:LeftMenu_NotAdminImages];
-        
-        FMLoginViewController * vc = [[FMLoginViewController alloc]init];
-        NavViewController *nav = [[NavViewController alloc] initWithRootViewController:vc];
-        MyAppDelegate.window.rootViewController = nav;
-        [MyAppDelegate.window makeKeyAndVisible];
-    });
+    }
+}
+
+- (void)getBootInfoWithPath:(NSString *)path completeBlock:(void(^)(BootModel *model))block{
+    [[WBStationBootAPI apiWithPath:path RequestMethod:@"GET"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        @weaky(self)
+        NSLog(@"%@",request.responseJsonObject);
+        BootModel *bootModel = [BootModel yy_modelWithJSON:request.responseJsonObject];
+        //        if (bootModel.current) {
+        if ([bootModel.state isEqualToString:@"started"]) {
+            block(bootModel);
+        }else if ([bootModel.state isEqualToString:@"stopping"]){
+            
+        }else{
+            dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0/*延迟执行时间*/ * NSEC_PER_SEC));
+            
+            dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+//                _count ++;
+                //                    if (_count<11) {
+                [weak_self getBootInfoWithPath:path completeBlock:block];
+                //                    }
+            });
+        }
+        //        }
+    } failure:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.error);
+    }];
+}
+
+- (void)serverBrowserLostService:(NSNetService *)service index:(NSUInteger)index {
+    
 }
 
 

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface FMUserAddVC : FABaseVC
-
+@property (nonatomic,strong)NSMutableArray *userDataArray;
 @end

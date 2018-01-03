@@ -18,14 +18,13 @@
 @property (nonatomic)UIImageView *firmwareNowleftImage;
 @property (nonatomic)UILabel *firmwareNowTitleLabel;
 @property (nonatomic)UILabel *firmwareNowStateLabel;
-@property (nonatomic)MDCFlatButton *stopAppifiButton;
 
 @property (nonatomic)UIView *firstLineView;
 
 @property (nonatomic)UIImageView *firmwareUpdateleftImage;
 @property (nonatomic)UILabel *firmwareUpdateTitleLabel;
 @property (nonatomic)UILabel *firmwareUpdateStateLabel;
-@property (nonatomic)MDCFlatButton *installUpdateButton;
+@property (nonatomic)UIButton *installUpdateButton;
 @property (nonatomic)UILabel *releaseTimeLabel;
 
 @property (nonatomic)UIView *secondLineView;
@@ -35,6 +34,8 @@
 @property (nonatomic)NSTimer*timer;
 
 @property (nonatomic)BOOL isFailed;
+
+@property (nonatomic)MDCFlatButton *updateCheckButton;
 
 @end
 
@@ -48,7 +49,7 @@
     [self.view addSubview:self.firmwareNowleftImage];
     [self.view addSubview:self.firmwareNowTitleLabel];
     [self.view addSubview:self.firmwareNowStateLabel];
-    [self.view addSubview:self.stopAppifiButton];
+//    [self.view addSubview:self.stopAppifiButton];
     [self.view addSubview:self.firstLineView];
     
     [self.view addSubview:self.firmwareUpdateleftImage];
@@ -57,6 +58,7 @@
     [self.view addSubview:self.installUpdateButton];
     [self.view addSubview:self.releaseTimeLabel];
     [self.view addSubview:self.secondLineView];
+    [self.view addSubview:self.updateCheckButton];
 }
 
 
@@ -79,10 +81,14 @@
     [[WBGetUpgradStateAPI apiWithURLPath:urlString] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
          NSLog(@"%@",request.responseJsonObject);
         WBGetUpgradStateModel *model = [WBGetUpgradStateModel yy_modelWithJSON:request.responseJsonObject];
-        [weak_self updateDataWithModel:model];
-        NSLog(@"%@",model.appifi.tagName);
+        if ([model.fetch.state isEqualToString:@"Pending"]) {
+            [weak_self updateDataWithModel:model];
+            NSLog(@"%@",model.appifi.tagName);
+            [SXLoadingView showProgressHUDText:@"检查更新完毕" duration:1.2f];
+        }
     } failure:^(__kindof JYBaseRequest *request) {
          NSLog(@"%@",request.error);
+         [SXLoadingView showProgressHUDText:@"检查更新失败" duration:1.2f];
     }];
 }
 
@@ -90,16 +96,15 @@
     _firmwareNowTitleLabel.text = [NSString stringWithFormat:@"当前使用的固件版本:%@",model.appifi.tagName];
     if ([model.appifi.state isEqualToString:@"Started"]) {
         _firmwareNowStateLabel.text = @"运行中";
-        _stopAppifiButton.alpha = 1;
+      
     }else if ([model.appifi.state isEqualToString:@"Starting"]){
         _firmwareNowStateLabel.text = @"正在启动";
-        _stopAppifiButton.alpha = 0;
+     
     }else if ([model.appifi.state isEqualToString:@"Stopping"]){
         _firmwareNowStateLabel.text = @"正在关闭";
-        _stopAppifiButton.alpha = 0;
+    
     }else if ([model.appifi.state isEqualToString:@"Stopped"]){
          _firmwareNowStateLabel.text = @"已关闭";
-         _stopAppifiButton.alpha = 0;
     }
     
     NSLog(@"%@",model.releases);
@@ -150,6 +155,7 @@
                  _firmwareUpdateleftImage.image = [UIImage imageNamed:@"update_done.png"];
                  _secondLineView.alpha = 0;
                  _releaseTimeLabel.alpha = 0;
+                 _updateCheckButton.frame = CGRectMake(CGRectGetMinX(_firmwareNowTitleLabel.frame), CGRectGetMaxY(_firmwareUpdateTitleLabel.frame) + 16, 100, 40);
              }];
          }
     }else{
@@ -165,24 +171,30 @@
                 _firmwareUpdateleftImage.image = [UIImage imageNamed:@"update_done.png"];
                 _secondLineView.alpha = 0;
                 _releaseTimeLabel.alpha = 0;
+                
             }];
         }
     }
    
 }
 
-- (void)stopAppifiButtonClick:(MDCFlatButton *)sender{
-    [SXLoadingView showProgressHUD:@""];
-    [[WBInstallUpgradeAPI apiWithURLPath:WB_UserService.currentUser.sn_address RequestMethod:@"PATCH" State:@"Stopped"]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        
-        NSLog(@"%@",request.responseJsonObject);
-
-        [SXLoadingView showProgressHUDText:@"已停止" duration:1.5f];
-    } failure:^(__kindof JYBaseRequest *request) {
-        NSLog(@"%@",request.error);
-        [SXLoadingView hideProgressHUD];
-    }];
+- (void)updateCheckButtonClick:(UIButton *)sender{
+    [SXLoadingView showProgressHUD:@"正在检查更新"];
+    [self getData];
 }
+
+//- (void)stopAppifiButtonClick:(MDCFlatButton *)sender{
+//    [SXLoadingView showProgressHUD:@""];
+//    [[WBInstallUpgradeAPI apiWithURLPath:WB_UserService.currentUser.sn_address RequestMethod:@"PATCH" State:@"Stopped"]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+//
+//        NSLog(@"%@",request.responseJsonObject);
+//
+//        [SXLoadingView showProgressHUDText:@"已停止" duration:1.5f];
+//    } failure:^(__kindof JYBaseRequest *request) {
+//        NSLog(@"%@",request.error);
+//        [SXLoadingView hideProgressHUD];
+//    }];
+//}
 
 - (void)installUpdateButtonClick:(MDCFlatButton *)sender{
     [SXLoadingView showProgressHUD:@""];
@@ -242,21 +254,10 @@
     return _firmwareNowStateLabel;
 }
 
-- (MDCFlatButton *)stopAppifiButton{
-    if (!_stopAppifiButton) {
-        _stopAppifiButton = [[MDCFlatButton alloc]initWithFrame:CGRectMake(CGRectGetMinX(_firmwareNowTitleLabel.frame), CGRectGetMaxY(_firmwareNowTitleLabel.frame) + 8, 100, 30)];
-        [_stopAppifiButton setTitle:@"停止" forState:UIControlStateNormal];
-        [_stopAppifiButton setTitleColor:COR1 forState:UIControlStateNormal];
-        _stopAppifiButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-        _stopAppifiButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-        [_stopAppifiButton addTarget:self action:@selector(stopAppifiButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _stopAppifiButton;
-}
 
 - (UIView *)firstLineView{
     if (!_firstLineView) {
-        _firstLineView = [[UIButton alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_stopAppifiButton.frame) + 16, __kWidth, 0.5)];
+        _firstLineView = [[UIButton alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_firmwareNowStateLabel.frame) + 16, __kWidth, 0.5)];
         _firstLineView.backgroundColor = LINECOLOR;
     }
     return _firstLineView;
@@ -296,13 +297,13 @@
     return _firmwareUpdateStateLabel;
 }
 
-- (MDCFlatButton *)installUpdateButton{
+- (UIButton *)installUpdateButton{
     if (!_installUpdateButton) {
-        _installUpdateButton = [[MDCFlatButton alloc]initWithFrame:CGRectMake(CGRectGetMinX(_firmwareUpdateTitleLabel.frame), CGRectGetMaxY(_firmwareUpdateTitleLabel.frame) + 8,130, 30)];
+        _installUpdateButton = [[MDCFlatButton alloc]initWithFrame:CGRectMake(CGRectGetMinX(_firmwareUpdateTitleLabel.frame), CGRectGetMaxY(_firmwareUpdateTitleLabel.frame) + 8,60, 30)];
         [_installUpdateButton setTitle:@"安装" forState:UIControlStateNormal];
         [_installUpdateButton setTitleColor:COR1 forState:UIControlStateNormal];
         _installUpdateButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-        _installUpdateButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+//        _installUpdateButton.titleLabel.adjustsFontSizeToFitWidth = YES;
         [_installUpdateButton addTarget:self action:@selector(installUpdateButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _installUpdateButton;
@@ -325,6 +326,17 @@
         _secondLineView.backgroundColor = LINECOLOR;
     }
     return _secondLineView;
+}
+
+- (MDCFlatButton *)updateCheckButton{
+    if (!_updateCheckButton) {
+        _updateCheckButton = [[MDCFlatButton alloc]initWithFrame:CGRectMake(CGRectGetMinX(_firmwareNowTitleLabel.frame), CGRectGetMaxY(_secondLineView.frame), 100, 40)];
+        [_updateCheckButton setTitle:@"检查更新" forState:UIControlStateNormal];
+        [_updateCheckButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_updateCheckButton setBackgroundColor:COR1 forState:UIControlStateNormal];
+        [_updateCheckButton addTarget:self action:@selector(updateCheckButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _updateCheckButton;
 }
 
 - (NSTimer *)timer{

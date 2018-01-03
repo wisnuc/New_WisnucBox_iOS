@@ -124,6 +124,7 @@
 
 - (IBAction)addBtnClick:(id)sender {
     FMUserAddVC * addVC = [[FMUserAddVC alloc]init];
+    addVC.userDataArray = self.dataSource;
     [self.navigationController pushViewController:addVC animated:YES];
 }
 

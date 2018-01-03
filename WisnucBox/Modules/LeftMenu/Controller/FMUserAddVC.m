@@ -8,6 +8,7 @@
 
 #import "FMUserAddVC.h"
 #import "NSString+Validate.h"
+#import "UserModel.h"
 //#import "FMCreateUserAPI.h"
 
 @interface FMUserAddVC ()<UITextFieldDelegate>
@@ -64,6 +65,19 @@
 - (IBAction)addBtnClick:(id)sender {
     if (![NSString isUserName:_userNameTF.text]) {
         [SXLoadingView  showProgressHUDText:WBLocalizedString(@"username_has_illegal_character", nil) duration:1];
+        return;
+    }
+   __block BOOL userNameExist = NO;
+    [self.userDataArray enumerateObjectsUsingBlock:^(UserModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([model.username isEqualToString:_userNameTF.text]) {
+            *stop = YES;
+            userNameExist = YES;
+           
+        }
+    }];
+    
+    if (userNameExist) {
+         [SXLoadingView  showProgressHUDText:@"已存在该用户名，请输入其他用户名" duration:1];
         return;
     }
     

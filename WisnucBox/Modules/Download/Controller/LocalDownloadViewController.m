@@ -213,8 +213,9 @@ UIDocumentInteractionControllerDelegate
 #pragma UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  
     if (indexPath.section==0) {
+      self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
       LocalDownloadingTableViewCell *cell;
        cell = [tableView  dequeueReusableCellWithIdentifier:NSStringFromClass([LocalDownloadingTableViewCell class])];
         if (!cell) {
@@ -379,8 +380,10 @@ UIDocumentInteractionControllerDelegate
             };
         }
         cell.status = _cellStatus;
+      
           return cell;
     }else{
+        
         LocalDownloadTableViewCell *cell;
         cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LocalDownloadTableViewCell class])];
         if (nil == cell) {

@@ -24,6 +24,10 @@
 @property (nonatomic, strong) DGPopUpViewTextView *textView;
 @property (nonatomic, strong) DGPopUpViewTextView *textView_2;
 @property (nonatomic, strong) DGPopUpViewTextView *textView_3;
+@property (nonatomic) RACSubject *signal;
+
+
+
 
 
 @property (nonatomic) UILabel * Lb1;
@@ -42,7 +46,7 @@
     [self.view addGestureRecognizer:tap];
     [self initView];
     [self addNavBtn];
-    
+   _signal  = [RACSubject subject];
 }
 
 -(BOOL)checkIPIsValidate{
@@ -87,13 +91,11 @@
         return;
     }
     if (self.block) {
-        
+        @weaky(self);
         FMSerachService * ser = [[FMSerachService alloc]init];
         ser.path = [NSString stringWithFormat:@"http://%@:3000/",self.textView.textField.text];
-//        ser.name = @"WISNUC";
-        if(self.textView.textField.text)
-            ser.displayPath = [self.textView.textField.text componentsSeparatedByString:@":"][0];
-        self.block(ser);
+        [ser getData];
+         weak_self.block(ser);
     }
     self.block = nil;
     [self.navigationController popToRootViewControllerAnimated:YES];

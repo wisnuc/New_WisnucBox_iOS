@@ -25,8 +25,11 @@
         _port = port;
         _discoveredServers = [NSMutableArray array];
         _resolvedServers = [NSMutableArray array];
-        
+        if (_browser && _browser.delegate ==self) {
+            _browser.delegate = nil;
+        }
         _browser = [[NSNetServiceBrowser alloc] init];
+       
         _browser.delegate = self;
         [_browser searchForServicesOfType:_serverType inDomain:@"local."];
     }

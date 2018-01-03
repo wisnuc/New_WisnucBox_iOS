@@ -110,7 +110,12 @@
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 5;
+    if (WB_UserService.currentUser.isAdmin) {
+        return 4;
+    }else{
+        return 3;
+    }
+   
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -134,25 +139,26 @@
         case 1:{
             cell.textLabel.text = WBLocalizedString(@"clear_cache", nil);
             NSUInteger  i = [SDImageCache sharedImageCache].getSize;
-            NSLog(@"%ld",(long)[[YYImageCache sharedCache].diskCache totalCost]);
+           
             i = i + [[YYImageCache sharedCache].diskCache totalCost];
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%luM",(unsigned long)i/(1024*1024)];
+             NSLog(@"%ld",(long)[[YYImageCache sharedCache].diskCache totalCost]);
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[NSString transformedValue:[NSNumber numberWithUnsignedInteger:i]]];
         }
             
             break;
+//        case 2:{
+//             cell.textLabel.text =  @"如何处理来自第三方应用的BT文件";
+//        }
+//
+//            break;
         case 2:{
-             cell.textLabel.text =  @"如何处理来自第三方应用的BT文件";
-        }
-            
-            break;
-        case 3:{
             
             cell.textLabel.text = @"服务管理";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
         }
              break;
-        case 4:{
+        case 3:{
             
             cell.textLabel.text = @"固件升级";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -171,7 +177,6 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 1) {
-        
         NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
         NSString *clearTitle = WBLocalizedString(@"clear", nil);
         NSString *confirmTitle = WBLocalizedString(@"confirm_clear_cache", nil);
@@ -188,21 +193,23 @@
             actionSheet.visibleButtonCount = 3.6f;
             [actionSheet show];
         }
-    }else if (indexPath.row == 2){
-        NSBundle *bundle = [NSBundle bundleForClass:[WBSettingSelectBTAlertViewController class]];
-        UIStoryboard *storyboard =
-        [UIStoryboard storyboardWithName:NSStringFromClass([WBSettingSelectBTAlertViewController class]) bundle:bundle];
-        NSString *identifier = NSStringFromClass([WBSettingSelectBTAlertViewController class]);
-        
-        UIViewController *viewController =
-        [storyboard instantiateViewControllerWithIdentifier:identifier];
-        
-        viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
-        WBSettingSelectBTAlertViewController *vc = (WBSettingSelectBTAlertViewController *)viewController;
-        vc.typeString = [NSString stringWithFormat:@"%@",GetUserDefaultForKey(kTorrentType)];
-        vc.delegate = self;
-        [self presentViewController:viewController animated:YES completion:NULL];
-    }else if (indexPath.row == 3){
+    }
+//    else if (indexPath.row == 2){
+//        NSBundle *bundle = [NSBundle bundleForClass:[WBSettingSelectBTAlertViewController class]];
+//        UIStoryboard *storyboard =
+//        [UIStoryboard storyboardWithName:NSStringFromClass([WBSettingSelectBTAlertViewController class]) bundle:bundle];
+//        NSString *identifier = NSStringFromClass([WBSettingSelectBTAlertViewController class]);
+//
+//        UIViewController *viewController =
+//        [storyboard instantiateViewControllerWithIdentifier:identifier];
+//
+//        viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
+//        WBSettingSelectBTAlertViewController *vc = (WBSettingSelectBTAlertViewController *)viewController;
+//        vc.typeString = [NSString stringWithFormat:@"%@",GetUserDefaultForKey(kTorrentType)];
+//        vc.delegate = self;
+//        [self presentViewController:viewController animated:YES completion:NULL];
+//    }
+else if (indexPath.row == 2){
         WBServiceSettingViewController *vc = [[WBServiceSettingViewController alloc]init];
         [self.navigationController pushViewController:vc animated:YES];
     }else{

@@ -86,7 +86,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 3;
+    return 2;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -123,17 +123,17 @@
         }
             
             break;
-        case 2:{
-            cell.textLabel.text =  WBLocalizedString(@"BT_download_service", nil);
-            cell.imageView.image = [UIImage imageNamed:@"bt_switch.png"];
-            UISwitch *switchBtn = [[UISwitch alloc]initWithFrame:CGRectMake(__kWidth - 70, 16, 50, 40)];
-            [switchBtn addTarget:self  action:@selector(btSwitchChanged:) forControlEvents:UIControlEventValueChanged];
-            [switchBtn setOn:_btSwitchOn];
-            if(!WB_UserService.isUserLogin) switchBtn.enabled = NO;
-            [cell.contentView addSubview:switchBtn];
-        }
-            
-            break;
+//        case 2:{
+//            cell.textLabel.text =  WBLocalizedString(@"BT_download_service", nil);
+//            cell.imageView.image = [UIImage imageNamed:@"bt_switch.png"];
+//            UISwitch *switchBtn = [[UISwitch alloc]initWithFrame:CGRectMake(__kWidth - 70, 16, 50, 40)];
+//            [switchBtn addTarget:self  action:@selector(btSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+//            [switchBtn setOn:_btSwitchOn];
+//            if(!WB_UserService.isUserLogin) switchBtn.enabled = NO;
+//            [cell.contentView addSubview:switchBtn];
+//        }
+//
+//            break;
             
         default:
             break;

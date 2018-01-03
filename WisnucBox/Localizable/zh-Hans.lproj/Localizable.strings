@@ -146,7 +146,7 @@
 "network_address" = "网络地址";
 "subnet_mask" = "子网掩码";
 "nic_mac_address" = "MAC地址";
-"network_connection_type" = "本地设备连接";
+"network_connection_type" = "设备连接类型";
 "remote_connection" = "远程设备连接";
 "local_station_connection" = "本地设备连接";
 

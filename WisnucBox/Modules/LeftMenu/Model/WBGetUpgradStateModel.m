@@ -20,6 +20,11 @@
 
 @end
 
+@implementation WBGetUpgradStateFetchModel
+
+@end
+
+
 @implementation WBGetUpgradStateModel
 + (NSDictionary *)modelContainerPropertyGenericClass {
     return @{@"releases" : [WBGetUpgradStateReleasesModel class],

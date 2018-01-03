@@ -23,7 +23,13 @@
 @property (nonatomic)NSString *tagName;
 @end
 
+@interface WBGetUpgradStateFetchModel : NSObject
+@property (nonatomic)NSString *state;
+@end
+
+
 @interface WBGetUpgradStateModel : WBBaseModel
 @property (nonatomic) WBGetUpgradStateAppifiModel *appifi;
+@property (nonatomic) WBGetUpgradStateFetchModel *fetch;
 @property (nonatomic) NSArray *releases;
 @end

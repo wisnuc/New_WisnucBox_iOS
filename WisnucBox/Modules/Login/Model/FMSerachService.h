@@ -24,4 +24,5 @@
 @property (nonatomic) NASType NASType;
 @property (nonatomic) WBStationManageStorageModel *storageModel;
 -(void)getDataWithPath:(NSString *)path Block:(void(^)(NSArray *dataArray))block;
+- (void)getData;
 @end

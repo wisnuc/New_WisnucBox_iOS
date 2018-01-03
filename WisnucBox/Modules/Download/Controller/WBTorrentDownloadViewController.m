@@ -23,6 +23,8 @@ UITableViewDelegate,
 UITableViewDataSource
 >
 @property (nonatomic)MDCFloatingButton *addButton;
+@property (nonatomic)UIButton *downloadingClearButton;
+@property (nonatomic)UIButton *downloadedClearButton;
 @property (nonatomic)NSTimer*timer;
 @property (nonatomic)NSMutableArray *runningDataArray;
 @property (nonatomic)NSMutableArray *finishDataArray;
@@ -82,6 +84,8 @@ UITableViewDataSource
             label.textAlignment = NSTextAlignmentCenter;
             self.tableView.tableFooterView =label;
             self.addButton.enabled = NO;
+            self.downloadedClearButton.enabled = NO;
+            self.downloadingClearButton.enabled = NO;
         }
          [SXLoadingView hideProgressHUD];
     } failure:^(__kindof JYBaseRequest *request) {
@@ -452,6 +456,7 @@ UITableViewDataSource
         UIButton *clearButton =  [[UIButton alloc]initWithFrame:CGRectMake(__kWidth - 16 - 80, 0, 80, 48)];
         [clearButton setTitle:@"全部暂停" forState:UIControlStateNormal];
         [clearButton setTitle:@"全部继续" forState:UIControlStateSelected];
+        self.downloadingClearButton = clearButton;
         [clearButton setTitleColor:COR1 forState:UIControlStateNormal];
         clearButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         clearButton.titleLabel.font = [UIFont systemFontOfSize:12];
@@ -478,6 +483,7 @@ UITableViewDataSource
         UIButton *clearButton =  [[UIButton alloc]initWithFrame:CGRectMake(__kWidth - 16 - 80, 0, 80, 48)];
         [clearButton setTitle:@"清除记录" forState:UIControlStateNormal];
         [clearButton setTitleColor:COR1 forState:UIControlStateNormal];
+        self.downloadedClearButton = clearButton;
         clearButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         clearButton.titleLabel.font = [UIFont systemFontOfSize:12];
         [clearButton addTarget:self action:@selector(fnishAllClearButtonClick:) forControlEvents:UIControlEventTouchUpInside];

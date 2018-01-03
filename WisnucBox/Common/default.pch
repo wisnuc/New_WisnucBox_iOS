@@ -36,6 +36,8 @@
 #import <MaterialComponents/MaterialDialogs.h>
 #import <MotionTransitioning/MDMTransition.h>
 #import <MaterialComponents/MaterialProgressView.h>
+#import <MaterialComponents/MaterialActivityIndicator.h>
+#import <MaterialComponents/MDCPalettes.h>
 #import "RadioButton.h"
 
 //Base

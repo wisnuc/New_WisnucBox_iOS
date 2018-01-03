@@ -281,7 +281,7 @@
     } if (_passwordTextField.text.length > 30){
 //        [_textFieldControllerPassword setErrorText:WBLocalizedString(@"password_exceed_character", nil) errorAccessibilityValue:nil];
         return;
-    }else if (![NSString isUserName:_passwordTextField.text]){
+    }else if (![NSString isPassword:_passwordTextField.text]){
         [_textFieldControllerPassword setErrorText:WBLocalizedString(@"password_has_illegal_character", nil) errorAccessibilityValue:nil];
         return;
     }
@@ -1636,7 +1636,7 @@
 - (MDCButton *)fourthStepNextButton{
     if (!_fourthStepNextButton) {
         _fourthStepNextButton = [[MDCButton alloc]initWithFrame:CGRectMake(CGRectGetMinX(_fourthStepDetailLabel.frame),CGRectGetMaxY(_fourthStepDetailLabel.frame) +28, 86, 36)];
-        [_fourthStepNextButton setTitle:WBLocalizedString(@"next_step", nil) forState:UIControlStateNormal];
+        [_fourthStepNextButton setTitle:@"绑定" forState:UIControlStateNormal];
         [_fourthStepNextButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _fourthStepNextButton.titleLabel.font = [UIFont systemFontOfSize:14];
         _fourthStepNextButton.backgroundColor = COR1;

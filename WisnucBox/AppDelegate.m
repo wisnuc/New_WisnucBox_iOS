@@ -196,23 +196,23 @@
             }else{
                 NSLog(@"%@写入成功",saveFile);
                 _filePath = saveFile;
-                if (url && [url.pathExtension isEqualToString:@"torrent"]) {
-                    if (!GetUserDefaultForKey(kTorrentType)) {
-                        SaveToUserDefault(kTorrentType, [NSNumber numberWithInt:TorrentTypeAskAllTime]);
-                        [self torrentDownloadAlert];
-                    }else{
-                        if ([GetUserDefaultForKey(kTorrentType) intValue] == TorrentTypeAskAllTime) {
-                            [self torrentDownloadAlert];
-                        }else if ([GetUserDefaultForKey(kTorrentType) intValue] == TorrentTypeCreatNewTask){
-                            [self torrentDownloadActionWithFilePath:saveFile];
-                        }else if ([GetUserDefaultForKey(kTorrentType) intValue] == TorrentTypeUpload){
-                             [self uploadWithFilePath:saveFile];
-                        }
-                    }
-                    
-                }else{
+//                if (url && [url.pathExtension isEqualToString:@"torrent"]) {
+//                    if (!GetUserDefaultForKey(kTorrentType)) {
+//                        SaveToUserDefault(kTorrentType, [NSNumber numberWithInt:TorrentTypeAskAllTime]);
+//                        [self torrentDownloadAlert];
+//                    }else{
+//                        if ([GetUserDefaultForKey(kTorrentType) intValue] == TorrentTypeAskAllTime) {
+//                            [self torrentDownloadAlert];
+//                        }else if ([GetUserDefaultForKey(kTorrentType) intValue] == TorrentTypeCreatNewTask){
+//                            [self torrentDownloadActionWithFilePath:saveFile];
+//                        }else if ([GetUserDefaultForKey(kTorrentType) intValue] == TorrentTypeUpload){
+//                             [self uploadWithFilePath:saveFile];
+//                        }
+//                    }
+//
+//                }else{
                     [self uploadWithFilePath:saveFile];
-                }
+//                }
             }
         }
     }
