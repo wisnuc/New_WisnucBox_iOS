@@ -38,7 +38,7 @@
 "operation_not_support" = "Operation not supported";
 "samba_service" = "Samba Service";
 "miniDLNA_service" = "miniDLNA Service";
-"BT_download_service" = "BT Download Service";
+
 
 //TabBar Title
 "photo" = "Photos";

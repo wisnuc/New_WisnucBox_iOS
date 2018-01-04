@@ -12,7 +12,7 @@
 #import "WBUpgradeAppfiViewController.h"
 
 
-@interface FMSetting ()<UITableViewDelegate,UITableViewDataSource,LCActionSheetDelegate,SettingSelectBTAlertViewDelegate>
+@interface FMSetting ()<UITableViewDelegate,UITableViewDataSource,LCActionSheetDelegate>
 @property (nonatomic) BOOL displayProgress;
 
 @property (nonatomic,strong)UISwitch * switchBtn;
@@ -44,58 +44,8 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.displayProgress = NO;
-//    [self getBTData];
     [self.settingTableView reloadData];
 
-}
-
-- (void)getBTData{
-    [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
-    [[WBTorrentDownloadSwitchAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        NSDictionary *dic = request.responseJsonObject;
-        NSNumber *number = dic[@"switch"];
-        BOOL swichOn = [number boolValue];
-        _btSwitchOn = swichOn;
-        [self.settingTableView reloadData];
-        [SXLoadingView hideProgressHUD];
-    } failure:^(__kindof JYBaseRequest *request) {
-        NSLog(@"%@",request.error);
-        [SXLoadingView hideProgressHUD];
-    }];
-    
-    [[WBFeaturesDlnaStatusAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        NSDictionary *dic = request.responseJsonObject;
-        NSString *status = dic[@"status"];
-        BOOL swichOn;
-        if ([status isEqualToString:@"active"]) {
-            swichOn = YES;
-        }else{
-            swichOn = NO;
-        }
-    
-        _miniDlnaSwitchOn = swichOn;
-        [self.settingTableView reloadData];
-       
-    } failure:^(__kindof JYBaseRequest *request) {
-      
-    }];
-    
-    [[WBFeaturesSambaStatusAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        NSDictionary *dic = request.responseJsonObject;
-        NSString *status = dic[@"status"];
-        BOOL swichOn;
-        if ([status isEqualToString:@"active"]) {
-            swichOn = YES;
-        }else{
-            swichOn = NO;
-        }
-        
-        _sambaSwitchOn = swichOn;
-       [self.settingTableView reloadData];
-    } failure:^(__kindof JYBaseRequest *request) {
- 
-    }];
-    
 }
 
 - (void)setSwitch{
@@ -194,21 +144,7 @@
             [actionSheet show];
         }
     }
-//    else if (indexPath.row == 2){
-//        NSBundle *bundle = [NSBundle bundleForClass:[WBSettingSelectBTAlertViewController class]];
-//        UIStoryboard *storyboard =
-//        [UIStoryboard storyboardWithName:NSStringFromClass([WBSettingSelectBTAlertViewController class]) bundle:bundle];
-//        NSString *identifier = NSStringFromClass([WBSettingSelectBTAlertViewController class]);
-//
-//        UIViewController *viewController =
-//        [storyboard instantiateViewControllerWithIdentifier:identifier];
-//
-//        viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
-//        WBSettingSelectBTAlertViewController *vc = (WBSettingSelectBTAlertViewController *)viewController;
-//        vc.typeString = [NSString stringWithFormat:@"%@",GetUserDefaultForKey(kTorrentType)];
-//        vc.delegate = self;
-//        [self presentViewController:viewController animated:YES completion:NULL];
-//    }
+
 else if (indexPath.row == 2){
         WBServiceSettingViewController *vc = [[WBServiceSettingViewController alloc]init];
         [self.navigationController pushViewController:vc animated:YES];
@@ -292,29 +228,6 @@ else if (indexPath.row == 2){
     }
 }
 
--(void)btSwitchChanged:(UISwitch *)paramSender{
-    BOOL isOn = paramSender.on;
-    if (isOn) {
-        [[WBTorrentDownloadSwitchAPI apiWithRequestMethod:@"PATCH" Option:@"start"]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-            _btSwitchOn = YES;
-            [self.settingTableView reloadData];
-        } failure:^(__kindof JYBaseRequest *request) {
-            _btSwitchOn = NO;
-            [self.settingTableView reloadData];
-            NSLog(@"%@",request.error);
-        }];
-    }else{
-        [[WBTorrentDownloadSwitchAPI apiWithRequestMethod:@"PATCH" Option:@"close"]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-            _btSwitchOn = NO;
-            [self.settingTableView reloadData];
-        } failure:^(__kindof JYBaseRequest *request) {
-            _btSwitchOn = YES;
-            [self.settingTableView reloadData];
-              NSLog(@"%@",request.error);
-        }];
-    }
-}
-
 -(void)miniDLNASwitchChanged:(UISwitch *)paramSender{
     BOOL isOn = paramSender.on;
     if (isOn) {
@@ -344,16 +257,6 @@ else if (indexPath.row == 2){
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)confirmWithTypeString:(NSString *)typeString {
-    if ([typeString containsString:@"询问"]) {
-        SaveToUserDefault(kTorrentType, [NSNumber numberWithInt: TorrentTypeAskAllTime]);
-       
-    }else if ([typeString containsString:@"新建"]){
-        SaveToUserDefault(kTorrentType, [NSNumber numberWithInt:TorrentTypeCreatNewTask]);
-       
-    } else if ([typeString containsString:@"上传"]){
-        SaveToUserDefault(kTorrentType, [NSNumber numberWithInt:TorrentTypeUpload]);
-    }
-}
+
 
 @end

@@ -66,7 +66,7 @@
     _isUserLogin = false;
     _currentUser = nil;
     [kUserDefaults removeObjectForKey:WBCURRENTUSER_UUID];
-    [kUserDefaults removeObjectForKey:kTorrentType];
+
     [kUserDefaults removeObjectForKey:kminiDLNASwich];
     [kUserDefaults removeObjectForKey:kSambaSwich];
 //    [kUserDefaults removeObjectForKey:kBTSwich];

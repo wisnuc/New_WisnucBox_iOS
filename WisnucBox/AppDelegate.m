@@ -16,12 +16,9 @@
 #import "LocalDownloadViewController.h"
 #import "WBLoginViewController.h"
 #import "WBInitializationViewController.h"
-#import "WBTorrentDownloadViewController.h"
-#import "WBTorrentAskToUploadAlertViewController.h"
 #import "FMSetting.h"
-#import "WBTorrentDownloadSwitchAPI.h"
 
-@interface AppDelegate () <WXApiDelegate,WBTorrentAskToUploadAlertDelegate>
+@interface AppDelegate () <WXApiDelegate>
 @property (nonatomic,strong) FMLoginViewController *loginController;
 @property (nonatomic,strong) NSString *filePath;
 @end
@@ -156,24 +153,6 @@
 }
 
 
-- (void)torrentDownloadAlert{
-    NSBundle *bundle = [NSBundle bundleForClass:[WBTorrentAskToUploadAlertViewController class]];
-    UIStoryboard *storyboard =
-    [UIStoryboard storyboardWithName:NSStringFromClass([WBTorrentAskToUploadAlertViewController class])bundle:bundle];
-    NSString *identifier = NSStringFromClass([WBTorrentAskToUploadAlertViewController class]);
-    
-    UIViewController *viewController =
-    [storyboard instantiateViewControllerWithIdentifier:identifier];
-    WBTorrentAskToUploadAlertViewController *vc = (WBTorrentAskToUploadAlertViewController *)viewController;
-    vc.delegate = self;
-    viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
-  
-    //    viewController
-    [self.window.rootViewController presentViewController:viewController animated:YES completion:NULL];
-    
-    
-
-}
 
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
@@ -196,23 +175,7 @@
             }else{
                 NSLog(@"%@写入成功",saveFile);
                 _filePath = saveFile;
-//                if (url && [url.pathExtension isEqualToString:@"torrent"]) {
-//                    if (!GetUserDefaultForKey(kTorrentType)) {
-//                        SaveToUserDefault(kTorrentType, [NSNumber numberWithInt:TorrentTypeAskAllTime]);
-//                        [self torrentDownloadAlert];
-//                    }else{
-//                        if ([GetUserDefaultForKey(kTorrentType) intValue] == TorrentTypeAskAllTime) {
-//                            [self torrentDownloadAlert];
-//                        }else if ([GetUserDefaultForKey(kTorrentType) intValue] == TorrentTypeCreatNewTask){
-//                            [self torrentDownloadActionWithFilePath:saveFile];
-//                        }else if ([GetUserDefaultForKey(kTorrentType) intValue] == TorrentTypeUpload){
-//                             [self uploadWithFilePath:saveFile];
-//                        }
-//                    }
-//
-//                }else{
                     [self uploadWithFilePath:saveFile];
-//                }
             }
         }
     }
@@ -312,75 +275,6 @@
     }
 }
 
-- (void)confirmWithTypeString:(NSString *)typeString isAlways:(BOOL)always{
-    if ([typeString containsString:@"新建"]) {
-        [self torrentDownloadActionWithFilePath:_filePath];
-    }else{
-        if (_filePath) {
-             [self uploadWithFilePath:_filePath];
-        }
-    }
-    
-    if (always) {
-        if ([typeString containsString:@"新建"]) {
-            SaveToUserDefault(kTorrentType,[NSNumber numberWithInt:TorrentTypeCreatNewTask]);
-        }else{
-            SaveToUserDefault(kTorrentType, [NSNumber numberWithInt:TorrentTypeUpload]);
-        }
-    
-    }
-}
 
-- (void)torrentDownloadActionWithFilePath:(NSString *)filePath{
-    @weaky(self)
-     NSString *controllerString = NSStringFromClass([[UIViewController getCurrentVC] class]);
-    [SXLoadingView showProgressHUD:@""];
-    [[WBTorrentDownloadSwitchAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        NSDictionary *dic = request.responseJsonObject;
-        NSNumber *number = dic[@"switch"];
-        BOOL swichOn = [number boolValue];
-        if (swichOn) {
-            [weak_self startTorrentDownloadWithFilePath:filePath];
-        }else{
-            if (![controllerString isEqualToString:NSStringFromClass([WBTorrentDownloadViewController class])]) {
-                CYLTabBarController * tVC = (CYLTabBarController *)MyAppDelegate.window.rootViewController;
-                NavViewController * selectVC = (NavViewController *)tVC.selectedViewController;
-                WBTorrentDownloadViewController *localViewController  = [[WBTorrentDownloadViewController alloc]init];
-                
-                if ([selectVC isKindOfClass:[NavViewController class]]) {
-                    [selectVC  pushViewController:localViewController animated:YES];
-                }
-            }
-        }
-        [SXLoadingView hideProgressHUD];
-    } failure:^(__kindof JYBaseRequest *request) {
-        [SXLoadingView hideProgressHUD];
-    }];
-    
-    
-}
 
-- (void)startTorrentDownloadWithFilePath:(NSString *)filePath{
-    NSString *controllerString = NSStringFromClass([[UIViewController getCurrentVC] class]);
-    [WB_NetService getDirUUIDWithDirName:BackUpTorrentDirName BaseDir:^(NSError *error, NSString *dirUUID) {
-        if (error) {
-            NSLog(@"%@",error);
-        }else{
-            NSLog(@"%@",dirUUID);
-            [[CSUploadHelper shareManager] readyUploadTorrentFilesWithFilePath:filePath DirUUID:dirUUID Complete:^(BOOL isComplete) {
-                if (isComplete) {
-                    if (![controllerString isEqualToString:NSStringFromClass([WBTorrentDownloadViewController class])]) {
-                        CYLTabBarController * tVC = (CYLTabBarController *)MyAppDelegate.window.rootViewController;
-                        NavViewController * selectVC = (NavViewController *)tVC.selectedViewController;
-                        WBTorrentDownloadViewController *localViewController  = [[WBTorrentDownloadViewController alloc]init];
-                        
-                        if ([selectVC isKindOfClass:[NavViewController class]]) {
-                            [selectVC  pushViewController:localViewController animated:YES];
-                        }
-                    }
-                }
-            }];
-        }
-    }];
-}
 @end

@@ -53,15 +53,9 @@
 		1F114A7D1FFCC92E007F6D15 /* WBStationEnterMaintanceAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A7C1FFCC92E007F6D15 /* WBStationEnterMaintanceAlertViewController.storyboard */; };
 		1F114A801FFCE2B1007F6D15 /* WBStationEnterMaintanceConfirmAVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F114A7F1FFCE2B1007F6D15 /* WBStationEnterMaintanceConfirmAVC.m */; };
 		1F114A821FFCE2BF007F6D15 /* WBStationEnterMaintanceConfirmAVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A811FFCE2BF007F6D15 /* WBStationEnterMaintanceConfirmAVC.storyboard */; };
-		1F178EBC1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F178EBB1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.m */; };
-		1F178EBE1FEBF047001650E5 /* WBSettingSelectBTAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F178EBD1FEBF047001650E5 /* WBSettingSelectBTAlertViewController.storyboard */; };
-		1F178EC21FECABAE001650E5 /* WBTorrentDownloadSwitchAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F178EC11FECABAE001650E5 /* WBTorrentDownloadSwitchAPI.m */; };
 		1F178EC81FECB076001650E5 /* WBFeaturesDlnaStatusAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F178EC71FECB076001650E5 /* WBFeaturesDlnaStatusAPI.m */; };
 		1F178ECB1FECB094001650E5 /* WBFeaturesSambaStatusAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F178ECA1FECB094001650E5 /* WBFeaturesSambaStatusAPI.m */; };
 		1F178ECE1FECB6A2001650E5 /* WBFeaturesChangeAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F178ECD1FECB6A2001650E5 /* WBFeaturesChangeAPI.m */; };
-		1F178ED31FECD492001650E5 /* ic_content_paste@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F178ED01FECD490001650E5 /* ic_content_paste@3x.png */; };
-		1F178ED41FECD492001650E5 /* ic_content_paste.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F178ED11FECD490001650E5 /* ic_content_paste.png */; };
-		1F178ED51FECD492001650E5 /* ic_content_paste@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F178ED21FECD491001650E5 /* ic_content_paste@2x.png */; };
 		1F178ED91FED188F001650E5 /* WBServiceSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F178ED71FED188F001650E5 /* WBServiceSettingViewController.m */; };
 		1F178EDA1FED188F001650E5 /* WBServiceSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F178ED81FED188F001650E5 /* WBServiceSettingViewController.xib */; };
 		1F1AB9EC1FB968CA006EB1FC /* FLFilesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AB9EA1FB968C9006EB1FC /* FLFilesCell.m */; };
@@ -126,15 +120,6 @@
 		1F5D21831FBC3DB0006C65AA /* FilesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D21821FBC3DB0006C65AA /* FilesModel.m */; };
 		1F611CAC1FF0CEFD00E34379 /* WBSettingSelectRolesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F611CAB1FF0CEFD00E34379 /* WBSettingSelectRolesViewController.m */; };
 		1F611CAE1FF0CF2000E34379 /* WBSettingSelectRolesViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F611CAD1FF0CF2000E34379 /* WBSettingSelectRolesViewController.storyboard */; };
-		1F611CB81FF0E8D500E34379 /* magnet@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F611CAF1FF0E8CF00E34379 /* magnet@3x.png */; };
-		1F611CB91FF0E8D500E34379 /* bt.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F611CB01FF0E8CF00E34379 /* bt.png */; };
-		1F611CBA1FF0E8D500E34379 /* magnet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F611CB11FF0E8CF00E34379 /* magnet@2x.png */; };
-		1F611CBB1FF0E8D500E34379 /* bt_download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F611CB21FF0E8D200E34379 /* bt_download@2x.png */; };
-		1F611CBC1FF0E8D500E34379 /* magnet.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F611CB31FF0E8D300E34379 /* magnet.png */; };
-		1F611CBD1FF0E8D500E34379 /* bt_download@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F611CB41FF0E8D400E34379 /* bt_download@3x.png */; };
-		1F611CBE1FF0E8D500E34379 /* bt@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F611CB51FF0E8D400E34379 /* bt@3x.png */; };
-		1F611CBF1FF0E8D500E34379 /* bt_download.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F611CB61FF0E8D500E34379 /* bt_download.png */; };
-		1F611CC01FF0E8D500E34379 /* bt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F611CB71FF0E8D500E34379 /* bt@2x.png */; };
 		1F8EAF241FB9A7C100FEED19 /* LocalDownloadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F8EAF211FB9A7C000FEED19 /* LocalDownloadingTableViewCell.xib */; };
 		1F8EAF251FB9A7C100FEED19 /* LocalDownloadingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EAF221FB9A7C000FEED19 /* LocalDownloadingTableViewCell.m */; };
 		1F8EAF291FBACD5000FEED19 /* FLFIlesHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EAF281FBACD5000FEED19 /* FLFIlesHelper.m */; };
@@ -270,25 +255,9 @@
 		1FCFB3DC1FE7B34C00BD3375 /* ic_radio_button@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FCFB3D61FE7B34B00BD3375 /* ic_radio_button@3x.png */; };
 		1FCFB3DD1FE7B34C00BD3375 /* ic_radio_button_unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FCFB3D71FE7B34C00BD3375 /* ic_radio_button_unchecked@2x.png */; };
 		1FCFB3E11FE8B43700BD3375 /* RadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFB3DF1FE8B43700BD3375 /* RadioButton.m */; };
-		1FCFB3E51FEA062100BD3375 /* WBDownloadTorrentAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFB3E41FEA062100BD3375 /* WBDownloadTorrentAPI.m */; };
-		1FCFB3E81FEA076A00BD3375 /* WBDownloadMagnetAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFB3E71FEA076A00BD3375 /* WBDownloadMagnetAPI.m */; };
-		1FCFB3EB1FEA15DE00BD3375 /* WBTorrentDownloadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFB3EA1FEA15DE00BD3375 /* WBTorrentDownloadHelper.m */; };
-		1FCFB3EF1FEA173C00BD3375 /* WBTorrentDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFB3ED1FEA173C00BD3375 /* WBTorrentDownloadViewController.m */; };
-		1FCFB3F01FEA173C00BD3375 /* WBTorrentDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FCFB3EE1FEA173C00BD3375 /* WBTorrentDownloadViewController.xib */; };
 		1FCFB3F41FEA425400BD3375 /* ic_add_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FCFB3F11FEA425200BD3375 /* ic_add_white.png */; };
 		1FCFB3F51FEA425400BD3375 /* ic_add_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FCFB3F21FEA425300BD3375 /* ic_add_white@2x.png */; };
 		1FCFB3F61FEA425400BD3375 /* ic_add_white@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FCFB3F31FEA425400BD3375 /* ic_add_white@3x.png */; };
-		1FCFB3FB1FEA45B200BD3375 /* WBTorrentMagnetAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFB3F91FEA45B200BD3375 /* WBTorrentMagnetAlertViewController.m */; };
-		1FCFB4001FEA4A8200BD3375 /* WBTorrentMagnetAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FCFB3FF1FEA4A8200BD3375 /* WBTorrentMagnetAlertViewController.storyboard */; };
-		1FCFB4031FEA617200BD3375 /* WBGetDownloadAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFB4021FEA617100BD3375 /* WBGetDownloadAPI.m */; };
-		1FCFB4061FEA647800BD3375 /* WBGetDownloadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFB4051FEA647800BD3375 /* WBGetDownloadModel.m */; };
-		1FCFB40A1FEA695300BD3375 /* WBTorrentDownloadingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFB4081FEA695300BD3375 /* WBTorrentDownloadingTableViewCell.m */; };
-		1FCFB40B1FEA695300BD3375 /* WBTorrentDownloadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FCFB4091FEA695300BD3375 /* WBTorrentDownloadingTableViewCell.xib */; };
-		1FCFB40F1FEA696B00BD3375 /* WBTorrentDownloadedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFB40D1FEA696B00BD3375 /* WBTorrentDownloadedTableViewCell.m */; };
-		1FCFB4101FEA696B00BD3375 /* WBTorrentDownloadedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FCFB40E1FEA696B00BD3375 /* WBTorrentDownloadedTableViewCell.xib */; };
-		1FCFB4131FEB553200BD3375 /* WBTorrentDownloadActionAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFB4121FEB553200BD3375 /* WBTorrentDownloadActionAPI.m */; };
-		1FCFB4161FEBD85B00BD3375 /* WBTorrentAskToUploadAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFB4151FEBD85A00BD3375 /* WBTorrentAskToUploadAlertViewController.m */; };
-		1FCFB4181FEBD8B500BD3375 /* WBTorrentAskToUploadAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FCFB4171FEBD8B500BD3375 /* WBTorrentAskToUploadAlertViewController.storyboard */; };
 		1FD7A0EA1FB05A45000D4CB3 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E41FB05A45000D4CB3 /* back@2x.png */; };
 		1FD7A0EB1FB05A45000D4CB3 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E51FB05A45000D4CB3 /* back.png */; };
 		1FD7A0EC1FB05A45000D4CB3 /* back_gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E61FB05A45000D4CB3 /* back_gray@3x.png */; };
@@ -868,20 +837,12 @@
 		1F114A7E1FFCE2B1007F6D15 /* WBStationEnterMaintanceConfirmAVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBStationEnterMaintanceConfirmAVC.h; sourceTree = "<group>"; };
 		1F114A7F1FFCE2B1007F6D15 /* WBStationEnterMaintanceConfirmAVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBStationEnterMaintanceConfirmAVC.m; sourceTree = "<group>"; };
 		1F114A811FFCE2BF007F6D15 /* WBStationEnterMaintanceConfirmAVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WBStationEnterMaintanceConfirmAVC.storyboard; sourceTree = "<group>"; };
-		1F178EBA1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBSettingSelectBTAlertViewController.h; sourceTree = "<group>"; };
-		1F178EBB1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBSettingSelectBTAlertViewController.m; sourceTree = "<group>"; };
-		1F178EBD1FEBF047001650E5 /* WBSettingSelectBTAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WBSettingSelectBTAlertViewController.storyboard; sourceTree = "<group>"; };
-		1F178EC01FECABAE001650E5 /* WBTorrentDownloadSwitchAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBTorrentDownloadSwitchAPI.h; sourceTree = "<group>"; };
-		1F178EC11FECABAE001650E5 /* WBTorrentDownloadSwitchAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBTorrentDownloadSwitchAPI.m; sourceTree = "<group>"; };
 		1F178EC61FECB076001650E5 /* WBFeaturesDlnaStatusAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBFeaturesDlnaStatusAPI.h; sourceTree = "<group>"; };
 		1F178EC71FECB076001650E5 /* WBFeaturesDlnaStatusAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBFeaturesDlnaStatusAPI.m; sourceTree = "<group>"; };
 		1F178EC91FECB094001650E5 /* WBFeaturesSambaStatusAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBFeaturesSambaStatusAPI.h; sourceTree = "<group>"; };
 		1F178ECA1FECB094001650E5 /* WBFeaturesSambaStatusAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBFeaturesSambaStatusAPI.m; sourceTree = "<group>"; };
 		1F178ECC1FECB6A2001650E5 /* WBFeaturesChangeAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBFeaturesChangeAPI.h; sourceTree = "<group>"; };
 		1F178ECD1FECB6A2001650E5 /* WBFeaturesChangeAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBFeaturesChangeAPI.m; sourceTree = "<group>"; };
-		1F178ED01FECD490001650E5 /* ic_content_paste@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_content_paste@3x.png"; sourceTree = "<group>"; };
-		1F178ED11FECD490001650E5 /* ic_content_paste.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_content_paste.png; sourceTree = "<group>"; };
-		1F178ED21FECD491001650E5 /* ic_content_paste@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_content_paste@2x.png"; sourceTree = "<group>"; };
 		1F178ED61FED188F001650E5 /* WBServiceSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBServiceSettingViewController.h; sourceTree = "<group>"; };
 		1F178ED71FED188F001650E5 /* WBServiceSettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBServiceSettingViewController.m; sourceTree = "<group>"; };
 		1F178ED81FED188F001650E5 /* WBServiceSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBServiceSettingViewController.xib; sourceTree = "<group>"; };
@@ -1003,15 +964,6 @@
 		1F611CAA1FF0CEFD00E34379 /* WBSettingSelectRolesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBSettingSelectRolesViewController.h; sourceTree = "<group>"; };
 		1F611CAB1FF0CEFD00E34379 /* WBSettingSelectRolesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBSettingSelectRolesViewController.m; sourceTree = "<group>"; };
 		1F611CAD1FF0CF2000E34379 /* WBSettingSelectRolesViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WBSettingSelectRolesViewController.storyboard; sourceTree = "<group>"; };
-		1F611CAF1FF0E8CF00E34379 /* magnet@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "magnet@3x.png"; sourceTree = "<group>"; };
-		1F611CB01FF0E8CF00E34379 /* bt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bt.png; sourceTree = "<group>"; };
-		1F611CB11FF0E8CF00E34379 /* magnet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "magnet@2x.png"; sourceTree = "<group>"; };
-		1F611CB21FF0E8D200E34379 /* bt_download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bt_download@2x.png"; sourceTree = "<group>"; };
-		1F611CB31FF0E8D300E34379 /* magnet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = magnet.png; sourceTree = "<group>"; };
-		1F611CB41FF0E8D400E34379 /* bt_download@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bt_download@3x.png"; sourceTree = "<group>"; };
-		1F611CB51FF0E8D400E34379 /* bt@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bt@3x.png"; sourceTree = "<group>"; };
-		1F611CB61FF0E8D500E34379 /* bt_download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bt_download.png; sourceTree = "<group>"; };
-		1F611CB71FF0E8D500E34379 /* bt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bt@2x.png"; sourceTree = "<group>"; };
 		1F8EAF211FB9A7C000FEED19 /* LocalDownloadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalDownloadingTableViewCell.xib; sourceTree = "<group>"; };
 		1F8EAF221FB9A7C000FEED19 /* LocalDownloadingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalDownloadingTableViewCell.m; sourceTree = "<group>"; };
 		1F8EAF231FB9A7C000FEED19 /* LocalDownloadingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalDownloadingTableViewCell.h; sourceTree = "<group>"; };
@@ -1192,36 +1144,9 @@
 		1FCFB3D71FE7B34C00BD3375 /* ic_radio_button_unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_radio_button_unchecked@2x.png"; sourceTree = "<group>"; };
 		1FCFB3DF1FE8B43700BD3375 /* RadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioButton.m; sourceTree = "<group>"; };
 		1FCFB3E01FE8B43700BD3375 /* RadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioButton.h; sourceTree = "<group>"; };
-		1FCFB3E31FEA062100BD3375 /* WBDownloadTorrentAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBDownloadTorrentAPI.h; sourceTree = "<group>"; };
-		1FCFB3E41FEA062100BD3375 /* WBDownloadTorrentAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBDownloadTorrentAPI.m; sourceTree = "<group>"; };
-		1FCFB3E61FEA076A00BD3375 /* WBDownloadMagnetAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBDownloadMagnetAPI.h; sourceTree = "<group>"; };
-		1FCFB3E71FEA076A00BD3375 /* WBDownloadMagnetAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBDownloadMagnetAPI.m; sourceTree = "<group>"; };
-		1FCFB3E91FEA15DE00BD3375 /* WBTorrentDownloadHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBTorrentDownloadHelper.h; sourceTree = "<group>"; };
-		1FCFB3EA1FEA15DE00BD3375 /* WBTorrentDownloadHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBTorrentDownloadHelper.m; sourceTree = "<group>"; };
-		1FCFB3EC1FEA173C00BD3375 /* WBTorrentDownloadViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBTorrentDownloadViewController.h; sourceTree = "<group>"; };
-		1FCFB3ED1FEA173C00BD3375 /* WBTorrentDownloadViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBTorrentDownloadViewController.m; sourceTree = "<group>"; };
-		1FCFB3EE1FEA173C00BD3375 /* WBTorrentDownloadViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBTorrentDownloadViewController.xib; sourceTree = "<group>"; };
 		1FCFB3F11FEA425200BD3375 /* ic_add_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_add_white.png; sourceTree = "<group>"; };
 		1FCFB3F21FEA425300BD3375 /* ic_add_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_add_white@2x.png"; sourceTree = "<group>"; };
 		1FCFB3F31FEA425400BD3375 /* ic_add_white@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_add_white@3x.png"; sourceTree = "<group>"; };
-		1FCFB3F81FEA45B200BD3375 /* WBTorrentMagnetAlertViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBTorrentMagnetAlertViewController.h; sourceTree = "<group>"; };
-		1FCFB3F91FEA45B200BD3375 /* WBTorrentMagnetAlertViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBTorrentMagnetAlertViewController.m; sourceTree = "<group>"; };
-		1FCFB3FF1FEA4A8200BD3375 /* WBTorrentMagnetAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WBTorrentMagnetAlertViewController.storyboard; sourceTree = "<group>"; };
-		1FCFB4011FEA617100BD3375 /* WBGetDownloadAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBGetDownloadAPI.h; sourceTree = "<group>"; };
-		1FCFB4021FEA617100BD3375 /* WBGetDownloadAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBGetDownloadAPI.m; sourceTree = "<group>"; };
-		1FCFB4041FEA647800BD3375 /* WBGetDownloadModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBGetDownloadModel.h; sourceTree = "<group>"; };
-		1FCFB4051FEA647800BD3375 /* WBGetDownloadModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBGetDownloadModel.m; sourceTree = "<group>"; };
-		1FCFB4071FEA695300BD3375 /* WBTorrentDownloadingTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBTorrentDownloadingTableViewCell.h; sourceTree = "<group>"; };
-		1FCFB4081FEA695300BD3375 /* WBTorrentDownloadingTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBTorrentDownloadingTableViewCell.m; sourceTree = "<group>"; };
-		1FCFB4091FEA695300BD3375 /* WBTorrentDownloadingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBTorrentDownloadingTableViewCell.xib; sourceTree = "<group>"; };
-		1FCFB40C1FEA696B00BD3375 /* WBTorrentDownloadedTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBTorrentDownloadedTableViewCell.h; sourceTree = "<group>"; };
-		1FCFB40D1FEA696B00BD3375 /* WBTorrentDownloadedTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBTorrentDownloadedTableViewCell.m; sourceTree = "<group>"; };
-		1FCFB40E1FEA696B00BD3375 /* WBTorrentDownloadedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBTorrentDownloadedTableViewCell.xib; sourceTree = "<group>"; };
-		1FCFB4111FEB553200BD3375 /* WBTorrentDownloadActionAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBTorrentDownloadActionAPI.h; sourceTree = "<group>"; };
-		1FCFB4121FEB553200BD3375 /* WBTorrentDownloadActionAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBTorrentDownloadActionAPI.m; sourceTree = "<group>"; };
-		1FCFB4141FEBD85A00BD3375 /* WBTorrentAskToUploadAlertViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBTorrentAskToUploadAlertViewController.h; sourceTree = "<group>"; };
-		1FCFB4151FEBD85A00BD3375 /* WBTorrentAskToUploadAlertViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBTorrentAskToUploadAlertViewController.m; sourceTree = "<group>"; };
-		1FCFB4171FEBD8B500BD3375 /* WBTorrentAskToUploadAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WBTorrentAskToUploadAlertViewController.storyboard; sourceTree = "<group>"; };
 		1FD7A0E41FB05A45000D4CB3 /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
 		1FD7A0E51FB05A45000D4CB3 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		1FD7A0E61FB05A45000D4CB3 /* back_gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_gray@3x.png"; sourceTree = "<group>"; };
@@ -2026,9 +1951,6 @@
 		1F178EB91FEBF00D001650E5 /* AlertController */ = {
 			isa = PBXGroup;
 			children = (
-				1F178EBA1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.h */,
-				1F178EBB1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.m */,
-				1F178EBD1FEBF047001650E5 /* WBSettingSelectBTAlertViewController.storyboard */,
 				1F611CAA1FF0CEFD00E34379 /* WBSettingSelectRolesViewController.h */,
 				1F611CAB1FF0CEFD00E34379 /* WBSettingSelectRolesViewController.m */,
 				1F611CAD1FF0CF2000E34379 /* WBSettingSelectRolesViewController.storyboard */,
@@ -2039,8 +1961,6 @@
 		1F178EBF1FECAB66001650E5 /* LeftMenu */ = {
 			isa = PBXGroup;
 			children = (
-				1F178EC01FECABAE001650E5 /* WBTorrentDownloadSwitchAPI.h */,
-				1F178EC11FECABAE001650E5 /* WBTorrentDownloadSwitchAPI.m */,
 				1F178EC61FECB076001650E5 /* WBFeaturesDlnaStatusAPI.h */,
 				1F178EC71FECB076001650E5 /* WBFeaturesDlnaStatusAPI.m */,
 				1F178EC91FECB094001650E5 /* WBFeaturesSambaStatusAPI.h */,
@@ -2049,25 +1969,6 @@
 				1F178ECD1FECB6A2001650E5 /* WBFeaturesChangeAPI.m */,
 			);
 			path = LeftMenu;
-			sourceTree = "<group>";
-		};
-		1F178ECF1FECD481001650E5 /* Download */ = {
-			isa = PBXGroup;
-			children = (
-				1F611CB61FF0E8D500E34379 /* bt_download.png */,
-				1F611CB21FF0E8D200E34379 /* bt_download@2x.png */,
-				1F611CB41FF0E8D400E34379 /* bt_download@3x.png */,
-				1F611CB01FF0E8CF00E34379 /* bt.png */,
-				1F611CB71FF0E8D500E34379 /* bt@2x.png */,
-				1F611CB51FF0E8D400E34379 /* bt@3x.png */,
-				1F611CB31FF0E8D300E34379 /* magnet.png */,
-				1F611CB11FF0E8CF00E34379 /* magnet@2x.png */,
-				1F611CAF1FF0E8CF00E34379 /* magnet@3x.png */,
-				1F178ED11FECD490001650E5 /* ic_content_paste.png */,
-				1F178ED21FECD491001650E5 /* ic_content_paste@2x.png */,
-				1F178ED01FECD490001650E5 /* ic_content_paste@3x.png */,
-			);
-			path = Download;
 			sourceTree = "<group>";
 		};
 		1F196F351FB9416A004D5EB7 /* Controller */ = {
@@ -2155,8 +2056,6 @@
 				1F1ABA091FB97C67006EB1FC /* CSDownloadEvenHandler.h */,
 				1F1ABA111FB99882006EB1FC /* CSDownloadHelper.h */,
 				1F1ABA121FB99882006EB1FC /* CSDownloadHelper.m */,
-				1FCFB3E91FEA15DE00BD3375 /* WBTorrentDownloadHelper.h */,
-				1FCFB3EA1FEA15DE00BD3375 /* WBTorrentDownloadHelper.m */,
 			);
 			path = Handler;
 			sourceTree = "<group>";
@@ -2184,9 +2083,6 @@
 				1F3F997D1FB0312300D6CC64 /* LocalDownloadViewController.h */,
 				1F3F997E1FB0312300D6CC64 /* LocalDownloadViewController.m */,
 				1F3F997F1FB0312300D6CC64 /* LocalDownloadViewController.xib */,
-				1FCFB3EC1FEA173C00BD3375 /* WBTorrentDownloadViewController.h */,
-				1FCFB3ED1FEA173C00BD3375 /* WBTorrentDownloadViewController.m */,
-				1FCFB3EE1FEA173C00BD3375 /* WBTorrentDownloadViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2200,12 +2096,6 @@
 				1F3F99861FB0353F00D6CC64 /* LocalDownloadTableViewCell.h */,
 				1F3F99871FB0353F00D6CC64 /* LocalDownloadTableViewCell.m */,
 				1F3F99881FB0353F00D6CC64 /* LocalDownloadTableViewCell.xib */,
-				1FCFB4071FEA695300BD3375 /* WBTorrentDownloadingTableViewCell.h */,
-				1FCFB4081FEA695300BD3375 /* WBTorrentDownloadingTableViewCell.m */,
-				1FCFB4091FEA695300BD3375 /* WBTorrentDownloadingTableViewCell.xib */,
-				1FCFB40C1FEA696B00BD3375 /* WBTorrentDownloadedTableViewCell.h */,
-				1FCFB40D1FEA696B00BD3375 /* WBTorrentDownloadedTableViewCell.m */,
-				1FCFB40E1FEA696B00BD3375 /* WBTorrentDownloadedTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2531,7 +2421,6 @@
 			children = (
 				1F114A341FF36899007F6D15 /* Maintenance */,
 				1F114A131FF33435007F6D15 /* Setting */,
-				1F178ECF1FECD481001650E5 /* Download */,
 				1FFAE3861FE141B20054C393 /* Initialization */,
 				1FAD74481FD0EDA900A5D880 /* Files */,
 				1F922E711FCD340700A7614B /* StationManage */,
@@ -2599,7 +2488,6 @@
 		1F7CE6601FB002F9004467C8 /* Download */ = {
 			isa = PBXGroup;
 			children = (
-				1FCFB3F71FEA456D00BD3375 /* AltertController */,
 				1F1ABA051FB97C1B006EB1FC /* Handler */,
 				1F1ABA011FB979F6006EB1FC /* Task */,
 				1F1AB9FD1FB978C8006EB1FC /* Queue */,
@@ -2868,34 +2756,6 @@
 			path = RadioButton;
 			sourceTree = "<group>";
 		};
-		1FCFB3E21FEA05D500BD3375 /* Download */ = {
-			isa = PBXGroup;
-			children = (
-				1FCFB3E31FEA062100BD3375 /* WBDownloadTorrentAPI.h */,
-				1FCFB3E41FEA062100BD3375 /* WBDownloadTorrentAPI.m */,
-				1FCFB3E61FEA076A00BD3375 /* WBDownloadMagnetAPI.h */,
-				1FCFB3E71FEA076A00BD3375 /* WBDownloadMagnetAPI.m */,
-				1FCFB4011FEA617100BD3375 /* WBGetDownloadAPI.h */,
-				1FCFB4021FEA617100BD3375 /* WBGetDownloadAPI.m */,
-				1FCFB4111FEB553200BD3375 /* WBTorrentDownloadActionAPI.h */,
-				1FCFB4121FEB553200BD3375 /* WBTorrentDownloadActionAPI.m */,
-			);
-			path = Download;
-			sourceTree = "<group>";
-		};
-		1FCFB3F71FEA456D00BD3375 /* AltertController */ = {
-			isa = PBXGroup;
-			children = (
-				1FCFB3F81FEA45B200BD3375 /* WBTorrentMagnetAlertViewController.h */,
-				1FCFB3F91FEA45B200BD3375 /* WBTorrentMagnetAlertViewController.m */,
-				1FCFB3FF1FEA4A8200BD3375 /* WBTorrentMagnetAlertViewController.storyboard */,
-				1FCFB4141FEBD85A00BD3375 /* WBTorrentAskToUploadAlertViewController.h */,
-				1FCFB4151FEBD85A00BD3375 /* WBTorrentAskToUploadAlertViewController.m */,
-				1FCFB4171FEBD8B500BD3375 /* WBTorrentAskToUploadAlertViewController.storyboard */,
-			);
-			path = AltertController;
-			sourceTree = "<group>";
-		};
 		1FEFCDDC1FE3C7DD00DEC866 /* Initialization */ = {
 			isa = PBXGroup;
 			children = (
@@ -2969,8 +2829,6 @@
 			children = (
 				1FFEADB31FB1594900CD3068 /* CSDownloadModel.h */,
 				1FFEADB41FB1594900CD3068 /* CSDownloadModel.m */,
-				1FCFB4041FEA647800BD3375 /* WBGetDownloadModel.h */,
-				1FCFB4051FEA647800BD3375 /* WBGetDownloadModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3005,7 +2863,6 @@
 			children = (
 				1F114A591FF48B49007F6D15 /* Upgrad */,
 				1F178EBF1FECAB66001650E5 /* LeftMenu */,
-				1FCFB3E21FEA05D500BD3375 /* Download */,
 				1FEFCDDC1FE3C7DD00DEC866 /* Initialization */,
 				1F922EA51FCD5C4F00A7614B /* StationManage */,
 				C1196BB81FC3BFC100E96973 /* Cloud */,
@@ -4022,7 +3879,6 @@
 				F6830F051FB2FF8C005AC578 /* FMUserSettingCell.xib in Resources */,
 				F68311AA1FB30AAF005AC578 /* transparency_bg@2x.png in Resources */,
 				1FAD745B1FD0EDDF00A5D880 /* mp4_icon.png in Resources */,
-				1F611CBA1FF0E8D500E34379 /* magnet@2x.png in Resources */,
 				F68310DC1FB30AAE005AC578 /* good_red@3x.png in Resources */,
 				1F922E5B1FC80F3400A7614B /* lauchScreen.png in Resources */,
 				F68311431FB30AAE005AC578 /* no_photo@3x.png in Resources */,
@@ -4031,7 +3887,6 @@
 				F68311271FB30AAE005AC578 /* login@3x.png in Resources */,
 				F68310BD1FB30AAE005AC578 /* dot@3x.png in Resources */,
 				F68310BE1FB30AAE005AC578 /* download.png in Resources */,
-				1F611CB91FF0E8D500E34379 /* bt.png in Resources */,
 				F683109E1FB30AAE005AC578 /* check-box@3x.png in Resources */,
 				F68310CC1FB30AAE005AC578 /* file_icon@2x.png in Resources */,
 				1FD7A1151FB05A51000D4CB3 /* eye@2x.png in Resources */,
@@ -4118,9 +3973,7 @@
 				F68311591FB30AAE005AC578 /* photo_placeholder.png in Resources */,
 				F683114B1FB30AAE005AC578 /* person_add@2x.png in Resources */,
 				F68311BB1FB30AAF005AC578 /* album_comment.png in Resources */,
-				1FCFB4001FEA4A8200BD3375 /* WBTorrentMagnetAlertViewController.storyboard in Resources */,
 				1FD7A10B1FB05A51000D4CB3 /* PLUS@3x.png in Resources */,
-				1F611CBC1FF0E8D500E34379 /* magnet.png in Resources */,
 				C139DFD21FC7DFC7007098E5 /* play2.png in Resources */,
 				F683110D1FB30AAE005AC578 /* icon_down@2x.png in Resources */,
 				F683115B1FB30AAE005AC578 /* photo_placeholder@3x.png in Resources */,
@@ -4175,7 +4028,6 @@
 				F68310D71FB30AAE005AC578 /* folder_shared.png in Resources */,
 				1F114A691FF4BA6C007F6D15 /* system_update.png in Resources */,
 				F68311421FB30AAE005AC578 /* no_photo@2x.png in Resources */,
-				1FCFB4101FEA696B00BD3375 /* WBTorrentDownloadedTableViewCell.xib in Resources */,
 				F68310D31FB30AAE005AC578 /* float_btn_del@3x.png in Resources */,
 				1FD7A10F1FB05A51000D4CB3 /* WeChat@3x.png in Resources */,
 				F68311671FB30AAE005AC578 /* photos@3x.png in Resources */,
@@ -4190,7 +4042,6 @@
 				F68311B01FB30AAF005AC578 /* up@2x.png in Resources */,
 				F68310941FB30AAE005AC578 /* back_grayhighlight@2x.png in Resources */,
 				F68311361FB30AAE005AC578 /* more@3x.png in Resources */,
-				1F178EBE1FEBF047001650E5 /* WBSettingSelectBTAlertViewController.storyboard in Resources */,
 				F6830F191FB300D2005AC578 /* FMLeftUserCell.xib in Resources */,
 				F68310A31FB30AAE005AC578 /* check_circle@2x.png in Resources */,
 				1F922EE01FCE993900A7614B /* ic_storage.png in Resources */,
@@ -4214,7 +4065,6 @@
 				F68311861FB30AAF005AC578 /* share_photo.png in Resources */,
 				F68311501FB30AAE005AC578 /* photo-album.png in Resources */,
 				F68311191FB30AAE005AC578 /* local.png in Resources */,
-				1F611CBD1FF0E8D500E34379 /* bt_download@3x.png in Resources */,
 				F68310DD1FB30AAE005AC578 /* good_red_select.png in Resources */,
 				1F922E771FCD342000A7614B /* ic_dns_black@2x.png in Resources */,
 				F68311001FB30AAE005AC578 /* ic_mode_edit_18pt.png in Resources */,
@@ -4256,7 +4106,6 @@
 				1F114A211FF33463007F6D15 /* bt_switch@3x.png in Resources */,
 				1FAD744C1FD0EDC700A5D880 /* wechat_icon@3x.png in Resources */,
 				F6830F141FB300D2005AC578 /* FMLeftMenu.xib in Resources */,
-				1F178ED41FECD492001650E5 /* ic_content_paste.png in Resources */,
 				1F178EDA1FED188F001650E5 /* WBServiceSettingViewController.xib in Resources */,
 				1FAD74711FD0EDED00A5D880 /* mov_icon@3x.png in Resources */,
 				1FD7A0ED1FB05A45000D4CB3 /* back@3x.png in Resources */,
@@ -4280,7 +4129,6 @@
 				F68310AA1FB30AAE005AC578 /* comment@3x.png in Resources */,
 				F68311941FB30AAF005AC578 /* small_0@3x.png in Resources */,
 				1FD7A0EE1FB05A45000D4CB3 /* back_gray@2x.png in Resources */,
-				1FCFB4181FEBD8B500BD3375 /* WBTorrentAskToUploadAlertViewController.storyboard in Resources */,
 				F68311111FB30AAE005AC578 /* info@2x.png in Resources */,
 				F68310971FB30AAE005AC578 /* bg_pic@2x.jpg in Resources */,
 				1F922E811FCD3FC100A7614B /* ic_chevron_right@3x.png in Resources */,
@@ -4316,10 +4164,8 @@
 				F683117E1FB30AAF005AC578 /* select@2x.png in Resources */,
 				F68311CA1FB30AAF005AC578 /* send-_select.png in Resources */,
 				F68310BA1FB30AAE005AC578 /* del_user@3x.png in Resources */,
-				1F178ED51FECD492001650E5 /* ic_content_paste@2x.png in Resources */,
 				F68310861FB30AAE005AC578 /* all@3x.png in Resources */,
 				F68310961FB30AAE005AC578 /* bg_pic.jpg in Resources */,
-				1F178ED31FECD492001650E5 /* ic_content_paste@3x.png in Resources */,
 				1F922E881FCD426000A7614B /* ic_dns@3x.png in Resources */,
 				F68311991FB30AAF005AC578 /* small_3@2x.png in Resources */,
 				F68310841FB30AAE005AC578 /* all.png in Resources */,
@@ -4346,7 +4192,6 @@
 				1FFADF8B1FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.xib in Resources */,
 				1FD7A1071FB05A51000D4CB3 /* PLUS@2x.png in Resources */,
 				F68310E71FB30AAE005AC578 /* hard_select@2x.png in Resources */,
-				1FCFB40B1FEA695300BD3375 /* WBTorrentDownloadingTableViewCell.xib in Resources */,
 				F68310981FB30AAE005AC578 /* bg_pic@3x.jpg in Resources */,
 				F68311C01FB30AAF005AC578 /* album_praise@3x.png in Resources */,
 				F68311311FB30AAE005AC578 /* menu_select.png in Resources */,
@@ -4365,7 +4210,6 @@
 				F683107E1FB30AAE005AC578 /* add_album@2x.png in Resources */,
 				F68311BC1FB30AAF005AC578 /* album_comment@2x.png in Resources */,
 				F683113E1FB30AAE005AC578 /* no_file.png in Resources */,
-				1F611CC01FF0E8D500E34379 /* bt@2x.png in Resources */,
 				F68310EE1FB30AAE005AC578 /* help@3x.png in Resources */,
 				1F611CAE1FF0CF2000E34379 /* WBSettingSelectRolesViewController.storyboard in Resources */,
 				F68310F71FB30AAE005AC578 /* ic_delete.png in Resources */,
@@ -4446,7 +4290,6 @@
 				F68311471FB30AAE005AC578 /* person.png in Resources */,
 				F68311C31FB30AAF005AC578 /* circle@3x.png in Resources */,
 				1F114A3E1FF368FF007F6D15 /* no.png in Resources */,
-				1F611CB81FF0E8D500E34379 /* magnet@3x.png in Resources */,
 				F68311A11FB30AAF005AC578 /* storage_select.png in Resources */,
 				F68311101FB30AAE005AC578 /* info.png in Resources */,
 				F68311481FB30AAE005AC578 /* person@2x.png in Resources */,
@@ -4486,7 +4329,6 @@
 				C139DFCE1FC7DFC7007098E5 /* ic_pause@3x.png in Resources */,
 				F683118A1FB30AAF005AC578 /* share_red@2x.png in Resources */,
 				1F922F071FCFB40600A7614B /* ic_build@2x.png in Resources */,
-				1FCFB3F01FEA173C00BD3375 /* WBTorrentDownloadViewController.xib in Resources */,
 				F68311DD1FB31369005AC578 /* LCActionSheet.bundle in Resources */,
 				F68311901FB30AAF005AC578 /* share_select@2x.png in Resources */,
 				F683110B1FB30AAE005AC578 /* icon_del@3x.png in Resources */,
@@ -4515,7 +4357,6 @@
 				F68311121FB30AAE005AC578 /* info@3x.png in Resources */,
 				F68310A21FB30AAE005AC578 /* check_circle.png in Resources */,
 				F68310E61FB30AAE005AC578 /* hard_select.png in Resources */,
-				1F611CBB1FF0E8D500E34379 /* bt_download@2x.png in Resources */,
 				F68311631FB30AAE005AC578 /* photo_select@2x.png in Resources */,
 				F68311491FB30AAE005AC578 /* person@3x.png in Resources */,
 				F68311391FB30AAE005AC578 /* more_highlight@3x.png in Resources */,
@@ -4567,8 +4408,6 @@
 				F6830F031FB2FF8C005AC578 /* ImageHeaderView.xib in Resources */,
 				C183CDDE1FCE8D84002E29CD /* FMChangePwdVC.xib in Resources */,
 				1F58DEE61FDFDC6B00768DD7 /* disk_settings.png in Resources */,
-				1F611CBE1FF0E8D500E34379 /* bt@3x.png in Resources */,
-				1F611CBF1FF0E8D500E34379 /* bt_download.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4710,7 +4549,6 @@
 				1F922EA41FCD4D5D00A7614B /* WBStationManageTimeViewController.m in Sources */,
 				1F922E7C1FCD3E1400A7614B /* WBStationManageRootTableViewCell.m in Sources */,
 				1F114A6E1FF4C8A1007F6D15 /* WBInstallUpgradeAPI.m in Sources */,
-				1FCFB3E51FEA062100BD3375 /* WBDownloadTorrentAPI.m in Sources */,
 				C139DFBE1FC6B9F3007098E5 /* FMMediaRamdomKeyAPI.m in Sources */,
 				1FF3AD541FD63F5C00E1E536 /* WBLoginViewController.m in Sources */,
 				1F5D21831FBC3DB0006C65AA /* FilesModel.m in Sources */,
@@ -4727,7 +4565,6 @@
 				1F4D75AD1FAC4BB800E6516C /* WBLocalAsset+CoreDataProperties.m in Sources */,
 				F67D64061FAC7D3600E23D16 /* JYAsset.m in Sources */,
 				F67D64081FAC7D3600E23D16 /* PHFetchResult+JYEXT.m in Sources */,
-				1FCFB3EF1FEA173C00BD3375 /* WBTorrentDownloadViewController.m in Sources */,
 				1F2BE3011FBC129700776DB3 /* FilesNextViewController.m in Sources */,
 				F671F1031FB4B3B50051DF93 /* floatTableViewCell.m in Sources */,
 				1F114A2A1FF3457B007F6D15 /* WBMaintenanceTableViewCell.m in Sources */,
@@ -4781,19 +4618,15 @@
 				F6830F181FB300D2005AC578 /* FMLeftUserCell.m in Sources */,
 				C183CE041FD006A9002E29CD /* WBCloudLocalTokenAPI.m in Sources */,
 				1FCFB3E11FE8B43700BD3375 /* RadioButton.m in Sources */,
-				1FCFB40A1FEA695300BD3375 /* WBTorrentDownloadingTableViewCell.m in Sources */,
 				F6830EB51FB2FAE0005AC578 /* RDVTabBarItem.m in Sources */,
 				F6830EB31FB2FAE0005AC578 /* RDVTabBar.m in Sources */,
 				C183CDE21FCE8D84002E29CD /* FMUserEditVC.m in Sources */,
 				1FEFCDDA1FE3AD2000DEC866 /* WBInitDiskSelectedTableViewCell.m in Sources */,
-				1FCFB4031FEA617200BD3375 /* WBGetDownloadAPI.m in Sources */,
-				1FCFB4061FEA647800BD3375 /* WBGetDownloadModel.m in Sources */,
 				1F4D75A41FAC4BB800E6516C /* UserModel.m in Sources */,
 				1FEFCDE61FE7914900DEC866 /* WBInitChangeDiskTypeAlertViewController.m in Sources */,
 				1FC2AFF81FC6684100E8C9DE /* WBgetStationInfoAPI.m in Sources */,
 				1F922EFB1FCEC3C800A7614B /* WBReNameAPI.m in Sources */,
 				1F5D21801FBC3CC6006C65AA /* WBBaseModel.m in Sources */,
-				1F178EBC1FEBF033001650E5 /* WBSettingSelectBTAlertViewController.m in Sources */,
 				1F4D75B41FAC4BB800E6516C /* AppServices.m in Sources */,
 				F6830EE61FB2FEC4005AC578 /* FMSetting.m in Sources */,
 				1F4D75AB1FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.m in Sources */,
@@ -4805,15 +4638,12 @@
 				1F4D759C1FAC4BB800E6516C /* UIButton+EnlargeEdge.m in Sources */,
 				1FC2AFF21FC52B4800E8C9DE /* CloudLoginModel.m in Sources */,
 				1F4D75CB1FAC5FF900E6516C /* FMCloudUserTableViewCell.m in Sources */,
-				1F178EC21FECABAE001650E5 /* WBTorrentDownloadSwitchAPI.m in Sources */,
 				1F922EB51FCD758C00A7614B /* WBStationManageNetInterfacesModel.m in Sources */,
 				F675614D1FB3428F00E3277F /* UIImage+MFTint.m in Sources */,
 				1F5D217D1FBC351A006C65AA /* FilesDataSourceManager.m in Sources */,
 				1FAD74421FD01F6300A5D880 /* CSFileUploadManager.m in Sources */,
-				1FCFB4161FEBD85B00BD3375 /* WBTorrentAskToUploadAlertViewController.m in Sources */,
 				F6D8CC441FB448B800673824 /* UIImage+imageWithColor.m in Sources */,
 				1F3F99801FB0312300D6CC64 /* LocalDownloadViewController.m in Sources */,
-				1FCFB3EB1FEA15DE00BD3375 /* WBTorrentDownloadHelper.m in Sources */,
 				F6830F131FB300D2005AC578 /* FMLeftMenu.m in Sources */,
 				1F114A571FF48AB8007F6D15 /* WBUpgradeAppfiViewController.m in Sources */,
 				F68311DF1FB31369005AC578 /* LCActionSheetCell.m in Sources */,
@@ -4857,7 +4687,6 @@
 				1F178ED91FED188F001650E5 /* WBServiceSettingViewController.m in Sources */,
 				F675614C1FB3428F00E3277F /* UIFont+MaterialTextField.m in Sources */,
 				F6D8CC301FB3F91600673824 /* FMLeftManager.m in Sources */,
-				1FCFB4131FEB553200BD3375 /* WBTorrentDownloadActionAPI.m in Sources */,
 				F67D64401FAC7E5600E23D16 /* TYDecorationSectionLayout.m in Sources */,
 				F67D64261FAC7D9A00E23D16 /* UIScrollView+IndicatorExt.m in Sources */,
 				71A3D6671FB57AC30002B8B1 /* JYBaseRequest.m in Sources */,
@@ -4869,12 +4698,10 @@
 				F6D8CC391FB402CB00673824 /* FMBaseViewController.m in Sources */,
 				F67D643F1FAC7E5600E23D16 /* JYProgressHUD.m in Sources */,
 				71A3D6681FB57AC30002B8B1 /* JYNetEngine.m in Sources */,
-				1FCFB3FB1FEA45B200BD3375 /* WBTorrentMagnetAlertViewController.m in Sources */,
 				1F4D75B11FAC4BB800E6516C /* UserServices.m in Sources */,
 				C183CDF41FCFD859002E29CD /* NSObject+SXRuntime.m in Sources */,
 				F6830EC41FB2FD1D005AC578 /* FMUserLoginHeaderView.m in Sources */,
 				F6D8CC3A1FB402CB00673824 /* FMBaseFirstVC.m in Sources */,
-				1FCFB3E81FEA076A00BD3375 /* WBDownloadMagnetAPI.m in Sources */,
 				1F114A321FF34D9B007F6D15 /* WBMaintenanceStorageInfoTableViewCell.m in Sources */,
 				1F4D75D01FAC604100E6516C /* LoginTableViewCell.m in Sources */,
 				F679336D1FB00D9B00C9A7DC /* WBUser+CoreDataClass.m in Sources */,
@@ -4926,7 +4753,6 @@
 				1F114A111FF2558F007F6D15 /* WBMaintenanceViewController.m in Sources */,
 				F67D643E1FAC7E5600E23D16 /* JYCollectionViewCell.m in Sources */,
 				F6830EF11FB2FEF3005AC578 /* FMUserSetting.m in Sources */,
-				1FCFB40F1FEA696B00BD3375 /* WBTorrentDownloadedTableViewCell.m in Sources */,
 				1F4D75B21FAC4BB800E6516C /* DBServices.m in Sources */,
 				1FAD741F1FCFE67F00A5D880 /* WBTicketsUserAPI.m in Sources */,
 				1F3F99891FB0353F00D6CC64 /* LocalDownloadTableViewCell.m in Sources */,

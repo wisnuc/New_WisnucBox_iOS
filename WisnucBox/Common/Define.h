@@ -40,12 +40,12 @@
 
 #define BackUpAssetDirName @"上传的照片"
 #define BackUpFilesDirName @"上传的文件"
-#define BackUpTorrentDirName @"Download"
 
-#define kTorrentType @"torrentType"
+
+
 #define kSambaSwich @"SambaSwich"
 #define kminiDLNASwich @"miniDLNASwich"
-#define kBTSwich @"BTSwich"
+
 
 #define KUploadFilesDocument [NSString stringWithFormat:@"Upload/%@",WB_UserService.currentUser.uuid]
 
@@ -75,7 +75,7 @@
 #define kStationManageRebootShutdownString WBLocalizedString(@"reboot_shutdown", nil)
 
 #define LeftMenuTransmissionManageString WBLocalizedString(@"transmission_manage", nil)
-#define LeftMenuTorrentDownloadManageString WBLocalizedString(@"download_manage", nil)
+
 
 #define LeftMenuSettingString WBLocalizedString(@"setting", nil)
 #define LeftMenuEquipmentManageString WBLocalizedString(@"equipment_manage", nil)

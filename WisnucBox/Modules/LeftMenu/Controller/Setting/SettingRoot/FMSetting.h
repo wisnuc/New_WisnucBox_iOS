@@ -7,18 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WBTorrentDownloadSwitchAPI.h"
 #import "WBFeaturesDlnaStatusAPI.h"
 #import "WBFeaturesSambaStatusAPI.h"
 #import "WBFeaturesChangeAPI.h"
-#import "WBSettingSelectBTAlertViewController.h"
-typedef enum
-{
-    TorrentTypeAskAllTime = 0,
-    TorrentTypeCreatNewTask,
-    TorrentTypeUpload
-    
-} TorrentType;
 
 @interface FMSetting : FABaseVC
 @property (weak, nonatomic) IBOutlet UITableView *settingTableView;
