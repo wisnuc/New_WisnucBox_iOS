@@ -45,6 +45,7 @@
     [super viewDidLoad];
     self.title = @"固件升级";
     _isFailed = NO;
+    [SXLoadingView showProgressHUD:@"检查更新中..."];
     [self getData];
     [self.view addSubview:self.firmwareNowleftImage];
     [self.view addSubview:self.firmwareNowTitleLabel];

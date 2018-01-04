@@ -61,10 +61,10 @@
      _backUpProgressView = [[UIProgressView alloc]init];
     [self addSubview:_backUpProgressView];
     [_backUpProgressView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_backupLabel.mas_right).offset(6);
+        make.left.equalTo(_backupLabel.mas_right).offset(16);
         make.height.equalTo(@2);
         make.centerY.equalTo(_backupLabel.mas_centerY);
-        make.right.equalTo(_progressLabel.mas_left).offset(-6);
+        make.right.equalTo(_progressLabel.mas_left).offset(-16);
     }];
     _backUpProgressView.hidden = YES;
     

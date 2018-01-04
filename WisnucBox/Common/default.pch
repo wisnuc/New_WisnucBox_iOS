@@ -38,6 +38,9 @@
 #import <MaterialComponents/MaterialProgressView.h>
 #import <MaterialComponents/MaterialActivityIndicator.h>
 #import <MaterialComponents/MDCPalettes.h>
+#import <MaterialComponents/MDCNavigationBar.h>
+#import <MaterialComponents/MDCAppBarContainerViewController.h>
+#import <MaterialComponents/MDCAppBar.h>
 #import "RadioButton.h"
 
 //Base

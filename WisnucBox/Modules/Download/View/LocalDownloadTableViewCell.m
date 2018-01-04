@@ -42,5 +42,19 @@
     // Configure the view for the selected state
 }
 
-
+- (void)drawRect:(CGRect)rect
+{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [UIColor clearColor].CGColor);
+    CGContextFillRect(context, rect);
+    
+//    //上分割线，
+//    CGContextSetStrokeColorWithColor(context,LINECOLOR.CGColor);
+//    CGContextStrokeRect(context, CGRectMake(76, -1, rect.size.width - 76, 1));
+    
+    //下分割线
+    CGContextSetStrokeColorWithColor(context, LINECOLOR.CGColor);
+    CGContextStrokeRect(context, CGRectMake(76, rect.size.height, rect.size.width - 76, 1));
+}
 @end

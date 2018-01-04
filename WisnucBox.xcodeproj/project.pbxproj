@@ -120,6 +120,9 @@
 		1F5D21831FBC3DB0006C65AA /* FilesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D21821FBC3DB0006C65AA /* FilesModel.m */; };
 		1F611CAC1FF0CEFD00E34379 /* WBSettingSelectRolesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F611CAB1FF0CEFD00E34379 /* WBSettingSelectRolesViewController.m */; };
 		1F611CAE1FF0CF2000E34379 /* WBSettingSelectRolesViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F611CAD1FF0CF2000E34379 /* WBSettingSelectRolesViewController.storyboard */; };
+		1F6E547D1FFE1690009E38AE /* weChat_add@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6E547A1FFE168E009E38AE /* weChat_add@3x.png */; };
+		1F6E547E1FFE1690009E38AE /* weChat_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6E547B1FFE168F009E38AE /* weChat_add.png */; };
+		1F6E547F1FFE1690009E38AE /* weChat_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6E547C1FFE168F009E38AE /* weChat_add@2x.png */; };
 		1F8EAF241FB9A7C100FEED19 /* LocalDownloadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F8EAF211FB9A7C000FEED19 /* LocalDownloadingTableViewCell.xib */; };
 		1F8EAF251FB9A7C100FEED19 /* LocalDownloadingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EAF221FB9A7C000FEED19 /* LocalDownloadingTableViewCell.m */; };
 		1F8EAF291FBACD5000FEED19 /* FLFIlesHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EAF281FBACD5000FEED19 /* FLFIlesHelper.m */; };
@@ -237,9 +240,6 @@
 		1FAD74881FD15EBE00A5D880 /* upload_download.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD74851FD15EBA00A5D880 /* upload_download.png */; };
 		1FAD74891FD15EBE00A5D880 /* upload_download@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD74861FD15EBB00A5D880 /* upload_download@3x.png */; };
 		1FAD748A1FD15EBE00A5D880 /* upload_download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD74871FD15EBD00A5D880 /* upload_download@2x.png */; };
-		1FAD748E1FD15F3300A5D880 /* weChat_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD748B1FD15F3100A5D880 /* weChat_add@2x.png */; };
-		1FAD748F1FD15F3300A5D880 /* weChat_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD748C1FD15F3200A5D880 /* weChat_add.png */; };
-		1FAD74901FD15F3300A5D880 /* weChat_add@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD748D1FD15F3300A5D880 /* weChat_add@3x.png */; };
 		1FAD74941FD2CECB00A5D880 /* gif_photo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD74911FD2CEC900A5D880 /* gif_photo.png */; };
 		1FAD74951FD2CECB00A5D880 /* gif_photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD74921FD2CECA00A5D880 /* gif_photo@2x.png */; };
 		1FAD74961FD2CECB00A5D880 /* gif_photo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FAD74931FD2CECA00A5D880 /* gif_photo@3x.png */; };
@@ -964,6 +964,9 @@
 		1F611CAA1FF0CEFD00E34379 /* WBSettingSelectRolesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBSettingSelectRolesViewController.h; sourceTree = "<group>"; };
 		1F611CAB1FF0CEFD00E34379 /* WBSettingSelectRolesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBSettingSelectRolesViewController.m; sourceTree = "<group>"; };
 		1F611CAD1FF0CF2000E34379 /* WBSettingSelectRolesViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WBSettingSelectRolesViewController.storyboard; sourceTree = "<group>"; };
+		1F6E547A1FFE168E009E38AE /* weChat_add@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChat_add@3x.png"; sourceTree = "<group>"; };
+		1F6E547B1FFE168F009E38AE /* weChat_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weChat_add.png; sourceTree = "<group>"; };
+		1F6E547C1FFE168F009E38AE /* weChat_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChat_add@2x.png"; sourceTree = "<group>"; };
 		1F8EAF211FB9A7C000FEED19 /* LocalDownloadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalDownloadingTableViewCell.xib; sourceTree = "<group>"; };
 		1F8EAF221FB9A7C000FEED19 /* LocalDownloadingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalDownloadingTableViewCell.m; sourceTree = "<group>"; };
 		1F8EAF231FB9A7C000FEED19 /* LocalDownloadingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalDownloadingTableViewCell.h; sourceTree = "<group>"; };
@@ -1120,9 +1123,6 @@
 		1FAD74851FD15EBA00A5D880 /* upload_download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upload_download.png; sourceTree = "<group>"; };
 		1FAD74861FD15EBB00A5D880 /* upload_download@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "upload_download@3x.png"; sourceTree = "<group>"; };
 		1FAD74871FD15EBD00A5D880 /* upload_download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "upload_download@2x.png"; sourceTree = "<group>"; };
-		1FAD748B1FD15F3100A5D880 /* weChat_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChat_add@2x.png"; sourceTree = "<group>"; };
-		1FAD748C1FD15F3200A5D880 /* weChat_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weChat_add.png; sourceTree = "<group>"; };
-		1FAD748D1FD15F3300A5D880 /* weChat_add@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChat_add@3x.png"; sourceTree = "<group>"; };
 		1FAD74911FD2CEC900A5D880 /* gif_photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gif_photo.png; sourceTree = "<group>"; };
 		1FAD74921FD2CECA00A5D880 /* gif_photo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gif_photo@2x.png"; sourceTree = "<group>"; };
 		1FAD74931FD2CECA00A5D880 /* gif_photo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gif_photo@3x.png"; sourceTree = "<group>"; };
@@ -3356,12 +3356,12 @@
 		F6830F1F1FB30AAD005AC578 /* LeftMenu */ = {
 			isa = PBXGroup;
 			children = (
+				1F6E547B1FFE168F009E38AE /* weChat_add.png */,
+				1F6E547C1FFE168F009E38AE /* weChat_add@2x.png */,
+				1F6E547A1FFE168E009E38AE /* weChat_add@3x.png */,
 				1F114A711FF4D223007F6D15 /* update_done.png */,
 				1F114A6F1FF4D222007F6D15 /* update_done@2x.png */,
 				1F114A701FF4D222007F6D15 /* update_done@3x.png */,
-				1FAD748C1FD15F3200A5D880 /* weChat_add.png */,
-				1FAD748B1FD15F3100A5D880 /* weChat_add@2x.png */,
-				1FAD748D1FD15F3300A5D880 /* weChat_add@3x.png */,
 				1FAD74851FD15EBA00A5D880 /* upload_download.png */,
 				1FAD74871FD15EBD00A5D880 /* upload_download@2x.png */,
 				1FAD74861FD15EBB00A5D880 /* upload_download@3x.png */,
@@ -3989,7 +3989,6 @@
 				1FFAE3911FE141C90054C393 /* disk_disable.png in Resources */,
 				F68311751FB30AAE005AC578 /* recommend@2x.png in Resources */,
 				1FD7A0EA1FB05A45000D4CB3 /* back@2x.png in Resources */,
-				1FAD748E1FD15F3300A5D880 /* weChat_add@2x.png in Resources */,
 				F683117B1FB30AAF005AC578 /* Roboto-Medium.ttf in Resources */,
 				1FAD746D1FD0EDED00A5D880 /* jpg_icon.png in Resources */,
 				1F0898DC1FB05FF900B86723 /* eye_off.png in Resources */,
@@ -4004,7 +4003,6 @@
 				F68310931FB30AAE005AC578 /* back_grayhighlight.png in Resources */,
 				F68311151FB30AAE005AC578 /* info_user@3x.png in Resources */,
 				F68310A41FB30AAE005AC578 /* check_circle@3x.png in Resources */,
-				1FAD748F1FD15F3300A5D880 /* weChat_add.png in Resources */,
 				1F114A221FF33463007F6D15 /* dlna_switch@2x.png in Resources */,
 				F683107D1FB30AAE005AC578 /* add_album.png in Resources */,
 				F68311821FB30AAF005AC578 /* set@3x.png in Resources */,
@@ -4055,12 +4053,12 @@
 				1F922E9A1FCD42F900A7614B /* ic_power_settings@3x.png in Resources */,
 				F6830EC61FB2FD1D005AC578 /* FMUsersLoginMangeCell.xib in Resources */,
 				1FAD74701FD0EDED00A5D880 /* mov_icon@2x.png in Resources */,
+				1F6E547E1FFE1690009E38AE /* weChat_add.png in Resources */,
 				1F922E6A1FC8833100A7614B /* share_files@3x.png in Resources */,
 				F68311441FB30AAE005AC578 /* open_in.png in Resources */,
 				F68311BF1FB30AAF005AC578 /* album_praise@2x.png in Resources */,
 				F683111A1FB30AAE005AC578 /* local@2x.png in Resources */,
 				1F114A401FF368FF007F6D15 /* yes.png in Resources */,
-				1FAD74901FD15F3300A5D880 /* weChat_add@3x.png in Resources */,
 				F683116F1FB30AAE005AC578 /* praise@2x.png in Resources */,
 				F68311861FB30AAF005AC578 /* share_photo.png in Resources */,
 				F68311501FB30AAE005AC578 /* photo-album.png in Resources */,
@@ -4184,6 +4182,7 @@
 				F683107A1FB30AAE005AC578 /* About.png in Resources */,
 				F68310D61FB30AAE005AC578 /* folder_icon@3x.png in Resources */,
 				1FCFB3F61FEA425400BD3375 /* ic_add_white@3x.png in Resources */,
+				1F6E547D1FFE1690009E38AE /* weChat_add@3x.png in Resources */,
 				F68311601FB30AAE005AC578 /* photo_plus_open@2x.png in Resources */,
 				1FAD74841FD1537400A5D880 /* invite_miniProgram.png in Resources */,
 				F68310AE1FB30AAE005AC578 /* date_bg.png in Resources */,
@@ -4363,6 +4362,7 @@
 				F68310DF1FB30AAE005AC578 /* good_red_select@3x.png in Resources */,
 				1F3F998A1FB0353F00D6CC64 /* LocalDownloadTableViewCell.xib in Resources */,
 				1F922E8D1FCD429900A7614B /* ic_person_add.png in Resources */,
+				1F6E547F1FFE1690009E38AE /* weChat_add@2x.png in Resources */,
 				F68311AC1FB30AAF005AC578 /* unselected.png in Resources */,
 				1F922E751FCD342000A7614B /* ic_dns_black@3x.png in Resources */,
 				F683111F1FB30AAE005AC578 /* lock_line.png in Resources */,

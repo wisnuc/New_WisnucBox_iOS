@@ -34,7 +34,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0DU-HI-tYw" userLabel="timeLabel">
-                        <rect key="frame" x="76" y="40" width="217" height="17"/>
+                        <rect key="frame" x="76" y="43" width="217" height="14"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" white="0.67000000000000004" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -62,7 +62,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mX6-gg-H8j">
-                        <rect key="frame" x="327" y="40" width="23" height="17"/>
+                        <rect key="frame" x="327" y="43" width="23" height="14"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="23" id="o3Y-D8-cfm"/>
                         </constraints>
@@ -76,7 +76,7 @@
                     <constraint firstItem="7BD-P2-wb5" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="AoF-9T-ok6"/>
                     <constraint firstItem="tbT-cl-mAk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="CgE-ae-a2b"/>
                     <constraint firstAttribute="trailing" secondItem="mX6-gg-H8j" secondAttribute="trailing" constant="38" id="Esq-MN-aPr"/>
-                    <constraint firstItem="0DU-HI-tYw" firstAttribute="top" secondItem="DyJ-oP-YOB" secondAttribute="bottom" constant="5" id="FL4-0f-T6Y"/>
+                    <constraint firstItem="0DU-HI-tYw" firstAttribute="top" secondItem="DyJ-oP-YOB" secondAttribute="bottom" constant="8" id="FL4-0f-T6Y"/>
                     <constraint firstAttribute="trailingMargin" secondItem="DyJ-oP-YOB" secondAttribute="trailing" constant="45" id="NWx-Iw-wCA"/>
                     <constraint firstItem="mX6-gg-H8j" firstAttribute="centerY" secondItem="0DU-HI-tYw" secondAttribute="centerY" id="QaG-2e-Oqm"/>
                     <constraint firstItem="0DU-HI-tYw" firstAttribute="leading" secondItem="DyJ-oP-YOB" secondAttribute="leading" id="Zbx-yX-3Cd"/>

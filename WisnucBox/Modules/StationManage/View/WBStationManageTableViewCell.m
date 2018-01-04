@@ -30,7 +30,7 @@
 
 - (UILabel *)detailLabel{
     if (!_detailLabel) {
-        _detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.contentView.frame) - 13 - 4, self.contentView.bounds.size.width, 13)];
+        _detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.normalLabel.frame) + 8, self.contentView.bounds.size.width, 13)];
         _detailLabel.textColor = [UIColor lightGrayColor];
         _detailLabel.font = [UIFont systemFontOfSize:12];
         _detailLabel.textAlignment = NSTextAlignmentLeft;
