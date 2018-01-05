@@ -36,7 +36,6 @@
 
 - (void)getData{
     [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
-    
     [[WBFeaturesDlnaStatusAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
        NSDictionary * responseDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
         NSString *status = responseDic[@"status"];
@@ -49,9 +48,10 @@
         
         _miniDlnaSwitchOn = swichOn;
         [self.tableView reloadData];
+        [SXLoadingView hideProgressHUD];
         
     } failure:^(__kindof JYBaseRequest *request) {
-        
+        [SXLoadingView hideProgressHUD];
     }];
     
     [[WBFeaturesSambaStatusAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
@@ -63,11 +63,11 @@
         }else{
             swichOn = NO;
         }
-        
+        [SXLoadingView hideProgressHUD];
         _sambaSwitchOn = swichOn;
         [self.tableView reloadData];
     } failure:^(__kindof JYBaseRequest *request) {
-        
+        [SXLoadingView hideProgressHUD];
     }];
     
 }
