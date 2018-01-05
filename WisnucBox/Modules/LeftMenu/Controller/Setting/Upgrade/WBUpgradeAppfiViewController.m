@@ -93,6 +93,23 @@
     }];
 }
 
+- (void)getStateData{
+    @weaky(self)
+    NSString *urlString = [NSString stringWithFormat:@"%@",WB_UserService.currentUser.sn_address];
+    NSLog(@"%@",urlString);
+    [[WBGetUpgradStateAPI apiWithURLPath:urlString] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+//        NSLog(@"%@",request.responseJsonObject);
+        WBGetUpgradStateModel *model = [WBGetUpgradStateModel yy_modelWithJSON:request.responseJsonObject];
+        if ([model.fetch.state isEqualToString:@"Pending"]) {
+            [weak_self updateDataWithModel:model];
+            NSLog(@"%@",model.appifi.tagName);
+        }
+    } failure:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.error);
+    
+    }];
+}
+
 - (void)updateDataWithModel:(WBGetUpgradStateModel *)model{
     _firmwareNowTitleLabel.text = [NSString stringWithFormat:@"当前使用的固件版本:%@",model.appifi.tagName];
     if ([model.appifi.state isEqualToString:@"Started"]) {
@@ -342,7 +359,7 @@
 
 - (NSTimer *)timer{
     if (!_timer) {
-        _timer =  [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(getData) userInfo:nil repeats:YES];
+        _timer =  [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(getStateData) userInfo:nil repeats:YES];
     }
     return _timer;
 }

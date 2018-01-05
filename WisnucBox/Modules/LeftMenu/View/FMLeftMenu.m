@@ -41,6 +41,7 @@
     _userBtn1.layer.cornerRadius = 20;
     _userBtn2.layer.cornerRadius = 20;
     
+    
     self.userHeaderIV.userInteractionEnabled = YES;
     [self.userHeaderIV addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapHeader:)]];
 //    _backupLabel.text = WBLocalizedString(@"backup_closed", nil);
@@ -86,6 +87,16 @@
     }else{
         self.nameLabel.text = _userInfo.userName;
         self.userHeaderIV.image = [UIImage imageForName:self.nameLabel.text size:self.userHeaderIV.bounds.size];
+    }
+    
+    [self.dropDownBtn setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
+    
+    if (WB_UserService.currentUser.isCloudLogin) {
+        self.cloudImageView.hidden = NO;
+        [self.dropDownBtn setHidden:YES];
+    }else{
+        self.cloudImageView.hidden = YES;
+        [self.dropDownBtn setHidden:NO];
     }
 
 //    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];

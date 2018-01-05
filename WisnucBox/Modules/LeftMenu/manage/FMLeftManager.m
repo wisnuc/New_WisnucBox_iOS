@@ -16,7 +16,8 @@
 #import "WBStationManageRootViewController.h"
 #import "FMUserEditVC.h"
 #import "WBInviteWechatViewController.h"
-
+#import "FMCheckManager.h"
+#import "GCDAsyncSocket.h"
 
 @interface FMLeftManager ()<FMLeftMenuDelegate>
 
@@ -121,88 +122,57 @@
 
 //切换 账户 响应
 -(void)LeftMenuViewClickUserTable:(WBUser *)info{
+    [SXLoadingView showProgressHUD:@"正在切换"];
     [self _hiddenMenu];
     
 #warning user change login
-//    [SXLoadingView showProgressHUD:@"正在切换"];
-//    
 //    @weaky(MyAppDelegate);
-//    [[FMCheckManager shareCheckManager] beginSearchingWithBlock:^(NSArray *discoveredServers) {
-//        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-//            BOOL canFindDevice = NO;
-//            NSLog(@"😁😁😁😁%@",discoveredServers);
-//            for (NSNetService * service in discoveredServers) {
-//                if ([service.hostName isEqualToString:info.bonjour_name]) {
-//                    canFindDevice = YES;
-//                    NSString * addressIP = [FMCheckManager serverIPFormService:service];
-//                    BOOL isAlive = [FMCheckManager testServerWithIP:addressIP andToken:info.jwt_token];
-//                    if (isAlive) { //如果可以跳转
-//                        
-//                        [SXLoadingView hideProgressHUD];
-//                        
-//                        //切换操作
-//                        [FMDBControl reloadTables];
-//                        [FMDBControl asyncLoadPhotoToDB];
-//                        
-//                        //清除deviceID
-//                        FMConfigInstance.deviceUUID = info.deviceId;//清除deviceUUID
-//                        FMConfigInstance.userToken = info.jwt_token;
-//                        FMConfigInstance.userUUID = info.uuid;
-//                        
-//                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:DRIVE_UUID_STR];
-//                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:DIR_UUID_STR];
-//                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:ENTRY_UUID_STR];
-//                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:PHOTO_ENTRY_UUID_STR];
-//                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"uploadImageArr"];
-//                        
-//                        //                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:UUID_STR];
-//                        
-//                        JYRequestConfig * config = [JYRequestConfig sharedConfig];
-//                        config.baseURL = [NSString stringWithFormat:@"%@:3000/",addressIP];
-//                        //重置数据
-//                        [weak_MyAppDelegate resetDatasource];
-//                        
-//                        if(IsNilString(USER_SHOULD_SYNC_PHOTO) || IsEquallString(USER_SHOULD_SYNC_PHOTO, info.uuid)){
-//                            //设置   可备份用户为
-//                            [[NSUserDefaults standardUserDefaults] setObject:info.uuid forKey:USER_SHOULD_SYNC_PHOTO_STR];
-//                            [[NSUserDefaults standardUserDefaults] synchronize];
-//                            //重启photoSyncer
-//                            [PhotoManager shareManager].canUpload = YES;
-//                        }else{
-//                            [PhotoManager shareManager].canUpload = NO;//停止上传
-//                        }
-//                        //组装UI
-//                        
-//                        self.window.rootViewController = nil;
-//                        [self.window resignKeyWindow];
-//                        [self.window removeFromSuperview];
-//                        
-//                        weak_MyAppDelegate.sharesTabBar = [[RDVTabBarController alloc]init];
-//                        [weak_MyAppDelegate initWithTabBar:MyAppDelegate.sharesTabBar];
-//                        [weak_MyAppDelegate.sharesTabBar setSelectedIndex:0];
-//                        weak_MyAppDelegate.filesTabBar = nil;
-//                        [weak_MyAppDelegate reloadLeftMenuIsAdmin:NO];
-//                        [weak_MyAppDelegate asynAnyThings];
-//                        dispatch_async(dispatch_get_main_queue(), ^{
-//                            
-//                            self.window.rootViewController = weak_MyAppDelegate.sharesTabBar;
-//                            [self.window makeKeyAndVisible];
-//                            //                            [[UIApplication sharedApplication].keyWindow makeKeyAndVisible];
-//                        });
-//                    }else{
-//                        [SXLoadingView showAlertHUD:@"切换失败，设备当前状态未知，请检查" duration:1];
-//                        //                        [self skipToLogin];
-//                    }
-//                    break;
-//                }
-//            }
-//            [SXLoadingView hideProgressHUD];
-//            if (!canFindDevice) {
-//                [SXLoadingView showAlertHUD:@"切换失败，可能设备不在附近" duration:1];
-//                //                [self skipToLogin];
-//            }
-//        });
-//    }];
+    [[FMCheckManager shareCheckManager] beginSearchingWithBlock:^(NSArray *discoveredServers) {
+        
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            BOOL canFindDevice = NO;
+            NSLog(@"😁😁😁😁%@",discoveredServers);
+            for (NSNetService * service in discoveredServers) {
+                for (NSData * address in service.addresses) {
+                    NSString* addressString = [GCDAsyncSocket hostFromAddress:address];
+                    if ([addressString isEqualToString:info.sn_address]) {
+                        canFindDevice = YES;
+                        NSString * addressIP = [FMCheckManager serverIPFormService:service];
+                        BOOL isAlive = [FMCheckManager testServerWithIP:addressIP andToken:info.localToken];
+                        if (isAlive) { //如果可以跳转
+                            
+                            [SXLoadingView hideProgressHUD];
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                
+                            [WB_UserService logoutUser];
+                            [WB_AppServices rebulid];
+                            [WB_UserService setCurrentUser:info];
+                            [WB_UserService synchronizedCurrentUser];
+                            
+                           
+                                AppDelegate * app = (AppDelegate *)[UIApplication sharedApplication].delegate ;
+                                app.window.rootViewController = nil;
+                                [app.window resignKeyWindow];
+                                [app.window removeFromSuperview];
+                                [MyAppDelegate initRootVC];
+                                 [SXLoadingView showAlertHUD:@"切换成功" duration:1.2];
+                            });
+                        }else{
+                            [SXLoadingView showAlertHUD:@"切换失败，设备当前状态未知，请检查" duration:1];
+                            //                        [self skipToLogin];
+                        }
+                        break;
+                    }
+                }
+                [SXLoadingView hideProgressHUD];
+                }
+               
+            if (!canFindDevice) {
+                [SXLoadingView showAlertHUD:@"切换失败，可能设备不在附近" duration:1];
+                //                [self skipToLogin];
+            }
+        });
+    }];
     
 }
 

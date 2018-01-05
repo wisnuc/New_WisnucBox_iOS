@@ -239,7 +239,7 @@
 "WeChat_not_support" = "微信不支持";
 "initialization" = "初始化";
 "initialization_guide" = "初始化向导";
-"select_device" = "请选择一台IWSNUC设备";
+"select_device" = "请选择一台WISNUC设备";
 
 //init
 

@@ -19,6 +19,7 @@
 @end
 
 @interface FMLeftMenu : UIView
+@property (weak, nonatomic) IBOutlet UIImageView *cloudImageView;
 
 @property (nonatomic) id<FMLeftMenuDelegate> delegate;
 

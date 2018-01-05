@@ -25,9 +25,9 @@
         _port = port;
         _discoveredServers = [NSMutableArray array];
         _resolvedServers = [NSMutableArray array];
-        if (_browser && _browser.delegate ==self) {
-            _browser.delegate = nil;
-        }
+//        if (_browser && _browser.delegate ==self) {
+//            _browser.delegate = nil;
+//        }
         _browser = [[NSNetServiceBrowser alloc] init];
        
         _browser.delegate = self;
@@ -37,7 +37,12 @@
 }
 
 -(void)dealloc{
-    
+    [_browser stop];
+    _browser.delegate = nil;
+    [_discoveredServers enumerateObjectsUsingBlock:^(NSNetService *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        obj.delegate = nil;
+    }];
+    _browser = nil;
 }
 
 - (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didFindService:(NSNetService *)aNetService moreComing:(BOOL)moreComing {
@@ -59,6 +64,7 @@
 - (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didRemoveService:(NSNetService *)aNetService moreComing:(BOOL)moreComing {
     
     NSUInteger index = [_discoveredServers indexOfObject:aNetService];
+    aNetService.delegate = nil;
     [_discoveredServers removeObject:aNetService];
     [_resolvedServers removeObject:aNetService];
     [self.delegate serverBrowserLostService:aNetService index:index];

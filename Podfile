@@ -28,6 +28,7 @@ pod 'MagicalRecord'
 pod 'RTRootNavigationController'
 pod 'CYLTabBarController'
 pod 'MaterialComponents'
+pod 'AvoidCrash', '~> 2.5.1'
 end
 
 #post_install do |installer|

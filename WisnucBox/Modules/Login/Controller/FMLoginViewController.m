@@ -99,6 +99,7 @@ WXApiDelegate
 //      [self firstbeginSearching];
   }
 
+
 - (void)viewWillDisappear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
@@ -151,9 +152,10 @@ WXApiDelegate
 }
 
 - (void)beginSearching {
-    [_browser stopServerBrowser];
-     _browser.delegate = nil;
-     _browser = nil;
+    if (_browser) {
+        _browser.delegate = nil;
+        _browser = nil;
+    }
 //    double delayInSeconds = 2;
 //    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 //    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){

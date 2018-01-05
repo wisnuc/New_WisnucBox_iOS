@@ -137,9 +137,9 @@ UITableViewDataSource
     FirstFilesModel *model = _dataSouceArray[indexPath.row];
     cell.nameLabel.text = model.name;
     if (model.type == WBFilesFirstDirectoryShare) {
-        cell.f_ImageView.image = [UIImage imageNamed:@"share_files"];
+        cell.f_ImageView.image = [UIImage imageNamed:@"share_disk"];
     }else if(model.type == WBFilesFirstDirectoryPublic) {
-        cell.f_ImageView.image = [UIImage imageNamed:@"share_files"];
+        cell.f_ImageView.image = [UIImage imageNamed:@"public_disk"];
     }else{
         cell.f_ImageView.image = [UIImage imageNamed:@"folder_icon"];
     }

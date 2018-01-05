@@ -67,9 +67,6 @@
     _currentUser = nil;
     [kUserDefaults removeObjectForKey:WBCURRENTUSER_UUID];
 
-    [kUserDefaults removeObjectForKey:kminiDLNASwich];
-    [kUserDefaults removeObjectForKey:kSambaSwich];
-//    [kUserDefaults removeObjectForKey:kBTSwich];
     kUD_Synchronize;
 }
 

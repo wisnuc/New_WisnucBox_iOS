@@ -129,5 +129,12 @@ static MBProgressHUD  *s_progressHUD = nil;
     }
 }
 
++ (BOOL)isPregressing{
+    if (s_progressHUD) {
+        return YES;
+    }else{
+        return NO;
+    }
+}
 
 @end

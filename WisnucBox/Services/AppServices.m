@@ -21,6 +21,7 @@
 #import "CSUploadHelper.h"
 #import "UserModel.h"
 #import <MBProgressHUD/MBProgressHUD.h>
+#import "FMCheckManager.h"
 
 @interface AppServices ()
 @end
@@ -481,6 +482,7 @@ static BOOL needRestart = NO;
     [CSFilesOneDownloadManager destroyAll];
     [CSUploadHelper destroyAll];
     [CSFileUploadManager destroyAll];
+    [FMCheckManager destroyAll];
 }
 
 @end
