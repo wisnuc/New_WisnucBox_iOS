@@ -32,5 +32,5 @@
 - (instancetype)initLeftMenuWithTitles:(NSArray *)titles andImages:(NSArray *)imageNames;
 
 - (void)reloadWithTitles:(NSArray *)titles andImages:(NSArray *)imageNames;
-
+- (void)reloadUser;
 @end

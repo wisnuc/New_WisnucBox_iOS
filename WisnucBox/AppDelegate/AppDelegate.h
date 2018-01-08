@@ -19,6 +19,6 @@
 @property (nonatomic) FMLeftManager *leftManager;
 
 - (void)initRootVC;
-
+- (void)leftMenuReloadData;
 @end
 

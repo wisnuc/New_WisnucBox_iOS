@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Setting Upgrade Select View Controller-->
+        <scene sceneID="EpG-65-Kql">
+            <objects>
+                <viewController storyboardIdentifier="WBSettingUpgradeSelectViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FGz-tT-uVO" customClass="WBSettingUpgradeSelectViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Zvp-CS-pve"/>
+                        <viewControllerLayoutGuide type="bottom" id="DVt-uG-5TZ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="UkW-yr-aUa">
+                        <rect key="frame" x="0.0" y="0.0" width="240" height="180"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="应用启动时是否检查设备系统更新？" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hme-RP-9KY">
+                                <rect key="frame" x="16" y="20" width="208" height="38.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="0.1267565356" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bp8-hf-xRQ" customClass="RadioButton">
+                                <rect key="frame" x="16" y="74.5" width="39" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="是" image="ic_radio_button_unchecked.png">
+                                    <color key="titleColor" white="0.1267565356" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="ic_radio_button.png"/>
+                                <connections>
+                                    <action selector="radioButtonClick:" destination="FGz-tT-uVO" eventType="touchUpInside" id="0eT-ED-CBs"/>
+                                    <outletCollection property="groupButtons" destination="mZZ-X0-nFe" id="iRp-nn-NKa"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mZZ-X0-nFe" customClass="RadioButton">
+                                <rect key="frame" x="16" y="106.5" width="39" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="否" image="ic_radio_button_unchecked.png">
+                                    <color key="titleColor" white="0.1267565356" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="ic_radio_button.png"/>
+                                <connections>
+                                    <action selector="radioButtonClick:" destination="FGz-tT-uVO" eventType="touchUpInside" id="zbd-qJ-Wo9"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ESj-Qm-b6X">
+                                <rect key="frame" x="193" y="142" width="31" height="30"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="确定">
+                                    <color key="titleColor" red="0.01176470588" green="0.66274509800000003" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="confirmButton:" destination="FGz-tT-uVO" eventType="touchUpInside" id="vtD-M2-odr"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="mZZ-X0-nFe" firstAttribute="leading" secondItem="hme-RP-9KY" secondAttribute="leading" id="481-rj-GMi"/>
+                            <constraint firstItem="hme-RP-9KY" firstAttribute="top" secondItem="Zvp-CS-pve" secondAttribute="bottom" constant="20" id="5b3-qR-AR2"/>
+                            <constraint firstItem="bp8-hf-xRQ" firstAttribute="leading" secondItem="hme-RP-9KY" secondAttribute="leading" id="93U-2G-4j8"/>
+                            <constraint firstItem="DVt-uG-5TZ" firstAttribute="top" secondItem="ESj-Qm-b6X" secondAttribute="bottom" constant="8" id="B6D-Id-Kre"/>
+                            <constraint firstItem="bp8-hf-xRQ" firstAttribute="top" secondItem="hme-RP-9KY" secondAttribute="bottom" constant="16" id="Phs-cd-4dm"/>
+                            <constraint firstAttribute="trailing" secondItem="ESj-Qm-b6X" secondAttribute="trailing" constant="16" id="aj4-A9-ywP"/>
+                            <constraint firstItem="hme-RP-9KY" firstAttribute="leading" secondItem="UkW-yr-aUa" secondAttribute="leading" constant="16" id="bwe-Bm-7RK"/>
+                            <constraint firstAttribute="trailing" secondItem="hme-RP-9KY" secondAttribute="trailing" constant="16" id="gaz-5c-BGk"/>
+                            <constraint firstItem="mZZ-X0-nFe" firstAttribute="top" secondItem="bp8-hf-xRQ" secondAttribute="bottom" constant="8" id="lud-Hf-SNw"/>
+                        </constraints>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="240" height="180"/>
+                    <size key="freeformSize" width="240" height="180"/>
+                    <connections>
+                        <outlet property="alertTitleLabel" destination="hme-RP-9KY" id="QxV-BG-in8"/>
+                        <outlet property="confirmRadioButton" destination="ESj-Qm-b6X" id="ENe-Gr-Cb9"/>
+                        <outlet property="falseRadioButton" destination="mZZ-X0-nFe" id="Cxv-QL-0FP"/>
+                        <outlet property="trueRadioButton" destination="bp8-hf-xRQ" id="ms1-AT-kqC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Gh-Fv-KE8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="81.599999999999994" y="193.4032983508246"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="ic_radio_button.png" width="24" height="24"/>
+        <image name="ic_radio_button_unchecked.png" width="24" height="24"/>
+    </resources>
+</document>

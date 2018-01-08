@@ -13,7 +13,7 @@
 #import "WBUpgradeDownloadAPI.h"
 
 @interface WBUpgradeAppfiViewController (){
-    
+    NSInteger _updateCount;
 }
 @property (nonatomic)UIImageView *firmwareNowleftImage;
 @property (nonatomic)UILabel *firmwareNowTitleLabel;
@@ -37,6 +37,7 @@
 
 @property (nonatomic)MDCFlatButton *updateCheckButton;
 
+
 @end
 
 @implementation WBUpgradeAppfiViewController
@@ -46,6 +47,7 @@
     self.title = @"固件升级";
     _isFailed = NO;
     [SXLoadingView showProgressHUD:@"检查更新中..."];
+    _updateCount = 0;
     [self getData];
     [self.view addSubview:self.firmwareNowleftImage];
     [self.view addSubview:self.firmwareNowTitleLabel];
@@ -86,10 +88,19 @@
             [weak_self updateDataWithModel:model];
             NSLog(@"%@",model.appifi.tagName);
             [SXLoadingView showProgressHUDText:@"检查更新完毕" duration:1.2f];
+        }else{
+            _updateCount ++;
+            if (_updateCount<=3) {
+                [weak_self performSelector:@selector(getData) withObject:nil afterDelay:5];
+            }else{
+                [SXLoadingView showProgressHUDText:@"检查更新失败" duration:1.2f];
+                [weak_self errorAction];
+            }
         }
     } failure:^(__kindof JYBaseRequest *request) {
          NSLog(@"%@",request.error);
          [SXLoadingView showProgressHUDText:@"检查更新失败" duration:1.2f];
+         [weak_self errorAction];
     }];
 }
 
@@ -106,11 +117,41 @@
         }
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
-    
+       [weak_self errorAction];
     }];
 }
 
+- (void)errorAction{
+   [self.firmwareNowStateLabel setHidden:YES];
+   [self.firstLineView setHidden:YES];
+    
+   [self.firmwareUpdateleftImage setHidden:YES];
+   [self.firmwareUpdateTitleLabel setHidden:YES];
+   [self.firmwareUpdateStateLabel setHidden:YES];
+   [self.installUpdateButton setHidden:YES];
+   [self.releaseTimeLabel setHidden:YES];
+   [self.secondLineView setHidden:YES];
+  _updateCheckButton.frame = CGRectMake(CGRectGetMinX(_firmwareNowTitleLabel.frame), CGRectGetMaxY(_firmwareUpdateTitleLabel.frame) + 16, 100, 40);
+    _firmwareNowTitleLabel.text = @"获取固件信息失败";
+}
+
+
+- (void)normalAction{
+    [self.firmwareNowStateLabel setHidden:NO];
+    [self.firstLineView setHidden:NO];
+    
+    [self.firmwareUpdateleftImage setHidden:NO];
+    [self.firmwareUpdateTitleLabel setHidden:NO];
+    [self.firmwareUpdateStateLabel setHidden:NO];
+    [self.installUpdateButton setHidden:NO];
+    [self.releaseTimeLabel setHidden:NO];
+    [self.secondLineView setHidden:NO];
+    _updateCheckButton.frame = CGRectMake(CGRectGetMinX(_firmwareNowTitleLabel.frame), CGRectGetMaxY(_secondLineView.frame), 100, 40);
+    _firmwareNowTitleLabel.text = @"当前使用的固件版本:";
+}
+
 - (void)updateDataWithModel:(WBGetUpgradStateModel *)model{
+    [self normalAction];
     _firmwareNowTitleLabel.text = [NSString stringWithFormat:@"当前使用的固件版本:%@",model.appifi.tagName];
     if ([model.appifi.state isEqualToString:@"Started"]) {
         _firmwareNowStateLabel.text = @"运行中";
@@ -124,6 +165,7 @@
     }else if ([model.appifi.state isEqualToString:@"Stopped"]){
          _firmwareNowStateLabel.text = @"已关闭";
     }
+    
     
     NSLog(@"%@",model.releases);
     WBGetUpgradStateReleasesModel *releaseModel;

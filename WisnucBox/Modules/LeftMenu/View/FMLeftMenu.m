@@ -13,7 +13,7 @@
 #import "FMUserLoginViewController.h"
 //#import "FMUploadFileAPI.h"
 
-@interface FMLeftMenu ()<UITableViewDelegate,UITableViewDataSource>
+@interface FMLeftMenu ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *versionLb;
 @property (weak, nonatomic) IBOutlet UIButton *userBtn1;
 @property (weak, nonatomic) IBOutlet UIButton *userBtn2;
@@ -349,14 +349,24 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == 1) {
-        return 8;
+    if (_settingTabelView == tableView) {
+        if (section == 1) {
+            return 8;
+        }else{
+            return 0;
+        }
+    }else{
+        return 0.1;
     }
-    return 0;
+   
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 8;
+    if (_settingTabelView == tableView) {
+        return 8;
+    }else{
+       return 64;
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -384,6 +394,15 @@
          
      } completion:nil];
 }
+
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    CGFloat sectionHeaderHeight = 64;
+//         if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
+//             scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+//         } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
+//             scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+//         }
+//}
 
 - (void)getUserInfo{
    _userInfo = [AppServices sharedService].userServices.currentUser;

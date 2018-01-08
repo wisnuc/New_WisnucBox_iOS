@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Upgrade Check View Controller-->
+        <scene sceneID="Igd-OM-ZGg">
+            <objects>
+                <viewController storyboardIdentifier="WBUpgradeCheckViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VlL-67-VW1" customClass="WBUpgradeCheckViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="JmB-7Y-jQp"/>
+                        <viewControllerLayoutGuide type="bottom" id="MhI-uy-QkS"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pzF-Gm-3ya">
+                        <rect key="frame" x="0.0" y="0.0" width="245" height="142"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设备系统有新的版本可以升级" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t5u-TI-1Gd">
+                                <rect key="frame" x="16" y="20" width="213" height="20"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <color key="textColor" white="0.1267565356" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ucT-Ky-8pU" customClass="BEMCheckBox">
+                                <rect key="frame" x="16" y="64" width="18" height="18"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="18" id="04h-K7-8Hv"/>
+                                    <constraint firstAttribute="height" constant="18" id="Vv5-5z-caC"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GVD-Xk-Lej">
+                                <rect key="frame" x="183" y="104" width="46" height="30"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="去升级">
+                                    <color key="titleColor" red="0.01176470588" green="0.66274509800000003" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="upgradeButtonClick:" destination="VlL-67-VW1" eventType="touchUpInside" id="rFb-ub-9GG"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0zb-sx-6OA">
+                                <rect key="frame" x="136" y="104" width="31" height="30"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="取消">
+                                    <color key="titleColor" red="0.01176470588" green="0.66274509800000003" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelButtonClick:" destination="VlL-67-VW1" eventType="touchUpInside" id="pSB-h1-fw3"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="不再提示" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bKf-06-kcy">
+                                <rect key="frame" x="42" y="64" width="57.5" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.1267565356" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ucT-Ky-8pU" firstAttribute="top" secondItem="t5u-TI-1Gd" secondAttribute="bottom" constant="24" id="0Gb-TP-alZ"/>
+                            <constraint firstItem="ucT-Ky-8pU" firstAttribute="leading" secondItem="t5u-TI-1Gd" secondAttribute="leading" id="4SQ-AK-bJn"/>
+                            <constraint firstItem="t5u-TI-1Gd" firstAttribute="leading" secondItem="pzF-Gm-3ya" secondAttribute="leading" constant="16" id="FQn-MD-jN0"/>
+                            <constraint firstItem="GVD-Xk-Lej" firstAttribute="leading" secondItem="0zb-sx-6OA" secondAttribute="trailing" constant="16" id="RUy-uZ-8Uo"/>
+                            <constraint firstItem="bKf-06-kcy" firstAttribute="centerY" secondItem="ucT-Ky-8pU" secondAttribute="centerY" id="Y71-iA-Pwo"/>
+                            <constraint firstItem="bKf-06-kcy" firstAttribute="leading" secondItem="ucT-Ky-8pU" secondAttribute="trailing" constant="8" id="cCR-P0-T8K"/>
+                            <constraint firstItem="MhI-uy-QkS" firstAttribute="top" secondItem="GVD-Xk-Lej" secondAttribute="bottom" constant="8" id="lC4-4Y-8e2"/>
+                            <constraint firstItem="t5u-TI-1Gd" firstAttribute="top" secondItem="JmB-7Y-jQp" secondAttribute="bottom" constant="20" id="oNb-sa-P4J"/>
+                            <constraint firstAttribute="trailing" secondItem="GVD-Xk-Lej" secondAttribute="trailing" constant="16" id="qTp-8e-Jwi"/>
+                            <constraint firstAttribute="trailing" secondItem="t5u-TI-1Gd" secondAttribute="trailing" constant="16" id="rMw-f8-kRM"/>
+                            <constraint firstItem="GVD-Xk-Lej" firstAttribute="centerY" secondItem="0zb-sx-6OA" secondAttribute="centerY" id="voF-1u-wwW"/>
+                        </constraints>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="245" height="142"/>
+                    <size key="freeformSize" width="245" height="142"/>
+                    <connections>
+                        <outlet property="alertTitleLabel" destination="t5u-TI-1Gd" id="wVT-Ld-VRC"/>
+                        <outlet property="cancelButton" destination="0zb-sx-6OA" id="NL9-fb-E4e"/>
+                        <outlet property="ignoreCheckBox" destination="ucT-Ky-8pU" id="2Ih-NP-Vbs"/>
+                        <outlet property="ignoreLabel" destination="bKf-06-kcy" id="xtP-jZ-QHS"/>
+                        <outlet property="upgradeButton" destination="GVD-Xk-Lej" id="cuT-FG-3zc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CIO-6n-qM0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="159.19999999999999" y="116.94152923538232"/>
+        </scene>
+    </scenes>
+</document>

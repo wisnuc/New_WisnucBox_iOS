@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13533" systemVersion="17B48" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="17C88" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="WBFile" representedClassName="WBFile" syncable="YES">
         <attribute name="actionType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="downloadedFileSize" optional="YES" attributeType="String" syncable="YES"/>
@@ -29,6 +29,7 @@
         <attribute name="isBindWechat" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isCloudLogin" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isFirstUser" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isIgnoreUpgradeCheck" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="localAddr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="localToken" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sn_address" optional="YES" attributeType="String" syncable="YES"/>
@@ -41,6 +42,6 @@
     <elements>
         <element name="WBFile" positionX="-54" positionY="45" width="128" height="180"/>
         <element name="WBLocalAsset" positionX="-63" positionY="-18" width="128" height="75"/>
-        <element name="WBUser" positionX="-54" positionY="9" width="128" height="360"/>
+        <element name="WBUser" positionX="-54" positionY="9" width="128" height="375"/>
     </elements>
 </model>

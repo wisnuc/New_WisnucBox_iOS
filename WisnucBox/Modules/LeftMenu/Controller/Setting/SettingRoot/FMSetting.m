@@ -10,9 +10,9 @@
 #import "LCActionSheet.h"
 #import "WBServiceSettingViewController.h"
 #import "WBUpgradeAppfiViewController.h"
+#import "WBSettingUpgradeSelectViewController.h"
 
-
-@interface FMSetting ()<UITableViewDelegate,UITableViewDataSource,LCActionSheetDelegate>
+@interface FMSetting ()<UITableViewDelegate,UITableViewDataSource,LCActionSheetDelegate,SettingUpgradeSelectAlertViewDelegate>
 @property (nonatomic) BOOL displayProgress;
 
 @property (nonatomic,strong)UISwitch * switchBtn;
@@ -61,7 +61,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (WB_UserService.currentUser.isAdmin) {
-        return 4;
+        return 5;
     }else{
         return 3;
     }
@@ -94,13 +94,8 @@
              NSLog(@"%ld",(long)[[YYImageCache sharedCache].diskCache totalCost]);
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[NSString transformedValue:[NSNumber numberWithUnsignedInteger:i]]];
         }
-            
+        
             break;
-//        case 2:{
-//             cell.textLabel.text =  @"如何处理来自第三方应用的BT文件";
-//        }
-//
-//            break;
         case 2:{
             
             cell.textLabel.text = @"服务管理";
@@ -115,7 +110,10 @@
             
         }
              break;
-           
+        case 4:{
+            cell.textLabel.text =  @"应用启动时是否检查设备系统更新？";
+        }
+            break;
 
         default:
             break;
@@ -126,34 +124,75 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 1) {
-        NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
-        NSString *clearTitle = WBLocalizedString(@"clear", nil);
-        NSString *confirmTitle = WBLocalizedString(@"confirm_clear_cache", nil);
-        
-        NSUInteger  i = [SDImageCache sharedImageCache].getSize;
-       i = i + [[YYImageCache sharedCache].diskCache totalCost];
-        if(i>0){
-            LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:confirmTitle
-                                                                     delegate:self
-                                                            cancelButtonTitle:cancelTitle
-                                                        otherButtonTitleArray:@[clearTitle]];
-            actionSheet.scrolling          = YES;
-            actionSheet.buttonHeight       = 60.0f;
-            actionSheet.visibleButtonCount = 3.6f;
-            [actionSheet show];
+    switch (indexPath.row) {
+        case 0:{
         }
-    }
-
-else if (indexPath.row == 2){
-        WBServiceSettingViewController *vc = [[WBServiceSettingViewController alloc]init];
-        [self.navigationController pushViewController:vc animated:YES];
-    }else{
-        if (!WB_UserService.currentUser.isCloudLogin) {
-            WBUpgradeAppfiViewController *vc = [[WBUpgradeAppfiViewController alloc]init];
+            break;
+        case 1:{
+            NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
+            NSString *clearTitle = WBLocalizedString(@"clear", nil);
+            NSString *confirmTitle = WBLocalizedString(@"confirm_clear_cache", nil);
+            
+            NSUInteger  i = [SDImageCache sharedImageCache].getSize;
+            i = i + [[YYImageCache sharedCache].diskCache totalCost];
+            if(i>0){
+                LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:confirmTitle
+                                                                         delegate:self
+                                                                cancelButtonTitle:cancelTitle
+                                                            otherButtonTitleArray:@[clearTitle]];
+                actionSheet.scrolling          = YES;
+                actionSheet.buttonHeight       = 60.0f;
+                actionSheet.visibleButtonCount = 3.6f;
+                [actionSheet show];
+            }
+        }
+            break;
+        case 2:{
+            WBServiceSettingViewController *vc = [[WBServiceSettingViewController alloc]init];
             [self.navigationController pushViewController:vc animated:YES];
         }
+            break;
+        case 3:{
+            if (!WB_UserService.currentUser.isCloudLogin) {
+                WBUpgradeAppfiViewController *vc = [[WBUpgradeAppfiViewController alloc]init];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+            break;
+            
+        case 4:{
+            NSBundle *bundle = [NSBundle bundleForClass:[WBSettingUpgradeSelectViewController class]];
+            UIStoryboard *storyboard =
+            [UIStoryboard storyboardWithName:NSStringFromClass([WBSettingUpgradeSelectViewController class]) bundle:bundle];
+            NSString *identifier = NSStringFromClass([WBSettingUpgradeSelectViewController class]);
+            
+            UIViewController *viewController =
+            [storyboard instantiateViewControllerWithIdentifier:identifier];
+            
+            viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
+            WBSettingUpgradeSelectViewController *vc = (WBSettingUpgradeSelectViewController *)viewController;
+            if (!WB_UserService.currentUser.isIgnoreUpgradeCheck) {
+                vc.typeString =  @"是";
+            }else{
+                vc.typeString =  @"否";
+            }
+            vc.delegate = self;
+            [self presentViewController:viewController animated:YES completion:NULL];
+        }
+            break;
+        default:
+            break;
     }
+
+}
+
+-(void)confirmWithTypeString:(NSString *)typeString{
+    if ([typeString isEqualToString:@"是"]) {
+       WB_UserService.currentUser.isIgnoreUpgradeCheck = NO;
+    }else{
+        WB_UserService.currentUser.isIgnoreUpgradeCheck = YES;
+    }
+    [WB_UserService synchronizedCurrentUser];
 }
 
 //实现下面的代理方法即可
@@ -194,60 +233,6 @@ else if (indexPath.row == 2){
     }
 }
 
--(void)switchBtnHandleForSync:(UISwitch *)switchBtn{
-    WB_UserService.currentUser.autoBackUp = switchBtn.isOn;
-    [WB_UserService synchronizedCurrentUser];
-    _switchOn = switchBtn.isOn;
-    if(_switchOn) {
-        [SXLoadingView showProgressHUD:@" "];
-        [WB_AppServices startUploadAssets:^{
-            [SXLoadingView hideProgressHUD];
-        }];
-    } else
-        [WB_AppServices.photoUploadManager stop];
-}
-
--(void)sambaSwitchChanged:(UISwitch *)paramSender{
-    BOOL isOn = paramSender.on;
-    if (isOn) {
-        [[WBFeaturesChangeAPI apiWithType:@"samba" Action:@"start"]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-            _sambaSwitchOn = YES;
-            [self.settingTableView reloadData];
-        } failure:^(__kindof JYBaseRequest *request) {
-            _sambaSwitchOn = NO;
-            [self.settingTableView reloadData];
-        }];
-    }else{
-        [[WBFeaturesChangeAPI apiWithType:@"samba" Action:@"stop"]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-            _sambaSwitchOn = NO;
-            [self.settingTableView reloadData];
-        } failure:^(__kindof JYBaseRequest *request) {
-            _sambaSwitchOn = YES;
-            [self.settingTableView reloadData];
-        }];
-    }
-}
-
--(void)miniDLNASwitchChanged:(UISwitch *)paramSender{
-    BOOL isOn = paramSender.on;
-    if (isOn) {
-        [[WBFeaturesChangeAPI apiWithType:@"dlna" Action:@"start"]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-            _miniDlnaSwitchOn = YES;
-            [self.settingTableView reloadData];
-        } failure:^(__kindof JYBaseRequest *request) {
-            _miniDlnaSwitchOn = NO;
-            [self.settingTableView reloadData];
-        }];
-    }else{
-        [[WBFeaturesChangeAPI apiWithType:@"dlna" Action:@"stop"]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-            _miniDlnaSwitchOn = NO;
-            [self.settingTableView reloadData];
-        } failure:^(__kindof JYBaseRequest *request) {
-            _miniDlnaSwitchOn = YES;
-            [self.settingTableView reloadData];
-        }];
-    }
-}
 
 - (IBAction)cleanBtnClick:(id)sender {
    

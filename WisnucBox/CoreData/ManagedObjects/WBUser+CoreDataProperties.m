@@ -35,4 +35,5 @@
 @dynamic askForBackup;
 @dynamic uploadFileDir;
 @dynamic isBindWechat;
+@dynamic isIgnoreUpgradeCheck;
 @end

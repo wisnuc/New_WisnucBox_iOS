@@ -9,6 +9,7 @@
 #import "FMUserLoginSettingVC.h"
 #import "FMUsersLoginMangeCell.h"
 #import "FMUserLoginHeaderView.h"
+#import "AppDelegate.h"
 
 @interface FMUserLoginSettingVC ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -22,6 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"账户管理";
     [self.usersLoginTable registerNib:[UINib nibWithNibName:@"FMUsersLoginMangeCell" bundle:nil] forCellReuseIdentifier:NSStringFromClass([FMUsersLoginMangeCell class])];
     // Do any additional setup after loading the view from its nib.
 }
@@ -61,18 +63,25 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     FMUsersLoginMangeCell * cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FMUsersLoginMangeCell class]) forIndexPath:indexPath];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.userHeaderIV.image = [UIImage imageForName:((WBUser *)(_dataSource[indexPath.section][indexPath.row])).userName size:cell.userHeaderIV.bounds.size];
     cell.userNameLb.text = ((WBUser *)(_dataSource[indexPath.section][indexPath.row])).userName;
-//    @weaky(MyAppDelegate);
-//    @weaky(self);
+    @weaky(MyAppDelegate);
+    @weaky(self);
     cell.deleteBtnClick = ^(UIButton * btn){
        WBUser * info =  (WBUser *)(_dataSource[indexPath.section][indexPath.row]);
-        [SXLoadingView showProgressHUD:@"正在删除数据"];
+        if (IsEquallString(info.uuid, WB_UserService.currentUser.uuid)) {
+            [SXLoadingView showProgressHUDText:@"无法删除当前登录用户" duration:1.2f];
+            return ;
+        }
+         [SXLoadingView showProgressHUD:@"正在删除数据"];
         [[AppServices sharedService].userServices deleteUserWithUserId:info.uuid];//删除数据
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weak_self getDataSource];
+            [_usersLoginTable reloadData];
             [SXLoadingView hideProgressHUD];
 #warning user delete should logout
-//            if (IsEquallString(info.uuid, DEF_UUID)) {
+     
 //                [PhotoManager shareManager].canUpload = NO;//停止上传
 //                FMConfigInstance.userToken = @"";
 //                [weak_MyAppDelegate resetDatasource];
@@ -83,8 +92,9 @@
 //            }else{
 //                [weak_self getDataSource];
 //                [tableView reloadData];
-//            }
-//            [weak_MyAppDelegate reloadLeftUsers];
+
+            [weak_MyAppDelegate leftMenuReloadData];
+            
         });
     };
     return cell;
@@ -97,7 +107,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 64;
+    return 40;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -106,18 +116,12 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     NSString * str = ((WBUser *)(_dataSource[section][0])).bonjour_name;
-    NSArray * tempArr = [str componentsSeparatedByString:@"."];
-    if(tempArr.count > 2){
-        NSString * str2 = tempArr[0];
-        NSArray * tmp2 = [str2 componentsSeparatedByString:@"-"];
-        NSString * name = tmp2[1];
-        NSString * sn = tmp2[2];
-        return [FMUserLoginHeaderView headerViewWithDeviceName:name DeviceSN:sn];
-    }else
-        return [FMUserLoginHeaderView headerViewWithDeviceName:str DeviceSN:@"未知"];
-    
-    
-    
+    NSLog(@"%@",str);
+    if(str){
+        return [FMUserLoginHeaderView headerViewWithDeviceName:str DeviceSN:@""];
+    }else{
+        return [FMUserLoginHeaderView headerViewWithDeviceName:@"未知" DeviceSN:@""];
+    }
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{

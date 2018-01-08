@@ -301,11 +301,12 @@
             }else{
                 WB_UserService.currentUser.isBindWechat = NO;
             }
-           
             [WB_UserService synchronizedCurrentUser];
             //notify
             [[NSNotificationCenter defaultCenter] postNotificationName:UserInfoChangedNotify object:nil];
         }
+      
+      
         if(callback) return callback(nil, WB_UserService.currentUser.isAdmin);
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"Update user info error : %@", request.error);

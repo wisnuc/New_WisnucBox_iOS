@@ -49,7 +49,6 @@
 
 - (void)initRootVC {
     self.window.rootViewController = nil;
-
     if(WB_UserService.isUserLogin) {
         // userHome / backupdir / backupbasedir / token / address
         // To TabBar
@@ -79,6 +78,7 @@
         }];
         
         [WB_AppServices updateCurrentUserInfoWithCompleteBlock:nil];
+        [WB_UserService upgradeCheckAction];
     });
     
     [[CSUploadHelper shareManager]startUploadAction];
@@ -108,6 +108,7 @@
     
     return tabbar;
 }
+
 
 // 将NSlog打印信息保存到Document目录下的文件中
 - (void)redirectNSlogToDocumentFolder
@@ -162,7 +163,9 @@
     self.leftManager = [[FMLeftManager alloc] initLeftMenuWithTitles:@[] andImages:@[]];
 }
 
-
+- (void)leftMenuReloadData{
+    [self.leftManager reloadUser];
+}
 
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{

@@ -15,7 +15,7 @@
 }
 
 +(FMUserLoginHeaderView *)headerViewWithDeviceName:(NSString *)name DeviceSN:(NSString *)sn{
-    FMUserLoginHeaderView * view = [[FMUserLoginHeaderView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 64)];
+    FMUserLoginHeaderView * view = [[FMUserLoginHeaderView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 32)];
     [view setUpViewsWithName:name DeviceSN:sn];
     return view;
 }
@@ -29,14 +29,14 @@
     [self addSubview:_NameLb];
     
     
-    _SNLb = [[UILabel alloc]initWithFrame:CGRectMake(16, 40, __kWidth-32, 15)];
-    _SNLb.font = [UIFont systemFontOfSize:14];
-    _SNLb.textColor = UICOLOR_RGB(0x000);
-    _SNLb.alpha = 0.54;
-    _SNLb.text = sn;
-    [self addSubview:_SNLb];
-    
-    
+//    _SNLb = [[UILabel alloc]initWithFrame:CGRectMake(16, 40, __kWidth-32, 15)];
+//    _SNLb.font = [UIFont systemFontOfSize:14];
+//    _SNLb.textColor = UICOLOR_RGB(0x000);
+//    _SNLb.alpha = 0.54;
+//    _SNLb.text = sn;
+//    [self addSubview:_SNLb];
+//
+//
 }
 
 @end

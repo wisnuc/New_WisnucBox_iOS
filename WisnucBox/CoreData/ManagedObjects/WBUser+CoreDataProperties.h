@@ -36,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL backUpInWWAN;
 @property (nonatomic) BOOL askForBackup;
 @property (nonatomic) BOOL isBindWechat;
+@property (nonatomic) BOOL isIgnoreUpgradeCheck;
 
 @end
 

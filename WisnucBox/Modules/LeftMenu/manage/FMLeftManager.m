@@ -238,6 +238,11 @@
     }
 }
 
+- (void)reloadUser{
+    self.leftMenu.usersDatasource = [self getUsersInfo];
+    [self.leftMenu.usersTableView reloadData];
+}
+
 - (void)reloadWithTitles:(NSArray *)titles andImages:(NSArray *)imageNames {
     
 }

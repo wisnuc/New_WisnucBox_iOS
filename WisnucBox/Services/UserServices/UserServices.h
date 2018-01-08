@@ -35,6 +35,8 @@
 - (void)synchronizedCurrentUser;
 
 - (WBUser *)createUserWithUserUUID:(NSString *)uuid;
+
+- (void)upgradeCheckAction;
 @end
 
 @interface UserSession : NSObject
