@@ -80,7 +80,7 @@
 #define LeftMenuSettingString WBLocalizedString(@"setting", nil)
 #define LeftMenuEquipmentManageString WBLocalizedString(@"equipment_manage", nil)
 #define LeftMenuInvitationString WBLocalizedString(@"invitation", nil)
-
+#define WBApplication [UIApplication sharedApplication]
 
 //tmp
 #define JY_TMP_Folder [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]stringByAppendingPathComponent:@"JYTMP"]

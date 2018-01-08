@@ -171,18 +171,30 @@
 - (void)setModel:(JYAsset *)model
 {
     _model = model;
-    
+    if (model.type == JYAssetTypeImage && model.type != JYAssetTypeNetImage){
+        self.videoImageView.hidden = NO;
+        self.videoBottomView.hidden = YES;
+        self.liveImageView.hidden = YES;
+        self.videoImageView.image = [UIImage imageNamed:@"ic_cloud_off_white"];
+        self.videoBottomView.hidden = NO;
+        self.liveImageView.hidden = YES;
+        self.timeLabel.hidden = YES;
+    }else
     if (model.type == JYAssetTypeVideo) {
         self.videoBottomView.hidden = NO;
         self.videoImageView.hidden = NO;
         self.liveImageView.hidden = YES;
         self.timeLabel.text = model.duration;
+        self.timeLabel.hidden = NO;
+        self.videoImageView.image = [UIImage imageNamed:@"ic_play"];
     }
     else if(model.type == JYAssetTypeNetVideo) {
         self.videoBottomView.hidden = NO;
         self.videoImageView.hidden = NO;
         self.liveImageView.hidden = YES;
         self.timeLabel.text = model.duration;
+        self.timeLabel.hidden = NO;
+        self.videoImageView.image = [UIImage imageNamed:@"ic_play"];
     }else if (model.type == JYAssetTypeLivePhoto) {
         self.videoBottomView.hidden = NO;
         self.videoImageView.hidden = YES;

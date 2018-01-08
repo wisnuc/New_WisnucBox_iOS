@@ -116,6 +116,12 @@
     return self;
 }
 
+- (void)addLocalDataSource:(NSArray<JYAsset *> *)assets{
+    [self.arrDataSources addObjectsFromArray:assets];
+    self.localArrDataSourcesBackup = [NSMutableArray  arrayWithArray:self.arrDataSources]; // backup
+    _isSelectMode = NO;
+}
+
 - (void)addNetAssets:(NSArray<WBAsset *> *)assetsArr {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         self.netArrDataSourcesBackup = [NSMutableArray arrayWithArray: assetsArr];
@@ -226,6 +232,7 @@
     [self sort:self.arrDataSources];
     [self addRightBtn];
     [self initCollectionView];
+    [self initMjRefresh];
     [self addPinchGesture];
     [self createControlbtn];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userAuthChange:) name:ASSETS_AUTH_CHANGE_NOTIFY object:nil];
@@ -243,6 +250,43 @@
     [super viewDidAppear:animated];
     [self updateIndicatorFrame];
 }
+
+- (void)initMjRefresh{
+    __weak __typeof(self) weakSelf = self;
+ 
+    self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        if (_isSelectMode) {
+            [weakSelf leftBtnClick:_leftBtn];
+        }
+        [WB_AssetService getNetAssets:^(NSError *error, NSArray<WBAsset *> *netAssets) {
+          
+        if(!error){
+        
+         [weakSelf.localArrDataSourcesBackup removeAllObjects];
+         [weakSelf.netArrDataSourcesBackup removeAllObjects];
+         [weakSelf.arrDataSources removeAllObjects];
+         [weakSelf addLocalDataSource:[AppServices sharedService].assetServices.allAssets];
+         [weakSelf sort:self.arrDataSources];
+//         NSLog(@"%@",self.arrDataSources);
+         [weakSelf addNetAssets:netAssets];
+         
+         weakSelf.isSelectMode = _isSelectMode;
+           
+         [weakSelf.collectionView reloadData];
+         [weakSelf.collectionView.mj_header endRefreshing];
+        }else{
+            [weakSelf.collectionView reloadData];
+            [weakSelf.collectionView.mj_header endRefreshing];
+        }
+        NSLog(@"Fetch Net Assets Error --> : %@", error);
+    }];
+//        [weakSelf sort:self.arrDataSources];
+//        [weakSelf.collectionView reloadData];
+}];
+//    self.tableView.mj_header.ignoredScrollViewContentInsetTop = KDefaultOffset;
+    //    [self.tableView.mj_header beginRefreshing];
+}
+
 
 //!!!!: ASSETS_UPDATE_NOTIFY Handler
 - (void)assetDidChangeHandle:(NSNotification *)notify {
@@ -368,7 +412,8 @@
     self.isSelectMode = NO;
     [self.collectionView reloadData];
     _addButton.hidden = YES;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.02
+                                                              * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self tabBarAnimationWithHidden:NO];
     });
     //    if (_edgeGesture) {

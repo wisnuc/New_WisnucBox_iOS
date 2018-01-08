@@ -233,6 +233,19 @@
     }
 }
 
+-(void)switchBtnHandleForSync:(UISwitch *)switchBtn{
+    WB_UserService.currentUser.autoBackUp = switchBtn.isOn;
+    [WB_UserService synchronizedCurrentUser];
+    _switchOn = switchBtn.isOn;
+    if(_switchOn) {
+        [SXLoadingView showProgressHUD:@" "];
+        [WB_AppServices startUploadAssets:^{
+            [SXLoadingView hideProgressHUD];
+        }];
+    } else
+        [WB_AppServices.photoUploadManager stop];
+}
+
 
 - (IBAction)cleanBtnClick:(id)sender {
    

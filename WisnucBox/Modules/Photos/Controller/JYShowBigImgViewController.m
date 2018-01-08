@@ -43,6 +43,8 @@
     UICollectionViewFlowLayout *_layout;
     
     id _currentModelForRecord;
+    
+    UIImageView *_rightImageView;
 }
 
 @property (nonatomic) UILabel *titleLabel;
@@ -118,7 +120,9 @@
     }
     [_collectionView setContentOffset:CGPointMake((kViewWidth+kItemMargin)*_indexBeforeRotation, 0)];
     [self performPresentAnimation];
+    WBApplication.statusBarStyle = UIStatusBarStyleLightContent;
 }
+
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -129,9 +133,21 @@
     [self reloadCurrentCell];
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+     WBApplication.statusBarStyle = UIStatusBarStyleDefault;
+}
+
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
+    if (_rightImageView) {
+        if ([self getCurrentPageModel].type == JYAssetTypeImage && [self getCurrentPageModel].type != JYAssetTypeNetImage) {
+            [_rightImageView setHidden:NO];
+        }else if([self getCurrentPageModel].type == JYAssetTypeNetImage) {
+             [_rightImageView setHidden:YES];
+        }
+    }
 //    _layout.minimumLineSpacing = kItemMargin;
 //    _layout.sectionInset = UIEdgeInsetsMake(0, kItemMargin/2, 0, kItemMargin/2);
 //    _layout.itemSize = self.view.bounds.size;
@@ -267,37 +283,37 @@
     UIView *naviView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 64)];
     naviView.backgroundColor = [UIColor clearColor];
     
-    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+//    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
     
-    UIVisualEffectView * btnEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+//    UIVisualEffectView * btnEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
 //    effectView.frame = CGRectMake(0, 0, __kWidth, 64);
 
     UIButton *leftNaviButton = [[UIButton alloc]init];
     [leftNaviButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     [leftNaviButton addTarget:self action:@selector(doneButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
-    [naviView addSubview:btnEffectView];
+//    [naviView addSubview:btnEffectView];
     [naviView addSubview:leftNaviButton];
-    
-    [btnEffectView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(leftNaviButton);
-        make.size.mas_equalTo(CGSizeMake(30, 30));
-    }];
-    btnEffectView.layer.cornerRadius = 15;
-    btnEffectView.layer.masksToBounds = YES;
+
+//    [btnEffectView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.center.equalTo(leftNaviButton);
+//        make.size.mas_equalTo(CGSizeMake(30, 30));
+//    }];
+//    btnEffectView.layer.cornerRadius = 15;
+//    btnEffectView.layer.masksToBounds = YES;
 
     [leftNaviButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(naviView.mas_centerY).offset(10);
         make.left.equalTo(naviView.mas_left).offset(16);
-        make.size.mas_equalTo(CGSizeMake(40, 20));
+        make.size.mas_equalTo(CGSizeMake(24, 24));
     }];
-
+    [leftNaviButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
     _titleLabel = [[UILabel alloc]init];
     _titleLabel.textColor = [UIColor whiteColor];
     _titleLabel.text =  [NSString stringWithFormat:@"%ld/%ld", _currentPage, self.models.count];
     _titleLabel.textAlignment = NSTextAlignmentCenter;
-     UIVisualEffectView * titleEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-    [naviView addSubview:titleEffectView];
+//     UIVisualEffectView * titleEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+//    [naviView addSubview:titleEffectView];
     [naviView addSubview:_titleLabel];
 
     [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -305,12 +321,27 @@
         make.centerY.equalTo(naviView.mas_centerY).offset(10);
     }];
     
-    [titleEffectView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(_titleLabel);
-        make.height.equalTo(_titleLabel.mas_height).offset(5);
-        make.width.equalTo(_titleLabel.mas_width).offset(40);
-    }];
+//    [titleEffectView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.center.equalTo(_titleLabel);
+//        make.height.equalTo(_titleLabel.mas_height).offset(5);
+//        make.width.equalTo(_titleLabel.mas_width).offset(40);
+//    }];
+    UIImageView *rightImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"ic_cloud_off_white"]];
+    [rightImageView setHidden:YES];
+    [naviView addSubview:rightImageView];
     
+    [rightImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_titleLabel.mas_centerY);
+        make.right.equalTo(naviView.mas_right).offset(-16);
+        make.size.mas_equalTo(CGSizeMake(24, 24));
+    }];
+   
+    
+    if ([self getCurrentPageModel].type == JYAssetTypeImage && [self getCurrentPageModel].type != JYAssetTypeNetImage) {
+       [rightImageView setHidden:NO];
+    }
+    
+    _rightImageView = rightImageView;
     self.navView = naviView;
 
     [self.view addSubview:naviView];
@@ -616,5 +647,7 @@
         completion();
     }];
 }
+
+
 
 @end
