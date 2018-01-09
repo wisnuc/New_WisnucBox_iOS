@@ -104,6 +104,9 @@
     if(!isSelectMode){
         [self.chooseSection removeAllObjects];
         [self.choosePhotos removeAllObjects];
+         self.collectionView.mj_header.hidden = NO;
+    }else{
+        self.collectionView.mj_header.hidden = YES;
     }
 }
 
@@ -253,7 +256,6 @@
 
 - (void)initMjRefresh{
     __weak __typeof(self) weakSelf = self;
- 
     self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         if (_isSelectMode) {
             [weakSelf leftBtnClick:_leftBtn];
@@ -378,6 +380,7 @@
 
 //添加 可选视图 左边按钮
 -(void)addLeftBtn{
+    
     if (!_chooseHeadView) {
         _chooseHeadView = [[UIView alloc]initWithFrame:CGRectMake(0, -64, __kWidth, 64)];
         _chooseHeadView.backgroundColor = UICOLOR_RGB(0x03a9f4);
@@ -395,8 +398,10 @@
         [_chooseHeadView addSubview:countLb];
         [_chooseHeadView addSubview:leftBtn];
         [self.navigationController.view addSubview:_chooseHeadView];
+    }else{
+        
     }
-    //    _countLb.text = @"选择照片";
+    _countLb.text = @"选择照片";
     _countLb.font = [UIFont fontWithName:FANGZHENG size:16];
     [UIView animateWithDuration:0.5 animations:^{
         _chooseHeadView.transform = CGAffineTransformTranslate(_chooseHeadView.transform, 0, 64);
@@ -595,8 +600,15 @@
                 needReload = YES;
             }
         }
-        if(needReload)
+        if(needReload){
             [weakSelf.collectionView reloadData];
+        }
+        
+        if (weakSelf.choosePhotos.count == 0) {
+            weakSelf.isSelectMode = NO;
+            [weakSelf leftBtnClick:_leftBtn];
+        }
+        _countLb.text = [NSString stringWithFormat:WBLocalizedString(@"select_count", nil),(unsigned long)weakSelf.choosePhotos.count];
     };
     
     cell.longPressBlock = ^() {
@@ -604,6 +616,19 @@
         weakSelf.isSelectMode = true;
         [weakSelf addLeftBtn];
         weakSelf.addButton.hidden = NO;
+        
+        [weakSelf.choosePhotos addObject:model];
+        __block BOOL containAll = YES;
+        [(NSArray *)weakSelf.arrDataSources[indexPath.section] enumerateObjectsUsingBlock:^(JYAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if(![weakSelf.choosePhotos containsObject:obj]) {
+                containAll = NO;
+                *stop = YES;
+            }
+        }];
+        if(containAll){ [weakSelf.chooseSection addObject:[NSIndexPath indexPathForRow:0 inSection:indexPath.section]];
+        }
+       _countLb.text = [NSString stringWithFormat:WBLocalizedString(@"select_count", nil),(unsigned long)weakSelf.choosePhotos.count];
+       
         [weakSelf.collectionView reloadData];
     };
     
@@ -827,6 +852,12 @@ bool isDecelerating = NO;
         [self.chooseSection removeObject:headView.fmIndexPath];
         [self.choosePhotos removeObjectsInArray:(NSArray *)self.arrDataSources[headView.fmIndexPath.section]];
     }
+    
+    if (self.choosePhotos.count == 0) {
+        self.isSelectMode = NO;
+        [self leftBtnClick:_leftBtn];
+    }
+    _countLb.text = [NSString stringWithFormat:WBLocalizedString(@"select_count", nil),(unsigned long)self.choosePhotos.count];
     [self.collectionView reloadData];
 }
 

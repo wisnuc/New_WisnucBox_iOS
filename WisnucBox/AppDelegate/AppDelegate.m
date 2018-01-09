@@ -99,8 +99,8 @@
     NSArray *tabBarItemsAttributes = @[ dict1, dict2 ];
     tabbar.tabBarItemsAttributes = tabBarItemsAttributes;
     [tabbar.tabBar setBackgroundImage:[UIImage new]];
-    [tabbar.tabBar setShadowImage:[self lineImageWithColor:[UIColor whiteColor]]];
-   
+    [tabbar.tabBar setShadowImage:[UIImage new]];
+    [self dropShadowWithTabbarController:tabbar Offset:CGSizeMake(0, -1) radius:1 color:[UIColor blackColor] opacity:0.3];
     tabbar.tabBar.backgroundColor  = [UIColor colorWithRed:245/255.0f green:245/255.0f blue:245/255.0f alpha:1];
     NSMutableArray *viewControllersMutArr = [[NSMutableArray alloc] initWithObjects:nav1,nav2,nil];
     [tabbar setViewControllers:viewControllersMutArr];

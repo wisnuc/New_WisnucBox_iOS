@@ -89,14 +89,14 @@
         self.userHeaderIV.image = [UIImage imageForName:self.nameLabel.text size:self.userHeaderIV.bounds.size];
     }
     
-    [self.dropDownBtn setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
+    [self.dropDownBtn setEnlargeEdgeWithTop:10 right:5 bottom:5 left:60];
     
     if (WB_UserService.currentUser.isCloudLogin) {
         self.cloudImageView.hidden = NO;
-        [self.dropDownBtn setHidden:YES];
+       
     }else{
         self.cloudImageView.hidden = YES;
-        [self.dropDownBtn setHidden:NO];
+      
     }
 
 //    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -177,7 +177,9 @@
     _isUserTableViewShow = !_isUserTableViewShow;
     @weaky(self);
     if (_isUserTableViewShow) {
+        _userManageDropLabel.text = @"主菜单";
         ((UIButton *)sender).transform = CGAffineTransformMakeRotation(M_PI);
+        [sender setEnlargeEdgeWithTop:5 right:40 bottom:10 left:5];
         [UIView animateWithDuration:0.3 animations:^{
             weak_self.usersTableView.alpha = 1;
             weak_self.userBtn1.alpha = 0;
@@ -185,7 +187,9 @@
             [weak_self.usersTableView reloadData];
         } completion:nil];
     }else{
+        _userManageDropLabel.text = @"账户管理";
         ((UIButton *)sender).transform = CGAffineTransformIdentity;
+        [sender setEnlargeEdgeWithTop:10 right:5 bottom:5 left:60];
         NSMutableArray * tempArr = self.menus;
         self.menus = [NSMutableArray new];
         [_settingTabelView reloadData];

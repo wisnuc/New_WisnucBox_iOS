@@ -10,6 +10,7 @@
 
 @implementation FMLeftUserFooterView{
     UILabel * _label;
+    UIImageView *_imageView;
 }
 
 +(FMLeftUserFooterView *)footerViewWithTouchBlock:(void(^)(void))block{
@@ -25,6 +26,10 @@
     _label.text = @"帐号管理";
     _label.font = [UIFont systemFontOfSize:14];
     _label.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.54];
+    
+    _imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"set"]];
+    _imageView.frame = CGRectMake(16, 17, 24, 24);
+     [self addSubview:_imageView];
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{

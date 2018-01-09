@@ -30,7 +30,7 @@ UITableViewDataSource
     [super viewDidLoad];
     self.title = LeftMenuEquipmentManageString;
     [self.view addSubview:self.tableView];
-    [self addLeftBarButtonWithImage:[UIImage imageNamed:@"back"] andHighlightButtonImage:nil andSEL:@selector(backbtnClick:)];
+
 }
 
 - (void)dealloc{
@@ -39,17 +39,15 @@ UITableViewDataSource
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:UICOLOR_RGB(0x03a9f4)] forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.backgroundColor = UICOLOR_RGB(0x03a9f4);
+    [self.navigationController.navigationBar setBarTintColor:COR1];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
      [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-//    [self.navigationController.navigationItem.leftBarButtonItem setImage:[UIImage imageNamed:@"back"]];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBarTintColor:[UIColor whiteColor]];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName :[UIColor darkTextColor]}];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }

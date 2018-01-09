@@ -7,7 +7,7 @@
 //
 
 #import "NavViewController.h"
-//#import "UIView+dropshadow.h"
+#import "UIView+dropshadow.h"
 
 @interface NavViewController ()
 @property (nonatomic, assign) id currentDelegate;
@@ -23,17 +23,19 @@
     self.currentDelegate = self.interactivePopGestureRecognizer.delegate;
 //    self.transferNavigationBarAttributes = YES;
     self.delegate = (id<UINavigationControllerDelegate>)self;
+     [self hideUnderLine];
     self.navigationBar.translucent = NO;
-    [self useClipsToBoundsRemoveBlackLine];
+   
+    [self.navigationBar dropShadowWithOffset:CGSizeMake(0, 1) radius:1 color:[UIColor blackColor] opacity:0.3];
 }
 
 
 -(void)useClipsToBoundsRemoveBlackLine
 {
-    if ([self.navigationController.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)])
+    if ([self.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)])
     {
         
-        NSArray *list=self.navigationController.navigationBar.subviews;
+        NSArray *list=self.navigationBar.subviews;
         
         for (id obj in list)
         {
@@ -53,9 +55,32 @@
             }
         }
     }
-    //设置移除黑线
-//    [self.navigationController.navigationBar setShadowImage:[UIImage new]]; 
+    self.navigationBar.clipsToBounds = YES;  
+    [self.navigationBar setShadowImage:[UIImage new]];
+
 }
+- (void)hideUnderLine
+{
+    UIImageView *imageView = [self findUnderLineWithView:self.navigationBar];
+    if (imageView) {
+        [imageView setHidden:YES];
+    }
+}
+
+- (UIImageView *)findUnderLineWithView:(UIView *)view
+{
+    if (view.frame.size.height <= 1.0 && [view isKindOfClass:[UIImageView class]]) {
+        return (UIImageView *)view;
+    }
+    for (UIView *v in view.subviews) {
+        UIImageView *imageView = [self findUnderLineWithView:v];
+        if (imageView) {
+            return imageView;
+        }
+    }
+    return nil;
+}
+
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
@@ -83,9 +108,7 @@
 //    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back_gray"] style:UIBarButtonItemStyleDone target:self action:@selector(backBtnClick)];
     
 //    self.navigationItem.leftItemsSupplementBackButton = YES;
-    if ([self.navigationBar.barTintColor isEqual:COR1]) {
-        NSLog(@"🌶");
-    }
+    
     //左按钮
     UIButton *leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 24, 24)];
     [leftBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];//设置按钮点击事件
@@ -93,7 +116,11 @@
     [leftBtn setImage:[UIImage imageNamed:@"back_gray"] forState:UIControlStateNormal];
     [leftBtn setImage:[UIImage imageNamed:@"back_grayhighlight"] forState:UIControlStateHighlighted];
     [leftBtn setEnlargeEdgeWithTop:8 right:8 bottom:8 left:10];
-    //设置按钮正常状态图片
+    
+    if ([self.navigationBar.barTintColor isEqual:COR1]) {
+       [leftBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    }
+    
     UIBarButtonItem *leftBarButon = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
 //    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
 //    negativeSpacer.width = -16 - 2*([UIScreen mainScreen].scale - 1);//这个数值可以根据情况自由变化

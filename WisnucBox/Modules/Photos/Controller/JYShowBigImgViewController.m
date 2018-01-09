@@ -12,6 +12,7 @@
 #import "JYConst.h"
 #import "JYAsset.h"
 #import "PHPhotoLibrary+JYEXT.h"
+#import "PHAsset+JYEXT.h"
 
 @interface JYShowBigImgViewController ()<UIScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 {
@@ -50,6 +51,12 @@
 @property (nonatomic) UILabel *titleLabel;
 
 @property (nonatomic) UIView *navView;
+
+@property (strong, nonatomic) JYProcessView * pv;
+
+@property (nonatomic, assign) BOOL isDownloading;
+
+@property (nonatomic, copy) void(^downloadBlock)(BOOL success ,UIImage *image);
 
 @end
 
@@ -101,7 +108,11 @@
     [_panGesture setMinimumNumberOfTouches:1];
     [_panGesture setMaximumNumberOfTouches:1];
     [self.view addGestureRecognizer:_panGesture];
+    
+    UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longGestureRecognized:)];
+    [self.view addGestureRecognizer:longGesture];
     [self initNavBtns];
+
 }
 
 - (void)back:(id)btn
@@ -145,7 +156,7 @@
         if ([self getCurrentPageModel].type == JYAssetTypeImage && [self getCurrentPageModel].type != JYAssetTypeNetImage) {
             [_rightImageView setHidden:NO];
         }else if([self getCurrentPageModel].type == JYAssetTypeNetImage) {
-             [_rightImageView setHidden:YES];
+            [_rightImageView setHidden:YES];
         }
     }
 //    _layout.minimumLineSpacing = kItemMargin;
@@ -251,6 +262,171 @@
     }
 }
 
+- (void)longGestureRecognized:(UILongPressGestureRecognizer *)sender{
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        [self readyToShare];
+    }
+}
+
+- (void)readyToShare{
+    NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
+    LCActionSheet *actionSheet = [[LCActionSheet alloc] initWithTitle:nil
+                                                             delegate:nil
+                                                    cancelButtonTitle:cancelTitle
+                                                otherButtonTitleArray:@[WBLocalizedString(@"share", nil)]];
+    actionSheet.clickedHandle = ^(LCActionSheet *actionSheet, NSInteger buttonIndex){
+        if (buttonIndex == 1) {
+            [self shareToOtherApp];
+        }
+    };
+    actionSheet.scrolling          = YES;
+    actionSheet.buttonHeight       = 60.0f;
+    actionSheet.visibleButtonCount = 3.6f;
+    [actionSheet show];
+}
+
+- (void)shareToOtherApp{
+    //准备照片
+    @weaky(self);
+    [self clickDownloadWithShare:YES andCompleteBlock:^(NSArray *images) {
+        UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:images applicationActivities:nil];
+        //初始化回调方法
+        UIActivityViewControllerCompletionWithItemsHandler myBlock = ^(NSString *activityType,BOOL completed,NSArray *returnedItems,NSError *activityError)
+        {
+            NSLog(@"activityType :%@", activityType);
+            if (completed)
+            {
+                NSLog(@"share completed");
+               
+            }
+            else
+            {
+                NSLog(@"share cancel");
+            }
+        };
+        
+        // 初始化completionHandler，当post结束之后（无论是done还是cancel）该blog都会被调用
+        activityVC.completionWithItemsHandler = myBlock;
+        
+        //关闭系统的一些activity类型 UIActivityTypeAirDrop 屏蔽aridrop
+        activityVC.excludedActivityTypes = @[];
+        
+        [weak_self presentViewController:activityVC animated:YES completion:nil];
+    }];
+}
+
+- (void)clickDownloadWithShare:(BOOL)share andCompleteBlock:(void(^)(NSArray * images))block{
+    NSArray * chooseItems = [NSArray arrayWithObject:[self getCurrentPageModel]];
+    if (!_pv)
+        _pv = [JYProcessView processViewWithType:ProcessTypeLine];
+    _pv.descLb.text = share?WBLocalizedString(@"preparing_photos", nil):WBLocalizedString(@"downloading_file", nil);
+    _pv.subDescLb.text = [NSString stringWithFormat:@"%lu个项目 ",(unsigned long)chooseItems.count];
+    [_pv show];
+    _isDownloading = YES;
+    _pv.cancleBlock = ^(){
+        _isDownloading = NO;
+    };
+    [self downloadItems:chooseItems withShare:share andCompleteBlock:block];
+
+}
+
+-(void)downloadItems:(NSArray *)items withShare:(BOOL)isShare andCompleteBlock:(void(^)(NSArray * images))block{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        @autoreleasepool {
+            __block float complete = 0.f;
+            __block int successCount = 0;
+            __block int finish = 0;
+            __block NSUInteger allCount = items.count;
+            @weaky(self);
+            NSMutableArray * tempDownArr = [NSMutableArray arrayWithCapacity:0];
+            self.downloadBlock = ^(BOOL success ,UIImage *image){
+                complete ++;finish ++;
+                if (successCount) successCount++;
+                CGFloat progress =  complete/allCount;
+                if (image && isShare) [tempDownArr addObject:image];
+                [weak_self.pv setValueForProcess:progress];
+                if (items.count > complete) {
+                    if (weak_self.isDownloading) {
+                        [weak_self downloadItem:items[finish] withShare:isShare withCompleteBlock: weak_self.downloadBlock];
+                    }
+                }else{
+                    _isDownloading = NO;
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [weak_self.pv dismiss];
+                        if (!isShare)
+                            [SXLoadingView showAlertHUD:WBLocalizedString(@"download_completed", nil) duration:1];
+                        if (block) block([tempDownArr copy]);
+                    });
+                }
+            };
+            if (_isDownloading) {
+                [self downloadItem:items[0] withShare:isShare withCompleteBlock:self.downloadBlock];
+            }
+        }
+    });
+}
+
+-(void)downloadItem:(JYAsset *)item withShare:(BOOL)share withCompleteBlock:(void(^)(BOOL isSuccess,UIImage * image))block{
+    if ([item isKindOfClass:[WBAsset class]]) {
+        NSLog(@"%lu",(unsigned long)item.type);
+        if (item.type == JYAssetTypeNetImage) {
+            __block id<SDWebImageOperation> operation =  [WB_NetService getHighWebImageWithHash:[(WBAsset *)item fmhash] completeBlock:^(NSError *error, UIImage *img) {
+                if (error) {
+                    NSLog(@"%@",error);
+                    // TODO: Load Error Image
+                    block(NO,nil);
+                } else {
+                    if (img) {
+                        if(!share){
+                            [PHPhotoLibrary saveImageToAlbum:img completion:^(BOOL isSuccess, PHAsset * asset) {
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    block(isSuccess,img);
+                                });
+                            }];
+                        }else{
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                block(YES,img);
+                            });
+                        }
+                    }else
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            block(NO,nil);
+                        });
+                    NSLog(@"%@",img);
+                }
+                [operation cancel];
+                operation = nil;
+            }];
+        }
+    }else{
+        NSLog(@"%@",item.asset) ;
+        if (item.asset) {
+            if (!share) {
+                [item.asset getFile:^(NSError *error, NSString *filePath) {
+                    if (item.type == JYAssetTypeImage || item.type == JYAssetTypeLivePhoto) {
+                        UIImage * image;
+                        if (filePath && (image = [UIImage imageWithContentsOfFile:filePath])) {
+                            [PHPhotoLibrary saveImageToAlbum:image completion:^(BOOL isSuccess, PHAsset * asset) {
+                                [[NSFileManager defaultManager]removeItemAtPath:filePath error:nil];//删除image
+                                block(isSuccess,image);
+                            }];
+                        }else block(NO,nil);
+                    }
+                }];
+            }else{
+                if (item.type == JYAssetTypeImage || item.type == JYAssetTypeLivePhoto) {
+                    [PHPhotoLibrary requestOriginalImageSyncForAsset:item.asset completion:^(NSError *error, UIImage *image, NSDictionary *dic) {
+                        if(error) return block(NO, nil);
+                        block(YES, image);
+                    }];
+                }
+            }
+        }else
+            block(NO,nil);
+    }
+}
+
+
 #pragma mark - 设备旋转
 - (void)deviceOrientationChanged:(NSNotification *)notify
 {
@@ -326,13 +502,29 @@
 //        make.height.equalTo(_titleLabel.mas_height).offset(5);
 //        make.width.equalTo(_titleLabel.mas_width).offset(40);
 //    }];
+    
+   
+    UIButton *rightNaviButton = [[UIButton alloc]init];
+    [rightNaviButton setImage:[UIImage imageNamed:@"more_white"] forState:UIControlStateNormal];
+    [rightNaviButton addTarget:self action:@selector(readyToShare) forControlEvents:UIControlEventTouchUpInside];
+
+    [naviView addSubview:rightNaviButton];
+
+    [rightNaviButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_titleLabel.mas_centerY);
+        make.right.equalTo(naviView.mas_right).offset(-10);
+        make.size.mas_equalTo(CGSizeMake(24, 24));
+    }];
+    
+    [rightNaviButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
+    
     UIImageView *rightImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"ic_cloud_off_white"]];
     [rightImageView setHidden:YES];
     [naviView addSubview:rightImageView];
     
     [rightImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_titleLabel.mas_centerY);
-        make.right.equalTo(naviView.mas_right).offset(-16);
+        make.right.equalTo(rightNaviButton.mas_left).offset(-16);
         make.size.mas_equalTo(CGSizeMake(24, 24));
     }];
    

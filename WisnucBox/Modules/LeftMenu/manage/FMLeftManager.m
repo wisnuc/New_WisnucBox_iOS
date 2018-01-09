@@ -124,11 +124,27 @@
 -(void)LeftMenuViewClickUserTable:(WBUser *)info{
     [SXLoadingView showProgressHUD:@"正在切换"];
     [self _hiddenMenu];
-    
+    if (WB_UserService.currentUser.isCloudLogin && IsEquallString(info.cloudToken, WB_UserService.currentUser.cloudToken)) {
+        [SXLoadingView hideProgressHUD];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [WB_UserService logoutUser];
+            [WB_AppServices rebulid];
+            [WB_UserService setCurrentUser:info];
+            [WB_UserService synchronizedCurrentUser];
+            
+            AppDelegate * app = (AppDelegate *)[UIApplication sharedApplication].delegate ;
+            app.window.rootViewController = nil;
+            [app.window resignKeyWindow];
+            [app.window removeFromSuperview];
+            [MyAppDelegate initRootVC];
+            [SXLoadingView showAlertHUD:@"切换成功" duration:1.2];
+        });
+        return;
+    }
 #warning user change login
 //    @weaky(MyAppDelegate);
     [[FMCheckManager shareCheckManager] beginSearchingWithBlock:^(NSArray *discoveredServers) {
-        
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             BOOL canFindDevice = NO;
             NSLog(@"😁😁😁😁%@",discoveredServers);
@@ -199,6 +215,7 @@
         if (!WB_UserService.currentUser.isCloudLogin) {
             vc = [[WBStationManageRootViewController alloc]init];
             if ([selectVC isKindOfClass:[NavViewController class]]) {
+                [selectVC.navigationBar setBarTintColor:COR1];
                 [selectVC  pushViewController:vc animated:YES];
             }
         }else{

@@ -19,7 +19,6 @@
     [super viewDidLoad];
     self.title = WBLocalizedString(@"modify_equipment_label", nil);
     self.renameTextField.text = _stationName;
-    [self addLeftBarButtonWithImage:[UIImage imageNamed:@"back"] andHighlightButtonImage:nil andSEL:@selector(backbtnClick:)];
     UIButton * rightButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 24)];
     rightButton.titleLabel.font = [UIFont systemFontOfSize:16];
     [rightButton setTitle:WBLocalizedString(@"finish_text", nil) forState:UIControlStateNormal];
@@ -31,18 +30,18 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:UICOLOR_RGB(0x03a9f4)] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBarTintColor:COR1];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor darkTextColor]}];
+    [self.navigationController.navigationBar setBarTintColor:[UIColor whiteColor]];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName :[UIColor darkTextColor]}];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }
-
 - (void)backbtnClick:(UIButton *)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }

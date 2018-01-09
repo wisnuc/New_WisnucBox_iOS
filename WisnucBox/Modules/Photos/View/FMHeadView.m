@@ -30,6 +30,7 @@
         [_choosebtn setBackgroundImage:[UIImage imageNamed:[self getImageWithChoose:_isChoose]] forState:UIControlStateNormal];
         [_contentView addSubview:_titleLb];
         [_contentView addSubview:_choosebtn];
+        [_choosebtn setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
         [self addSubview:_contentView];
         
         [_contentView mas_makeConstraints:^(MASConstraintMaker *make) {

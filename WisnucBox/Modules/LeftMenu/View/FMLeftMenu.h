@@ -38,6 +38,7 @@
 //@property (weak, nonatomic) IBOutlet UIProgressView *backupProgressView;
 //@property (weak, nonatomic) IBOutlet UILabel *progressLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *userManageDropLabel;
 
 @property (nonatomic) NSMutableArray * usersDatasource;
 
