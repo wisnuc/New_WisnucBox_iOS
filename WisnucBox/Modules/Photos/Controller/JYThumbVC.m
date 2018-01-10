@@ -24,7 +24,7 @@
 #import "JYProcessView.h"
 #import "AppDelegate.h"
 
-@interface JYThumbVC ()<UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UIViewControllerPreviewingDelegate, JYShowBigImgViewControllerDelegate, FMHeadViewDelegate, floatMenuDelegate> {
+@interface JYThumbVC ()<UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UIViewControllerPreviewingDelegate, JYShowBigImgViewControllerDelegate, FMHeadViewDelegate, floatMenuDelegate,UICollectionViewDataSourcePrefetching> {
     NSInteger _currentScale;
     
 }
@@ -491,6 +491,7 @@
 
 - (void)initCollectionView
 {
+    
     _currentScale = 3;
     TYDecorationSectionLayout *_fmCollectionViewLayout = [[TYDecorationSectionLayout alloc]init];
     _fmCollectionViewLayout.alternateDecorationViews = YES;
@@ -513,6 +514,8 @@
         [self registerForPreviewingWithDelegate:self sourceView:self.collectionView];
     [self.collectionView reloadData];
     
+//    self.collectionView.prefetchDataSource = self;
+//    self.collectionView.prefetchingEnabled = YES;
     if(_showIndicator) [self initIndicator];
 }
 
@@ -571,7 +574,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+
     JYCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JYCollectionViewCell" forIndexPath:indexPath];
     
     JYAsset *model;
@@ -707,6 +710,62 @@
     if (vc) {
         [self presentViewController:vc animated:YES completion:nil];
     }
+}
+
+- (void)collectionView:(UICollectionView *)collectionView prefetchItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths{
+//    for (NSIndexPath *indexPath in indexPaths) {
+//        NSLog(@"🌶 %ld/%ld",indexPath.section,indexPath.row);
+//        
+//        JYAsset *model;
+//        model = ((NSMutableArray *)self.arrDataSources[indexPath.section])[indexPath.row];
+////        NSLog(@"%@",model);
+////        if (model) {
+//  JYCollectionViewCell * cell = (JYCollectionViewCell *)[self collectionView:collectionView cellForItemAtIndexPath:indexPath];//
+////     UICollectionViewCell *collectionViewCell  =[collectionView cellForItemAtIndexPath:indexPath];
+////        JYCollectionViewCell *cell = (JYCollectionViewCell *)collectionViewCell;
+//        NSLog(@"🌹%@",cell);
+//        CGSize size;
+//        size.width = GetViewWidth(cell) * 1.7 ;
+//        size.height = GetViewHeight(cell) * 1.7;
+//        if(model.asset)
+//            cell.identifier = model.asset.localIdentifier;
+//        else
+//            cell.identifier = [(WBAsset *)model fmhash];
+//        cell.imageView.image = nil;
+//        if(model.asset)
+//            cell.imageRequestID = [PHPhotoLibrary requestImageForAsset:model.asset size:size completion:^(UIImage *image, NSDictionary *info) {
+//                if(!cell) return;
+//                if ([cell.identifier isEqualToString:model.asset.localIdentifier]) {
+//                    cell.imageView.image = image;
+//                }
+//                if (![[info objectForKey:PHImageResultIsDegradedKey] boolValue]) {
+//                    cell.imageRequestID = -1;
+//                }
+//            }];
+//        else {
+//            id <SDWebImageOperation> thumbnailRequestOperation = [WB_NetService getThumbnailWithHash:[(WBAsset *)model fmhash] complete:^(NSError *error, UIImage *img) {
+//                if(!cell) return;
+//                if (!error && [cell.identifier isEqualToString:[(WBAsset *)model fmhash]]) {
+//                    cell.imageView.image = img;
+//                }else
+//                    NSLog(@"get thumbnail error ---> : %@", error);
+//                cell.thumbnailRequestOperation = nil;
+//            }];
+//            cell.thumbnailRequestOperation = thumbnailRequestOperation;
+//        }
+////     }
+//   }
+}
+
+-(void)collectionView:(UICollectionView *)collectionView cancelPrefetchingForItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
+{
+//      for (NSIndexPath *indexPath in indexPaths) {
+//            JYCollectionViewCell * cell = (JYCollectionViewCell *)[self collectionView:collectionView cellForItemAtIndexPath:indexPath];
+//          if (cell.thumbnailRequestOperation){
+//              [cell.thumbnailRequestOperation cancel];
+//              cell.thumbnailRequestOperation = nil;
+//          }
+//      }
 }
 
 - (CGSize)getSize:(JYAsset *)model

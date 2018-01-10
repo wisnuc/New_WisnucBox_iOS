@@ -14,9 +14,8 @@
 
 @interface JYCollectionViewCell ()
 
-@property (nonatomic, copy) NSString *identifier;
-@property (nonatomic, assign) PHImageRequestID imageRequestID;
-@property (nonatomic, weak) id<SDWebImageOperation> thumbnailRequestOperation;
+
+
 @end
 
 @implementation JYCollectionViewCell
@@ -28,7 +27,7 @@
 -(void)prepareForReuse{
     [super prepareForReuse];
     self.imageView.backgroundColor = UICOLOR_RGB(0xf5f5f5);
-    self.imageView.image = [UIImage imageNamed:@"F5F5F5.png"];
+//    self.imageView.image = [UIImage imageNamed:@"F5F5F5.png"];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -38,6 +37,7 @@
         longGesture.minimumPressDuration = 0.5f;
         [self.contentView addGestureRecognizer:longGesture];
         self.clipsToBounds = YES;
+        self.opaque = NO;
     }
     return self;
 }
@@ -90,7 +90,7 @@
         _imageView = [[UIImageView alloc] init];
         _imageView.contentMode = UIViewContentModeScaleAspectFill;
         _imageView.clipsToBounds = YES;
-        _imageView.image = [UIImage imageNamed:@"F5F5F5.png"];
+//        _imageView.image = [UIImage imageNamed:@"F5F5F5.png"];
         self.contentView.clipsToBounds = YES;
         [self.contentView addSubview:_imageView];
         

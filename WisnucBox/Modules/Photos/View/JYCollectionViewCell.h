@@ -27,6 +27,11 @@
 @property (nonatomic, strong) UIColor *maskColor;
 @property (nonatomic, assign) BOOL showMask;
 
+@property (nonatomic, copy) NSString *identifier;
+
+@property (nonatomic, assign) PHImageRequestID imageRequestID;
+@property (nonatomic, weak) id<SDWebImageOperation> thumbnailRequestOperation;
+
 @property (nonatomic, copy) void (^selectedBlock)(BOOL);
 @property (nonatomic, copy) void (^longPressBlock)(void);
 
