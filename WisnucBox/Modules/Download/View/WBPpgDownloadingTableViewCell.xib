@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="72" id="KGk-i7-Jjw" customClass="WBPpgDownloadingTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="72"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="71.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="LmP-Yv-ukw">
+                        <rect key="frame" x="72" y="35" width="176" height="2"/>
+                        <color key="progressTintColor" red="0.01176470588" green="0.66274509800000003" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </progressView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="file_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="tU8-J4-Dk8">
+                        <rect key="frame" x="16" y="23" width="24" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="24" id="3Wl-Hc-L72"/>
+                            <constraint firstAttribute="height" constant="24" id="KUw-ni-ylO"/>
+                        </constraints>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XZ8-S8-eFH">
+                        <rect key="frame" x="280" y="24" width="24" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="asm-uw-sam"/>
+                            <constraint firstAttribute="width" constant="24" id="jd1-DO-F63"/>
+                        </constraints>
+                        <state key="normal" image="more.png"/>
+                        <connections>
+                            <action selector="moreButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="JD4-Gs-LT4"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ATf-ss-z4t">
+                        <rect key="frame" x="72" y="31" width="108" height="0.0"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.1267565356" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T3R-5O-tZJ">
+                        <rect key="frame" x="188" y="31" width="60" height="0.0"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="LL2-oC-U65"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" white="0.46095792452494305" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bXM-Zx-g3i">
+                        <rect key="frame" x="72" y="45" width="0.0" height="0.0"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="0.4609579245" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNa-VT-wgK">
+                        <rect key="frame" x="248" y="45" width="0.0" height="0.0"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="0.4609579245" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="LmP-Yv-ukw" firstAttribute="top" secondItem="ATf-ss-z4t" secondAttribute="bottom" constant="4" id="6jg-cF-2es"/>
+                    <constraint firstItem="tU8-J4-Dk8" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="7za-Xe-rK2"/>
+                    <constraint firstItem="RNa-VT-wgK" firstAttribute="top" secondItem="LmP-Yv-ukw" secondAttribute="bottom" constant="8" id="A96-PI-iCf"/>
+                    <constraint firstItem="bXM-Zx-g3i" firstAttribute="leading" secondItem="LmP-Yv-ukw" secondAttribute="leading" id="AZ1-xa-g7P"/>
+                    <constraint firstItem="bXM-Zx-g3i" firstAttribute="top" secondItem="LmP-Yv-ukw" secondAttribute="bottom" constant="8" id="GZ5-T2-nia"/>
+                    <constraint firstItem="LmP-Yv-ukw" firstAttribute="leading" secondItem="ATf-ss-z4t" secondAttribute="leading" id="Mpp-pd-Tee"/>
+                    <constraint firstItem="RNa-VT-wgK" firstAttribute="trailing" secondItem="LmP-Yv-ukw" secondAttribute="trailing" id="PCn-Vr-YeG"/>
+                    <constraint firstItem="tU8-J4-Dk8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="WNk-7Z-0TV"/>
+                    <constraint firstItem="T3R-5O-tZJ" firstAttribute="trailing" secondItem="LmP-Yv-ukw" secondAttribute="trailing" id="YcU-SJ-YI3"/>
+                    <constraint firstItem="LmP-Yv-ukw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="72" id="alO-hv-Uow"/>
+                    <constraint firstItem="T3R-5O-tZJ" firstAttribute="leading" secondItem="ATf-ss-z4t" secondAttribute="trailing" constant="8" id="cSg-Mi-M3S"/>
+                    <constraint firstItem="XZ8-S8-eFH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="oNx-Mw-CM0"/>
+                    <constraint firstItem="LmP-Yv-ukw" firstAttribute="top" secondItem="T3R-5O-tZJ" secondAttribute="bottom" constant="4" id="q9S-rP-5Vq"/>
+                    <constraint firstAttribute="trailing" secondItem="XZ8-S8-eFH" secondAttribute="trailing" constant="16" id="ssH-Wx-hHh"/>
+                    <constraint firstAttribute="trailing" secondItem="LmP-Yv-ukw" secondAttribute="trailing" constant="72" id="vAL-Jv-Pbn"/>
+                    <constraint firstItem="LmP-Yv-ukw" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="xeC-As-q8q"/>
+                </constraints>
+            </tableViewCellContentView>
+            <inset key="separatorInset" minX="76" minY="0.0" maxX="0.0" maxY="0.0"/>
+            <connections>
+                <outlet property="leftImageView" destination="tU8-J4-Dk8" id="GST-jJ-Q17"/>
+                <outlet property="moreButton" destination="XZ8-S8-eFH" id="3nS-TO-aRc"/>
+                <outlet property="nameLabel" destination="ATf-ss-z4t" id="F3b-2O-6jc"/>
+                <outlet property="progressLabel" destination="RNa-VT-wgK" id="i2n-rn-gvJ"/>
+                <outlet property="progressView" destination="LmP-Yv-ukw" id="mYK-2Y-Zjw"/>
+                <outlet property="sizeLabel" destination="bXM-Zx-g3i" id="BHY-8m-Chd"/>
+                <outlet property="speedLabel" destination="T3R-5O-tZJ" id="qie-zB-qCy"/>
+            </connections>
+            <point key="canvasLocation" x="35" y="86"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="file_icon.png" width="36" height="36"/>
+        <image name="more.png" width="24" height="24"/>
+    </resources>
+</document>

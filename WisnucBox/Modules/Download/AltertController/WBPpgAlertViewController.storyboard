@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Ppg Alert View Controller-->
+        <scene sceneID="odo-An-7iv">
+            <objects>
+                <viewController storyboardIdentifier="WBPpgAlertViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9Ag-A5-APh" customClass="WBPpgAlertViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="F6m-HM-87k"/>
+                        <viewControllerLayoutGuide type="bottom" id="SGf-n6-YDG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wrg-s7-uCU">
+                        <rect key="frame" x="0.0" y="0.0" width="240" height="220"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="85f-Mk-0yi">
+                                <rect key="frame" x="16" y="16" width="0.0" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="KDZ-Hs-MQQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <color key="textColor" white="0.12675653563605416" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OcU-T5-PnE">
+                                <rect key="frame" x="140" y="184" width="30" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="MI2-sS-GkE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.01176470588" green="0.66274509800000003" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelButtonClick:" destination="9Ag-A5-APh" eventType="touchUpInside" id="8uy-Zp-yq1"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9U4-aU-uZ0">
+                                <rect key="frame" x="194" y="184" width="30" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="I6g-oX-qQv"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.01176470588" green="0.66274509800000003" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="confirmButtonClick:" destination="9Ag-A5-APh" eventType="touchUpInside" id="1OO-BR-9Zr"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="v5u-9m-WyT">
+                                <rect key="frame" x="16" y="44" width="208" height="131"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ilJ-8l-MNB">
+                                <rect key="frame" x="200" y="11" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="lRF-lJ-be7"/>
+                                </constraints>
+                                <state key="normal" image="ic_content_paste.png"/>
+                                <connections>
+                                    <action selector="magnetPastButtonClick:" destination="9Ag-A5-APh" eventType="touchUpInside" id="dtt-a9-STN"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="v5u-9m-WyT" firstAttribute="top" secondItem="ilJ-8l-MNB" secondAttribute="bottom" constant="9" id="9L1-GH-VZa"/>
+                            <constraint firstAttribute="trailing" secondItem="9U4-aU-uZ0" secondAttribute="trailing" constant="16" id="DJs-xv-eSo"/>
+                            <constraint firstItem="85f-Mk-0yi" firstAttribute="top" secondItem="F6m-HM-87k" secondAttribute="bottom" constant="16" id="ScG-vI-THp"/>
+                            <constraint firstItem="9U4-aU-uZ0" firstAttribute="leading" secondItem="OcU-T5-PnE" secondAttribute="trailing" constant="24" id="VoN-L3-ime"/>
+                            <constraint firstItem="9U4-aU-uZ0" firstAttribute="centerY" secondItem="OcU-T5-PnE" secondAttribute="centerY" id="Ze2-Ue-iJn"/>
+                            <constraint firstItem="v5u-9m-WyT" firstAttribute="centerY" secondItem="wrg-s7-uCU" secondAttribute="centerY" id="dlj-mL-gMd"/>
+                            <constraint firstItem="v5u-9m-WyT" firstAttribute="leading" secondItem="wrg-s7-uCU" secondAttribute="leading" constant="16" id="dq3-bF-0vx"/>
+                            <constraint firstItem="v5u-9m-WyT" firstAttribute="centerX" secondItem="wrg-s7-uCU" secondAttribute="centerX" id="pSO-zH-frd"/>
+                            <constraint firstAttribute="trailing" secondItem="ilJ-8l-MNB" secondAttribute="trailing" constant="16" id="qd6-Tt-U5K"/>
+                            <constraint firstItem="SGf-n6-YDG" firstAttribute="top" secondItem="9U4-aU-uZ0" secondAttribute="bottom" constant="16" id="vaI-UJ-1O1"/>
+                            <constraint firstAttribute="trailing" secondItem="v5u-9m-WyT" secondAttribute="trailing" constant="16" id="vcW-1J-EY1"/>
+                            <constraint firstItem="85f-Mk-0yi" firstAttribute="leading" secondItem="wrg-s7-uCU" secondAttribute="leading" constant="16" id="vqT-I9-geP"/>
+                            <constraint firstItem="OcU-T5-PnE" firstAttribute="top" secondItem="v5u-9m-WyT" secondAttribute="bottom" constant="9" id="xCo-oy-5og"/>
+                        </constraints>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="240" height="220"/>
+                    <size key="freeformSize" width="240" height="220"/>
+                    <connections>
+                        <outlet property="cancelButton" destination="OcU-T5-PnE" id="fcx-5U-ixb"/>
+                        <outlet property="confirmButton" destination="9U4-aU-uZ0" id="4Av-Mf-8vA"/>
+                        <outlet property="textView" destination="v5u-9m-WyT" id="vSq-Ef-dtm"/>
+                        <outlet property="titleLabel" destination="85f-Mk-0yi" id="vdi-iI-v9F"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Sc-rt-eoB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="246.40000000000001" y="135.832083958021"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="ic_content_paste.png" width="24" height="24"/>
+    </resources>
+</document>

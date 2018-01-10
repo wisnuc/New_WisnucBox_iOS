@@ -40,7 +40,7 @@
 
 #define BackUpAssetDirName @"上传的照片"
 #define BackUpFilesDirName @"上传的文件"
-
+#define BackUpPpgDirName @"Download"
 
 
 #define kSambaSwich @"SambaSwich"
@@ -76,6 +76,7 @@
 
 #define LeftMenuTransmissionManageString WBLocalizedString(@"transmission_manage", nil)
 
+#define LeftMenuPpgManageString WBLocalizedString(@"download_manage", nil)
 
 #define LeftMenuSettingString WBLocalizedString(@"setting", nil)
 #define LeftMenuEquipmentManageString WBLocalizedString(@"equipment_manage", nil)

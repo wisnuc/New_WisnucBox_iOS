@@ -18,6 +18,7 @@
 #import "WBInviteWechatViewController.h"
 #import "FMCheckManager.h"
 #import "GCDAsyncSocket.h"
+#import "WBppgViewController.h"
 
 @interface FMLeftManager ()<FMLeftMenuDelegate>
 
@@ -232,6 +233,13 @@
 //        }else{
 //            [SXLoadingView showProgressHUDText:WBLocalizedString(@"operation_not_support", nil) duration:1.5];
 //        }
+    }
+    
+    else if (IsEquallString(title,LeftMenuPpgManageString)){
+        vc = [[WBppgViewController alloc]init];
+        if ([selectVC isKindOfClass:[NavViewController class]]) {
+            [selectVC  pushViewController:vc animated:YES];
+        }
     }
     
     else if (IsEquallString(title, LeftMenuSettingString)){
