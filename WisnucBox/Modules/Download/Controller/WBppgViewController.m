@@ -79,7 +79,7 @@ UITableViewDataSource
            [self.timer fire];
         }else{
             UILabel *label =  [[UILabel alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 80)];
-            label.text = @"BT下载服务已关闭";
+            label.text = @"下载服务已关闭";
             label.textColor = COR1;
             label.textAlignment = NSTextAlignmentCenter;
             self.tableView.tableFooterView =label;
@@ -110,7 +110,7 @@ UITableViewDataSource
                     NSLog(@"%@",request.responseJsonObject);
                    
                     NSString *PpgId = requestDic[@"PpgId"];
-                    [weak_self startGetMagnetDownloadInfoWithPpgId:PpgId];
+                    [weak_self startGetPpgDownloadInfoWithPpgId:PpgId];
                 } failure:^(__kindof JYBaseRequest *request) {
                     NSLog(@"%@",request.error);
                     NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
@@ -126,7 +126,7 @@ UITableViewDataSource
     }
 }
 
-- (void)startGetMagnetDownloadInfoWithPpgId:(NSString *)PpgId{
+- (void)startGetPpgDownloadInfoWithPpgId:(NSString *)PpgId{
 //    if (PpgId.length >0) {
 //
 //    }

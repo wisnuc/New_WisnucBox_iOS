@@ -243,7 +243,6 @@
     PHFetchOptions * option = [[PHFetchOptions alloc]init];
     option.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
     option.includeHiddenAssets = YES;
-    option.includeAssetSourceTypes = PHAssetSourceTypeNone;
     PHFetchResult<PHAsset *> * lastresult = [PHAsset fetchAssetsWithOptions:option];
     [lastresult enumerateObjectsUsingBlock:^(PHAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [tempDic setObject:obj forKey:obj.localIdentifier];

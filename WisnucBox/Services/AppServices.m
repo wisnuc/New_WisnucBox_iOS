@@ -22,6 +22,7 @@
 #import "UserModel.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "FMCheckManager.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 
 @interface AppServices ()
 @end
@@ -968,11 +969,12 @@ static BOOL needRestart = NO;
     [self.uploadingQueue enumerateObjectsUsingBlock:^(WBUploadModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [obj cancel];
     }];
-    [self.manager.session getAllTasksWithCompletionHandler:^(NSArray<__kindof NSURLSessionTask *> * _Nonnull tasks) {
-        [tasks enumerateObjectsUsingBlock:^(__kindof NSURLSessionTask * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [obj cancel];
+    if([[UIDevice currentDevice].systemVersion floatValue] > 9.0)
+        [self.manager.session getAllTasksWithCompletionHandler:^(NSArray<__kindof NSURLSessionTask *> * _Nonnull tasks) {
+            [tasks enumerateObjectsUsingBlock:^(__kindof NSURLSessionTask * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [obj cancel];
+            }];
         }];
-    }];
 }
 
 - (void)destroy {

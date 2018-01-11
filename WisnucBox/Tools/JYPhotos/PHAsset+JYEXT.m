@@ -92,7 +92,14 @@
 {
     return [self getFile:^(NSError *error, NSString *filePath) {
         if(error) return callback(error, NULL);
+        NSError * err;
+        NSDate * beforeDate = [[[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:&err] objectForKey:NSFileCreationDate];
+        if(err) return callback(err, NULL);
         NSString * hashStr = [FileHash sha256HashOfFileAtPath:filePath];
+        NSDate * afterDate = [[[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:&err] objectForKey:NSFileCreationDate];
+        if(err) return callback(err, NULL);
+        // time  mismatch
+        if(![beforeDate isEqualToDate:afterDate]) return callback([NSError errorWithDomain:@"CreateTime MISMATCH" code:667 userInfo:nil], NULL);
         if(!hashStr || !hashStr.length) return callback([NSError errorWithDomain:@"FILE HASH ERROR" code:666 userInfo:nil], NULL);
         @try {
             [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
@@ -105,12 +112,14 @@
 
 - (PHImageRequestID)getFile:(void(^)(NSError *error, NSString *filePath))callback {
     NSString *fileName = [NSString stringWithFormat:@"tmp_%ld_%@", (long)[[NSDate date] timeIntervalSince1970], [NSString WB_UUID]];
-    NSString * filePath = [[self getTmpPath] stringByAppendingPathComponent:fileName];
+    NSString * __block filePath = [[self getTmpPath] stringByAppendingPathComponent:fileName];
     //TODO: do something for livephoto
     
     if(!self.isVideo) {
         return [PHPhotoLibrary requestHighImageDataSyncForAsset:self completion:^(NSError * error, NSData *imageData, NSDictionary *info) {
             if(imageData) {
+                if([[UIDevice currentDevice].systemVersion floatValue] < 9.0 && [info objectForKey:@"PHImageFileURLKey"])
+                    filePath = [[self getTmpPath] stringByAppendingPathComponent:[[info objectForKey:@"PHImageFileURLKey"] lastPathComponent]];
                 [imageData writeToFile:filePath atomically:YES];
                 return callback(nil, filePath);
             }
