@@ -238,6 +238,7 @@
     else if (IsEquallString(title,LeftMenuPpgManageString)){
         vc = [[WBppgViewController alloc]init];
         if ([selectVC isKindOfClass:[NavViewController class]]) {
+            [selectVC.navigationBar setBarTintColor:COR1];
             [selectVC  pushViewController:vc animated:YES];
         }
     }

@@ -8,11 +8,13 @@
 
 #import "WBServiceSettingViewController.h"
 #import "FMSetting.h"
+#import "WBPpgDownloadSwitchAPI.h"
 
 @interface WBServiceSettingViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic)BOOL miniDlnaSwitchOn;
 @property (nonatomic)BOOL sambaSwitchOn;
+@property (nonatomic)BOOL ppgSwitchOn;
 @end
 
 @implementation WBServiceSettingViewController
@@ -36,6 +38,20 @@
 
 - (void)getData{
     [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
+    
+    [[WBPpgDownloadSwitchAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSDictionary * responseDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+        NSNumber *number = responseDic[@"switch"];
+        BOOL swichOn = [number boolValue];
+        _ppgSwitchOn = swichOn;
+        [self.tableView reloadData];
+        [SXLoadingView hideProgressHUD];
+    } failure:^(__kindof JYBaseRequest *request) {
+        
+        NSLog(@"%@",request.error);
+        [SXLoadingView hideProgressHUD];
+    }];
+    
     [[WBFeaturesDlnaStatusAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
        NSDictionary * responseDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
         NSString *status = responseDic[@"status"];
@@ -73,7 +89,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 2;
+    return 3;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -110,7 +126,17 @@
         }
             
             break;
-            
+        case 2:{
+            cell.textLabel.text =  WBLocalizedString(@"download_service", nil);
+            cell.imageView.image = [UIImage imageNamed:@"download_switch.png"];
+            UISwitch *switchBtn = [[UISwitch alloc]initWithFrame:CGRectMake(__kWidth - 70, 16, 50, 40)];
+            [switchBtn addTarget:self  action:@selector(ppgSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+            [switchBtn setOn:_ppgSwitchOn];
+            if(!WB_UserService.isUserLogin) switchBtn.enabled = NO;
+            [cell.contentView addSubview:switchBtn];
+        }
+
+            break;
         default:
             break;
     }
@@ -171,6 +197,33 @@
     }
 }
 
-
+-(void)ppgSwitchChanged:(UISwitch *)paramSender{
+    BOOL isOn = paramSender.on;
+    if (isOn) {
+        [[WBPpgDownloadSwitchAPI apiWithRequestMethod:@"PATCH" Option:@"start"]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+            _ppgSwitchOn = YES;
+            [self.tableView reloadData];
+        } failure:^(__kindof JYBaseRequest *request) {
+            _ppgSwitchOn = NO;
+            [self.tableView reloadData];
+            NSLog(@"%@",request.error);
+            NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+            if(errorData.length >0){
+                NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+                
+                NSLog(@"%@",serializedData);
+            }
+        }];
+    }else{
+        [[WBPpgDownloadSwitchAPI apiWithRequestMethod:@"PATCH" Option:@"close"]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+            _ppgSwitchOn = NO;
+            [self.tableView reloadData];
+        } failure:^(__kindof JYBaseRequest *request) {
+            _ppgSwitchOn = YES;
+            [self.tableView reloadData];
+            NSLog(@"%@",request.error);
+        }];
+    }
+}
 
 @end

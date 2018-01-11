@@ -91,7 +91,7 @@
 "clear_record" = "Clear Record";
 "delete_file" = "Delete downloaded file";
 "download_manage" = "Download Manage";
-
+"download_service" = "Download Service";
 //Setting
 "photo_auto_upload_setting_text" = "Automatic backup";
 "clear_cache" = "Erase temporary files";

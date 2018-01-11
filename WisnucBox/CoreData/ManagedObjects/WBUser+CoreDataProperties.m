@@ -36,4 +36,5 @@
 @dynamic uploadFileDir;
 @dynamic isBindWechat;
 @dynamic isIgnoreUpgradeCheck;
+@dynamic ppgSelectType;
 @end

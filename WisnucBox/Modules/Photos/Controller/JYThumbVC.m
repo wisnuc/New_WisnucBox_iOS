@@ -104,9 +104,14 @@
     if(!isSelectMode){
         [self.chooseSection removeAllObjects];
         [self.choosePhotos removeAllObjects];
-         self.collectionView.mj_header.hidden = NO;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.collectionView.mj_header.hidden = NO;
+        });
+        
     }else{
-        self.collectionView.mj_header.hidden = YES;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.collectionView.mj_header.hidden = YES;
+        });
     }
 }
 

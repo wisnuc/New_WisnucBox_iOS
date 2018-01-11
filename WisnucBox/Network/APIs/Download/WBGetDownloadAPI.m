@@ -35,7 +35,7 @@
 
 /// 请求的URL
 - (NSString *)requestUrl{
-    return WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@?resource=%@&method=GET", kCloudAddr, kCloudCommonJsonUrl, [@"/download/ppg3" base64EncodedString]] : @"/download/ppg3";
+    return WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@?resource=%@&method=GET", kCloudAddr, kCloudCommonJsonUrl, [@"download/ppg3" base64EncodedString]] : @"download/ppg3";
 }
 
 - (NSDictionary *)requestHeaderFieldValueDictionary{

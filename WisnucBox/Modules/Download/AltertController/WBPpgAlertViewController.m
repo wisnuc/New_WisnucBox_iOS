@@ -40,7 +40,7 @@
 - (IBAction)cancelButtonClick:(UIButton *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-- (IBAction)magnetPastButtonClick:(UIButton *)sender {
+- (IBAction)pastButtonClick:(UIButton *)sender {
     
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     NSLog(@"%@",pasteboard.string);

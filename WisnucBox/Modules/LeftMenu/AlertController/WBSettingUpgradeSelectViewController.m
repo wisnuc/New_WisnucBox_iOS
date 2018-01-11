@@ -32,10 +32,10 @@
 
 - (IBAction)confirmButton:(UIButton *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
-    if ([_delegate respondsToSelector:@selector(confirmWithTypeString:)]) { // 如果协议响应了sendValue:方法
+    if ([_delegate respondsToSelector:@selector(confirmUpgradWithTypeString:)]) { // 如果协议响应了sendValue:方法
         
         NSLog(@"%@",_typeString);
-        [_delegate confirmWithTypeString:_typeString]; // 通知执行协议方法
+        [_delegate confirmUpgradWithTypeString:_typeString]; // 通知执行协议方法
     }
 }
 

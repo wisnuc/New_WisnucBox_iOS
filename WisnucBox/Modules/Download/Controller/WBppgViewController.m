@@ -16,6 +16,7 @@
 #import "WBPpgDownloadActionAPI.h"
 #import "CSDateUtil.h"
 #import "WBPpgDownloadSwitchAPI.h"
+#import "WBGetVersionAPI.h"
 
 @interface WBppgViewController ()
 <PpgAlertViewDelegate,
@@ -52,23 +53,42 @@ UITableViewDataSource
     [super viewWillDisappear:animated];
     [_timer invalidate];
     _timer = nil;
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBarTintColor:[UIColor whiteColor]];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName :[UIColor darkTextColor]}];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self checkSwitch];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:UICOLOR_RGB(0x03a9f4)] forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.backgroundColor = UICOLOR_RGB(0x03a9f4);
+    [self checkVersion];
+    [self.navigationController.navigationBar setBarTintColor:COR1];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-    //    [self.navigationController.navigationItem.leftBarButtonItem setImage:[UIImage imageNamed:@"back"]];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [self addLeftBarButtonWithImage:[UIImage imageNamed:@"back"] andHighlightButtonImage:nil andSEL:@selector(backbtnClick:)];
+}
+
+- (void)checkVersion{
+    @weaky(self)
+    [[WBGetVersionAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.responseJsonObject);
+         NSDictionary *requestDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+        NSNumber *versionNumber = requestDic[@"version"];
+        if ([versionNumber boolValue]) {
+            [weak_self checkSwitch];
+        }else{
+            self.addButton.enabled = NO;
+            self.downloadedClearButton.enabled = NO;
+            self.downloadingClearButton.enabled = NO;
+        }
+    } failure:^(__kindof JYBaseRequest *request) {
+      NSLog(@"%@",request.error);
+        self.addButton.enabled = NO;
+        self.downloadedClearButton.enabled = NO;
+        self.downloadingClearButton.enabled = NO;
+    }];
 }
 
 - (void)checkSwitch{
+    
     [SXLoadingView showProgressHUD:@""];
     [[WBPpgDownloadSwitchAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
        NSDictionary *requestDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
@@ -76,6 +96,7 @@ UITableViewDataSource
         BOOL swichOn = [number boolValue];
         _switchOn = swichOn;
         if (swichOn) {
+           self.addButton.enabled = YES;
            [self.timer fire];
         }else{
             UILabel *label =  [[UILabel alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 80)];
@@ -91,6 +112,9 @@ UITableViewDataSource
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
          [SXLoadingView hideProgressHUD];
+        self.addButton.enabled = NO;
+        self.downloadedClearButton.enabled = NO;
+        self.downloadingClearButton.enabled = NO;
     }];
 }
 
@@ -188,7 +212,6 @@ UITableViewDataSource
     sender.selected = !sender.selected;
     [SXLoadingView showProgressHUD:@""];
     if (sender.selected) {
-        
         [_runningDataArray enumerateObjectsUsingBlock:^(WBGetDownloadRunnngModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if (![obj.isPause boolValue]) {
                 [[WBPpgDownloadActionAPI apiWithPpgId:obj.infoHash Option:@"pause"]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
@@ -257,11 +280,11 @@ UITableViewDataSource
                 allSizeNumber = [NSNumber numberWithInt:0];
             }
             
-//            if (model.magnetURL && model.magnetURL>0) {
-//                  cell.leftImageView.image = [UIImage imageNamed:@"magnet.png"];
-//            }else if (model.torrentPath && model.torrentPath>0){
-//                cell.leftImageView.image = [UIImage imageNamed:@"bt.png"];
-//            }
+            if (model.ppgURL && model.ppgURL>0) {
+//                  cell.leftImageView.image = [UIImage imageNamed:@""];
+            }else if (model.ppgPath && model.ppgPath>0){
+//                cell.leftImageView.image = [UIImage imageNamed:@""];
+            }
 //            NSNumber *allSizeNumber = [NSNumber numberWithLongLong:[number longLongValue]];
             cell.sizeLabel.text = [NSString stringWithFormat:@"%@/%@",[NSString transformedValue: model.downloaded],[NSString transformedValue:allSizeNumber]];
             if ([model.isPause boolValue]) {
@@ -355,11 +378,11 @@ UITableViewDataSource
         cell.timeLabel.text = [self getTimeWithTime:[model.finishTime longLongValue]];
         
         cell.sizeLabel.text = [NSString transformedValue:model.downloaded];
-//        if (model.magnetURL && model.magnetURL>0) {
-//            cell.leftImageView.image = [UIImage imageNamed:@"magnet.png"];
-//        }else if (model.torrentPath && model.torrentPath>0){
-//            cell.leftImageView.image = [UIImage imageNamed:@"bt.png"];
-//        }
+        if (model.ppgURL && model.ppgURL>0) {
+//            cell.leftImageView.image = [UIImage imageNamed:@""];
+        }else if (model.ppgPath && model.ppgPath>0){
+//            cell.leftImageView.image = [UIImage imageNamed:@"png"];
+        }
         cell.clickBlock = ^(WBPpgDownloadedTableViewCell *cell) {
             NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
             NSString *actionTitle = WBLocalizedString(@"delete_file", nil);
@@ -481,7 +504,7 @@ UITableViewDataSource
         titleLabel.text = [NSString stringWithFormat:@"%@(%lu)",WBLocalizedString(@"completed", nil),(unsigned long)self.finishDataArray.count];
         [headerView addSubview:titleLabel];
         UIButton *clearButton =  [[UIButton alloc]initWithFrame:CGRectMake(__kWidth - 16 - 80, 0, 80, 48)];
-        [clearButton setTitle:@"清除记录" forState:UIControlStateNormal];
+        [clearButton setTitle:WBLocalizedString(@"clear_record", nil) forState:UIControlStateNormal];
         [clearButton setTitleColor:COR1 forState:UIControlStateNormal];
         self.downloadedClearButton = clearButton;
         clearButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
@@ -532,6 +555,7 @@ UITableViewDataSource
                       forControlEvents:UIControlEventTouchUpInside];
         UIImage *plusImage = [UIImage imageNamed:@"ic_add_white"];
         [_addButton setImage:plusImage forState:UIControlStateNormal];
+        [_addButton setEnabled:NO];
         [_addButton setBackgroundColor:COR1];
     }
     return _addButton;

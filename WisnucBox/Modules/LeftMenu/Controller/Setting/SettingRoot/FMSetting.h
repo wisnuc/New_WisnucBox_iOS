@@ -10,6 +10,15 @@
 #import "WBFeaturesDlnaStatusAPI.h"
 #import "WBFeaturesSambaStatusAPI.h"
 #import "WBFeaturesChangeAPI.h"
+#import "WBSettingSelectPpgAlertViewController.h"
+typedef enum
+{
+    PpgTypeAskAllTime = 0,
+    PpgTypeCreatNewTask,
+    PpgTypeUpload
+    
+} PpgType;
+
 
 @interface FMSetting : FABaseVC
 @property (weak, nonatomic) IBOutlet UITableView *settingTableView;

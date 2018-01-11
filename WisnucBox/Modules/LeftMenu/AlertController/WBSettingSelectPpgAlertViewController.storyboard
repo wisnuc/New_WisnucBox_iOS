@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Setting Select Ppg Alert View Controller-->
+        <scene sceneID="9Nr-oC-nzY">
+            <objects>
+                <viewController storyboardIdentifier="WBSettingSelectPpgAlertViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="D7P-SD-HgZ" customClass="WBSettingSelectPpgAlertViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3ep-6r-eBK"/>
+                        <viewControllerLayoutGuide type="bottom" id="qFP-U9-BTP"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ttd-FK-7qM">
+                        <rect key="frame" x="0.0" y="0.0" width="290" height="215"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="如何处理来自第三方应用的下载文件" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NOI-Sm-m23">
+                                <rect key="frame" x="16" y="16" width="258" height="38.5"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <color key="textColor" white="0.1266818576388889" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QhQ-9n-QtS" customClass="RadioButton">
+                                <rect key="frame" x="16" y="70.5" width="153" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="每次都询问如何处理" image="ic_radio_button_unchecked.png">
+                                    <color key="titleColor" white="0.1267565356" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="ic_radio_button.png"/>
+                                <connections>
+                                    <action selector="radioButtonClick:" destination="D7P-SD-HgZ" eventType="touchUpInside" id="XId-sx-9fs"/>
+                                    <outletCollection property="groupButtons" destination="oSN-e1-lHy" id="0cz-MV-9dW"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oSN-e1-lHy" customClass="RadioButton">
+                                <rect key="frame" x="16" y="110.5" width="110" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="新建下载任务" image="ic_radio_button_unchecked.png">
+                                    <color key="titleColor" white="0.1267565356" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="ic_radio_button.png"/>
+                                <connections>
+                                    <action selector="radioButtonClick:" destination="D7P-SD-HgZ" eventType="touchUpInside" id="9rW-td-NoJ"/>
+                                    <outletCollection property="groupButtons" destination="QhQ-9n-QtS" id="zVY-Nn-EJ2"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0xm-yC-n3g" customClass="RadioButton">
+                                <rect key="frame" x="16" y="150.5" width="152" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="上传文件到WISNUC" image="ic_radio_button_unchecked.png">
+                                    <color key="titleColor" white="0.1267565356" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="ic_radio_button.png"/>
+                                <connections>
+                                    <action selector="radioButtonClick:" destination="D7P-SD-HgZ" eventType="touchUpInside" id="OER-6M-rUs"/>
+                                    <outletCollection property="groupButtons" destination="oSN-e1-lHy" id="CaA-82-np1"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KSK-w0-a3A">
+                                <rect key="frame" x="243" y="177" width="31" height="30"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="确定">
+                                    <color key="titleColor" red="0.01176470588" green="0.66274509800000003" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="confirmButtonClick:" destination="D7P-SD-HgZ" eventType="touchUpInside" id="oeD-D2-PhE"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="0xm-yC-n3g" firstAttribute="top" secondItem="oSN-e1-lHy" secondAttribute="bottom" constant="16" id="0NZ-ZJ-Te5"/>
+                            <constraint firstItem="QhQ-9n-QtS" firstAttribute="top" secondItem="NOI-Sm-m23" secondAttribute="bottom" constant="16" id="0WD-tz-EQo"/>
+                            <constraint firstItem="NOI-Sm-m23" firstAttribute="leading" secondItem="ttd-FK-7qM" secondAttribute="leading" constant="16" id="4ic-CV-hR2"/>
+                            <constraint firstItem="qFP-U9-BTP" firstAttribute="top" secondItem="KSK-w0-a3A" secondAttribute="bottom" constant="8" id="5Md-X3-l9Z"/>
+                            <constraint firstItem="oSN-e1-lHy" firstAttribute="leading" secondItem="NOI-Sm-m23" secondAttribute="leading" id="Tmz-27-1zv"/>
+                            <constraint firstItem="0xm-yC-n3g" firstAttribute="leading" secondItem="NOI-Sm-m23" secondAttribute="leading" id="UQr-Fe-4iH"/>
+                            <constraint firstAttribute="trailing" secondItem="NOI-Sm-m23" secondAttribute="trailing" constant="16" id="cZ0-QQ-u51"/>
+                            <constraint firstItem="NOI-Sm-m23" firstAttribute="top" secondItem="3ep-6r-eBK" secondAttribute="bottom" constant="16" id="fKN-fL-UDp"/>
+                            <constraint firstItem="oSN-e1-lHy" firstAttribute="top" secondItem="QhQ-9n-QtS" secondAttribute="bottom" constant="16" id="ilz-T1-y4n"/>
+                            <constraint firstItem="QhQ-9n-QtS" firstAttribute="leading" secondItem="NOI-Sm-m23" secondAttribute="leading" id="jjs-2v-3nv"/>
+                            <constraint firstAttribute="trailing" secondItem="KSK-w0-a3A" secondAttribute="trailing" constant="16" id="lzD-7Q-BqV"/>
+                        </constraints>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="240" height="215"/>
+                    <size key="freeformSize" width="290" height="215"/>
+                    <connections>
+                        <outlet property="askAllTimeRadioButton" destination="QhQ-9n-QtS" id="NjS-qV-BQa"/>
+                        <outlet property="confirmButton" destination="KSK-w0-a3A" id="gQU-gu-RR9"/>
+                        <outlet property="creatNewTaskRadioButton" destination="oSN-e1-lHy" id="LBf-aV-Piv"/>
+                        <outlet property="titleLabel" destination="NOI-Sm-m23" id="o7c-3V-piT"/>
+                        <outlet property="uploadRadioButton" destination="0xm-yC-n3g" id="maf-h9-VbN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pea-gi-d74" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-56" y="154.72263868065968"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="ic_radio_button.png" width="24" height="24"/>
+        <image name="ic_radio_button_unchecked.png" width="24" height="24"/>
+    </resources>
+</document>

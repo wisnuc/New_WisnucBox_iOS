@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @protocol SettingUpgradeSelectAlertViewDelegate <NSObject>
 
-- (void)confirmWithTypeString:(NSString *)typeString;
+- (void)confirmUpgradWithTypeString:(NSString *)typeString;
 
 @end
 @interface WBSettingUpgradeSelectViewController : UIViewController

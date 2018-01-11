@@ -25,4 +25,5 @@
 @property(weak,nonatomic)id<UploadHelperDelegate> delegate;
 - (void)readyUploadFilesWithFilePath:(NSString *)filePath;
 - (void)startUploadAction;
+- (void)readyUploadPpgFilesWithFilePath:(NSString *)filePath DirUUID:(NSString *)dirUUID Complete:(void (^)(BOOL isComplete))complete;
 @end

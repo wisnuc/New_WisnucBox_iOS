@@ -18,8 +18,11 @@
 #import "WBInitializationViewController.h"
 #import "FMSetting.h"
 #import <AvoidCrash/AvoidCrash.h>
+#import "WBPpgAskToUploadAlertViewController.h"
+#import "WBppgViewController.h"
+#import "WBPpgDownloadSwitchAPI.h"
 
-@interface AppDelegate () <WXApiDelegate>
+@interface AppDelegate () <WXApiDelegate,WBPpgAskToUploadAlertDelegate>
 @property (nonatomic,strong) FMLoginViewController *loginController;
 @property (nonatomic,strong) NSString *filePath;
 @end
@@ -170,7 +173,7 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
     NSLog(@"%@",NSStringFromClass([[UIViewController getCurrentVC] class]));
-//    NSString *controllerString = NSStringFromClass([[UIViewController getCurrentVC] class]);
+    //    NSString *controllerString = NSStringFromClass([[UIViewController getCurrentVC] class]);
     if (self.window) {
         if (url) {
             NSString *fileNameStr = [url lastPathComponent];
@@ -188,13 +191,35 @@
             }else{
                 NSLog(@"%@写入成功",saveFile);
                 _filePath = saveFile;
-                    [self uploadWithFilePath:saveFile];
+                int char1 = 0 ,char2 =0 ; //必须这样初始化
+                [data getBytes:&char1 range:NSMakeRange(0, 1)];
+                [data getBytes:&char2 range:NSMakeRange(1, 1)];
+                NSLog(@"%d%d",char1,char2);
+                NSString *numStr = [NSString stringWithFormat:@"%i%i",char1,char2];
+                if (url && [numStr isEqualToString:@"10056"]) {
+                    if (!WB_UserService.currentUser.ppgSelectType) {
+                        WB_UserService.currentUser.ppgSelectType = [NSString stringWithFormat:@"%@",[NSNumber numberWithInt:PpgTypeAskAllTime]];
+                        [WB_UserService synchronizedCurrentUser];
+                        [self ppgDownloadAlert];
+                    
+                    }else{
+                        if ([WB_UserService.currentUser.ppgSelectType intValue] == PpgTypeAskAllTime) {
+                            [self ppgDownloadAlert];
+                        }else if ([WB_UserService.currentUser.ppgSelectType intValue] == PpgTypeCreatNewTask){
+                            [self ppgDownloadActionWithFilePath:saveFile];
+                        }else if ([WB_UserService.currentUser.ppgSelectType intValue] == PpgTypeUpload){
+                             [self uploadWithFilePath:saveFile];
+                        }
+                    }
+
+                }else{
+                [self uploadWithFilePath:saveFile];
+            }
             }
         }
     }
-   return [WXApi handleOpenURL:url delegate:self];
+    return [WXApi handleOpenURL:url delegate:self];
 }
-
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     if(WB_AppServices.photoUploadManager.shouldUpload) {
@@ -270,6 +295,22 @@
     self.completeBlock = completionHandler;
 }
 
+- (void)ppgDownloadAlert{
+    NSBundle *bundle = [NSBundle bundleForClass:[WBPpgAskToUploadAlertViewController class]];
+    UIStoryboard *storyboard =
+    [UIStoryboard storyboardWithName:NSStringFromClass([WBPpgAskToUploadAlertViewController class])bundle:bundle];
+    NSString *identifier = NSStringFromClass([WBPpgAskToUploadAlertViewController class]);
+    
+    UIViewController *viewController =
+    [storyboard instantiateViewControllerWithIdentifier:identifier];
+    WBPpgAskToUploadAlertViewController *vc = (WBPpgAskToUploadAlertViewController *)viewController;
+    vc.delegate = self;
+    viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
+    
+    //    viewController
+    [self.window.rootViewController presentViewController:viewController animated:YES completion:NULL];
+}
+
 - (void)uploadWithFilePath:(NSString *)filePath{
     NSString *controllerString = NSStringFromClass([[UIViewController getCurrentVC] class]);
     NSFileManager *manager = [NSFileManager defaultManager];
@@ -281,13 +322,84 @@
         CYLTabBarController * tVC = (CYLTabBarController *)MyAppDelegate.window.rootViewController;
         NavViewController * selectVC = (NavViewController *)tVC.selectedViewController;
         LocalDownloadViewController *localViewController  = [[LocalDownloadViewController alloc]init];
-        
         if ([selectVC isKindOfClass:[NavViewController class]]) {
+            selectVC.navigationBar.barTintColor = kWhiteColor;
             [selectVC  pushViewController:localViewController animated:YES];
         }
     }
 }
 
+- (void)confirmWithTypeString:(NSString *)typeString isAlways:(BOOL)always{
+    if ([typeString containsString:@"新建"]) {
+        [self ppgDownloadActionWithFilePath:_filePath];
+    }else{
+        if (_filePath) {
+            [self uploadWithFilePath:_filePath];
+        }
+    }
+    
+    if (always) {
+        if ([typeString containsString:@"新建"]) {
+            WB_UserService.currentUser.ppgSelectType = [NSString stringWithFormat:@"%@",[NSNumber numberWithInt:PpgTypeCreatNewTask]];
+          
+        }else{
+            WB_UserService.currentUser.ppgSelectType = [NSString stringWithFormat:@"%@",[NSNumber numberWithInt:PpgTypeUpload]];
+        }
+          [WB_UserService synchronizedCurrentUser];
+        
+    }
+}
+
+- (void)ppgDownloadActionWithFilePath:(NSString *)filePath{
+    @weaky(self)
+    NSString *controllerString = NSStringFromClass([[UIViewController getCurrentVC] class]);
+    [SXLoadingView showProgressHUD:@""];
+    [[WBPpgDownloadSwitchAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSDictionary *dic = request.responseJsonObject;
+        NSNumber *number = dic[@"switch"];
+        BOOL swichOn = [number boolValue];
+        if (swichOn) {
+            [weak_self startPpgDownloadWithFilePath:filePath];
+        }else{
+            if (![controllerString isEqualToString:NSStringFromClass([WBppgViewController class])]) {
+                CYLTabBarController * tVC = (CYLTabBarController *)MyAppDelegate.window.rootViewController;
+                NavViewController * selectVC = (NavViewController *)tVC.selectedViewController;
+                WBppgViewController *localViewController  = [[WBppgViewController alloc]init];
+                if ([selectVC isKindOfClass:[NavViewController class]]) {
+                     selectVC.navigationBar.barTintColor = COR1;
+                    [selectVC  pushViewController:localViewController animated:YES];
+                }
+            }
+        }
+        [SXLoadingView hideProgressHUD];
+    } failure:^(__kindof JYBaseRequest *request) {
+        [SXLoadingView hideProgressHUD];
+    }];
+}
+
+- (void)startPpgDownloadWithFilePath:(NSString *)filePath{
+    NSString *controllerString = NSStringFromClass([[UIViewController getCurrentVC] class]);
+    [WB_NetService getDirUUIDWithDirName:BackUpPpgDirName BaseDir:^(NSError *error, NSString *dirUUID) {
+        if (error) {
+            NSLog(@"%@",error);
+        }else{
+            NSLog(@"%@",dirUUID);
+            [[CSUploadHelper shareManager] readyUploadPpgFilesWithFilePath:filePath DirUUID:dirUUID Complete:^(BOOL isComplete) {
+                if (isComplete) {
+                    if (![controllerString isEqualToString:NSStringFromClass([WBppgViewController class])]) {
+                        CYLTabBarController * tVC = (CYLTabBarController *)MyAppDelegate.window.rootViewController;
+                        NavViewController * selectVC = (NavViewController *)tVC.selectedViewController;
+                        WBppgViewController *localViewController  = [[WBppgViewController alloc]init];
+                        if ([selectVC isKindOfClass:[NavViewController class]]) {
+                            selectVC.navigationBar.barTintColor = COR1;
+                            [selectVC  pushViewController:localViewController animated:YES];
+                        }
+                    }
+                }
+            }];
+        }
+    }];
+}
 
 
 @end

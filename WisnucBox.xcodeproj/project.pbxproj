@@ -12,11 +12,8 @@
 		1F0898DC1FB05FF900B86723 /* eye_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0898DB1FB05FF800B86723 /* eye_off.png */; };
 		1F114A111FF2558F007F6D15 /* WBMaintenanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F114A0F1FF2558F007F6D15 /* WBMaintenanceViewController.m */; };
 		1F114A121FF2558F007F6D15 /* WBMaintenanceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A101FF2558F007F6D15 /* WBMaintenanceViewController.xib */; };
-		1F114A1D1FF33463007F6D15 /* bt_switch.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A141FF33461007F6D15 /* bt_switch.png */; };
-		1F114A1E1FF33463007F6D15 /* bt_switch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A151FF33461007F6D15 /* bt_switch@2x.png */; };
 		1F114A1F1FF33463007F6D15 /* samba_switch.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A161FF33461007F6D15 /* samba_switch.png */; };
 		1F114A201FF33463007F6D15 /* samba_switch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A171FF33462007F6D15 /* samba_switch@2x.png */; };
-		1F114A211FF33463007F6D15 /* bt_switch@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A181FF33462007F6D15 /* bt_switch@3x.png */; };
 		1F114A221FF33463007F6D15 /* dlna_switch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A191FF33462007F6D15 /* dlna_switch@2x.png */; };
 		1F114A231FF33463007F6D15 /* dlna_switch.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A1A1FF33462007F6D15 /* dlna_switch.png */; };
 		1F114A241FF33463007F6D15 /* samba_switch@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A1B1FF33463007F6D15 /* samba_switch@3x.png */; };
@@ -94,6 +91,12 @@
 		1F4083E320062C2700DC0634 /* ic_content_paste.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4083D720062C2600DC0634 /* ic_content_paste.png */; };
 		1F4083E820062C2700DC0634 /* ic_content_paste@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4083DC20062C2600DC0634 /* ic_content_paste@3x.png */; };
 		1F4083E920062C2700DC0634 /* ic_content_paste@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4083DD20062C2600DC0634 /* ic_content_paste@2x.png */; };
+		1F4083EC2007109500DC0634 /* WBGetVersionAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4083EB2007109500DC0634 /* WBGetVersionAPI.m */; };
+		1F4083F0200732CE00DC0634 /* download_switch.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4083ED200732CB00DC0634 /* download_switch.png */; };
+		1F4083F1200732CE00DC0634 /* download_switch@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4083EE200732CB00DC0634 /* download_switch@3x.png */; };
+		1F4083F2200732CE00DC0634 /* download_switch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4083EF200732CC00DC0634 /* download_switch@2x.png */; };
+		1F4083F62007357F00DC0634 /* WBSettingSelectPpgAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4083F32007357E00DC0634 /* WBSettingSelectPpgAlertViewController.m */; };
+		1F4083F72007357F00DC0634 /* WBSettingSelectPpgAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F4083F52007357F00DC0634 /* WBSettingSelectPpgAlertViewController.storyboard */; };
 		1F4D759B1FAC4BB800E6516C /* UIImage+GKContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D755B1FAC4BB700E6516C /* UIImage+GKContact.m */; };
 		1F4D759C1FAC4BB800E6516C /* UIButton+EnlargeEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75601FAC4BB700E6516C /* UIButton+EnlargeEdge.m */; };
 		1F4D759D1FAC4BB800E6516C /* UIButton+Universal.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D75611FAC4BB700E6516C /* UIButton+Universal.m */; };
@@ -825,11 +828,8 @@
 		1F114A0E1FF2558F007F6D15 /* WBMaintenanceViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBMaintenanceViewController.h; sourceTree = "<group>"; };
 		1F114A0F1FF2558F007F6D15 /* WBMaintenanceViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBMaintenanceViewController.m; sourceTree = "<group>"; };
 		1F114A101FF2558F007F6D15 /* WBMaintenanceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBMaintenanceViewController.xib; sourceTree = "<group>"; };
-		1F114A141FF33461007F6D15 /* bt_switch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bt_switch.png; sourceTree = "<group>"; };
-		1F114A151FF33461007F6D15 /* bt_switch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bt_switch@2x.png"; sourceTree = "<group>"; };
 		1F114A161FF33461007F6D15 /* samba_switch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = samba_switch.png; sourceTree = "<group>"; };
 		1F114A171FF33462007F6D15 /* samba_switch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "samba_switch@2x.png"; sourceTree = "<group>"; };
-		1F114A181FF33462007F6D15 /* bt_switch@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bt_switch@3x.png"; sourceTree = "<group>"; };
 		1F114A191FF33462007F6D15 /* dlna_switch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dlna_switch@2x.png"; sourceTree = "<group>"; };
 		1F114A1A1FF33462007F6D15 /* dlna_switch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dlna_switch.png; sourceTree = "<group>"; };
 		1F114A1B1FF33463007F6D15 /* samba_switch@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "samba_switch@3x.png"; sourceTree = "<group>"; };
@@ -947,6 +947,14 @@
 		1F4083D720062C2600DC0634 /* ic_content_paste.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_content_paste.png; sourceTree = "<group>"; };
 		1F4083DC20062C2600DC0634 /* ic_content_paste@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_content_paste@3x.png"; sourceTree = "<group>"; };
 		1F4083DD20062C2600DC0634 /* ic_content_paste@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_content_paste@2x.png"; sourceTree = "<group>"; };
+		1F4083EA2007109500DC0634 /* WBGetVersionAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBGetVersionAPI.h; sourceTree = "<group>"; };
+		1F4083EB2007109500DC0634 /* WBGetVersionAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBGetVersionAPI.m; sourceTree = "<group>"; };
+		1F4083ED200732CB00DC0634 /* download_switch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = download_switch.png; sourceTree = "<group>"; };
+		1F4083EE200732CB00DC0634 /* download_switch@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download_switch@3x.png"; sourceTree = "<group>"; };
+		1F4083EF200732CC00DC0634 /* download_switch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download_switch@2x.png"; sourceTree = "<group>"; };
+		1F4083F32007357E00DC0634 /* WBSettingSelectPpgAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBSettingSelectPpgAlertViewController.m; sourceTree = "<group>"; };
+		1F4083F42007357E00DC0634 /* WBSettingSelectPpgAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBSettingSelectPpgAlertViewController.h; sourceTree = "<group>"; };
+		1F4083F52007357F00DC0634 /* WBSettingSelectPpgAlertViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WBSettingSelectPpgAlertViewController.storyboard; sourceTree = "<group>"; };
 		1F4D75561FAC4B8800E6516C /* Define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Define.h; sourceTree = "<group>"; };
 		1F4D75571FAC4B8800E6516C /* default.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = default.pch; sourceTree = "<group>"; };
 		1F4D755B1FAC4BB700E6516C /* UIImage+GKContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GKContact.m"; sourceTree = "<group>"; };
@@ -1911,9 +1919,9 @@
 		1F114A131FF33435007F6D15 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				1F114A141FF33461007F6D15 /* bt_switch.png */,
-				1F114A151FF33461007F6D15 /* bt_switch@2x.png */,
-				1F114A181FF33462007F6D15 /* bt_switch@3x.png */,
+				1F4083ED200732CB00DC0634 /* download_switch.png */,
+				1F4083EF200732CC00DC0634 /* download_switch@2x.png */,
+				1F4083EE200732CB00DC0634 /* download_switch@3x.png */,
 				1F114A1A1FF33462007F6D15 /* dlna_switch.png */,
 				1F114A191FF33462007F6D15 /* dlna_switch@2x.png */,
 				1F114A1C1FF33463007F6D15 /* dlna_switch@3x.png */,
@@ -2041,6 +2049,9 @@
 		1F178EB91FEBF00D001650E5 /* AlertController */ = {
 			isa = PBXGroup;
 			children = (
+				1F4083F42007357E00DC0634 /* WBSettingSelectPpgAlertViewController.h */,
+				1F4083F32007357E00DC0634 /* WBSettingSelectPpgAlertViewController.m */,
+				1F4083F52007357F00DC0634 /* WBSettingSelectPpgAlertViewController.storyboard */,
 				1F611CAA1FF0CEFD00E34379 /* WBSettingSelectRolesViewController.h */,
 				1F611CAB1FF0CEFD00E34379 /* WBSettingSelectRolesViewController.m */,
 				1F611CAD1FF0CF2000E34379 /* WBSettingSelectRolesViewController.storyboard */,
@@ -2225,6 +2236,8 @@
 				1F4083B920061A3100DC0634 /* WBGetDownloadAPI.m */,
 				1F4083B620061A3100DC0634 /* WBPpgDownloadActionAPI.h */,
 				1F4083BB20061A3100DC0634 /* WBPpgDownloadActionAPI.m */,
+				1F4083EA2007109500DC0634 /* WBGetVersionAPI.h */,
+				1F4083EB2007109500DC0634 /* WBGetVersionAPI.m */,
 			);
 			path = Download;
 			sourceTree = "<group>";
@@ -4166,6 +4179,7 @@
 				F68310811FB30AAE005AC578 /* album_share.png in Resources */,
 				F683113D1FB30AAE005AC578 /* navLine.png in Resources */,
 				F68310B81FB30AAE005AC578 /* del_user.png in Resources */,
+				1F4083F0200732CE00DC0634 /* download_switch.png in Resources */,
 				F68311881FB30AAF005AC578 /* share_photo@3x.png in Resources */,
 				F68310F11FB30AAE005AC578 /* ic_account_circle.png in Resources */,
 				F68311641FB30AAE005AC578 /* photo_select@3x.png in Resources */,
@@ -4240,7 +4254,6 @@
 				F68310FF1FB30AAE005AC578 /* ic_lock_outline@3x.png in Resources */,
 				1FCFB3D81FE7B34C00BD3375 /* ic_radio_button.png in Resources */,
 				F68310AB1FB30AAE005AC578 /* comment_share.png in Resources */,
-				1F114A1E1FF33463007F6D15 /* bt_switch@2x.png in Resources */,
 				F68311261FB30AAE005AC578 /* login@2x.png in Resources */,
 				F68310CD1FB30AAE005AC578 /* file_icon@3x.png in Resources */,
 				F68311B01FB30AAF005AC578 /* up@2x.png in Resources */,
@@ -4309,7 +4322,6 @@
 				F671F1041FB4B3B50051DF93 /* floatTableViewCell.xib in Resources */,
 				1F114A2B1FF3457B007F6D15 /* WBMaintenanceTableViewCell.xib in Resources */,
 				F68310F21FB30AAE005AC578 /* ic_account_circle@2x.png in Resources */,
-				1F114A211FF33463007F6D15 /* bt_switch@3x.png in Resources */,
 				1FAD744C1FD0EDC700A5D880 /* wechat_icon@3x.png in Resources */,
 				F6830F141FB300D2005AC578 /* FMLeftMenu.xib in Resources */,
 				1F6E54A820036663009E38AE /* ic_cloud_off_white.png in Resources */,
@@ -4324,6 +4336,7 @@
 				1F922E7D1FCD3E1400A7614B /* WBStationManageRootTableViewCell.xib in Resources */,
 				F68310EB1FB30AAE005AC578 /* head-portrait@3x.png in Resources */,
 				F68311A01FB30AAF005AC578 /* storage@3x.png in Resources */,
+				1F4083F72007357F00DC0634 /* WBSettingSelectPpgAlertViewController.storyboard in Resources */,
 				F68310DA1FB30AAE005AC578 /* good_red.png in Resources */,
 				1FFAE3981FE142D40054C393 /* ic_info@2x.png in Resources */,
 				1FAD745C1FD0EDDF00A5D880 /* gif_symbol@3x.png in Resources */,
@@ -4395,6 +4408,7 @@
 				F68311601FB30AAE005AC578 /* photo_plus_open@2x.png in Resources */,
 				1FAD74841FD1537400A5D880 /* invite_miniProgram.png in Resources */,
 				F68310AE1FB30AAE005AC578 /* date_bg.png in Resources */,
+				1F4083F1200732CE00DC0634 /* download_switch@3x.png in Resources */,
 				1FAD744E1FD0EDC700A5D880 /* wechat_icon.png in Resources */,
 				1FAD74891FD15EBE00A5D880 /* upload_download@3x.png in Resources */,
 				1FFADF8B1FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.xib in Resources */,
@@ -4449,6 +4463,7 @@
 				F68310FD1FB30AAE005AC578 /* ic_lock_outline.png in Resources */,
 				1F4083E920062C2700DC0634 /* ic_content_paste@2x.png in Resources */,
 				F683112E1FB30AAE005AC578 /* menu.png in Resources */,
+				1F4083F2200732CE00DC0634 /* download_switch@2x.png in Resources */,
 				1F922EC91FCE931A00A7614B /* ic_tv.png in Resources */,
 				1F114A741FF4D223007F6D15 /* update_done.png in Resources */,
 				F68311961FB30AAF005AC578 /* small_1@2x.png in Resources */,
@@ -4556,7 +4571,6 @@
 				F68311611FB30AAE005AC578 /* photo_plus_open@3x.png in Resources */,
 				F683117D1FB30AAF005AC578 /* select.png in Resources */,
 				F68310A11FB30AAE005AC578 /* check-box_select@3x.png in Resources */,
-				1F114A1D1FF33463007F6D15 /* bt_switch.png in Resources */,
 				1F58DEE51FDFDC6B00768DD7 /* disk_settings@3x.png in Resources */,
 				F683114C1FB30AAE005AC578 /* person_add@3x.png in Resources */,
 				F68310831FB30AAE005AC578 /* album_share@3x.png in Resources */,
@@ -4802,6 +4816,7 @@
 				1FAD74771FD1049900A5D880 /* WBInviteWechatViewController.m in Sources */,
 				F65035671FAC00A60007979D /* ViewController.m in Sources */,
 				1F4D75A61FAC4BB800E6516C /* DGPopUpViewTextView.m in Sources */,
+				1F4083F62007357F00DC0634 /* WBSettingSelectPpgAlertViewController.m in Sources */,
 				F67D64481FAC7E6B00E23D16 /* JYForceTouchPreviewController.m in Sources */,
 				F67D64131FAC7D7F00E23D16 /* FileHash.m in Sources */,
 				F67561571FB342AE00E3277F /* MXScrollView.m in Sources */,
@@ -4994,6 +5009,7 @@
 				1F3F99891FB0353F00D6CC64 /* LocalDownloadTableViewCell.m in Sources */,
 				1F1FA3871FC3F38200272347 /* FilesShareViewController.m in Sources */,
 				F67D64121FAC7D7F00E23D16 /* CocoaSecurity.m in Sources */,
+				1F4083EC2007109500DC0634 /* WBGetVersionAPI.m in Sources */,
 				7EC1F8F7B7661283352336B2 /* UIViewController+controller.m in Sources */,
 				1F4083CA200625F000DC0634 /* WBPpgDownloadedTableViewCell.m in Sources */,
 				1F922E631FC8438C00A7614B /* FirstFilesTableViewCell.m in Sources */,

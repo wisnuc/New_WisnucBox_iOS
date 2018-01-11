@@ -12,7 +12,7 @@
 #import "WBUpgradeAppfiViewController.h"
 #import "WBSettingUpgradeSelectViewController.h"
 
-@interface FMSetting ()<UITableViewDelegate,UITableViewDataSource,LCActionSheetDelegate,SettingUpgradeSelectAlertViewDelegate>
+@interface FMSetting ()<UITableViewDelegate,UITableViewDataSource,LCActionSheetDelegate,SettingUpgradeSelectAlertViewDelegate,SettingSelectPpgAlertViewDelegate>
 @property (nonatomic) BOOL displayProgress;
 
 @property (nonatomic,strong)UISwitch * switchBtn;
@@ -61,9 +61,9 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (WB_UserService.currentUser.isAdmin) {
-        return 5;
+        return 6;
     }else{
-        return 3;
+        return 4;
     }
    
 }
@@ -96,21 +96,28 @@
         }
         
             break;
+            
         case 2:{
             
             cell.textLabel.text = @"服务管理";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
         }
-             break;
+            break;
         case 3:{
+             cell.textLabel.text =  @"如何处理来自第三方应用的下载文件";
+        }
+
+            break;
+         
+        case 4:{
             
             cell.textLabel.text = @"固件升级";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             
         }
              break;
-        case 4:{
+        case 5:{
             cell.textLabel.text =  @"应用启动时是否检查设备系统更新？";
         }
             break;
@@ -152,7 +159,25 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
+            
         case 3:{
+                NSBundle *bundle = [NSBundle bundleForClass:[WBSettingSelectPpgAlertViewController class]];
+                UIStoryboard *storyboard =
+                [UIStoryboard storyboardWithName:NSStringFromClass([WBSettingSelectPpgAlertViewController class]) bundle:bundle];
+                NSString *identifier = NSStringFromClass([WBSettingSelectPpgAlertViewController class]);
+        
+                UIViewController *viewController =
+                [storyboard instantiateViewControllerWithIdentifier:identifier];
+        
+                viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
+                WBSettingSelectPpgAlertViewController *vc = (WBSettingSelectPpgAlertViewController *)viewController;
+                vc.typeString = [NSString stringWithFormat:@"%@",WB_UserService.currentUser.ppgSelectType];
+                vc.delegate = self;
+                [self presentViewController:viewController animated:YES completion:NULL];
+    
+        }
+            break;
+        case 4:{
             if (!WB_UserService.currentUser.isCloudLogin) {
                 WBUpgradeAppfiViewController *vc = [[WBUpgradeAppfiViewController alloc]init];
                 [self.navigationController pushViewController:vc animated:YES];
@@ -160,7 +185,7 @@
         }
             break;
             
-        case 4:{
+        case 5:{
             NSBundle *bundle = [NSBundle bundleForClass:[WBSettingUpgradeSelectViewController class]];
             UIStoryboard *storyboard =
             [UIStoryboard storyboardWithName:NSStringFromClass([WBSettingUpgradeSelectViewController class]) bundle:bundle];
@@ -186,7 +211,7 @@
 
 }
 
--(void)confirmWithTypeString:(NSString *)typeString{
+-(void)confirmUpgradWithTypeString:(NSString *)typeString{
     if ([typeString isEqualToString:@"是"]) {
        WB_UserService.currentUser.isIgnoreUpgradeCheck = NO;
     }else{
@@ -255,6 +280,17 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
+- (void)confirmWithTypeString:(NSString *)typeString {
+    if ([typeString containsString:@"询问"]) {
+        WB_UserService.currentUser.ppgSelectType = [NSString stringWithFormat:@"%@",[NSNumber numberWithInt:PpgTypeAskAllTime]];
+        
+    }else if ([typeString containsString:@"新建"]){
+        WB_UserService.currentUser.ppgSelectType = [NSString stringWithFormat:@"%@",[NSNumber numberWithInt:PpgTypeCreatNewTask]];
+        
+    } else if ([typeString containsString:@"上传"]){
+       WB_UserService.currentUser.ppgSelectType = [NSString stringWithFormat:@"%@",[NSNumber numberWithInt:PpgTypeUpload]];
+    }
+    [WB_UserService synchronizedCurrentUser];
+}
 
 @end

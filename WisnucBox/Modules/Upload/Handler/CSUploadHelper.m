@@ -69,7 +69,7 @@ __strong static id _sharedObject = nil;
     }
 }
 
-- (void)readyUploadTorrentFilesWithFilePath:(NSString *)filePath DirUUID:(NSString *)dirUUID Complete:(void (^)(BOOL isComplete))complete{
+- (void)readyUploadPpgFilesWithFilePath:(NSString *)filePath DirUUID:(NSString *)dirUUID Complete:(void (^)(BOOL isComplete))complete{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString * hashString  = [FileHash sha256HashOfFileAtPath:filePath];
     NSNumber * sizeNumber = [NSNumber numberWithLongLong:[WB_FileService fileSizeAtPath:filePath]];
@@ -80,7 +80,7 @@ __strong static id _sharedObject = nil;
     NSMutableDictionary * mutableDic = [NSMutableDictionary dictionaryWithCapacity:0];
     if (WB_UserService.currentUser.isCloudLogin) {
         urlString = [NSString stringWithFormat:@"%@%@", kCloudAddr, kCloudCommonPipeUrl];
-        NSString *requestUrl = [NSString stringWithFormat:@"download/torrent"];
+        NSString *requestUrl = [NSString stringWithFormat:@"download/ppg2"];
         NSString *resource =[requestUrl base64EncodedString] ;
         NSMutableDictionary *manifestDic  = [NSMutableDictionary dictionaryWithCapacity:0];
         [manifestDic setObject:dirUUID forKey:@"dirUUID"];
@@ -94,7 +94,7 @@ __strong static id _sharedObject = nil;
         [manager.requestSerializer setValue:[NSString stringWithFormat:@"%@", WB_UserService.currentUser.cloudToken] forHTTPHeaderField:@"Authorization"];
         manager.requestSerializer.timeoutInterval = 200000;
     }else {
-        urlString = [NSString stringWithFormat:@"%@download/torrent",[JYRequestConfig sharedConfig].baseURL];
+        urlString = [NSString stringWithFormat:@"%@download/ppg2",[JYRequestConfig sharedConfig].baseURL];
 
         [mutableDic setObject:dirUUID forKey:@"dirUUID"];
         [manager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@",WB_UserService.defaultToken] forHTTPHeaderField:@"Authorization"];
@@ -108,8 +108,7 @@ __strong static id _sharedObject = nil;
                 NSLog(@"😁");
             }
             
-            [formData appendPartWithFileURL:[NSURL fileURLWithPath:filePath] name:@"torrent" fileName:fileName mimeType:@"application/octet-stream" error:nil];
-//            [formData appendPartWithFormData:data name:@"torrent"];
+            [formData appendPartWithFileURL:[NSURL fileURLWithPath:filePath] name:@"ppg" fileName:fileName mimeType:@"application/octet-stream" error:nil];
         }
     }
                                           progress:^(NSProgress * _Nonnull uploadProgress) {

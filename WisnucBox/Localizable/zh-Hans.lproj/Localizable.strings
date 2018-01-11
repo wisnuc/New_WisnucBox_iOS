@@ -92,6 +92,7 @@
 "clear_record" = "清除记录";
 "delete_file" = "删除已下载文件";
 "download_manage" = "下载管理";
+"download_service" = "下载服务";
 
 //Setting
 "photo_auto_upload_setting_text" = "照片自动备份";

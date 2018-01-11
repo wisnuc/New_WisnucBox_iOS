@@ -40,7 +40,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mZZ-X0-nFe" customClass="RadioButton">
-                                <rect key="frame" x="16" y="106.5" width="39" height="24"/>
+                                <rect key="frame" x="16" y="114.5" width="39" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <state key="normal" title="否" image="ic_radio_button_unchecked.png">
                                     <color key="titleColor" white="0.1267565356" alpha="1" colorSpace="calibratedWhite"/>
@@ -71,7 +71,7 @@
                             <constraint firstAttribute="trailing" secondItem="ESj-Qm-b6X" secondAttribute="trailing" constant="16" id="aj4-A9-ywP"/>
                             <constraint firstItem="hme-RP-9KY" firstAttribute="leading" secondItem="UkW-yr-aUa" secondAttribute="leading" constant="16" id="bwe-Bm-7RK"/>
                             <constraint firstAttribute="trailing" secondItem="hme-RP-9KY" secondAttribute="trailing" constant="16" id="gaz-5c-BGk"/>
-                            <constraint firstItem="mZZ-X0-nFe" firstAttribute="top" secondItem="bp8-hf-xRQ" secondAttribute="bottom" constant="8" id="lud-Hf-SNw"/>
+                            <constraint firstItem="mZZ-X0-nFe" firstAttribute="top" secondItem="bp8-hf-xRQ" secondAttribute="bottom" constant="16" id="lud-Hf-SNw"/>
                         </constraints>
                     </view>
                     <value key="contentSizeForViewInPopover" type="size" width="240" height="180"/>
