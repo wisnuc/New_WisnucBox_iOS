@@ -21,14 +21,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="290" height="215"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="如何处理来自第三方应用的下载文件" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NOI-Sm-m23">
-                                <rect key="frame" x="16" y="16" width="258" height="38.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="如何处理使用WISNUC打开的文件" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NOI-Sm-m23">
+                                <rect key="frame" x="16" y="16" width="258" height="19.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                 <color key="textColor" white="0.1266818576388889" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QhQ-9n-QtS" customClass="RadioButton">
-                                <rect key="frame" x="16" y="70.5" width="153" height="24"/>
+                                <rect key="frame" x="16" y="51.5" width="153" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <state key="normal" title="每次都询问如何处理" image="ic_radio_button_unchecked.png">
                                     <color key="titleColor" white="0.1267565356" alpha="1" colorSpace="calibratedWhite"/>
@@ -40,7 +40,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oSN-e1-lHy" customClass="RadioButton">
-                                <rect key="frame" x="16" y="110.5" width="110" height="24"/>
+                                <rect key="frame" x="16" y="91.5" width="110" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <state key="normal" title="新建下载任务" image="ic_radio_button_unchecked.png">
                                     <color key="titleColor" white="0.1267565356" alpha="1" colorSpace="calibratedWhite"/>
@@ -52,7 +52,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0xm-yC-n3g" customClass="RadioButton">
-                                <rect key="frame" x="16" y="150.5" width="152" height="24"/>
+                                <rect key="frame" x="16" y="131.5" width="152" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <state key="normal" title="上传文件到WISNUC" image="ic_radio_button_unchecked.png">
                                     <color key="titleColor" white="0.1267565356" alpha="1" colorSpace="calibratedWhite"/>

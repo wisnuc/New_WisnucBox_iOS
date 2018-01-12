@@ -154,7 +154,6 @@ UITableViewDataSource
 //    if (PpgId.length >0) {
 //
 //    }
-    
     @weaky(self)
     [[WBGetDownloadAPI apiWithType:nil PpgId:nil]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
@@ -209,6 +208,7 @@ UITableViewDataSource
 }
 
 - (void)runningAllClearButtonClick:(UIButton *)sender{
+    if (_runningDataArray.count >0) {
     sender.selected = !sender.selected;
     [SXLoadingView showProgressHUD:@""];
     if (sender.selected) {
@@ -237,11 +237,13 @@ UITableViewDataSource
          }
     }];
     }
+    }
 }
 
 - (void)fnishAllClearButtonClick:(UIButton *)sender{
-    [SXLoadingView showProgressHUD:@""];
+   
     if (self.finishDataArray.count>0) {
+    [SXLoadingView showProgressHUD:@""];
     [_finishDataArray enumerateObjectsUsingBlock:^(WBGetDownloadFinishModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [[WBPpgDownloadActionAPI apiWithPpgId:obj.infoHash Option:@"destroy"]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
             [SXLoadingView hideProgressHUD];

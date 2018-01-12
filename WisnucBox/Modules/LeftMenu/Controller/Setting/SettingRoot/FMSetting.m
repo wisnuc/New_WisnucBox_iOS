@@ -105,7 +105,7 @@
         }
             break;
         case 3:{
-             cell.textLabel.text =  @"如何处理来自第三方应用的下载文件";
+             cell.textLabel.text =  @"如何处理使用WISNUC打开的文件";
         }
 
             break;

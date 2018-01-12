@@ -66,6 +66,7 @@
 		1F1ABA131FB99882006EB1FC /* CSDownloadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1ABA121FB99882006EB1FC /* CSDownloadHelper.m */; };
 		1F1FA37E1FC2EDCD00272347 /* FirstFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1FA37D1FC2EDCD00272347 /* FirstFilesViewController.m */; };
 		1F1FA3871FC3F38200272347 /* FilesShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1FA3861FC3F38200272347 /* FilesShareViewController.m */; };
+		1F29AA922008970D002C7131 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F29AA912008970C002C7131 /* MediaPlayer.framework */; };
 		1F2BE3011FBC129700776DB3 /* FilesNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2BE3001FBC129700776DB3 /* FilesNextViewController.m */; };
 		1F3F99801FB0312300D6CC64 /* LocalDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F997E1FB0312300D6CC64 /* LocalDownloadViewController.m */; };
 		1F3F99811FB0312300D6CC64 /* LocalDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3F997F1FB0312300D6CC64 /* LocalDownloadViewController.xib */; };
@@ -909,6 +910,7 @@
 		1F1FA3851FC3F38200272347 /* FilesShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilesShareViewController.h; sourceTree = "<group>"; };
 		1F1FA3861FC3F38200272347 /* FilesShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilesShareViewController.m; sourceTree = "<group>"; };
 		1F244D9D3BCB4706DAFC363E /* Pods-WisnucBox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.debug.xcconfig"; sourceTree = "<group>"; };
+		1F29AA912008970C002C7131 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		1F2BE2FF1FBC129700776DB3 /* FilesNextViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilesNextViewController.h; sourceTree = "<group>"; };
 		1F2BE3001FBC129700776DB3 /* FilesNextViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilesNextViewController.m; sourceTree = "<group>"; };
 		1F3F997D1FB0312300D6CC64 /* LocalDownloadViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalDownloadViewController.h; sourceTree = "<group>"; };
@@ -1876,6 +1878,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F29AA922008970D002C7131 /* MediaPlayer.framework in Frameworks */,
 				2C68507817DCDF432CF88A3F /* Pods_WisnucBox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3126,6 +3129,7 @@
 		A425D85D003C084CDA92A5DA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1F29AA912008970C002C7131 /* MediaPlayer.framework */,
 				357873726A4400954BE467E2 /* Pods_WisnucBox.framework */,
 			);
 			name = Frameworks;

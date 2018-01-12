@@ -10,6 +10,10 @@
 
 #import <PhotosUI/PhotosUI.h>
 
+@import AVKit;
+@import AVFoundation;
+@import MediaPlayer;
+
 @class JYAsset;
 @class PHAsset;
 @class JYPreviewView;
@@ -134,17 +138,24 @@
 @end
 
 
+@protocol JYPreviewVideoPlayerDelegate <NSObject>
+
+- (void)playVideoWithAVPlayerViewController:(AVPlayerViewController *)viewController;
+
+@end
 //---------------video---------------
-@interface JYPreviewVideo : JYBasePreviewView
+@interface JYPreviewVideo : JYBasePreviewView <AVPlayerViewControllerDelegate>
 
 @property (nonatomic, strong) AVPlayerLayer *playLayer;
 @property (nonatomic, strong) UILabel *icloudLoadFailedLabel;
 @property (nonatomic, strong) UIButton *playBtn;
+@property (nonatomic,weak) id<JYPreviewVideoPlayerDelegate> delegate;
 
 - (BOOL)haveLoadVideo;
 
 - (void)stopPlayVideo;
 
 - (void)loadNetNormalImage:(JYAsset *)asset;
+
 
 @end

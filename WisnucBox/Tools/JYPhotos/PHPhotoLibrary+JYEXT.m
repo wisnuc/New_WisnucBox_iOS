@@ -498,7 +498,10 @@
 
 + (PHImageRequestID)requestVideoForAsset:(PHAsset *)asset completion:(void (^)(AVPlayerItem *, NSDictionary *))completion
 {
-    return [[PHCachingImageManager defaultManager] requestPlayerItemForVideo:asset options:nil resultHandler:^(AVPlayerItem * _Nullable playerItem, NSDictionary * _Nullable info) {
+    PHVideoRequestOptions * opt = [PHVideoRequestOptions new];
+    opt.networkAccessAllowed = YES;
+    opt.deliveryMode = PHVideoRequestOptionsDeliveryModeFastFormat;
+    return [[PHCachingImageManager defaultManager] requestPlayerItemForVideo:asset options:opt resultHandler:^(AVPlayerItem * _Nullable playerItem, NSDictionary * _Nullable info) {
         if (completion) completion(playerItem, info);
     }];
 }

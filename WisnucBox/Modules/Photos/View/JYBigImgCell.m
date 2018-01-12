@@ -14,6 +14,7 @@
 #import "PHAsset+JYEXT.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
+
 @implementation JYBigImgCell
 
 - (void)dealloc{
@@ -903,8 +904,10 @@
             strongSelf.playLayer.player = player;
             [strongSelf switchVideoStatus];
             [strongSelf.playLayer addObserver:strongSelf forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
+       
             _hasObserverStatus = YES;
             [[NSNotificationCenter defaultCenter] addObserver:strongSelf selector:@selector(playFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:player.currentItem];
+            [[NSNotificationCenter defaultCenter] addObserver:strongSelf selector:@selector(playEnd:) name:MPMoviePlayerPlaybackDidFinishNotification object:player];
             [strongSelf.indicator stopAnimating];
         });
     } failure:^(__kindof JYBaseRequest *request) {
@@ -930,12 +933,14 @@
         return;
     }
     AVPlayer *player = self.playLayer.player;
-    
-    if (player.rate != .0) {
-        [player pause];
-        self.playBtn.hidden = NO;
-    }
+    self.playBtn.hidden = NO;
+//    if (player.rate != .0) {
+//        [player pause];
+//        self.playBtn.hidden = NO;
+//    }
 }
+
+
 
 - (void)singleTapAction
 {
@@ -950,6 +955,8 @@
                         [strongSelf initVideoLoadFailedFromiCloudUI];
                         return;
                     }
+                    
+                    
                     AVPlayer *player = [AVPlayer playerWithPlayerItem:item];
                     [strongSelf.layer addSublayer:strongSelf.playLayer];
                     strongSelf.playLayer.player = player;
@@ -957,6 +964,7 @@
                     [strongSelf.playLayer addObserver:strongSelf forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
                     _hasObserverStatus = YES;
                     [[NSNotificationCenter defaultCenter] addObserver:strongSelf selector:@selector(playFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:player.currentItem];
+                     [[NSNotificationCenter defaultCenter] addObserver:strongSelf selector:@selector(playEnd:) name:MPMoviePlayerPlaybackDidFinishNotification object:player];
                 });
             }];
         }else {
@@ -983,32 +991,53 @@
         if (stop.value == duration.value) {
             [player.currentItem seekToTime:CMTimeMake(0, 1)];
         }
-        [player play];
+//        [player play];
+        AVPlayerViewController *playerViewController = [AVPlayerViewController new];
+        playerViewController.delegate = self;
+        playerViewController.player = player;
+        
+        if(self.delegate && [self.delegate respondsToSelector:@selector(playVideoWithAVPlayerViewController:)]) {
+            [self.delegate playVideoWithAVPlayerViewController:playerViewController];
+        }
+//        [self presentViewController:playerViewController animated:YES completion:nil];
+        [playerViewController.player play];
+ 
     } else {
-        self.playBtn.hidden = NO;
-        [player pause];
+//        self.playBtn.hidden = NO;
+//        [player pause];
     }
 }
 
 - (void)playFinished:(AVPlayerItem *)item
 {
-    [super singleTapAction];
+//    [super singleTapAction];
     self.playBtn.hidden = NO;
     self.imageView.hidden = NO;
     [self.playLayer.player seekToTime:kCMTimeZero];
+}
+
+- (void)playEnd:(NSNotification*)notification{
+    
 }
 
 //监听获得消息
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
     AVPlayerItem *playerItem = (AVPlayerItem *)object;
-    
     if ([keyPath isEqualToString:@"status"]) {
         if ([playerItem status] == AVPlayerStatusReadyToPlay) {
             //status 有三种状态
             self.imageView.hidden = YES;
+        } else if(playerItem.status==AVPlayerStatusUnknown){
+            NSLog(@"playerItem Unknown错误");
+            [SXLoadingView showProgressHUDText:@"播放失败，未知错误" duration:1.2f];
+        }
+        else if (playerItem.status==AVPlayerStatusFailed){
+            NSLog(@"playerItem 失败");
+            [SXLoadingView showProgressHUDText:@"播放失败" duration:1.2f];
         }
     }
 }
+
 
 @end

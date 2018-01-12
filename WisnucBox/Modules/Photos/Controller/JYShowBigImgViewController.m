@@ -14,7 +14,7 @@
 #import "PHPhotoLibrary+JYEXT.h"
 #import "PHAsset+JYEXT.h"
 
-@interface JYShowBigImgViewController ()<UIScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
+@interface JYShowBigImgViewController ()<UIScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate,JYPreviewVideoPlayerDelegate>
 {
     UICollectionView *_collectionView;
     
@@ -261,6 +261,8 @@
         }
     }
 }
+
+
 
 - (void)longGestureRecognized:(UILongPressGestureRecognizer *)sender{
     if (sender.state == UIGestureRecognizerStateBegan) {
@@ -617,7 +619,7 @@
 {
     JYBigImgCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JYBigImgCell" forIndexPath:indexPath];
     JYAsset *model = self.models[indexPath.row];
-    
+    cell.previewView.videoView.delegate = self;
     
     cell.showGif = YES;
     cell.showLivePhoto = YES;
@@ -837,6 +839,16 @@
         self.view.backgroundColor = [UIColor clearColor];
     } completion:^(BOOL finished) {
         completion();
+    }];
+}
+
+
+
+- (void)playVideoWithAVPlayerViewController:(AVPlayerViewController *)viewController {
+    [self presentViewController:viewController animated:YES completion:^{
+        NSIndexPath *indexP = [NSIndexPath indexPathForRow:_currentPage - 1 inSection:0];
+        JYBigImgCell * cell = (JYBigImgCell *)[_collectionView cellForItemAtIndexPath:indexP];
+        [cell.previewView.videoView stopPlayVideo];
     }];
 }
 

@@ -353,7 +353,7 @@ UIDocumentInteractionControllerDelegate
                         CSUploadTask *uploadTask = [self.transmitingArray objectAtIndex:indexPath.row];
                         NSLog(@"%u",uploadTask.uploadStatus);
                         if (uploadTask.uploadStatus == CSUploadStatusCanceled||
-                            uploadTask.uploadStatus == CSUploadStatusSuccess||
+                                uploadTask.uploadStatus == CSUploadStatusSuccess||
                             uploadTask.uploadStatus == CSUploadStatusFailure ) {
                             [actionSheet setHidden:YES];
                             return ;
