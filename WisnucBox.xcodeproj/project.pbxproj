@@ -359,7 +359,6 @@
 		1FFAE3981FE142D40054C393 /* ic_info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FFAE3951FE142D30054C393 /* ic_info@2x.png */; };
 		1FFEADAE1FB087AE00CD3068 /* CSFileDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEADAD1FB087AE00CD3068 /* CSFileDownloadManager.m */; };
 		1FFEADB51FB1594900CD3068 /* CSDownloadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEADB41FB1594900CD3068 /* CSDownloadModel.m */; };
-		2C68507817DCDF432CF88A3F /* Pods_WisnucBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 357873726A4400954BE467E2 /* Pods_WisnucBox.framework */; };
 		71A3D6671FB57AC30002B8B1 /* JYBaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A3D65F1FB57AC30002B8B1 /* JYBaseRequest.m */; };
 		71A3D6681FB57AC30002B8B1 /* JYNetEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A3D6611FB57AC30002B8B1 /* JYNetEngine.m */; };
 		71A3D6691FB57AC30002B8B1 /* JYNetworker.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A3D6631FB57AC30002B8B1 /* JYNetworker.m */; };
@@ -369,6 +368,7 @@
 		71A3D6791FB5AD230002B8B1 /* FMGetUsersAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A3D6761FB5AD230002B8B1 /* FMGetUsersAPI.m */; };
 		71A3D67A1FB5AD230002B8B1 /* FMAccountUsersAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A3D6781FB5AD230002B8B1 /* FMAccountUsersAPI.m */; };
 		71A3D67E1FB5ADAA0002B8B1 /* FMGetJWTAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A3D67D1FB5ADAA0002B8B1 /* FMGetJWTAPI.m */; };
+		795BF0D9839BDA7A681977B4 /* libPods-WisnucBox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 741BB8AA17A553016C393E92 /* libPods-WisnucBox.a */; };
 		7EC1F8F7B7661283352336B2 /* UIViewController+controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC1FAE1226D685452156DF9 /* UIViewController+controller.m */; };
 		C11EAB221FC4066A007C9BA7 /* WBCloudJsonAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C11EAB211FC4066A007C9BA7 /* WBCloudJsonAPI.m */; };
 		C11EAB281FC41495007C9BA7 /* NSError+WBCode.m in Sources */ = {isa = PBXBuildFile; fileRef = C11EAB271FC41495007C9BA7 /* NSError+WBCode.m */; };
@@ -1336,7 +1336,6 @@
 		1FFEADAD1FB087AE00CD3068 /* CSFileDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSFileDownloadManager.m; sourceTree = "<group>"; };
 		1FFEADB31FB1594900CD3068 /* CSDownloadModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSDownloadModel.h; sourceTree = "<group>"; };
 		1FFEADB41FB1594900CD3068 /* CSDownloadModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSDownloadModel.m; sourceTree = "<group>"; };
-		357873726A4400954BE467E2 /* Pods_WisnucBox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WisnucBox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		71A3D65E1FB57AC30002B8B1 /* JYBaseRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYBaseRequest.h; sourceTree = "<group>"; };
 		71A3D65F1FB57AC30002B8B1 /* JYBaseRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYBaseRequest.m; sourceTree = "<group>"; };
 		71A3D6601FB57AC30002B8B1 /* JYNetEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYNetEngine.h; sourceTree = "<group>"; };
@@ -1356,6 +1355,7 @@
 		71A3D6781FB5AD230002B8B1 /* FMAccountUsersAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMAccountUsersAPI.m; sourceTree = "<group>"; };
 		71A3D67C1FB5ADAA0002B8B1 /* FMGetJWTAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMGetJWTAPI.h; sourceTree = "<group>"; };
 		71A3D67D1FB5ADAA0002B8B1 /* FMGetJWTAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMGetJWTAPI.m; sourceTree = "<group>"; };
+		741BB8AA17A553016C393E92 /* libPods-WisnucBox.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WisnucBox.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EC1F976ED196B15B0370018 /* UIViewController+controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+controller.h"; sourceTree = "<group>"; };
 		7EC1FAE1226D685452156DF9 /* UIViewController+controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+controller.m"; sourceTree = "<group>"; };
 		B0D3F6BCD083EB684E36A713 /* Pods-WisnucBox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.release.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.release.xcconfig"; sourceTree = "<group>"; };
@@ -1902,7 +1902,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F29AA922008970D002C7131 /* MediaPlayer.framework in Frameworks */,
-				2C68507817DCDF432CF88A3F /* Pods_WisnucBox.framework in Frameworks */,
+				795BF0D9839BDA7A681977B4 /* libPods-WisnucBox.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3215,7 +3215,7 @@
 			isa = PBXGroup;
 			children = (
 				1F29AA912008970C002C7131 /* MediaPlayer.framework */,
-				357873726A4400954BE467E2 /* Pods_WisnucBox.framework */,
+				741BB8AA17A553016C393E92 /* libPods-WisnucBox.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -4762,9 +4762,34 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox-resources.sh",
+				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser/MWPhotoBrowser.bundle",
+				"${PODS_ROOT}/MaterialComponents/components/ActivityIndicator/src/MaterialActivityIndicator.bundle",
+				"${PODS_ROOT}/MaterialComponents/components/AppBar/src/MaterialAppBar.bundle",
+				"${PODS_ROOT}/MaterialComponents/components/BottomNavigation/src/MaterialBottomNavigation.bundle",
+				"${PODS_ROOT}/MaterialComponents/components/CollectionCells/src/MaterialCollectionCells.bundle",
+				"${PODS_ROOT}/MaterialComponents/components/Collections/src/MaterialCollections.bundle",
+				"${PODS_ROOT}/MaterialComponents/components/Dialogs/src/MaterialDialogs.bundle",
+				"${PODS_ROOT}/MaterialComponents/components/FeatureHighlight/src/MaterialFeatureHighlight.bundle",
+				"${PODS_ROOT}/MaterialComponents/components/PageControl/src/MaterialPageControl.bundle",
+				"${PODS_ROOT}/MaterialComponents/components/Tabs/src/MaterialTabs.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_arrow_back.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_check.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_check_circle.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_chevron_right.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_info.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_radio_button_unchecked.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_reorder.bundle",
+				"${PODS_ROOT}/NIMKit/NIMKit/Resources/NIMKitEmoticon.bundle",
+				"${PODS_ROOT}/NIMKit/NIMKit/Resources/NIMKitResource.bundle",
+				"${PODS_ROOT}/NIMKit/NIMKit/Resources/NIMKitSettings.bundle",
+				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
+				"${PODS_ROOT}/TZImagePickerController/TZImagePickerController/TZImagePickerController/TZImagePickerController.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

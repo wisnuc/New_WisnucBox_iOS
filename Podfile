@@ -1,6 +1,6 @@
 platform :ios,’8.0’
 
-use_frameworks!
+#use_frameworks!
 inhibit_all_warnings!
 
 target :’WisnucBox’ do
@@ -29,6 +29,7 @@ pod 'RTRootNavigationController'
 pod 'CYLTabBarController'
 pod 'MaterialComponents'
 pod 'AvoidCrash', '~> 2.5.1'
+pod 'NIMKit'
 end
 
 #post_install do |installer|
