@@ -65,8 +65,10 @@
 
 #define KDefaultOffset 8
 
-#define kFirstTabBarTitle WBLocalizedString(@"photo", nil)
-#define kSecondTabBarTitle WBLocalizedString(@"file", nil)
+#define kPhotoTabBarTitle WBLocalizedString(@"photo", nil)
+#define kFileTabBarTitle WBLocalizedString(@"file", nil)
+#define kBoxTabBarTitle WBLocalizedString(@"box", nil)
+#define kChatTabBarTitle WBLocalizedString(@"chat", nil)
 
 #define kStationManageUserMangeString WBLocalizedString(@"user_manage", nil)
 #define kStationManageEquipmentString WBLocalizedString(@"equipment", nil)

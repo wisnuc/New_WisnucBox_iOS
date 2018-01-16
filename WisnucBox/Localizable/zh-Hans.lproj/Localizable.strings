@@ -43,6 +43,8 @@
 //TabBar Title
 "photo" = "照片";
 "file" = "文件";
+"box" = "分享";
+"chat" = "私有群";
 
 //Upload
 "upload_failed" = "上传失败";

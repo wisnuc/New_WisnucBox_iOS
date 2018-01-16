@@ -9,6 +9,15 @@
 /* Begin PBXBuildFile section */
 		0693AED01FE7FFB2005CCEA1 /* WBInitDiskDetailAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0693AECF1FE7FFB2005CCEA1 /* WBInitDiskDetailAlertViewController.m */; };
 		0693AED21FE7FFC0005CCEA1 /* WBInitDiskDetailAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0693AED11FE7FFC0005CCEA1 /* WBInitDiskDetailAlertViewController.storyboard */; };
+		1F06FD4D200D9E1C0024AFC7 /* WBBoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F06FD4B200D9E1C0024AFC7 /* WBBoxViewController.m */; };
+		1F06FD4E200D9E1C0024AFC7 /* WBBoxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F06FD4C200D9E1C0024AFC7 /* WBBoxViewController.xib */; };
+		1F06FD54200D9FE00024AFC7 /* WBBoxPhotoVideoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F06FD52200D9FE00024AFC7 /* WBBoxPhotoVideoTableViewCell.m */; };
+		1F06FD55200D9FE00024AFC7 /* WBBoxPhotoVideoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F06FD53200D9FE00024AFC7 /* WBBoxPhotoVideoTableViewCell.xib */; };
+		1F06FD5B200DCF890024AFC7 /* WBChatListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F06FD59200DCF890024AFC7 /* WBChatListViewController.m */; };
+		1F06FD61200DD1630024AFC7 /* WBChatListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F06FD5F200DD1630024AFC7 /* WBChatListTableViewCell.m */; };
+		1F06FD62200DD1630024AFC7 /* WBChatListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F06FD60200DD1630024AFC7 /* WBChatListTableViewCell.xib */; };
+		1F06FD66200DD7E00024AFC7 /* WBChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F06FD64200DD7E00024AFC7 /* WBChatViewController.m */; };
+		1F06FD67200DD7E00024AFC7 /* WBChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F06FD65200DD7E00024AFC7 /* WBChatViewController.xib */; };
 		1F0898DC1FB05FF900B86723 /* eye_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0898DB1FB05FF800B86723 /* eye_off.png */; };
 		1F114A111FF2558F007F6D15 /* WBMaintenanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F114A0F1FF2558F007F6D15 /* WBMaintenanceViewController.m */; };
 		1F114A121FF2558F007F6D15 /* WBMaintenanceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F114A101FF2558F007F6D15 /* WBMaintenanceViewController.xib */; };
@@ -825,6 +834,20 @@
 		0693AECE1FE7FFB2005CCEA1 /* WBInitDiskDetailAlertViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBInitDiskDetailAlertViewController.h; sourceTree = "<group>"; };
 		0693AECF1FE7FFB2005CCEA1 /* WBInitDiskDetailAlertViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBInitDiskDetailAlertViewController.m; sourceTree = "<group>"; };
 		0693AED11FE7FFC0005CCEA1 /* WBInitDiskDetailAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WBInitDiskDetailAlertViewController.storyboard; sourceTree = "<group>"; };
+		1F06FD4A200D9E1C0024AFC7 /* WBBoxViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBBoxViewController.h; sourceTree = "<group>"; };
+		1F06FD4B200D9E1C0024AFC7 /* WBBoxViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBBoxViewController.m; sourceTree = "<group>"; };
+		1F06FD4C200D9E1C0024AFC7 /* WBBoxViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBBoxViewController.xib; sourceTree = "<group>"; };
+		1F06FD51200D9FE00024AFC7 /* WBBoxPhotoVideoTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBBoxPhotoVideoTableViewCell.h; sourceTree = "<group>"; };
+		1F06FD52200D9FE00024AFC7 /* WBBoxPhotoVideoTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBBoxPhotoVideoTableViewCell.m; sourceTree = "<group>"; };
+		1F06FD53200D9FE00024AFC7 /* WBBoxPhotoVideoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBBoxPhotoVideoTableViewCell.xib; sourceTree = "<group>"; };
+		1F06FD58200DCF890024AFC7 /* WBChatListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBChatListViewController.h; sourceTree = "<group>"; };
+		1F06FD59200DCF890024AFC7 /* WBChatListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBChatListViewController.m; sourceTree = "<group>"; };
+		1F06FD5E200DD1630024AFC7 /* WBChatListTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBChatListTableViewCell.h; sourceTree = "<group>"; };
+		1F06FD5F200DD1630024AFC7 /* WBChatListTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBChatListTableViewCell.m; sourceTree = "<group>"; };
+		1F06FD60200DD1630024AFC7 /* WBChatListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBChatListTableViewCell.xib; sourceTree = "<group>"; };
+		1F06FD63200DD7E00024AFC7 /* WBChatViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBChatViewController.h; sourceTree = "<group>"; };
+		1F06FD64200DD7E00024AFC7 /* WBChatViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBChatViewController.m; sourceTree = "<group>"; };
+		1F06FD65200DD7E00024AFC7 /* WBChatViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBChatViewController.xib; sourceTree = "<group>"; };
 		1F0898DB1FB05FF800B86723 /* eye_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye_off.png; sourceTree = "<group>"; };
 		1F114A0E1FF2558F007F6D15 /* WBMaintenanceViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBMaintenanceViewController.h; sourceTree = "<group>"; };
 		1F114A0F1FF2558F007F6D15 /* WBMaintenanceViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBMaintenanceViewController.m; sourceTree = "<group>"; };
@@ -1900,6 +1923,66 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F06FD49200D9DBD0024AFC7 /* Box */ = {
+			isa = PBXGroup;
+			children = (
+				1F06FD50200D9F630024AFC7 /* View */,
+				1F06FD4F200D9F260024AFC7 /* ViewController */,
+			);
+			path = Box;
+			sourceTree = "<group>";
+		};
+		1F06FD4F200D9F260024AFC7 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1F06FD4A200D9E1C0024AFC7 /* WBBoxViewController.h */,
+				1F06FD4B200D9E1C0024AFC7 /* WBBoxViewController.m */,
+				1F06FD4C200D9E1C0024AFC7 /* WBBoxViewController.xib */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		1F06FD50200D9F630024AFC7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1F06FD51200D9FE00024AFC7 /* WBBoxPhotoVideoTableViewCell.h */,
+				1F06FD52200D9FE00024AFC7 /* WBBoxPhotoVideoTableViewCell.m */,
+				1F06FD53200D9FE00024AFC7 /* WBBoxPhotoVideoTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1F06FD56200DCEE90024AFC7 /* Twitter */ = {
+			isa = PBXGroup;
+			children = (
+				1F06FD5D200DCF8E0024AFC7 /* View */,
+				1F06FD57200DCF2C0024AFC7 /* ViewController */,
+			);
+			path = Twitter;
+			sourceTree = "<group>";
+		};
+		1F06FD57200DCF2C0024AFC7 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1F06FD58200DCF890024AFC7 /* WBChatListViewController.h */,
+				1F06FD59200DCF890024AFC7 /* WBChatListViewController.m */,
+				1F06FD63200DD7E00024AFC7 /* WBChatViewController.h */,
+				1F06FD64200DD7E00024AFC7 /* WBChatViewController.m */,
+				1F06FD65200DD7E00024AFC7 /* WBChatViewController.xib */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		1F06FD5D200DCF8E0024AFC7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1F06FD5E200DD1630024AFC7 /* WBChatListTableViewCell.h */,
+				1F06FD5F200DD1630024AFC7 /* WBChatListTableViewCell.m */,
+				1F06FD60200DD1630024AFC7 /* WBChatListTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		1F114A0C1FF25545007F6D15 /* Maintenance */ = {
 			isa = PBXGroup;
 			children = (
@@ -2349,6 +2432,8 @@
 		1F4D756A1FAC4BB700E6516C /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				1F06FD56200DCEE90024AFC7 /* Twitter */,
+				1F06FD49200D9DBD0024AFC7 /* Box */,
 				1F114A0C1FF25545007F6D15 /* Maintenance */,
 				1F58DEE81FDFF22C00768DD7 /* Initialization */,
 				1FAD742A1FD00B8F00A5D880 /* Upload */,
@@ -4239,6 +4324,7 @@
 				F68310FC1FB30AAE005AC578 /* ic_https@3x.png in Resources */,
 				1FFAE3921FE141C90054C393 /* disk_disable@2x.png in Resources */,
 				F68310EC1FB30AAE005AC578 /* help.png in Resources */,
+				1F06FD4E200D9E1C0024AFC7 /* WBBoxViewController.xib in Resources */,
 				C139DFD01FC7DFC7007098E5 /* ic_play@3x.png in Resources */,
 				1F922E641FC8438C00A7614B /* FirstFilesTableViewCell.xib in Resources */,
 				F683116A1FB30AAE005AC578 /* pic_线型@3x.png in Resources */,
@@ -4449,6 +4535,7 @@
 				1F922ED51FCE971B00A7614B /* ic_memory@2x.png in Resources */,
 				1FAD74601FD0EDDF00A5D880 /* gif_icon.png in Resources */,
 				1F6E54AF2004B123009E38AE /* more_white@3x.png in Resources */,
+				1F06FD55200D9FE00024AFC7 /* WBBoxPhotoVideoTableViewCell.xib in Resources */,
 				F68310CE1FB30AAE005AC578 /* file_more.png in Resources */,
 				F68311761FB30AAE005AC578 /* recommend@3x.png in Resources */,
 				1FD7A1081FB05A51000D4CB3 /* eye_off@3x.png in Resources */,
@@ -4473,6 +4560,7 @@
 				1F114A741FF4D223007F6D15 /* update_done.png in Resources */,
 				F68311961FB30AAF005AC578 /* small_1@2x.png in Resources */,
 				F68311AE1FB30AAF005AC578 /* unselected@3x.png in Resources */,
+				1F06FD67200DD7E00024AFC7 /* WBChatViewController.xib in Resources */,
 				F68310D11FB30AAE005AC578 /* float_btn_del.png in Resources */,
 				F68311461FB30AAE005AC578 /* open_in@3x.png in Resources */,
 				F68310A01FB30AAE005AC578 /* check-box_select@2x.png in Resources */,
@@ -4557,6 +4645,7 @@
 				1F4083E320062C2700DC0634 /* ic_content_paste.png in Resources */,
 				F68311711FB30AAE005AC578 /* praise_share.png in Resources */,
 				F68310D91FB30AAE005AC578 /* folder_shared@3x.png in Resources */,
+				1F06FD62200DD1630024AFC7 /* WBChatListTableViewCell.xib in Resources */,
 				1FAD74661FD0EDDF00A5D880 /* gif_symbol@2x.png in Resources */,
 				F68310A61FB30AAE005AC578 /* check_circle_select@2x.png in Resources */,
 				F68311341FB30AAE005AC578 /* more.png in Resources */,
@@ -4834,6 +4923,7 @@
 				1F1FA37E1FC2EDCD00272347 /* FirstFilesViewController.m in Sources */,
 				F67561581FB342AE00E3277F /* MXScrollViewController.m in Sources */,
 				F6830F021FB2FF8C005AC578 /* ImageHeaderView.m in Sources */,
+				1F06FD54200D9FE00024AFC7 /* WBBoxPhotoVideoTableViewCell.m in Sources */,
 				1F4083D02006299200DC0634 /* WBPpgDownloadSwitchAPI.m in Sources */,
 				1F1ABA0D1FB9862A006EB1FC /* TestDataModel.m in Sources */,
 				1FEFCDE21FE3C83300DEC866 /* WBStorageVolumesAPI.m in Sources */,
@@ -4868,6 +4958,7 @@
 				F6830EB31FB2FAE0005AC578 /* RDVTabBar.m in Sources */,
 				C183CDE21FCE8D84002E29CD /* FMUserEditVC.m in Sources */,
 				1FEFCDDA1FE3AD2000DEC866 /* WBInitDiskSelectedTableViewCell.m in Sources */,
+				1F06FD5B200DCF890024AFC7 /* WBChatListViewController.m in Sources */,
 				1F4D75A41FAC4BB800E6516C /* UserModel.m in Sources */,
 				1FEFCDE61FE7914900DEC866 /* WBInitChangeDiskTypeAlertViewController.m in Sources */,
 				1FC2AFF81FC6684100E8C9DE /* WBgetStationInfoAPI.m in Sources */,
@@ -4925,12 +5016,14 @@
 				1FFADF8E1FDE7F7200FA3F6E /* WBLoginTableViewDelegate.m in Sources */,
 				1F922E701FCD315600A7614B /* WBStationManageRootViewController.m in Sources */,
 				1F922EF11FCEAE9500A7614B /* WBStationManageRenameViewController.m in Sources */,
+				1F06FD61200DD1630024AFC7 /* WBChatListTableViewCell.m in Sources */,
 				1F1AB9EC1FB968CA006EB1FC /* FLFilesCell.m in Sources */,
 				1F922E671FC8706200A7614B /* CSOneDowloadTask.m in Sources */,
 				1F4D75C61FAC5EB500E6516C /* GCDAsyncUdpSocket.m in Sources */,
 				1F922EAC1FCD5D2100A7614B /* WBStationManageTimeDateModel.m in Sources */,
 				F6830F011FB2FF8C005AC578 /* BaseTableViewCell.m in Sources */,
 				1FC2AFEF1FC5299300E8C9DE /* WBCloudLoginAPI.m in Sources */,
+				1F06FD66200DD7E00024AFC7 /* WBChatViewController.m in Sources */,
 				1F178ECB1FECB094001650E5 /* WBFeaturesSambaStatusAPI.m in Sources */,
 				F67D64271FAC7D9A00E23D16 /* UIView+JY_ExtendTouchRect.m in Sources */,
 				1F1ABA041FB97A0D006EB1FC /* CSDownloadTask.m in Sources */,
@@ -4998,6 +5091,7 @@
 				71A3D67E1FB5ADAA0002B8B1 /* FMGetJWTAPI.m in Sources */,
 				F6830F151FB300D2005AC578 /* MenuView.m in Sources */,
 				1F4D759E1FAC4BB800E6516C /* UIColor+FM_UserHeadImage.m in Sources */,
+				1F06FD4D200D9E1C0024AFC7 /* WBBoxViewController.m in Sources */,
 				1FAD74261FCFE99C00A5D880 /* TicketUserModel.m in Sources */,
 				F65035611FAC00A60007979D /* main.m in Sources */,
 				1F6E54B32004BAE3009E38AE /* UIView+dropshadow.m in Sources */,

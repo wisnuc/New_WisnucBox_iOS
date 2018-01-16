@@ -43,6 +43,8 @@
 //TabBar Title
 "photo" = "Photos";
 "file" = "Files";
+"box" = "Share";
+"chat" = "Chat";
 
 //Upload
 "cancel_upload" = "Cancel ";
