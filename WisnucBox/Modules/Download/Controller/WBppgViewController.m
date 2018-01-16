@@ -81,9 +81,9 @@ UITableViewDataSource
         }
     } failure:^(__kindof JYBaseRequest *request) {
       NSLog(@"%@",request.error);
-        self.addButton.enabled = NO;
-        self.downloadedClearButton.enabled = NO;
-        self.downloadingClearButton.enabled = NO;
+        self.addButton.enabled = YES;
+        self.downloadedClearButton.enabled = YES;
+        self.downloadingClearButton.enabled = YES;
     }];
 }
 
