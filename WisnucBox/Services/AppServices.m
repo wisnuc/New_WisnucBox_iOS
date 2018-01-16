@@ -70,6 +70,12 @@
     }
 }
 
+- (void)rebulidCutUser{
+    NSLog(@"%@",self.userServices.currentUser);
+    [self abortCutUser];
+    [self _build];
+}
+
 - (void)rebulid {
     [self abort];
     [self _build];
@@ -268,6 +274,7 @@
             user.backUpDir = entryUUID;
             [WB_UserService synchronizedCurrentUser];
             NSLog(@"GET BACKUP DIR SUCCESS");
+            NSLog(@"%d",user.askForBackup);
             if(!user.askForBackup)
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [weak_self requestForBackupPhotos:^(BOOL shouldUpload) {
@@ -453,6 +460,38 @@ static BOOL needRestart = NO;
         _progressView = [JYProcessView processViewWithType:ProcessTypeLine];
     }
     return _progressView;
+}
+
+- (void)abortCutUser {
+    //destory JYnetEngine
+    [[JYNetEngine sharedInstance] cancleAllRequest];
+    // TODO: maybe one is enough
+    [[SDWebImageManager sharedManager] cancelAll];
+    [[SDWebImageDownloader sharedDownloader] cancelAllDownloads];
+    
+//    _userServices ? [_userServices abort] : nil;
+    _fileServices ? [_fileServices abort] : nil;
+    _assetServices ? [_assetServices abort] : nil;
+    _netServices ? [_netServices abort] : nil;
+    _dbServices ? [_dbServices abort] : nil;
+    _photoUploadManager ? [_photoUploadManager destroy] : nil;
+    
+//    _userServices = nil;
+//    _fileServices = nil;
+//    _assetServices = nil;
+//    _netServices = nil;
+//    _dbServices = nil;
+//    _photoUploadManager = nil;
+    //cancel download
+    
+    [CSFileDownloadManager destroyAll];
+    [FilesDataSourceManager destroyAll];
+    [FLFIlesHelper destroyAll];
+    [CSDownloadHelper destroyAll];
+    [CSFilesOneDownloadManager destroyAll];
+    [CSUploadHelper destroyAll];
+    [CSFileUploadManager destroyAll];
+    [FMCheckManager destroyAll];
 }
 
 - (void)abort {

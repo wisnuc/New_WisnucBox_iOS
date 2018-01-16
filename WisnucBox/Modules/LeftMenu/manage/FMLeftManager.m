@@ -1,4 +1,4 @@
-//
+    //
 //  FMLeftManager.m
 //  WisnucBox
 //
@@ -123,23 +123,50 @@
 
 //切换 账户 响应
 -(void)LeftMenuViewClickUserTable:(WBUser *)info{
+    @weaky(self)
     [SXLoadingView showProgressHUD:@"正在切换"];
     [self _hiddenMenu];
     if (WB_UserService.currentUser.isCloudLogin && IsEquallString(info.cloudToken, WB_UserService.currentUser.cloudToken)) {
         [SXLoadingView hideProgressHUD];
         dispatch_async(dispatch_get_main_queue(), ^{
-            
             [WB_UserService logoutUser];
             [WB_AppServices rebulid];
-            [WB_UserService setCurrentUser:info];
-            [WB_UserService synchronizedCurrentUser];
+//            [WB_UserService setCurrentUser:info];
+//            [WB_UserService synchronizedCurrentUser];
+            [WB_NetService testForLANIP:info.localAddr commplete:^(BOOL success) { // test for it
+                if(success) {
+                    [WB_NetService getLocalTokenWithCloud:^(NSError *error, NSString *token) {
+                        if(!error) {
+                            WB_UserService.currentUser.isCloudLogin = NO;
+                            [WB_AppServices.netServices updateIsCloud:NO andLocalURL:info.localAddr andCloudURL:WX_BASE_URL];
+                            WB_UserService.currentUser.localToken = token;
+                        }
+                        [WB_UserService setCurrentUser:info];
+                        [WB_UserService synchronizedCurrentUser];
+                        [WB_AppServices nextSteapForLogin:^(NSError *error, WBUser *user) {
+                            if (!error) {
+                                AppDelegate * app = (AppDelegate *)[UIApplication sharedApplication].delegate ;
+                                app.window.rootViewController = nil;
+                                [app.window resignKeyWindow];
+                                [app.window removeFromSuperview];
+                                [MyAppDelegate initRootVC];
+                                [SXLoadingView showAlertHUD:@"切换成功" duration:1.2];
+                            }
+                        }];
+                    }];
+                }else
+                    [WB_AppServices nextSteapForLogin:^(NSError *error, WBUser *user) {
+                        if (!error) {
+                            AppDelegate * app = (AppDelegate *)[UIApplication sharedApplication].delegate ;
+                            app.window.rootViewController = nil;
+                            [app.window resignKeyWindow];
+                            [app.window removeFromSuperview];
+                            [MyAppDelegate initRootVC];
+                            [SXLoadingView showAlertHUD:@"切换成功" duration:1.2];
+                        }
+                 }];
+            }];
             
-            AppDelegate * app = (AppDelegate *)[UIApplication sharedApplication].delegate ;
-            app.window.rootViewController = nil;
-            [app.window resignKeyWindow];
-            [app.window removeFromSuperview];
-            [MyAppDelegate initRootVC];
-            [SXLoadingView showAlertHUD:@"切换成功" duration:1.2];
         });
         return;
     }
@@ -157,7 +184,6 @@
                         NSString * addressIP = [FMCheckManager serverIPFormService:service];
                         BOOL isAlive = [FMCheckManager testServerWithIP:addressIP andToken:info.localToken];
                         if (isAlive) { //如果可以跳转
-                            
                             [SXLoadingView hideProgressHUD];
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 
@@ -165,14 +191,23 @@
                             [WB_AppServices rebulid];
                             [WB_UserService setCurrentUser:info];
                             [WB_UserService synchronizedCurrentUser];
-                            
+                                [WB_AppServices nextSteapForLogin:^(NSError *error, WBUser *user) {
+                                    if(!error){
+                                        AppDelegate * app = (AppDelegate *)[UIApplication sharedApplication].delegate ;
+                                        app.window.rootViewController = nil;
+                                        [app.window resignKeyWindow];
+                                        [app.window removeFromSuperview];
+                                        [MyAppDelegate initRootVC];
+                                        [weak_self userInfoChange];
+                                        [SXLoadingView showAlertHUD:@"切换成功" duration:1.2];
+                                    }else{
+                                         [SXLoadingView showAlertHUD:@"切换失败，请重新登录" duration:1.2];
+                                         [MyAppDelegate initRootVC];
+                                    }
+                                }];
+                               NSLog(@"%@", WB_UserService.currentUser);
                            
-                                AppDelegate * app = (AppDelegate *)[UIApplication sharedApplication].delegate ;
-                                app.window.rootViewController = nil;
-                                [app.window resignKeyWindow];
-                                [app.window removeFromSuperview];
-                                [MyAppDelegate initRootVC];
-                                 [SXLoadingView showAlertHUD:@"切换成功" duration:1.2];
+                             
                             });
                         }else{
                             [SXLoadingView showAlertHUD:@"切换失败，设备当前状态未知，请检查" duration:1];

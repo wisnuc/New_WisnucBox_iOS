@@ -120,7 +120,6 @@ WXApiDelegate
         [_browser stopServerBrowser];
         _browser = nil;
     }
-   
 }
 
 - (instancetype)init{

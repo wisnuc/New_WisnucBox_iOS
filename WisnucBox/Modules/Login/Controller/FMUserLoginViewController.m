@@ -83,6 +83,8 @@
     [SXLoadingView showProgressHUD:WBLocalizedString(@"logging_in", nil)];
     NSString * UUID = [NSString stringWithFormat:@"%@:%@",_user.uuid,IsNilString(_loginTextField.text)?@"":_loginTextField.text];
     NSString * Basic = [UUID base64EncodedString];
+    [WB_UserService logoutUser];
+    [WB_AppServices rebulid];
     [WB_AppServices loginWithBasic:Basic userUUID:_user.uuid StationName:_service.name UserName:_user.username addr:_service.displayPath AvatarURL:_user.avatar isWechat:NO completeBlock:^(NSError *error, WBUser *user) {
         if(error || IsNilString(user.userHome)){
             if(!user) NSLog(@"GET TOKEN ERROR");

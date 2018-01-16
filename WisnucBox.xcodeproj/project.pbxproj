@@ -67,6 +67,8 @@
 		1F1FA37E1FC2EDCD00272347 /* FirstFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1FA37D1FC2EDCD00272347 /* FirstFilesViewController.m */; };
 		1F1FA3871FC3F38200272347 /* FilesShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1FA3861FC3F38200272347 /* FilesShareViewController.m */; };
 		1F29AA922008970D002C7131 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F29AA912008970C002C7131 /* MediaPlayer.framework */; };
+		1F29AAA0200C4E4F002C7131 /* FMUserLoginSettingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F29AA9D200C4E4E002C7131 /* FMUserLoginSettingVC.xib */; };
+		1F29AAA1200C4E4F002C7131 /* FMUserLoginSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F29AA9F200C4E4E002C7131 /* FMUserLoginSettingVC.m */; };
 		1F2BE3011FBC129700776DB3 /* FilesNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2BE3001FBC129700776DB3 /* FilesNextViewController.m */; };
 		1F3F99801FB0312300D6CC64 /* LocalDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F997E1FB0312300D6CC64 /* LocalDownloadViewController.m */; };
 		1F3F99811FB0312300D6CC64 /* LocalDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3F997F1FB0312300D6CC64 /* LocalDownloadViewController.xib */; };
@@ -445,8 +447,6 @@
 		F6830EB31FB2FAE0005AC578 /* RDVTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = F6830EAE1FB2FAE0005AC578 /* RDVTabBar.m */; };
 		F6830EB41FB2FAE0005AC578 /* RDVTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6830EB01FB2FAE0005AC578 /* RDVTabBarController.m */; };
 		F6830EB51FB2FAE0005AC578 /* RDVTabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F6830EB21FB2FAE0005AC578 /* RDVTabBarItem.m */; };
-		F6830EBD1FB2FD10005AC578 /* FMUserLoginSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F6830EBB1FB2FD10005AC578 /* FMUserLoginSettingVC.m */; };
-		F6830EBE1FB2FD10005AC578 /* FMUserLoginSettingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6830EBC1FB2FD10005AC578 /* FMUserLoginSettingVC.xib */; };
 		F6830EC41FB2FD1D005AC578 /* FMUserLoginHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F6830EC01FB2FD1D005AC578 /* FMUserLoginHeaderView.m */; };
 		F6830EC51FB2FD1D005AC578 /* FMUsersLoginMangeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F6830EC21FB2FD1D005AC578 /* FMUsersLoginMangeCell.m */; };
 		F6830EC61FB2FD1D005AC578 /* FMUsersLoginMangeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6830EC31FB2FD1D005AC578 /* FMUsersLoginMangeCell.xib */; };
@@ -911,6 +911,9 @@
 		1F1FA3861FC3F38200272347 /* FilesShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilesShareViewController.m; sourceTree = "<group>"; };
 		1F244D9D3BCB4706DAFC363E /* Pods-WisnucBox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisnucBox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox.debug.xcconfig"; sourceTree = "<group>"; };
 		1F29AA912008970C002C7131 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		1F29AA9D200C4E4E002C7131 /* FMUserLoginSettingVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FMUserLoginSettingVC.xib; sourceTree = "<group>"; };
+		1F29AA9E200C4E4E002C7131 /* FMUserLoginSettingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMUserLoginSettingVC.h; sourceTree = "<group>"; };
+		1F29AA9F200C4E4E002C7131 /* FMUserLoginSettingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMUserLoginSettingVC.m; sourceTree = "<group>"; };
 		1F2BE2FF1FBC129700776DB3 /* FilesNextViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilesNextViewController.h; sourceTree = "<group>"; };
 		1F2BE3001FBC129700776DB3 /* FilesNextViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilesNextViewController.m; sourceTree = "<group>"; };
 		1F3F997D1FB0312300D6CC64 /* LocalDownloadViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalDownloadViewController.h; sourceTree = "<group>"; };
@@ -1489,9 +1492,6 @@
 		F6830EB01FB2FAE0005AC578 /* RDVTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDVTabBarController.m; sourceTree = "<group>"; };
 		F6830EB11FB2FAE0005AC578 /* RDVTabBarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDVTabBarItem.h; sourceTree = "<group>"; };
 		F6830EB21FB2FAE0005AC578 /* RDVTabBarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDVTabBarItem.m; sourceTree = "<group>"; };
-		F6830EBA1FB2FD10005AC578 /* FMUserLoginSettingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMUserLoginSettingVC.h; sourceTree = "<group>"; };
-		F6830EBB1FB2FD10005AC578 /* FMUserLoginSettingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMUserLoginSettingVC.m; sourceTree = "<group>"; };
-		F6830EBC1FB2FD10005AC578 /* FMUserLoginSettingVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FMUserLoginSettingVC.xib; sourceTree = "<group>"; };
 		F6830EBF1FB2FD1D005AC578 /* FMUserLoginHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMUserLoginHeaderView.h; sourceTree = "<group>"; };
 		F6830EC01FB2FD1D005AC578 /* FMUserLoginHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMUserLoginHeaderView.m; sourceTree = "<group>"; };
 		F6830EC11FB2FD1D005AC578 /* FMUsersLoginMangeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMUsersLoginMangeCell.h; sourceTree = "<group>"; };
@@ -2016,9 +2016,9 @@
 		1F114A531FF48A2E007F6D15 /* LoginManage */ = {
 			isa = PBXGroup;
 			children = (
-				F6830EBA1FB2FD10005AC578 /* FMUserLoginSettingVC.h */,
-				F6830EBB1FB2FD10005AC578 /* FMUserLoginSettingVC.m */,
-				F6830EBC1FB2FD10005AC578 /* FMUserLoginSettingVC.xib */,
+				1F29AA9E200C4E4E002C7131 /* FMUserLoginSettingVC.h */,
+				1F29AA9F200C4E4E002C7131 /* FMUserLoginSettingVC.m */,
+				1F29AA9D200C4E4E002C7131 /* FMUserLoginSettingVC.xib */,
 			);
 			path = LoginManage;
 			sourceTree = "<group>";
@@ -4308,6 +4308,7 @@
 				1F114A121FF2558F007F6D15 /* WBMaintenanceViewController.xib in Resources */,
 				F68311BE1FB30AAF005AC578 /* album_praise.png in Resources */,
 				1F114A1F1FF33463007F6D15 /* samba_switch.png in Resources */,
+				1F29AAA0200C4E4F002C7131 /* FMUserLoginSettingVC.xib in Resources */,
 				F68310F51FB30AAE005AC578 /* ic_arrow_drop_down@2x.png in Resources */,
 				1F4083A020060D0300DC0634 /* download_gray@3x.png in Resources */,
 				F68310801FB30AAE005AC578 /* album_balloon.png in Resources */,
@@ -4578,7 +4579,6 @@
 				1F58DEE51FDFDC6B00768DD7 /* disk_settings@3x.png in Resources */,
 				F683114C1FB30AAE005AC578 /* person_add@3x.png in Resources */,
 				F68310831FB30AAE005AC578 /* album_share@3x.png in Resources */,
-				F6830EBE1FB2FD10005AC578 /* FMUserLoginSettingVC.xib in Resources */,
 				1FD7A1161FB05A51000D4CB3 /* logo@3x.png in Resources */,
 				1FAD74811FD14A4700A5D880 /* add_invite.png in Resources */,
 				F68311131FB30AAE005AC578 /* info_user.png in Resources */,
@@ -4846,7 +4846,6 @@
 				F67D643A1FAC7E5600E23D16 /* FirstDecorationSectionView.m in Sources */,
 				1F4083A52006155100DC0634 /* WBppgViewController.m in Sources */,
 				1FFADF8A1FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.m in Sources */,
-				F6830EBD1FB2FD10005AC578 /* FMUserLoginSettingVC.m in Sources */,
 				0693AED01FE7FFB2005CCEA1 /* WBInitDiskDetailAlertViewController.m in Sources */,
 				C11EAB2E1FC43611007C9BA7 /* WBCloudGetStationsAPI.m in Sources */,
 				F6D8CC3D1FB42D6500673824 /* UIApplication+JYTopVC.m in Sources */,
@@ -4859,6 +4858,7 @@
 				1F1ABA001FB978EB006EB1FC /* CSDownloadTaskQueue.m in Sources */,
 				F65035641FAC00A60007979D /* AppDelegate.m in Sources */,
 				C138D07A1FB9A4B0000CF518 /* DirectoriesModel.m in Sources */,
+				1F29AAA1200C4E4F002C7131 /* FMUserLoginSettingVC.m in Sources */,
 				1F114A801FFCE2B1007F6D15 /* WBStationEnterMaintanceConfirmAVC.m in Sources */,
 				C138D0781FB9A4B0000CF518 /* DriveModel.m in Sources */,
 				F6830F181FB300D2005AC578 /* FMLeftUserCell.m in Sources */,

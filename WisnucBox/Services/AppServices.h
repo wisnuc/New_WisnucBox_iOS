@@ -47,6 +47,10 @@
 
 - (void)rebulid;
 
+//- (void)rebulidCutUser;
+
+- (void)rebulidUploadManager;
+
 - (void)startUploadAssets:(void(^)(void))complete;
 
 - (void)loginWithBasic:(NSString *)basic userUUID:(NSString *)uuid StationName:(NSString *)stationName UserName:(NSString *)userName addr:(NSString *)addr AvatarURL:(NSString *)avatar isWechat:(BOOL)isWechat completeBlock:(void(^)(NSError *error, WBUser *user))callback;
@@ -58,6 +62,7 @@
 
 - (void)requestForBackupPhotos:(void(^)(BOOL shouldUpload))callback;
 
+- (void)nextSteapForLogin:(void(^)(NSError *error, WBUser *user))callback;
 @end
 
 #define HashCalculateFinishedNotify @"HashCalculateFinishedNotify"
@@ -105,6 +110,7 @@
 - (void)removeTask:(JYAsset *)rmAsset;
 
 - (void)removeTasks:(NSArray<JYAsset *> *)assets;
+
 
 @end
 

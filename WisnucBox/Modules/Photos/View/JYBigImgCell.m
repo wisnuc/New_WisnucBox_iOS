@@ -904,7 +904,7 @@
             strongSelf.playLayer.player = player;
             [strongSelf switchVideoStatus];
             [strongSelf.playLayer addObserver:strongSelf forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
-       
+            [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
             _hasObserverStatus = YES;
             [[NSNotificationCenter defaultCenter] addObserver:strongSelf selector:@selector(playFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:player.currentItem];
             [[NSNotificationCenter defaultCenter] addObserver:strongSelf selector:@selector(playEnd:) name:MPMoviePlayerPlaybackDidFinishNotification object:player];
@@ -932,7 +932,7 @@
     if (!_playLayer) {
         return;
     }
-    AVPlayer *player = self.playLayer.player;
+//    AVPlayer *player = self.playLayer.player;
     self.playBtn.hidden = NO;
 //    if (player.rate != .0) {
 //        [player pause];
@@ -945,6 +945,15 @@
 - (void)singleTapAction
 {
     [super singleTapAction];
+   
+}
+
+- (void)playBtnClick
+{
+    [self startPlayVideo];
+}
+
+- (void)startPlayVideo{
     if (!_playLayer) {
         if(self.jyAsset.type == JYAssetTypeVideo){
             jy_weakify(self);
@@ -956,15 +965,15 @@
                         return;
                     }
                     
-                    
                     AVPlayer *player = [AVPlayer playerWithPlayerItem:item];
                     [strongSelf.layer addSublayer:strongSelf.playLayer];
                     strongSelf.playLayer.player = player;
                     [strongSelf switchVideoStatus];
+                    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
                     [strongSelf.playLayer addObserver:strongSelf forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
                     _hasObserverStatus = YES;
                     [[NSNotificationCenter defaultCenter] addObserver:strongSelf selector:@selector(playFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:player.currentItem];
-                     [[NSNotificationCenter defaultCenter] addObserver:strongSelf selector:@selector(playEnd:) name:MPMoviePlayerPlaybackDidFinishNotification object:player];
+                    [[NSNotificationCenter defaultCenter] addObserver:strongSelf selector:@selector(playEnd:) name:MPMoviePlayerPlaybackDidFinishNotification object:player];
                 });
             }];
         }else {
@@ -974,11 +983,6 @@
     } else {
         [self switchVideoStatus];
     }
-}
-
-- (void)playBtnClick
-{
-    [self singleTapAction];
 }
 
 - (void)switchVideoStatus

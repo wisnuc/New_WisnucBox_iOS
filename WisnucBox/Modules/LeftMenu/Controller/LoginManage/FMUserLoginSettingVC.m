@@ -10,10 +10,12 @@
 #import "FMUsersLoginMangeCell.h"
 #import "FMUserLoginHeaderView.h"
 #import "AppDelegate.h"
+#import "FMLoginViewController.h"
 
 @interface FMUserLoginSettingVC ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *usersLoginTable;
+@property (weak, nonatomic) IBOutlet MDCFloatingButton *fabButton;
 
 @property (nonatomic) NSMutableArray * dataSource;
 
@@ -26,6 +28,15 @@
     self.title = @"账户管理";
     [self.usersLoginTable registerNib:[UINib nibWithNibName:@"FMUsersLoginMangeCell" bundle:nil] forCellReuseIdentifier:NSStringFromClass([FMUsersLoginMangeCell class])];
     // Do any additional setup after loading the view from its nib.
+
+    UIImage *plusImage = [UIImage imageNamed:@"ic_add_white"];
+    [_fabButton setMaximumSize:CGSizeMake(63, 63) forShape:MDCFloatingButtonShapeDefault inMode:MDCFloatingButtonModeNormal];
+    [_fabButton setImage:plusImage forState:UIControlStateNormal];
+    [_fabButton setBackgroundColor:COR1];
+}
+
+- (void)dealloc{
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -33,6 +44,7 @@
     [self.cyl_tabBarController.tabBar setHidden:YES];
     [self getDataSource];
     [self.usersLoginTable reloadData];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 -(void)getDataSource{
@@ -51,6 +63,11 @@
     }
     
     self.dataSource =  [NSMutableArray arrayWithArray:[dic allValues]];
+}
+
+- (IBAction)fabButtonClick:(MDCFloatingButton *)sender {
+    FMLoginViewController *loginController = [[FMLoginViewController alloc]init];
+    [self.navigationController pushViewController:loginController animated:YES];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
