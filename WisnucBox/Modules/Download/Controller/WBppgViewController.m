@@ -260,6 +260,17 @@ UITableViewDataSource
    
 }
 
+- (NSString *)notRounding:(float)price afterPoint:(int)position{
+    NSDecimalNumberHandler* roundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundDown scale:position raiseOnExactness:NO raiseOnOverflow:NO raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+    NSDecimalNumber *ouncesDecimal;
+    NSDecimalNumber *roundedOunces;
+    
+    ouncesDecimal = [[NSDecimalNumber alloc] initWithFloat:price];
+    roundedOunces = [ouncesDecimal decimalNumberByRoundingAccordingToBehavior:roundingBehavior];
+    //    [ouncesDecimal release];
+    return [NSString stringWithFormat:@"%@",roundedOunces];
+}
+
 #pragma UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -276,7 +287,17 @@ UITableViewDataSource
         if ([model.state isEqualToString:@"downloading"]) {
             cell.progressView.progress = [model.progress  floatValue];
             cell.nameLabel.text = model.name;
-            cell.progressLabel.text = [NSString stringWithFormat:@"%.f%%",[model.progress floatValue] *100];
+            
+            NSDecimalNumber *progressDecimalNumber = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%@",[self notRounding:[model.progress  floatValue] afterPoint:2]]];
+            NSDecimalNumber *decimalNumber = [NSDecimalNumber decimalNumberWithString:@"100"];
+            NSDecimalNumber *mutiplyDecimal;
+            if ([progressDecimalNumber compare:[NSDecimalNumber zero]] == NSOrderedSame || [[NSDecimalNumber notANumber] isEqualToNumber:progressDecimalNumber]) {
+                mutiplyDecimal = [NSDecimalNumber zero];
+            }else{
+                mutiplyDecimal = [progressDecimalNumber decimalNumberByMultiplyingBy:decimalNumber];
+            }
+            
+            cell.progressLabel.text = [NSString stringWithFormat:@"%@%%",mutiplyDecimal];
             NSNumber *allSizeNumber = [NSNumber numberWithDouble:[model.downloaded doubleValue] / [model.progress doubleValue]];
             if ([model.downloaded doubleValue] == 0.0000000000) {
                 allSizeNumber = [NSNumber numberWithInt:0];
