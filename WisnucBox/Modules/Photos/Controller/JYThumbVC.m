@@ -242,6 +242,7 @@
     [self addRightBtn];
     [self initCollectionView];
     [self initMjRefresh];
+    [self sort:[self merge]];
     [self addPinchGesture];
     [self createControlbtn];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userAuthChange:) name:ASSETS_AUTH_CHANGE_NOTIFY object:nil];

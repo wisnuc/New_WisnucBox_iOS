@@ -1,17 +1,13 @@
 platform :ios,’8.0’
 
-#use_frameworks!
+use_frameworks!
 inhibit_all_warnings!
 
 target :’WisnucBox’ do
     
-pod 'YYWebImage'
 pod 'AFNetworking', '~> 3.1.0'
 pod 'YYModel'
-pod 'YYText'
 pod 'YYKeyboardManager'
-pod 'YYDispatchQueuePool'
-pod 'YYAsyncLayer'
 pod 'Masonry'
 pod 'MBProgressHUD'
 pod 'MWPhotoBrowser', '~> 2.1.1'
@@ -29,7 +25,8 @@ pod 'RTRootNavigationController'
 pod 'CYLTabBarController'
 pod 'MaterialComponents'
 pod 'AvoidCrash', '~> 2.5.1'
-pod 'NIMKit'
+pod 'TZImagePickerController'
+pod 'YYKit'
 end
 
 #post_install do |installer|

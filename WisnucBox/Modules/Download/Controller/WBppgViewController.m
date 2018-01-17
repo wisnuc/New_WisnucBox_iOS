@@ -75,13 +75,13 @@ UITableViewDataSource
         if ([versionNumber boolValue]) {
             [weak_self checkSwitch];
         }else{
-            self.addButton.enabled = NO;
+            self.addButton.hidden = YES;
             self.downloadedClearButton.enabled = NO;
             self.downloadingClearButton.enabled = NO;
         }
     } failure:^(__kindof JYBaseRequest *request) {
       NSLog(@"%@",request.error);
-        self.addButton.enabled = YES;
+        self.addButton.hidden = NO;
         self.downloadedClearButton.enabled = YES;
         self.downloadingClearButton.enabled = YES;
     }];
@@ -426,6 +426,7 @@ UITableViewDataSource
                         if (indexPath.row > self.finishDataArray.count -1 && self.finishDataArray.count -1 > 0) {
                             return;
                         }
+                        
                         [[WBPpgDownloadActionAPI apiWithPpgId:model.infoHash Option:@"destroy"]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
                             NSLog(@"%@",request.responseJsonObject);
                         } failure:^(__kindof JYBaseRequest *request) {
@@ -578,7 +579,7 @@ UITableViewDataSource
                       forControlEvents:UIControlEventTouchUpInside];
         UIImage *plusImage = [UIImage imageNamed:@"ic_add_white"];
         [_addButton setImage:plusImage forState:UIControlStateNormal];
-        [_addButton setEnabled:NO];
+//        [_addButton setHidden:YES];
         [_addButton setBackgroundColor:COR1];
     }
     return _addButton;

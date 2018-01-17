@@ -13,6 +13,7 @@
 
 #define __kWidth [[UIScreen mainScreen]bounds].size.width
 #define __kHeight [[UIScreen mainScreen]bounds].size.height
+#define recourcesPath [[NSBundle mainBundle] resourcePath]
 
 #define RGBCOLOR(r, g, b)      [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:1.0f]
 #define RGBACOLOR(r, g, b ,a)      [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:a]
@@ -127,6 +128,15 @@
 #define strongy(object) try{} @finally{} __typeof__(object) object = block##_##object;
 #endif
 #endif
+#endif
+
+
+#ifdef DEBUG
+#define DLog(s,...) NSLog(@"%s LINE:%d < %@ >",__FUNCTION__, __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__]);
+#define DMethod() NSLog(@"%s", __func__);
+#else
+#define DLog(...);
+#define DMethod();
 #endif
 
 #endif /* Define_h */

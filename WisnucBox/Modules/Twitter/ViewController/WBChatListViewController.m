@@ -9,7 +9,7 @@
 #import "WBChatListViewController.h"
 #import "WBChatListTableViewCell.h"
 #import "WBChatViewController.h"
-#import <NIMKit/NIMKit.h>
+
 
 @interface WBChatListViewController () <UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,strong) UITableView *tableView;
@@ -72,13 +72,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     WBChatListTableViewCell * cell = (WBChatListTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-//    WBChatViewController *chatVC = [[WBChatViewController alloc]init];
-    NIMSession *session = [NIMSession session:cell.nameLabel.text type:NIMSessionTypeP2P];
-    NIMSessionViewController *vc = [[NIMSessionViewController alloc] initWithSession:session];
-//    [self.navigationController pushViewController:vc animated:YES];
+    WBChatViewController *chatVC = [[WBChatViewController alloc]init];
 
-    vc.title = cell.nameLabel.text;
-    [self.navigationController pushViewController:vc animated:YES];
+
+    chatVC.title = cell.nameLabel.text;
+    [self.navigationController pushViewController:chatVC animated:YES];
     
 }
 

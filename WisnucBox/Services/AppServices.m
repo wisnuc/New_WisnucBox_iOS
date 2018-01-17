@@ -9,7 +9,6 @@
 #import "AppServices.h"
 #import "PHAsset+JYEXT.h"
 #import "AppDelegate.h"
-#import <YYDispatchQueuePool/YYDispatchQueuePool.h>
 #import "FMAccountUsersAPI.h"
 #import "CSFileDownloadManager.h"
 #import "FilesDataSourceManager.h"
