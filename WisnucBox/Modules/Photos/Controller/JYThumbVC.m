@@ -174,6 +174,7 @@
 -(void)sort:(NSArray<JYAsset *> *)assetsArr {
     NSMutableArray * arr = [NSMutableArray arrayWithArray:assetsArr];
     NSComparator cmptr = ^(JYAsset * photo1, JYAsset * photo2){
+//        NSLog(@"%@/%@",photo1,photo2);
         NSDate * tempDate = [photo1.createDate laterDate: photo2.createDate];
         if ([tempDate isEqualToDate:photo1.createDate]) {
             return (NSComparisonResult)NSOrderedAscending;
@@ -237,7 +238,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.showIndicator = YES;
-    [self sort:self.arrDataSources];
+//    [self sort:self.arrDataSources];
     [self addRightBtn];
     [self initCollectionView];
     [self initMjRefresh];
