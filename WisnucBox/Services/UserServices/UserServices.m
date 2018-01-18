@@ -125,6 +125,9 @@
         @weaky(self)
         NSString *urlString = [NSString stringWithFormat:@"%@",WB_UserService.currentUser.sn_address];
         NSLog(@"%@",urlString);
+        if (!urlString) {
+            return;
+        }
         [[WBGetUpgradStateAPI apiWithURLPath:urlString] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
             //        NSLog(@"%@",request.responseJsonObject);
             WBGetUpgradStateModel *model = [WBGetUpgradStateModel yy_modelWithJSON:request.responseJsonObject];

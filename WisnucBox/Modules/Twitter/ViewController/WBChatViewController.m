@@ -17,6 +17,7 @@
 #import "SDImageCache.h"
 #import "LHPhotoPreviewController.h"
 #import "XSBrowserAnimateDelegate.h"
+#import "WBGroupManageViewController.h"
 
 NSString *const kTableViewOffset = @"contentOffset";
 NSString *const kTableViewFrame = @"frame";
@@ -53,12 +54,33 @@ NSString *const kTableViewFrame = @"frame";
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
+    [self createNavBtns];
     [self setupInit];
     
-    [self loadMessageWithId:nil];
+//    [self loadMessageWithId:nil];
     
-    [self scrollToBottomAnimated:NO refresh:YES];
+    [self scrollToBottomAnimated:YES refresh:YES];
+}
+
+
+- (void)createNavBtns{
+    UIButton * rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 24, 24)];
+    [rightBtn setImage:[UIImage imageNamed:@"more"] forState:UIControlStateNormal];
+    [rightBtn setImage:[UIImage imageNamed:@"more_highlight"] forState:UIControlStateHighlighted];
+    NSString* phoneVersion = [[UIDevice currentDevice] systemVersion];
+    NSLog(@"%@",phoneVersion);
+    
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -10;
+    if([phoneVersion floatValue]>=11.0){
+        rightBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 0,0, -10);
+    }
+    [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [rightBtn setEnlargeEdgeWithTop:10 right:5 bottom:5 left:5];
+    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:rightItem,negativeSpacer,nil];
 }
 
 - (void)setupInit {
@@ -85,6 +107,12 @@ NSString *const kTableViewFrame = @"frame";
 }
 
 #pragma mark - private
+
+- (void)rightBtnClick:(UIButton *)sender{
+    WBGroupManageViewController *groupManageVC = [[WBGroupManageViewController alloc]init];
+    [self.navigationController pushViewController:groupManageVC animated:YES];
+}
+
 - (void)dropDownLoadDataWithScrollView:(UIScrollView *)scrollView {
     if ([scrollView isMemberOfClass:[UITableView class]]) {
         if (!self.isHeaderRefreshing) return;
@@ -100,26 +128,26 @@ NSString *const kTableViewFrame = @"frame";
 
 
 - (void)loadMessageWithId:(NSString *)Id {
-    //    NSArray *messages = [[LHIMDBManager shareManager] searchModelArr:[LHMessageModel class] byKey:Id];
-    //
-    //    self.meetRefresh = messages.count == kMessageCount;
-    //
-    //    [messages enumerateObjectsUsingBlock:^(LHMessageModel *messageModel, NSUInteger idx, BOOL * stop) {
-    //        [self.dataSource insertObject:messageModel atIndex:0];
-    //        [self.messages insertObject:messageModel atIndex:0];
-    //
-    //        NSString *time = [LHTools processingTimeWithDate:messageModel.date];
-    //        if (![self.lastTime isEqualToString:time]) {
-    //            [self.dataSource insertObject:time atIndex:0];
-    //            self.lastTime = time;
-    //        }
-    //    }];
-    //
-    //    NSUInteger index = [self.dataSource indexOfObject:self.lastTime];
-    //    if (index) {
-    //        [self.dataSource removeObjectAtIndex:index];
-    //        [self.dataSource insertObject:self.lastTime atIndex:0];
-    //    }
+        NSArray *messages = [[LHIMDBManager shareManager] searchModelArr:[LHMessageModel class] byKey:Id];
+    
+        self.meetRefresh = messages.count == kMessageCount;
+    
+        [messages enumerateObjectsUsingBlock:^(LHMessageModel *messageModel, NSUInteger idx, BOOL * stop) {
+            [self.dataSource insertObject:messageModel atIndex:0];
+            [self.messages insertObject:messageModel atIndex:0];
+    
+            NSString *time = [LHTools processingTimeWithDate:messageModel.date];
+            if (![self.lastTime isEqualToString:time]) {
+                [self.dataSource insertObject:time atIndex:0];
+                self.lastTime = time;
+            }
+        }];
+    
+        NSUInteger index = [self.dataSource indexOfObject:self.lastTime];
+        if (index) {
+            [self.dataSource removeObjectAtIndex:index];
+            [self.dataSource insertObject:self.lastTime atIndex:0];
+        }
 }
 
 - (NSIndexPath *)insertNewMessageOrTime:(id)NewMessage {
@@ -436,7 +464,7 @@ NSString *const kTableViewFrame = @"frame";
 #pragma mark - lazy
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, __kWidth, __kHeight - kChatBarHeight - kNavBarHeight) style:UITableViewStyleGrouped];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight - kChatBarHeight) style:UITableViewStyleGrouped];
         _tableView.backgroundColor = [UIColor lh_colorWithHex:0xffffff];
         _tableView.delegate = self;
         _tableView.dataSource = self;
@@ -451,7 +479,7 @@ NSString *const kTableViewFrame = @"frame";
    
     if (!_chatBarView) {
         @weaky(self);
-        _chatBarView = [[LHChatBarView alloc] initWithFrame:CGRectMake(0, __kHeight - kChatBarHeight, __kWidth, kChatBarHeight)];
+        _chatBarView = [[LHChatBarView alloc] initWithFrame:CGRectMake(0, __kHeight - kChatBarHeight - kNavBarHeight, __kWidth, kChatBarHeight)];
         _chatBarView.backgroundColor = [UIColor lh_colorWithHex:0xf8f8fa];
         _chatBarView.tableView = self.tableView;
         _chatBarView.sendContent = ^(LHContentModel *content) {

@@ -32,7 +32,7 @@
 #define WarningDetailColor UICOLOR_RGB(0xf44336)
 #define IgnoreColor RGBACOLOR(0, 0, 0, 0.54f)
 #define OriginTitleColor RGBACOLOR(0, 0, 0, 0.87f)
-#define MainBackgroudColor  UICOLOR_RGB(0xfafafa)
+
 #define userNameMax 16
 #define passwordMax 30
 

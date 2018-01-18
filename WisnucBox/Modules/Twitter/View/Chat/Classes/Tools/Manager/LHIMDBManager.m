@@ -237,7 +237,10 @@ SingleM(Manager)
 #pragma mark 查
 - (NSArray *)searchModelArr:(Class)modelClass byKey:(NSString *)key {
     if ([self.dataBase open]) {
-        ISEXITTABLE(modelClass);
+//        ISEXITTABLE(modelClass);
+        if (![self isExitTable:modelClass autoCloseDB:NO]) {
+            [self createTable:modelClass];
+        }
         // 查询数据
         NSMutableString *sql = [NSString stringWithFormat:@"SELECT * FROM %@",modelClass].mutableCopy;
         if (!key) { // 加载消息
@@ -306,7 +309,10 @@ SingleM(Manager)
 
 - (id)searchModel:(Class)modelClass byKey:(NSString *)key autoCloseDB:(BOOL)autoCloseDB sqlString:(NSString *)sql {
     if ([self.dataBase open]) {
-        ISEXITTABLE(modelClass);
+//        ISEXITTABLE(modelClass);
+        if (![self isExitTable:modelClass autoCloseDB:NO]) {
+            [self createTable:modelClass];
+        }
         // 查询数据
         FMResultSet *rs = [self.dataBase executeQuery:sql ? sql : [NSString stringWithFormat:@"SELECT * FROM %@ WHERE id = '%@';", modelClass, key]];
         // 创建对象
@@ -349,7 +355,10 @@ SingleM(Manager)
 #pragma mark 改
 - (BOOL)modifyModel:(id)model byID:(NSString *)ID autoCloseDB:(BOOL)autoCloseDB {
     if ([self.dataBase open]) {
-        ISEXITTABLE([model class]);
+//        ISEXITTABLE([model class]);
+        if (![self isExitTable:[model class] autoCloseDB:NO]) {
+            [self createTable:[model class]];
+        }
         // 修改数据@"UPDATE t_student SET name = 'liwx' WHERE age > 12 AND age < 15;"
         NSMutableString *sql = [NSMutableString stringWithFormat:@"UPDATE %@ SET ",[model class]];
         unsigned int outCount;

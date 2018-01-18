@@ -251,3 +251,7 @@
 "single_mode" = "Single模式";
 "raid0_mode" = "Raid0模式";
 "raid1_mode" = "Raid1模式";
+
+
+//Group
+"group_setting" = "群设置";

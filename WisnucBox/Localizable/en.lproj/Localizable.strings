@@ -252,3 +252,5 @@
 "raid0_mode" = "Raid0 Mode";
 "raid1_mode" = "Raid1 Mode";
 
+//Group
+"group_setting" = "Group Setting";

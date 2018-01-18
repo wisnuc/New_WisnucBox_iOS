@@ -12,7 +12,6 @@
 #import "KeyboardVC.h"
 #import "LHContentModel.h"
 #import "LHTools.h"
-#import "TZImagePickerController.h"
 #import "UIView+frameAdjust.h"
 
 CGFloat const kChatInputTextViewFont = 16.0f;
@@ -29,6 +28,7 @@ CGFloat const kChatBatItemWH = 26.0f;
 @property (nonatomic, strong) KeyboardEmojiTextView *textView;
 @property (nonatomic, strong) UIButton *emojiBtn;
 @property (nonatomic, strong) UIButton *moreBtn;
+@property (nonatomic, strong) UIButton *voiceBtn;
 @property (nonatomic, strong) LHChatBarMoreView *moreView;
 @property (nonatomic, strong) UIView *emojiView;
 @property (nonatomic, strong) KeyboardVC *emojiKeyboardVC;
@@ -59,6 +59,7 @@ CGFloat const kChatBatItemWH = 26.0f;
 
 - (void)setupSubViews {
     [self addSubview:self.textView];
+    [self addSubview:self.voiceBtn];
     [self addSubview:self.emojiBtn];
     [self addSubview:self.moreBtn];
 }
@@ -70,12 +71,17 @@ CGFloat const kChatBatItemWH = 26.0f;
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.emojiBtn.frame = CGRectMake(10, self.height - kChatBatItemWH - 11, kChatBatItemWH, kChatBatItemWH);
+    
+    self.voiceBtn.frame = CGRectMake(10, self.height - kChatBatItemWH - 11, kChatBatItemWH, kChatBatItemWH);
+    
+    CGFloat textViewX = CGRectGetMaxX(self.voiceBtn.frame) + 10;
+    self.textView.frame = CGRectMake(textViewX, 7.5, __kWidth - textViewX*3 + 10, self.height - 15);
+    
+    self.emojiBtn.frame = CGRectMake(CGRectGetMaxX(self.textView.frame) + 10, self.height - kChatBatItemWH - 11, kChatBatItemWH, kChatBatItemWH);
     
     self.moreBtn.frame = CGRectMake(CGRectGetMaxX(self.emojiBtn.frame) + 10, self.height - kChatBatItemWH - 11, kChatBatItemWH, kChatBatItemWH);
     
-    CGFloat textViewX = CGRectGetMaxX(self.moreBtn.frame) + 10;
-    self.textView.frame = CGRectMake(textViewX, 7.5, __kWidth - textViewX - 10, self.height - 15);
+   
 }
 
 #pragma mark - 事件监听
@@ -103,8 +109,8 @@ CGFloat const kChatBatItemWH = 26.0f;
     
     [UIView animateWithDuration:_animationDuration delay:0 options:(_animationCurve << 16 | UIViewAnimationOptionBeginFromCurrentState) animations:^{
         // 修改frame
-        self.y = __kHeight - self.height - _keyboardHeight;
-        _tableView.height = self.y - kNavBarHeight;
+        self.y = __kHeight - self.height - _keyboardHeight - kNavBarHeight;
+        _tableView.height = self.y;
 //        [_conversationChatVC scrollToBottomAnimated:NO refresh:NO];
     } completion:nil];
     
@@ -169,10 +175,10 @@ CGFloat const kChatBatItemWH = 26.0f;
         // 2.更改inputToolBar 底部约束
         // 添加动画
         [UIView animateWithDuration:0.25 animations:^{
-            self.y = __kHeight - kChatEmojiHeight - self.height;
-            _tableView.height = self.y - kNavBarHeight;
+            self.y = __kHeight - kChatEmojiHeight - self.height - kNavBarHeight;
+            _tableView.height = self.y ;
             
-            emojiView.y = __kHeight - kChatEmojiHeight;
+            emojiView.y = __kHeight - kChatEmojiHeight - kNavBarHeight;
         }];
         
     } else { // 工具+没有选中
@@ -192,10 +198,10 @@ CGFloat const kChatBatItemWH = 26.0f;
             
             // 添加动画
             [UIView animateWithDuration:0.25 animations:^{
-                self.y = __kHeight - kChatEmojiHeight - self.height;
-                _tableView.height = self.y - kNavBarHeight;
+                self.y = __kHeight - kChatEmojiHeight - self.height - kNavBarHeight;
+                _tableView.height = self.y;
                 
-                emojiView.y = __kHeight - kChatEmojiHeight;
+                emojiView.y = __kHeight - kChatEmojiHeight - kNavBarHeight;
                 // 4.把消息现在在顶部
                 //                [self scrollToBottom:NO];
 //                [_conversationChatVC scrollToBottomAnimated:NO refresh:NO];
@@ -229,9 +235,9 @@ CGFloat const kChatBatItemWH = 26.0f;
         
         // 添加动画
         [UIView animateWithDuration:0.25 animations:^{
-            self.y = __kHeight - kChatMoreHeight - self.height;
-            _tableView.height = self.y - kNavBarHeight;
-            moreView.y = __kHeight - kChatMoreHeight;
+            self.y = __kHeight - kChatMoreHeight - self.height -kNavBarHeight;
+            _tableView.height = self.y;
+            moreView.y = __kHeight - kChatMoreHeight - kNavBarHeight;
         }];
         
     } else { // 表情键盘没有选择
@@ -250,10 +256,10 @@ CGFloat const kChatBatItemWH = 26.0f;
             
             // 添加动画
             [UIView animateWithDuration:0.25 animations:^{
-                self.y = __kHeight - kChatMoreHeight - self.height;
-                _tableView.height = self.y - kNavBarHeight;
+                self.y = __kHeight - kChatMoreHeight - self.height - kNavBarHeight;
+                _tableView.height = self.y;
                 
-                moreView.y = __kHeight - kChatMoreHeight;
+                moreView.y = __kHeight - kChatMoreHeight - kNavBarHeight;
                 // 4.把消息现在在顶部
 //                [_conversationChatVC scrollToBottomAnimated:NO refresh:NO];
             }];
@@ -275,8 +281,8 @@ CGFloat const kChatBatItemWH = 26.0f;
             self.moreView.y = __kHeight;
             self.emojiView.y = __kHeight;
         }
-        self.y = __kHeight - self.height;
-        _tableView.height = self.y - kNavBarHeight;
+        self.y = __kHeight - self.height - kNavBarHeight;
+        _tableView.height = self.y;
     } completion:^(BOOL finished) {
     }];
     self.moreBtn.selected = NO;
@@ -296,8 +302,8 @@ CGFloat const kChatBatItemWH = 26.0f;
         else if (self.emojiBtn.selected) {
             keyboardHeight = kChatEmojiHeight;
         }
-        self.y = __kHeight - self.height - keyboardHeight;
-        _tableView.height = self.y - kNavBarHeight;
+        self.y = __kHeight - self.height - keyboardHeight - kNavBarHeight;
+        _tableView.height = self.y;
         [self layoutIfNeeded];
     } completion:^(BOOL finished) {
         if (!finished) return;
@@ -354,7 +360,7 @@ CGFloat const kChatBatItemWH = 26.0f;
         picker.sourceType = UIImagePickerControllerSourceTypeCamera;
         
         if (![LHTools cameraLimit]) {
-            UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:nil message:@"请在iPhone的\"设置-隐私-相机\"选项中,允许LHChatUI访问你的相机" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:nil message:@"请在iPhone的\"设置-隐私-相机\"选项中,允许WISNUC访问你的相机" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alertView show];
             return;
         }
@@ -366,7 +372,7 @@ CGFloat const kChatBatItemWH = 26.0f;
 
 - (void)moreViewPhotoAction:(LHChatBarMoreView *)moreVie {
     if (![LHTools photoLimit]) {
-        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:nil message:@"请在iPhone的\"设置-隐私-照片\"选项中,允许LHChatUI访问你的照片" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:nil message:@"请在iPhone的\"设置-隐私-照片\"选项中,允许WISNUC访问你的照片" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
         return;
     }
@@ -405,8 +411,9 @@ CGFloat const kChatBatItemWH = 26.0f;
             keyboardHeight = kChatEmojiHeight;
         }
         
-        self.y = __kHeight - self.height - keyboardHeight;
-        _tableView.height = self.y - kNavBarHeight;
+        self.y = __kHeight - self.height - keyboardHeight - kNavBarHeight;
+//        NSLog(@"%f",self.y);
+        _tableView.height = self.y;
         [self layoutIfNeeded];
     } completion:nil];
 }
@@ -482,6 +489,8 @@ CGFloat const kChatBatItemWH = 26.0f;
     return _textView;
 }
 
+
+
 - (UIButton *)emojiBtn {
     if (!_emojiBtn) {
         _emojiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -502,6 +511,16 @@ CGFloat const kChatBatItemWH = 26.0f;
     return _moreBtn;
 }
 
+- (UIButton *)voiceBtn{
+    if (!_voiceBtn) {
+        _voiceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_voiceBtn setImage:[UIImage imageWithContentsOfFile:[[NSString alloc] initWithFormat:@"%@/%@",recourcesPath,@"IM_Chat_more"]] forState:UIControlStateNormal];
+        [_voiceBtn setImage:[UIImage imageWithContentsOfFile:[[NSString alloc] initWithFormat:@"%@/%@",recourcesPath,@"IM_Chat_keyboard"]] forState:UIControlStateSelected];
+        [_voiceBtn addTarget:self action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _voiceBtn;
+}
+
 - (LHChatBarMoreView *)moreView {
     if (!_moreView) {
         _moreView = [[LHChatBarMoreView alloc]initWithFrame:CGRectMake(0, __kHeight,    __kWidth, kChatMoreHeight)];
@@ -516,7 +535,7 @@ CGFloat const kChatBatItemWH = 26.0f;
 - (UIView *)emojiView {
     if (!_emojiView) {
         _emojiView = self.emojiKeyboardVC.view;
-        _emojiView.frame = CGRectMake(0, __kHeight,    __kWidth, kChatEmojiHeight);
+        _emojiView.frame = CGRectMake(0, __kHeight, __kWidth, kChatEmojiHeight);
         [self.emojiKeyboardVC.view layoutIfNeeded];
         [self.superview addSubview:_emojiView];
     }

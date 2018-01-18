@@ -96,8 +96,8 @@
     filesViewController.title = kFileTabBarTitle;
     chatViewController.title = kChatTabBarTitle;
     NSDictionary *dict1 = @{
-                            CYLTabBarItemImage : @"share",
-                            CYLTabBarItemSelectedImage : @"share_select",
+                            CYLTabBarItemImage : @"group",
+                            CYLTabBarItemSelectedImage : @"group_highLight",
                             };
     NSDictionary *dict2 = @{
                             CYLTabBarItemImage : @"photo",
