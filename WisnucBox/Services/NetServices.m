@@ -45,6 +45,29 @@
     }];
 }
 
+- (void)checkForLANIP:(NSString *)LANIP commplete:(void(^)(BOOL success))callback {
+    @weaky(self)
+    AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer.timeoutInterval = 3;
+    [manager GET:[NSString stringWithFormat:@"%@station/info", LANIP] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        return callback(YES);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [weak_self checkForCloudComplete:callback];
+    }];
+}
+
+
+- (void)checkForCloudComplete:(void(^)(BOOL success))callback{
+    @weaky(self)
+    [weak_self getLocalTokenWithCloud:^(NSError *error, NSString *token) {
+        if (!error) {
+            callback(YES);
+        }else{
+             callback(NO);
+        }
+    }];
+}
+
 - (void)testAndCheckoutIfSuccessComplete:(void(^)(void))callback {
     if(!WB_UserService.currentUser) return callback();
     [self testForLANIP:WB_UserService.currentUser.localAddr commplete:^(BOOL success) {

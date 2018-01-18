@@ -44,6 +44,8 @@
 
 - (void)testForLANIP:(NSString *)LANIP commplete:(void(^)(BOOL success))callback;
 
+- (void)checkForLANIP:(NSString *)LANIP commplete:(void(^)(BOOL success))callback;
+
 - (void)testAndCheckoutIfSuccessComplete:(void(^)(void))callback;
 
 - (instancetype)initWithLocalURL:(NSString *)localUrl andCloudURL:(NSString *)cloudUrl;

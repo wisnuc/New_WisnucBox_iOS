@@ -119,7 +119,7 @@
     if(!WB_UserService.currentUser || !WB_UserService.currentUser.autoBackUp) return;
     if (status == AFNetworkReachabilityStatusReachableViaWiFi) {
         if(!WB_UserService.currentUser.isCloudLogin)
-           [WB_NetService testForLANIP:WB_UserService.currentUser.localAddr commplete:^(BOOL success) { //测试是否可用网络
+           [WB_NetService checkForLANIP:WB_UserService.currentUser.localAddr commplete:^(BOOL success) { //测试是否可用网络
               if(success) [self startUploadAssets:nil];
            }];
         else
@@ -192,6 +192,7 @@
         WBUser *user = [WB_UserService createUserWithUserUUID:uuid];
         user.userName = userName;
         user.localAddr = urlString;
+        user.cloudToken = nil;
         user.localToken = token;
         user.isFirstUser = NO;
         user.isAdmin = NO;
