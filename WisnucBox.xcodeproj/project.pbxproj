@@ -185,6 +185,14 @@
 		1F7F160320108767003CB83D /* group_highLight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7F160020108766003CB83D /* group_highLight@2x.png */; };
 		1F7F160420108767003CB83D /* group_highLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7F160120108767003CB83D /* group_highLight.png */; };
 		1F7F160720108BE1003CB83D /* WBGroupManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F160620108BE1003CB83D /* WBGroupManageViewController.m */; };
+		1F7F160C201193A4003CB83D /* WBGroupAdressBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F160A201193A4003CB83D /* WBGroupAdressBookViewController.m */; };
+		1F7F160D201193A4003CB83D /* WBGroupAdressBookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F7F160B201193A4003CB83D /* WBGroupAdressBookViewController.xib */; };
+		1F7F161420119785003CB83D /* WBGroupAdressBookTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F161220119785003CB83D /* WBGroupAdressBookTableViewCell.m */; };
+		1F7F161520119785003CB83D /* WBGroupAdressBookTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F7F161320119785003CB83D /* WBGroupAdressBookTableViewCell.xib */; };
+		1F7F16192011A042003CB83D /* WBGroupSettingUserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F16172011A042003CB83D /* WBGroupSettingUserTableViewCell.m */; };
+		1F7F161A2011A042003CB83D /* WBGroupSettingUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F7F16182011A042003CB83D /* WBGroupSettingUserTableViewCell.xib */; };
+		1F7F161E2011A367003CB83D /* GroupUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F161D2011A367003CB83D /* GroupUserModel.m */; };
+		1F7F16212011D4B8003CB83D /* UIImage+extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F16202011D4B8003CB83D /* UIImage+extension.m */; };
 		1F8EAF241FB9A7C100FEED19 /* LocalDownloadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F8EAF211FB9A7C000FEED19 /* LocalDownloadingTableViewCell.xib */; };
 		1F8EAF251FB9A7C100FEED19 /* LocalDownloadingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EAF221FB9A7C000FEED19 /* LocalDownloadingTableViewCell.m */; };
 		1F8EAF291FBACD5000FEED19 /* FLFIlesHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EAF281FBACD5000FEED19 /* FLFIlesHelper.m */; };
@@ -1338,6 +1346,19 @@
 		1F7F160120108767003CB83D /* group_highLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = group_highLight.png; sourceTree = "<group>"; };
 		1F7F160520108BE1003CB83D /* WBGroupManageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBGroupManageViewController.h; sourceTree = "<group>"; };
 		1F7F160620108BE1003CB83D /* WBGroupManageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBGroupManageViewController.m; sourceTree = "<group>"; };
+		1F7F1609201193A4003CB83D /* WBGroupAdressBookViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBGroupAdressBookViewController.h; sourceTree = "<group>"; };
+		1F7F160A201193A4003CB83D /* WBGroupAdressBookViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBGroupAdressBookViewController.m; sourceTree = "<group>"; };
+		1F7F160B201193A4003CB83D /* WBGroupAdressBookViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBGroupAdressBookViewController.xib; sourceTree = "<group>"; };
+		1F7F161120119785003CB83D /* WBGroupAdressBookTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBGroupAdressBookTableViewCell.h; sourceTree = "<group>"; };
+		1F7F161220119785003CB83D /* WBGroupAdressBookTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBGroupAdressBookTableViewCell.m; sourceTree = "<group>"; };
+		1F7F161320119785003CB83D /* WBGroupAdressBookTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBGroupAdressBookTableViewCell.xib; sourceTree = "<group>"; };
+		1F7F16162011A042003CB83D /* WBGroupSettingUserTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBGroupSettingUserTableViewCell.h; sourceTree = "<group>"; };
+		1F7F16172011A042003CB83D /* WBGroupSettingUserTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBGroupSettingUserTableViewCell.m; sourceTree = "<group>"; };
+		1F7F16182011A042003CB83D /* WBGroupSettingUserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBGroupSettingUserTableViewCell.xib; sourceTree = "<group>"; };
+		1F7F161C2011A367003CB83D /* GroupUserModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupUserModel.h; sourceTree = "<group>"; };
+		1F7F161D2011A367003CB83D /* GroupUserModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupUserModel.m; sourceTree = "<group>"; };
+		1F7F161F2011D4B7003CB83D /* UIImage+extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+extension.h"; sourceTree = "<group>"; };
+		1F7F16202011D4B8003CB83D /* UIImage+extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+extension.m"; sourceTree = "<group>"; };
 		1F8EAF211FB9A7C000FEED19 /* LocalDownloadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalDownloadingTableViewCell.xib; sourceTree = "<group>"; };
 		1F8EAF221FB9A7C000FEED19 /* LocalDownloadingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalDownloadingTableViewCell.m; sourceTree = "<group>"; };
 		1F8EAF231FB9A7C000FEED19 /* LocalDownloadingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalDownloadingTableViewCell.h; sourceTree = "<group>"; };
@@ -2465,6 +2486,7 @@
 		1F06FD56200DCEE90024AFC7 /* Twitter */ = {
 			isa = PBXGroup;
 			children = (
+				1F7F161B2011A345003CB83D /* Model */,
 				1F06FD5D200DCF8E0024AFC7 /* View */,
 				1F06FD57200DCF2C0024AFC7 /* ViewController */,
 			);
@@ -2474,13 +2496,9 @@
 		1F06FD57200DCF2C0024AFC7 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				1F06FD58200DCF890024AFC7 /* WBChatListViewController.h */,
-				1F06FD59200DCF890024AFC7 /* WBChatListViewController.m */,
-				1F06FD63200DD7E00024AFC7 /* WBChatViewController.h */,
-				1F06FD64200DD7E00024AFC7 /* WBChatViewController.m */,
-				1F06FD65200DD7E00024AFC7 /* WBChatViewController.xib */,
-				1F7F160520108BE1003CB83D /* WBGroupManageViewController.h */,
-				1F7F160620108BE1003CB83D /* WBGroupManageViewController.m */,
+				1F7F160F201193C0003CB83D /* Chat */,
+				1F7F160E201193AC003CB83D /* ChatList */,
+				1F7F160820119331003CB83D /* Group */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2488,6 +2506,7 @@
 		1F06FD5D200DCF8E0024AFC7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1F7F161020119759003CB83D /* Group */,
 				1FA86052200F287000550C7B /* ChatList */,
 				1FA86051200F286500550C7B /* Chat */,
 			);
@@ -2904,6 +2923,8 @@
 		1F4D755A1FAC4BB700E6516C /* UIIamge */ = {
 			isa = PBXGroup;
 			children = (
+				1F7F161F2011D4B7003CB83D /* UIImage+extension.h */,
+				1F7F16202011D4B8003CB83D /* UIImage+extension.m */,
 				1F4D755B1FAC4BB700E6516C /* UIImage+GKContact.m */,
 				1F4D755C1FAC4BB700E6516C /* UIImage+GKContact.h */,
 				F6D8CC421FB448B800673824 /* UIImage+imageWithColor.h */,
@@ -3309,6 +3330,60 @@
 			children = (
 			);
 			path = Group;
+			sourceTree = "<group>";
+		};
+		1F7F160820119331003CB83D /* Group */ = {
+			isa = PBXGroup;
+			children = (
+				1F7F160520108BE1003CB83D /* WBGroupManageViewController.h */,
+				1F7F160620108BE1003CB83D /* WBGroupManageViewController.m */,
+				1F7F1609201193A4003CB83D /* WBGroupAdressBookViewController.h */,
+				1F7F160A201193A4003CB83D /* WBGroupAdressBookViewController.m */,
+				1F7F160B201193A4003CB83D /* WBGroupAdressBookViewController.xib */,
+			);
+			path = Group;
+			sourceTree = "<group>";
+		};
+		1F7F160E201193AC003CB83D /* ChatList */ = {
+			isa = PBXGroup;
+			children = (
+				1F06FD58200DCF890024AFC7 /* WBChatListViewController.h */,
+				1F06FD59200DCF890024AFC7 /* WBChatListViewController.m */,
+			);
+			path = ChatList;
+			sourceTree = "<group>";
+		};
+		1F7F160F201193C0003CB83D /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				1F06FD63200DD7E00024AFC7 /* WBChatViewController.h */,
+				1F06FD64200DD7E00024AFC7 /* WBChatViewController.m */,
+				1F06FD65200DD7E00024AFC7 /* WBChatViewController.xib */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		1F7F161020119759003CB83D /* Group */ = {
+			isa = PBXGroup;
+			children = (
+				1F7F161120119785003CB83D /* WBGroupAdressBookTableViewCell.h */,
+				1F7F161220119785003CB83D /* WBGroupAdressBookTableViewCell.m */,
+				1F7F161320119785003CB83D /* WBGroupAdressBookTableViewCell.xib */,
+				1F7F16162011A042003CB83D /* WBGroupSettingUserTableViewCell.h */,
+				1F7F16172011A042003CB83D /* WBGroupSettingUserTableViewCell.m */,
+				1F7F16182011A042003CB83D /* WBGroupSettingUserTableViewCell.xib */,
+			);
+			path = Group;
+			sourceTree = "<group>";
+		};
+		1F7F161B2011A345003CB83D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1F7F161C2011A367003CB83D /* GroupUserModel.h */,
+				1F7F161D2011A367003CB83D /* GroupUserModel.m */,
+			);
+			name = Model;
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		1F8EAF261FBACD2800FEED19 /* Handler */ = {
@@ -5269,6 +5344,7 @@
 				1FA86468200F405100550C7B /* B_38@2x.gif in Resources */,
 				1FA864AC200F405200550C7B /* B_48@2x.gif in Resources */,
 				1FA86451200F405100550C7B /* B_16@2x.gif in Resources */,
+				1F7F160D201193A4003CB83D /* WBGroupAdressBookViewController.xib in Resources */,
 				1F6E548A1FFF56BE009E38AE /* share_disk@3x.png in Resources */,
 				F683108C1FB30AAE005AC578 /* Arrow_down@3x.png in Resources */,
 				1F114A231FF33463007F6D15 /* dlna_switch.png in Resources */,
@@ -5608,6 +5684,7 @@
 				F68310961FB30AAE005AC578 /* bg_pic.jpg in Resources */,
 				1F922E881FCD426000A7614B /* ic_dns@3x.png in Resources */,
 				1FA86483200F405200550C7B /* B_66@2x.gif in Resources */,
+				1F7F161520119785003CB83D /* WBGroupAdressBookTableViewCell.xib in Resources */,
 				1FA864D1200F405200550C7B /* C_102@2x.png in Resources */,
 				F68311991FB30AAF005AC578 /* small_3@2x.png in Resources */,
 				1FA864C0200F405200550C7B /* IM_Chat_keyboard@2x.png in Resources */,
@@ -5618,6 +5695,7 @@
 				1FA864E0200F405200550C7B /* C_103@2x.png in Resources */,
 				1FD7A1061FB05A51000D4CB3 /* WeChat@2x.png in Resources */,
 				F683118C1FB30AAF005AC578 /* share_red_select.png in Resources */,
+				1F7F161A2011A042003CB83D /* WBGroupSettingUserTableViewCell.xib in Resources */,
 				F683114D1FB30AAE005AC578 /* personal.png in Resources */,
 				1F922EDA1FCE992F00A7614B /* brtfs@3x.png in Resources */,
 				1FA864DB200F405200550C7B /* C_109@2x.png in Resources */,
@@ -6164,6 +6242,7 @@
 				F68311DE1FB31369005AC578 /* LCActionSheet.m in Sources */,
 				1F922EBB1FCE617B00A7614B /* WBStatioManageEquipmentViewController.m in Sources */,
 				F67D64111FAC7D7F00E23D16 /* Base64.m in Sources */,
+				1F7F161E2011A367003CB83D /* GroupUserModel.m in Sources */,
 				C138D05D1FB96100000CF518 /* FLCreateDirAPI.m in Sources */,
 				1F4083BD20061A3100DC0634 /* WBPpgAPI.m in Sources */,
 				F67D644E1FAC84E800E23D16 /* NavViewController.m in Sources */,
@@ -6176,11 +6255,13 @@
 				F6D8CC3D1FB42D6500673824 /* UIApplication+JYTopVC.m in Sources */,
 				1FA8640F200F405100550C7B /* UIViewController+Set.m in Sources */,
 				1F922EAF1FCD740700A7614B /* WBStationManageNetworkViewController.m in Sources */,
+				1F7F16192011A042003CB83D /* WBGroupSettingUserTableViewCell.m in Sources */,
 				C138D0571FB94396000CF518 /* FLDrivesAPI.m in Sources */,
 				1F922EC31FCE867400A7614B /* WBStationManageEquipmentModel.m in Sources */,
 				C138D05A1FB94D8D000CF518 /* FLGetDriveDirAPI.m in Sources */,
 				1FAD747B1FD1061D00A5D880 /* WBInviteWechatTableViewCell.m in Sources */,
 				1FF3AD621FD66E8C00E1E536 /* UIScrollView+JYEmptyView.m in Sources */,
+				1F7F161420119785003CB83D /* WBGroupAdressBookTableViewCell.m in Sources */,
 				1FA86413200F405100550C7B /* LHContentModel.m in Sources */,
 				1F1ABA001FB978EB006EB1FC /* CSDownloadTaskQueue.m in Sources */,
 				F65035641FAC00A60007979D /* AppDelegate.m in Sources */,
@@ -6300,6 +6381,7 @@
 				1F4D75B11FAC4BB800E6516C /* UserServices.m in Sources */,
 				C183CDF41FCFD859002E29CD /* NSObject+SXRuntime.m in Sources */,
 				1FA8642F200F405100550C7B /* KeyboardEmojiTextView.m in Sources */,
+				1F7F16212011D4B8003CB83D /* UIImage+extension.m in Sources */,
 				F6830EC41FB2FD1D005AC578 /* FMUserLoginHeaderView.m in Sources */,
 				F6D8CC3A1FB402CB00673824 /* FMBaseFirstVC.m in Sources */,
 				1F114A321FF34D9B007F6D15 /* WBMaintenanceStorageInfoTableViewCell.m in Sources */,
@@ -6368,6 +6450,7 @@
 				1FA86405200F405100550C7B /* LHPhotoPreviewController.m in Sources */,
 				1F4D75B21FAC4BB800E6516C /* DBServices.m in Sources */,
 				1FAD741F1FCFE67F00A5D880 /* WBTicketsUserAPI.m in Sources */,
+				1F7F160C201193A4003CB83D /* WBGroupAdressBookViewController.m in Sources */,
 				1F3F99891FB0353F00D6CC64 /* LocalDownloadTableViewCell.m in Sources */,
 				1F1FA3871FC3F38200272347 /* FilesShareViewController.m in Sources */,
 				F67D64121FAC7D7F00E23D16 /* CocoaSecurity.m in Sources */,

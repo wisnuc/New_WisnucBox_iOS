@@ -7,6 +7,7 @@
 //
 
 #import "WBGroupManageViewController.h"
+#import "WBGroupSettingUserTableViewCell.h"
 
 #define GeneralBottomHeight 30
 #define UserNameLabelHeight 15
@@ -23,14 +24,64 @@
     [super viewDidLoad];
     self.title = WBLocalizedString(@"group_setting", nil);
     [self initView];
-    NSArray *tmpArray = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"0"];
-    self.userGroupArray = [NSMutableArray arrayWithArray:tmpArray];
+    
+   
+//    self.automaticallyAdjustsScrollViewInsets = NO;
+    GroupUserModel *model1 = [GroupUserModel new];
+    model1.userName = @"离开家";
+    model1.imageURL = @"http://www.mf08s.com/y/q/UploadFiles_q/20121005/2012100507413841.jpg";
+    
+    GroupUserModel *model2 = [GroupUserModel new];
+    model2.userName = @"adgshja";
+    model2.imageURL = @"http://www.mf08s.com/y/q/UploadFiles_q/20121005/2012100507413803.jpg";
+    
+    GroupUserModel *model3 = [GroupUserModel new];
+    model3.userName = @"科技爱好大的";
+    model3.imageURL = @"http://pic.qqtn.com/up/2018-1/2018011815282654933.jpg";
+    
+    GroupUserModel *model4 = [GroupUserModel new];
+    model4.userName = @"打撒撒多";
+    model4.imageURL = @"http://www.qqzhi.com/uploadpic/2014-09-06/195035112.jpg";
+    
+    GroupUserModel *model5 = [GroupUserModel new];
+    model5.userName = @"坎坎坷坷";
+    model5.imageURL = @"http://www.qqzhi.com/uploadpic/2014-09-06/195035637.jpg";
+    
+    GroupUserModel *model6 = [GroupUserModel new];
+    model6.userName = @"呃呃呃";
+    model6.imageURL = @"http://www.qqzhi.com/uploadpic/2014-09-06/195034891.jpg";
+    
+    GroupUserModel *model7 = [GroupUserModel new];
+    model7.userName = @"辣鸡";
+    model7.imageURL = @"http://www.qqzhi.com/uploadpic/2014-09-06/195035561.jpg";
+    
+    GroupUserModel *model8 = [GroupUserModel new];
+    model8.userName = @"通天塔";
+    model8.imageURL = @"http://up.qqjia.com/z/19/tu21104_4.jpg";
+    
+    
+//    NSArray *tmpArray = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"0"];
+    self.userGroupArray = [NSMutableArray arrayWithObjects:model1,model2,model3,model4,model5,model6,model7,model8,nil];
     [self.tableView reloadData];
 //    self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (void)initView{
+    UIButton * rightButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 24)];
+    rightButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
+    [rightButton setTitleColor:COR1 forState:UIControlStateNormal];
+    [rightButton setTitle:@"退出" forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(rightButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    rightButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    [rightButton setEnlargeEdgeWithTop:5 right:10 bottom:5 left:5];
+    UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem = rightButtonItem;
+    
     [self.view addSubview:self.tableView];
+}
+
+- (void)rightButtonClick:(UIButton *)sender{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)switchChanged:(UISwitch *)sender{
@@ -53,6 +104,7 @@
     }
     
     if (switchTag) {
+         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         UISwitch *settingSwitch = [[UISwitch alloc]initWithFrame:CGRectMake(__kWidth - 16 - 50, 48/2 - 34/2, 50, 40)];
         settingSwitch.tag = [switchTag integerValue];
         [settingSwitch addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
@@ -93,7 +145,15 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     switch (indexPath.section) {
         case 0:{
-            CGFloat rowHeight = kGeneralWidthHeight + (self.userGroupArray.count/4) *(UserNameLabelHeight + 40 + 12 + 20) + 10 + kGeneralWidthHeight + GeneralBottomHeight;
+            NSInteger addLine = 0;
+            NSInteger index = self.userGroupArray.count % 4;
+            if (index >= 3) {
+                addLine = 1;
+            }else if(index == 0){
+                addLine = 1;
+            }
+            
+            CGFloat rowHeight = kGeneralWidthHeight + (ceil(self.userGroupArray.count/4.0) + addLine) *(UserNameLabelHeight + 40 + 12 + 20) + 10 + kGeneralWidthHeight + GeneralBottomHeight;
              return rowHeight;
         }
             break;
@@ -156,13 +216,24 @@
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     static NSString *identifer = @"groupCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifer];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifer];
     }
+    
     switch (indexPath.section) {
-        case 0:
+        case 0:{
+            WBGroupSettingUserTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WBGroupSettingUserTableViewCell class])];
+            if (!cell) {
+                cell = (WBGroupSettingUserTableViewCell *)[[[NSBundle mainBundle]loadNibNamed:NSStringFromClass([WBGroupSettingUserTableViewCell class]) owner:self options:nil]lastObject];
+            }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.userArray =  _userGroupArray;
+            cell.clickBlock = ^(NSInteger iamgeTag) {
+#warning push 
+            };
+            return cell;
+        }
             break;
             
         case 1:{
@@ -187,7 +258,7 @@
             break;
             
         case 2:{
-            NSNumber *tagNumber = [NSNumber numberWithString:[NSString stringWithFormat:@"%d%d",indexPath.section,indexPath.row]];
+            NSNumber *tagNumber = [NSNumber numberWithString:[NSString stringWithFormat:@"%ld%d",(long)indexPath.section,indexPath.row]];
             [self generalCellWithTabelViewCell:cell Title:@"消息免打扰" DetailText:nil IsAccessoryDisclosureIndicator:NO SwitchTag:tagNumber];
         }
             break;
@@ -195,13 +266,13 @@
         case 3:{
             switch (indexPath.row) {
                 case 0:{
-                     NSNumber *tagNumber = [NSNumber numberWithString:[NSString stringWithFormat:@"%d%d",indexPath.section,indexPath.row]];
+                    NSNumber *tagNumber = [NSNumber numberWithString:[NSString stringWithFormat:@"%ld%ld",(long)indexPath.section,(long)indexPath.row]];
                      [self generalCellWithTabelViewCell:cell Title:@"群邀请确认" DetailText:nil IsAccessoryDisclosureIndicator:NO SwitchTag:tagNumber];
                 }
 
                     break;
                 case 1:{
-                    NSNumber *tagNumber = [NSNumber numberWithString:[NSString stringWithFormat:@"%d%d",indexPath.section,indexPath.row]];
+                    NSNumber *tagNumber = [NSNumber numberWithString:[NSString stringWithFormat:@"%ld%ld",(long)indexPath.section,(long)indexPath.row]];
                     [self generalCellWithTabelViewCell:cell Title:@"需要审核" DetailText:nil IsAccessoryDisclosureIndicator:NO SwitchTag:tagNumber];
                 }
                     break;
@@ -243,9 +314,14 @@
     }
 }
 
+
+
 - (UITableView *)tableView{
     if (!_tableView) {
         _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight) style:UITableViewStyleGrouped];
+        if (CYL_IS_IOS_11) {
+            _tableView.frame = CGRectMake(0, 0, __kWidth, __kHeight - 64);
+        }
         _tableView.dataSource = self;
         _tableView.delegate = self;
         _tableView.backgroundColor = MainBackgroudColor;
