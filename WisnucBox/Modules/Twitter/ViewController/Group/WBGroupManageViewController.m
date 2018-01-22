@@ -230,7 +230,7 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.userArray =  _userGroupArray;
             cell.clickBlock = ^(NSInteger iamgeTag) {
-#warning push 
+#warning push
             };
             return cell;
         }
