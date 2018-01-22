@@ -36,6 +36,7 @@
                 @"url" :_downloadURL
                 };
     }
+    NSLog(@"%@",dic);
     return dic;
 }
 

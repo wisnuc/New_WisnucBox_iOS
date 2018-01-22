@@ -51,7 +51,7 @@
     NSMutableArray * arr = [NSMutableArray arrayWithArray:[[AppServices sharedService].userServices getAllLoginUser]];
     NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:0];
     for (WBUser * info in arr) {
-        if(!info.bonjour_name)info.bonjour_name = @"未知设备,请删除后重新添加";
+        if(!info.bonjour_name)info.bonjour_name = @"未知设备";
         if ([[dic allKeys] containsObject:info.bonjour_name]) {
             NSMutableArray * temp = dic[info.bonjour_name];
             [temp addObject:info];

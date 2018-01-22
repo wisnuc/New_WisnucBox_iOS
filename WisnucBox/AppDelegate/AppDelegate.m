@@ -37,7 +37,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dealwithCrashMessage:) name:AvoidCrashNotification object:nil];
     [self configWeChat];
 //    if(WB_IS_DEBUG){
-        [self redirectNSlogToDocumentFolder];
+//        [self redirectNSlogToDocumentFolder];
 //    }
     [AppServices sharedService];
     [self initRootVC];
@@ -355,8 +355,9 @@
     NSString *controllerString = NSStringFromClass([[UIViewController getCurrentVC] class]);
     [SXLoadingView showProgressHUD:@""];
     [[WBPpgDownloadSwitchAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        NSDictionary *dic = request.responseJsonObject;
-        NSNumber *number = dic[@"switch"];
+        NSDictionary * responseDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+        NSNumber *number = responseDic[@"switch"];
+//        NSLog(@"%@",dic);
         BOOL swichOn = [number boolValue];
         if (swichOn) {
             [weak_self startPpgDownloadWithFilePath:filePath];

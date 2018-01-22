@@ -48,6 +48,8 @@
 
 - (void)testAndCheckoutIfSuccessComplete:(void(^)(void))callback;
 
+- (void)testAndCheckoutCloudIfSuccessComplete:(void(^)(void))callback;
+
 - (instancetype)initWithLocalURL:(NSString *)localUrl andCloudURL:(NSString *)cloudUrl;
 
 - (void)getLocalTokenWithCloud:(void(^)(NSError *, NSString * token))callback;

@@ -132,11 +132,11 @@ UITableViewDataSource
                     NSLog(@"%@",error);
                 }else{
                     [[WBPpgAPI apiWithDirUUID:dirUUID PpgURL:url]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-                        NSDictionary *requestDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
-                        NSLog(@"%@",request.responseJsonObject);
+//                        NSDictionary *requestDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+//                        NSLog(@"%@",request.responseJsonObject);
                         
-                        NSString *PpgId = requestDic[@"PpgId"];
-                        [weak_self startGetPpgDownloadInfoWithPpgId:PpgId];
+//                        NSString *PpgId = requestDic[@"PpgId"];
+//                        [weak_self startGetPpgDownloadInfoWithPpgId:PpgId];
                     } failure:^(__kindof JYBaseRequest *request) {
                         NSLog(@"%@",request.error);
                         NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
@@ -157,7 +157,7 @@ UITableViewDataSource
                     NSLog(@"%@",error);
                 }else{
                     [[WBHttpDownloadAPI apiWithDirUUID:dirUUID DownloadURL:url] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-                        [weak_self startGetPpgDownloadInfoWithPpgId:nil];
+//                        [weak_self startGetPpgDownloadInfoWithPpgId:nil];
                     } failure:^(__kindof JYBaseRequest *request) {
                         NSLog(@"%@",request.error);
                         NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
@@ -203,14 +203,17 @@ UITableViewDataSource
      @weaky(self)
     [[WBGetDownloadAPI apiWithType:nil PpgId:nil]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
-         NSDictionary *requestDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
-        WBGetDownloadModel *model = [WBGetDownloadModel yy_modelWithDictionary:requestDic];
-        [self.runningDataArray removeAllObjects];
-        [self.runningDataArray addObjectsFromArray:model.running];
-        [self.finishDataArray removeAllObjects];
-        [self.finishDataArray addObjectsFromArray:model.finish];
-       
-        [weak_self reloadData];
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            NSDictionary *requestDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+            WBGetDownloadModel *model = [WBGetDownloadModel yy_modelWithDictionary:requestDic];
+            [self.runningDataArray removeAllObjects];
+            [self.runningDataArray addObjectsFromArray:model.running];
+            [self.finishDataArray removeAllObjects];
+            [self.finishDataArray addObjectsFromArray:model.finish];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weak_self.tableView reloadData];
+            });
+        });
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
     }];
@@ -311,8 +314,14 @@ UITableViewDataSource
         if ([model.state isEqualToString:@"downloading"]) {
             cell.progressView.progress = [model.progress  floatValue];
             cell.nameLabel.text = model.name;
-            
-            NSDecimalNumber *progressDecimalNumber = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%@",[self notRounding:[model.progress  floatValue] afterPoint:2]]];
+            NSLog(@"%@",model.progress);
+            NSDecimalNumber *progressDecimalNumber;
+            if (model.progress) {
+               progressDecimalNumber = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%@",[self notRounding:[model.progress  floatValue] afterPoint:2]]];
+            }else{
+                progressDecimalNumber = [NSDecimalNumber zero];
+            }
+           
             NSDecimalNumber *decimalNumber = [NSDecimalNumber decimalNumberWithString:@"100"];
             NSDecimalNumber *mutiplyDecimal;
             if ([progressDecimalNumber compare:[NSDecimalNumber zero]] == NSOrderedSame || [[NSDecimalNumber notANumber] isEqualToNumber:progressDecimalNumber]) {
@@ -322,7 +331,13 @@ UITableViewDataSource
             }
             
             cell.progressLabel.text = [NSString stringWithFormat:@"%@%%",mutiplyDecimal];
-            NSNumber *allSizeNumber = [NSNumber numberWithDouble:[model.downloaded doubleValue] / [model.progress doubleValue]];
+            NSNumber *allSizeNumber;
+           if (model.progress && [model.downloaded integerValue]!= 0) {
+              allSizeNumber =  [NSNumber numberWithDouble:[model.downloaded doubleValue] / [model.progress doubleValue]];
+           }else{
+               allSizeNumber = [NSNumber numberWithInt:0];
+           }
+           
             if ([model.downloaded doubleValue] == 0.0000000000) {
                 allSizeNumber = [NSNumber numberWithInt:0];
             }
@@ -332,8 +347,12 @@ UITableViewDataSource
             }else if (model.ppgPath && model.ppgPath>0){
 //                cell.leftImageView.image = [UIImage imageNamed:@""];
             }
+            
+             NSLog(@"%@/%@",model.downloaded,allSizeNumber);
 //            NSNumber *allSizeNumber = [NSNumber numberWithLongLong:[number longLongValue]];
             cell.sizeLabel.text = [NSString stringWithFormat:@"%@/%@",[NSString transformedValue: model.downloaded],[NSString transformedValue:allSizeNumber]];
+           
+            
             if ([model.isPause boolValue]) {
                 cell.speedLabel.text = WBLocalizedString(@"paused", nil);
             }else{
@@ -602,7 +621,7 @@ UITableViewDataSource
                       forControlEvents:UIControlEventTouchUpInside];
         UIImage *plusImage = [UIImage imageNamed:@"ic_add_white"];
         [_addButton setImage:plusImage forState:UIControlStateNormal];
-        [_addButton setEnabled:NO];
+//        [_addButton setEnabled:NO];
         [_addButton setBackgroundColor:COR1];
     }
     return _addButton;

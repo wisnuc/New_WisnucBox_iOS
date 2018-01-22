@@ -30,4 +30,5 @@
 
 @property(nonatomic, strong, getter = getDownloadFilePlistURL) NSString* downloadFilePlistURL;
 
+
 @end
