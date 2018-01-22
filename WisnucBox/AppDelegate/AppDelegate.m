@@ -37,7 +37,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dealwithCrashMessage:) name:AvoidCrashNotification object:nil];
     [self configWeChat];
 //    if(WB_IS_DEBUG){
-//        [self redirectNSlogToDocumentFolder];
+        [self redirectNSlogToDocumentFolder];
 //    }
     [AppServices sharedService];
     [self initRootVC];
