@@ -15,6 +15,7 @@
 #define NO_USER_LOGIN 60001
 #define NOT_Found Created_Dir 60002
 #define UserHome_NOT_Found 60004
+#define NO_CLOUD_TOKEN 60005
 
 #define Current_User_Home @"Current_User_Home"
 #define Current_Backup_Base_Entry @"Current_Backup_Base_Entry"
@@ -47,6 +48,8 @@
 - (void)checkForLANIP:(NSString *)LANIP commplete:(void(^)(BOOL success))callback;
 
 - (void)testAndCheckoutIfSuccessComplete:(void(^)(void))callback;
+
+- (void)testAndCheckoutCloudIfSuccessComplete:(void(^)(void))callback;
 
 - (instancetype)initWithLocalURL:(NSString *)localUrl andCloudURL:(NSString *)cloudUrl;
 

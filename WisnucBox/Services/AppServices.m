@@ -116,15 +116,60 @@
     }
     
     if(_isLogining) return;
-    if(!WB_UserService.currentUser || !WB_UserService.currentUser.autoBackUp) return;
+    if (status == AFNetworkReachabilityStatusReachableViaWWAN) {
+        if (WB_UserService.currentUser && WB_UserService.currentUser.autoBackUp) {
+            [self.photoUploadManager stop];
+            if(!WB_UserService.currentUser.isCloudLogin)
+                [WB_NetService checkForLANIP:WB_UserService.currentUser.localAddr commplete:^(BOOL success) { //测试是否可用网络
+                    if(success){
+                        [self startUploadAssets:nil];
+                    }else{
+                        [WB_NetService testAndCheckoutCloudIfSuccessComplete:^{
+                            //                     [self startUploadAssets:nil];
+                        }];
+                    }
+                }];
+            else
+                [WB_NetService testAndCheckoutIfSuccessComplete:^{
+//                    [self startUploadAssets:nil];
+                }];
+        }else if(WB_UserService.currentUser &&!WB_UserService.currentUser.autoBackUp){
+            if(!WB_UserService.currentUser.isCloudLogin)
+                [WB_NetService checkForLANIP:WB_UserService.currentUser.localAddr commplete:^(BOOL success) { //测试是否可用网络
+                    if(success){
+                      [self startUploadAssets:nil];
+                    }else{
+                        [WB_NetService testAndCheckoutCloudIfSuccessComplete:^{
+//                            [self startUploadAssets:nil];
+                        }];
+                    }
+                }];
+            else
+                [WB_NetService testAndCheckoutIfSuccessComplete:^{
+//                    [self startUploadAssets:nil];
+                }];
+        }
+    }
+    
+    if(!WB_UserService.currentUser) return;
     if (status == AFNetworkReachabilityStatusReachableViaWiFi) {
         if(!WB_UserService.currentUser.isCloudLogin)
            [WB_NetService checkForLANIP:WB_UserService.currentUser.localAddr commplete:^(BOOL success) { //测试是否可用网络
-              if(success) [self startUploadAssets:nil];
+               if (WB_UserService.currentUser.autoBackUp) {
+                   if(success) {
+                       [self startUploadAssets:nil];
+//                   }else{
+//                       [WB_NetService testAndCheckoutCloudIfSuccessComplete:^{
+//                           //                            [self startUploadAssets:nil];
+//                       }];
+                   }
+               }
            }];
         else
             [WB_NetService testAndCheckoutIfSuccessComplete:^{
-                [self startUploadAssets:nil];
+                if (WB_UserService.currentUser.autoBackUp) {
+                    [self startUploadAssets:nil];
+                }
             }];
     }else {
         [self.photoUploadManager stop];
@@ -192,7 +237,7 @@
         WBUser *user = [WB_UserService createUserWithUserUUID:uuid];
         user.userName = userName;
         user.localAddr = urlString;
-        user.cloudToken = nil;
+//        user.cloudToken = nil;
         user.localToken = token;
         user.isFirstUser = NO;
         user.isAdmin = NO;

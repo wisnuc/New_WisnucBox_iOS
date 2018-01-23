@@ -91,13 +91,7 @@
     
     [self.dropDownBtn setEnlargeEdgeWithTop:10 right:5 bottom:5 left:60];
     
-    if (WB_UserService.currentUser.isCloudLogin) {
-        self.cloudImageView.hidden = NO;
-       
-    }else{
-        self.cloudImageView.hidden = YES;
-      
-    }
+  
 
 //    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 //    NSString *urlString = [NSString stringWithFormat:@"https://itunes.apple.com/cn/lookup?id=1132191394"];
@@ -228,6 +222,13 @@
     self.nameLabel.text = [AppServices sharedService].userServices.currentUser.userName;
 //    [cell.contentView addSubview:progressLb];
 //    progressLb.hidden = !_displayProgress;
+    if (WB_UserService.currentUser.isCloudLogin) {
+        self.cloudImageView.hidden = NO;
+        
+    }else{
+        self.cloudImageView.hidden = YES;
+        
+    }
 
 }
 -(NSString *)notRounding:(float)price afterPoint:(int)position{

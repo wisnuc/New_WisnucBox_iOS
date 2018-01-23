@@ -17,6 +17,7 @@
 #import "CSDateUtil.h"
 #import "WBPpgDownloadSwitchAPI.h"
 #import "WBGetVersionAPI.h"
+#import "WBHttpDownloadAPI.h"
 
 @interface WBppgViewController ()
 <PpgAlertViewDelegate,
@@ -31,6 +32,7 @@ UITableViewDataSource
 @property (nonatomic)NSMutableArray *finishDataArray;
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic) BOOL switchOn;
+@property (nonatomic) BOOL versionOn;
 @end
 
 @implementation WBppgViewController
@@ -60,6 +62,7 @@ UITableViewDataSource
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self checkVersion];
+    [self checkSwitch];
     [self.navigationController.navigationBar setBarTintColor:COR1];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
@@ -67,28 +70,24 @@ UITableViewDataSource
 }
 
 - (void)checkVersion{
-    @weaky(self)
+//    @weaky(self)
     [[WBGetVersionAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
          NSDictionary *requestDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
         NSNumber *versionNumber = requestDic[@"version"];
         if ([versionNumber boolValue]) {
-            [weak_self checkSwitch];
+            _versionOn = YES;
         }else{
-            self.addButton.hidden = YES;
-            self.downloadedClearButton.enabled = NO;
-            self.downloadingClearButton.enabled = NO;
+
+            _versionOn = NO;
         }
     } failure:^(__kindof JYBaseRequest *request) {
       NSLog(@"%@",request.error);
-        self.addButton.hidden = NO;
-        self.downloadedClearButton.enabled = YES;
-        self.downloadingClearButton.enabled = YES;
+        _versionOn = NO;
     }];
 }
 
 - (void)checkSwitch{
-    
     [SXLoadingView showProgressHUD:@""];
     [[WBPpgDownloadSwitchAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
        NSDictionary *requestDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
@@ -123,30 +122,56 @@ UITableViewDataSource
 }
 
 - (void)Ppgdownload:(NSString *)url {
-    if (url.length >0) {
-        @weaky(self)
-        [WB_NetService getDirUUIDWithDirName:BackUpPpgDirName BaseDir:^(NSError *error, NSString *dirUUID) {
-            if (error) {
-                NSLog(@"%@",error);
-            }else{
-                [[WBPpgAPI apiWithDirUUID:dirUUID PpgURL:url]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-                    NSDictionary *requestDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
-                    NSLog(@"%@",request.responseJsonObject);
-                   
-                    NSString *PpgId = requestDic[@"PpgId"];
-                    [weak_self startGetPpgDownloadInfoWithPpgId:PpgId];
-                } failure:^(__kindof JYBaseRequest *request) {
-                    NSLog(@"%@",request.error);
-                    NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
-                    if(errorData.length >0){
-                        NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
-                        NSString *message = serializedData[@"message"];
-                        [SXLoadingView showProgressHUDText:message duration:1.5f];
-                        NSLog(@"%@",serializedData);
-                    }
-                }];
-            }
-        }];
+    if (url.length >8) {
+        NSString *dataString = [url substringToIndex:8];
+        NSString *base64String = [dataString base64EncodedString];
+        NSLog(@"%@",base64String);
+           @weaky(self)
+        if ([base64String isEqualToString:@"bWFnbmV0Oj8="] && !_versionOn) {
+            [WB_NetService getDirUUIDWithDirName:BackUpPpgDirName BaseDir:^(NSError *error, NSString *dirUUID) {
+                if (error) {
+                    NSLog(@"%@",error);
+                }else{
+                    [[WBPpgAPI apiWithDirUUID:dirUUID PpgURL:url]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+//                        NSDictionary *requestDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+//                        NSLog(@"%@",request.responseJsonObject);
+                        
+//                        NSString *PpgId = requestDic[@"PpgId"];
+//                        [weak_self startGetPpgDownloadInfoWithPpgId:PpgId];
+                    } failure:^(__kindof JYBaseRequest *request) {
+                        NSLog(@"%@",request.error);
+                        NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+                        if(errorData.length >0){
+                            NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+                            NSString *message = serializedData[@"message"];
+                            [SXLoadingView showProgressHUDText:message duration:1.5f];
+                            NSLog(@"%@",serializedData);
+                        }
+                    }];
+                }
+            }];
+        }else if([base64String isEqualToString:@"bWFnbmV0Oj8="] && _versionOn){
+            [SXLoadingView showProgressHUDText:@"不支持此链接" duration:1.2f];
+        }else{
+            [WB_NetService getDirUUIDWithDirName:BackUpPpgDirName BaseDir:^(NSError *error, NSString *dirUUID) {
+                if (error) {
+                    NSLog(@"%@",error);
+                }else{
+                    [[WBHttpDownloadAPI apiWithDirUUID:dirUUID DownloadURL:url] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+//                        [weak_self startGetPpgDownloadInfoWithPpgId:nil];
+                    } failure:^(__kindof JYBaseRequest *request) {
+                        NSLog(@"%@",request.error);
+                        NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+                        if(errorData.length >0){
+                            NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+                            NSString *message = serializedData[@"message"];
+                            [SXLoadingView showProgressHUDText:message duration:1.5f];
+                            NSLog(@"%@",serializedData);
+                        }
+                    }];
+                }
+            }];
+        }
     }
 }
 
@@ -179,14 +204,17 @@ UITableViewDataSource
      @weaky(self)
     [[WBGetDownloadAPI apiWithType:nil PpgId:nil]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
-         NSDictionary *requestDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
-        WBGetDownloadModel *model = [WBGetDownloadModel yy_modelWithDictionary:requestDic];
-        [self.runningDataArray removeAllObjects];
-        [self.runningDataArray addObjectsFromArray:model.running];
-        [self.finishDataArray removeAllObjects];
-        [self.finishDataArray addObjectsFromArray:model.finish];
-       
-        [weak_self reloadData];
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            NSDictionary *requestDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+            WBGetDownloadModel *model = [WBGetDownloadModel yy_modelWithDictionary:requestDic];
+            [self.runningDataArray removeAllObjects];
+            [self.runningDataArray addObjectsFromArray:model.running];
+            [self.finishDataArray removeAllObjects];
+            [self.finishDataArray addObjectsFromArray:model.finish];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weak_self.tableView reloadData];
+            });
+        });
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
     }];
@@ -237,7 +265,7 @@ UITableViewDataSource
          }
     }];
     }
-    }
+  }
 }
 
 - (void)fnishAllClearButtonClick:(UIButton *)sender{
@@ -287,8 +315,14 @@ UITableViewDataSource
         if ([model.state isEqualToString:@"downloading"]) {
             cell.progressView.progress = [model.progress  floatValue];
             cell.nameLabel.text = model.name;
-            
-            NSDecimalNumber *progressDecimalNumber = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%@",[self notRounding:[model.progress  floatValue] afterPoint:2]]];
+            NSLog(@"%@",model.progress);
+            NSDecimalNumber *progressDecimalNumber;
+            if (model.progress) {
+               progressDecimalNumber = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%@",[self notRounding:[model.progress  floatValue] afterPoint:2]]];
+            }else{
+                progressDecimalNumber = [NSDecimalNumber zero];
+            }
+           
             NSDecimalNumber *decimalNumber = [NSDecimalNumber decimalNumberWithString:@"100"];
             NSDecimalNumber *mutiplyDecimal;
             if ([progressDecimalNumber compare:[NSDecimalNumber zero]] == NSOrderedSame || [[NSDecimalNumber notANumber] isEqualToNumber:progressDecimalNumber]) {
@@ -298,7 +332,13 @@ UITableViewDataSource
             }
             
             cell.progressLabel.text = [NSString stringWithFormat:@"%@%%",mutiplyDecimal];
-            NSNumber *allSizeNumber = [NSNumber numberWithDouble:[model.downloaded doubleValue] / [model.progress doubleValue]];
+            NSNumber *allSizeNumber;
+           if (model.progress && [model.downloaded integerValue]!= 0) {
+              allSizeNumber =  [NSNumber numberWithDouble:[model.downloaded doubleValue] / [model.progress doubleValue]];
+           }else{
+               allSizeNumber = [NSNumber numberWithInt:0];
+           }
+           
             if ([model.downloaded doubleValue] == 0.0000000000) {
                 allSizeNumber = [NSNumber numberWithInt:0];
             }
@@ -308,8 +348,12 @@ UITableViewDataSource
             }else if (model.ppgPath && model.ppgPath>0){
 //                cell.leftImageView.image = [UIImage imageNamed:@""];
             }
+            
+             NSLog(@"%@/%@",model.downloaded,allSizeNumber);
 //            NSNumber *allSizeNumber = [NSNumber numberWithLongLong:[number longLongValue]];
             cell.sizeLabel.text = [NSString stringWithFormat:@"%@/%@",[NSString transformedValue: model.downloaded],[NSString transformedValue:allSizeNumber]];
+           
+            
             if ([model.isPause boolValue]) {
                 cell.speedLabel.text = WBLocalizedString(@"paused", nil);
             }else{
@@ -579,7 +623,6 @@ UITableViewDataSource
                       forControlEvents:UIControlEventTouchUpInside];
         UIImage *plusImage = [UIImage imageNamed:@"ic_add_white"];
         [_addButton setImage:plusImage forState:UIControlStateNormal];
-//        [_addButton setHidden:YES];
         [_addButton setBackgroundColor:COR1];
     }
     return _addButton;

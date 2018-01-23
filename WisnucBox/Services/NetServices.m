@@ -46,13 +46,13 @@
 }
 
 - (void)checkForLANIP:(NSString *)LANIP commplete:(void(^)(BOOL success))callback {
-    @weaky(self)
+//    @weaky(self)
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = 3;
     [manager GET:[NSString stringWithFormat:@"%@station/info", LANIP] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         return callback(YES);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [weak_self checkForCloudComplete:callback];
+        return callback(NO);
     }];
 }
 
@@ -65,6 +65,24 @@
         }else{
              callback(NO);
         }
+    }];
+}
+
+- (void)testAndCheckoutCloudIfSuccessComplete:(void(^)(void))callback{
+    if(!WB_UserService.currentUser) return callback();
+    [self checkForCloudComplete:^(BOOL success) {
+        if(!success) return callback();
+        [self getLocalTokenWithCloud:^(NSError *error, NSString *token) {
+            if(error) return callback();
+            [self updateIsCloud:YES andLocalURL:nil andCloudURL:nil];
+            WB_UserService.currentUser.isCloudLogin = YES;
+//            WB_UserService.currentUser.cloudToken = token;
+            [WB_UserService setCurrentUser:WB_UserService.currentUser];
+            [WB_UserService synchronizedCurrentUser];
+            NSLog(@"切换网络成功");
+            [[NSNotificationCenter defaultCenter] postNotificationName:NETWORK_CHECKOUT_TO_LAN_NOTIFY object:nil];
+            return callback();
+        }];
     }];
 }
 
@@ -170,6 +188,7 @@
 
 - (void)getLocalTokenWithCloud:(void(^)(NSError *, NSString * token))callback {
     if(!WB_UserService.isUserLogin) return callback([NSError errorWithDomain:@"User Not Login" code:NO_USER_LOGIN userInfo:nil], NULL);
+    if(!WB_UserService.currentUser.cloudToken) return callback([NSError errorWithDomain:@"NO TOKEN" code:NO_CLOUD_TOKEN userInfo:nil], NULL);
     [[WBCloudLocalTokenAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSString * token = ((NSDictionary *)(request.responseJsonObject[@"data"]))[@"token"];
         return callback(nil, token);
