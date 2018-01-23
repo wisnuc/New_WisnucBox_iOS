@@ -896,7 +896,7 @@ static BOOL needHide = YES;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == _userListTableViwe) {
         UserModel *model = _userDataSource[indexPath.row];;
-//        NSLog(@"%@",model.global);
+        NSLog(@"%@",model.global);
         FMUserLoginViewController *userLoginVC = [[FMUserLoginViewController alloc]init];
         FMSerachService * ser;
         if (_userDataCount >0) {

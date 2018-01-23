@@ -275,7 +275,6 @@
     user.isAdmin = [cloudUserModel.isAdmin boolValue];
     user.isCloudLogin = YES;
     user.avaterURL = avatarUrl;
-    user.guid = cloudUserModel.global.guid;
     if (!IsNilString(cloudUserModel.LANIP)) {
         NSString* urlString = [NSString stringWithFormat:@"http://%@:3000/", cloudUserModel.LANIP];
         user.localAddr = urlString;
@@ -350,6 +349,7 @@
             WB_UserService.currentUser.isAdmin = [userModel.isAdmin boolValue];
             WB_UserService.currentUser.isFirstUser = [userModel.isFirstUser boolValue];
             if (userModel.global) {
+                WB_UserService.currentUser.guid = userModel.global.guid;
                 WB_UserService.currentUser.isBindWechat = YES;
             }else{
                 WB_UserService.currentUser.isBindWechat = NO;
