@@ -72,6 +72,18 @@
     [self.window makeKeyAndVisible];
 }
 
+- (void)saveBoxesToken {
+    [WB_NetService getBoxesToken:^(NSError *error, NSString *token) {
+        if (!error) {
+            WB_UserService.currentUser.boxToken = token;
+            [WB_UserService setCurrentUser:WB_UserService.currentUser];
+            [WB_UserService synchronizedCurrentUser];
+        }else{
+            NSLog(@"%@",error);
+        }
+    }];
+}
+
 - (CYLTabBarController *)setUpTabbar {
     CYLTabBarController * tabbar = [CYLTabBarController new];
     JYThumbVC * photosVC = [[JYThumbVC alloc] initWithLocalDataSource:[AppServices sharedService].assetServices.allAssets];
@@ -84,9 +96,14 @@
         
         [WB_AppServices updateCurrentUserInfoWithCompleteBlock:nil];
         [WB_UserService upgradeCheckAction];
+        NSLog(@"%@",WB_UserService.currentUser.guid);
+        if (WB_UserService.currentUser.guid) {
+            [self saveBoxesToken];
+        }
     });
     
     [[CSUploadHelper shareManager]startUploadAction];
+    
     FirstFilesViewController *filesViewController = [[FirstFilesViewController alloc]init];
     WBChatListViewController *chatViewController = [[WBChatListViewController alloc]init];
     NavViewController *nav2 = [[NavViewController alloc] initWithRootViewController:photosVC];

@@ -15,6 +15,7 @@
 #import "NSError+WBCode.h"
 #import "CSFileDownloadManager.h"
 #import "WBCloudLocalTokenAPI.h"
+#import "WBGetBoxTokenAPI.h"
 
 
 @interface NetServices()
@@ -191,6 +192,16 @@
     if(!WB_UserService.currentUser.cloudToken) return callback([NSError errorWithDomain:@"NO TOKEN" code:NO_CLOUD_TOKEN userInfo:nil], NULL);
     [[WBCloudLocalTokenAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSString * token = ((NSDictionary *)(request.responseJsonObject[@"data"]))[@"token"];
+        return callback(nil, token);
+    } failure:^(__kindof JYBaseRequest *request) {
+        return callback(request.error, nil);
+    }];
+}
+
+- (void)getBoxesToken:(void(^)(NSError *, NSString * token))callback{
+    if(!WB_UserService.isUserLogin) return callback([NSError errorWithDomain:@"User Not Login" code:NO_USER_LOGIN userInfo:nil], NULL);
+    [[WBGetBoxTokenAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSString * token = ((NSDictionary *)request.responseJsonObject)[@"token"];
         return callback(nil, token);
     } failure:^(__kindof JYBaseRequest *request) {
         return callback(request.error, nil);

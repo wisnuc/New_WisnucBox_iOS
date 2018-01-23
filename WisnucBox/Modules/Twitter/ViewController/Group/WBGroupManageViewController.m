@@ -8,6 +8,7 @@
 
 #import "WBGroupManageViewController.h"
 #import "WBGroupSettingUserTableViewCell.h"
+#import "WBGetBoxTokenAPI.h"
 
 #define GeneralBottomHeight 30
 #define UserNameLabelHeight 15

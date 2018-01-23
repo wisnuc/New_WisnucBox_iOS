@@ -55,6 +55,8 @@
 
 - (void)getLocalTokenWithCloud:(void(^)(NSError *, NSString * token))callback;
 
+- (void)getBoxesToken:(void(^)(NSError *, NSString * token))callback;
+
 - (void)getUserBackupDirName:(NSString *)name BackupDir:(void(^)(NSError *, NSString * entryUUID))callback;
 
 - (void)getUserHome:(void(^)(NSError *, NSString * userHome))callback;

@@ -37,4 +37,5 @@
 @dynamic isBindWechat;
 @dynamic isIgnoreUpgradeCheck;
 @dynamic ppgSelectType;
+@dynamic boxToken;
 @end

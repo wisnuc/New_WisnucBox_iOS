@@ -555,6 +555,8 @@
 		1FCFB3F51FEA425400BD3375 /* ic_add_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FCFB3F21FEA425300BD3375 /* ic_add_white@2x.png */; };
 		1FCFB3F61FEA425400BD3375 /* ic_add_white@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FCFB3F31FEA425400BD3375 /* ic_add_white@3x.png */; };
 		1FD1F26620170D1D005503DC /* WBHttpDownloadAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1F26420170D1D005503DC /* WBHttpDownloadAPI.m */; };
+		1FD1F26A20171355005503DC /* WBGetBoxesAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1F26920171355005503DC /* WBGetBoxesAPI.m */; };
+		1FD1F26D201714ED005503DC /* WBGetBoxTokenAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1F26C201714ED005503DC /* WBGetBoxTokenAPI.m */; };
 		1FD7A0EA1FB05A45000D4CB3 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E41FB05A45000D4CB3 /* back@2x.png */; };
 		1FD7A0EB1FB05A45000D4CB3 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E51FB05A45000D4CB3 /* back.png */; };
 		1FD7A0EC1FB05A45000D4CB3 /* back_gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7A0E61FB05A45000D4CB3 /* back_gray@3x.png */; };
@@ -1807,6 +1809,10 @@
 		1FCFB3F31FEA425400BD3375 /* ic_add_white@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_add_white@3x.png"; sourceTree = "<group>"; };
 		1FD1F26420170D1D005503DC /* WBHttpDownloadAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBHttpDownloadAPI.m; sourceTree = "<group>"; };
 		1FD1F26520170D1D005503DC /* WBHttpDownloadAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBHttpDownloadAPI.h; sourceTree = "<group>"; };
+		1FD1F26820171355005503DC /* WBGetBoxesAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBGetBoxesAPI.h; sourceTree = "<group>"; };
+		1FD1F26920171355005503DC /* WBGetBoxesAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBGetBoxesAPI.m; sourceTree = "<group>"; };
+		1FD1F26B201714ED005503DC /* WBGetBoxTokenAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBGetBoxTokenAPI.h; sourceTree = "<group>"; };
+		1FD1F26C201714ED005503DC /* WBGetBoxTokenAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBGetBoxTokenAPI.m; sourceTree = "<group>"; };
 		1FD7A0E41FB05A45000D4CB3 /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
 		1FD7A0E51FB05A45000D4CB3 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		1FD7A0E61FB05A45000D4CB3 /* back_gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_gray@3x.png"; sourceTree = "<group>"; };
@@ -4142,6 +4148,17 @@
 			path = RadioButton;
 			sourceTree = "<group>";
 		};
+		1FD1F26720171323005503DC /* Box */ = {
+			isa = PBXGroup;
+			children = (
+				1FD1F26820171355005503DC /* WBGetBoxesAPI.h */,
+				1FD1F26920171355005503DC /* WBGetBoxesAPI.m */,
+				1FD1F26B201714ED005503DC /* WBGetBoxTokenAPI.h */,
+				1FD1F26C201714ED005503DC /* WBGetBoxTokenAPI.m */,
+			);
+			path = Box;
+			sourceTree = "<group>";
+		};
 		1FEFCDDC1FE3C7DD00DEC866 /* Initialization */ = {
 			isa = PBXGroup;
 			children = (
@@ -4249,6 +4266,7 @@
 		71A3D66B1FB57D8C0002B8B1 /* APIs */ = {
 			isa = PBXGroup;
 			children = (
+				1FD1F26720171323005503DC /* Box */,
 				1F4083B420061A3100DC0634 /* Download */,
 				1F114A591FF48B49007F6D15 /* Upgrad */,
 				1F178EBF1FECAB66001650E5 /* LeftMenu */,
@@ -6343,6 +6361,7 @@
 				F6D8CC411FB42E1300673824 /* UIView+JYExtension.m in Sources */,
 				1FAD741C1FCFE0BC00A5D880 /* WBStationTicketsAPI.m in Sources */,
 				1F114A5F1FF48D49007F6D15 /* WBGetUpgradStateModel.m in Sources */,
+				1FD1F26A20171355005503DC /* WBGetBoxesAPI.m in Sources */,
 				1F4D759F1FAC4BB800E6516C /* UIColor+fm_color.m in Sources */,
 				1F1ABA131FB99882006EB1FC /* CSDownloadHelper.m in Sources */,
 				1FFEADB51FB1594900CD3068 /* CSDownloadModel.m in Sources */,
@@ -6352,6 +6371,7 @@
 				1F922EF11FCEAE9500A7614B /* WBStationManageRenameViewController.m in Sources */,
 				1F06FD61200DD1630024AFC7 /* WBChatListTableViewCell.m in Sources */,
 				1F1AB9EC1FB968CA006EB1FC /* FLFilesCell.m in Sources */,
+				1FD1F26D201714ED005503DC /* WBGetBoxTokenAPI.m in Sources */,
 				1FA86411200F405100550C7B /* UIResponder+Router.m in Sources */,
 				1F922E671FC8706200A7614B /* CSOneDowloadTask.m in Sources */,
 				1F4D75C61FAC5EB500E6516C /* GCDAsyncUdpSocket.m in Sources */,
