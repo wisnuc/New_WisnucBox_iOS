@@ -10,10 +10,22 @@
 
 @implementation WBGetBoxTokenAPI
 
++ (instancetype)apiWithGuid:(NSString *)guid{
+    WBGetBoxTokenAPI *api = [WBGetBoxTokenAPI new];
+    api.guid = guid;
+    return api;
+}
+
 - (JYRequestMethod)requestMethod{
     return JYRequestMethodGet;
 }
 
+- (id)requestArgument{
+    NSDictionary *dic = @{
+                          @"guid" :_guid
+      };
+    return dic;
+}
 
 /// 请求的URL
 - (NSString *)requestUrl{

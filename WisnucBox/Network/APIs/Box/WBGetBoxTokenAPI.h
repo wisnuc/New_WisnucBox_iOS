@@ -9,5 +9,6 @@
 #import "JYBaseRequest.h"
 
 @interface WBGetBoxTokenAPI : JYBaseRequest
-
++ (instancetype)apiWithGuid:(NSString *)guid;
+@property (nonatomic) NSString *guid;
 @end

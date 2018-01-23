@@ -72,8 +72,8 @@
     [self.window makeKeyAndVisible];
 }
 
-- (void)saveBoxesToken {
-    [WB_NetService getBoxesToken:^(NSError *error, NSString *token) {
+- (void)saveBoxesTokenWithGuid:(NSString *)guid {
+    [WB_NetService getBoxesTokenWithGuid:guid comlete:^(NSError *error, NSString *token) {
         if (!error) {
             WB_UserService.currentUser.boxToken = token;
             [WB_UserService setCurrentUser:WB_UserService.currentUser];
@@ -98,7 +98,7 @@
         [WB_UserService upgradeCheckAction];
         NSLog(@"%@",WB_UserService.currentUser.guid);
         if (WB_UserService.currentUser.guid) {
-            [self saveBoxesToken];
+            [self saveBoxesTokenWithGuid:WB_UserService.currentUser.guid];
         }
     });
     

@@ -9,6 +9,7 @@
 #import "WBChatListViewController.h"
 #import "WBChatListTableViewCell.h"
 #import "WBChatViewController.h"
+#import "WBGetBoxesAPI.h"
 
 
 @interface WBChatListViewController () <UITableViewDataSource,UITableViewDelegate>
@@ -23,6 +24,7 @@
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.addButton];
     [self initMjFreshHeader];
+    [self getBoxesListData];
 //    [self initMjFreshFooter];
     
 }
@@ -47,6 +49,14 @@
 - (void)initMjFreshFooter{
     self.tableView.mj_footer = [MJRefreshFooter footerWithRefreshingBlock:^{
         
+    }];
+}
+
+- (void)getBoxesListData{
+    [[WBGetBoxesAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.responseJsonObject);
+    } failure:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.error);
     }];
 }
 

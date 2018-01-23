@@ -198,9 +198,9 @@
     }];
 }
 
-- (void)getBoxesToken:(void(^)(NSError *, NSString * token))callback{
+- (void)getBoxesTokenWithGuid:(NSString *)guid comlete:(void(^)(NSError *, NSString * token))callback{
     if(!WB_UserService.isUserLogin) return callback([NSError errorWithDomain:@"User Not Login" code:NO_USER_LOGIN userInfo:nil], NULL);
-    [[WBGetBoxTokenAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+    [[WBGetBoxTokenAPI apiWithGuid:guid] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSString * token = ((NSDictionary *)request.responseJsonObject)[@"token"];
         return callback(nil, token);
     } failure:^(__kindof JYBaseRequest *request) {
