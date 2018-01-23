@@ -188,6 +188,7 @@
 
 - (void)getLocalTokenWithCloud:(void(^)(NSError *, NSString * token))callback {
     if(!WB_UserService.isUserLogin) return callback([NSError errorWithDomain:@"User Not Login" code:NO_USER_LOGIN userInfo:nil], NULL);
+    if(!WB_UserService.currentUser.cloudToken) return callback([NSError errorWithDomain:@"NO TOKEN" code:NO_CLOUD_TOKEN userInfo:nil], NULL);
     [[WBCloudLocalTokenAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSString * token = ((NSDictionary *)(request.responseJsonObject[@"data"]))[@"token"];
         return callback(nil, token);
