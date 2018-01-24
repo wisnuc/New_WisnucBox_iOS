@@ -7,28 +7,13 @@
 //
 
 #import "JYBaseRequest.h"
-//comment = "\U4e0d\U77e5\U75b2\U5026\U7684\U7ffb\U8d8a\Uff0c \U6bcf\U4e00\U5ea7\U5c71\U4e18";
-//ctime = 1516349811931;
-//index = 0;
-//list =         (
-//                {
-//                    filename = "pc\U5206\U4eab2_spec.png";
-//                    sha256 = 91ef2850754c891409940460a73271b12be85ed475860a527cb7e4d4e5f9ec65;
-//                }
-//                );
-//tweeter =         {
-//    id = "b20ea9c9-c9a6-4a4f-adde-c8f7c1c11884";
-//    wx =             (
-//                      "oOMKGwvkssIOT-Ceo6IX6y0Oas5E"
-//                      );
-//};
-//type = list;
-//uuid = "7c0cd12a-451f-42fe-a3aa-29c4ed5f5ce3";
+#import "LHMessageModel.h"
+
 
 @interface WBTweetlistModel : NSObject
 @property (nonatomic,copy)NSString *filename;
 @property (nonatomic,copy)NSString *sha256;
-//@property (nonatomic,copy)NSString *metadata;
+@property (nonatomic,copy)NSDictionary *metadata;
 @end
 
 @interface WBTweetTweeterModel : NSObject
@@ -37,6 +22,19 @@
 @end
 
 @interface WBTweetModel : NSObject
+/** 是否是发送者 */
+@property (nonatomic, assign) BOOL isSender;
+/** 是否已读 */
+@property (nonatomic) BOOL isRead;
+
+/** image */
+@property (nonatomic, assign) CGFloat width;
+@property (nonatomic, assign) CGFloat height;
+@property (nonatomic, strong) NSURL *imageRemoteURL;
+
+@property (nonatomic, assign) MessageBodyType messageBodytype;
+@property (nonatomic, assign) MessageDeliveryState status;
+
 @property (nonatomic,copy)NSString *comment;
 @property (nonatomic)long long ctime;
 @property (nonatomic)NSInteger index;
@@ -44,4 +42,5 @@
 @property (nonatomic)WBTweetTweeterModel *tweeter;
 @property (nonatomic,copy)NSString *type;
 @property (nonatomic,copy)NSString *uuid;
+
 @end

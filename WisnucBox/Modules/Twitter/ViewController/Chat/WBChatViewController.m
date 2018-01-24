@@ -20,6 +20,7 @@
 #import "WBGroupManageViewController.h"
 #import "WBTweetAPI.h"
 #import "WBTweetModel.h"
+#import "WBChatViewNormalTableViewCell.h"
 
 NSString *const kTableViewOffset = @"contentOffset";
 NSString *const kTableViewFrame = @"frame";
@@ -326,12 +327,12 @@ NSString *const kTableViewFrame = @"frame";
         return timeCell;
     }
     
-    LHMessageModel *messageModel = (LHMessageModel *)obj;
+    WBTweetModel *messageModel = (WBTweetModel *)obj;
     
-    NSString *cellIdentifier = [LHChatViewCell cellIdentifierForMessageModel:messageModel];
-    LHChatViewCell *messageCell = (LHChatViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    NSString *cellIdentifier = [WBChatViewNormalTableViewCell cellIdentifierForMessageModel:messageModel];
+    WBChatViewNormalTableViewCell *messageCell = (WBChatViewNormalTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!messageCell) {
-        messageCell = [[LHChatViewCell alloc] initWithMessageModel:messageModel reuseIdentifier:cellIdentifier];
+        messageCell = [[WBChatViewNormalTableViewCell alloc] initWithMessageModel:messageModel reuseIdentifier:cellIdentifier];
     }
     
     messageCell.messageModel = messageModel;

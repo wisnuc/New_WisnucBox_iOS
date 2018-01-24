@@ -592,6 +592,11 @@
 		1FF6410820182CD1007118F5 /* WBBoxesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF6410720182CD1007118F5 /* WBBoxesModel.m */; };
 		1FF6410C20183546007118F5 /* WBTweetAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF6410B20183546007118F5 /* WBTweetAPI.m */; };
 		1FF6410F20185332007118F5 /* WBTweetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF6410E20185332007118F5 /* WBTweetModel.m */; };
+		1FF6411920186332007118F5 /* WBChatViewNormalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF6411720186332007118F5 /* WBChatViewNormalTableViewCell.m */; };
+		1FF6411D201863E9007118F5 /* WBChatViewBaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF6411C201863E9007118F5 /* WBChatViewBaseTableViewCell.m */; };
+		1FF6412120186EC1007118F5 /* WBChatBaseBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF6412020186EC1007118F5 /* WBChatBaseBubbleView.m */; };
+		1FF64124201870E4007118F5 /* WBChatTextBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF64123201870E4007118F5 /* WBChatTextBubbleView.m */; };
+		1FF641272018727C007118F5 /* WBChatImageBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF641262018727C007118F5 /* WBChatImageBubbleView.m */; };
 		1FFADF821FDE797C00FA3F6E /* WBLoginTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFADF811FDE797C00FA3F6E /* WBLoginTableView.m */; };
 		1FFADF8A1FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFADF881FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.m */; };
 		1FFADF8B1FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FFADF891FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.xib */; };
@@ -1839,6 +1844,16 @@
 		1FF6410B20183546007118F5 /* WBTweetAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBTweetAPI.m; sourceTree = "<group>"; };
 		1FF6410D20185332007118F5 /* WBTweetModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBTweetModel.h; sourceTree = "<group>"; };
 		1FF6410E20185332007118F5 /* WBTweetModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBTweetModel.m; sourceTree = "<group>"; };
+		1FF6411620186332007118F5 /* WBChatViewNormalTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBChatViewNormalTableViewCell.h; sourceTree = "<group>"; };
+		1FF6411720186332007118F5 /* WBChatViewNormalTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBChatViewNormalTableViewCell.m; sourceTree = "<group>"; };
+		1FF6411B201863E9007118F5 /* WBChatViewBaseTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBChatViewBaseTableViewCell.h; sourceTree = "<group>"; };
+		1FF6411C201863E9007118F5 /* WBChatViewBaseTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBChatViewBaseTableViewCell.m; sourceTree = "<group>"; };
+		1FF6411F20186EC1007118F5 /* WBChatBaseBubbleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBChatBaseBubbleView.h; sourceTree = "<group>"; };
+		1FF6412020186EC1007118F5 /* WBChatBaseBubbleView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBChatBaseBubbleView.m; sourceTree = "<group>"; };
+		1FF64122201870E4007118F5 /* WBChatTextBubbleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBChatTextBubbleView.h; sourceTree = "<group>"; };
+		1FF64123201870E4007118F5 /* WBChatTextBubbleView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBChatTextBubbleView.m; sourceTree = "<group>"; };
+		1FF641252018727C007118F5 /* WBChatImageBubbleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBChatImageBubbleView.h; sourceTree = "<group>"; };
+		1FF641262018727C007118F5 /* WBChatImageBubbleView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBChatImageBubbleView.m; sourceTree = "<group>"; };
 		1FFADF801FDE797C00FA3F6E /* WBLoginTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBLoginTableView.h; sourceTree = "<group>"; };
 		1FFADF811FDE797C00FA3F6E /* WBLoginTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBLoginTableView.m; sourceTree = "<group>"; };
 		1FFADF871FDE7C3C00FA3F6E /* WBLoginCardTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBLoginCardTableViewCell.h; sourceTree = "<group>"; };
@@ -2476,6 +2491,8 @@
 		1F06FD5D200DCF8E0024AFC7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1FF6411E20186E8A007118F5 /* BubbleView */,
+				1FF64115201862AB007118F5 /* Cell */,
 				1F7F161020119759003CB83D /* Group */,
 				1FA86052200F287000550C7B /* ChatList */,
 				1FA86051200F286500550C7B /* Chat */,
@@ -3631,17 +3648,17 @@
 		1FA86301200F405000550C7B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1FA86308200F405000550C7B /* LHChatTimeCell.h */,
 				1FA86302200F405000550C7B /* LHChatTimeCell.m */,
+				1FA86307200F405000550C7B /* LHChatBarMoreView.h */,
 				1FA86303200F405000550C7B /* LHChatBarMoreView.m */,
 				1FA86304200F405000550C7B /* LHChatBarView.h */,
-				1FA86305200F405000550C7B /* LHChatViewCell.m */,
-				1FA86306200F405000550C7B /* LHChatViewBaseCell.m */,
-				1FA86307200F405000550C7B /* LHChatBarMoreView.h */,
-				1FA86308200F405000550C7B /* LHChatTimeCell.h */,
-				1FA86309200F405000550C7B /* BubbleView */,
 				1FA86316200F405000550C7B /* LHChatBarView.m */,
 				1FA86317200F405000550C7B /* LHChatViewBaseCell.h */,
+				1FA86306200F405000550C7B /* LHChatViewBaseCell.m */,
 				1FA86318200F405000550C7B /* LHChatViewCell.h */,
+				1FA86305200F405000550C7B /* LHChatViewCell.m */,
+				1FA86309200F405000550C7B /* BubbleView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3649,16 +3666,16 @@
 		1FA86309200F405000550C7B /* BubbleView */ = {
 			isa = PBXGroup;
 			children = (
+				1FA86311200F405000550C7B /* LHChatImageBubbleView.h */,
 				1FA8630A200F405000550C7B /* LHChatImageBubbleView.m */,
 				1FA8630B200F405000550C7B /* LHChatTextBubbleView.h */,
 				1FA8630C200F405000550C7B /* LHChatBaseBubbleView.h */,
+				1FA86313200F405000550C7B /* LHChatBaseBubbleView.m */,
 				1FA8630D200F405000550C7B /* LHChatAudioBubbleView.h */,
 				1FA8630E200F405000550C7B /* LHChatVideoBubbleView.h */,
 				1FA8630F200F405000550C7B /* LHChatLocationBubbleView.h */,
 				1FA86310200F405000550C7B /* LHChatTextBubbleView.m */,
-				1FA86311200F405000550C7B /* LHChatImageBubbleView.h */,
 				1FA86312200F405000550C7B /* LHChatAudioBubbleView.m */,
-				1FA86313200F405000550C7B /* LHChatBaseBubbleView.m */,
 				1FA86314200F405000550C7B /* LHChatLocationBubbleView.m */,
 				1FA86315200F405000550C7B /* LHChatVideoBubbleView.m */,
 			);
@@ -4197,6 +4214,30 @@
 				1F4D759A1FAC4BB800E6516C /* AppServices.m */,
 			);
 			path = AppServices;
+			sourceTree = "<group>";
+		};
+		1FF64115201862AB007118F5 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				1FF6411620186332007118F5 /* WBChatViewNormalTableViewCell.h */,
+				1FF6411720186332007118F5 /* WBChatViewNormalTableViewCell.m */,
+				1FF6411B201863E9007118F5 /* WBChatViewBaseTableViewCell.h */,
+				1FF6411C201863E9007118F5 /* WBChatViewBaseTableViewCell.m */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		1FF6411E20186E8A007118F5 /* BubbleView */ = {
+			isa = PBXGroup;
+			children = (
+				1FF6411F20186EC1007118F5 /* WBChatBaseBubbleView.h */,
+				1FF6412020186EC1007118F5 /* WBChatBaseBubbleView.m */,
+				1FF64122201870E4007118F5 /* WBChatTextBubbleView.h */,
+				1FF64123201870E4007118F5 /* WBChatTextBubbleView.m */,
+				1FF641252018727C007118F5 /* WBChatImageBubbleView.h */,
+				1FF641262018727C007118F5 /* WBChatImageBubbleView.m */,
+			);
+			path = BubbleView;
 			sourceTree = "<group>";
 		};
 		1FFADF831FDE7AD400FA3F6E /* Delegate */ = {
@@ -6248,6 +6289,7 @@
 				1F1ABA001FB978EB006EB1FC /* CSDownloadTaskQueue.m in Sources */,
 				F65035641FAC00A60007979D /* AppDelegate.m in Sources */,
 				C138D07A1FB9A4B0000CF518 /* DirectoriesModel.m in Sources */,
+				1FF64124201870E4007118F5 /* WBChatTextBubbleView.m in Sources */,
 				1F29AAA1200C4E4F002C7131 /* FMUserLoginSettingVC.m in Sources */,
 				1FA86408200F405100550C7B /* XSBrowserAnimateDelegate.m in Sources */,
 				1FA8641A200F405100550C7B /* LHChatTextBubbleView.m in Sources */,
@@ -6274,6 +6316,7 @@
 				F6830EE61FB2FEC4005AC578 /* FMSetting.m in Sources */,
 				1F4D75AB1FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.m in Sources */,
 				1FAD74391FD01C2F00A5D880 /* CSUploadModel.m in Sources */,
+				1FF6411920186332007118F5 /* WBChatViewNormalTableViewCell.m in Sources */,
 				1F4D75B31FAC4BB800E6516C /* NetServices.m in Sources */,
 				71A3D67A1FB5AD230002B8B1 /* FMAccountUsersAPI.m in Sources */,
 				1F922EE71FCE9BAA00A7614B /* WBStationManageStorageModel.m in Sources */,
@@ -6287,6 +6330,7 @@
 				1F4083B12006161D00DC0634 /* WBPpgAlertViewController.m in Sources */,
 				F675614D1FB3428F00E3277F /* UIImage+MFTint.m in Sources */,
 				1F5D217D1FBC351A006C65AA /* FilesDataSourceManager.m in Sources */,
+				1FF6411D201863E9007118F5 /* WBChatViewBaseTableViewCell.m in Sources */,
 				1FAD74421FD01F6300A5D880 /* CSFileUploadManager.m in Sources */,
 				1F4083B02006161D00DC0634 /* WBPpgAskToUploadAlertViewController.m in Sources */,
 				F6D8CC441FB448B800673824 /* UIImage+imageWithColor.m in Sources */,
@@ -6333,6 +6377,7 @@
 				1F06FD61200DD1630024AFC7 /* WBChatListTableViewCell.m in Sources */,
 				1F1AB9EC1FB968CA006EB1FC /* FLFilesCell.m in Sources */,
 				1FD1F26D201714ED005503DC /* WBGetBoxTokenAPI.m in Sources */,
+				1FF641272018727C007118F5 /* WBChatImageBubbleView.m in Sources */,
 				1FA86411200F405100550C7B /* UIResponder+Router.m in Sources */,
 				1F922E671FC8706200A7614B /* CSOneDowloadTask.m in Sources */,
 				1F4D75C61FAC5EB500E6516C /* GCDAsyncUdpSocket.m in Sources */,
@@ -6412,6 +6457,7 @@
 				1FA86403200F405100550C7B /* XSBrowserTransition.m in Sources */,
 				F6AAD1881FB049E100DEDBDC /* WBFile+CoreDataClass.m in Sources */,
 				1F4D75A11FAC4BB800E6516C /* FMUserLoginViewController.m in Sources */,
+				1FF6412120186EC1007118F5 /* WBChatBaseBubbleView.m in Sources */,
 				1F114A771FF4D56C007F6D15 /* WBUpgradeDownloadAPI.m in Sources */,
 				1F6E549C20033F5B009E38AE /* WBUpgradeCheckViewController.m in Sources */,
 				F679336E1FB00D9B00C9A7DC /* WBUser+CoreDataProperties.m in Sources */,
