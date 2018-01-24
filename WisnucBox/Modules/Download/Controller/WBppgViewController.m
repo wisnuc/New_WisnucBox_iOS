@@ -317,7 +317,7 @@ UITableViewDataSource
             cell.nameLabel.text = model.name;
             NSLog(@"%@",model.progress);
             NSDecimalNumber *progressDecimalNumber;
-            if (model.progress) {
+            if (model.progress && [model.progress floatValue]!= 0.00000000f) {
                progressDecimalNumber = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%@",[self notRounding:[model.progress  floatValue] afterPoint:2]]];
             }else{
                 progressDecimalNumber = [NSDecimalNumber zero];
@@ -333,13 +333,13 @@ UITableViewDataSource
             
             cell.progressLabel.text = [NSString stringWithFormat:@"%@%%",mutiplyDecimal];
             NSNumber *allSizeNumber;
-           if (model.progress && [model.downloaded integerValue]!= 0) {
+           if (model.progress && [model.progress floatValue]!= 0.00000000f) {
               allSizeNumber =  [NSNumber numberWithDouble:[model.downloaded doubleValue] / [model.progress doubleValue]];
            }else{
                allSizeNumber = [NSNumber numberWithInt:0];
            }
            
-            if ([model.downloaded doubleValue] == 0.0000000000) {
+            if ([model.downloaded doubleValue] == 0.0000000001) {
                 allSizeNumber = [NSNumber numberWithInt:0];
             }
             
