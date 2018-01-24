@@ -10,11 +10,12 @@
 #import "WBChatListTableViewCell.h"
 #import "WBChatViewController.h"
 #import "WBGetBoxesAPI.h"
-
+#import "WBBoxesModel.h"
 
 @interface WBChatListViewController () <UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic)MDCFloatingButton *addButton;
+@property (nonatomic)NSMutableArray *boxDataArray;
 @end
 
 @implementation WBChatListViewController
@@ -38,7 +39,7 @@
     __weak __typeof(self) weakSelf = self;
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-//        [weakSelf loadData];
+        [weakSelf getBoxesListData];
          [self.tableView.mj_header endRefreshing];
     }];
    
@@ -55,8 +56,19 @@
 - (void)getBoxesListData{
     [[WBGetBoxesAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
+        NSMutableArray *array = request.responseJsonObject;
+        NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
+        [array enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+           WBBoxesModel *model = [WBBoxesModel yy_modelWithDictionary:obj];
+            [dataArray addObject:model];
+        }];
+        self.boxDataArray = dataArray;
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView reloadData];
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView reloadData];
     }];
 }
 
@@ -69,7 +81,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 1;
+    return self.boxDataArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -77,6 +89,8 @@
     if (!cell) {
         cell = (WBChatListTableViewCell *)[[[NSBundle mainBundle]loadNibNamed:NSStringFromClass([WBChatListTableViewCell class]) owner:self options:nil]lastObject];
     }
+    WBBoxesModel *boxesModel = self.boxDataArray[indexPath.row];
+    cell.nameLabel.text = boxesModel.name;
     return cell;
 }
 
@@ -86,18 +100,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    WBBoxesModel *model = self.boxDataArray[indexPath.row];
     WBChatListTableViewCell * cell = (WBChatListTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     WBChatViewController *chatVC = [[WBChatViewController alloc]init];
-
-
     chatVC.title = cell.nameLabel.text;
+    chatVC.boxuuid = model.uuid;
     [self.navigationController pushViewController:chatVC animated:YES];
-    
 }
 
 - (UITableView *)tableView{
     if (!_tableView) {
-        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight - 64) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight - 64 - 48) style:UITableViewStylePlain];
         _tableView.dataSource = self;
         _tableView.delegate = self;
         _tableView.contentInset = UIEdgeInsetsMake(KDefaultOffset, 0, 0, 0);
@@ -119,5 +132,12 @@
         [_addButton setBackgroundColor:COR1];
     }
     return _addButton;
+}
+
+- (NSMutableArray *)boxDataArray{
+    if (!_boxDataArray) {
+        _boxDataArray = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _boxDataArray;
 }
 @end

@@ -9,5 +9,5 @@
 #import "FABaseVC.h"
 
 @interface WBChatViewController : FABaseVC
-
+@property (nonatomic) NSString *boxuuid;
 @end

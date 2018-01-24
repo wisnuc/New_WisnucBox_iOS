@@ -18,6 +18,8 @@
 #import "LHPhotoPreviewController.h"
 #import "XSBrowserAnimateDelegate.h"
 #import "WBGroupManageViewController.h"
+#import "WBTweetAPI.h"
+#import "WBTweetModel.h"
 
 NSString *const kTableViewOffset = @"contentOffset";
 NSString *const kTableViewFrame = @"frame";
@@ -54,11 +56,10 @@ NSString *const kTableViewFrame = @"frame";
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    [self getData];
     [self createNavBtns];
     [self setupInit];
-    
 //    [self loadMessageWithId:nil];
-    
     [self scrollToBottomAnimated:YES refresh:YES];
 }
 
@@ -94,6 +95,22 @@ NSString *const kTableViewFrame = @"frame";
 - (void)dealloc {
     [self.tableView removeObserver:self forKeyPath:kTableViewFrame];
     [self.tableView removeObserver:self forKeyPath:kTableViewOffset];
+}
+
+- (void)getData{
+    if (_boxuuid.length == 0)return;
+    [[WBTweetAPI apiWithBoxuuid:_boxuuid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+       NSLog(@"%@",request.responseJsonObject);
+        NSArray *array = request.responseJsonObject;
+        NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
+        [array enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            WBTweetModel *model = [WBTweetModel yy_modelWithDictionary:obj];
+            [dataArray addObject:model];
+        }];
+        self.dataSource = dataArray;
+    } failure:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.error);
+    }];
 }
 
 #pragma mark - public
@@ -304,7 +321,6 @@ NSString *const kTableViewFrame = @"frame";
         if (!timeCell) {
             timeCell = [[LHChatTimeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([LHChatTimeCell class])];
         }
-        
         timeCell.timeLable.text = (NSString *)obj;
         
         return timeCell;

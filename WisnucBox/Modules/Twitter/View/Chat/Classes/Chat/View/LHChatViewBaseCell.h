@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "LHMessageModel.h"
 #import "LHChatBaseBubbleView.h"
-
+#import "WBTweetModel.h"
 
 
 @interface LHChatViewBaseCell : UITableViewCell {
