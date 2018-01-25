@@ -9,6 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "WBChatBaseBubbleView.h"
 #import "WBTweetModel.h"
+#import "WBChatTextBubbleView.h"
+#import "WBChatImageBubbleView.h"
+#import "WBChatFileBubbleView.h"
+
+#import "LHChatAudioBubbleView.h"
+#import "LHChatVideoBubbleView.h"
+#import "LHChatLocationBubbleView.h"
 @interface WBChatViewBaseTableViewCell : UITableViewCell{
     UIImageView *_headImageView;
     UILabel *_nameLabel;

@@ -32,6 +32,6 @@
  @param date 时间戳
  @return 处理后的格式 yyyy/MM/dd HH:mm
  */
-+ (NSString *)processingTimeWithDate:(NSString *)date;
++ (NSString *)processingTimeWithDate:(long long)date;
 
 @end

@@ -132,11 +132,11 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
 - (WBChatBaseBubbleView *)bubbleViewForMessageModel:(WBTweetModel *)messageModel {
     switch (messageModel.messageBodytype) {
         case MessageBodyType_Text: {
-            return [[LHChatTextBubbleView alloc] init];
+            return [[WBChatTextBubbleView alloc] init];
         }
             break;
         case MessageBodyType_Image: {
-            return [[LHChatImageBubbleView alloc] init];
+            return [[WBChatImageBubbleView alloc] init];
         }
             break;
         case MessageBodyType_Voice: {
@@ -151,6 +151,10 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
             return [[LHChatVideoBubbleView alloc] init];
         }
             break;
+        case MessageBodyType_File: {
+            return [[WBChatFileBubbleView alloc] init];
+        }
+             break;
         default:
             break;
     }
@@ -161,11 +165,11 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
 + (CGFloat)bubbleViewHeightForMessageModel:(WBTweetModel *)messageModel {
     switch (messageModel.messageBodytype) {
         case MessageBodyType_Text: {
-            return [LHChatTextBubbleView heightForBubbleWithObject:messageModel];
+            return [WBChatTextBubbleView heightForBubbleWithObject:messageModel];
         }
             break;
         case MessageBodyType_Image: {
-            return [LHChatImageBubbleView heightForBubbleWithObject:messageModel];
+            return [WBChatImageBubbleView heightForBubbleWithObject:messageModel];
         }
             break;
         case MessageBodyType_Voice: {
@@ -178,6 +182,10 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
             break;
         case MessageBodyType_Video: {
             return [LHChatVideoBubbleView heightForBubbleWithObject:messageModel];
+        }
+            break;
+        case MessageBodyType_File: {
+            return  [WBChatFileBubbleView heightForBubbleWithObject:messageModel];
         }
             break;
         default:

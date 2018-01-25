@@ -66,7 +66,7 @@ ReNameDelegate
     WBgetStationInfoAPI * stationApi = [WBgetStationInfoAPI apiWithServicePath:WB_UserService.currentUser.localAddr];
     [stationApi startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
 //         NSLog(@"%@",request.responseJsonObject);
-        WBStationInfoModel *model = [WBStationInfoModel yy_modelWithJSON:request.responseJsonObject];
+        WBStationInfoModel *model = [WBStationInfoModel modelWithJSON:request.responseJsonObject];
         [self.dataStationInfoArray addObject:model];
         NSString *stationName = model.name;
         WB_UserService.currentUser.bonjour_name =  stationName;
@@ -80,7 +80,7 @@ ReNameDelegate
     [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
 //        NSLog(@"%@",request.responseJsonObject);
-        WBStationManageEquipmentModel *model = [WBStationManageEquipmentModel yy_modelWithJSON:request.responseJsonObject];
+        WBStationManageEquipmentModel *model = [WBStationManageEquipmentModel modelWithJSON:request.responseJsonObject];
         [self.dataRootArray addObject:model];
         [model.cpuInfo enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [self.dataCpuInfoArray addObject:obj];
@@ -101,7 +101,7 @@ ReNameDelegate
     WBStationManageStorageAPI *storageAPI = [[WBStationManageStorageAPI alloc]init];
     [storageAPI startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
 //        NSLog(@"%@",request.responseJsonObject);
-        WBStationManageStorageModel *storageModel = [WBStationManageStorageModel yy_modelWithJSON:request.responseJsonObject];
+        WBStationManageStorageModel *storageModel = [WBStationManageStorageModel modelWithJSON:request.responseJsonObject];
         [self.dataStorageArray addObject:storageModel];
         [self.tableView reloadData];
     } failure:^(__kindof JYBaseRequest *request) {

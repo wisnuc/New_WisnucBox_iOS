@@ -59,7 +59,7 @@
         NSMutableArray *array = request.responseJsonObject;
         NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
         [array enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-           WBBoxesModel *model = [WBBoxesModel yy_modelWithDictionary:obj];
+           WBBoxesModel *model = [WBBoxesModel modelWithDictionary:obj];
             [dataArray addObject:model];
         }];
         self.boxDataArray = dataArray;

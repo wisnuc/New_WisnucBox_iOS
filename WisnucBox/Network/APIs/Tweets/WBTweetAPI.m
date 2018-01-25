@@ -19,6 +19,14 @@
     return JYRequestMethodGet;
 }
 
+- (id)requestArgument{
+
+    NSDictionary *dic = @{
+                          @"metadata":@"true"
+                          };
+    return dic;
+}
+
 /// 请求的URL
 - (NSString *)requestUrl{
     return WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@?resource=%@&method=GET", kCloudAddr, kCloudCommonJsonUrl, [[NSString stringWithFormat:@"boxes/%@/tweets",_uuid] base64EncodedString]] : [NSString stringWithFormat:@"boxes/%@/tweets",_uuid];

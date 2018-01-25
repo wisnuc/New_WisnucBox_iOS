@@ -8,11 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WBChatViewBaseTableViewCell.h"
-#import "LHChatTextBubbleView.h"
-#import "LHChatImageBubbleView.h"
-#import "LHChatAudioBubbleView.h"
-#import "LHChatVideoBubbleView.h"
-#import "LHChatLocationBubbleView.h"
+
 
 @interface WBChatViewNormalTableViewCell : WBChatViewBaseTableViewCell
 @property (nonatomic, strong) UIActivityIndicatorView *activtiy;

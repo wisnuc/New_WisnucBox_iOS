@@ -11,7 +11,7 @@
 #import "UIImageView+WebCache.h"
 
 //　图片最大显示大小
-CGFloat const MAX_SIZE = 120.0f;
+//CGFloat const MAX_SIZE = 120.0f;
 
 @interface LHChatImageBubbleView ()
 

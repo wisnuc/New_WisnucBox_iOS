@@ -56,7 +56,7 @@ UITableViewDataSource
     [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSDictionary * responseDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
-        WBStationManageTimeDateModel *model = [WBStationManageTimeDateModel yy_modelWithDictionary:responseDic];
+        WBStationManageTimeDateModel *model = [WBStationManageTimeDateModel modelWithDictionary:responseDic];
         [self.dataArray addObject:model];
         [SXLoadingView hideProgressHUD];
         [self.tableView reloadData];

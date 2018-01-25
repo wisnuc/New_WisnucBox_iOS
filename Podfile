@@ -6,7 +6,7 @@ inhibit_all_warnings!
 target :’WisnucBox’ do
     
 pod 'AFNetworking', '~> 3.1.0'
-pod 'YYModel'
+#pod 'YYModel'
 pod 'YYKeyboardManager'
 pod 'Masonry'
 pod 'MBProgressHUD'

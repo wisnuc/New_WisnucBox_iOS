@@ -216,7 +216,7 @@
         NSLog(@"%@",responseArr);
         __block BOOL find = NO;
         [responseArr enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            DriveModel *model = [DriveModel yy_modelWithJSON:obj];
+            DriveModel *model = [DriveModel modelWithJSON:obj];
             if(IsEquallString(model.tag, @"home")){
                 *stop = YES;
                 find = YES;
@@ -251,7 +251,7 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 //        NSLog(@"%@",responseObject);
         NSDictionary * dic = responseObject[0];
-        DirectoriesModel * dir = [DirectoriesModel yy_modelWithJSON:dic[@"data"]];
+        DirectoriesModel * dir = [DirectoriesModel modelWithJSON:dic[@"data"]];
         completeBlock(nil, dir);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@", error);
@@ -269,7 +269,7 @@
     [dic setObject:name forKey:kCloudBodyToName];
     WBCloudJsonAPI * api = [WBCloudJsonAPI apiWithBody:dic];
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        DirectoriesModel *model = [DirectoriesModel yy_modelWithJSON: request.responseJsonObject[@"data"]];
+        DirectoriesModel *model = [DirectoriesModel modelWithJSON: request.responseJsonObject[@"data"]];
         NSLog(@"---------> cloud response <---------- \n %@", request.responseJsonObject);
         completeBlock(nil,model);
     } failure:^(__kindof JYBaseRequest *request) {
@@ -288,7 +288,7 @@
         //FIXME: file name equal backup base name
         __block BOOL find = NO;
         [arr enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            EntriesModel *model = [EntriesModel yy_modelWithDictionary:obj];
+            EntriesModel *model = [EntriesModel modelWithDictionary:obj];
             if(IsEquallString(model.name, name) && IsEquallString(model.type, @"directory")) {
                 *stop = YES;
                 find = YES;
@@ -325,7 +325,7 @@
         //FIXME: file name equal backup base name
         __block BOOL find = NO;
         [arr enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            EntriesModel *model = [EntriesModel yy_modelWithDictionary:obj];
+            EntriesModel *model = [EntriesModel modelWithDictionary:obj];
             if(IsEquallString(model.name, photoDirName) && IsEquallString(model.type, @"directory")) {
                 *stop = YES;
                 find = YES;
@@ -356,7 +356,7 @@
         NSArray * arr = [NSArray arrayWithArray:[dic objectForKey:@"entries"]];
         NSMutableArray * entries = [NSMutableArray arrayWithCapacity:0];
         [arr enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            EntriesModel *model = [EntriesModel yy_modelWithDictionary:obj];
+            EntriesModel *model = [EntriesModel modelWithDictionary:obj];
             [entries addObject:model];
         }];
         callback(nil, entries);
@@ -399,9 +399,31 @@
         return dic;
     };
     [SDWebImageManager sharedManager].imageDownloader.downloadTimeout = 60;
-    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"%@media/%@?alt=thumbnail&width=200&height=200&modifier=caret&autoOrient=true", [self currentURL], hash]];
+    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"%@media/%@?alt=thumbnail&width=134&height=134&modifier=caret&autoOrient=true", [self currentURL], hash]];
     if(WB_UserService.currentUser.isCloudLogin)
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resource=%@&method=GET&alt=thumbnail&width=200&height=200&modifier=caret&autoOrient=true", kCloudAddr, kCloudCommonPipeUrl, [[NSString stringWithFormat:@"media/%@", hash] base64EncodedString]]];
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resource=%@&method=GET&alt=thumbnail&width=134&height=134&modifier=caret&autoOrient=true", kCloudAddr, kCloudCommonPipeUrl, [[NSString stringWithFormat:@"media/%@", hash] base64EncodedString]]];
+    return [[SDWebImageManager sharedManager] downloadImageWithURL:url options:SDWebImageRetryFailed progress:nil
+                                                         completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                                                             if (image) {
+                                                                 callback(nil, image);
+                                                             }else{
+                                                                 callback(error, nil);
+                                                             }
+                                                         }];
+    
+}
+
+- (id <SDWebImageOperation>)getTweeetThumbnailImageWithHash:(NSString *)hash BoxUUID:(NSString *)boxUUID complete:(void(^)(NSError *, UIImage *))callback {
+    [SDWebImageManager sharedManager].imageDownloader.headersFilter = ^NSDictionary *(NSURL *url, NSDictionary *headers) {
+        NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:headers];
+        [dic setValue:WB_UserService.currentUser.isCloudLogin ? WB_UserService.currentUser.cloudToken : [NSString stringWithFormat:@"JWT %@",WB_UserService.defaultToken] forKey:@"Authorization"];
+        return dic;
+    };
+    [SDWebImageManager sharedManager].imageDownloader.downloadTimeout = 60;
+    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"%@media/%@?alt=thumbnail&width=200&height=200&modifier=caret&autoOrient=true&boxUUID=%@", [self currentURL], hash,boxUUID]];
+//    NSLog(@"%@",url.absoluteString);
+    if(WB_UserService.currentUser.isCloudLogin)
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resource=%@&method=GET&alt=thumbnail&boxUUID=%@", kCloudAddr, kCloudCommonPipeUrl, [[NSString stringWithFormat:@"media/%@", hash] base64EncodedString],boxUUID]];
     return [[SDWebImageManager sharedManager] downloadImageWithURL:url options:SDWebImageRetryFailed progress:nil
                                                          completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
                                                              if (image) {
@@ -411,5 +433,6 @@
                                                              }
                                                          }];
 }
+
 
 @end

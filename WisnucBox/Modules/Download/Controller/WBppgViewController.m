@@ -184,7 +184,7 @@ UITableViewDataSource
         NSLog(@"%@",request.responseJsonObject);
         NSDictionary *requestDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
     
-        WBGetDownloadModel *model = [WBGetDownloadModel yy_modelWithDictionary:requestDic];
+        WBGetDownloadModel *model = [WBGetDownloadModel modelWithDictionary:requestDic];
         [self.runningDataArray removeAllObjects];
         [self.runningDataArray addObjectsFromArray:model.running];
         [self.finishDataArray removeAllObjects];
@@ -206,7 +206,7 @@ UITableViewDataSource
         NSLog(@"%@",request.responseJsonObject);
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             NSDictionary *requestDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
-            WBGetDownloadModel *model = [WBGetDownloadModel yy_modelWithDictionary:requestDic];
+            WBGetDownloadModel *model = [WBGetDownloadModel modelWithDictionary:requestDic];
             [self.runningDataArray removeAllObjects];
             [self.runningDataArray addObjectsFromArray:model.running];
             [self.finishDataArray removeAllObjects];

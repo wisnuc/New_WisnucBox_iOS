@@ -101,6 +101,10 @@
             identifier = [identifier stringByAppendingString:@"Video"];
             break;
         }
+        case MessageBodyType_File: {
+            identifier = [identifier stringByAppendingString:@"File"];
+            break;
+        }
             
         default:
             break;

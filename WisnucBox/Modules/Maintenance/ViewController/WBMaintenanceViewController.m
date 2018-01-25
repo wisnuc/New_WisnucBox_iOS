@@ -68,7 +68,7 @@ UITableViewDelegate
 
     [[WBStationManageStorageAPI apiWithURLPath:_searchModel.path] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
             NSLog(@"%@",request.responseJsonObject);
-        WBStationManageStorageModel *storageModel = [WBStationManageStorageModel yy_modelWithJSON:request.responseJsonObject];
+        WBStationManageStorageModel *storageModel = [WBStationManageStorageModel modelWithJSON:request.responseJsonObject];
         _storageModel = storageModel;
         [storageModel.volumes enumerateObjectsUsingBlock:^(WBStationManageVolumesModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
             [self.rootDataSource addObject:model];
@@ -93,7 +93,7 @@ UITableViewDelegate
     
     [[WBStationBootAPI apiWithPath:_searchModel.path RequestMethod:@"GET"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
           NSLog(@"%@",request.responseJsonObject);
-         BootModel *bootModel = [BootModel yy_modelWithJSON:request.responseJsonObject];
+         BootModel *bootModel = [BootModel modelWithJSON:request.responseJsonObject];
         _bootModel = bootModel;
         [self.tableView reloadData];
     } failure:^(__kindof JYBaseRequest *request) {

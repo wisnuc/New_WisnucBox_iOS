@@ -273,7 +273,7 @@
     [[WBStationBootAPI apiWithPath:path RequestMethod:@"GET"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         @weaky(self)
         NSLog(@"%@",request.responseJsonObject);
-        BootModel *bootModel = [BootModel yy_modelWithJSON:request.responseJsonObject];
+        BootModel *bootModel = [BootModel modelWithJSON:request.responseJsonObject];
         //        if (bootModel.current) {
         if ([bootModel.state isEqualToString:@"started"]) {
             block(bootModel);

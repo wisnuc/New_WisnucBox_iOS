@@ -293,7 +293,7 @@ static BOOL needHide = YES;
 - (void)initializeActionWithURLString:(NSString *)urlString SearchModel:(FMSerachService *)ser AddressString:(NSString *)addressString  Service:(NSNetService *)service{
     @weaky(self)
     [[WBStationManageStorageAPI apiWithURLPath:urlString]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        WBStationManageStorageModel *storageModel = [WBStationManageStorageModel yy_modelWithJSON:request.responseJsonObject];
+        WBStationManageStorageModel *storageModel = [WBStationManageStorageModel modelWithJSON:request.responseJsonObject];
         NSLog(@"%@",request.responseJsonObject);
         if (storageModel.volumes && storageModel.volumes.count == 0) {
             ser.storageModel = storageModel;
@@ -310,7 +310,7 @@ static BOOL needHide = YES;
     [[WBStationBootAPI apiWithPath:path RequestMethod:@"GET"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         @weaky(self)
         NSLog(@"%@",request.responseJsonObject);
-        BootModel *bootModel = [BootModel yy_modelWithJSON:request.responseJsonObject];
+        BootModel *bootModel = [BootModel modelWithJSON:request.responseJsonObject];
 //        if (bootModel.current) {
             if ([bootModel.state isEqualToString:@"started"]) {
                 block(bootModel);
@@ -609,7 +609,7 @@ static BOOL needHide = YES;
     self.cloudLoginStationArray=[NSMutableArray arrayWithCapacity:0];
     [[WBCloudLoginAPI apiWithCode:code] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         [SXLoadingView updateProgressHUD:WBLocalizedString(@"loading...", nil)];
-        CloudLoginModel * model = [CloudLoginModel yy_modelWithJSON:request.responseJsonObject];
+        CloudLoginModel * model = [CloudLoginModel modelWithJSON:request.responseJsonObject];
         weak_self.token = model.data.token;
         weak_self.avatarUrl = model.data.user.avatarUrl;
         [weak_self getStationWithModel:model completeBlock:^(NSError *error, NSArray<NSDictionary *> *stations) {
@@ -693,7 +693,7 @@ static BOOL needHide = YES;
                      mutableDic = [NSMutableDictionary dictionaryWithDictionary:dic];
                     [mutableDic addEntriesFromDictionary:stationDic];
                      NSLog(@"%@",model.data.user.userId);
-                    CloudModelForUser *userModel = [CloudModelForUser yy_modelWithDictionary:mutableDic];
+                    CloudModelForUser *userModel = [CloudModelForUser modelWithDictionary:mutableDic];
                     if(stationDic[@"LANIP"] && ((NSArray *)stationDic[@"LANIP"]).count){
                         userModel.LANIP = stationDic[@"LANIP"][0];
                     }

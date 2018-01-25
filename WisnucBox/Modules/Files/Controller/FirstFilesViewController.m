@@ -77,7 +77,7 @@ UITableViewDataSource
         NSLog(@"%@",request.responseJsonObject);
         __block NSInteger i = 0;
         [responseArr enumerateObjectsUsingBlock:^(NSDictionary * obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            DriveModel *model = [DriveModel yy_modelWithJSON:obj];
+            DriveModel *model = [DriveModel modelWithJSON:obj];
 //            NSLog(@"writelist: %@| uuid: %@",model.writelist, WB_UserService.currentUser.uuid);
             if(IsEquallString(model.tag, @"home")){
                 FirstFilesModel *filesModel =  [FirstFilesModel new];

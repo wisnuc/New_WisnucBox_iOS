@@ -60,10 +60,10 @@ UITableViewDataSource
         if (responseArr.count >0) {
            responseDic  = responseArr[0];
         }
-        WBStationManageNetInterfacesModel *model = [WBStationManageNetInterfacesModel yy_modelWithDictionary:responseDic];
+        WBStationManageNetInterfacesModel *model = [WBStationManageNetInterfacesModel modelWithDictionary:responseDic];
         [model.ipAddresses enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             NSDictionary *objDic = obj;
-            IpAddressesModel *ipModel  = [IpAddressesModel yy_modelWithDictionary:objDic];
+            IpAddressesModel *ipModel  = [IpAddressesModel modelWithDictionary:objDic];
             [ipModel setName:model.name];
             [ipModel setSpeed:model.speed];
             if (![ipModel.internal boolValue] && [ipModel.family isEqualToString: @"IPv4"]) {

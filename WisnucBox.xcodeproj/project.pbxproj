@@ -79,6 +79,7 @@
 		1F29AAA0200C4E4F002C7131 /* FMUserLoginSettingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F29AA9D200C4E4E002C7131 /* FMUserLoginSettingVC.xib */; };
 		1F29AAA1200C4E4F002C7131 /* FMUserLoginSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F29AA9F200C4E4E002C7131 /* FMUserLoginSettingVC.m */; };
 		1F2BE3011FBC129700776DB3 /* FilesNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2BE3001FBC129700776DB3 /* FilesNextViewController.m */; };
+		1F33B0752019E94B00DE3877 /* WBChatFileBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33B0742019E94B00DE3877 /* WBChatFileBubbleView.m */; };
 		1F3F99801FB0312300D6CC64 /* LocalDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F997E1FB0312300D6CC64 /* LocalDownloadViewController.m */; };
 		1F3F99811FB0312300D6CC64 /* LocalDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3F997F1FB0312300D6CC64 /* LocalDownloadViewController.xib */; };
 		1F3F99891FB0353F00D6CC64 /* LocalDownloadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F99871FB0353F00D6CC64 /* LocalDownloadTableViewCell.m */; };
@@ -1169,6 +1170,8 @@
 		1F29AA9F200C4E4E002C7131 /* FMUserLoginSettingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMUserLoginSettingVC.m; sourceTree = "<group>"; };
 		1F2BE2FF1FBC129700776DB3 /* FilesNextViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilesNextViewController.h; sourceTree = "<group>"; };
 		1F2BE3001FBC129700776DB3 /* FilesNextViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilesNextViewController.m; sourceTree = "<group>"; };
+		1F33B0732019E94B00DE3877 /* WBChatFileBubbleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBChatFileBubbleView.h; sourceTree = "<group>"; };
+		1F33B0742019E94B00DE3877 /* WBChatFileBubbleView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBChatFileBubbleView.m; sourceTree = "<group>"; };
 		1F3F997D1FB0312300D6CC64 /* LocalDownloadViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalDownloadViewController.h; sourceTree = "<group>"; };
 		1F3F997E1FB0312300D6CC64 /* LocalDownloadViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalDownloadViewController.m; sourceTree = "<group>"; };
 		1F3F997F1FB0312300D6CC64 /* LocalDownloadViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocalDownloadViewController.xib; sourceTree = "<group>"; };
@@ -4236,6 +4239,8 @@
 				1FF64123201870E4007118F5 /* WBChatTextBubbleView.m */,
 				1FF641252018727C007118F5 /* WBChatImageBubbleView.h */,
 				1FF641262018727C007118F5 /* WBChatImageBubbleView.m */,
+				1F33B0732019E94B00DE3877 /* WBChatFileBubbleView.h */,
+				1F33B0742019E94B00DE3877 /* WBChatFileBubbleView.m */,
 			);
 			path = BubbleView;
 			sourceTree = "<group>";
@@ -6157,7 +6162,6 @@
 				"${BUILT_PRODUCTS_DIR}/TZImagePickerController/TZImagePickerController.framework",
 				"${BUILT_PRODUCTS_DIR}/YYKeyboardManager/YYKeyboardManager.framework",
 				"${BUILT_PRODUCTS_DIR}/YYKit/YYKit.framework",
-				"${BUILT_PRODUCTS_DIR}/YYModel/YYModel.framework",
 				"${BUILT_PRODUCTS_DIR}/pop/pop.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -6188,7 +6192,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TZImagePickerController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYKeyboardManager.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYModel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/pop.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6318,6 +6321,7 @@
 				1FAD74391FD01C2F00A5D880 /* CSUploadModel.m in Sources */,
 				1FF6411920186332007118F5 /* WBChatViewNormalTableViewCell.m in Sources */,
 				1F4D75B31FAC4BB800E6516C /* NetServices.m in Sources */,
+				1F33B0752019E94B00DE3877 /* WBChatFileBubbleView.m in Sources */,
 				71A3D67A1FB5AD230002B8B1 /* FMAccountUsersAPI.m in Sources */,
 				1F922EE71FCE9BAA00A7614B /* WBStationManageStorageModel.m in Sources */,
 				1FA8640E200F405100550C7B /* UIColor+RGB.m in Sources */,

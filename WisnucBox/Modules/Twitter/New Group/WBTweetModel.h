@@ -31,6 +31,7 @@
 @property (nonatomic, assign) CGFloat width;
 @property (nonatomic, assign) CGFloat height;
 @property (nonatomic, strong) NSURL *imageRemoteURL;
+@property (nonatomic, strong) NSString *boxuuid;
 
 @property (nonatomic, assign) MessageBodyType messageBodytype;
 @property (nonatomic, assign) MessageDeliveryState status;

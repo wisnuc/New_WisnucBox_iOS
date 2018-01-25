@@ -344,7 +344,7 @@
     [[FMAccountUsersAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
         NSLog(@"%@",request.responseJsonObject);
-         UserModel *userModel = [UserModel yy_modelWithDictionary:dic];
+         UserModel *userModel = [UserModel modelWithDictionary:dic];
         if (IsEquallString(userModel.uuid, WB_UserService.currentUser.uuid)) {
             WB_UserService.currentUser.isAdmin = [userModel.isAdmin boolValue];
             WB_UserService.currentUser.isFirstUser = [userModel.isFirstUser boolValue];

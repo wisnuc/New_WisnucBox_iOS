@@ -63,7 +63,7 @@ UITableViewDataSource
          NSLog(@"%@",request.responseJsonObject);
          NSArray * responseArr = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
         [responseArr enumerateObjectsUsingBlock:^(NSDictionary *dic, NSUInteger idx, BOOL * _Nonnull stop) {
-            TicketStationModel *model = [TicketStationModel yy_modelWithDictionary:dic];
+            TicketStationModel *model = [TicketStationModel modelWithDictionary:dic];
             [model.users enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 TicketUserModel *usersModel = obj;
                 [usersModel setCreatedAt:model.createdAt];

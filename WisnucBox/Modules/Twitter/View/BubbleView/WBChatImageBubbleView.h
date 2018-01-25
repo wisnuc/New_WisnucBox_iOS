@@ -10,4 +10,5 @@
 
 @interface WBChatImageBubbleView : WBChatBaseBubbleView
 @property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) NSMutableArray *thumbnailRequestOperationArray;
 @end

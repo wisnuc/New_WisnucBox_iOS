@@ -75,7 +75,7 @@
     [[FMAccountUsersAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
 //        NSLog(@"%@",request.responseJsonObject);
-        UserModel *userModel = [UserModel yy_modelWithDictionary:dic];
+        UserModel *userModel = [UserModel modelWithDictionary:dic];
         if (userModel.global) {
             _userModel = userModel;
             [self.bindWechatButton setHidden:YES];
@@ -177,7 +177,7 @@
             [[FMAccountUsersAPI apiWithRequestMethod:@"PATCH" IsAdmin:YES UUID:_userModel.uuid] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
                 NSLog(@"%@",request.responseJsonObject);
                 NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
-                UserModel *userModel = [UserModel yy_modelWithDictionary:dic];
+                UserModel *userModel = [UserModel modelWithDictionary:dic];
                 _userModel = userModel;
                 [_passwordButton setTitle:WBLocalizedString(@"administrator", nil) forState:UIControlStateNormal];
                 [SXLoadingView hideProgressHUD];
@@ -198,7 +198,7 @@
             [[FMAccountUsersAPI apiWithRequestMethod:@"PATCH" IsAdmin:NO UUID:_userModel.uuid] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
                 NSLog(@"%@",request.responseJsonObject);
                 NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
-                UserModel *userModel = [UserModel yy_modelWithDictionary:dic];
+                UserModel *userModel = [UserModel modelWithDictionary:dic];
                 _userModel = userModel;
                 [_passwordButton setTitle:WBLocalizedString(@"general_user", nil) forState:UIControlStateNormal];
                 [SXLoadingView hideProgressHUD];
@@ -276,7 +276,7 @@
     [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
     [[WBStationTicketsAPI apiWithRequestMethodString:@"POST" Type:@"bind"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         [SXLoadingView hideProgressHUD];
-        TicketModel *model = [TicketModel yy_modelWithJSON:request.responseJsonObject];
+        TicketModel *model = [TicketModel modelWithJSON:request.responseJsonObject];
         _model = model;
             if ([WXApi isWXAppInstalled]) {
                 SendAuthReq *req = [[SendAuthReq alloc] init];
@@ -309,7 +309,7 @@
     @weaky(self);
     [SXLoadingView showProgressHUD:nil];
     [[WBCloudLoginAPI apiWithCode:code] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        CloudLoginModel * model = [CloudLoginModel yy_modelWithJSON:request.responseJsonObject];
+        CloudLoginModel * model = [CloudLoginModel modelWithJSON:request.responseJsonObject];
         [weak_self bindWechtWithCloudToken:model.data.token];
 //        weak_self.avatarUrl = model.data.user.avatarUrl;
     } failure:^(__kindof JYBaseRequest *request) {
@@ -325,7 +325,7 @@
     RACSubject *subject = [RACSubject subject];
     [[WBTicketsUserAPI apiWithTicketId:_model.ticketId WithToken:token]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSDictionary * responseDic =  request.responseJsonObject[@"data"];
-        TicketUserModel *model = [TicketUserModel yy_modelWithDictionary:responseDic];
+        TicketUserModel *model = [TicketUserModel modelWithDictionary:responseDic];
         [SXLoadingView hideProgressHUD];
         [subject sendNext:model];
         NSLog(@"%@",request.responseJsonObject);
@@ -392,7 +392,7 @@
             [[FMAccountUsersAPI apiWithRequestMethod:@"PATCH" Disabled:NO UUID:_userModel.uuid] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
                 NSLog(@"%@",request.responseJsonObject);
                 NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
-                 UserModel *userModel = [UserModel yy_modelWithDictionary:dic];
+                 UserModel *userModel = [UserModel modelWithDictionary:dic];
                 _userModel = userModel;
                 [_logoutButton setTitle:WBLocalizedString(@"disable", nil) forState:UIControlStateNormal];
                 [_userTypeLabel setHidden:YES];
@@ -410,7 +410,7 @@
             [[FMAccountUsersAPI apiWithRequestMethod:@"PATCH" Disabled:YES UUID:_userModel.uuid] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
                  NSLog(@"%@",request.responseJsonObject);
                 NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
-                UserModel *userModel = [UserModel yy_modelWithDictionary:dic];
+                UserModel *userModel = [UserModel modelWithDictionary:dic];
                 _userModel = userModel;
                 
                   [_logoutButton setTitle:WBLocalizedString(@"enable", nil) forState:UIControlStateNormal];

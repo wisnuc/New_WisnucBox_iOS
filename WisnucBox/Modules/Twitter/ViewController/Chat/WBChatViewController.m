@@ -9,10 +9,10 @@
 #import "WBChatViewController.h"
 #import "LHChatBarView.h"
 #import "LHContentModel.h"
-#import "LHMessageModel.h"
+#import "WBTweetModel.h"
 #import "LHIMDBManager.h"
 #import "LHTools.h"
-#import "LHChatViewCell.h"
+#import "WBChatViewNormalTableViewCell.h"
 #import "LHChatTimeCell.h"
 #import "SDImageCache.h"
 #import "LHPhotoPreviewController.h"
@@ -86,6 +86,7 @@ NSString *const kTableViewFrame = @"frame";
 }
 
 - (void)setupInit {
+    self.view.backgroundColor = MainBackgroudColor;
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.chatBarView];
     
@@ -105,10 +106,12 @@ NSString *const kTableViewFrame = @"frame";
         NSArray *array = request.responseJsonObject;
         NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
         [array enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            WBTweetModel *model = [WBTweetModel yy_modelWithDictionary:obj];
+            WBTweetModel *model = [WBTweetModel modelWithDictionary:obj];
+            model.boxuuid = _boxuuid;
             [dataArray addObject:model];
         }];
         self.dataSource = dataArray;
+        [self.tableView reloadData];
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
     }];
@@ -135,9 +138,9 @@ NSString *const kTableViewFrame = @"frame";
     if ([scrollView isMemberOfClass:[UITableView class]]) {
         if (!self.isHeaderRefreshing) return;
         
-        LHMessageModel *model = self.messages.firstObject;
+        WBTweetModel *model = self.messages.firstObject;
         self.tableViewOffSetY = (self.tableView.contentSize.height - self.tableView.contentOffset.y);
-        [self loadMessageWithId:model.id];
+        [self loadMessageWithId:model.uuid];
         [self.tableView reloadData];
         [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height - self.tableViewOffSetY)];
         self.headerRefreshing = NO;
@@ -146,15 +149,15 @@ NSString *const kTableViewFrame = @"frame";
 
 
 - (void)loadMessageWithId:(NSString *)Id {
-        NSArray *messages = [[LHIMDBManager shareManager] searchModelArr:[LHMessageModel class] byKey:Id];
+        NSArray *messages = [[LHIMDBManager shareManager] searchModelArr:[WBTweetModel class] byKey:Id];
     
         self.meetRefresh = messages.count == kMessageCount;
     
-        [messages enumerateObjectsUsingBlock:^(LHMessageModel *messageModel, NSUInteger idx, BOOL * stop) {
+        [messages enumerateObjectsUsingBlock:^(WBTweetModel *messageModel, NSUInteger idx, BOOL * stop) {
             [self.dataSource insertObject:messageModel atIndex:0];
             [self.messages insertObject:messageModel atIndex:0];
     
-            NSString *time = [LHTools processingTimeWithDate:messageModel.date];
+            NSString *time = [LHTools processingTimeWithDate:messageModel.ctime];
             if (![self.lastTime isEqualToString:time]) {
                 [self.dataSource insertObject:time atIndex:0];
                 self.lastTime = time;
@@ -191,30 +194,30 @@ NSString *const kTableViewFrame = @"frame";
 }
 
 - (void)seavMessage:(id)content type:(MessageBodyType)type {
-    NSString *date = [NSString stringWithFormat:@"%ld", (long)([[NSDate date] timeIntervalSince1970] * 1000)];
-    __block LHMessageModel *messageModel = [LHMessageModel new];
+    long long date = (long long)([[NSDate date] timeIntervalSince1970] * 1000);
+    __block WBTweetModel *messageModel = [WBTweetModel new];
     messageModel.isSender = YES;
     messageModel.isRead = YES;
     messageModel.status = MessageDeliveryState_Delivering;
-    messageModel.date = date;
-    messageModel.type = type;
+    messageModel.ctime = date;
+    messageModel.messageBodytype = type;
     switch (type) {
         case MessageBodyType_Text: {
-            messageModel.content = content;
+            messageModel.comment = content;
             break;
         }
         case MessageBodyType_Image: {
             UIImage *image = (UIImage *)content;
             messageModel.width = image.size.width;
             messageModel.height = image.size.height;
-            [SDImageCache.sharedImageCache storeImage:image forKey:messageModel.date ];
+            [SDImageCache.sharedImageCache storeImage:image forKey:[NSString stringWithFormat:@"%lld",messageModel.ctime]];
             break;
         }
         default:
             break;
     }
     [[LHIMDBManager shareManager] insertModel:messageModel];
-    NSString *time = [LHTools processingTimeWithDate:messageModel.date];
+    NSString *time = [LHTools processingTimeWithDate:messageModel.ctime];
     if ([time isEqualToString:self.lastTime]) {
         [self insertNewMessageOrTime:time];
         self.lastTime = time;
@@ -226,13 +229,13 @@ NSString *const kTableViewFrame = @"frame";
     // 模仿延迟发送
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         messageModel.status = MessageDeliveryState_Delivered;
-        LHMessageModel *dbMessageModel = [[LHIMDBManager shareManager] searchModel:[LHMessageModel class] keyValues:@{@"date" : date, @"status" : @(MessageDeliveryState_Delivering)}];
+        WBTweetModel *dbMessageModel = [[LHIMDBManager shareManager] searchModel:[WBTweetModel class] keyValues:@{@"date" : [NSString stringWithFormat:@"%lld",date], @"status" : @(MessageDeliveryState_Delivering)}];
         dbMessageModel.status = MessageDeliveryState_Delivered;
         NSArray *cells = [self.tableView visibleCells];
         [cells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj isKindOfClass:[LHChatViewCell class]]) {
-                LHChatViewCell *messagecell = (LHChatViewCell *)obj;
-                if ([messagecell.messageModel.date isEqualToString:dbMessageModel.date]) {
+            if ([obj isKindOfClass:[WBChatViewNormalTableViewCell class]]) {
+                WBChatViewNormalTableViewCell *messagecell = (WBChatViewNormalTableViewCell *)obj;
+                if (messagecell.messageModel.ctime == dbMessageModel.ctime) {
                     [messagecell layoutSubviews];
                     [[LHIMDBManager shareManager] insertModel:dbMessageModel];
                     *stop = YES;
@@ -243,7 +246,7 @@ NSString *const kTableViewFrame = @"frame";
         // 模仿消息回复
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             dbMessageModel.isSender = NO;
-            dbMessageModel.id = nil;
+            dbMessageModel.uuid = nil;
             [[LHIMDBManager shareManager] insertModel:dbMessageModel];
             NSIndexPath *index = [self insertNewMessageOrTime:dbMessageModel];
             [self.messages addObject:dbMessageModel];
@@ -275,7 +278,7 @@ NSString *const kTableViewFrame = @"frame";
 
 #pragma mark  cell事件处理
 - (void)routerEventWithName:(NSString *)eventName userInfo:(NSDictionary *)userInfo {
-    LHMessageModel *model = [userInfo objectForKey:kMessageKey];
+    WBTweetModel *model = [userInfo objectForKey:kMessageKey];
     if ([eventName isEqualToString:kRouterEventImageBubbleTapEventName]) {
         //点击图片
         [self chatImageCellBubblePressed:model];
@@ -284,14 +287,14 @@ NSString *const kTableViewFrame = @"frame";
 
 
 // 图片的bubble被点击
-- (void)chatImageCellBubblePressed:(LHMessageModel *)model {
+- (void)chatImageCellBubblePressed:(WBTweetModel *)model {
     NSMutableArray *imageKeys = @[].mutableCopy;
     __block NSString *currentKey = nil;
-    [self.messages enumerateObjectsUsingBlock:^(LHMessageModel *messageModel, NSUInteger idx, BOOL * stop) {
-        if (messageModel.type == MessageBodyType_Image) {
-            [imageKeys addObject:messageModel.date];
-            if ([messageModel.date isEqualToString:model.date]) {
-                currentKey = messageModel.date;
+    [self.messages enumerateObjectsUsingBlock:^(WBTweetModel *messageModel, NSUInteger idx, BOOL * stop) {
+        if (messageModel.messageBodytype == MessageBodyType_Image) {
+            [imageKeys addObject:[NSString stringWithFormat:@"%lld",messageModel.ctime]];
+            if (messageModel.ctime == model.ctime) {
+                currentKey = [NSString stringWithFormat:@"%lld",messageModel.ctime];
             }
         }
     }];
@@ -316,18 +319,8 @@ NSString *const kTableViewFrame = @"frame";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     id obj = [self.dataSource objectAtIndex:indexPath.row];
-    
-    if ([obj isKindOfClass:[NSString class]]) {
-        LHChatTimeCell *timeCell = (LHChatTimeCell *)[tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LHChatTimeCell class])];
-        if (!timeCell) {
-            timeCell = [[LHChatTimeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([LHChatTimeCell class])];
-        }
-        timeCell.timeLable.text = (NSString *)obj;
-        
-        return timeCell;
-    }
-    
-    WBTweetModel *messageModel = (WBTweetModel *)obj;
+      WBTweetModel *messageModel = (WBTweetModel *)obj;
+//    NSLog(@"%@",self.dataSource);
     
     NSString *cellIdentifier = [WBChatViewNormalTableViewCell cellIdentifierForMessageModel:messageModel];
     WBChatViewNormalTableViewCell *messageCell = (WBChatViewNormalTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -347,13 +340,13 @@ NSString *const kTableViewFrame = @"frame";
     if ([obj isKindOfClass:[NSString class]]) {
         return 31;
     } else {
-        LHMessageModel *model = (LHMessageModel *)obj;
-        CGFloat height = [[self.rowHeight objectForKey:model.id] floatValue];
+        WBTweetModel *model = (WBTweetModel *)obj;
+        CGFloat height = [[self.rowHeight objectForKey:model.uuid] floatValue];
         if (height) {
             return height;
         }
-        height = [LHChatViewCell tableView:tableView heightForRowAtIndexPath:indexPath withObject:model];
-        [self.rowHeight setObject:@(height) forKey:model.id];
+        height = [WBChatViewNormalTableViewCell tableView:tableView heightForRowAtIndexPath:indexPath withObject:model];
+        [self.rowHeight setObject:@(height) forKey:model.uuid];
         return height;
     }
 }
@@ -405,11 +398,11 @@ NSString *const kTableViewFrame = @"frame";
     NSArray *cells = [self.tableView visibleCells];
     __block UIImageView *imageView = nil;
     [cells enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[LHChatViewCell class]]) {
-            LHChatViewCell *cell = (LHChatViewCell *)obj;
-            if (cell.messageModel.type == MessageBodyType_Image) {
-                LHChatImageBubbleView *imageBubbleView = (LHChatImageBubbleView *)cell.bubbleView;
-                if ([cell.messageModel.date isEqualToString:_imageKeys[index]]) {
+        if ([obj isKindOfClass:[WBChatViewNormalTableViewCell class]]) {
+            WBChatViewNormalTableViewCell *cell = (WBChatViewNormalTableViewCell *)obj;
+            if (cell.messageModel.messageBodytype == MessageBodyType_Image) {
+                WBChatImageBubbleView *imageBubbleView = (WBChatImageBubbleView *)cell.bubbleView;
+                if (cell.messageModel.ctime == [_imageKeys[index] longLongValue]) {
                     imageView = [[UIImageView alloc] initWithImage:imageBubbleView.imageView.image];
                     imageView.frame = imageBubbleView.imageView.frame;
                     *stop = YES;
@@ -423,14 +416,14 @@ NSString *const kTableViewFrame = @"frame";
 /** 获取被点击cell相对于keywindow的frame */
 - (CGRect)XSBrowserDelegate:(XSBrowserAnimateDelegate *)browserDelegate fromRectForRowAtIndex:(NSInteger)index {
     NSArray *cells = [self.tableView visibleCells];
-    __block LHChatImageBubbleView *currentImageBubbleView;
+    __block WBChatImageBubbleView *currentImageBubbleView;
     __block UIImageView *imageView = nil;
     [cells enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[LHChatViewCell class]]) {
-            LHChatViewCell *cell = (LHChatViewCell *)obj;
-            if (cell.messageModel.type == MessageBodyType_Image) {
-                LHChatImageBubbleView *imageBubbleView = (LHChatImageBubbleView *)cell.bubbleView;
-                if ([cell.messageModel.date isEqualToString:_imageKeys[index]]) {
+        if ([obj isKindOfClass:[WBChatViewNormalTableViewCell class]]) {
+            WBChatViewNormalTableViewCell *cell = (WBChatViewNormalTableViewCell *)obj;
+            if (cell.messageModel.messageBodytype == MessageBodyType_Image) {
+                WBChatImageBubbleView *imageBubbleView = (WBChatImageBubbleView *)cell.bubbleView;
+                if (cell.messageModel.ctime  == [_imageKeys[index] longLongValue] ) {
                     imageView = imageBubbleView.imageView;
                     currentImageBubbleView = imageBubbleView;
                     *stop = YES;
@@ -465,10 +458,10 @@ NSString *const kTableViewFrame = @"frame";
     NSArray *cells = [self.tableView visibleCells];
     __block BOOL isVisual = YES;
     [cells enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[LHChatViewCell class]]) {
-            LHChatViewCell *cell = (LHChatViewCell *)obj;
-            if (cell.messageModel.type == MessageBodyType_Image) {
-                if ([cell.messageModel.date isEqualToString:_imageKeys[index]]) {
+        if ([obj isKindOfClass:[WBChatViewNormalTableViewCell class]]) {
+            WBChatViewNormalTableViewCell *cell = (WBChatViewNormalTableViewCell *)obj;
+            if (cell.messageModel.messageBodytype == MessageBodyType_Image) {
+                if (cell.messageModel.ctime == [_imageKeys[index] longLongValue]) {
                     isVisual = NO;
                     *stop = YES;
                 }
@@ -482,7 +475,7 @@ NSString *const kTableViewFrame = @"frame";
 - (UITableView *)tableView {
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight - kChatBarHeight) style:UITableViewStyleGrouped];
-        _tableView.backgroundColor = [UIColor lh_colorWithHex:0xffffff];
+        _tableView.backgroundColor = MainBackgroudColor;
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;

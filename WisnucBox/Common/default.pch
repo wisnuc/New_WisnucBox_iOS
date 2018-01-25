@@ -16,13 +16,14 @@
 #import "Define.h"
 #import "FontDefine.h"
 #import "WBConst.h"
+#import "JYConst.h"
 
 //第三方
 #import <AFNetworking/AFNetworking.h>
 //#import <YYImage/YYImage.h>
 #import <YYKit/YYKit.h>
 //#import <YYText/YYText.h>
-#import <YYModel/YYModel.h>
+//#import <YYKit/NSObject+YYModel.h>
 //#import <YYCache/YYCache.h>
 //#import <YYWebImage/YYWebImage.h>
 
@@ -100,5 +101,6 @@
 #import "UIViewController+Set.h"
 #import "UIImage+Common.h"
 #import "UIColor+RGB.h"
+
 
 #endif /* default_pch */

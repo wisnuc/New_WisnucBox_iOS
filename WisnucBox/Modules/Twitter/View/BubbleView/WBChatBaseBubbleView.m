@@ -35,11 +35,16 @@ NSString *const BUBBLE_RIGHT_IMAGE_NAME_X = @"IM_Chat_sender_bg";
     _messageModel = messageModel;
     
     BOOL isReceiver = !messageModel.isSender;
-    NSString *imageName = isReceiver ? BUBBLE_LEFT_IMAGE_NAME_X : BUBBLE_RIGHT_IMAGE_NAME_X;
+//    NSString *imageName = isReceiver ? BUBBLE_LEFT_IMAGE_NAME_X : BUBBLE_RIGHT_IMAGE_NAME_X;
     NSInteger leftCapWidth = isReceiver?BUBBLE_LEFT_LEFT_CAP_WIDTH:BUBBLE_RIGHT_LEFT_CAP_WIDTH;
     NSInteger topCapHeight =  isReceiver?BUBBLE_LEFT_TOP_CAP_HEIGHT:BUBBLE_RIGHT_TOP_CAP_HEIGHT;
+//
+//    UIImage *image = [UIImage imageNamed:imageName];
+//    NSInteger bottomCapHeight = image.size.height - topCapHeight - 1;
+//    NSInteger rightCapWidth = image.size.width - leftCapWidth -1;
+//    image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(topCapHeight, leftCapWidth, bottomCapHeight, rightCapWidth)];
     
-    UIImage *image = [UIImage imageNamed:imageName];
+    UIImage *image = [UIImage imageWithColor:kWhiteColor];
     NSInteger bottomCapHeight = image.size.height - topCapHeight - 1;
     NSInteger rightCapWidth = image.size.width - leftCapWidth -1;
     image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(topCapHeight, leftCapWidth, bottomCapHeight, rightCapWidth)];

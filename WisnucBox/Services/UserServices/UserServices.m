@@ -130,7 +130,7 @@
         }
         [[WBGetUpgradStateAPI apiWithURLPath:urlString] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
             //        NSLog(@"%@",request.responseJsonObject);
-            WBGetUpgradStateModel *model = [WBGetUpgradStateModel yy_modelWithJSON:request.responseJsonObject];
+            WBGetUpgradStateModel *model = [WBGetUpgradStateModel modelWithJSON:request.responseJsonObject];
             if ([model.fetch.state isEqualToString:@"Pending"]) {
                 WBGetUpgradStateReleasesModel *releaseModel;
                 if (model.releases.count >0) {

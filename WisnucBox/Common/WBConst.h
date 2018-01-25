@@ -7,6 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+
+extern CGFloat const MAX_SIZE;
+
 extern CGFloat const kNavBarHeight;
 extern CGFloat const kTabBarHeight;
 extern CGFloat const kChatBarHeight;

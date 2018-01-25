@@ -582,7 +582,7 @@
 - (void)installBootRequestWithUUID:(NSString *)uuid{
     @weaky(self)
     [[WBStationBootAPI apiWithPath:_searchModel.path RequestMethod:@"PATCH" UUID:uuid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        BootModel *bootModel = [BootModel yy_modelWithJSON:request.responseJsonObject];
+        BootModel *bootModel = [BootModel modelWithJSON:request.responseJsonObject];
         if (bootModel.current) {
             if ([bootModel.state isEqualToString:@"started"]) {
                 [weak_self getStationUsers];
@@ -613,7 +613,7 @@
     [[FMAsyncUsersAPI apiWithURLPath:_searchModel.path UserName:_userNameTextField.text Password:_confirmPasswordTextField.text] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
         NSDictionary *dic  = request.responseJsonObject;
-        UserModel * model = [UserModel yy_modelWithJSON:dic];
+        UserModel * model = [UserModel modelWithJSON:dic];
         
         self.loginDataDic  = @{@"userModel":model
                                };
@@ -679,7 +679,7 @@
      @weaky(self)
     [[WBStationTicketsAPI apiWithRequestMethodString:@"POST" Type:@"bind"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         [SXLoadingView hideProgressHUD];
-        TicketModel *model = [TicketModel yy_modelWithJSON:request.responseJsonObject];
+        TicketModel *model = [TicketModel modelWithJSON:request.responseJsonObject];
         _ticketModel = model;
         if ([WXApi isWXAppInstalled]) {
             SendAuthReq *req = [[SendAuthReq alloc] init];
@@ -706,7 +706,7 @@
     @weaky(self);
     [SXLoadingView showProgressHUD:nil];
     [[WBCloudLoginAPI apiWithCode:code] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        CloudLoginModel * model = [CloudLoginModel yy_modelWithJSON:request.responseJsonObject];
+        CloudLoginModel * model = [CloudLoginModel modelWithJSON:request.responseJsonObject];
         [weak_self bindWechtWithCloudToken:model.data.token];
         //        weak_self.avatarUrl = model.data.user.avatarUrl;
     } failure:^(__kindof JYBaseRequest *request) {
@@ -722,7 +722,7 @@
     RACSubject *subject = [RACSubject subject];
     [[WBTicketsUserAPI apiWithTicketId:_ticketModel.ticketId WithToken:token]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSDictionary * responseDic =  request.responseJsonObject[@"data"];
-        TicketUserModel *model = [TicketUserModel yy_modelWithDictionary:responseDic];
+        TicketUserModel *model = [TicketUserModel modelWithDictionary:responseDic];
         [SXLoadingView hideProgressHUD];
         [subject sendNext:model];
         NSLog(@"%@",request.responseJsonObject);
@@ -797,7 +797,7 @@
     [[WBStationBootAPI apiWithPath:_searchModel.path RequestMethod:@"GET"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         @weaky(self)
         NSLog(@"%@",request.responseJsonObject);
-        BootModel *bootModel = [BootModel yy_modelWithJSON:request.responseJsonObject];
+        BootModel *bootModel = [BootModel modelWithJSON:request.responseJsonObject];
         //        if (bootModel.current) {
         if ([bootModel.state isEqualToString:@"started"]) {
             [SXLoadingView hideProgressHUD];

@@ -83,7 +83,7 @@
     NSLog(@"%@",urlString);
     [[WBGetUpgradStateAPI apiWithURLPath:urlString] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
          NSLog(@"%@",request.responseJsonObject);
-        WBGetUpgradStateModel *model = [WBGetUpgradStateModel yy_modelWithJSON:request.responseJsonObject];
+        WBGetUpgradStateModel *model = [WBGetUpgradStateModel modelWithJSON:request.responseJsonObject];
         if ([model.fetch.state isEqualToString:@"Pending"]) {
             [weak_self updateDataWithModel:model];
             NSLog(@"%@",model.appifi.tagName);
@@ -110,7 +110,7 @@
     NSLog(@"%@",urlString);
     [[WBGetUpgradStateAPI apiWithURLPath:urlString] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
 //        NSLog(@"%@",request.responseJsonObject);
-        WBGetUpgradStateModel *model = [WBGetUpgradStateModel yy_modelWithJSON:request.responseJsonObject];
+        WBGetUpgradStateModel *model = [WBGetUpgradStateModel modelWithJSON:request.responseJsonObject];
         if ([model.fetch.state isEqualToString:@"Pending"]) {
             [weak_self updateDataWithModel:model];
             NSLog(@"%@",model.appifi.tagName);

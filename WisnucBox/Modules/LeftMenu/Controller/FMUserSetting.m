@@ -85,7 +85,7 @@
     WBgetStationInfoAPI * stationApi = [WBgetStationInfoAPI apiWithServicePath:WB_UserService.currentUser.localAddr];
     [stationApi startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         //         NSLog(@"%@",request.responseJsonObject);
-        WBStationInfoModel *model = [WBStationInfoModel yy_modelWithJSON:request.responseJsonObject];
+        WBStationInfoModel *model = [WBStationInfoModel modelWithJSON:request.responseJsonObject];
         _typeLabel.text = model.name;
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
@@ -99,7 +99,7 @@
         NSLog(@"%@",request.responseJsonObject);
         NSMutableArray *tempDataSource = [NSMutableArray arrayWithCapacity:0];
         for (NSDictionary * dic in userArr) {
-            UserModel * model = [UserModel yy_modelWithJSON:dic];
+            UserModel * model = [UserModel modelWithJSON:dic];
             [tempDataSource addObject:model];
         }
         self.dataSource = tempDataSource;

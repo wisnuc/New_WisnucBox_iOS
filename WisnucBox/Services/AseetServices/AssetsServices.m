@@ -126,7 +126,7 @@
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             NSMutableArray *photoArr = [NSMutableArray arrayWithCapacity:0];
             [medias enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                [photoArr addObject:[WBAsset yy_modelWithJSON:obj]];
+                [photoArr addObject:[WBAsset modelWithJSON:obj]];
             }];
             weak_self.allNetAssets = photoArr;
             callback(nil, photoArr);

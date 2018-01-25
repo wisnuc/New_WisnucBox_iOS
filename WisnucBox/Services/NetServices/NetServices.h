@@ -69,5 +69,5 @@
 
 - (id <SDWebImageOperation>)getThumbnailWithHash:(NSString *)hash complete:(void(^)(NSError *, UIImage *))callback;
 - (void)getDirUUIDWithDirName:(NSString *)name BaseDir:(void(^)(NSError *, NSString * dirUUID))callback;
-
+- (id <SDWebImageOperation>)getTweeetThumbnailImageWithHash:(NSString *)hash BoxUUID:(NSString *)boxUUID complete:(void(^)(NSError *, UIImage *))callback;
 @end

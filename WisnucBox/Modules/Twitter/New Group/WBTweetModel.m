@@ -19,10 +19,11 @@
 }
 @end
 
+
 @implementation WBTweetModel
 // 如果实现了该方法，则处理过程中会忽略该列表内的所有属性
 + (NSArray *)modelPropertyBlacklist {
-    return @[@"isSender", @"isRead",@"messageBodytype",@"status",@"width",@"height"];
+    return @[@"isSender", @"isRead",@"messageBodytype",@"status",@"width",@"height",@"boxuuid"];
 }
 
 + (NSDictionary *)modelContainerPropertyGenericClass {
@@ -30,12 +31,26 @@
              };
 }
 
-// 当 Model 转为 JSON 完成后，该方法会被调用。
-// 你可以在这里对数据进行校验，如果校验不通过，可以返回 NO，则该 Model 会被忽略。
-// 你也可以在这里做一些自动转换不能完成的工作。
-- (BOOL)modelCustomTransformToDictionary:(NSMutableDictionary *)dic {
+- (BOOL)modelCustomTransformFromDictionary:(NSDictionary *)dic {
+    _messageBodytype = MessageBodyType_Image;
+    [self.list enumerateObjectsUsingBlock:^(WBTweetlistModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (!obj.metadata) {
+            *stop = YES;
+            _messageBodytype = MessageBodyType_File;
+        }
+    }];
     
-//    dic[@"timestamp"] = @(n.timeIntervalSince1970);
+    if (_messageBodytype == MessageBodyType_Image) {
+//        NSInteger x = 3;
+//        NSInteger y = 2;
+//        if (self.list.count % x == 0) {
+//            self.height = IMAGE_MAX_SIZE *((int)floorf(self.list.count/x));
+//            self.width = IMAGE_MAX_SIZE *self.list.count + SEPARATE *self.list.count;
+//        }else if (self.list.count % y == 0){
+//            self.height = IMAGE_MAX_SIZE *((int)floorf(self.list.count/y));
+//            self.width = IMAGE_MAX_SIZE *self.list.count + SEPARATE *self.list.count;
+//        }
+    }
     return YES;
 }
 

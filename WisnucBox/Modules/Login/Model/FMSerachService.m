@@ -27,7 +27,7 @@
         NSArray * userArr = responseObject;
         NSMutableArray * tempArr = [NSMutableArray arrayWithCapacity:0];
         for (NSDictionary * dic in userArr) {
-            UserModel * model = [UserModel yy_modelWithJSON:dic];
+            UserModel * model = [UserModel modelWithJSON:dic];
             if (![model.disabled boolValue]) {
                 [tempArr addObject:model];
             }
@@ -57,7 +57,7 @@
         NSArray * userArr = responseObject;
         NSMutableArray * tempArr = [NSMutableArray arrayWithCapacity:0];
         for (NSDictionary * dic in userArr) {
-            UserModel * model = [UserModel yy_modelWithJSON:dic];
+            UserModel * model = [UserModel modelWithJSON:dic];
             if (![model.disabled boolValue]) {
                 [tempArr addObject:model];
             }
