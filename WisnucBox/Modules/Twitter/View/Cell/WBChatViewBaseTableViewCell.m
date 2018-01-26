@@ -32,6 +32,11 @@
     self.headImageView.image = [UIImage imageNamed:imgaeName];
 }
 
+- (void)prepareForReuse {
+    [super prepareForReuse];
+
+}
+
 #pragma mark - 事件监听
 - (void)headImagePressed:(id)sender {
     [super routerEventWithName:kRouterEventChatHeadImageTapEventName userInfo:@{kMessageKey : self.messageModel}];

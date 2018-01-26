@@ -11,6 +11,15 @@
 //　图片最大显示大小
 CGFloat const MAX_SIZE = 134.0f;
 
+CGFloat const THREE_IMAGE_SIZE = 89.0f;
+
+CGFloat const SEPARATE = 1.0f;
+
+
+CGFloat const BOX_FILE_SIZE_WIDTH = 269.0f;
+
+CGFloat const BOX_FILE_SIZE_HEIGHT = 56.0f;
+
 CGFloat const kNavBarHeight = 64.0f;
 CGFloat const kTabBarHeight = 44;
 CGFloat const kChatBarHeight = 48.0f;

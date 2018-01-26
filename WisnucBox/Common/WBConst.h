@@ -10,6 +10,14 @@
 
 extern CGFloat const MAX_SIZE;
 
+extern CGFloat const THREE_IMAGE_SIZE;
+
+extern CGFloat const SEPARATE;
+
+extern CGFloat const BOX_FILE_SIZE_WIDTH;
+
+extern CGFloat const BOX_FILE_SIZE_HEIGHT;
+
 extern CGFloat const kNavBarHeight;
 extern CGFloat const kTabBarHeight;
 extern CGFloat const kChatBarHeight;

@@ -93,6 +93,15 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
     [_bubbleView sizeToFit];
 }
 
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    if ([self.bubbleView isKindOfClass:[WBChatImageBubbleView class]]) {
+        [((WBChatImageBubbleView *)self.bubbleView).subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [obj removeFromSuperview];
+        }];
+    }
+}
+
 #pragma mark - action
 
 // 重发按钮事件

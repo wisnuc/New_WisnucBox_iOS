@@ -41,15 +41,26 @@
     }];
     
     if (_messageBodytype == MessageBodyType_Image) {
-//        NSInteger x = 3;
-//        NSInteger y = 2;
-//        if (self.list.count % x == 0) {
-//            self.height = IMAGE_MAX_SIZE *((int)floorf(self.list.count/x));
-//            self.width = IMAGE_MAX_SIZE *self.list.count + SEPARATE *self.list.count;
-//        }else if (self.list.count % y == 0){
-//            self.height = IMAGE_MAX_SIZE *((int)floorf(self.list.count/y));
-//            self.width = IMAGE_MAX_SIZE *self.list.count + SEPARATE *self.list.count;
-//        }
+        NSInteger x = 3;
+        NSInteger y = 2;
+        if (self.list.count >=6) {
+            self.height = THREE_IMAGE_SIZE *2;
+            self.width = THREE_IMAGE_SIZE *3 + SEPARATE *3;
+        }else
+        if (self.list.count == 1) {
+            self.height = MAX_SIZE;
+        }else if (self.list.count % x == 0) {
+            self.height = THREE_IMAGE_SIZE *((int)floorf(self.list.count/x));
+            self.width = THREE_IMAGE_SIZE *3 + SEPARATE *self.list.count;
+        }else if (self.list.count % y == 0){
+            if (self.list.count == 4) {
+                self.height = THREE_IMAGE_SIZE *((int)floorf(self.list.count/y));
+                self.width = THREE_IMAGE_SIZE *2 + SEPARATE *self.list.count;
+            }else{
+                self.height = MAX_SIZE *((int)floorf(self.list.count/y));
+                self.width = MAX_SIZE *2 + SEPARATE *self.list.count;
+            }
+        }
     }
     return YES;
 }

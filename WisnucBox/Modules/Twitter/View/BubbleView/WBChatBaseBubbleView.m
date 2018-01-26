@@ -36,6 +36,7 @@ NSString *const BUBBLE_RIGHT_IMAGE_NAME_X = @"IM_Chat_sender_bg";
     
     BOOL isReceiver = !messageModel.isSender;
 //    NSString *imageName = isReceiver ? BUBBLE_LEFT_IMAGE_NAME_X : BUBBLE_RIGHT_IMAGE_NAME_X;
+//    NSInteger leftCapWidth = isReceiver?BUBBLE_LEFT_LEFT_CAP_WIDTH:BUBBLE_RIGHT_LEFT_CAP_WIDTH;
     NSInteger leftCapWidth = isReceiver?BUBBLE_LEFT_LEFT_CAP_WIDTH:BUBBLE_RIGHT_LEFT_CAP_WIDTH;
     NSInteger topCapHeight =  isReceiver?BUBBLE_LEFT_TOP_CAP_HEIGHT:BUBBLE_RIGHT_TOP_CAP_HEIGHT;
 //

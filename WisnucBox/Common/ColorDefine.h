@@ -17,4 +17,6 @@
 #define kWhiteColor  [UIColor whiteColor]
 #define kBlackColor  [UIColor blackColor]
 
+#define kTitleTextColor RGBACOLOR(0, 0, 0, 0.87f)
+#define kDetailTextColor RGBACOLOR(0, 0, 0, 0.54f)
 #endif /* ColorDefine_h */
