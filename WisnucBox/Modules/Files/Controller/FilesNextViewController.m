@@ -236,23 +236,14 @@ FilesHelperOpenFilesDelegate
 
 - (void)handlerStatusChangeNotify:(NSNotification *)notify{
     if (![notify.object boolValue]) {
-        if ([NSThread isMainThread] ) {
-           [self actionForNormalStatus];
-        }else{
-            dispatch_async(dispatch_get_main_queue(), ^{
-               [self actionForNormalStatus];
-            });
-        }
-       
+        dispatch_main_async_safe(^{
+            [self actionForNormalStatus];
+        });
     }else{
         if (self.cellStatus != FLFliesCellStatusCanChoose) {
-            if ([NSThread isMainThread] ) {
-                  [self actionForChooseStatus];
-            }else{
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self actionForChooseStatus];;
-                });
-            }
+            dispatch_main_async_safe(^{
+                [self actionForChooseStatus];
+            });
         }
     }
 }

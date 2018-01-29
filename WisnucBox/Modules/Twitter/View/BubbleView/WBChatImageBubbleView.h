@@ -8,7 +8,9 @@
 
 #import "WBChatBaseBubbleView.h"
 
+
 @interface WBChatImageBubbleView : WBChatBaseBubbleView
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) NSMutableArray *thumbnailRequestOperationArray;
+@property (nonatomic, strong) NSMutableArray *imageArray;
 @end

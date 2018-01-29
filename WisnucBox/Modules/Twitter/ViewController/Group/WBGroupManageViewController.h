@@ -7,7 +7,8 @@
 //
 
 #import "FABaseVC.h"
+#import "WBBoxesModel.h"
 
 @interface WBGroupManageViewController : FABaseVC
-
+@property (nonatomic)WBBoxesModel *boxModel;
 @end

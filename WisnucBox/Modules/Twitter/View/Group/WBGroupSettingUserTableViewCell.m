@@ -43,7 +43,12 @@
 
         _userImageView.userInteractionEnabled = YES;
         _userImageView.tag = idx;
-        [_userImageView was_setCircleImageWithUrlString:model.imageURL placeholder:[UIImage imageForName:model.userName size:_userImageView.bounds.size]];
+        if (model.imageURL) {
+           [_userImageView was_setCircleImageWithUrlString:model.imageURL placeholder:[UIImage imageForName:model.userName size:_userImageView.bounds.size]];
+        }else{
+            _userImageView.image = [UIImage imageForName:model.userName size:_userImageView.size];
+        }
+       
         UITapGestureRecognizer *singleTap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(onClickImage:)];
         [_userImageView addGestureRecognizer:singleTap];
 //        _userImageView
@@ -116,11 +121,11 @@
 }
 
 - (void)addButtonClick:(UIButton *)sender{
-    
+    self.addUserClickBlock(self);
 }
 
 - (void)removeButtonClick:(UIButton *)sender{
-    
+    self.removeUserClickBlock(self);
 }
 
 - (void)checkAllUserButtonClick:(UIButton *)sender{

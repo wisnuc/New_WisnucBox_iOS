@@ -39,7 +39,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="大学同学" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AV8-34-NjP">
-                        <rect key="frame" x="72" y="12.5" width="65.5" height="19.5"/>
+                        <rect key="frame" x="72" y="12.5" width="173" height="19.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" white="0.13023096323013306" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -54,6 +54,7 @@
                     <constraint firstItem="QXw-3Q-oNx" firstAttribute="leading" secondItem="MSf-Hx-aSk" secondAttribute="trailing" constant="8" id="f1m-Dw-1jn"/>
                     <constraint firstItem="AV8-34-NjP" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="-14" id="hOn-JY-GPv"/>
                     <constraint firstAttribute="trailing" secondItem="QXw-3Q-oNx" secondAttribute="trailing" constant="16" id="heM-Gp-uX6"/>
+                    <constraint firstAttribute="trailing" secondItem="AV8-34-NjP" secondAttribute="trailing" constant="75" id="mHL-EC-L6d"/>
                     <constraint firstItem="QXw-3Q-oNx" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="s0V-PV-0dB"/>
                     <constraint firstItem="6Xm-Ou-guX" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="uKG-WW-nKi"/>
                 </constraints>

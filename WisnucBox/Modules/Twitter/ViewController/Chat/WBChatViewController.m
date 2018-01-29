@@ -100,14 +100,14 @@ NSString *const kTableViewFrame = @"frame";
 }
 
 - (void)getData{
-    if (_boxuuid.length == 0)return;
-    [[WBTweetAPI apiWithBoxuuid:_boxuuid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+    if (_boxModel.uuid.length == 0)return;
+    [[WBTweetAPI apiWithBoxuuid:_boxModel.uuid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
        NSLog(@"%@",request.responseJsonObject);
         NSArray *array = request.responseJsonObject;
         NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
         [array enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
             WBTweetModel *model = [WBTweetModel modelWithDictionary:obj];
-            model.boxuuid = _boxuuid;
+            model.boxuuid = _boxModel.uuid;
             [dataArray addObject:model];
         }];
         self.dataSource = dataArray;
@@ -131,6 +131,7 @@ NSString *const kTableViewFrame = @"frame";
 
 - (void)rightBtnClick:(UIButton *)sender{
     WBGroupManageViewController *groupManageVC = [[WBGroupManageViewController alloc]init];
+    groupManageVC.boxModel = _boxModel;
     [self.navigationController pushViewController:groupManageVC animated:YES];
 }
 

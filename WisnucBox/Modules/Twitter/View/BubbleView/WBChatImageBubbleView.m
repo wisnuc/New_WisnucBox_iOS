@@ -119,7 +119,10 @@
     
     [SDImageCache.sharedImageCache diskImageExistsWithKey:date completion:^(BOOL isInCache) {
         if (isInCache) {
-            [self.imageView sd_setImageWithURL:[NSURL URLWithString:date] placeholderImage:image];
+            [SDImageCache.sharedImageCache queryDiskCacheForKey:date done:^(UIImage *image, SDImageCacheType cacheType) {
+                self.imageView.image = image;
+                NSLog(@"%@",image);
+            }];
         }else{
             if (self.thumbnailRequestOperationArray && self.thumbnailRequestOperationArray.count>0){
                 [self.thumbnailRequestOperationArray enumerateObjectsUsingBlock:^(id <SDWebImageOperation> thumbnailRequestOperation, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -141,7 +144,7 @@
           
             [imageArray enumerateObjectsUsingBlock:^(WBTweetlistModel *listModel, NSUInteger idx, BOOL * _Nonnull stop) {
                
-                weakSelf.imageView = [[UIImageView alloc] init];
+                weakSelf.imageView = [[UIImageView alloc]init];
                 weakSelf.imageView.tag = idx;
                 weakSelf.imageView.userInteractionEnabled = YES;
                 NSInteger index = 0 ;
@@ -172,21 +175,25 @@
                 [weakSelf.imageView addGestureRecognizer:tap];
                 
                 
-                NSLog(@"🌶%@",NSStringFromCGRect(weakSelf.imageView.frame));
-                dispatch_main_async_safe(^{
+//                NSLog(@"🌶%@",NSStringFromCGRect(weakSelf.imageView.frame));
+//                dispatch_main_async_safe(^{
                     UIImage *image = [UIImage imageNamed:@"IM_Chart_imageDownloadFail.png"];
                     weakSelf.imageView.image = image;
                     [weakSelf setNeedsLayout];
-                });
-                
-                [weakSelf addSubview:weakSelf.imageView];
+//                });
+                  [weakSelf addSubview:weakSelf.imageView];
               
                __block id <SDWebImageOperation> thumbnailRequestOperation = [WB_NetService getTweeetThumbnailImageWithHash:listModel.sha256 BoxUUID:messageModel.boxuuid complete:^(NSError *error, UIImage *img) {
                     if(!weakSelf) return;
+//                   UIImage *imageCache = (UIImage *)img;
+//                   messageModel.width = imageCache.size.width;
+//                   messageModel.height = imageCache.size.height;
+//                   [SDImageCache.sharedImageCache storeImage:imageCache forKey:messageModel.uuid toDisk:YES];
                     if (!error &&img) {
                         dispatch_main_async_safe(^{
                             weakSelf.imageView.image = img;
-                            [weakSelf setNeedsLayout];
+                            [weakSelf layoutSubviews];
+                            
                         });
                         
                         [self.thumbnailRequestOperationArray addObject:thumbnailRequestOperation];
@@ -207,16 +214,18 @@
             }];
         }
     }];
-    UIImageView * maskImageView ;
-    imageWithHeight = 89.0f;
-    if (messageModel.list.count >6) {
-        maskImageView = [[UIImageView alloc]initWithImage:[UIImage imageWithColor:[UIColor blackColor]]];
-//        maskImageView.alpha = 0.6f;
-        maskImageView.frame = CGRectMake(5 * (imageWithHeight + Width_Space) + Start_X,2 * (imageWithHeight + Height_Space)+Start_Y, imageWithHeight, imageWithHeight);
-        dispatch_main_async_safe(^{
-        [self addSubview:maskImageView];
-        });
-    }
+    
+    
+//    UIImageView * maskImageView ;
+//    imageWithHeight = 89.0f;
+//    if (messageModel.list.count >6) {
+//        maskImageView = [[UIImageView alloc]initWithImage:[UIImage imageWithColor:[UIColor redColor]]];
+////        maskImageView.alpha = 0.6f;
+//        maskImageView.frame = CGRectMake(0 * (imageWithHeight + Width_Space) + Start_X,1 * (imageWithHeight + Height_Space)+Start_Y, imageWithHeight, imageWithHeight);
+//        dispatch_main_async_safe(^{
+//        [self addSubview:maskImageView];
+//         });
+//    }
     
 //     if (messageModel.isSender) {
 //     if (messageModel.imageRemoteURL) {
@@ -267,10 +276,17 @@
 
 //- (UIImageView *)imageView{
 //    if (!_imageView) {
-//
+//       _imageView = [[UIImageView alloc] init];
 //    }
 //    return _imageView;
 //}
+
+- (NSMutableArray *)imageArray{
+    if (!_imageArray) {
+        _imageArray = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _imageArray;
+}
 
 @end
 

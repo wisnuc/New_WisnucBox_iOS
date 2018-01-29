@@ -179,6 +179,10 @@
 		1F6E54AF2004B123009E38AE /* more_white@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6E54AC2004B122009E38AE /* more_white@3x.png */; };
 		1F6E54B02004B123009E38AE /* more_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6E54AD2004B122009E38AE /* more_white@2x.png */; };
 		1F6E54B32004BAE3009E38AE /* UIView+dropshadow.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6E54B12004BAE1009E38AE /* UIView+dropshadow.m */; };
+		1F70A5B1201ECF70001DED64 /* WBChatListAddUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70A5B0201ECF70001DED64 /* WBChatListAddUserViewController.m */; };
+		1F70A5B5201EEBD3001DED64 /* WBChatListAddUserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70A5B3201EEBD3001DED64 /* WBChatListAddUserTableViewCell.m */; };
+		1F70A5B6201EEBD3001DED64 /* WBChatListAddUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F70A5B4201EEBD3001DED64 /* WBChatListAddUserTableViewCell.xib */; };
+		1F70A5BC201F2F69001DED64 /* WBUpdateBoxAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70A5BB201F2F69001DED64 /* WBUpdateBoxAPI.m */; };
 		1F7F15FC2010872E003CB83D /* group.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7F15F92010872D003CB83D /* group.png */; };
 		1F7F15FD2010872E003CB83D /* group@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7F15FA2010872D003CB83D /* group@3x.png */; };
 		1F7F15FE2010872E003CB83D /* group@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7F15FB2010872E003CB83D /* group@2x.png */; };
@@ -1328,6 +1332,13 @@
 		1F6E54AD2004B122009E38AE /* more_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "more_white@2x.png"; sourceTree = "<group>"; };
 		1F6E54B12004BAE1009E38AE /* UIView+dropshadow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+dropshadow.m"; sourceTree = "<group>"; };
 		1F6E54B22004BAE2009E38AE /* UIView+dropshadow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+dropshadow.h"; sourceTree = "<group>"; };
+		1F70A5AF201ECF70001DED64 /* WBChatListAddUserViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBChatListAddUserViewController.h; sourceTree = "<group>"; };
+		1F70A5B0201ECF70001DED64 /* WBChatListAddUserViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBChatListAddUserViewController.m; sourceTree = "<group>"; };
+		1F70A5B2201EEBD3001DED64 /* WBChatListAddUserTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBChatListAddUserTableViewCell.h; sourceTree = "<group>"; };
+		1F70A5B3201EEBD3001DED64 /* WBChatListAddUserTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBChatListAddUserTableViewCell.m; sourceTree = "<group>"; };
+		1F70A5B4201EEBD3001DED64 /* WBChatListAddUserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBChatListAddUserTableViewCell.xib; sourceTree = "<group>"; };
+		1F70A5BA201F2F69001DED64 /* WBUpdateBoxAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBUpdateBoxAPI.h; sourceTree = "<group>"; };
+		1F70A5BB201F2F69001DED64 /* WBUpdateBoxAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBUpdateBoxAPI.m; sourceTree = "<group>"; };
 		1F7F15F92010872D003CB83D /* group.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = group.png; sourceTree = "<group>"; };
 		1F7F15FA2010872D003CB83D /* group@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "group@3x.png"; sourceTree = "<group>"; };
 		1F7F15FB2010872E003CB83D /* group@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "group@2x.png"; sourceTree = "<group>"; };
@@ -3336,6 +3347,8 @@
 			children = (
 				1F06FD58200DCF890024AFC7 /* WBChatListViewController.h */,
 				1F06FD59200DCF890024AFC7 /* WBChatListViewController.m */,
+				1F70A5AF201ECF70001DED64 /* WBChatListAddUserViewController.h */,
+				1F70A5B0201ECF70001DED64 /* WBChatListAddUserViewController.m */,
 			);
 			path = ChatList;
 			sourceTree = "<group>";
@@ -3535,6 +3548,9 @@
 				1F06FD5E200DD1630024AFC7 /* WBChatListTableViewCell.h */,
 				1F06FD5F200DD1630024AFC7 /* WBChatListTableViewCell.m */,
 				1F06FD60200DD1630024AFC7 /* WBChatListTableViewCell.xib */,
+				1F70A5B2201EEBD3001DED64 /* WBChatListAddUserTableViewCell.h */,
+				1F70A5B3201EEBD3001DED64 /* WBChatListAddUserTableViewCell.m */,
+				1F70A5B4201EEBD3001DED64 /* WBChatListAddUserTableViewCell.xib */,
 			);
 			path = ChatList;
 			sourceTree = "<group>";
@@ -4135,6 +4151,8 @@
 				1FD1F26920171355005503DC /* WBGetBoxesAPI.m */,
 				1FD1F26B201714ED005503DC /* WBGetBoxTokenAPI.h */,
 				1FD1F26C201714ED005503DC /* WBGetBoxTokenAPI.m */,
+				1F70A5BA201F2F69001DED64 /* WBUpdateBoxAPI.h */,
+				1F70A5BB201F2F69001DED64 /* WBUpdateBoxAPI.m */,
 			);
 			path = Box;
 			sourceTree = "<group>";
@@ -5518,6 +5536,7 @@
 				1F922E641FC8438C00A7614B /* FirstFilesTableViewCell.xib in Resources */,
 				1F7F15FE2010872E003CB83D /* group@2x.png in Resources */,
 				1FA8649E200F405200550C7B /* B_62@2x.gif in Resources */,
+				1F70A5B6201EEBD3001DED64 /* WBChatListAddUserTableViewCell.xib in Resources */,
 				F683116A1FB30AAE005AC578 /* pic_线型@3x.png in Resources */,
 				F68311791FB30AAF005AC578 /* Roboto-Bold.ttf in Resources */,
 				1FA8644B200F405100550C7B /* B_32@2x.gif in Resources */,
@@ -6237,6 +6256,7 @@
 				1F114A2A1FF3457B007F6D15 /* WBMaintenanceTableViewCell.m in Sources */,
 				1F4D75B01FAC4BB800E6516C /* AssetsServices.m in Sources */,
 				F675614B1FB3428F00E3277F /* UIColor+MaterialTextField.m in Sources */,
+				1F70A5B1201ECF70001DED64 /* WBChatListAddUserViewController.m in Sources */,
 				71A3D6741FB584360002B8B1 /* FMCreateUserAPI.m in Sources */,
 				1F58DEEC1FDFF25900768DD7 /* WBInitializationViewController.m in Sources */,
 				C183CDFD1FCFD8A0002E29CD /* UINavigationController+SXFullScreen.m in Sources */,
@@ -6406,7 +6426,9 @@
 				71A3D6671FB57AC30002B8B1 /* JYBaseRequest.m in Sources */,
 				1F922EBF1FCE816800A7614B /* WBStationManageEquipmentTableViewCell.m in Sources */,
 				1F922E531FC7FB3600A7614B /* CSFilesOneDownloadManager.m in Sources */,
+				1F70A5BC201F2F69001DED64 /* WBUpdateBoxAPI.m in Sources */,
 				71A3D6711FB57F830002B8B1 /* FMAsyncUsersAPI.m in Sources */,
+				1F70A5B5201EEBD3001DED64 /* WBChatListAddUserTableViewCell.m in Sources */,
 				1F8EAF251FB9A7C100FEED19 /* LocalDownloadingTableViewCell.m in Sources */,
 				1FFEADAE1FB087AE00CD3068 /* CSFileDownloadManager.m in Sources */,
 				F6D8CC391FB402CB00673824 /* FMBaseViewController.m in Sources */,

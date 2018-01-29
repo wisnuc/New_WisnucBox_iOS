@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "GroupUserModel.h"
-
-typedef void(^imageClickBlock)(NSInteger iamgeTag);
+@class WBGroupSettingUserTableViewCell;
+typedef void(^ImageClickBlock)(NSInteger iamgeTag);
+typedef void(^AddUserClickBlock)(WBGroupSettingUserTableViewCell *groupSettingUsercell);
+typedef void(^RemoveUserClickBlock)(WBGroupSettingUserTableViewCell *groupSettingUsercell);
 
 @interface WBGroupSettingUserTableViewCell : UITableViewCell
 @property (nonatomic) UIImageView *userImageView;
@@ -18,5 +20,7 @@ typedef void(^imageClickBlock)(NSInteger iamgeTag);
 @property (nonatomic) UILabel *userNameLabel;
 @property (nonatomic) UILabel *moreUserLabel;
 @property (nonatomic) NSMutableArray *userArray;
-@property (nonatomic) imageClickBlock clickBlock;
+@property (nonatomic) ImageClickBlock clickBlock;
+@property (nonatomic) AddUserClickBlock  addUserClickBlock;
+@property (nonatomic) RemoveUserClickBlock  removeUserClickBlock;
 @end

@@ -9,6 +9,12 @@
 #ifndef Define_h
 #define Define_h
 
+typedef NS_ENUM(NSInteger , WBUserAddressBookType) {
+    WBUserAddressBookCreat = 0,
+    WBUserAddressBookAdd,
+    WBUserAddressBookDelete,
+};
+
 #define WB_IS_DEBUG NO
 
 #define __kWidth [[UIScreen mainScreen]bounds].size.width

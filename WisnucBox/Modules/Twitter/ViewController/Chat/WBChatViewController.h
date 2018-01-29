@@ -7,7 +7,8 @@
 //
 
 #import "FABaseVC.h"
+#import "WBBoxesModel.h"
 
 @interface WBChatViewController : FABaseVC
-@property (nonatomic) NSString *boxuuid;
+@property (nonatomic) WBBoxesModel *boxModel;
 @end

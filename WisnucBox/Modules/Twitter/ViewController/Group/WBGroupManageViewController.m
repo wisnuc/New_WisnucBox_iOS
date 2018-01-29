@@ -9,6 +9,8 @@
 #import "WBGroupManageViewController.h"
 #import "WBGroupSettingUserTableViewCell.h"
 #import "WBGetBoxTokenAPI.h"
+#import "WBChatListAddUserViewController.h"
+#import "WBUpdateBoxAPI.h"
 
 #define GeneralBottomHeight 30
 #define UserNameLabelHeight 15
@@ -25,46 +27,55 @@
     [super viewDidLoad];
     self.title = WBLocalizedString(@"group_setting", nil);
     [self initView];
-    
+    [self getUserData];
    
 //    self.automaticallyAdjustsScrollViewInsets = NO;
-    GroupUserModel *model1 = [GroupUserModel new];
-    model1.userName = @"离开家";
-    model1.imageURL = @"http://www.mf08s.com/y/q/UploadFiles_q/20121005/2012100507413841.jpg";
-    
-    GroupUserModel *model2 = [GroupUserModel new];
-    model2.userName = @"adgshja";
-    model2.imageURL = @"http://www.mf08s.com/y/q/UploadFiles_q/20121005/2012100507413803.jpg";
-    
-    GroupUserModel *model3 = [GroupUserModel new];
-    model3.userName = @"科技爱好大的";
-    model3.imageURL = @"http://pic.qqtn.com/up/2018-1/2018011815282654933.jpg";
-    
-    GroupUserModel *model4 = [GroupUserModel new];
-    model4.userName = @"打撒撒多";
-    model4.imageURL = @"http://www.qqzhi.com/uploadpic/2014-09-06/195035112.jpg";
-    
-    GroupUserModel *model5 = [GroupUserModel new];
-    model5.userName = @"坎坎坷坷";
-    model5.imageURL = @"http://www.qqzhi.com/uploadpic/2014-09-06/195035637.jpg";
-    
-    GroupUserModel *model6 = [GroupUserModel new];
-    model6.userName = @"呃呃呃";
-    model6.imageURL = @"http://www.qqzhi.com/uploadpic/2014-09-06/195034891.jpg";
-    
-    GroupUserModel *model7 = [GroupUserModel new];
-    model7.userName = @"辣鸡";
-    model7.imageURL = @"http://www.qqzhi.com/uploadpic/2014-09-06/195035561.jpg";
-    
-    GroupUserModel *model8 = [GroupUserModel new];
-    model8.userName = @"通天塔";
-    model8.imageURL = @"http://up.qqjia.com/z/19/tu21104_4.jpg";
-    
-    
-//    NSArray *tmpArray = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"0"];
-    self.userGroupArray = [NSMutableArray arrayWithObjects:model1,model2,model3,model4,model5,model6,model7,model8,nil];
-    [self.tableView reloadData];
+//    GroupUserModel *model1 = [GroupUserModel new];
+//    model1.userName = @"离开家";
+//    model1.imageURL = @"http://www.mf08s.com/y/q/UploadFiles_q/20121005/2012100507413841.jpg";
+//
+//    GroupUserModel *model2 = [GroupUserModel new];
+//    model2.userName = @"adgshja";
+//    model2.imageURL = @"http://www.mf08s.com/y/q/UploadFiles_q/20121005/2012100507413803.jpg";
+//
+//    GroupUserModel *model3 = [GroupUserModel new];
+//    model3.userName = @"科技爱好大的";
+//    model3.imageURL = @"http://pic.qqtn.com/up/2018-1/2018011815282654933.jpg";
+//
+//    GroupUserModel *model4 = [GroupUserModel new];
+//    model4.userName = @"打撒撒多";
+//    model4.imageURL = @"http://www.qqzhi.com/uploadpic/2014-09-06/195035112.jpg";
+//
+//    GroupUserModel *model5 = [GroupUserModel new];
+//    model5.userName = @"坎坎坷坷";
+//    model5.imageURL = @"http://www.qqzhi.com/uploadpic/2014-09-06/195035637.jpg";
+//
+//    GroupUserModel *model6 = [GroupUserModel new];
+//    model6.userName = @"呃呃呃";
+//    model6.imageURL = @"http://www.qqzhi.com/uploadpic/2014-09-06/195034891.jpg";
+//
+//    GroupUserModel *model7 = [GroupUserModel new];
+//    model7.userName = @"辣鸡";
+//    model7.imageURL = @"http://www.qqzhi.com/uploadpic/2014-09-06/195035561.jpg";
+//
+//    GroupUserModel *model8 = [GroupUserModel new];
+//    model8.userName = @"通天塔";
+//    model8.imageURL = @"http://up.qqjia.com/z/19/tu21104_4.jpg";
+//
+//
+////    NSArray *tmpArray = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"0"];
+//    self.userGroupArray = [NSMutableArray arrayWithObjects:model1,model2,model3,model4,model5,model6,model7,model8,nil];
+//
 //    self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
+}
+
+- (void)getUserData{
+    [_boxModel.users enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        GroupUserModel *model = [GroupUserModel new];
+        model.userName = obj;
+        [self.userGroupArray addObject:model];
+    }];
+     [self.tableView reloadData];
 }
 
 - (void)initView{
@@ -221,7 +232,7 @@
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifer];
     }
-    
+    @weaky(self)
     switch (indexPath.section) {
         case 0:{
             WBGroupSettingUserTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WBGroupSettingUserTableViewCell class])];
@@ -230,8 +241,24 @@
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.userArray =  _userGroupArray;
-            cell.clickBlock = ^(NSInteger iamgeTag) {
+            cell.clickBlock = ^(NSInteger imageTag) {
 #warning push
+               NSLog(@"%ld",imageTag);
+           
+                
+            };
+            cell.addUserClickBlock = ^(WBGroupSettingUserTableViewCell *groupSettingUsercell) {
+                WBChatListAddUserViewController *addUserViewController = [[WBChatListAddUserViewController alloc]init];
+                addUserViewController.type = WBUserAddressBookAdd;
+                addUserViewController.boxModel = _boxModel;
+                NavViewController *navi = [[NavViewController alloc]initWithRootViewController:addUserViewController];
+                [self presentViewController:navi animated:YES completion:^{
+                    
+                }];
+            };
+            
+            cell.removeUserClickBlock = ^(WBGroupSettingUserTableViewCell *groupSettingUsercell) {
+                
             };
             return cell;
         }
@@ -241,7 +268,12 @@
             switch (indexPath.row) {
                 case 0:
                 {
-                    [self generalCellWithTabelViewCell:cell Title:@"群名称" DetailText:@"闻上大本营" IsAccessoryDisclosureIndicator:YES SwitchTag:nil];
+                    if (!_boxModel.name ||_boxModel.name.length==0) {
+                     [self generalCellWithTabelViewCell:cell Title:@"群名称" DetailText:@"未设置" IsAccessoryDisclosureIndicator:YES SwitchTag:nil];
+                    }else{
+                      [self generalCellWithTabelViewCell:cell Title:@"群名称" DetailText:@"闻上大本营" IsAccessoryDisclosureIndicator:YES SwitchTag:nil];
+                    }
+                   
                 }
                     break;
                  case 1:

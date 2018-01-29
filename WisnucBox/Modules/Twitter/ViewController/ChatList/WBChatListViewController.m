@@ -11,8 +11,9 @@
 #import "WBChatViewController.h"
 #import "WBGetBoxesAPI.h"
 #import "WBBoxesModel.h"
+#import "WBChatListAddUserViewController.h"
 
-@interface WBChatListViewController () <UITableViewDataSource,UITableViewDelegate>
+@interface WBChatListViewController () <UITableViewDataSource,UITableViewDelegate,ChatListAddUserEndDelegate>
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic)MDCFloatingButton *addButton;
 @property (nonatomic)NSMutableArray *boxDataArray;
@@ -24,8 +25,9 @@
     [super viewDidLoad];
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.addButton];
-    [self initMjFreshHeader];
     [self getBoxesListData];
+    [self initMjFreshHeader];
+ 
 //    [self initMjFreshFooter];
     
 }
@@ -73,7 +75,17 @@
 }
 
 - (void)didTapAdd:(MDCFloatingButton *)sender{
-    
+    WBChatListAddUserViewController *addUserViewController = [[WBChatListAddUserViewController alloc]init];
+    addUserViewController.type = WBUserAddressBookCreat;
+    addUserViewController.endDelegate = self;
+    NavViewController *navi = [[NavViewController alloc]initWithRootViewController:addUserViewController];
+    [self presentViewController:navi animated:YES completion:^{
+        
+    }];
+}
+
+- (void)endAddUser{
+    [self getBoxesListData];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -91,6 +103,26 @@
     }
     WBBoxesModel *boxesModel = self.boxDataArray[indexPath.row];
     cell.nameLabel.text = boxesModel.name;
+    if (boxesModel.name.length == 0|| !boxesModel.name) {
+        switch (boxesModel.users.count) {
+            case 1:
+                cell.nameLabel.text = [NSString stringWithFormat:@"%@",boxesModel.users[0]];
+                break;
+            case 2:
+                 cell.nameLabel.text = [NSString stringWithFormat:@"%@、%@",boxesModel.users[0],boxesModel.users[1]];
+                break;
+            case 3:
+                 cell.nameLabel.text = [NSString stringWithFormat:@"%@、%@、%@",boxesModel.users[0],boxesModel.users[1],boxesModel.users[2]];
+                break;
+            case 4:
+                cell.nameLabel.text = [NSString stringWithFormat:@"%@、%@、%@、%@",boxesModel.users[0],boxesModel.users[1],boxesModel.users[2],boxesModel.users[3]];
+                break;
+                
+            default:
+                break;
+        }
+    
+    }
     return cell;
 }
 
@@ -104,7 +136,7 @@
     WBChatListTableViewCell * cell = (WBChatListTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     WBChatViewController *chatVC = [[WBChatViewController alloc]init];
     chatVC.title = cell.nameLabel.text;
-    chatVC.boxuuid = model.uuid;
+    chatVC.boxModel = model;
     [self.navigationController pushViewController:chatVC animated:YES];
 }
 
