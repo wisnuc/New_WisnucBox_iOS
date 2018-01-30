@@ -130,7 +130,7 @@ SingleM(Manager)
     NSAssert(![model isKindOfClass:[UIResponder class]], @"必须保证模型是NSObject或者NSObject的子类,同时不响应事件");
     if ([self.dataBase open]) {
         // 没有表的时候，先创建再插入
-        
+     
         // 此时有三步操作，第一步处理完不关闭数据库
         if (![self isExitTable:[model class] autoCloseDB:NO]) {
             // 第二步处理完不关闭数据库

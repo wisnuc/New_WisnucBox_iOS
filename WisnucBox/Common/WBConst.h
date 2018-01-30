@@ -31,6 +31,8 @@ extern NSString *const kRouterEventChatHeadImageTapEventName;
 extern NSString *const kRouterEventTextURLTapEventName;
 extern NSString *const kRouterEventImageBubbleTapEventName;
 
+extern NSString *const kDataChangedName;
+
 extern NSInteger kMessageCount;
 
 #pragma mark - IM模块常量

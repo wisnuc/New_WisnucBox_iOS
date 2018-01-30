@@ -183,6 +183,9 @@
 		1F70A5B5201EEBD3001DED64 /* WBChatListAddUserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70A5B3201EEBD3001DED64 /* WBChatListAddUserTableViewCell.m */; };
 		1F70A5B6201EEBD3001DED64 /* WBChatListAddUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F70A5B4201EEBD3001DED64 /* WBChatListAddUserTableViewCell.xib */; };
 		1F70A5BC201F2F69001DED64 /* WBUpdateBoxAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70A5BB201F2F69001DED64 /* WBUpdateBoxAPI.m */; };
+		1F70A5C0202018DE001DED64 /* WBGetOneBoxAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70A5BF202018DE001DED64 /* WBGetOneBoxAPI.m */; };
+		1F70A5C320204082001DED64 /* WBDeleteBoxAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70A5C220204082001DED64 /* WBDeleteBoxAPI.m */; };
+		1F70A5C62020573A001DED64 /* WBCreatTweetAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70A5C52020573A001DED64 /* WBCreatTweetAPI.m */; };
 		1F7F15FC2010872E003CB83D /* group.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7F15F92010872D003CB83D /* group.png */; };
 		1F7F15FD2010872E003CB83D /* group@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7F15FA2010872D003CB83D /* group@3x.png */; };
 		1F7F15FE2010872E003CB83D /* group@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7F15FB2010872E003CB83D /* group@2x.png */; };
@@ -1339,6 +1342,13 @@
 		1F70A5B4201EEBD3001DED64 /* WBChatListAddUserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WBChatListAddUserTableViewCell.xib; sourceTree = "<group>"; };
 		1F70A5BA201F2F69001DED64 /* WBUpdateBoxAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBUpdateBoxAPI.h; sourceTree = "<group>"; };
 		1F70A5BB201F2F69001DED64 /* WBUpdateBoxAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBUpdateBoxAPI.m; sourceTree = "<group>"; };
+		1F70A5BD202010C9001DED64 /* WBEnum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBEnum.h; sourceTree = "<group>"; };
+		1F70A5BE202018DE001DED64 /* WBGetOneBoxAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBGetOneBoxAPI.h; sourceTree = "<group>"; };
+		1F70A5BF202018DE001DED64 /* WBGetOneBoxAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBGetOneBoxAPI.m; sourceTree = "<group>"; };
+		1F70A5C120204082001DED64 /* WBDeleteBoxAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBDeleteBoxAPI.h; sourceTree = "<group>"; };
+		1F70A5C220204082001DED64 /* WBDeleteBoxAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBDeleteBoxAPI.m; sourceTree = "<group>"; };
+		1F70A5C42020573A001DED64 /* WBCreatTweetAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBCreatTweetAPI.h; sourceTree = "<group>"; };
+		1F70A5C52020573A001DED64 /* WBCreatTweetAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBCreatTweetAPI.m; sourceTree = "<group>"; };
 		1F7F15F92010872D003CB83D /* group.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = group.png; sourceTree = "<group>"; };
 		1F7F15FA2010872D003CB83D /* group@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "group@3x.png"; sourceTree = "<group>"; };
 		1F7F15FB2010872E003CB83D /* group@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "group@2x.png"; sourceTree = "<group>"; };
@@ -2881,6 +2891,7 @@
 				1F4D75B71FAC5AE700E6516C /* FontDefine.h */,
 				1FA8604B200F229800550C7B /* WBConst.h */,
 				1FA8604C200F229800550C7B /* WBConst.m */,
+				1F70A5BD202010C9001DED64 /* WBEnum.h */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -4153,6 +4164,10 @@
 				1FD1F26C201714ED005503DC /* WBGetBoxTokenAPI.m */,
 				1F70A5BA201F2F69001DED64 /* WBUpdateBoxAPI.h */,
 				1F70A5BB201F2F69001DED64 /* WBUpdateBoxAPI.m */,
+				1F70A5BE202018DE001DED64 /* WBGetOneBoxAPI.h */,
+				1F70A5BF202018DE001DED64 /* WBGetOneBoxAPI.m */,
+				1F70A5C120204082001DED64 /* WBDeleteBoxAPI.h */,
+				1F70A5C220204082001DED64 /* WBDeleteBoxAPI.m */,
 			);
 			path = Box;
 			sourceTree = "<group>";
@@ -4188,6 +4203,8 @@
 			children = (
 				1FF6410A20183546007118F5 /* WBTweetAPI.h */,
 				1FF6410B20183546007118F5 /* WBTweetAPI.m */,
+				1F70A5C42020573A001DED64 /* WBCreatTweetAPI.h */,
+				1F70A5C52020573A001DED64 /* WBCreatTweetAPI.m */,
 			);
 			path = Tweets;
 			sourceTree = "<group>";
@@ -6320,6 +6337,7 @@
 				C138D0781FB9A4B0000CF518 /* DriveModel.m in Sources */,
 				F6830F181FB300D2005AC578 /* FMLeftUserCell.m in Sources */,
 				1FA8604D200F229800550C7B /* WBConst.m in Sources */,
+				1F70A5C62020573A001DED64 /* WBCreatTweetAPI.m in Sources */,
 				1FA86407200F405100550C7B /* LHPhotoPreviewCell.m in Sources */,
 				C183CE041FD006A9002E29CD /* WBCloudLocalTokenAPI.m in Sources */,
 				1FCFB3E11FE8B43700BD3375 /* RadioButton.m in Sources */,
@@ -6340,6 +6358,7 @@
 				1F4D75AB1FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.m in Sources */,
 				1FAD74391FD01C2F00A5D880 /* CSUploadModel.m in Sources */,
 				1FF6411920186332007118F5 /* WBChatViewNormalTableViewCell.m in Sources */,
+				1F70A5C320204082001DED64 /* WBDeleteBoxAPI.m in Sources */,
 				1F4D75B31FAC4BB800E6516C /* NetServices.m in Sources */,
 				1F33B0752019E94B00DE3877 /* WBChatFileBubbleView.m in Sources */,
 				71A3D67A1FB5AD230002B8B1 /* FMAccountUsersAPI.m in Sources */,
@@ -6390,6 +6409,7 @@
 				F6D8CC411FB42E1300673824 /* UIView+JYExtension.m in Sources */,
 				1FAD741C1FCFE0BC00A5D880 /* WBStationTicketsAPI.m in Sources */,
 				1F114A5F1FF48D49007F6D15 /* WBGetUpgradStateModel.m in Sources */,
+				1F70A5C0202018DE001DED64 /* WBGetOneBoxAPI.m in Sources */,
 				1FD1F26A20171355005503DC /* WBGetBoxesAPI.m in Sources */,
 				1F4D759F1FAC4BB800E6516C /* UIColor+fm_color.m in Sources */,
 				1F1ABA131FB99882006EB1FC /* CSDownloadHelper.m in Sources */,

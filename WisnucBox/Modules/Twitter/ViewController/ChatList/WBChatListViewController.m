@@ -25,7 +25,7 @@
     [super viewDidLoad];
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.addButton];
-    [self getBoxesListData];
+ 
     [self initMjFreshHeader];
  
 //    [self initMjFreshFooter];
@@ -34,6 +34,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self getBoxesListData];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 

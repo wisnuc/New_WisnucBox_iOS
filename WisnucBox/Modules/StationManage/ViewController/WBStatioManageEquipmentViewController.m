@@ -122,6 +122,7 @@ ReNameDelegate
 
 - (void)editButtonClick:(UIButton *)sender{
     WBStationManageRenameViewController *renameVC = [[WBStationManageRenameViewController alloc]init];
+    renameVC.vcType = WBRenameVCTypeStationName;
     WBStationInfoModel *model = self.dataStationInfoArray[0];
     renameVC.stationName = model.name;
     renameVC.delegate = self;

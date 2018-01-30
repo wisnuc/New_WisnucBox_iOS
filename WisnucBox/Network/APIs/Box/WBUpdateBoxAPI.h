@@ -14,4 +14,5 @@
 @property (nonatomic)NSString *op;
 @property (nonatomic)NSString *boxuuid;
 + (instancetype)updateApiWithBoxuuid:(NSString *)boxuuid Users:(NSArray *)users Option:(NSString *)op;
++ (instancetype)updateApiWithBoxName:(NSString *)boxName Boxuuid:(NSString *)boxuuid;
 @end

@@ -35,6 +35,8 @@ NSString *const kRouterEventChatResendEventName = @"kRouterEventChatResendEventN
 NSString *const kRouterEventTextURLTapEventName = @"kRouterEventTextURLTapEventName";
 NSString *const kRouterEventImageBubbleTapEventName = @"kRouterEventImageBubbleTapEventName";
 
+NSString *const kDataChangedName = @"kDataChangedName";
+
 NSInteger kMessageCount = 20;
 
 #pragma mark - IM模块常量

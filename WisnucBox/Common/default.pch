@@ -17,6 +17,7 @@
 #import "FontDefine.h"
 #import "WBConst.h"
 #import "JYConst.h"
+#import "WBEnum.h"
 
 //第三方
 #import <AFNetworking/AFNetworking.h>

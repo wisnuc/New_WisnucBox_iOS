@@ -154,6 +154,7 @@
 
 - (void)addUserAction{
     if (self.exsitDataArray.count == self.choosedUserArray.count)return;
+    @weaky(self)
     NSMutableArray *globalArray = [NSMutableArray arrayWithCapacity:0];
     [self.choosedUserArray enumerateObjectsUsingBlock:^(UserModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [globalArray addObject:obj.global.guid];
@@ -163,11 +164,13 @@
         NSArray *arr = [NSArray arrayWithArray:globalArray];
     [[WBUpdateBoxAPI updateApiWithBoxuuid:_boxModel.uuid Users:arr Option:@"add"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
+        if (_endDelegate && [_endDelegate respondsToSelector:@selector(endAddUser)]) {
+            [weak_self.endDelegate endAddUser];
+        }
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
     }];
     }
-    
 }
 
 - (void)creatBoxAction{

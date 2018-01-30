@@ -377,6 +377,7 @@ CGFloat const kChatBatItemWH = 26.0f;
         return;
     }
     
+    
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:9 delegate:self];
     imagePickerVc.alwaysEnableDoneBtn = NO;
     imagePickerVc.allowPickingVideo = NO;

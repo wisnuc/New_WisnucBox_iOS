@@ -62,6 +62,7 @@ NSString *const kTableViewFrame = @"frame";
     [self setupInit];
 //    [self loadMessageWithId:nil];
     [self scrollToBottomAnimated:YES refresh:YES];
+    [KDefaultNotificationCenter addObserver:self selector:@selector(dataChanged:) name:kDataChangedName object:nil];
 }
 
 
@@ -86,6 +87,9 @@ NSString *const kTableViewFrame = @"frame";
 }
 
 - (void)setupInit {
+    if (!_boxModel.name || _boxModel.name.length==0) {
+        self.title = [NSString stringWithFormat:@"群聊(%ld)",_boxModel.users.count];
+    }
     self.view.backgroundColor = MainBackgroudColor;
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.chatBarView];
@@ -97,6 +101,7 @@ NSString *const kTableViewFrame = @"frame";
 - (void)dealloc {
     [self.tableView removeObserver:self forKeyPath:kTableViewFrame];
     [self.tableView removeObserver:self forKeyPath:kTableViewOffset];
+    [KDefaultNotificationCenter removeObserver:self name:kDataChangedName object:nil];
 }
 
 - (void)getData{
@@ -117,6 +122,10 @@ NSString *const kTableViewFrame = @"frame";
     }];
 }
 
+- (void)dataChanged:(NSNotification *)noti{
+    WBBoxesModel *boxModel = noti.object;
+    _boxModel = boxModel;
+}
 #pragma mark - public
 //刷新并滑动到底部
 - (void)scrollToBottomAnimated:(BOOL)animated refresh:(BOOL)refresh {
@@ -141,7 +150,7 @@ NSString *const kTableViewFrame = @"frame";
         
         WBTweetModel *model = self.messages.firstObject;
         self.tableViewOffSetY = (self.tableView.contentSize.height - self.tableView.contentOffset.y);
-        [self loadMessageWithId:model.uuid];
+        [self loadMessageWithId:[NSString stringWithFormat:@"%lld",model.ctime]];
         [self.tableView reloadData];
         [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height - self.tableViewOffSetY)];
         self.headerRefreshing = NO;
@@ -231,6 +240,7 @@ NSString *const kTableViewFrame = @"frame";
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         messageModel.status = MessageDeliveryState_Delivered;
         WBTweetModel *dbMessageModel = [[LHIMDBManager shareManager] searchModel:[WBTweetModel class] keyValues:@{@"date" : [NSString stringWithFormat:@"%lld",date], @"status" : @(MessageDeliveryState_Delivering)}];
+        NSLog(@"%@",dbMessageModel);
         dbMessageModel.status = MessageDeliveryState_Delivered;
         NSArray *cells = [self.tableView visibleCells];
         [cells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL * _Nonnull stop) {

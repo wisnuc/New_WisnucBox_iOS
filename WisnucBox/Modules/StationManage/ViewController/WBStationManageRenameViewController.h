@@ -19,4 +19,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *renameTextField;
 @property (nonatomic,weak) id<ReNameDelegate> delegate;
 @property (nonatomic,strong) NSString *stationName;
+@property (nonatomic,strong) NSString *boxuuid;
+@property (nonatomic) WBRenameVCType vcType;
 @end

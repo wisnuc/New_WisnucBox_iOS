@@ -17,18 +17,29 @@
     return api;
 }
 
++ (instancetype)updateApiWithBoxName:(NSString *)boxName Boxuuid:(NSString *)boxuuid {
+    WBUpdateBoxAPI *api = [WBUpdateBoxAPI new];
+    api.boxName = boxName;
+    api.boxuuid = boxuuid;
+    return api;
+}
+
 - (JYRequestMethod)requestMethod{
     return JYRequestMethodPatch;
 }
 
 - (id)requestArgument{
+    if (_boxName) {
+        NSDictionary *dic = @{
+                              @"name":_boxName
+                              };
+        return dic;
+    }
     NSMutableDictionary *mutableDic = [NSMutableDictionary dictionaryWithCapacity:0];
     [mutableDic setObject:_users forKey:@"value"];
     [mutableDic setObject:_op forKey:@"op"];
     NSLog(@"%@",mutableDic);
     NSData *josnData = [NSJSONSerialization dataWithJSONObject:mutableDic options:NSJSONWritingPrettyPrinted error:nil];
-    NSString *result = [[NSString alloc] initWithData:josnData  encoding:NSUTF8StringEncoding];
-    
     NSMutableDictionary *dicx = [NSJSONSerialization JSONObjectWithData:josnData options:NSJSONReadingMutableLeaves error:nil];
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
     [dic setObject:dicx forKey:@"users"];

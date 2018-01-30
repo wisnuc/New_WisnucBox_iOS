@@ -8,15 +8,19 @@
 
 #import "WBGroupManageViewController.h"
 #import "WBGroupSettingUserTableViewCell.h"
-#import "WBGetBoxTokenAPI.h"
+#import "WBChatListViewController.h"
 #import "WBChatListAddUserViewController.h"
+#import "WBStationManageRenameViewController.h"
 #import "WBUpdateBoxAPI.h"
+#import "WBGetBoxTokenAPI.h"
+#import "WBGetOneBoxAPI.h"
+#import "WBDeleteBoxAPI.h"
 
 #define GeneralBottomHeight 30
 #define UserNameLabelHeight 15
 #define UserImageViewHeight 40
 
-@interface WBGroupManageViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface WBGroupManageViewController ()<UITableViewDelegate,UITableViewDataSource,ReNameDelegate,ChatListAddUserEndDelegate>
 @property(nonatomic,strong) UITableView *tableView;
 @property(nonatomic) NSMutableArray *userGroupArray;
 @end
@@ -70,12 +74,14 @@
 }
 
 - (void)getUserData{
+    NSMutableArray *userGroupArray = [NSMutableArray arrayWithCapacity:0];
     [_boxModel.users enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         GroupUserModel *model = [GroupUserModel new];
         model.userName = obj;
-        [self.userGroupArray addObject:model];
+        [userGroupArray addObject:model];
     }];
-     [self.tableView reloadData];
+    self.userGroupArray = userGroupArray;
+    [self.tableView reloadData];
 }
 
 - (void)initView{
@@ -93,7 +99,19 @@
 }
 
 - (void)rightButtonClick:(UIButton *)sender{
-    [self.navigationController popViewControllerAnimated:YES];
+    [[WBDeleteBoxAPI deleteBoxApiWithBoxuuid:_boxModel.uuid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.responseJsonObject);
+         [SXLoadingView showProgressHUDText:@"该群已解散" duration:1.2f];
+        for (UIViewController *temp in self.navigationController.viewControllers) {
+            if ([temp isKindOfClass:[WBChatListViewController class]]) {
+                [self.navigationController popToViewController:temp animated:YES];
+            }
+        }
+        
+    } failure:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.error);
+        [SXLoadingView showProgressHUDText:@"退出群失败" duration:1.2f];
+    }];
 }
 
 - (void)switchChanged:(UISwitch *)sender{
@@ -148,6 +166,27 @@
     }
     
     return headerView;
+}
+
+-(void)endAddUser{
+    [self reNameComplete];
+}
+
+- (void)reNameComplete{
+    if (_boxModel.uuid.length==0 ||!_boxModel.uuid) {
+        return;
+    }
+    @weaky(self)
+    [[WBGetOneBoxAPI getBoxApiWithBoxuuid:_boxModel.uuid] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+         NSDictionary * responseDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+         WBBoxesModel *model = [WBBoxesModel modelWithDictionary:responseDic];
+        _boxModel = model;
+        [weak_self getUserData];
+        [KDefaultNotificationCenter postNotificationName:kDataChangedName object:model];
+        NSLog(@"%@",request.responseJsonObject);
+    } failure:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.error);
+    }];;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -223,7 +262,34 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    switch (indexPath.section) {
+        case 1:
+            {
+                switch (indexPath.row) {
+                    case 0:{
+                        WBStationManageRenameViewController *renameVC = [[WBStationManageRenameViewController alloc]init];
+                        renameVC.vcType = WBRenameVCTypeBoxName;
+                        if (_boxModel.name && _boxModel.name.length>0) {
+                            renameVC.stationName = _boxModel.name;
+                        }
+                        renameVC.boxuuid = _boxModel.uuid;
+                        renameVC.delegate = self;
+                        [self.navigationController.navigationBar setBarTintColor:COR1];
+                        [self.navigationController pushViewController:renameVC animated:YES];
+                      
+                        
+                    }
+                        break;
+                        
+                    default:
+                        break;
+                }
+            }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
@@ -249,6 +315,7 @@
             };
             cell.addUserClickBlock = ^(WBGroupSettingUserTableViewCell *groupSettingUsercell) {
                 WBChatListAddUserViewController *addUserViewController = [[WBChatListAddUserViewController alloc]init];
+                addUserViewController.endDelegate = self;
                 addUserViewController.type = WBUserAddressBookAdd;
                 addUserViewController.boxModel = _boxModel;
                 NavViewController *navi = [[NavViewController alloc]initWithRootViewController:addUserViewController];
@@ -271,7 +338,7 @@
                     if (!_boxModel.name ||_boxModel.name.length==0) {
                      [self generalCellWithTabelViewCell:cell Title:@"群名称" DetailText:@"未设置" IsAccessoryDisclosureIndicator:YES SwitchTag:nil];
                     }else{
-                      [self generalCellWithTabelViewCell:cell Title:@"群名称" DetailText:@"闻上大本营" IsAccessoryDisclosureIndicator:YES SwitchTag:nil];
+                      [self generalCellWithTabelViewCell:cell Title:@"群名称" DetailText:_boxModel.name IsAccessoryDisclosureIndicator:YES SwitchTag:nil];
                     }
                    
                 }
@@ -291,7 +358,7 @@
             break;
             
         case 2:{
-            NSNumber *tagNumber = [NSNumber numberWithString:[NSString stringWithFormat:@"%ld%d",(long)indexPath.section,indexPath.row]];
+            NSNumber *tagNumber = [NSNumber numberWithString:[NSString stringWithFormat:@"%ld%ld",(long)indexPath.section,indexPath.row]];
             [self generalCellWithTabelViewCell:cell Title:@"消息免打扰" DetailText:nil IsAccessoryDisclosureIndicator:NO SwitchTag:tagNumber];
         }
             break;
