@@ -186,6 +186,7 @@
 		1F70A5C0202018DE001DED64 /* WBGetOneBoxAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70A5BF202018DE001DED64 /* WBGetOneBoxAPI.m */; };
 		1F70A5C320204082001DED64 /* WBDeleteBoxAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70A5C220204082001DED64 /* WBDeleteBoxAPI.m */; };
 		1F70A5C62020573A001DED64 /* WBCreatTweetAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70A5C52020573A001DED64 /* WBCreatTweetAPI.m */; };
+		1F70A5CA202160A4001DED64 /* BoxServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70A5C9202160A4001DED64 /* BoxServices.m */; };
 		1F7F15FC2010872E003CB83D /* group.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7F15F92010872D003CB83D /* group.png */; };
 		1F7F15FD2010872E003CB83D /* group@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7F15FA2010872D003CB83D /* group@3x.png */; };
 		1F7F15FE2010872E003CB83D /* group@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7F15FB2010872E003CB83D /* group@2x.png */; };
@@ -1349,6 +1350,8 @@
 		1F70A5C220204082001DED64 /* WBDeleteBoxAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBDeleteBoxAPI.m; sourceTree = "<group>"; };
 		1F70A5C42020573A001DED64 /* WBCreatTweetAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBCreatTweetAPI.h; sourceTree = "<group>"; };
 		1F70A5C52020573A001DED64 /* WBCreatTweetAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBCreatTweetAPI.m; sourceTree = "<group>"; };
+		1F70A5C8202160A4001DED64 /* BoxServices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BoxServices.h; sourceTree = "<group>"; };
+		1F70A5C9202160A4001DED64 /* BoxServices.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BoxServices.m; sourceTree = "<group>"; };
 		1F7F15F92010872D003CB83D /* group.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = group.png; sourceTree = "<group>"; };
 		1F7F15FA2010872D003CB83D /* group@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "group@3x.png"; sourceTree = "<group>"; };
 		1F7F15FB2010872E003CB83D /* group@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "group@2x.png"; sourceTree = "<group>"; };
@@ -2507,7 +2510,7 @@
 			children = (
 				1F7F160F201193C0003CB83D /* Chat */,
 				1F7F160E201193AC003CB83D /* ChatList */,
-				1F7F160820119331003CB83D /* Group */,
+				1F7F160820119331003CB83D /* ChatManage */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -3114,6 +3117,7 @@
 			isa = PBXGroup;
 			children = (
 				1F4D75921FAC4BB800E6516C /* ServiceProtocol.h */,
+				1F70A5C720216075001DED64 /* BoxServices */,
 				1FF6411020185C3C007118F5 /* DBServices */,
 				1F6E549F2003478B009E38AE /* UserServices */,
 				1FF6411120185C5B007118F5 /* AseetServices */,
@@ -3255,6 +3259,15 @@
 			path = UserServices;
 			sourceTree = "<group>";
 		};
+		1F70A5C720216075001DED64 /* BoxServices */ = {
+			isa = PBXGroup;
+			children = (
+				1F70A5C8202160A4001DED64 /* BoxServices.h */,
+				1F70A5C9202160A4001DED64 /* BoxServices.m */,
+			);
+			path = BoxServices;
+			sourceTree = "<group>";
+		};
 		1F7CE62C1FAC824E004467C8 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -3341,7 +3354,7 @@
 			path = Group;
 			sourceTree = "<group>";
 		};
-		1F7F160820119331003CB83D /* Group */ = {
+		1F7F160820119331003CB83D /* ChatManage */ = {
 			isa = PBXGroup;
 			children = (
 				1F7F160520108BE1003CB83D /* WBGroupManageViewController.h */,
@@ -3350,7 +3363,7 @@
 				1F7F160A201193A4003CB83D /* WBGroupAdressBookViewController.m */,
 				1F7F160B201193A4003CB83D /* WBGroupAdressBookViewController.xib */,
 			);
-			path = Group;
+			path = ChatManage;
 			sourceTree = "<group>";
 		};
 		1F7F160E201193AC003CB83D /* ChatList */ = {
@@ -6356,6 +6369,7 @@
 				1F4D75B41FAC4BB800E6516C /* AppServices.m in Sources */,
 				F6830EE61FB2FEC4005AC578 /* FMSetting.m in Sources */,
 				1F4D75AB1FAC4BB800E6516C /* WBLocalAsset+CoreDataClass.m in Sources */,
+				1F70A5CA202160A4001DED64 /* BoxServices.m in Sources */,
 				1FAD74391FD01C2F00A5D880 /* CSUploadModel.m in Sources */,
 				1FF6411920186332007118F5 /* WBChatViewNormalTableViewCell.m in Sources */,
 				1F70A5C320204082001DED64 /* WBDeleteBoxAPI.m in Sources */,

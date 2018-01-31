@@ -197,10 +197,37 @@ NSString *const kTableViewFrame = @"frame";
     }
     if (!content.photos && !content.photos.photos.count) return;
     // 图片类型
-    [content.photos.photos enumerateObjectsUsingBlock:^(UIImage *image, NSUInteger idx, BOOL * stop) {
-        
-        [self seavMessage:image type:MessageBodyType_Image];
-    }];
+//    [content.photos.photos enumerateObjectsUsingBlock:^(UIImage *image, NSUInteger idx, BOOL * stop) {
+//
+//        [self seavMessage:image type:MessageBodyType_Image];
+//    }];
+    
+   
+  
+    WBTweetModel *messageModel = [WBTweetModel new];
+    long long date = (long long)([[NSDate date] timeIntervalSince1970] * 1000);
+    messageModel.isSender = YES;
+    messageModel.isRead = YES;
+//    messageModel.status = MessageDeliveryState_Delivering;
+    messageModel.ctime = date;
+    messageModel.messageBodytype = MessageBodyType_Image;
+    messageModel.status = MessageDeliveryState_Delivered;
+    messageModel.localImageArray = content.photos.photos;
+    NSString *time = [LHTools processingTimeWithDate:messageModel.ctime];
+    if ([time isEqualToString:self.lastTime]) {
+        [self insertNewMessageOrTime:time];
+        self.lastTime = time;
+    }
+    NSIndexPath *index = [self insertNewMessageOrTime:messageModel];
+    [self.messages addObject:messageModel];
+    [self.tableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    [self sendMessageToNetSeverWith:(LHContentModel *)content];
+    
+//     NSArray *cells = [self.tableView visibleCells];
+}
+
+- (void)sendMessageToNetSeverWith:(LHContentModel *)content{
+#warning upload;
 }
 
 - (void)seavMessage:(id)content type:(MessageBodyType)type {
@@ -255,14 +282,14 @@ NSString *const kTableViewFrame = @"frame";
         }];
         
         // 模仿消息回复
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            dbMessageModel.isSender = NO;
-            dbMessageModel.uuid = nil;
-            [[LHIMDBManager shareManager] insertModel:dbMessageModel];
-            NSIndexPath *index = [self insertNewMessageOrTime:dbMessageModel];
-            [self.messages addObject:dbMessageModel];
-            [self.tableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-        });
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            dbMessageModel.isSender = NO;
+//            dbMessageModel.uuid = nil;
+//            [[LHIMDBManager shareManager] insertModel:dbMessageModel];
+//            NSIndexPath *index = [self insertNewMessageOrTime:dbMessageModel];
+//            [self.messages addObject:dbMessageModel];
+//            [self.tableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//        });
     });
 }
 

@@ -7,14 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JYAsset.h"
 
 @interface LHPhotosModel : NSObject
 
 @property (nonatomic, strong) NSArray *photos;
+@property (nonatomic, strong) NSArray<JYAsset *> *assets;
 @property (nonatomic, assign, getter=isOriginalPhoto) BOOL originalPhoto;
 
 - (instancetype)initWitiPhotos:(NSArray *)photos originalPhoto:(BOOL)originalPhoto;
 + (instancetype)photosModelWitiPhotos:(NSArray *)photos originalPhoto:(BOOL)originalPhoto;
++ (instancetype)photosModelWitiPhotos:(NSArray *)photos Assets:(NSArray *)assets originalPhoto:(BOOL)originalPhoto;
 
 @end
 

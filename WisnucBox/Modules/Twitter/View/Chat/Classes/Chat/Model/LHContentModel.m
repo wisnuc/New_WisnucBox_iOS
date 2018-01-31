@@ -18,10 +18,22 @@
     return self;
 }
 
+- (instancetype)initWitiPhotos:(NSArray *)photos originalPhoto:(BOOL)originalPhoto Assets:(NSArray *)assets{
+    if (self = [super init]) {
+        self.photos = photos;
+        self.originalPhoto = originalPhoto;
+        self.assets = assets;
+    }
+    return self;
+}
+
 + (instancetype)photosModelWitiPhotos:(NSArray *)photos originalPhoto:(BOOL)originalPhoto {
     return [[self alloc] initWitiPhotos:photos originalPhoto:originalPhoto];
 }
 
++ (instancetype)photosModelWitiPhotos:(NSArray *)photos Assets:(NSArray *)assets originalPhoto:(BOOL)originalPhoto {
+    return [[self alloc] initWitiPhotos:photos originalPhoto:originalPhoto Assets:assets];
+}
 @end
 
 @implementation LHContentModel

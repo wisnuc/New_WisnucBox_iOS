@@ -54,7 +54,13 @@
 
 @property (nonatomic, assign) BOOL isDownloading;
 
+@property (nonatomic, assign) BOOL isBoxSelectType;
+
 @property (nonatomic, copy) void(^downloadBlock)(BOOL success ,UIImage *image);
+
+@property (nonatomic,strong) UIView *boxTypeBar;
+
+@property (nonatomic,strong) UIButton *boxTypeSelectFinishButton;
 
 @end
 
@@ -115,13 +121,56 @@
     }
 }
 
-- (instancetype)initWithLocalDataSource:(NSArray<JYAsset *> *)assets {
+- (instancetype)initWithLocalDataSource:(NSArray<JYAsset *> *)assets{
     if(self = [super init]) {
         [self.arrDataSources addObjectsFromArray:assets];
         self.localArrDataSourcesBackup = [NSMutableArray  arrayWithArray:self.arrDataSources]; // backup
         _isSelectMode = NO;
+        [self initMjRefresh];
     }
     return self;
+}
+
+- (instancetype)initWithLocalDataSource:(NSArray<JYAsset *> *)assets IsBoxSelectType:(BOOL)isBoxSelectType{
+    if(self = [super init]) {
+        [self.arrDataSources addObjectsFromArray:assets];
+        self.localArrDataSourcesBackup = [NSMutableArray  arrayWithArray:self.arrDataSources]; // backup
+        if (isBoxSelectType) {
+            _isSelectMode = YES;
+            _isBoxSelectType = YES;
+        }
+       
+        [self initMjRefresh];
+        [self.view addSubview:self.boxTypeBar];
+        
+    }
+    return self;
+}
+
+- (void)initNaviForBoxSelectType{
+//    dispatch_main_async_safe(^{
+    
+    UIButton * leftButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 24)];
+    leftButton.backgroundColor= [UIColor clearColor];
+    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = nil;
+    self.navigationItem.leftBarButtonItems = @[leftButtonItem];
+    
+    UIButton * rBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 30)];
+    rBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    [rBtn setEnlargeEdgeWithTop:5 right:10 bottom:5 left:5];
+    [rBtn setTitleColor:kTitleTextColor forState:UIControlStateNormal];
+    [rBtn setTitle:@"取消" forState:UIControlStateNormal];
+    rBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    [rBtn addTarget:self action:@selector(rBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem * item = [[UIBarButtonItem alloc]initWithCustomView:rBtn];
+    self.navigationItem.rightBarButtonItem = nil;
+    self.navigationItem.rightBarButtonItem = item;
+//    });
+}
+
+- (void)rBtnClick{
+    [self dismissViewControllerAnimated:YES completion:^{}];
 }
 
 - (void)addLocalDataSource:(NSArray<JYAsset *> *)assets{
@@ -136,6 +185,7 @@
         [self sort:[self merge]];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.collectionView reloadData];
+            [SXLoadingView hideProgressHUD];
         });
     });
 //    dispatch_async(dispatch_get_main_queue(), ^{
@@ -241,7 +291,9 @@
 //    [self sort:self.arrDataSources];
     [self addRightBtn];
     [self initCollectionView];
-    [self initMjRefresh];
+    if (_isBoxSelectType) {
+         [self initNaviForBoxSelectType];
+    }
     [self sort:[self merge]];
     [self addPinchGesture];
     [self createControlbtn];
@@ -268,9 +320,7 @@
             [weakSelf leftBtnClick:_leftBtn];
         }
         [WB_AssetService getNetAssets:^(NSError *error, NSArray<WBAsset *> *netAssets) {
-          
         if(!error){
-        
          [weakSelf.localArrDataSourcesBackup removeAllObjects];
          [weakSelf.netArrDataSourcesBackup removeAllObjects];
          [weakSelf.arrDataSources removeAllObjects];
@@ -469,6 +519,67 @@
     }
 }
 
+//选择完成
+- (void)boxTypeSelectFinishButtonClick:(UIButton *)sender{
+    @weaky(self)
+    if (self.choosePhotos.count == 0)return;
+    NSMutableArray *photosArray = [NSMutableArray arrayWithCapacity:0];
+    NSArray *sourceArray =[NSArray arrayWithArray:self.choosePhotos];
+    CGSize size = [weak_self getImageSizeWithImageArray:sourceArray];
+    [self.choosePhotos enumerateObjectsUsingBlock:^(JYAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSLog(@"%@",_choosePhotos);
+        if (obj.asset) {
+            [PHPhotoLibrary requestImageForAsset:obj.asset size:size completion:^(UIImage *image, NSDictionary *info) {
+                if(!weak_self) return;
+                [photosArray addObject:image];
+            }];
+        }else{
+          __block id <SDWebImageOperation> thumbnailRequestOperation = [WB_NetService getThumbnailWithHash:[(WBAsset *)obj fmhash] complete:^(NSError *error, UIImage *img) {
+                if(!weak_self) return;
+                if (!error && img) {
+                    [photosArray addObject:img];
+                }else{
+                    [thumbnailRequestOperation cancel];
+                    thumbnailRequestOperation = nil;
+                }
+            }];
+        }
+    }];
+   
+    if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerDidFinishPickingPhotos:sourceAssets:isSelectOriginalPhoto:)]) {
+        [self.delegate imagePickerDidFinishPickingPhotos:photosArray sourceAssets:self.choosePhotos isSelectOriginalPhoto:YES];
+    }
+    [self dismissViewControllerAnimated:YES completion:^{}];
+}
+
+- (CGSize)getImageSizeWithImageArray:(NSArray *)array{
+    CGSize size = CGSizeZero;
+    if (array.count  == 0 || !array)return CGSizeZero;
+    if (array.count % 2 == 0) {
+        if (array.count == 4) {
+            size.width = THREE_IMAGE_SIZE;
+            size.height = THREE_IMAGE_SIZE;
+        }else{
+            size.width = MAX_SIZE ;
+            size.height = MAX_SIZE;
+        }
+    }
+    if (array.count % 3 == 0){
+        size.width = THREE_IMAGE_SIZE;
+        size.height = THREE_IMAGE_SIZE;
+    }
+    if (array.count == 1) {
+        size.width = MAX_SIZE ;
+        size.height = MAX_SIZE;
+    }
+    
+    if (array.count >=5) {
+        size.width = THREE_IMAGE_SIZE;
+        size.height = THREE_IMAGE_SIZE;
+    }
+    return size;
+}
+
 -(void)changeFlowLayoutIsBeSmall:(BOOL)isSmall{
     if ((!isSmall && _currentScale == 1) || (isSmall && _currentScale == 6))
         return;
@@ -614,9 +725,13 @@
             [weakSelf.collectionView reloadData];
         }
         
-        if (weakSelf.choosePhotos.count == 0) {
+        if (weakSelf.choosePhotos.count == 0 &&!_isBoxSelectType) {
             weakSelf.isSelectMode = NO;
             [weakSelf leftBtnClick:_leftBtn];
+        }
+        
+        if (_isBoxSelectType) {
+            [_boxTypeSelectFinishButton setTitle:[NSString stringWithFormat:@"完成(%lu)",(unsigned long)weakSelf.choosePhotos.count] forState:UIControlStateNormal];
         }
         _countLb.text = [NSString stringWithFormat:WBLocalizedString(@"select_count", nil),(unsigned long)weakSelf.choosePhotos.count];
     };
@@ -1081,6 +1196,29 @@ bool isDecelerating = NO;
         }else
             block(NO,nil);
     }
+}
+
+- (UIView *)boxTypeBar{
+    if (!_boxTypeBar) {
+        _boxTypeBar = [[UIView alloc]initWithFrame:CGRectMake(0, __kHeight - 44 - 64,__kWidth,44)];
+        [_boxTypeBar setLayerShadow:[UIColor blackColor] offset:CGSizeMake(0, -1) radius:1.0f];
+        _boxTypeBar.layer.shadowOpacity = 0.3f;
+        _boxTypeBar.backgroundColor = UICOLOR_RGB(0xf8f8fa);
+        [_boxTypeBar addSubview:self.boxTypeSelectFinishButton];
+    }
+    return _boxTypeBar;
+}
+
+- (UIButton *)boxTypeSelectFinishButton{
+    if (!_boxTypeSelectFinishButton) {
+        _boxTypeSelectFinishButton = [[UIButton alloc]initWithFrame:CGRectMake(__kWidth - 16 - 100, 0,100,44)];
+        [_boxTypeSelectFinishButton setTitle:[NSString stringWithFormat:@"完成(%ld)", self.choosePhotos.count] forState:UIControlStateNormal];
+        _boxTypeSelectFinishButton.titleLabel.font = [UIFont systemFontOfSize:16];
+        _boxTypeSelectFinishButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+        [_boxTypeSelectFinishButton setTitleColor:COR1 forState:UIControlStateNormal];
+        [_boxTypeSelectFinishButton addTarget:self action:@selector(boxTypeSelectFinishButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _boxTypeSelectFinishButton;
 }
 
 @end

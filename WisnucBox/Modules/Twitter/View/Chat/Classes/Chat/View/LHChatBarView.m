@@ -13,13 +13,14 @@
 #import "LHContentModel.h"
 #import "LHTools.h"
 #import "UIView+frameAdjust.h"
+#import "JYThumbVC.h"
 
 CGFloat const kChatInputTextViewFont = 16.0f;
 CGFloat const kChatEmojiHeight = 216.0f;
 CGFloat const kChatMoreHeight = 130.0f;
 CGFloat const kChatBatItemWH = 26.0f;
 
-@interface LHChatBarView () <UITextViewDelegate, LHChatBarMoreViewDelegate,TZImagePickerControllerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate> {
+@interface LHChatBarView () <UITextViewDelegate, LHChatBarMoreViewDelegate,TZImagePickerControllerDelegate,JYThumbVCDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate> {
     UIViewAnimationCurve _animationCurve;
     CGFloat _animationDuration;
     CGFloat _keyboardHeight;
@@ -376,14 +377,27 @@ CGFloat const kChatBatItemWH = 26.0f;
         [alertView show];
         return;
     }
-    
-    
-    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:9 delegate:self];
-    imagePickerVc.alwaysEnableDoneBtn = NO;
-    imagePickerVc.allowPickingVideo = NO;
-    imagePickerVc.allowTakePicture = NO;
-    imagePickerVc.allowPickingOriginalPhoto = NO;
-    [self.viewController presentViewController:imagePickerVc animated:YES completion:nil];
+   
+    JYThumbVC * photosVC = [[JYThumbVC alloc] initWithLocalDataSource:[AppServices sharedService].assetServices.allAssets IsBoxSelectType:YES];
+    photosVC.delegate = self;
+     [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [WB_AssetService getNetAssets:^(NSError *error, NSArray<WBAsset *> *netAssets) {
+            if(!error){
+            [photosVC addNetAssets:netAssets];
+            }
+          
+            NSLog(@"Fetch Net Assets Error --> : %@", error);
+          
+        }];
+//    });
+    NavViewController *nav = [[NavViewController alloc] initWithRootViewController:photosVC];
+//    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:9 delegate:self];
+//    imagePickerVc.alwaysEnableDoneBtn = NO;
+//    imagePickerVc.allowPickingVideo = NO;
+//    imagePickerVc.allowTakePicture = NO;
+//    imagePickerVc.allowPickingOriginalPhoto = NO;
+    [self.viewController presentViewController:nav animated:YES completion:nil];
 }
 
 #pragma mark - UITextViewDelegate
@@ -457,6 +471,12 @@ CGFloat const kChatBatItemWH = 26.0f;
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)imagePickerDidFinishPickingPhotos:(NSArray *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto {
+    self.photos = [LHPhotosModel photosModelWitiPhotos:photos Assets:assets originalPhoto:isSelectOriginalPhoto];
+    !self.sendContent ? : self.sendContent(self.contentModel);
+
+    [self resetState];
+}
 
 #pragma mark - TZImagePickerControllerDelegate
 // 相册选的图片

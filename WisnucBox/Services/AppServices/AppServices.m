@@ -23,6 +23,7 @@
 #import "FMCheckManager.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
+
 @interface AppServices ()
 @end
 
@@ -497,6 +498,15 @@ static BOOL needRestart = NO;
             _dbServices = [[DBServices alloc] init];
         }
         return _dbServices;
+    }
+}
+
+- (BoxServices *)boxServices{
+    @synchronized (self) {
+        if(!_boxServices) {
+            _boxServices = [[BoxServices alloc] init];
+        }
+        return _boxServices;
     }
 }
 

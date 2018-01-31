@@ -16,7 +16,7 @@
 #define Start_X         0     // 第一个按钮的X坐标
 #define Start_Y         0     // 第一个按钮的Y坐标
 
-@interface WBChatImageBubbleView ()
+@interface WBChatImageBubbleView ()<UIGestureRecognizerDelegate>
 
 
 
@@ -73,6 +73,46 @@
 //
 }
 
+- (float)setFrameSelfFrameWithArray:(NSArray *)array{
+    float imageWithHeight = 0.0;
+    CGRect frame = self.frame;
+   if (array.count  == 0 || !array)return 0;
+    if (array.count % 2 == 0) {
+        if (array.count == 4) {
+            frame.size.width = IMG_THREE_Width *2;
+            imageWithHeight = IMG_THREE_Width;
+        }else{
+            frame.size.width = IMG_TWO_Width *2;
+            imageWithHeight = IMG_TWO_Width;
+        }
+    }
+    if (array.count % 3 == 0){
+        frame.size.width = IMG_THREE_Width *3;
+        imageWithHeight = IMG_THREE_Width;
+    }
+    if (array.count == 1) {
+        frame.size.width = IMG_TWO_Width;
+        imageWithHeight = IMG_TWO_Width;
+    }
+    
+    if (array.count >=5) {
+        frame.size.width = IMG_THREE_Width *3;
+        imageWithHeight = IMG_THREE_Width;
+    }
+    
+//        if (self.messageModel.isSender) {
+//            frame.origin.x = 2;
+//        } else {
+////            frame.origin.x = 2 + BUBBLE_ARROW_WIDTH;
+//        }
+
+    dispatch_main_async_safe(^{
+        self.frame = frame;
+        [self setNeedsLayout];
+    });
+    return imageWithHeight;
+}
+
 
 #pragma mark - setter
 
@@ -82,41 +122,89 @@
     NSString *date = [NSString stringWithFormat:@"%lld",messageModel.ctime];
     UIImage *image = [UIImage imageNamed:@"IM_Chart_imageDownloadFail.png"];
     
-    CGRect frame = self.frame;
     if (!self.messageModel)return;
     float imageWithHeight = 0.0;
-    if (messageModel.list.count  == 0 || !messageModel.list)return;
+    if (messageModel.isSender) {
+      imageWithHeight = [self setFrameSelfFrameWithArray:messageModel.localImageArray];
+    }else{
+      imageWithHeight = [self setFrameSelfFrameWithArray:messageModel.list];
+    }
+
     
-    if (messageModel.list.count % 2 == 0) {
-        if (messageModel.list.count == 4) {
-            frame.size.width = IMG_THREE_Width *2;
-            imageWithHeight = IMG_THREE_Width;
-        }else{
-        frame.size.width = IMG_TWO_Width *2;
-        imageWithHeight = IMG_TWO_Width;
+    if (messageModel.isSender && messageModel.localImageArray.count>0) {
+        NSMutableArray *localImageArray = [NSMutableArray arrayWithArray:messageModel.localImageArray];
+        if (localImageArray.count>6) {
+            localImageArray = [NSMutableArray arrayWithArray:[messageModel.localImageArray subarrayWithRange:NSMakeRange(0, 6)]];
         }
+        
+        [localImageArray enumerateObjectsUsingBlock:^(UIImage *localImage, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            _imageView = [[UIImageView alloc]init];
+            _imageView.tag = idx;
+            _imageView.userInteractionEnabled = YES;
+            
+            NSInteger index = 0 ;
+            NSInteger page = 0 ;
+            
+            if (messageModel.localImageArray.count == 1) {
+                index = 0;
+                page= 0;
+            }else{
+                if (messageModel.localImageArray.count % 2 == 0) {
+                    index = idx % 2;
+                    page= idx / 2;
+                    
+                }
+                if (messageModel.localImageArray.count % 3 == 0){
+                    index = idx % 3;
+                    page= idx / 3;
+                }
+            }
+            
+            if (messageModel.localImageArray.count >=5) {
+                index = idx % 3;
+                page= idx / 3;
+                NSLog(@"😆%ld🌶%ld",index,page);
+            }
+            //
+            _imageView.frame = CGRectMake(index * (imageWithHeight + Width_Space) + Start_X,page * (imageWithHeight + Height_Space)+Start_Y, imageWithHeight, imageWithHeight);
+            UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(bubbleViewPressed:)];
+            [_imageView addGestureRecognizer:tap];
+            _imageView.image = localImage;
+          
+            dispatch_main_async_safe(^{
+            [weakSelf addSubview:_imageView];
+                [weakSelf setNeedsLayout];
+              });
+            }];
+        
+        
+      
+        imageWithHeight = 89.0f;
+        NSMutableArray *dataArray;
+        if (messageModel.isSender) {
+            dataArray = [NSMutableArray arrayWithArray:messageModel.localImageArray] ;
+        }else{
+            dataArray = [NSMutableArray arrayWithArray:messageModel.list];
+        }
+        if (dataArray.count >6) {
+//            maskImageView.alpha = 0.54f;
+            self.maskImageView.frame = CGRectMake(2 * (imageWithHeight + Width_Space) + Start_X,1 * (imageWithHeight + Height_Space)+Start_Y, imageWithHeight, imageWithHeight);
+            UILabel *label = [[UILabel alloc]initWithFrame:self.maskImageView.bounds];
+            label.text = [NSString stringWithFormat:@"+%ld",dataArray.count - 6];
+            label.font = [UIFont boldSystemFontOfSize:21];
+            label.textAlignment = NSTextAlignmentCenter;
+            label.textColor = kWhiteColor;
+            [self.maskImageView addSubview:label];
+            dispatch_main_async_safe(^{
+                [self addSubview:self.maskImageView];
+            });
+        }
+        return;
     }
-    if (messageModel.list.count % 3 == 0){
-        frame.size.width = IMG_THREE_Width *3;
-        imageWithHeight = IMG_THREE_Width;
-    }
-    if (self.messageModel.list.count == 1) {
-        frame.size.width = IMG_THREE_Width;
-        imageWithHeight = IMG_TWO_Width;
-    }
-    
-    if (self.messageModel.list.count >=6) {
-       frame.size.width = IMG_THREE_Width *3;
-       imageWithHeight = IMG_THREE_Width;
-    }
-    
-    dispatch_main_async_safe(^{
-       self.frame = frame;
-      [weakSelf setNeedsLayout];
-    });
-    
  
-    
+
+    imageWithHeight = [self setFrameSelfFrameWithArray:messageModel.list];
     [SDImageCache.sharedImageCache diskImageExistsWithKey:date completion:^(BOOL isInCache) {
         if (isInCache) {
             [SDImageCache.sharedImageCache queryDiskCacheForKey:date done:^(UIImage *image, SDImageCacheType cacheType) {
@@ -132,7 +220,7 @@
             
             [self.thumbnailRequestOperationArray removeAllObjects];
             self.thumbnailRequestOperationArray = nil;
-//            weakSelf.imageView.image = image;
+//            _imageView.image = image;
             NSLog(@"🍰%ld",messageModel.list.count);
             
             NSMutableArray *imageArray = [NSMutableArray arrayWithArray:messageModel.list];
@@ -144,9 +232,9 @@
           
             [imageArray enumerateObjectsUsingBlock:^(WBTweetlistModel *listModel, NSUInteger idx, BOOL * _Nonnull stop) {
                
-                weakSelf.imageView = [[UIImageView alloc]init];
-                weakSelf.imageView.tag = idx;
-                weakSelf.imageView.userInteractionEnabled = YES;
+                _imageView = [[UIImageView alloc]init];
+                _imageView.tag = idx;
+                _imageView.userInteractionEnabled = YES;
                 NSInteger index = 0 ;
                 NSInteger page = 0 ;
                 
@@ -165,23 +253,24 @@
                     }
                 }
                 
-                if (messageModel.list.count >= 6) {
+                if (messageModel.list.count >=5) {
                     index = idx % 3;
                     page= idx / 3;
+                    NSLog(@"😆%ld🌶%ld",index,page);
                 }
 //                NSLog(@"😆%ld",index);
-                weakSelf.imageView.frame = CGRectMake(index * (imageWithHeight + Width_Space) + Start_X,page * (imageWithHeight + Height_Space)+Start_Y, imageWithHeight, imageWithHeight);
+                _imageView.frame = CGRectMake(index * (imageWithHeight + Width_Space) + Start_X,page * (imageWithHeight + Height_Space)+Start_Y, imageWithHeight, imageWithHeight);
                 UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(bubbleViewPressed:)];
-                [weakSelf.imageView addGestureRecognizer:tap];
+                [_imageView addGestureRecognizer:tap];
                 
                 
-//                NSLog(@"🌶%@",NSStringFromCGRect(weakSelf.imageView.frame));
+//                NSLog(@"🌶%@",NSStringFromCGRect(_imageView.frame));
 //                dispatch_main_async_safe(^{
-                    UIImage *image = [UIImage imageNamed:@"IM_Chart_imageDownloadFail.png"];
-                    weakSelf.imageView.image = image;
+//                    UIImage *image = [UIImage imageNamed:@"IM_Chart_imageDownloadFail.png"];
+                    _imageView.image = image;
                     [weakSelf setNeedsLayout];
 //                });
-                  [weakSelf addSubview:weakSelf.imageView];
+                  [weakSelf addSubview:_imageView];
               
                __block id <SDWebImageOperation> thumbnailRequestOperation = [WB_NetService getTweeetThumbnailImageWithHash:listModel.sha256 BoxUUID:messageModel.boxuuid complete:^(NSError *error, UIImage *img) {
                     if(!weakSelf) return;
@@ -191,7 +280,7 @@
 //                   [SDImageCache.sharedImageCache storeImage:imageCache forKey:messageModel.uuid toDisk:YES];
                     if (!error &&img) {
                         dispatch_main_async_safe(^{
-                            weakSelf.imageView.image = img;
+                            _imageView.image = img;
                             [weakSelf layoutSubviews];
                             
                         });
@@ -200,7 +289,7 @@
                         
                     }else{
                         dispatch_main_async_safe(^{
-                            weakSelf.imageView.image = image;
+                            _imageView.image = image;
                             [weakSelf setNeedsLayout];
                         });
                         NSLog(@"get thumbnail error ---> : %@", error);
@@ -216,16 +305,22 @@
     }];
     
     
-//    UIImageView * maskImageView ;
-//    imageWithHeight = 89.0f;
-//    if (messageModel.list.count >6) {
-//        maskImageView = [[UIImageView alloc]initWithImage:[UIImage imageWithColor:[UIColor redColor]]];
-////        maskImageView.alpha = 0.6f;
-//        maskImageView.frame = CGRectMake(0 * (imageWithHeight + Width_Space) + Start_X,1 * (imageWithHeight + Height_Space)+Start_Y, imageWithHeight, imageWithHeight);
-//        dispatch_main_async_safe(^{
-//        [self addSubview:maskImageView];
-//         });
-//    }
+    
+    imageWithHeight = 89.0f;
+    NSMutableArray *dataArray;
+    if (messageModel.isSender) {
+        dataArray = [NSMutableArray arrayWithArray:messageModel.localImageArray] ;
+    }else{
+        dataArray = [NSMutableArray arrayWithArray:messageModel.list];
+    }
+    if (dataArray.count >6) {
+
+//        maskImageView.alpha = 0.6f;
+        self.maskImageView.frame = CGRectMake(2 * (imageWithHeight + Width_Space) + Start_X,1 * (imageWithHeight + Height_Space)+Start_Y, imageWithHeight, imageWithHeight);
+        dispatch_main_async_safe(^{
+        [self addSubview:self.maskImageView];
+         });
+    }
     
 //     if (messageModel.isSender) {
 //     if (messageModel.imageRemoteURL) {
@@ -242,6 +337,8 @@
 //     return;
 //     }
 }
+
+
 
 #pragma mark - public
 
@@ -270,8 +367,19 @@
 }
 
 - (void)bubbleViewPressed:(id)sender {
+    UITapGestureRecognizer *tap = (UITapGestureRecognizer*)sender;
+    
     [self routerEventWithName:kRouterEventImageBubbleTapEventName
                      userInfo:@{kMessageKey : self.messageModel}];
+}
+
+- (UIImageView *)maskImageView{
+    if (!_maskImageView) {
+        _maskImageView = [[UIImageView alloc]initWithImage:[UIImage imageWithColor:RGBACOLOR(0, 0, 0, 0.54f)]];
+        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(bubbleViewPressed:)];
+        [_maskImageView addGestureRecognizer:tap];
+    }
+    return _maskImageView;
 }
 
 //- (UIImageView *)imageView{

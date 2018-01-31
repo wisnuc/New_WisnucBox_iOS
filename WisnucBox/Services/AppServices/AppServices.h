@@ -12,6 +12,7 @@
 #import "AssetsServices.h"
 #import "FilesServices.h"
 #import "NetServices.h"
+#import "BoxServices.h"
 #import "FMLoginViewController.h"
 #import "JYProcessView.h"
 
@@ -20,6 +21,8 @@
 #define WB_UserService  [WB_AppServices userServices]
 #define WB_FileService  [WB_AppServices fileServices]
 #define WB_NetService   [WB_AppServices netServices]
+#define WB_BoxService   [WB_AppServices boxServices]
+
 #define WB_PhotoUploadManager [WB_AppServices photoUploadManager]
 
 #define UserBackUpConfigChangeNotify @"UserBackUpConfigChangeNotify"
@@ -38,6 +41,8 @@
 @property (nonatomic, strong) FilesServices * fileServices;
 
 @property (nonatomic, strong) NetServices * netServices;
+
+@property (nonatomic, strong) BoxServices * boxServices;
 
 @property (nonatomic, strong) WBUploadManager * photoUploadManager;
 

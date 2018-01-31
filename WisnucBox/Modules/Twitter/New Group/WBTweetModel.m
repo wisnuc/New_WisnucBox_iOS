@@ -23,7 +23,7 @@
 @implementation WBTweetModel
 // 如果实现了该方法，则处理过程中会忽略该列表内的所有属性
 + (NSArray *)modelPropertyBlacklist {
-    return @[@"isSender", @"isRead",@"messageBodytype",@"status",@"width",@"height",@"boxuuid"];
+    return @[@"isSender", @"isRead",@"messageBodytype",@"status",@"width",@"height",@"boxuuid",@"localImageArray"];
 }
 
 + (NSDictionary *)modelContainerPropertyGenericClass {
@@ -31,8 +31,19 @@
              };
 }
 
+- (void)setLocalImageArray:(NSArray *)localImageArray{
+    _localImageArray = localImageArray;
+    if (self.isSender) {
+        [self setImageWidthHeightWithX:3 Y:2 Array:self.localImageArray];
+    }
+}
+
 - (BOOL)modelCustomTransformFromDictionary:(NSDictionary *)dic {
     _messageBodytype = MessageBodyType_Image;
+    if (self.isSender) {
+        [self setImageWidthHeightWithX:3 Y:2 Array:self.localImageArray];
+        return YES;
+    }
     [self.list enumerateObjectsUsingBlock:^(WBTweetlistModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (!obj.metadata) {
             *stop = YES;
@@ -41,28 +52,33 @@
     }];
     
     if (_messageBodytype == MessageBodyType_Image) {
-        NSInteger x = 3;
-        NSInteger y = 2;
-        if (self.list.count >=6) {
-            self.height = THREE_IMAGE_SIZE *2;
-            self.width = THREE_IMAGE_SIZE *3 + SEPARATE *3;
-        }else
-        if (self.list.count == 1) {
-            self.height = MAX_SIZE;
-        }else if (self.list.count % x == 0) {
-            self.height = THREE_IMAGE_SIZE *((int)floorf(self.list.count/x));
-            self.width = THREE_IMAGE_SIZE *3 + SEPARATE *self.list.count;
-        }else if (self.list.count % y == 0){
-            if (self.list.count == 4) {
-                self.height = THREE_IMAGE_SIZE *((int)floorf(self.list.count/y));
-                self.width = THREE_IMAGE_SIZE *2 + SEPARATE *self.list.count;
-            }else{
-                self.height = MAX_SIZE *((int)floorf(self.list.count/y));
-                self.width = MAX_SIZE *2 + SEPARATE *self.list.count;
-            }
-        }
+        [self setImageWidthHeightWithX:3 Y:2 Array:self.list];
     }
     return YES;
+}
+
+- (void)setImageWidthHeightWithX:(NSInteger)x Y:(NSInteger)y Array:(NSArray *)array{
+//    NSInteger x = 3;
+//    NSInteger y = 2;
+    if (array.count >=5) {
+        self.height = THREE_IMAGE_SIZE *2;
+        self.width = THREE_IMAGE_SIZE *3 + SEPARATE *3;
+    }else
+        if (array.count == 1) {
+            self.height = MAX_SIZE;
+            self.width = MAX_SIZE;
+        }else if (array.count % x == 0) {
+            self.height = THREE_IMAGE_SIZE *((int)floorf(array.count/x));
+            self.width = THREE_IMAGE_SIZE *3 + SEPARATE *array.count;
+        }else if (array.count % y == 0){
+            if (array.count == 4) {
+                self.height = THREE_IMAGE_SIZE *((int)floorf(array.count/y));
+                self.width = THREE_IMAGE_SIZE *2 + SEPARATE *array.count;
+            }else{
+                self.height = MAX_SIZE *((int)floorf(array.count/y));
+                self.width = MAX_SIZE *2 + SEPARATE *array.count;
+            }
+        }
 }
 
 @end

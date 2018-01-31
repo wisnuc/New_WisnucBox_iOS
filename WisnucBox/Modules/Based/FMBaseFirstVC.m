@@ -17,6 +17,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIButton *leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 24, 24)];
+    [leftBtn addTarget:self action:@selector(showLeftMenu) forControlEvents:UIControlEventTouchUpInside];//设置按钮点击事件
+    [leftBtn setImage:[UIImage imageNamed:@"menu"] forState:UIControlStateNormal];//设置按钮正常状态图片
+    [leftBtn setImage:[UIImage imageNamed:@"menu_select"] forState:UIControlStateHighlighted];
+    [leftBtn setEnlargeEdgeWithTop:5 right:5 bottom:5 left:10];
+    UIBarButtonItem *leftBarButon = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
+    self.navigationItem.leftBarButtonItems = @[leftBarButon];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -27,13 +34,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     //左按钮
-    UIButton *leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 24, 24)];
-    [leftBtn addTarget:self action:@selector(showLeftMenu) forControlEvents:UIControlEventTouchUpInside];//设置按钮点击事件
-    [leftBtn setImage:[UIImage imageNamed:@"menu"] forState:UIControlStateNormal];//设置按钮正常状态图片
-    [leftBtn setImage:[UIImage imageNamed:@"menu_select"] forState:UIControlStateHighlighted];
-    [leftBtn setEnlargeEdgeWithTop:5 right:5 bottom:5 left:10];
-    UIBarButtonItem *leftBarButon = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
-    self.navigationItem.leftBarButtonItems = @[ leftBarButon];
+    
 
     [self.cyl_tabBarController.tabBar setHidden:NO];
 }

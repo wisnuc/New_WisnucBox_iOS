@@ -43,5 +43,5 @@
 @property (nonatomic)WBTweetTweeterModel *tweeter;
 @property (nonatomic,copy)NSString *type;
 @property (nonatomic,copy)NSString *uuid;
-
+@property (nonatomic,strong)NSArray *localImageArray;
 @end

@@ -34,7 +34,7 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
     bubbleFrame.origin.y = self.headImageView.frame.origin.y;
     
 //    if (self.messageModel.isChatGroup) {
-//        bubbleFrame.origin.y = self.headImageView.frame.origin.y + NAME_LABEL_HEIGHT;
+        bubbleFrame.origin.y = self.headImageView.frame.origin.y + NAME_LABEL_HEIGHT;
 //    }
     if (self.messageModel.isSender) {
         bubbleFrame.origin.y = self.headImageView.frame.origin.y;
@@ -88,7 +88,8 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
 //        //        _nameLabel.text = [model.message.ext objectForKey:sendUserName];
 //        _nameLabel.hidden = model.isSender;
 //    }
-    
+    _nameLabel.hidden = model.isSender;
+    _nameLabel.text = @"aaaa";
     _bubbleView.messageModel = self.messageModel;
     [_bubbleView sizeToFit];
 }
@@ -99,6 +100,8 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
         [((WBChatImageBubbleView *)self.bubbleView).subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [obj removeFromSuperview];
         }];
+        [((WBChatImageBubbleView *)self.bubbleView).maskImageView removeFromSuperview];
+        ((WBChatImageBubbleView *)self.bubbleView).maskImageView = nil;
     }
 }
 

@@ -16,7 +16,7 @@
     frame.origin.x = _messageModel.isSender ? (self.bounds.size.width - _headImageView.frame.size.width - HEAD_X) : HEAD_X;
     _headImageView.frame = frame;
     
-    _nameLabel.frame = CGRectMake(CGRectGetMaxX(_headImageView.frame) + 10, CGRectGetMinY(_headImageView.frame), NAME_LABEL_WIDTH, NAME_LABEL_HEIGHT);
+    _nameLabel.frame = CGRectMake(CGRectGetMaxX(_headImageView.frame) + 8, CGRectGetMinY(_headImageView.frame), NAME_LABEL_WIDTH, NAME_LABEL_HEIGHT);
 }
 
 - (void)setMessageModel:(WBTweetModel *)messageModel {
