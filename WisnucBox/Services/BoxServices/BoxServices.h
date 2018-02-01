@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface BoxServices : NSObject <ServiceProtocol>
-
+- (void)sendTweetWithImageArray:(NSArray *)array Boxuuid:(NSString *)boxuuid Complete:(void(^)(NSError *error))callback;
 @end

@@ -17,6 +17,12 @@
              @"tweeterId" : @"id",
              };
 }
+
+- (BOOL)modelCustomTransformFromDictionary:(NSDictionary *)dic {
+ 
+    return YES;
+}
+
 @end
 
 
@@ -39,9 +45,13 @@
 }
 
 - (BOOL)modelCustomTransformFromDictionary:(NSDictionary *)dic {
+    if ([self.tweeter.tweeterId isEqualToString:WB_UserService.currentUser.guid]) {
+        self.isSender = YES;
+    }
     _messageBodytype = MessageBodyType_Image;
     if (self.isSender) {
         [self setImageWidthHeightWithX:3 Y:2 Array:self.localImageArray];
+        [self setImageWidthHeightWithX:3 Y:2 Array:self.list];
         return YES;
     }
     [self.list enumerateObjectsUsingBlock:^(WBTweetlistModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -54,6 +64,7 @@
     if (_messageBodytype == MessageBodyType_Image) {
         [self setImageWidthHeightWithX:3 Y:2 Array:self.list];
     }
+    
     return YES;
 }
 
@@ -79,6 +90,7 @@
                 self.width = MAX_SIZE *2 + SEPARATE *array.count;
             }
         }
+    
 }
 
 @end

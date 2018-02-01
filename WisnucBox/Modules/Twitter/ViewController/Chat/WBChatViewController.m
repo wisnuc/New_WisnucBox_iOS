@@ -47,6 +47,10 @@ NSString *const kTableViewFrame = @"frame";
 
 @property (nonatomic, strong) XSBrowserAnimateDelegate *browserAnimateDelegate;
 
+@property (nonatomic, assign) BOOL isScrollBottom;
+
+
+
 @end
 
 @implementation WBChatViewController
@@ -57,11 +61,16 @@ NSString *const kTableViewFrame = @"frame";
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    // 初始化
+    self.isScrollBottom = NO;
     [self getData];
     [self createNavBtns];
     [self setupInit];
 //    [self loadMessageWithId:nil];
-    [self scrollToBottomAnimated:YES refresh:YES];
+//    dispatch_main_async_safe(^{
+//         [self scrollToBottomAnimated:NO refresh:YES];
+//    });
+   
     [KDefaultNotificationCenter addObserver:self selector:@selector(dataChanged:) name:kDataChangedName object:nil];
 }
 
@@ -218,17 +227,36 @@ NSString *const kTableViewFrame = @"frame";
         [self insertNewMessageOrTime:time];
         self.lastTime = time;
     }
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        messageModel.status = MessageDeliveryState_Delivered;
+        
+    });
     NSIndexPath *index = [self insertNewMessageOrTime:messageModel];
     [self.messages addObject:messageModel];
     [self.tableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    
     [self sendMessageToNetSeverWith:(LHContentModel *)content];
     
 //     NSArray *cells = [self.tableView visibleCells];
+   
 }
 
 - (void)sendMessageToNetSeverWith:(LHContentModel *)content{
 #warning upload;
+    NSMutableArray *imageArray = [NSMutableArray arrayWithCapacity:0];
+    [content.photos.assets enumerateObjectsUsingBlock:^(JYAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [imageArray addObject:obj];
+    }];
+
+    [WB_BoxService sendTweetWithImageArray:imageArray Boxuuid:_boxModel.uuid Complete:^(NSError *error) {
+        if (!error) {
+            
+        }
+    }];
+    
+
 }
+
 
 - (void)seavMessage:(id)content type:(MessageBodyType)type {
     long long date = (long long)([[NSDate date] timeIntervalSince1970] * 1000);
@@ -371,6 +399,23 @@ NSString *const kTableViewFrame = @"frame";
     return messageCell;
 }
 
+-(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    //    if([indexPath row] == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).row){
+    //    }
+    
+    if (self.isScrollBottom == NO) {
+        
+        NSIndexPath *lastPath = [NSIndexPath indexPathForRow:self.dataSource.count - 1 inSection:0];
+        [self.tableView scrollToRowAtIndexPath:lastPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        
+        if (indexPath.row == self.dataSource.count-1) {
+            
+            self.isScrollBottom = YES;
+        }
+        
+    }
+}
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -512,7 +557,7 @@ NSString *const kTableViewFrame = @"frame";
 #pragma mark - lazy
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight - kChatBarHeight) style:UITableViewStyleGrouped];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight - kChatBarHeight -44) style:UITableViewStyleGrouped];
         _tableView.backgroundColor = MainBackgroudColor;
         _tableView.delegate = self;
         _tableView.dataSource = self;
