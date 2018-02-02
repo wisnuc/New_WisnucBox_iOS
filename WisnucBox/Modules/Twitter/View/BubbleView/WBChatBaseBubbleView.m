@@ -27,6 +27,7 @@ NSString *const BUBBLE_RIGHT_IMAGE_NAME_X = @"IM_Chat_sender_bg";
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bubbleViewPressed:)];
         [self addGestureRecognizer:tap];
     }
+    
     return self;
 }
 

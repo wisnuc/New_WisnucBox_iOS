@@ -8,7 +8,10 @@
 
 #import "JYBaseRequest.h"
 #import "LHMessageModel.h"
-
+@interface WBTweetlocalImageModel : NSObject <NSCopying,NSMutableCopying>
+@property (nonatomic,copy)JYAsset *asset;
+@property (nonatomic,copy)UIImage *localImage;
+@end
 
 @interface WBTweetlistModel : NSObject
 @property (nonatomic,copy)NSString *filename;

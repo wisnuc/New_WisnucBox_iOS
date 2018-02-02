@@ -524,6 +524,7 @@
     @weaky(self)
     if (self.choosePhotos.count == 0)return;
     NSMutableArray *photosArray = [NSMutableArray arrayWithCapacity:0];
+    NSMutableArray *localModelArray = [NSMutableArray arrayWithCapacity:0];
     NSArray *sourceArray =[NSArray arrayWithArray:self.choosePhotos];
     CGSize size = [weak_self getImageSizeWithImageArray:sourceArray];
     [self.choosePhotos enumerateObjectsUsingBlock:^(JYAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -531,12 +532,20 @@
         if (obj.asset) {
             [PHPhotoLibrary requestImageForAsset:obj.asset size:size completion:^(UIImage *image, NSDictionary *info) {
                 if(!weak_self) return;
+                WBTweetlocalImageModel *localImageModel = [WBTweetlocalImageModel new];
+                localImageModel.localImage = image;
+                localImageModel.asset = obj;
+                [localModelArray addObject:localImageModel];
                 [photosArray addObject:image];
             }];
         }else{
           __block id <SDWebImageOperation> thumbnailRequestOperation = [WB_NetService getThumbnailWithHash:[(WBAsset *)obj fmhash] complete:^(NSError *error, UIImage *img) {
                 if(!weak_self) return;
                 if (!error && img) {
+                    WBTweetlocalImageModel *localImageModel = [WBTweetlocalImageModel new];
+                    localImageModel.localImage = img;
+                    localImageModel.asset = obj;
+                    [localModelArray addObject:localImageModel];
                     [photosArray addObject:img];
                 }else{
                     [thumbnailRequestOperation cancel];
@@ -546,8 +555,8 @@
         }
     }];
    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerDidFinishPickingPhotos:sourceAssets:isSelectOriginalPhoto:)]) {
-        [self.delegate imagePickerDidFinishPickingPhotos:photosArray sourceAssets:self.choosePhotos isSelectOriginalPhoto:YES];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerDidFinishPickingPhotos:sourceAssets:LocalImageModelArray:isSelectOriginalPhoto:)]) {
+        [self.delegate imagePickerDidFinishPickingPhotos:photosArray sourceAssets:self.choosePhotos LocalImageModelArray:localModelArray isSelectOriginalPhoto:YES];
     }
     [self dismissViewControllerAnimated:YES completion:^{}];
 }

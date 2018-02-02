@@ -148,7 +148,7 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
         }
             break;
         case MessageBodyType_Image: {
-            return [[WBChatImageBubbleView alloc] init];
+            return [[WBChatImageBubbleView alloc] initWithFrame:CGRectMake(0, 0, messageModel.width, messageModel.height)];
         }
             break;
         case MessageBodyType_Voice: {

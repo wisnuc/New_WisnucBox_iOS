@@ -20,7 +20,7 @@ typedef NS_ENUM(NSUInteger, JYAssetType) {
     JYAssetTypeUnknown,
 };
 
-@interface JYAsset : NSObject
+@interface JYAsset : NSObject <NSCopying,NSMutableCopying>
 
 //asset对象
 @property (nonatomic, strong) PHAsset *asset;

@@ -24,6 +24,7 @@ extern CGFloat const kChatBarHeight;
 extern CGFloat const kYYkitWidth;
 
 extern NSString *const kMessageKey;
+extern NSString *const kMessageImageKey;
 extern NSString *const kShouldResendCell;
 extern NSString *const kRouterEventChatResendEventName;
 extern NSString *const kRouterEventChatCellBubbleTapEventName;
@@ -32,6 +33,9 @@ extern NSString *const kRouterEventTextURLTapEventName;
 extern NSString *const kRouterEventImageBubbleTapEventName;
 
 extern NSString *const kDataChangedName;
+extern NSString *const kMessageImageBoxUUID;
+extern NSString *const kMessageImageBoxLocalAsset;
+extern NSString *const kMessageImageBoxNetImageHash;
 
 extern NSInteger kMessageCount;
 

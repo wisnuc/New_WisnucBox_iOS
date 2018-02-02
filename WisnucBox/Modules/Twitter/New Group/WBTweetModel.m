@@ -7,9 +7,32 @@
 //
 
 #import "WBTweetModel.h"
-@implementation WBTweetlistModel
+@implementation WBTweetlocalImageModel
++ (NSArray *)modelPropertyBlacklist {
+    return @[@"localImage", @"asset"];
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    WBTweetlocalImageModel *newClass = [[WBTweetlocalImageModel alloc]init];
+    newClass.asset = self.asset;
+    newClass.localImage = self.localImage;
+    return newClass;
+}
+- (nonnull id)mutableCopyWithZone:(nullable NSZone *)zone {
+    WBTweetlocalImageModel *newClass = [[WBTweetlocalImageModel alloc]init];
+    newClass.asset = self.asset;
+    newClass.localImage = self.localImage;
+    return newClass;
+}
 
 @end
+
+@implementation WBTweetlistModel
++ (NSArray *)modelPropertyBlacklist {
+    return @[@"localImage", @"asset"];
+}
+@end
+
 
 @implementation WBTweetTweeterModel
 + (NSDictionary *)modelCustomPropertyMapper {

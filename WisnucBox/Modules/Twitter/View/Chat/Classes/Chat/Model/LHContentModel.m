@@ -18,11 +18,12 @@
     return self;
 }
 
-- (instancetype)initWitiPhotos:(NSArray *)photos originalPhoto:(BOOL)originalPhoto Assets:(NSArray *)assets{
+- (instancetype)initWitiPhotos:(NSArray *)photos originalPhoto:(BOOL)originalPhoto LocalImageModelArray:(NSArray *)localImageModelArray Assets:(NSArray *)assets{
     if (self = [super init]) {
         self.photos = photos;
         self.originalPhoto = originalPhoto;
         self.assets = assets;
+        self.localImageModelArray = localImageModelArray;
     }
     return self;
 }
@@ -31,8 +32,8 @@
     return [[self alloc] initWitiPhotos:photos originalPhoto:originalPhoto];
 }
 
-+ (instancetype)photosModelWitiPhotos:(NSArray *)photos Assets:(NSArray *)assets originalPhoto:(BOOL)originalPhoto {
-    return [[self alloc] initWitiPhotos:photos originalPhoto:originalPhoto Assets:assets];
++ (instancetype)photosModelWitiPhotos:(NSArray *)photos Assets:(NSArray *)assets LocalImageModelArray:(NSArray *)localImageModelArray originalPhoto:(BOOL)originalPhoto {
+    return [[self alloc] initWitiPhotos:photos originalPhoto:originalPhoto LocalImageModelArray:localImageModelArray Assets:assets];
 }
 @end
 

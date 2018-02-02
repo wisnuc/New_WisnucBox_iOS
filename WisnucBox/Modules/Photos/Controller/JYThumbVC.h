@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "FMBaseFirstVC.h"
+#import "WBTweetModel.h"
 
 @class JYAsset;
 
 @protocol JYThumbVCDelegate <NSObject>
-- (void)imagePickerDidFinishPickingPhotos:(NSArray *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto;
+- (void)imagePickerDidFinishPickingPhotos:(NSArray *)photos sourceAssets:(NSArray *)assets LocalImageModelArray:(NSArray *)localImageModelArray isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto;
 @end
 
 @interface JYThumbVC : FMBaseFirstVC

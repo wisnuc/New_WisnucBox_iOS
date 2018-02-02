@@ -28,6 +28,7 @@ CGFloat const kYYkitWidth = 250.f;
 
 
 NSString *const kMessageKey = @"kMessageKey";
+NSString *const kMessageImageKey = @"kMessageImageKey";
 NSString *const kShouldResendCell = @"kShouldResendCell";
 NSString *const kRouterEventChatCellBubbleTapEventName = @"kRouterEventChatCellBubbleTapEventName";
 NSString *const kRouterEventChatHeadImageTapEventName = @"kRouterEventChatHeadImageTapEventName";
@@ -36,6 +37,9 @@ NSString *const kRouterEventTextURLTapEventName = @"kRouterEventTextURLTapEventN
 NSString *const kRouterEventImageBubbleTapEventName = @"kRouterEventImageBubbleTapEventName";
 
 NSString *const kDataChangedName = @"kDataChangedName";
+NSString *const kMessageImageBoxUUID = @"kMessageImageBoxUUID";
+NSString *const kMessageImageBoxLocalAsset = @"kMessageImageBoxLocalAsset";
+NSString *const kMessageImageBoxNetImageHash = @"kMessageImageBoxNetImageHash";
 
 NSInteger kMessageCount = 20;
 

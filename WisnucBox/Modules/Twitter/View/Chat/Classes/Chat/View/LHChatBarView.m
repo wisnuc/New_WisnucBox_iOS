@@ -471,10 +471,10 @@ CGFloat const kChatBatItemWH = 26.0f;
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)imagePickerDidFinishPickingPhotos:(NSArray *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto {
-    self.photos = [LHPhotosModel photosModelWitiPhotos:photos Assets:assets originalPhoto:isSelectOriginalPhoto];
+- (void)imagePickerDidFinishPickingPhotos:(NSArray *)photos sourceAssets:(NSArray *)assets LocalImageModelArray:(NSArray *)localImageModelArray isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto {
+    self.photos = [LHPhotosModel photosModelWitiPhotos:photos Assets:assets LocalImageModelArray:localImageModelArray originalPhoto:YES];
     !self.sendContent ? : self.sendContent(self.contentModel);
-
+    NSLog(@"%ld",localImageModelArray.count);
     [self resetState];
 }
 

@@ -103,8 +103,8 @@ NSString *const kTableViewFrame = @"frame";
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.chatBarView];
     
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self.chatBarView action:@selector(hideKeyboard)];
-    [self.tableView addGestureRecognizer:tapGesture];
+//    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self.chatBarView action:@selector(hideKeyboard)];
+//    [self.tableView addGestureRecognizer:tapGesture];
 }
 
 - (void)dealloc {
@@ -159,7 +159,7 @@ NSString *const kTableViewFrame = @"frame";
         
         WBTweetModel *model = self.messages.firstObject;
         self.tableViewOffSetY = (self.tableView.contentSize.height - self.tableView.contentOffset.y);
-        [self loadMessageWithId:[NSString stringWithFormat:@"%lld",model.ctime]];
+//        [self loadMessageWithId:[NSString stringWithFormat:@"%lld",model.ctime]];
         [self.tableView reloadData];
         [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height - self.tableViewOffSetY)];
         self.headerRefreshing = NO;
@@ -221,7 +221,7 @@ NSString *const kTableViewFrame = @"frame";
     messageModel.ctime = date;
     messageModel.messageBodytype = MessageBodyType_Image;
     messageModel.status = MessageDeliveryState_Delivered;
-    messageModel.localImageArray = content.photos.photos;
+    messageModel.localImageArray = content.photos.localImageModelArray;
     NSString *time = [LHTools processingTimeWithDate:messageModel.ctime];
     if ([time isEqualToString:self.lastTime]) {
         [self insertNewMessageOrTime:time];
@@ -345,22 +345,23 @@ NSString *const kTableViewFrame = @"frame";
 #pragma mark  cell事件处理
 - (void)routerEventWithName:(NSString *)eventName userInfo:(NSDictionary *)userInfo {
     WBTweetModel *model = [userInfo objectForKey:kMessageKey];
+    UIImageView *imageView = [userInfo objectForKey:kMessageImageKey];
     if ([eventName isEqualToString:kRouterEventImageBubbleTapEventName]) {
         //点击图片
-        [self chatImageCellBubblePressed:model];
+        [self chatImageCellBubblePressed:model ImageViewTag:imageView.tag];
     }
 }
 
 
 // 图片的bubble被点击
-- (void)chatImageCellBubblePressed:(WBTweetModel *)model {
+- (void)chatImageCellBubblePressed:(WBTweetModel *)model ImageViewTag:(NSInteger)tag{
     NSMutableArray *imageKeys = @[].mutableCopy;
     __block NSString *currentKey = nil;
     [self.messages enumerateObjectsUsingBlock:^(WBTweetModel *messageModel, NSUInteger idx, BOOL * stop) {
         if (messageModel.messageBodytype == MessageBodyType_Image) {
-            [imageKeys addObject:[NSString stringWithFormat:@"%lld",messageModel.ctime]];
+            [imageKeys addObject:[NSString stringWithFormat:@"%@%lld%ld",messageModel.uuid,messageModel.ctime,tag]];
             if (messageModel.ctime == model.ctime) {
-                currentKey = [NSString stringWithFormat:@"%lld",messageModel.ctime];
+                currentKey = [NSString stringWithFormat:@"%@%lld%ld",messageModel.uuid,messageModel.ctime,tag];
             }
         }
     }];
@@ -455,6 +456,11 @@ NSString *const kTableViewFrame = @"frame";
     return 0.1;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+}
+
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -479,6 +485,7 @@ NSString *const kTableViewFrame = @"frame";
 /** 获取一个和被点击cell一模一样的UIImageView */
 - (UIImageView *)XSBrowserDelegate:(XSBrowserAnimateDelegate *)browserDelegate imageViewForRowAtIndex:(NSInteger)index {
     NSArray *cells = [self.tableView visibleCells];
+    
     __block UIImageView *imageView = nil;
     [cells enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[WBChatViewNormalTableViewCell class]]) {
