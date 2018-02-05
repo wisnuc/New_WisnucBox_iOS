@@ -31,9 +31,9 @@
         _totalScale = 1.0;
         
         // 捏合手势缩放图片
-//        UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(zoomImage:)];
-//        pinch.delegate = self;
-//        [self addGestureRecognizer:pinch];
+        UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(zoomImage:)];
+        pinch.delegate = self;
+        [self addGestureRecognizer:pinch];
      
     }
     return self;
