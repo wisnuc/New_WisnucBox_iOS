@@ -753,6 +753,7 @@ static BOOL needHide = YES;
                                  initializationVC.searchModel = model;
                                  [self.navigationController pushViewController:initializationVC animated:YES];
                              }];
+       [_userDataSource removeAllObjects];
        [_userListTableViwe reloadData];
     }else if (model.NASType == NASTypeMaintain){
         [_userListTableViwe removeEmptyView];
@@ -773,6 +774,7 @@ static BOOL needHide = YES;
                                  [self.navigationController pushViewController:maintenanceVC animated:YES];
 //
                              }];
+         [_userDataSource removeAllObjects];
          [_userListTableViwe reloadData];
     }else if (model.NASType == NASTypeError){
             [_userListTableViwe removeEmptyView];
@@ -793,7 +795,7 @@ static BOOL needHide = YES;
                                      [self.navigationController pushViewController:maintenanceVC animated:YES];
                                      //
                                  }];
-        
+        [_userDataSource removeAllObjects];
         [_userListTableViwe reloadData];
     }else if (model.NASType == NASTypeNormal) {
         _userView.alpha = 1;

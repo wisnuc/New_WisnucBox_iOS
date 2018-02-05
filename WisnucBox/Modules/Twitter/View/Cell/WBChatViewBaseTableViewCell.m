@@ -91,7 +91,8 @@
             break;
         }
         case MessageBodyType_Image: {
-            identifier = [identifier stringByAppendingString:@"Image"];
+            NSString *string = [NSString stringWithFormat:@"Image_%lld",model.ctime];
+            identifier = [identifier stringByAppendingString:string];
             break;
         }
         case MessageBodyType_Video: {

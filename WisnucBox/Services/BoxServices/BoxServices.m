@@ -9,6 +9,7 @@
 #import "BoxServices.h"
 #import "PHAsset+JYEXT.h"
 
+
 @interface BoxServices(){
 //     AFHTTPSessionManager * _manager;
 }
@@ -23,7 +24,7 @@
     
 }
 
-- (void)sendTweetWithImageArray:(NSArray *)array Boxuuid:(NSString *)boxuuid Complete:(void(^)(NSError *error))callback{
+- (void)sendTweetWithImageArray:(NSArray *)array Boxuuid:(NSString *)boxuuid Complete:(void(^)(WBTweetModel *tweetModel,NSError *error))callback{
     NSMutableArray *localImageListArray = [NSMutableArray arrayWithCapacity:0];
     NSMutableArray *netImageListArray = [NSMutableArray arrayWithCapacity:0];
     [array enumerateObjectsUsingBlock:^(JYAsset *obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -35,9 +36,9 @@
             [netImageListArray addObject:mutableDic];
             
         }else{
-            PHImageRequestID requestFileID =  [obj.asset getFile:^(NSError *error, NSString *filePath) {
-                if(error)
-                    return callback(error);
+            PHImageRequestID requestFileID =  [obj.asset getFile:^(NSError *requestError, NSString *filePath) {
+                if(requestError)
+                    return callback(nil,requestError);
                 if (filePath.length==0) return;
                 NSString * hashString = obj.digest;
                 NSInteger sizeNumber = (NSInteger)[WB_FileService fileSizeAtPath:filePath];
@@ -62,7 +63,7 @@
     [self creatAtweetWithNetImageListArray:netImageListArray LocalImageListArray:localImageListArray   Boxuuid:boxuuid   Complete:callback];
 }
 
-- (void)creatAtweetWithNetImageListArray:(NSArray *)netImageListArray LocalImageListArray:(NSArray *)localImageListArray  Boxuuid:(NSString *)boxuuid  Complete:(void(^)(NSError *error))callback{
+- (void)creatAtweetWithNetImageListArray:(NSArray *)netImageListArray LocalImageListArray:(NSArray *)localImageListArray  Boxuuid:(NSString *)boxuuid  Complete:(void(^)(WBTweetModel *tweetModel,NSError *error))callback{
    __block NSMutableArray *localDataArray = [[NSMutableArray alloc]initWithArray:localImageListArray copyItems:YES];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
@@ -155,11 +156,13 @@
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-         NSLog(@"%@",responseObject);
-        callback(nil);
+        WBTweetModel *model = [WBTweetModel modelWithJSON:responseObject];
+         NSLog(@"%@",model.uuid);
+        
+        callback(model,nil);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
-        callback(error);
+        callback(nil,error);
     }];
     [dataTask resume];
 //    }

@@ -27,6 +27,7 @@
 //#import <YYKit/NSObject+YYModel.h>
 //#import <YYCache/YYCache.h>
 //#import <YYWebImage/YYWebImage.h>
+#import <SDAutoLayout/SDAutoLayout.h>
 
 #import <WXApi.h>
 #import <ReactiveObjC/ReactiveObjC.h>

@@ -5,7 +5,7 @@
 //  Created by aier on 15-2-3.
 //  Copyright (c) 2015年 aier. All rights reserved.
 //
-#import "PHPhotoLibrary+JYEXT.h"
+
 #import "SDPhotoBrowser.h"
 #import "UIImageView+WebCache.h"
 #import "SDBrowserImageView.h"
@@ -68,6 +68,8 @@
     indexLabel.clipsToBounds = YES;
     if (self.imageCount > 1) {
         indexLabel.text = [NSString stringWithFormat:@"1/%ld", (long)self.imageCount];
+    }else{
+        indexLabel.text = @"1/1";
     }
     _indexLabel = indexLabel;
     [self addSubview:indexLabel];
@@ -129,6 +131,9 @@
     _scrollView.showsHorizontalScrollIndicator = NO;
     _scrollView.showsVerticalScrollIndicator = NO;
     _scrollView.pagingEnabled = YES;
+//    _scrollView.maximumZoomScale = 3.0;
+//    _scrollView.minimumZoomScale = 1.0;
+//    _scrollView.multipleTouchEnabled = YES;
     [self addSubview:_scrollView];
     
     for (int i = 0; i < self.imageCount; i++) {
@@ -154,17 +159,18 @@
 }
 
 // 加载图片
+// 加载图片
 - (void)setupImageOfImageViewForIndex:(NSInteger)index
 {
     SDBrowserImageView *imageView = _scrollView.subviews[index];
     self.currentImageIndex = index;
     if (imageView.hasLoadedImage) return;
-//    if ([self highQualityImageURLForIndex:index]) {
+    //    if ([self highQualityImageURLForIndex:index]) {
     
-//        [imageView setImageWithURL:[self highQualityImageURLForIndex:index] placeholderImage:[self placeholderImageForIndex:index]];
-//    } else {
-//        imageView.image = [self placeholderImageForIndex:index];
-//    }
+    //        [imageView setImageWithURL:[self highQualityImageURLForIndex:index] placeholderImage:[self placeholderImageForIndex:index]];
+    //    } else {
+    //        imageView.image = [self placeholderImageForIndex:index];
+    //    }
     @weaky(self)
     if ([self highQualityImageBoxInfoForIndex:index]) {
         NSDictionary *dic = [self highQualityImageBoxInfoForIndex:index];
@@ -178,22 +184,23 @@
                 }
             }];
         }else{
-        [SXLoadingView showProgressHUD:@""];
-        [WB_NetService getTweeethighQualityImageWithHash:dic[kMessageImageBoxNetImageHash] BoxUUID:dic[kMessageImageBoxUUID] complete:^(NSError *error, UIImage *netImage) {
-            if (!error &&netImage) {
-                imageView.image = netImage;
-                 [SXLoadingView hideProgressHUD];
-            }else{
-                imageView.image = [self placeholderImageForIndex:index];
-                [SXLoadingView hideProgressHUD];
-            }
-        }];
+            [SXLoadingView showProgressHUD:@""];
+            [WB_NetService getTweeethighQualityImageWithHash:dic[kMessageImageBoxNetImageHash] BoxUUID:dic[kMessageImageBoxUUID] complete:^(NSError *error, UIImage *netImage) {
+                if (!error &&netImage) {
+                    imageView.image = netImage;
+                    [SXLoadingView hideProgressHUD];
+                }else{
+                    imageView.image = [self placeholderImageForIndex:index];
+                    [SXLoadingView hideProgressHUD];
+                }
+            }];
         }
     }else{
-       imageView.image = [self placeholderImageForIndex:index];
+        imageView.image = [self placeholderImageForIndex:index];
     }
     imageView.hasLoadedImage = YES;
 }
+
 
 - (void)photoClick:(UITapGestureRecognizer *)recognizer
 {
@@ -203,7 +210,17 @@
     SDBrowserImageView *currentImageView = (SDBrowserImageView *)recognizer.view;
     NSInteger currentIndex = currentImageView.tag;
     
-    UIView *sourceView = self.sourceImagesContainerView.subviews[currentIndex];
+    UIView *sourceView = nil;
+    if ([self.sourceImagesContainerView isKindOfClass:UICollectionView.class]) {
+        UICollectionView *view = (UICollectionView *)self.sourceImagesContainerView;
+        NSIndexPath *path = [NSIndexPath indexPathForItem:currentIndex inSection:0];
+        sourceView = [view cellForItemAtIndexPath:path];
+    }else {
+        sourceView = self.sourceImagesContainerView.subviews[currentIndex];
+    }
+    
+    
+    
     CGRect targetTemp = [self.sourceImagesContainerView convertRect:sourceView.frame toView:self];
     
     UIImageView *tempView = [[UIImageView alloc] init];
@@ -301,7 +318,15 @@
 
 - (void)showFirstImage
 {
-    UIView *sourceView = self.sourceImagesContainerView.subviews[self.currentImageIndex];
+    UIView *sourceView = nil;
+    
+    if ([self.sourceImagesContainerView isKindOfClass:UICollectionView.class]) {
+        UICollectionView *view = (UICollectionView *)self.sourceImagesContainerView;
+        NSIndexPath *path = [NSIndexPath indexPathForItem:self.currentImageIndex inSection:0];
+        sourceView = [view cellForItemAtIndexPath:path];
+    }else {
+        sourceView = self.sourceImagesContainerView.subviews[self.currentImageIndex];
+    }
     CGRect rect = [self.sourceImagesContainerView convertRect:sourceView.frame toView:self];
     
     UIImageView *tempView = [[UIImageView alloc] init];
@@ -377,6 +402,20 @@
     [self setupImageOfImageViewForIndex:index];
 }
 
+//- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
+//    SDBrowserImageView *imageView = _scrollView.subviews[self.currentImageIndex];
+//    CGFloat offsetX = (GetViewWidth(scrollView) > scrollView.contentSize.width) ? (GetViewWidth(scrollView) - scrollView.contentSize.width) * 0.5 : 0.0;
+//    CGFloat offsetY = (GetViewHeight(scrollView) > scrollView.contentSize.height) ? (GetViewHeight(scrollView) - scrollView.contentSize.height) * 0.5 : 0.0;
+//    imageView.center = CGPointMake(scrollView.contentSize.width * 0.5 + offsetX, scrollView.contentSize.height * 0.5 + offsetY);
+////    imageView.isScaled = YES;
+//}
+//
+//
+//
+//- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
+//{
+//    return _scrollView.subviews[self.currentImageIndex];
+//}
 
 
 @end

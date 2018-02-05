@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WBTweetModel.h"
 
 @interface BoxServices : NSObject <ServiceProtocol>
-- (void)sendTweetWithImageArray:(NSArray *)array Boxuuid:(NSString *)boxuuid Complete:(void(^)(NSError *error))callback;
+- (void)sendTweetWithImageArray:(NSArray *)array Boxuuid:(NSString *)boxuuid Complete:(void(^)(WBTweetModel *tweetModel,NSError *error))callback;
 @end

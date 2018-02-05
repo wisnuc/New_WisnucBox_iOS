@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WBTweetModel.h"
+
 
 @class SDButton, SDPhotoBrowser;
 
@@ -20,8 +20,8 @@
 @optional
 
 - (NSURL *)photoBrowser:(SDPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index;
-
 - (NSDictionary *)photoBrowser:(SDPhotoBrowser *)browser highQualityImageBoxInfoForIndex:(NSInteger)index;
+
 @end
 
 

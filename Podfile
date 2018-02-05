@@ -27,6 +27,7 @@ pod 'MaterialComponents'
 pod 'AvoidCrash', '~> 2.5.1'
 pod 'TZImagePickerController'
 pod 'YYKit'
+pod 'SDAutoLayout'
 end
 
 #post_install do |installer|

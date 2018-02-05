@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "WBChatViewBaseTableViewCell.h"
+@class WBChatViewNormalTableViewCell;
+typedef void(^ReloadCellBlock)(WBChatViewNormalTableViewCell *cell);
 
-
-@interface WBChatViewNormalTableViewCell : WBChatViewBaseTableViewCell
+@interface WBChatViewNormalTableViewCell : WBChatViewBaseTableViewCell <RefreshDelegate>
 @property (nonatomic, strong) UIActivityIndicatorView *activtiy;
 @property (nonatomic, strong) UIView *activityView;
 @property (nonatomic, strong) UIButton *retryButton;
+@property (nonatomic)ReloadCellBlock reloadCellBlock;
 @end

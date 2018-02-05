@@ -23,7 +23,7 @@ NSString *const BUBBLE_RIGHT_IMAGE_NAME_X = @"IM_Chat_sender_bg";
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        [self addSubview:self.backImageView];
+//        [self addSubview:self.backImageView];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bubbleViewPressed:)];
         [self addGestureRecognizer:tap];
     }
@@ -45,11 +45,11 @@ NSString *const BUBBLE_RIGHT_IMAGE_NAME_X = @"IM_Chat_sender_bg";
 //    NSInteger rightCapWidth = image.size.width - leftCapWidth -1;
 //    image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(topCapHeight, leftCapWidth, bottomCapHeight, rightCapWidth)];
     
-    UIImage *image = [UIImage imageWithColor:kWhiteColor];
-    NSInteger bottomCapHeight = image.size.height - topCapHeight - 1;
-    NSInteger rightCapWidth = image.size.width - leftCapWidth -1;
-    image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(topCapHeight, leftCapWidth, bottomCapHeight, rightCapWidth)];
-    self.backImageView.image = image;
+//    UIImage *image = [UIImage imageWithColor:kWhiteColor];
+//    NSInteger bottomCapHeight = image.size.height - topCapHeight - 1;
+//    NSInteger rightCapWidth = image.size.width - leftCapWidth -1;
+//    image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(topCapHeight, leftCapWidth, bottomCapHeight, rightCapWidth)];
+//    self.backImageView.image = image;
 }
 
 #pragma mark - public

@@ -90,8 +90,8 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
 //    }
     _nameLabel.hidden = model.isSender;
     _nameLabel.text = @"aaaa";
-    _bubbleView.messageModel = self.messageModel;
-    [_bubbleView sizeToFit];
+    _bubbleView.messageModel = model;
+//    [_bubbleView sizeToFit];
 }
 
 - (void)prepareForReuse {
@@ -148,7 +148,9 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
         }
             break;
         case MessageBodyType_Image: {
-            return [[WBChatImageBubbleView alloc] initWithFrame:CGRectMake(0, 0, messageModel.width, messageModel.height)];
+            WBChatImageBubbleView *imageBubbleView = [[WBChatImageBubbleView alloc] initWithFrame:CGRectMake(0, 0, messageModel.width, messageModel.height)];
+            imageBubbleView.refreshDelegate = self;
+            return imageBubbleView;
         }
             break;
         case MessageBodyType_Voice: {
@@ -214,6 +216,10 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
 //        bubbleHeight += NAME_LABEL_HEIGHT;
 //    }
     return MAX(headHeight, bubbleHeight);
+}
+
+- (void)reloadFinishLoadData{
+
 }
 
 @end
