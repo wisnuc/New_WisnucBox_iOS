@@ -51,6 +51,8 @@
 #import "RadioButton.h"
 #import  <TZImagePickerController/TZImagePickerController.h>
 #import "UIImage+extension.h"
+#import <DACircularProgress/DACircularProgress-umbrella.h>
+#import <SDWebImage/SDWebImage-umbrella.h>
 
 //Base
 //#import "RDVTabBarController.h"

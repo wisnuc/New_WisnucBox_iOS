@@ -10,7 +10,6 @@ pod 'AFNetworking', '~> 3.1.0'
 pod 'YYKeyboardManager'
 pod 'Masonry'
 pod 'MBProgressHUD'
-pod 'MWPhotoBrowser', '~> 2.1.1'
 pod 'pop'
 pod 'FMDB', '~> 2.5'
 pod 'CHTCollectionViewWaterfallLayout', '~> 0.9.4'
@@ -28,6 +27,8 @@ pod 'AvoidCrash', '~> 2.5.1'
 pod 'TZImagePickerController'
 pod 'YYKit'
 pod 'SDAutoLayout'
+pod 'DACircularProgress'
+pod 'SDWebImage'
 end
 
 #post_install do |installer|

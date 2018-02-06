@@ -59,11 +59,12 @@
             NSMutableArray *tempDataSource = [NSMutableArray arrayWithCapacity:0];
             NSMutableArray *chooseUserSource = [NSMutableArray arrayWithCapacity:0];
             NSMutableArray *exsitDataSource = [NSMutableArray arrayWithCapacity:0];
-         
+            
             for (NSDictionary * dic in userArr) {
                 UserModel * model = [UserModel modelWithJSON:dic];
                 if (model.global) {
-                  [tempDataSource addObject:model];
+                        [tempDataSource addObject:model];
+                    if(_type == WBUserAddressBookCreat || _type == WBUserAddressBookAdd){
                     if ([model.uuid isEqualToString:WB_UserService.currentUser.uuid]) {
                         [chooseUserSource addObject:model];
                         [exsitDataSource addObject:model];
@@ -77,6 +78,7 @@
                     }
                 }
             }
+        }
             self.userArray = tempDataSource;
             self.choosedUserArray = chooseUserSource;
             self.exsitDataArray = exsitDataSource;
@@ -149,7 +151,24 @@
 }
 
 - (void)deleteUserAction{
+    if (self.choosedUserArray.count==0)return;
+    @weaky(self)
+    NSMutableArray *globalArray = [NSMutableArray arrayWithCapacity:0];
+    [self.choosedUserArray enumerateObjectsUsingBlock:^(UserModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [globalArray addObject:obj.global.guid];
+    }];
     
+    if (globalArray && globalArray.count>0) {
+        NSArray *arr = [NSArray arrayWithArray:globalArray];
+        [[WBUpdateBoxAPI updateApiWithBoxuuid:_boxModel.uuid Users:arr Option:@"delete"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+            NSLog(@"%@",request.responseJsonObject);
+            if (_endDelegate && [_endDelegate respondsToSelector:@selector(endAddUser)]) {
+                [weak_self.endDelegate endAddUser];
+            }
+        } failure:^(__kindof JYBaseRequest *request) {
+            NSLog(@"%@",request.error);
+        }];
+    }
 }
 
 - (void)addUserAction{
@@ -182,6 +201,7 @@
     
     NSMutableArray *globalArray = [NSMutableArray arrayWithCapacity:0];
     [self.choosedUserArray enumerateObjectsUsingBlock:^(UserModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
         [globalArray addObject:obj.global.guid];
     }];
     
@@ -221,12 +241,36 @@
     cell.userImageView.image = [UIImage imageForName:model.username size:cell.userImageView.bounds.size];
     cell.userNameLabel.text = model.username;
     cell.checkBox.delegate = self;
-    [self.choosedUserArray enumerateObjectsUsingBlock:^(UserModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//        NSLog(@"%@/%@",model.uuid ,obj.uuid);
-        if ([model.global.guid isEqualToString:obj.global.guid]) {
-              [cell.checkBox setOn:YES animated:NO];
+    switch (_type) {
+        case WBUserAddressBookAdd:{
+            [self.choosedUserArray enumerateObjectsUsingBlock:^(UserModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                //        NSLog(@"%@/%@",model.uuid ,obj.uuid);
+                if ([model.global.guid isEqualToString:obj.global.guid]) {
+                    [cell.checkBox setOn:YES animated:NO];
+                }
+            }];
         }
-    }];
+            break;
+            
+        case WBUserAddressBookDelete:{
+            
+        }
+            break;
+            
+        case WBUserAddressBookCreat:{
+            [self.choosedUserArray enumerateObjectsUsingBlock:^(UserModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                //        NSLog(@"%@/%@",model.uuid ,obj.uuid);
+                if ([model.global.guid isEqualToString:obj.global.guid]) {
+                    [cell.checkBox setOn:YES animated:NO];
+                }
+            }];
+        }
+            break;
+            
+        default:
+            break;
+    }
+   
     return cell;
 }
 
@@ -238,20 +282,58 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UserModel *model = self.userArray[indexPath.row];
     WBChatListAddUserTableViewCell *cell  = [tableView cellForRowAtIndexPath:indexPath];
-    
-    if (!cell.checkBox.on) {
-        [cell.checkBox setOn:YES animated:YES];
-        if (model.global.guid.length >0) {
-            [self.choosedUserArray addObject:model];
+    switch (_type) {
+        case WBUserAddressBookAdd:{
+            if (!cell.checkBox.on) {
+                [cell.checkBox setOn:YES animated:YES];
+                if (model.global.guid.length >0) {
+                    [self.choosedUserArray addObject:model];
+                }
+            }else{
+                if ([model.uuid isEqualToString:WB_UserService.currentUser.uuid] || [_exsitDataArray containsObject:model]) {
+                    [cell.checkBox setEnabled:NO];
+                }else{
+                    [cell.checkBox setOn:NO animated:YES];
+                    [self.choosedUserArray removeObject:model];
+                }
+            }
         }
-    }else{
-        if ([model.uuid isEqualToString:WB_UserService.currentUser.uuid] || [_exsitDataArray containsObject:model]) {
-            [cell.checkBox setEnabled:NO];
-        }else{
-            [cell.checkBox setOn:NO animated:YES];
-            [self.choosedUserArray removeObject:model];
+            break;
+        case WBUserAddressBookDelete:{
+            if (!cell.checkBox.on){
+                [cell.checkBox setOn:YES animated:YES];
+                [self.choosedUserArray addObject:model];
+            }
+            else
+            {
+                [cell.checkBox setOn:NO animated:YES];
+                [self.choosedUserArray removeObject:model];
+            }
         }
+            break;
+            
+        case WBUserAddressBookCreat:{
+            if (!cell.checkBox.on) {
+                [cell.checkBox setOn:YES animated:YES];
+                if (model.global.guid.length >0) {
+                    [self.choosedUserArray addObject:model];
+                }
+            }else{
+                if ([model.uuid isEqualToString:WB_UserService.currentUser.uuid] || [_exsitDataArray containsObject:model]) {
+                    [cell.checkBox setEnabled:NO];
+                }else{
+                    [cell.checkBox setOn:NO animated:YES];
+                    [self.choosedUserArray removeObject:model];
+                }
+            }
+        }
+            break;
+            
+            
+        default:
+            break;
     }
+  
 }
 
 

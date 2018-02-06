@@ -441,9 +441,9 @@
     if (self.jyAsset.asset && self.imageRequestID >= 0) {
         [[PHCachingImageManager defaultManager] cancelImageRequest:self.imageRequestID];
     }
-    if(self.operation){
-        [self.operation cancel];
-        self.operation = nil;
+    if(self.sdDownloadToken){
+        [[SDWebImageDownloader sharedDownloader]cancel:self.sdDownloadToken];
+        self.sdDownloadToken = nil;
     }
     self.jyAsset = asset;
     
@@ -475,14 +475,14 @@
     if (self.jyAsset.asset && self.imageRequestID >= 0) {
         [[PHCachingImageManager defaultManager] cancelImageRequest:self.imageRequestID];
     }
-    if(self.operation){
-        [self.operation cancel];
-        self.operation = nil;
+    if(self.sdDownloadToken){
+        [[SDWebImageDownloader sharedDownloader]cancel:self.sdDownloadToken];
+        self.sdDownloadToken = nil;
     }
     self.jyAsset = asset;
     [self.indicator startAnimating];
     jy_weakify(self);
-    self.operation =  [WB_NetService getHighWebImageWithHash:[(WBAsset *)asset fmhash] completeBlock:^(NSError *error, UIImage *img) {
+    self.sdDownloadToken =  [WB_NetService getHighWebImageWithHash:[(WBAsset *)asset fmhash] completeBlock:^(NSError *error, UIImage *img) {
         [weakSelf.indicator stopAnimating];
         jy_strongify(weakSelf);
         if(!strongSelf) return;
@@ -494,7 +494,7 @@
             if(asset.type == JYAssetTypeGIF) [strongSelf resumeGif];
             [strongSelf resetSubviewSize:img];
         }
-        strongSelf.operation = nil;
+        strongSelf.sdDownloadToken = nil;
     }];
     
 }

@@ -38,6 +38,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = SDPhotoBrowserBackgrounColor;
+   
     }
     return self;
 }
@@ -174,15 +175,32 @@
     @weaky(self)
     if ([self highQualityImageBoxInfoForIndex:index]) {
         NSDictionary *dic = [self highQualityImageBoxInfoForIndex:index];
-        JYAsset *asset = dic[kMessageImageBoxLocalAsset];
-        if (asset) {
-            [PHPhotoLibrary requestOriginalImageForAsset:asset.asset completion:^(UIImage *localImage, NSDictionary *info) {
+        NSLog(@"%@",dic);
+       
+        if (dic[kMessageImageBoxLocalAsset]) {
+            if ([dic[kMessageImageBoxLocalAsset] isKindOfClass:[WBAsset class]]) {
+                [SXLoadingView showProgressHUD:@""];
+                WBAsset*asset = dic[kMessageImageBoxLocalAsset];
+                [WB_NetService getHighWebImageWithHash:asset.fmhash completeBlock:^(NSError *error, UIImage *netImage) {
+                    if (!error &&netImage) {
+                        imageView.image = netImage;
+                        [SXLoadingView hideProgressHUD];
+                    }else{
+                        imageView.image = [self placeholderImageForIndex:index];
+                        [SXLoadingView hideProgressHUD];
+                    }
+                }];
+                return;
+            }else{
+             JYAsset *jyasset = dic[kMessageImageBoxLocalAsset];
+            [PHPhotoLibrary requestOriginalImageForAsset:jyasset.asset completion:^(UIImage *localImage, NSDictionary *info) {
                 if (localImage) {
                     imageView.image = localImage;
                 }else{
                     imageView.image = [self placeholderImageForIndex:index];
                 }
             }];
+            }
         }else{
             [SXLoadingView showProgressHUD:@""];
             [WB_NetService getTweeethighQualityImageWithHash:dic[kMessageImageBoxNetImageHash] BoxUUID:dic[kMessageImageBoxUUID] complete:^(NSError *error, UIImage *netImage) {

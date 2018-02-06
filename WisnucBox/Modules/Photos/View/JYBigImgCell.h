@@ -96,7 +96,7 @@
 @property (nonatomic, strong) JYAsset *jyAsset;
 
 @property (nonatomic, assign) PHImageRequestID imageRequestID;
-@property (nonatomic, weak) id<SDWebImageOperation> operation;
+@property (nonatomic, weak) SDWebImageDownloadToken *sdDownloadToken;
 
 @property (nonatomic, strong) UITapGestureRecognizer *singleTap;
 @property (nonatomic, copy)   void (^singleTapCallBack)(void);

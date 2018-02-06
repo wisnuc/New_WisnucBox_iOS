@@ -77,9 +77,8 @@
     if (WB_UserService.currentUser.avaterURL) {
         self.nameLabel.text = _userInfo.userName;
         NSString *avatarUrl = currentUser.avaterURL;
-        [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:avatarUrl] options:SDWebImageDownloaderHighPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-            
-        } completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+        [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:avatarUrl] options:SDWebImageDownloaderHighPriority progress:nil
+            completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
              dispatch_async(dispatch_get_main_queue(), ^{
                  self.userHeaderIV.image = [self imageCirclewithImage:image];
              });

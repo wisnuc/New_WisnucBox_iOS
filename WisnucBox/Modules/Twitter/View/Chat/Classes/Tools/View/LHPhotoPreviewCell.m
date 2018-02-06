@@ -91,7 +91,7 @@
 - (void)setImageUrl:(NSString *)imageUrl {
     _imageUrl = imageUrl;
     [_scrollView setZoomScale:1.0 animated:NO];
-    [SDImageCache.sharedImageCache queryDiskCacheForKey:imageUrl done:^(UIImage *image, SDImageCacheType cacheType) {
+    [SDImageCache.sharedImageCache queryCacheOperationForKey:imageUrl done:^(UIImage * _Nullable image, NSData * _Nullable data, SDImageCacheType cacheType) {
         self.imageView.image = image;
         [self resizeSubviews];
     }];

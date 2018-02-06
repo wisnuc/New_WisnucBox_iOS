@@ -84,13 +84,15 @@
                 return ;
             }
             NSString *avatarUrl = WB_UserService.currentUser.avaterURL;
-            [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:avatarUrl] options:SDWebImageDownloaderHighPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+            
+            [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:avatarUrl] options:SDWebImageDownloaderHighPriority progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
                 
-            } completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+            } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, BOOL finished) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     self.userHeaderImageView.image = [UIImage imageCirclewithImage:image];
                 });
             }];
+            
         }else{
             [self.userHeaderImageView setImage:[UIImage imageForName:WB_UserService.currentUser.userName size:self.userHeaderImageView.bounds.size]];
         }

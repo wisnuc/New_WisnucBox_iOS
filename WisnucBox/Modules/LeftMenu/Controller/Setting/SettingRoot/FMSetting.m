@@ -246,8 +246,9 @@
     if (buttonIndex == 1) {
         [SXLoadingView showProgressHUD:WBLocalizedString(@"clearing_cache", nil)];
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            [[SDImageCache sharedImageCache] cleanDisk];
-            [[SDImageCache sharedImageCache] clearDisk];
+            [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
+                
+            }];
             [[YYImageCache sharedCache].diskCache removeAllObjects];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [SXLoadingView hideProgressHUD];

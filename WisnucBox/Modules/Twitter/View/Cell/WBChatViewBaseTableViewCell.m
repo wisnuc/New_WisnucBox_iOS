@@ -25,7 +25,7 @@
 //    _nameLabel.hidden = !messageModel.isChatGroup;
     NSString *imgaeName = nil;
     if (_messageModel.isSender) {
-        imgaeName = @"receive_head.jpg";
+        imgaeName = @"";
     } else {
         imgaeName = @"send_head.jpg";
     }
@@ -51,10 +51,12 @@
     if (self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier]) {
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headImagePressed:)];
         _headImageView = [[UIImageView alloc] initWithFrame:CGRectMake(HEAD_X, 0, HEAD_SIZE, HEAD_SIZE)];
+     
         [_headImageView addGestureRecognizer:tap];
         _headImageView.userInteractionEnabled = YES;
         _headImageView.multipleTouchEnabled = YES;
         _headImageView.backgroundColor = [UIColor lh_colorWithHex:0xeeeff3];
+    
         [self.contentView addSubview:_headImageView];
         
         _nameLabel = [[UILabel alloc] init];
@@ -71,7 +73,8 @@
 
 - (void)setupSubviewsForMessageModel:(WBTweetModel *)model {
     if (model.isSender) {
-        self.headImageView.frame = CGRectMake(self.bounds.size.width - HEAD_SIZE - HEAD_PADDING, CELLPADDING, HEAD_SIZE, HEAD_SIZE);
+        self.headImageView.frame = CGRectMake(self.bounds.size.width - 4 - HEAD_PADDING, CELLPADDING, 4, 4);
+        self.headImageView.backgroundColor = [UIColor redColor];
     } else {
         self.headImageView.frame = CGRectMake(0, CELLPADDING, HEAD_SIZE, HEAD_SIZE);
     }

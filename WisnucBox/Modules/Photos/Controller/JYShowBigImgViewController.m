@@ -372,7 +372,7 @@
     if ([item isKindOfClass:[WBAsset class]]) {
         NSLog(@"%lu",(unsigned long)item.type);
         if (item.type == JYAssetTypeNetImage) {
-            __block id<SDWebImageOperation> operation =  [WB_NetService getHighWebImageWithHash:[(WBAsset *)item fmhash] completeBlock:^(NSError *error, UIImage *img) {
+            __block SDWebImageDownloadToken *sdDownloadToken =  [WB_NetService getHighWebImageWithHash:[(WBAsset *)item fmhash] completeBlock:^(NSError *error, UIImage *img) {
                 if (error) {
                     NSLog(@"%@",error);
                     // TODO: Load Error Image
@@ -396,8 +396,8 @@
                         });
                     NSLog(@"%@",img);
                 }
-                [operation cancel];
-                operation = nil;
+               [[SDWebImageDownloader sharedDownloader] cancel:sdDownloadToken];
+                sdDownloadToken = nil;
             }];
         }
     }else{

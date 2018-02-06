@@ -527,10 +527,12 @@
     NSMutableArray *localModelArray = [NSMutableArray arrayWithCapacity:0];
     NSArray *sourceArray =[NSArray arrayWithArray:self.choosePhotos];
     CGSize size = [weak_self getImageSizeWithImageArray:sourceArray];
-    [self.choosePhotos enumerateObjectsUsingBlock:^(JYAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+     dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    [self.choosePhotos enumerateObjectsUsingBlock:^( id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSLog(@"%@",_choosePhotos);
-        if (obj.asset) {
-            [PHPhotoLibrary requestImageForAsset:obj.asset size:size completion:^(UIImage *image, NSDictionary *info) {
+        if (![obj isKindOfClass:[WBAsset class]]) {
+            JYAsset *asset = obj;
+            [PHPhotoLibrary requestImageForAsset:asset.asset size:size completion:^(UIImage *image, NSDictionary *info) {
                 if(!weak_self) return;
                 WBTweetlocalImageModel *localImageModel = [WBTweetlocalImageModel new];
                 localImageModel.localImage = image;
@@ -539,7 +541,15 @@
                 [photosArray addObject:image];
             }];
         }else{
-          __block id <SDWebImageOperation> thumbnailRequestOperation = [WB_NetService getThumbnailWithHash:[(WBAsset *)obj fmhash] complete:^(NSError *error, UIImage *img) {
+            WBAsset *asset = obj;
+            if (asset.image) {
+                WBTweetlocalImageModel *localImageModel = [WBTweetlocalImageModel new];
+                localImageModel.localImage = asset.image;
+                localImageModel.asset = asset;
+                [localModelArray addObject:localImageModel];
+                [photosArray addObject:asset.image];
+            }else{
+          __block SDWebImageDownloadToken *thumbnailRequestOperation = [WB_NetService getThumbnailWithHash:[(WBAsset *)obj fmhash] complete:^(NSError *error, UIImage *img) {
                 if(!weak_self) return;
                 if (!error && img) {
                     WBTweetlocalImageModel *localImageModel = [WBTweetlocalImageModel new];
@@ -548,13 +558,14 @@
                     [localModelArray addObject:localImageModel];
                     [photosArray addObject:img];
                 }else{
-                    [thumbnailRequestOperation cancel];
+//                    [[SDWebImageDownloader sharedDownloader]cancel:thumbnailRequestOperation];
                     thumbnailRequestOperation = nil;
                 }
-            }];
+             }];
+            }
         }
     }];
-   
+     });
     if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerDidFinishPickingPhotos:sourceAssets:LocalImageModelArray:isSelectOriginalPhoto:)]) {
         [self.delegate imagePickerDidFinishPickingPhotos:photosArray sourceAssets:self.choosePhotos LocalImageModelArray:localModelArray isSelectOriginalPhoto:YES];
     }
@@ -1151,7 +1162,7 @@ bool isDecelerating = NO;
     if ([item isKindOfClass:[WBAsset class]]) {
         NSLog(@"%lu",(unsigned long)item.type);
         if (item.type == JYAssetTypeNetImage) {
-            __block id<SDWebImageOperation> operation =  [WB_NetService getHighWebImageWithHash:[(WBAsset *)item fmhash] completeBlock:^(NSError *error, UIImage *img) {
+            __block SDWebImageDownloadToken *sdDownloadToken =  [WB_NetService getHighWebImageWithHash:[(WBAsset *)item fmhash] completeBlock:^(NSError *error, UIImage *img) {
                 if (error) {
                     NSLog(@"%@",error);
                     // TODO: Load Error Image
@@ -1175,8 +1186,8 @@ bool isDecelerating = NO;
                         });
                     NSLog(@"%@",img);
                 }
-                [operation cancel];
-                operation = nil;
+               [[SDWebImageDownloader sharedDownloader] cancel:sdDownloadToken];
+                sdDownloadToken = nil;
             }];
         }
     }else{

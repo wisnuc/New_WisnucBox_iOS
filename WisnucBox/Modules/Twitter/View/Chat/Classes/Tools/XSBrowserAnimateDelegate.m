@@ -88,10 +88,10 @@ SingleM(Instance)
         LHPhotoPreviewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
         NSInteger index = fromVC.currentIndex;
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.currentFrame];
-        [SDImageCache.sharedImageCache queryDiskCacheForKey:fromVC.models[index] done:^(UIImage *image, SDImageCacheType cacheType) {
-           imageView.image = image;
+        [SDImageCache.sharedImageCache queryCacheOperationForKey:fromVC.models[index] done:^(UIImage * _Nullable image, NSData * _Nullable data, SDImageCacheType cacheType) {
+             imageView.image = image;
         }];
-        
+   
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         imageView.layer.masksToBounds = YES;
         

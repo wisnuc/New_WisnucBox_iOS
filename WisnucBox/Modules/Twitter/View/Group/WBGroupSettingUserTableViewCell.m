@@ -66,24 +66,23 @@
     }];
     
     UIButton *addUserButton = [[UIButton alloc]init];
-    addUserButton.backgroundColor = [UIColor cyanColor];
+//    addUserButton.backgroundColor = [UIColor cyanColor];
     [addUserButton addTarget:self action:@selector(addButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [addUserButton setImage:[UIImage imageNamed:@"add_box_user"] forState:UIControlStateNormal];
     addUserButton.layer.masksToBounds = YES;
     addUserButton.layer.cornerRadius = Button_Width/2;
     addUserButton.layer.borderWidth = 1.0f;
     addUserButton.layer.borderColor = RGBACOLOR(0, 0, 0, 0.37f).CGColor;
     
     UIButton *removeUserButton = [[UIButton alloc]init];
-    removeUserButton.backgroundColor = [UIColor orangeColor];
+//    removeUserButton.backgroundColor = [UIColor orangeColor];
     [removeUserButton addTarget:self action:@selector(removeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [removeUserButton setImage:[UIImage imageNamed:@"delete_box_user"] forState:UIControlStateNormal];
     removeUserButton.layer.masksToBounds = YES;
     removeUserButton.layer.cornerRadius = Button_Width/2;
     removeUserButton.layer.borderWidth = 1.0f;
     removeUserButton.layer.borderColor = RGBACOLOR(0, 0, 0, 0.37f).CGColor;
-    
-     UIImage *plusImage = [UIImage imageNamed:@"ic_add_white"];
-    [addUserButton setImage:plusImage forState:UIControlStateNormal];
-    [addUserButton setTintColor:RGBACOLOR(0, 0, 0, 0.37f)];
+
 
     
     NSInteger judgement = _userArray.count % 4;

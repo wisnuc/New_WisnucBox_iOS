@@ -65,10 +65,10 @@
 
 - (void)getEntriesInUserBackupDir:(void(^)(NSError *, NSArray<EntriesModel *> *entries))callback;
 
-- (id <SDWebImageOperation>)getHighWebImageWithHash:(NSString *)hash completeBlock:(void(^)(NSError *, UIImage *))callback;
+- (SDWebImageDownloadToken *)getHighWebImageWithHash:(NSString *)hash completeBlock:(void(^)(NSError *, UIImage *))callback;
 
-- (id <SDWebImageOperation>)getThumbnailWithHash:(NSString *)hash complete:(void(^)(NSError *, UIImage *))callback;
+- (SDWebImageDownloadToken *)getThumbnailWithHash:(NSString *)hash complete:(void(^)(NSError *, UIImage *))callback;
 - (void)getDirUUIDWithDirName:(NSString *)name BaseDir:(void(^)(NSError *, NSString * dirUUID))callback;
-- (id <SDWebImageOperation>)getTweeetThumbnailImageWithHash:(NSString *)hash BoxUUID:(NSString *)boxUUID complete:(void(^)(NSError *, UIImage *))callback;
-- (id <SDWebImageOperation>)getTweeethighQualityImageWithHash:(NSString *)hash BoxUUID:(NSString *)boxUUID complete:(void(^)(NSError *, UIImage *))callback;
+- (SDWebImageDownloadToken *)getTweeetThumbnailImageWithHash:(NSString *)hash BoxUUID:(NSString *)boxUUID complete:(void(^)(NSError *, UIImage *))callback;
+- (SDWebImageDownloadToken *)getTweeethighQualityImageWithHash:(NSString *)hash BoxUUID:(NSString *)boxUUID complete:(void(^)(NSError *, UIImage *))callback;
 @end

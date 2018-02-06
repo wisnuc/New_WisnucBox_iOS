@@ -225,9 +225,9 @@
     jy_weakify(self);
     if (self.imageRequestID >= PHInvalidImageRequestID) [[PHCachingImageManager defaultManager] cancelImageRequest:self.imageRequestID];
     
-    if (self.thumbnailRequestOperation)
-        [self.thumbnailRequestOperation cancel];
-    self.thumbnailRequestOperation = nil;
+    if (self.thumbnailDownloadToken)
+        [[SDWebImageDownloader sharedDownloader]cancel:self.thumbnailDownloadToken];
+    self.thumbnailDownloadToken = nil;
     
     if(model.asset)
         self.identifier = model.asset.localIdentifier;
@@ -245,15 +245,16 @@
             }
         }];
     else {
-        id <SDWebImageOperation> thumbnailRequestOperation = [WB_NetService getThumbnailWithHash:[(WBAsset *)model fmhash] complete:^(NSError *error, UIImage *img) {
+        SDWebImageDownloadToken *thumbnailDownloadToken = [WB_NetService getThumbnailWithHash:[(WBAsset *)model fmhash] complete:^(NSError *error, UIImage *img) {
             if(!weakSelf) return;
             if (!error && [weakSelf.identifier isEqualToString:[(WBAsset *)model fmhash]]) {
                 weakSelf.imageView.image = img;
+                model.image = img;
             }else
                 NSLog(@"get thumbnail error ---> : %@", error);
-            weakSelf.thumbnailRequestOperation = nil;
+            weakSelf.thumbnailDownloadToken = nil;
         }];
-        self.thumbnailRequestOperation = thumbnailRequestOperation;
+        self.thumbnailDownloadToken = thumbnailDownloadToken;
     }
 }
 

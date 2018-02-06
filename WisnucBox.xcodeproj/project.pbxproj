@@ -594,6 +594,50 @@
 		1FEFCDE21FE3C83300DEC866 /* WBStorageVolumesAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEFCDE11FE3C83300DEC866 /* WBStorageVolumesAPI.m */; };
 		1FEFCDE61FE7914900DEC866 /* WBInitChangeDiskTypeAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEFCDE41FE7914900DEC866 /* WBInitChangeDiskTypeAlertViewController.m */; };
 		1FEFCDEB1FE799C500DEC866 /* WBInitChangeDiskTypeAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FEFCDEA1FE799C500DEC866 /* WBInitChangeDiskTypeAlertViewController.storyboard */; };
+		1FF1482320297BF3009BBEF8 /* UIBarButtonItemArrowLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF147EA20297BF2009BBEF8 /* UIBarButtonItemArrowLeft.png */; };
+		1FF1482420297BF3009BBEF8 /* UIBarButtonItemGrid@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF147EB20297BF2009BBEF8 /* UIBarButtonItemGrid@3x.png */; };
+		1FF1482520297BF3009BBEF8 /* ImageSelectedSmallOn.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF147EC20297BF2009BBEF8 /* ImageSelectedSmallOn.png */; };
+		1FF1482620297BF3009BBEF8 /* UIBarButtonItemGrid.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF147ED20297BF2009BBEF8 /* UIBarButtonItemGrid.png */; };
+		1FF1482720297BF3009BBEF8 /* UIBarButtonItemGrid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF147EE20297BF2009BBEF8 /* UIBarButtonItemGrid@2x.png */; };
+		1FF1482820297BF3009BBEF8 /* VideoOverlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF147EF20297BF2009BBEF8 /* VideoOverlay@2x.png */; };
+		1FF1482920297BF3009BBEF8 /* ImageSelectedOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF147F020297BF2009BBEF8 /* ImageSelectedOff.png */; };
+		1FF1482A20297BF3009BBEF8 /* PlayButtonOverlayLargeTap@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF147F120297BF2009BBEF8 /* PlayButtonOverlayLargeTap@2x.png */; };
+		1FF1482B20297BF3009BBEF8 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 1FF147F220297BF2009BBEF8 /* .gitkeep */; };
+		1FF1482C20297BF3009BBEF8 /* ImageError@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF147F320297BF2009BBEF8 /* ImageError@2x.png */; };
+		1FF1482D20297BF3009BBEF8 /* ImageSelectedSmallOff@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF147F420297BF2009BBEF8 /* ImageSelectedSmallOff@2x.png */; };
+		1FF1482E20297BF3009BBEF8 /* ImageSelectedSmallOff@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF147F520297BF2009BBEF8 /* ImageSelectedSmallOff@3x.png */; };
+		1FF1482F20297BF3009BBEF8 /* PlayButtonOverlayLargeTap.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF147F620297BF2009BBEF8 /* PlayButtonOverlayLargeTap.png */; };
+		1FF1483020297BF3009BBEF8 /* ImageError@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF147F720297BF2009BBEF8 /* ImageError@3x.png */; };
+		1FF1483120297BF3009BBEF8 /* PlayButtonOverlayLargeTap@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF147F820297BF2009BBEF8 /* PlayButtonOverlayLargeTap@3x.png */; };
+		1FF1483220297BF3009BBEF8 /* UIBarButtonItemArrowRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF147F920297BF2009BBEF8 /* UIBarButtonItemArrowRight.png */; };
+		1FF1483320297BF3009BBEF8 /* VideoOverlay@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF147FA20297BF2009BBEF8 /* VideoOverlay@3x.png */; };
+		1FF1483420297BF3009BBEF8 /* ImageError.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF147FB20297BF2009BBEF8 /* ImageError.png */; };
+		1FF1483520297BF3009BBEF8 /* UIBarButtonItemArrowRight@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF147FC20297BF2009BBEF8 /* UIBarButtonItemArrowRight@3x.png */; };
+		1FF1483620297BF3009BBEF8 /* ImageSelectedOn.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF147FD20297BF2009BBEF8 /* ImageSelectedOn.png */; };
+		1FF1483720297BF3009BBEF8 /* PlayButtonOverlayLarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF147FE20297BF2009BBEF8 /* PlayButtonOverlayLarge@2x.png */; };
+		1FF1483820297BF3009BBEF8 /* ImageSelectedOff@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF147FF20297BF2009BBEF8 /* ImageSelectedOff@2x.png */; };
+		1FF1483920297BF3009BBEF8 /* UIBarButtonItemArrowLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF1480020297BF2009BBEF8 /* UIBarButtonItemArrowLeft@2x.png */; };
+		1FF1483A20297BF3009BBEF8 /* VideoOverlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF1480120297BF2009BBEF8 /* VideoOverlay.png */; };
+		1FF1483B20297BF3009BBEF8 /* ImageSelectedSmallOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF1480220297BF2009BBEF8 /* ImageSelectedSmallOff.png */; };
+		1FF1483C20297BF3009BBEF8 /* UIBarButtonItemArrowLeft@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF1480320297BF2009BBEF8 /* UIBarButtonItemArrowLeft@3x.png */; };
+		1FF1483D20297BF3009BBEF8 /* ImageSelectedOff@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF1480420297BF2009BBEF8 /* ImageSelectedOff@3x.png */; };
+		1FF1483E20297BF3009BBEF8 /* PlayButtonOverlayLarge@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF1480520297BF2009BBEF8 /* PlayButtonOverlayLarge@3x.png */; };
+		1FF1483F20297BF3009BBEF8 /* UIBarButtonItemArrowRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF1480620297BF2009BBEF8 /* UIBarButtonItemArrowRight@2x.png */; };
+		1FF1484020297BF3009BBEF8 /* ImageSelectedSmallOn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF1480720297BF2009BBEF8 /* ImageSelectedSmallOn@3x.png */; };
+		1FF1484120297BF3009BBEF8 /* PlayButtonOverlayLarge.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF1480820297BF2009BBEF8 /* PlayButtonOverlayLarge.png */; };
+		1FF1484220297BF3009BBEF8 /* ImageSelectedOn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF1480920297BF2009BBEF8 /* ImageSelectedOn@3x.png */; };
+		1FF1484320297BF3009BBEF8 /* ImageSelectedOn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF1480A20297BF2009BBEF8 /* ImageSelectedOn@2x.png */; };
+		1FF1484420297BF3009BBEF8 /* ImageSelectedSmallOn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF1480B20297BF2009BBEF8 /* ImageSelectedSmallOn@2x.png */; };
+		1FF1484520297BF3009BBEF8 /* MWPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF1481120297BF3009BBEF8 /* MWPhotoBrowser.m */; };
+		1FF1484620297BF3009BBEF8 /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF1481220297BF3009BBEF8 /* MWCaptionView.m */; };
+		1FF1484720297BF3009BBEF8 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 1FF1481320297BF3009BBEF8 /* .gitkeep */; };
+		1FF1484820297BF3009BBEF8 /* MWZoomingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF1481620297BF3009BBEF8 /* MWZoomingScrollView.m */; };
+		1FF1484920297BF3009BBEF8 /* UIImage+MWPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF1481720297BF3009BBEF8 /* UIImage+MWPhotoBrowser.m */; };
+		1FF1484A20297BF3009BBEF8 /* MWTapDetectingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF1481920297BF3009BBEF8 /* MWTapDetectingImageView.m */; };
+		1FF1484B20297BF3009BBEF8 /* MWPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF1481A20297BF3009BBEF8 /* MWPhoto.m */; };
+		1FF1484C20297BF3009BBEF8 /* MWTapDetectingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF1481B20297BF3009BBEF8 /* MWTapDetectingView.m */; };
+		1FF1484D20297BF3009BBEF8 /* MWGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF1481D20297BF3009BBEF8 /* MWGridViewController.m */; };
+		1FF1484E20297BF3009BBEF8 /* MWGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF1482020297BF3009BBEF8 /* MWGridCell.m */; };
 		1FF3AD511FD5254C00E1E536 /* LoginSeverPathModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3AD501FD5254C00E1E536 /* LoginSeverPathModel.m */; };
 		1FF3AD541FD63F5C00E1E536 /* WBLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3AD531FD63F5C00E1E536 /* WBLoginViewController.m */; };
 		1FF3AD5A1FD669DB00E1E536 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1FF3AD5C1FD669DB00E1E536 /* Localizable.strings */; };
@@ -623,6 +667,12 @@
 		1FFEABB12028550500BFD15F /* SDPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEABAB2028550500BFD15F /* SDPhotoBrowser.m */; };
 		1FFEABB22028550500BFD15F /* SDWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEABAC2028550500BFD15F /* SDWaitingView.m */; };
 		1FFEABB32028550500BFD15F /* SDBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEABAD2028550500BFD15F /* SDBrowserImageView.m */; };
+		1FFEABBA2029486900BFD15F /* delete_box_user.@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FFEABB42029486500BFD15F /* delete_box_user.@2x.png */; };
+		1FFEABBB2029486900BFD15F /* add_box_user@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FFEABB52029486500BFD15F /* add_box_user@3x.png */; };
+		1FFEABBC2029486900BFD15F /* delete_box_user.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FFEABB62029486600BFD15F /* delete_box_user.png */; };
+		1FFEABBD2029486900BFD15F /* add_box_user.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FFEABB72029486700BFD15F /* add_box_user.png */; };
+		1FFEABBE2029486900BFD15F /* add_box_user@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FFEABB82029486800BFD15F /* add_box_user@2x.png */; };
+		1FFEABBF2029486900BFD15F /* delete_box_user.@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FFEABB92029486800BFD15F /* delete_box_user.@3x.png */; };
 		1FFEADAE1FB087AE00CD3068 /* CSFileDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEADAD1FB087AE00CD3068 /* CSFileDownloadManager.m */; };
 		1FFEADB51FB1594900CD3068 /* CSDownloadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEADB41FB1594900CD3068 /* CSDownloadModel.m */; };
 		71A3D6671FB57AC30002B8B1 /* JYBaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A3D65F1FB57AC30002B8B1 /* JYBaseRequest.m */; };
@@ -1858,6 +1908,62 @@
 		1FEFCDE31FE7914900DEC866 /* WBInitChangeDiskTypeAlertViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBInitChangeDiskTypeAlertViewController.h; sourceTree = "<group>"; };
 		1FEFCDE41FE7914900DEC866 /* WBInitChangeDiskTypeAlertViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBInitChangeDiskTypeAlertViewController.m; sourceTree = "<group>"; };
 		1FEFCDEA1FE799C500DEC866 /* WBInitChangeDiskTypeAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WBInitChangeDiskTypeAlertViewController.storyboard; sourceTree = "<group>"; };
+		1FF147EA20297BF2009BBEF8 /* UIBarButtonItemArrowLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UIBarButtonItemArrowLeft.png; sourceTree = "<group>"; };
+		1FF147EB20297BF2009BBEF8 /* UIBarButtonItemGrid@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIBarButtonItemGrid@3x.png"; sourceTree = "<group>"; };
+		1FF147EC20297BF2009BBEF8 /* ImageSelectedSmallOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageSelectedSmallOn.png; sourceTree = "<group>"; };
+		1FF147ED20297BF2009BBEF8 /* UIBarButtonItemGrid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UIBarButtonItemGrid.png; sourceTree = "<group>"; };
+		1FF147EE20297BF2009BBEF8 /* UIBarButtonItemGrid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIBarButtonItemGrid@2x.png"; sourceTree = "<group>"; };
+		1FF147EF20297BF2009BBEF8 /* VideoOverlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VideoOverlay@2x.png"; sourceTree = "<group>"; };
+		1FF147F020297BF2009BBEF8 /* ImageSelectedOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageSelectedOff.png; sourceTree = "<group>"; };
+		1FF147F120297BF2009BBEF8 /* PlayButtonOverlayLargeTap@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PlayButtonOverlayLargeTap@2x.png"; sourceTree = "<group>"; };
+		1FF147F220297BF2009BBEF8 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		1FF147F320297BF2009BBEF8 /* ImageError@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageError@2x.png"; sourceTree = "<group>"; };
+		1FF147F420297BF2009BBEF8 /* ImageSelectedSmallOff@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageSelectedSmallOff@2x.png"; sourceTree = "<group>"; };
+		1FF147F520297BF2009BBEF8 /* ImageSelectedSmallOff@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageSelectedSmallOff@3x.png"; sourceTree = "<group>"; };
+		1FF147F620297BF2009BBEF8 /* PlayButtonOverlayLargeTap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlayButtonOverlayLargeTap.png; sourceTree = "<group>"; };
+		1FF147F720297BF2009BBEF8 /* ImageError@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageError@3x.png"; sourceTree = "<group>"; };
+		1FF147F820297BF2009BBEF8 /* PlayButtonOverlayLargeTap@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PlayButtonOverlayLargeTap@3x.png"; sourceTree = "<group>"; };
+		1FF147F920297BF2009BBEF8 /* UIBarButtonItemArrowRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UIBarButtonItemArrowRight.png; sourceTree = "<group>"; };
+		1FF147FA20297BF2009BBEF8 /* VideoOverlay@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VideoOverlay@3x.png"; sourceTree = "<group>"; };
+		1FF147FB20297BF2009BBEF8 /* ImageError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageError.png; sourceTree = "<group>"; };
+		1FF147FC20297BF2009BBEF8 /* UIBarButtonItemArrowRight@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIBarButtonItemArrowRight@3x.png"; sourceTree = "<group>"; };
+		1FF147FD20297BF2009BBEF8 /* ImageSelectedOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageSelectedOn.png; sourceTree = "<group>"; };
+		1FF147FE20297BF2009BBEF8 /* PlayButtonOverlayLarge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PlayButtonOverlayLarge@2x.png"; sourceTree = "<group>"; };
+		1FF147FF20297BF2009BBEF8 /* ImageSelectedOff@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageSelectedOff@2x.png"; sourceTree = "<group>"; };
+		1FF1480020297BF2009BBEF8 /* UIBarButtonItemArrowLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIBarButtonItemArrowLeft@2x.png"; sourceTree = "<group>"; };
+		1FF1480120297BF2009BBEF8 /* VideoOverlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VideoOverlay.png; sourceTree = "<group>"; };
+		1FF1480220297BF2009BBEF8 /* ImageSelectedSmallOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageSelectedSmallOff.png; sourceTree = "<group>"; };
+		1FF1480320297BF2009BBEF8 /* UIBarButtonItemArrowLeft@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIBarButtonItemArrowLeft@3x.png"; sourceTree = "<group>"; };
+		1FF1480420297BF2009BBEF8 /* ImageSelectedOff@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageSelectedOff@3x.png"; sourceTree = "<group>"; };
+		1FF1480520297BF2009BBEF8 /* PlayButtonOverlayLarge@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PlayButtonOverlayLarge@3x.png"; sourceTree = "<group>"; };
+		1FF1480620297BF2009BBEF8 /* UIBarButtonItemArrowRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIBarButtonItemArrowRight@2x.png"; sourceTree = "<group>"; };
+		1FF1480720297BF2009BBEF8 /* ImageSelectedSmallOn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageSelectedSmallOn@3x.png"; sourceTree = "<group>"; };
+		1FF1480820297BF2009BBEF8 /* PlayButtonOverlayLarge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlayButtonOverlayLarge.png; sourceTree = "<group>"; };
+		1FF1480920297BF2009BBEF8 /* ImageSelectedOn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageSelectedOn@3x.png"; sourceTree = "<group>"; };
+		1FF1480A20297BF2009BBEF8 /* ImageSelectedOn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageSelectedOn@2x.png"; sourceTree = "<group>"; };
+		1FF1480B20297BF2009BBEF8 /* ImageSelectedSmallOn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageSelectedSmallOn@2x.png"; sourceTree = "<group>"; };
+		1FF1480D20297BF3009BBEF8 /* MWTapDetectingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWTapDetectingImageView.h; sourceTree = "<group>"; };
+		1FF1480E20297BF3009BBEF8 /* MWPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhoto.h; sourceTree = "<group>"; };
+		1FF1480F20297BF3009BBEF8 /* MWPhotoProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhotoProtocol.h; sourceTree = "<group>"; };
+		1FF1481020297BF3009BBEF8 /* MWGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWGridViewController.h; sourceTree = "<group>"; };
+		1FF1481120297BF3009BBEF8 /* MWPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWPhotoBrowser.m; sourceTree = "<group>"; };
+		1FF1481220297BF3009BBEF8 /* MWCaptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWCaptionView.m; sourceTree = "<group>"; };
+		1FF1481320297BF3009BBEF8 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		1FF1481420297BF3009BBEF8 /* MWTapDetectingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWTapDetectingView.h; sourceTree = "<group>"; };
+		1FF1481520297BF3009BBEF8 /* MWPhotoBrowserPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhotoBrowserPrivate.h; sourceTree = "<group>"; };
+		1FF1481620297BF3009BBEF8 /* MWZoomingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWZoomingScrollView.m; sourceTree = "<group>"; };
+		1FF1481720297BF3009BBEF8 /* UIImage+MWPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MWPhotoBrowser.m"; sourceTree = "<group>"; };
+		1FF1481820297BF3009BBEF8 /* MWGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWGridCell.h; sourceTree = "<group>"; };
+		1FF1481920297BF3009BBEF8 /* MWTapDetectingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWTapDetectingImageView.m; sourceTree = "<group>"; };
+		1FF1481A20297BF3009BBEF8 /* MWPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWPhoto.m; sourceTree = "<group>"; };
+		1FF1481B20297BF3009BBEF8 /* MWTapDetectingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWTapDetectingView.m; sourceTree = "<group>"; };
+		1FF1481C20297BF3009BBEF8 /* MWCaptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCaptionView.h; sourceTree = "<group>"; };
+		1FF1481D20297BF3009BBEF8 /* MWGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWGridViewController.m; sourceTree = "<group>"; };
+		1FF1481E20297BF3009BBEF8 /* MWPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhotoBrowser.h; sourceTree = "<group>"; };
+		1FF1481F20297BF3009BBEF8 /* MWCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCommon.h; sourceTree = "<group>"; };
+		1FF1482020297BF3009BBEF8 /* MWGridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWGridCell.m; sourceTree = "<group>"; };
+		1FF1482120297BF3009BBEF8 /* UIImage+MWPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MWPhotoBrowser.h"; sourceTree = "<group>"; };
+		1FF1482220297BF3009BBEF8 /* MWZoomingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWZoomingScrollView.h; sourceTree = "<group>"; };
 		1FF3AD4F1FD5254C00E1E536 /* LoginSeverPathModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginSeverPathModel.h; sourceTree = "<group>"; };
 		1FF3AD501FD5254C00E1E536 /* LoginSeverPathModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginSeverPathModel.m; sourceTree = "<group>"; };
 		1FF3AD521FD63F5C00E1E536 /* WBLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBLoginViewController.h; sourceTree = "<group>"; };
@@ -1909,6 +2015,12 @@
 		1FFEABAE2028550500BFD15F /* SDWaitingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWaitingView.h; sourceTree = "<group>"; };
 		1FFEABAF2028550500BFD15F /* SDPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoBrowser.h; sourceTree = "<group>"; };
 		1FFEABB02028550500BFD15F /* SDBrowserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDBrowserImageView.h; sourceTree = "<group>"; };
+		1FFEABB42029486500BFD15F /* delete_box_user.@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "delete_box_user.@2x.png"; sourceTree = "<group>"; };
+		1FFEABB52029486500BFD15F /* add_box_user@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_box_user@3x.png"; sourceTree = "<group>"; };
+		1FFEABB62029486600BFD15F /* delete_box_user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete_box_user.png; sourceTree = "<group>"; };
+		1FFEABB72029486700BFD15F /* add_box_user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add_box_user.png; sourceTree = "<group>"; };
+		1FFEABB82029486800BFD15F /* add_box_user@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_box_user@2x.png"; sourceTree = "<group>"; };
+		1FFEABB92029486800BFD15F /* delete_box_user.@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "delete_box_user.@3x.png"; sourceTree = "<group>"; };
 		1FFEADAC1FB087AE00CD3068 /* CSFileDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSFileDownloadManager.h; sourceTree = "<group>"; };
 		1FFEADAD1FB087AE00CD3068 /* CSFileDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSFileDownloadManager.m; sourceTree = "<group>"; };
 		1FFEADB31FB1594900CD3068 /* CSDownloadModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSDownloadModel.h; sourceTree = "<group>"; };
@@ -2912,6 +3024,7 @@
 		1F4D75581FAC4BB700E6516C /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				1FF147E820297BE7009BBEF8 /* MWPhotoBrowser */,
 				1FFEABA92028550500BFD15F /* SDPhotoBrowser */,
 				1F6E54971FFF6B39009E38AE /* CheckIP */,
 				1FCFB3DE1FE8B42200BD3375 /* RadioButton */,
@@ -3361,6 +3474,12 @@
 		1F7F15F82010871A003CB83D /* Group */ = {
 			isa = PBXGroup;
 			children = (
+				1FFEABB72029486700BFD15F /* add_box_user.png */,
+				1FFEABB82029486800BFD15F /* add_box_user@2x.png */,
+				1FFEABB52029486500BFD15F /* add_box_user@3x.png */,
+				1FFEABB42029486500BFD15F /* delete_box_user.@2x.png */,
+				1FFEABB92029486800BFD15F /* delete_box_user.@3x.png */,
+				1FFEABB62029486600BFD15F /* delete_box_user.png */,
 			);
 			path = Group;
 			sourceTree = "<group>";
@@ -4203,6 +4322,85 @@
 				1FEFCDE11FE3C83300DEC866 /* WBStorageVolumesAPI.m */,
 			);
 			path = Initialization;
+			sourceTree = "<group>";
+		};
+		1FF147E820297BE7009BBEF8 /* MWPhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				1FF147E920297BF2009BBEF8 /* Assets */,
+				1FF1480C20297BF3009BBEF8 /* Classes */,
+			);
+			path = MWPhotoBrowser;
+			sourceTree = "<group>";
+		};
+		1FF147E920297BF2009BBEF8 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				1FF147EA20297BF2009BBEF8 /* UIBarButtonItemArrowLeft.png */,
+				1FF147EB20297BF2009BBEF8 /* UIBarButtonItemGrid@3x.png */,
+				1FF147EC20297BF2009BBEF8 /* ImageSelectedSmallOn.png */,
+				1FF147ED20297BF2009BBEF8 /* UIBarButtonItemGrid.png */,
+				1FF147EE20297BF2009BBEF8 /* UIBarButtonItemGrid@2x.png */,
+				1FF147EF20297BF2009BBEF8 /* VideoOverlay@2x.png */,
+				1FF147F020297BF2009BBEF8 /* ImageSelectedOff.png */,
+				1FF147F120297BF2009BBEF8 /* PlayButtonOverlayLargeTap@2x.png */,
+				1FF147F220297BF2009BBEF8 /* .gitkeep */,
+				1FF147F320297BF2009BBEF8 /* ImageError@2x.png */,
+				1FF147F420297BF2009BBEF8 /* ImageSelectedSmallOff@2x.png */,
+				1FF147F520297BF2009BBEF8 /* ImageSelectedSmallOff@3x.png */,
+				1FF147F620297BF2009BBEF8 /* PlayButtonOverlayLargeTap.png */,
+				1FF147F720297BF2009BBEF8 /* ImageError@3x.png */,
+				1FF147F820297BF2009BBEF8 /* PlayButtonOverlayLargeTap@3x.png */,
+				1FF147F920297BF2009BBEF8 /* UIBarButtonItemArrowRight.png */,
+				1FF147FA20297BF2009BBEF8 /* VideoOverlay@3x.png */,
+				1FF147FB20297BF2009BBEF8 /* ImageError.png */,
+				1FF147FC20297BF2009BBEF8 /* UIBarButtonItemArrowRight@3x.png */,
+				1FF147FD20297BF2009BBEF8 /* ImageSelectedOn.png */,
+				1FF147FE20297BF2009BBEF8 /* PlayButtonOverlayLarge@2x.png */,
+				1FF147FF20297BF2009BBEF8 /* ImageSelectedOff@2x.png */,
+				1FF1480020297BF2009BBEF8 /* UIBarButtonItemArrowLeft@2x.png */,
+				1FF1480120297BF2009BBEF8 /* VideoOverlay.png */,
+				1FF1480220297BF2009BBEF8 /* ImageSelectedSmallOff.png */,
+				1FF1480320297BF2009BBEF8 /* UIBarButtonItemArrowLeft@3x.png */,
+				1FF1480420297BF2009BBEF8 /* ImageSelectedOff@3x.png */,
+				1FF1480520297BF2009BBEF8 /* PlayButtonOverlayLarge@3x.png */,
+				1FF1480620297BF2009BBEF8 /* UIBarButtonItemArrowRight@2x.png */,
+				1FF1480720297BF2009BBEF8 /* ImageSelectedSmallOn@3x.png */,
+				1FF1480820297BF2009BBEF8 /* PlayButtonOverlayLarge.png */,
+				1FF1480920297BF2009BBEF8 /* ImageSelectedOn@3x.png */,
+				1FF1480A20297BF2009BBEF8 /* ImageSelectedOn@2x.png */,
+				1FF1480B20297BF2009BBEF8 /* ImageSelectedSmallOn@2x.png */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		1FF1480C20297BF3009BBEF8 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				1FF1480D20297BF3009BBEF8 /* MWTapDetectingImageView.h */,
+				1FF1480E20297BF3009BBEF8 /* MWPhoto.h */,
+				1FF1480F20297BF3009BBEF8 /* MWPhotoProtocol.h */,
+				1FF1481020297BF3009BBEF8 /* MWGridViewController.h */,
+				1FF1481120297BF3009BBEF8 /* MWPhotoBrowser.m */,
+				1FF1481220297BF3009BBEF8 /* MWCaptionView.m */,
+				1FF1481320297BF3009BBEF8 /* .gitkeep */,
+				1FF1481420297BF3009BBEF8 /* MWTapDetectingView.h */,
+				1FF1481520297BF3009BBEF8 /* MWPhotoBrowserPrivate.h */,
+				1FF1481620297BF3009BBEF8 /* MWZoomingScrollView.m */,
+				1FF1481720297BF3009BBEF8 /* UIImage+MWPhotoBrowser.m */,
+				1FF1481820297BF3009BBEF8 /* MWGridCell.h */,
+				1FF1481920297BF3009BBEF8 /* MWTapDetectingImageView.m */,
+				1FF1481A20297BF3009BBEF8 /* MWPhoto.m */,
+				1FF1481B20297BF3009BBEF8 /* MWTapDetectingView.m */,
+				1FF1481C20297BF3009BBEF8 /* MWCaptionView.h */,
+				1FF1481D20297BF3009BBEF8 /* MWGridViewController.m */,
+				1FF1481E20297BF3009BBEF8 /* MWPhotoBrowser.h */,
+				1FF1481F20297BF3009BBEF8 /* MWCommon.h */,
+				1FF1482020297BF3009BBEF8 /* MWGridCell.m */,
+				1FF1482120297BF3009BBEF8 /* UIImage+MWPhotoBrowser.h */,
+				1FF1482220297BF3009BBEF8 /* MWZoomingScrollView.h */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		1FF3AD571FD6699B00E1E536 /* Localizable */ = {
@@ -5389,9 +5587,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F4083A120060D0300DC0634 /* download_gray.png in Resources */,
+				1FF1484220297BF3009BBEF8 /* ImageSelectedOn@3x.png in Resources */,
 				1FA864CA200F405200550C7B /* C_83@2x.png in Resources */,
 				F683115C1FB30AAE005AC578 /* photo_plus_close.png in Resources */,
 				F683107B1FB30AAE005AC578 /* About@2x.png in Resources */,
+				1FF1483F20297BF3009BBEF8 /* UIBarButtonItemArrowRight@2x.png in Resources */,
 				1F114A251FF33463007F6D15 /* dlna_switch@3x.png in Resources */,
 				F68310A91FB30AAE005AC578 /* comment@2x.png in Resources */,
 				F6830F051FB2FF8C005AC578 /* FMUserSettingCell.xib in Resources */,
@@ -5401,7 +5601,9 @@
 				F68310DC1FB30AAE005AC578 /* good_red@3x.png in Resources */,
 				1F922E5B1FC80F3400A7614B /* lauchScreen.png in Resources */,
 				F68311431FB30AAE005AC578 /* no_photo@3x.png in Resources */,
+				1FF1483920297BF3009BBEF8 /* UIBarButtonItemArrowLeft@2x.png in Resources */,
 				1FAD74821FD14A4700A5D880 /* add_invite@3x.png in Resources */,
+				1FF1482620297BF3009BBEF8 /* UIBarButtonItemGrid.png in Resources */,
 				1F114A821FFCE2BF007F6D15 /* WBStationEnterMaintanceConfirmAVC.storyboard in Resources */,
 				F68311271FB30AAE005AC578 /* login@3x.png in Resources */,
 				F68310BD1FB30AAE005AC578 /* dot@3x.png in Resources */,
@@ -5444,6 +5646,7 @@
 				F683115E1FB30AAE005AC578 /* photo_plus_close@3x.png in Resources */,
 				F68311531FB30AAE005AC578 /* photo-album_select.png in Resources */,
 				F68311681FB30AAE005AC578 /* pic_线型.png in Resources */,
+				1FF1483E20297BF3009BBEF8 /* PlayButtonOverlayLarge@3x.png in Resources */,
 				F68311041FB30AAE005AC578 /* ic_person@2x.png in Resources */,
 				1FA864B0200F405200550C7B /* B_03@2x.gif in Resources */,
 				1F7F160220108767003CB83D /* group_highLightp@3x.png in Resources */,
@@ -5451,6 +5654,7 @@
 				1FD7A0EC1FB05A45000D4CB3 /* back_gray@3x.png in Resources */,
 				1F114A451FF38578007F6D15 /* disk_array@2x.png in Resources */,
 				F68310D41FB30AAE005AC578 /* folder_icon.png in Resources */,
+				1FF1482720297BF3009BBEF8 /* UIBarButtonItemGrid@2x.png in Resources */,
 				F683110E1FB30AAE005AC578 /* icon_down@3x.png in Resources */,
 				1FA86491200F405200550C7B /* B_87@2x.gif in Resources */,
 				F68310AC1FB30AAE005AC578 /* comment_share@2x.png in Resources */,
@@ -5471,11 +5675,14 @@
 				1F7F160D201193A4003CB83D /* WBGroupAdressBookViewController.xib in Resources */,
 				1F6E548A1FFF56BE009E38AE /* share_disk@3x.png in Resources */,
 				F683108C1FB30AAE005AC578 /* Arrow_down@3x.png in Resources */,
+				1FF1484120297BF3009BBEF8 /* PlayButtonOverlayLarge.png in Resources */,
 				1F114A231FF33463007F6D15 /* dlna_switch.png in Resources */,
 				1F4083CD200625F000DC0634 /* WBPpgDownloadingTableViewCell.xib in Resources */,
 				F68311201FB30AAE005AC578 /* lock_line@2x.png in Resources */,
 				1F922E991FCD42F900A7614B /* ic_power_settings@2x.png in Resources */,
 				F68310E31FB30AAE005AC578 /* hard.png in Resources */,
+				1FFEABBF2029486900BFD15F /* delete_box_user.@3x.png in Resources */,
+				1FFEABBD2029486900BFD15F /* add_box_user.png in Resources */,
 				1FFAE3901FE141C90054C393 /* disk_disable@3x.png in Resources */,
 				1F114A3C1FF368FF007F6D15 /* no@3x.png in Resources */,
 				1FD7A1041FB05A51000D4CB3 /* key.png in Resources */,
@@ -5489,6 +5696,7 @@
 				1F922ECE1FCE93DF00A7614B /* ic_sd_storage@2x.png in Resources */,
 				1FAD744D1FD0EDC700A5D880 /* wechat_icon@2x.png in Resources */,
 				F68311651FB30AAE005AC578 /* photos@18pt.png in Resources */,
+				1FF1483720297BF3009BBEF8 /* PlayButtonOverlayLarge@2x.png in Resources */,
 				1F922E5C1FC80F3400A7614B /* lauchScreen@3x.png in Resources */,
 				F683111E1FB30AAE005AC578 /* local_select@3x.png in Resources */,
 				F683113A1FB30AAE005AC578 /* nav_left_close.png in Resources */,
@@ -5505,6 +5713,7 @@
 				1FA8645D200F405100550C7B /* B_55@2x.gif in Resources */,
 				F650356C1FAC00A70007979D /* Assets.xcassets in Resources */,
 				1FA864A7200F405200550C7B /* B_93@2x.gif in Resources */,
+				1FF1483520297BF3009BBEF8 /* UIBarButtonItemArrowRight@3x.png in Resources */,
 				1F922F081FCFB40600A7614B /* ic_build@3x.png in Resources */,
 				F68310991FB30AAE005AC578 /* cancel.png in Resources */,
 				F68310871FB30AAE005AC578 /* Arrow.png in Resources */,
@@ -5558,10 +5767,12 @@
 				F68310B31FB30AAE005AC578 /* Default-736h@3x.png in Resources */,
 				1FA86476200F405200550C7B /* b_1@2x.gif in Resources */,
 				F68311081FB30AAE005AC578 /* icon_close@3x.png in Resources */,
+				1FF1482A20297BF3009BBEF8 /* PlayButtonOverlayLargeTap@2x.png in Resources */,
 				F68311A91FB30AAF005AC578 /* transparency_bg.png in Resources */,
 				1F922E5A1FC80F3400A7614B /* lauchScreen@2x.png in Resources */,
 				C139DFD41FC7F76C007098E5 /* F5F5F5.png in Resources */,
 				1F114A731FF4D223007F6D15 /* update_done@3x.png in Resources */,
+				1FF1484420297BF3009BBEF8 /* ImageSelectedSmallOn@2x.png in Resources */,
 				1F114A661FF4BA6C007F6D15 /* new_releases.png in Resources */,
 				1FAD745F1FD0EDDF00A5D880 /* png_icon.png in Resources */,
 				1FA864DC200F405200550C7B /* C_92@2x.png in Resources */,
@@ -5589,6 +5800,7 @@
 				1F06FD4E200D9E1C0024AFC7 /* WBBoxViewController.xib in Resources */,
 				C139DFD01FC7DFC7007098E5 /* ic_play@3x.png in Resources */,
 				1F922E641FC8438C00A7614B /* FirstFilesTableViewCell.xib in Resources */,
+				1FF1483320297BF3009BBEF8 /* VideoOverlay@3x.png in Resources */,
 				1F7F15FE2010872E003CB83D /* group@2x.png in Resources */,
 				1FA8649E200F405200550C7B /* B_62@2x.gif in Resources */,
 				1F70A5B6201EEBD3001DED64 /* WBChatListAddUserTableViewCell.xib in Resources */,
@@ -5618,6 +5830,7 @@
 				1FA864D7200F405200550C7B /* C_100@2x.png in Resources */,
 				1FCFB3D81FE7B34C00BD3375 /* ic_radio_button.png in Resources */,
 				F68310AB1FB30AAE005AC578 /* comment_share.png in Resources */,
+				1FF1482D20297BF3009BBEF8 /* ImageSelectedSmallOff@2x.png in Resources */,
 				F68311261FB30AAE005AC578 /* login@2x.png in Resources */,
 				1FA86435200F405100550C7B /* B_30@2x.gif in Resources */,
 				1FA864D8200F405200550C7B /* C_82@2x.png in Resources */,
@@ -5634,6 +5847,7 @@
 				1FA8644F200F405100550C7B /* B_04@2x.gif in Resources */,
 				1F922EC01FCE816800A7614B /* WBStationManageEquipmentTableViewCell.xib in Resources */,
 				F68311141FB30AAE005AC578 /* info_user@2x.png in Resources */,
+				1FF1483A20297BF3009BBEF8 /* VideoOverlay.png in Resources */,
 				1FA86456200F405100550C7B /* b_6@2x.gif in Resources */,
 				1F6E549E20033F6C009E38AE /* WBUpgradeCheckViewController.storyboard in Resources */,
 				1FA86432200F405100550C7B /* icon_success_hite@2x.png in Resources */,
@@ -5650,6 +5864,7 @@
 				1F6E547E1FFE1690009E38AE /* weChat_add.png in Resources */,
 				F68311441FB30AAE005AC578 /* open_in.png in Resources */,
 				1FA86498200F405200550C7B /* B_46@2x.gif in Resources */,
+				1FFEABBA2029486900BFD15F /* delete_box_user.@2x.png in Resources */,
 				F683111A1FB30AAE005AC578 /* local@2x.png in Resources */,
 				1F114A401FF368FF007F6D15 /* yes.png in Resources */,
 				1FA8647C200F405200550C7B /* B_64@2x.gif in Resources */,
@@ -5695,6 +5910,8 @@
 				C183CDEB1FCE9CE8002E29CD /* FMChangeNameVC.xib in Resources */,
 				F68310D21FB30AAE005AC578 /* float_btn_del@2x.png in Resources */,
 				1FA8647E200F405200550C7B /* B_107@2x.gif in Resources */,
+				1FF1482E20297BF3009BBEF8 /* ImageSelectedSmallOff@3x.png in Resources */,
+				1FF1483120297BF3009BBEF8 /* PlayButtonOverlayLargeTap@3x.png in Resources */,
 				1FA864CC200F405200550C7B /* C_106@2x.png in Resources */,
 				1F114A6B1FF4BA6C007F6D15 /* system_update@3x.png in Resources */,
 				C139DFCA1FC7DFC7007098E5 /* ic_pause.png in Resources */,
@@ -5712,6 +5929,7 @@
 				F671F1041FB4B3B50051DF93 /* floatTableViewCell.xib in Resources */,
 				1F114A2B1FF3457B007F6D15 /* WBMaintenanceTableViewCell.xib in Resources */,
 				F68310F21FB30AAE005AC578 /* ic_account_circle@2x.png in Resources */,
+				1FF1483620297BF3009BBEF8 /* ImageSelectedOn.png in Resources */,
 				1FAD744C1FD0EDC700A5D880 /* wechat_icon@3x.png in Resources */,
 				F6830F141FB300D2005AC578 /* FMLeftMenu.xib in Resources */,
 				1F6E54A820036663009E38AE /* ic_cloud_off_white.png in Resources */,
@@ -5726,6 +5944,7 @@
 				1FA86477200F405200550C7B /* B_15@2x.gif in Resources */,
 				1F922ED41FCE971B00A7614B /* ic_memory.png in Resources */,
 				1FA8645A200F405100550C7B /* B_36@2x.gif in Resources */,
+				1FF1484320297BF3009BBEF8 /* ImageSelectedOn@2x.png in Resources */,
 				1F922E7D1FCD3E1400A7614B /* WBStationManageRootTableViewCell.xib in Resources */,
 				1FA86490200F405200550C7B /* B_99@2x.gif in Resources */,
 				F68310EB1FB30AAE005AC578 /* head-portrait@3x.png in Resources */,
@@ -5746,6 +5965,7 @@
 				C139DFCF1FC7DFC7007098E5 /* ic_play.png in Resources */,
 				F68310AA1FB30AAE005AC578 /* comment@3x.png in Resources */,
 				1FA864AD200F405200550C7B /* B_35@2x.gif in Resources */,
+				1FF1482920297BF3009BBEF8 /* ImageSelectedOff.png in Resources */,
 				F68311941FB30AAF005AC578 /* small_0@3x.png in Resources */,
 				1FD7A0EE1FB05A45000D4CB3 /* back_gray@2x.png in Resources */,
 				F68311111FB30AAE005AC578 /* info@2x.png in Resources */,
@@ -5758,6 +5978,7 @@
 				F68310CA1FB30AAE005AC578 /* fangzheng.ttf in Resources */,
 				F683112C1FB30AAE005AC578 /* mask-layer@2x.png in Resources */,
 				F68310891FB30AAE005AC578 /* Arrow@3x.png in Resources */,
+				1FF1482820297BF3009BBEF8 /* VideoOverlay@2x.png in Resources */,
 				F67D644B1FAC7E6B00E23D16 /* JYThumbVC.xib in Resources */,
 				F683119C1FB30AAF005AC578 /* stationLogo@2x.png in Resources */,
 				1FA86461200F405100550C7B /* B_47@2x.gif in Resources */,
@@ -5777,12 +5998,14 @@
 				F68311321FB30AAE005AC578 /* menu_select@2x.png in Resources */,
 				1FA86495200F405200550C7B /* B_29@2x.gif in Resources */,
 				1F114A331FF34D9B007F6D15 /* WBMaintenanceStorageInfoTableViewCell.xib in Resources */,
+				1FF1482320297BF3009BBEF8 /* UIBarButtonItemArrowLeft.png in Resources */,
 				F683119A1FB30AAF005AC578 /* small_3@3x.png in Resources */,
 				1FA8646E200F405200550C7B /* B_49@2x.gif in Resources */,
 				1F7F160320108767003CB83D /* group_highLight@2x.png in Resources */,
 				1F3F99811FB0312300D6CC64 /* LocalDownloadViewController.xib in Resources */,
 				1F4083B32006161D00DC0634 /* WBPpgAskToUploadAlertViewController.storyboard in Resources */,
 				F68311571FB30AAE005AC578 /* photo@2x.png in Resources */,
+				1FF1483C20297BF3009BBEF8 /* UIBarButtonItemArrowLeft@3x.png in Resources */,
 				1FA8644D200F405100550C7B /* B_104@2x.gif in Resources */,
 				F683119E1FB30AAF005AC578 /* storage.png in Resources */,
 				1FAD74961FD2CECB00A5D880 /* gif_photo@3x.png in Resources */,
@@ -5798,17 +6021,20 @@
 				F68310BA1FB30AAE005AC578 /* del_user@3x.png in Resources */,
 				1FA86486200F405200550C7B /* B_09@2x.gif in Resources */,
 				F68310861FB30AAE005AC578 /* all@3x.png in Resources */,
+				1FF1484720297BF3009BBEF8 /* .gitkeep in Resources */,
 				F68310961FB30AAE005AC578 /* bg_pic.jpg in Resources */,
 				1F922E881FCD426000A7614B /* ic_dns@3x.png in Resources */,
 				1FA86483200F405200550C7B /* B_66@2x.gif in Resources */,
 				1F7F161520119785003CB83D /* WBGroupAdressBookTableViewCell.xib in Resources */,
 				1FA864D1200F405200550C7B /* C_102@2x.png in Resources */,
+				1FF1483820297BF3009BBEF8 /* ImageSelectedOff@2x.png in Resources */,
 				F68311991FB30AAF005AC578 /* small_3@2x.png in Resources */,
 				1FA864C0200F405200550C7B /* IM_Chat_keyboard@2x.png in Resources */,
 				1FA864C6200F405200550C7B /* IM_Chat_receiver_bg@3x.png in Resources */,
 				F68310841FB30AAE005AC578 /* all.png in Resources */,
 				C1D2D6CA1FC8587000EE1C46 /* livePhoto@3x.png in Resources */,
 				1FA864B8200F405200550C7B /* chatBar_colorMore_photo@3x.png in Resources */,
+				1FF1483020297BF3009BBEF8 /* ImageError@3x.png in Resources */,
 				1FA864E0200F405200550C7B /* C_103@2x.png in Resources */,
 				1FD7A1061FB05A51000D4CB3 /* WeChat@2x.png in Resources */,
 				F683118C1FB30AAF005AC578 /* share_red_select.png in Resources */,
@@ -5914,6 +6140,7 @@
 				1FAD74941FD2CECB00A5D880 /* gif_photo.png in Resources */,
 				1F58DF4D1FE12FB300768DD7 /* WBInitDiskTableViewCell.xib in Resources */,
 				1F922EDB1FCE992F00A7614B /* brtfs.png in Resources */,
+				1FF1483220297BF3009BBEF8 /* UIBarButtonItemArrowRight.png in Resources */,
 				1FA864C5200F405200550C7B /* IM_Chat_sender_bg@2x.png in Resources */,
 				F68311741FB30AAE005AC578 /* recommend.png in Resources */,
 				F68310B41FB30AAE005AC578 /* Default@2x.png in Resources */,
@@ -5923,6 +6150,7 @@
 				F68310D81FB30AAE005AC578 /* folder_shared@2x.png in Resources */,
 				F68310851FB30AAE005AC578 /* all@2x.png in Resources */,
 				1FA86494200F405200550C7B /* B_54@2x.gif in Resources */,
+				1FFEABBB2029486900BFD15F /* add_box_user@3x.png in Resources */,
 				F68311661FB30AAE005AC578 /* photos@2x.png in Resources */,
 				1FA86429200F405100550C7B /* Keyboard_gradient_mask@2x.png in Resources */,
 				1FAD74801FD14A4700A5D880 /* add_invite@2x.png in Resources */,
@@ -5943,6 +6171,7 @@
 				1FA864E3200F405200550C7B /* C_88@2x.png in Resources */,
 				F68311221FB30AAE005AC578 /* lock_photo.png in Resources */,
 				F68310F31FB30AAE005AC578 /* ic_account_circle@3x.png in Resources */,
+				1FF1483B20297BF3009BBEF8 /* ImageSelectedSmallOff.png in Resources */,
 				1FA864DA200F405200550C7B /* C_105@2x.png in Resources */,
 				F68311521FB30AAE005AC578 /* photo-album@3x.png in Resources */,
 				C139DFD11FC7DFC7007098E5 /* ic_play@2x.png in Resources */,
@@ -5954,6 +6183,7 @@
 				1F922E931FCD42DF00A7614B /* ic_network@3x.png in Resources */,
 				1FA86438200F405100550C7B /* B_114@2x.gif in Resources */,
 				F68310C91FB30AAE005AC578 /* fab_share@3x.png in Resources */,
+				1FF1482520297BF3009BBEF8 /* ImageSelectedSmallOn.png in Resources */,
 				F68311241FB30AAE005AC578 /* lock_photo@3x.png in Resources */,
 				F683117F1FB30AAF005AC578 /* select@3x.png in Resources */,
 				1F922E821FCD3FC100A7614B /* ic_chevron_right.png in Resources */,
@@ -5961,10 +6191,12 @@
 				1FA86455200F405100550C7B /* B_82@2x.gif in Resources */,
 				F68310B71FB30AAE005AC578 /* del@3x.png in Resources */,
 				1FAD74641FD0EDDF00A5D880 /* png_icon@3x.png in Resources */,
+				1FFEABBC2029486900BFD15F /* delete_box_user.png in Resources */,
 				1FA86436200F405100550C7B /* B_118@2x.gif in Resources */,
 				F68311B71FB30AAF005AC578 /* virtual_machine@3x.png in Resources */,
 				F68311471FB30AAE005AC578 /* person.png in Resources */,
 				1FA864C4200F405200550C7B /* IM_Chat_sender_bg@3x.png in Resources */,
+				1FF1483D20297BF3009BBEF8 /* ImageSelectedOff@3x.png in Resources */,
 				1F114A3E1FF368FF007F6D15 /* no.png in Resources */,
 				1FA864A3200F405200550C7B /* B_83@2x.gif in Resources */,
 				F68311A11FB30AAF005AC578 /* storage_select.png in Resources */,
@@ -5982,6 +6214,7 @@
 				1FA864B3200F405200550C7B /* B_72@2x.gif in Resources */,
 				F683108B1FB30AAE005AC578 /* Arrow_down@2x.png in Resources */,
 				1F922E9F1FCD432000A7614B /* ic_access_time@2x.png in Resources */,
+				1FF1482B20297BF3009BBEF8 /* .gitkeep in Resources */,
 				F68310E41FB30AAE005AC578 /* hard@2x.png in Resources */,
 				F683109F1FB30AAE005AC578 /* check-box_select.png in Resources */,
 				1FA86479200F405200550C7B /* B_76@2x.gif in Resources */,
@@ -5998,6 +6231,7 @@
 				1F922EC81FCE931A00A7614B /* ic_tv@2x.png in Resources */,
 				F683119D1FB30AAF005AC578 /* stationLogo@3x.png in Resources */,
 				F68310AF1FB30AAE005AC578 /* date_bg@2x.png in Resources */,
+				1FF1482420297BF3009BBEF8 /* UIBarButtonItemGrid@3x.png in Resources */,
 				1FD7A10A1FB05A51000D4CB3 /* PLUS.png in Resources */,
 				1F922E871FCD426000A7614B /* ic_dns@2x.png in Resources */,
 				1F4D75CC1FAC5FF900E6516C /* FMCloudUserTableViewCell.xib in Resources */,
@@ -6010,6 +6244,7 @@
 				F683109C1FB30AAE005AC578 /* check-box.png in Resources */,
 				1F114A681FF4BA6C007F6D15 /* new_releases@3x.png in Resources */,
 				1F4083E320062C2700DC0634 /* ic_content_paste.png in Resources */,
+				1FFEABBE2029486900BFD15F /* add_box_user@2x.png in Resources */,
 				F68311711FB30AAE005AC578 /* praise_share.png in Resources */,
 				F68310D91FB30AAE005AC578 /* folder_shared@3x.png in Resources */,
 				1F06FD62200DD1630024AFC7 /* WBChatListTableViewCell.xib in Resources */,
@@ -6051,6 +6286,7 @@
 				F6830EF01FB2FEF3005AC578 /* FMUserAddVC.xib in Resources */,
 				F683116E1FB30AAE005AC578 /* praise.png in Resources */,
 				1FA864CE200F405200550C7B /* C_85@2x.png in Resources */,
+				1FF1482F20297BF3009BBEF8 /* PlayButtonOverlayLargeTap.png in Resources */,
 				1F58DEE71FDFDC6B00768DD7 /* disk_settings@2x.png in Resources */,
 				1F6E54A4200353E7009E38AE /* WBSettingUpgradeSelectViewController.storyboard in Resources */,
 				1FA8649A200F405200550C7B /* B_58@2x.gif in Resources */,
@@ -6070,6 +6306,7 @@
 				1FA86442200F405100550C7B /* B_84@2x.gif in Resources */,
 				F68311491FB30AAE005AC578 /* person@3x.png in Resources */,
 				F68311391FB30AAE005AC578 /* more_highlight@3x.png in Resources */,
+				1FF1483420297BF3009BBEF8 /* ImageError.png in Resources */,
 				F68310DF1FB30AAE005AC578 /* good_red_select@3x.png in Resources */,
 				1F3F998A1FB0353F00D6CC64 /* LocalDownloadTableViewCell.xib in Resources */,
 				1F4083E820062C2700DC0634 /* ic_content_paste@3x.png in Resources */,
@@ -6112,12 +6349,14 @@
 				1F6E548B1FFF56BE009E38AE /* share_disk@2x.png in Resources */,
 				1FA864E8200F405200550C7B /* C_86@2x.png in Resources */,
 				1FAD748A1FD15EBE00A5D880 /* upload_download@2x.png in Resources */,
+				1FF1482C20297BF3009BBEF8 /* ImageError@2x.png in Resources */,
 				F68310B11FB30AAE005AC578 /* Default-568h@2x.png in Resources */,
 				1FA86460200F405100550C7B /* B_112@2x.gif in Resources */,
 				F68310A51FB30AAE005AC578 /* check_circle_select.png in Resources */,
 				F68311A81FB30AAF005AC578 /* touxiang.jpg in Resources */,
 				1FA864E6200F405200550C7B /* C_101@2x.png in Resources */,
 				1F922E8E1FCD429900A7614B /* ic_person_add@3x.png in Resources */,
+				1FF1484020297BF3009BBEF8 /* ImageSelectedSmallOn@3x.png in Resources */,
 				1FA86452200F405100550C7B /* B_75@2x.gif in Resources */,
 				1F922E8F1FCD429900A7614B /* ic_person_add@2x.png in Resources */,
 				F6830F171FB300D2005AC578 /* FMLeftMenuCell.xib in Resources */,
@@ -6158,7 +6397,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox-resources.sh",
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
-				$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser/MWPhotoBrowser.bundle,
+				"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser/MWPhotoBrowser.bundle",
 				"${PODS_ROOT}/MaterialComponents/components/ActivityIndicator/src/MaterialActivityIndicator.bundle",
 				"${PODS_ROOT}/MaterialComponents/components/AppBar/src/MaterialAppBar.bundle",
 				"${PODS_ROOT}/MaterialComponents/components/BottomNavigation/src/MaterialBottomNavigation.bundle",
@@ -6168,13 +6407,13 @@
 				"${PODS_ROOT}/MaterialComponents/components/FeatureHighlight/src/MaterialFeatureHighlight.bundle",
 				"${PODS_ROOT}/MaterialComponents/components/PageControl/src/MaterialPageControl.bundle",
 				"${PODS_ROOT}/MaterialComponents/components/Tabs/src/MaterialTabs.bundle",
-				$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_arrow_back.bundle,
-				$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_check.bundle,
-				$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_check_circle.bundle,
-				$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_chevron_right.bundle,
-				$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_info.bundle,
-				$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_radio_button_unchecked.bundle,
-				$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_reorder.bundle,
+				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_arrow_back.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_check.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_check_circle.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_chevron_right.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_info.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_radio_button_unchecked.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_reorder.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -6222,7 +6461,6 @@
 				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFTextAccessibility/MDFTextAccessibility.framework",
 				"${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework",
-				"${BUILT_PRODUCTS_DIR}/MWPhotoBrowser/MWPhotoBrowser.framework",
 				"${BUILT_PRODUCTS_DIR}/MagicalRecord/MagicalRecord.framework",
 				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
@@ -6253,7 +6491,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFInternationalization.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFTextAccessibility.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJRefresh.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MWPhotoBrowser.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MagicalRecord.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
@@ -6304,6 +6541,7 @@
 				C183CDDD1FCE8D84002E29CD /* FMChangePwdVC.m in Sources */,
 				1F58DF4C1FE12FB300768DD7 /* WBInitDiskTableViewCell.m in Sources */,
 				C11EAB221FC4066A007C9BA7 /* WBCloudJsonAPI.m in Sources */,
+				1FF1484D20297BF3009BBEF8 /* MWGridViewController.m in Sources */,
 				1F4D75AD1FAC4BB800E6516C /* WBLocalAsset+CoreDataProperties.m in Sources */,
 				F67D64061FAC7D3600E23D16 /* JYAsset.m in Sources */,
 				F67D64081FAC7D3600E23D16 /* PHFetchResult+JYEXT.m in Sources */,
@@ -6371,6 +6609,7 @@
 				C138D07A1FB9A4B0000CF518 /* DirectoriesModel.m in Sources */,
 				1FF64124201870E4007118F5 /* WBChatTextBubbleView.m in Sources */,
 				1F29AAA1200C4E4F002C7131 /* FMUserLoginSettingVC.m in Sources */,
+				1FF1484620297BF3009BBEF8 /* MWCaptionView.m in Sources */,
 				1FA86408200F405100550C7B /* XSBrowserAnimateDelegate.m in Sources */,
 				1FA8641A200F405100550C7B /* LHChatTextBubbleView.m in Sources */,
 				1F114A801FFCE2B1007F6D15 /* WBStationEnterMaintanceConfirmAVC.m in Sources */,
@@ -6409,6 +6648,7 @@
 				1FF6410F20185332007118F5 /* WBTweetModel.m in Sources */,
 				F67561561FB342AE00E3277F /* MXParallaxHeader.m in Sources */,
 				1F4D759C1FAC4BB800E6516C /* UIButton+EnlargeEdge.m in Sources */,
+				1FF1484C20297BF3009BBEF8 /* MWTapDetectingView.m in Sources */,
 				1FC2AFF21FC52B4800E8C9DE /* CloudLoginModel.m in Sources */,
 				1F4D75CB1FAC5FF900E6516C /* FMCloudUserTableViewCell.m in Sources */,
 				1F922EB51FCD758C00A7614B /* WBStationManageNetInterfacesModel.m in Sources */,
@@ -6441,6 +6681,7 @@
 				1F6E54961FFF6B33009E38AE /* FMCheckManager.m in Sources */,
 				F6830EEF1FB2FEF3005AC578 /* FMUserAddVC.m in Sources */,
 				1FAD74291FCFEAE000A5D880 /* WBStationTicketsWechatAPI.m in Sources */,
+				1FF1484B20297BF3009BBEF8 /* MWPhoto.m in Sources */,
 				C138D0661FB99AF3000CF518 /* FMMediaAPI.m in Sources */,
 				F67D644A1FAC7E6B00E23D16 /* JYThumbVC.m in Sources */,
 				1FA86419200F405100550C7B /* LHChatImageBubbleView.m in Sources */,
@@ -6455,6 +6696,7 @@
 				1F70A5C0202018DE001DED64 /* WBGetOneBoxAPI.m in Sources */,
 				1FD1F26A20171355005503DC /* WBGetBoxesAPI.m in Sources */,
 				1F4D759F1FAC4BB800E6516C /* UIColor+fm_color.m in Sources */,
+				1FF1484820297BF3009BBEF8 /* MWZoomingScrollView.m in Sources */,
 				1F1ABA131FB99882006EB1FC /* CSDownloadHelper.m in Sources */,
 				1FFEADB51FB1594900CD3068 /* CSDownloadModel.m in Sources */,
 				F6830EC51FB2FD1D005AC578 /* FMUsersLoginMangeCell.m in Sources */,
@@ -6505,6 +6747,7 @@
 				1FA8642F200F405100550C7B /* KeyboardEmojiTextView.m in Sources */,
 				1F7F16212011D4B8003CB83D /* UIImage+extension.m in Sources */,
 				F6830EC41FB2FD1D005AC578 /* FMUserLoginHeaderView.m in Sources */,
+				1FF1484520297BF3009BBEF8 /* MWPhotoBrowser.m in Sources */,
 				F6D8CC3A1FB402CB00673824 /* FMBaseFirstVC.m in Sources */,
 				1F114A321FF34D9B007F6D15 /* WBMaintenanceStorageInfoTableViewCell.m in Sources */,
 				1F4D75D01FAC604100E6516C /* LoginTableViewCell.m in Sources */,
@@ -6517,6 +6760,7 @@
 				1FA8640D200F405100550C7B /* UIActionSheet+Blocks.m in Sources */,
 				1F922EB21FCD744C00A7614B /* WBStationManageTableViewCell.m in Sources */,
 				F671F1081FB4B8820051DF93 /* JYProcessView.m in Sources */,
+				1FF1484A20297BF3009BBEF8 /* MWTapDetectingImageView.m in Sources */,
 				C183CDFC1FCFD8A0002E29CD /* UIBarButtonItem+SXCreate.m in Sources */,
 				1FA86418200F405100550C7B /* LHChatViewBaseCell.m in Sources */,
 				C138D0601FB970F7000CF518 /* NSString+DeviceName.m in Sources */,
@@ -6536,6 +6780,7 @@
 				1FAD742D1FD00DBF00A5D880 /* CSUploadTaskQueue.m in Sources */,
 				C183CDEA1FCE9CE8002E29CD /* FMChangeNameVC.m in Sources */,
 				1F922F021FCFA6E500A7614B /* WBStationManageRebotViewController.m in Sources */,
+				1FF1484E20297BF3009BBEF8 /* MWGridCell.m in Sources */,
 				1FB0900B1FBC519A0020B304 /* NSString+Extension.m in Sources */,
 				1F4083BE20061A3100DC0634 /* WBGetDownloadAPI.m in Sources */,
 				1F922EE41FCE998A00A7614B /* WBStationManageStorageAPI.m in Sources */,
@@ -6552,6 +6797,7 @@
 				1F6E549C20033F5B009E38AE /* WBUpgradeCheckViewController.m in Sources */,
 				F679336E1FB00D9B00C9A7DC /* WBUser+CoreDataProperties.m in Sources */,
 				1FFADF911FDFB33600FA3F6E /* BootModel.m in Sources */,
+				1FF1484920297BF3009BBEF8 /* UIImage+MWPhotoBrowser.m in Sources */,
 				C183CDEE1FCEA20C002E29CD /* FMUpdateUserAPI.m in Sources */,
 				1F922EB81FCD75EC00A7614B /* WBStationManageNetInterfaceAPI.m in Sources */,
 				1FFADF821FDE797C00FA3F6E /* WBLoginTableView.m in Sources */,

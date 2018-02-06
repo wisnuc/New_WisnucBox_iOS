@@ -173,10 +173,10 @@ UITableViewDataSource
     }
     cell.nameLabel.text = usersModel.nickName;
     cell.timeLabel.text =  usersModel.createdAt;
-    SDWebImageManager *manager = [SDWebImageManager sharedManager] ;
-    [manager downloadImageWithURL:[NSURL URLWithString:usersModel.avatarUrl] options:0 progress:^(NSInteger   receivedSize, NSInteger expectedSize) {
-        // progression tracking code
-    }  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType,   BOOL finished, NSURL *imageURL) {
+    SDWebImageManager *sdmanager = [SDWebImageManager sharedManager] ;
+    [[sdmanager imageDownloader]downloadImageWithURL:[NSURL URLWithString:usersModel.avatarUrl] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+        
+    } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, BOOL finished) {
         if (image) {
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
                 UIImage *cellImage = [UIImage imageCirclewithImage:image];
@@ -186,6 +186,14 @@ UITableViewDataSource
             });
         }
     }];
+     
+     
+     
+//     downloadImageWithURL:[NSURL URLWithString:usersModel.avatarUrl] options:0 progress:^(NSInteger   receivedSize, NSInteger expectedSize) {
+//        // progression tracking code
+//    }  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType,   BOOL finished, NSURL *imageURL) {
+//
+//    }];
 
     cell.resolvedClickBlock = ^(WBInviteWechatTableViewCell *inviteCell){
         [SXLoadingView showProgressHUD:@""];

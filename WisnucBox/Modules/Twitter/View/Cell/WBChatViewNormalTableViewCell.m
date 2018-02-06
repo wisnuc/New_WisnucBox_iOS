@@ -17,6 +17,9 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
     if (self = [super initWithMessageModel:model reuseIdentifier:reuseIdentifier]) {
         self.headImageView.clipsToBounds = YES;
         self.headImageView.layer.cornerRadius = 20.0;
+        if (model.isSender) {
+             self.headImageView.layer.cornerRadius = 2.0;
+        }
         self.backgroundColor = [UIColor clearColor];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
     }

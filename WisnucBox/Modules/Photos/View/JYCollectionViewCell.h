@@ -30,7 +30,7 @@
 @property (nonatomic, copy) NSString *identifier;
 
 @property (nonatomic, assign) PHImageRequestID imageRequestID;
-@property (nonatomic, weak) id<SDWebImageOperation> thumbnailRequestOperation;
+@property (nonatomic, weak) SDWebImageDownloadToken *thumbnailDownloadToken;
 
 @property (nonatomic, copy) void (^selectedBlock)(BOOL);
 @property (nonatomic, copy) void (^longPressBlock)(void);

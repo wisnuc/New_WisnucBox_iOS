@@ -223,7 +223,7 @@ NSString *const kTableViewFrame = @"frame";
     [WB_BoxService sendTweetWithImageArray:imageArray Boxuuid:_boxModel.uuid Complete:^(WBTweetModel *tweetModel, NSError *error) {
         if (!error) {
             [content.photos.photos enumerateObjectsUsingBlock:^(UIImage *image, NSUInteger idx, BOOL * _Nonnull stop) {
-               [SDImageCache.sharedImageCache storeImage:image forKey:[NSString stringWithFormat:@"%@%lld%lu",tweetModel.uuid,tweetModel.ctime,idx] toDisk:YES];
+                [SDImageCache.sharedImageCache storeImage:image forKey:[NSString stringWithFormat:@"%@%lld%lu",tweetModel.uuid,tweetModel.ctime,idx] toDisk:YES completion:nil];
             }];
              tabelViewCell.messageModel.status = MessageDeliveryState_Delivered;
              [tabelViewCell layoutSubviews];
@@ -517,21 +517,19 @@ NSString *const kTableViewFrame = @"frame";
 }
 
 /** 获取被点击cell中的图片, 将来在图片浏览器中显示的尺寸 */
-- (CGRect)XSBrowserDelegate:(XSBrowserAnimateDelegate *)browserDelegate toRectForRowAtIndex:(NSInteger)index {
-    __block CGSize size = CGSizeZero;
-    
-    [SDImageCache.sharedImageCache queryDiskCacheForKey:_imageKeys[index] done:^(UIImage *image, SDImageCacheType cacheType) {
-        
-        size = image.size;
-    }];
-    CGFloat height = size.height * __kWidth / size.width;
-    if (height > __kHeight) {
-        return CGRectMake(0, 0, __kWidth, height);
-    } else {
-        CGFloat offsetY = (__kHeight - height) * 0.5;
-        return CGRectMake(0, offsetY, __kWidth, height);
-    }
-}
+//- (CGRect)XSBrowserDelegate:(XSBrowserAnimateDelegate *)browserDelegate toRectForRowAtIndex:(NSInteger)index {
+//    __block CGSize size = CGSizeZero;
+//    [SDImageCache.sharedImageCache queryDiskCacheForKey:_imageKeys[index] done:^(UIImage *image, SDImageCacheType cacheType) {
+//        size = image.size;
+//    }];
+//    CGFloat height = size.height * __kWidth / size.width;
+//    if (height > __kHeight) {
+//        return CGRectMake(0, 0, __kWidth, height);
+//    } else {
+//        CGFloat offsetY = (__kHeight - height) * 0.5;
+//        return CGRectMake(0, offsetY, __kWidth, height);
+//    }
+//}
 
 /** 是否在可视区域 */
 - (BOOL)XSBrowserDelegate:(XSBrowserAnimateDelegate *)browserDelegate isVisibleForRowAtIndex:(NSInteger)index {

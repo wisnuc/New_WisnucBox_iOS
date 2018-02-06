@@ -234,7 +234,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     switch (section) {
         case 0:{
-            return [self generalHeaderViewWithTitle:@"群成员" Message:@"有2位新成员申请加入"];
+            return [self generalHeaderViewWithTitle:@"群成员" Message:@""];
         }
             break;
             
@@ -325,7 +325,13 @@
             };
             
             cell.removeUserClickBlock = ^(WBGroupSettingUserTableViewCell *groupSettingUsercell) {
-                
+                WBChatListAddUserViewController *addUserViewController = [[WBChatListAddUserViewController alloc]init];
+                addUserViewController.endDelegate = self;
+                addUserViewController.type = WBUserAddressBookDelete;
+                addUserViewController.boxModel = _boxModel;
+                NavViewController *navi = [[NavViewController alloc]initWithRootViewController:addUserViewController];
+                [self presentViewController:navi animated:YES completion:^{
+                }];
             };
             return cell;
         }

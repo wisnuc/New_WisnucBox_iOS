@@ -13,7 +13,7 @@
 @interface LHPhotosModel : NSObject
 
 @property (nonatomic, strong) NSArray *photos;
-@property (nonatomic, strong) NSArray<JYAsset *> *assets;
+@property (nonatomic, strong) NSArray *assets;
 @property (nonatomic, strong) NSArray<WBTweetlocalImageModel *> *localImageModelArray;
 @property (nonatomic, assign, getter=isOriginalPhoto) BOOL originalPhoto;
 
