@@ -316,7 +316,6 @@
 //        weak_self.avatarUrl = model.data.user.avatarUrl;
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
-       
     }];
     
 }

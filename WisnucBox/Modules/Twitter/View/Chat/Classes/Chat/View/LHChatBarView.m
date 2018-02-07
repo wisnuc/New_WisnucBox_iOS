@@ -217,59 +217,59 @@ CGFloat const kChatBatItemWH = 26.0f;
 // 点击工具按钮
 - (void)moreBtnClick:(UIButton *)moreBtn {
     
-    [self.emojiView removeFromSuperview];
-    self.emojiKeyboard = NO;
-    UIView *moreView = self.moreView;
-    
-    if (self.emojiBtn.selected) { // 表情键盘有选中
-        self.moreBtn.selected = YES;
-        self.moreKeyboard = YES;
-        if (!self.showingSystemKeyboard) {
-            self.moreView.y = __kHeight;
-        }
-        
-        self.emojiView.y = __kHeight;
-        self.emojiBtn.selected = NO;
-        [self.superview addSubview:moreView];
-        // 2.更改inputToolBar 底部约束
-        
-        
-        // 添加动画
-        [UIView animateWithDuration:0.25 animations:^{
-            self.y = __kHeight - kChatMoreHeight - self.height -kNavBarHeight;
-            _tableView.height = self.y;
-            moreView.y = __kHeight - kChatMoreHeight - kNavBarHeight;
-        }];
-        
-    } else { // 表情键盘没有选择
-        moreBtn.selected = !moreBtn.selected;
-        if (moreBtn.selected) {
-            // 让vioce声音按钮,取消选择,隐藏录音按钮
-            
-            if (!self.showingSystemKeyboard) {
-                self.moreView.y = __kHeight;
-            }
-            [self.textView resignFirstResponder];
-            self.moreKeyboard = YES;
-            [self.superview addSubview:moreView];
-            // 2.更改inputToolBar 底部约束
-            
-            
-            // 添加动画
-            [UIView animateWithDuration:0.25 animations:^{
-                self.y = __kHeight - kChatMoreHeight - self.height - kNavBarHeight;
-                _tableView.height = self.y;
-                
-                moreView.y = __kHeight - kChatMoreHeight - kNavBarHeight;
-                // 4.把消息现在在顶部
-//                [_conversationChatVC scrollToBottomAnimated:NO refresh:NO];
-            }];
-            
-        } else {
-            self.moreKeyboard = YES;
-            [self.textView becomeFirstResponder];
-        }
-    }
+//    [self.emojiView removeFromSuperview];
+//    self.emojiKeyboard = NO;
+//    UIView *moreView = self.moreView;
+//    
+//    if (self.emojiBtn.selected) { // 表情键盘有选中
+//        self.moreBtn.selected = YES;
+//        self.moreKeyboard = YES;
+//        if (!self.showingSystemKeyboard) {
+//            self.moreView.y = __kHeight;
+//        }
+//        
+//        self.emojiView.y = __kHeight;
+//        self.emojiBtn.selected = NO;
+//        [self.superview addSubview:moreView];
+//        // 2.更改inputToolBar 底部约束
+//        
+//        
+//        // 添加动画
+//        [UIView animateWithDuration:0.25 animations:^{
+//            self.y = __kHeight  - self.height -kNavBarHeight;
+//            _tableView.height = self.y;
+//            moreView.y = __kHeight  - kNavBarHeight;
+//        }];
+//        
+//    } else { // 表情键盘没有选择
+//        moreBtn.selected = !moreBtn.selected;
+//        if (moreBtn.selected) {
+//            // 让vioce声音按钮,取消选择,隐藏录音按钮
+//            
+//            if (!self.showingSystemKeyboard) {
+//                self.moreView.y = __kHeight;
+//            }
+//            [self.textView resignFirstResponder];
+//            self.moreKeyboard = YES;
+//            [self.superview addSubview:moreView];
+//            // 2.更改inputToolBar 底部约束
+//            
+//            
+//            // 添加动画
+//            [UIView animateWithDuration:0.25 animations:^{
+//                self.y = __kHeight - kChatMoreHeight - self.height - kNavBarHeight;
+//                _tableView.height = self.y;
+//                
+//                moreView.y = __kHeight - kChatMoreHeight - kNavBarHeight;
+//                // 4.把消息现在在顶部
+////                [_conversationChatVC scrollToBottomAnimated:NO refresh:NO];
+//            }];
+//            
+//        } else {
+//            self.moreKeyboard = YES;
+//            [self.textView becomeFirstResponder];
+//        }
+//    }
 }
 
 #pragma mark - 公共方法
@@ -294,24 +294,24 @@ CGFloat const kChatBatItemWH = 26.0f;
 //重置状态
 - (void)resetState {
     
-    [UIView animateWithDuration:0.25 animations:^{
-        self.height = kChatBarHeight;
-        CGFloat keyboardHeight = _keyboardHeight;
-        if (self.moreBtn.selected) {
-            keyboardHeight = kChatMoreHeight;
-        }
-        else if (self.emojiBtn.selected) {
-            keyboardHeight = kChatEmojiHeight;
-        }
-        self.y = __kHeight - self.height - keyboardHeight - kNavBarHeight;
-        _tableView.height = self.y;
-        [self layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        if (!finished) return;
-        self.contentModel = nil;
-        _textView.text = @"";
-        self.photos = nil;
-    }];
+//    [UIView animateWithDuration:0.25 animations:^{
+//        self.height = kChatBarHeight;
+//        CGFloat keyboardHeight = _keyboardHeight;
+//        if (self.moreBtn.selected) {
+//            keyboardHeight = kChatMoreHeight;
+//        }
+//        else if (self.emojiBtn.selected) {
+//            keyboardHeight = kChatEmojiHeight;
+//        }
+//        self.y = __kHeight - self.height - keyboardHeight - kNavBarHeight;
+//        _tableView.height = self.y;
+//        [self layoutIfNeeded];
+//    } completion:^(BOOL finished) {
+//        if (!finished) return;
+//        self.contentModel = nil;
+//        _textView.text = @"";
+//        self.photos = nil;
+//    }];
 }
 
 - (NSRange)isPresenceExpressionWithText:(NSString *)text {

@@ -476,8 +476,7 @@
     option.networkAccessAllowed = YES;
     
     return [[PHCachingImageManager defaultManager] requestImageForAsset:asset targetSize:size contentMode:PHImageContentModeAspectFill options:option resultHandler:^(UIImage * _Nullable image, NSDictionary * _Nullable info) {
-        BOOL downloadFinined = ![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey];
-        // && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]
+        BOOL downloadFinined = ![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey]&& ![[info objectForKey:PHImageResultIsDegradedKey] boolValue];
         if (downloadFinined && completion) {
             completion(image, info);
         }

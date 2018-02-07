@@ -59,7 +59,8 @@
 - (void)getBoxesListData{
     [[WBGetBoxesAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
-        NSMutableArray *array = request.responseJsonObject;
+        NSArray * array = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"]
+        : request.responseJsonObject;
         NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
         [array enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
            WBBoxesModel *model = [WBBoxesModel modelWithDictionary:obj];
@@ -70,6 +71,8 @@
         [self.tableView reloadData];
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
+        NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
+        self.boxDataArray = dataArray;
         [self.tableView.mj_header endRefreshing];
         [self.tableView reloadData];
     }];

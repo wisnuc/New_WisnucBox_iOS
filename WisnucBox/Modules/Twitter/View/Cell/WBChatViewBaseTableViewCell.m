@@ -18,6 +18,9 @@
     
     _nameLabel.frame = CGRectMake(CGRectGetMaxX(_headImageView.frame) + 8, CGRectGetMinY(_headImageView.frame), NAME_LABEL_WIDTH, NAME_LABEL_HEIGHT);
 }
+- (void)layout{
+    
+}
 
 - (void)setMessageModel:(WBTweetModel *)messageModel {
     _messageModel = messageModel;

@@ -27,7 +27,7 @@
 - (void)sendTweetWithImageArray:(NSArray *)array Boxuuid:(NSString *)boxuuid Complete:(void(^)(WBTweetModel *tweetModel,NSError *error))callback{
     NSMutableArray *localImageListArray = [NSMutableArray arrayWithCapacity:0];
     NSMutableArray *netImageListArray = [NSMutableArray arrayWithCapacity:0];
-    [array enumerateObjectsUsingBlock:^(JYAsset *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[WBAsset class]]) {
             NSString * hashString = ((WBAsset *)obj).fmhash;
             NSMutableDictionary * mutableDic = [NSMutableDictionary dictionaryWithCapacity:0];
@@ -36,14 +36,23 @@
             [netImageListArray addObject:mutableDic];
             
         }else{
-            PHImageRequestID requestFileID =  [obj.asset getFile:^(NSError *requestError, NSString *filePath) {
+            JYAsset *jyasset = obj;
+            PHImageRequestID requestFileID =  [jyasset.asset getFile:^(NSError *requestError, NSString *filePath) {
                 if(requestError)
                     return callback(nil,requestError);
                 if (filePath.length==0) return;
-                NSString * hashString = obj.digest;
+               __block NSString * hashString = jyasset.digest;
+    
+                if (!hashString || hashString.length==0) {
+                    hashString  = [FileHash sha256HashOfFileAtPath:filePath];
+                }
+       
+                if (!hashString || hashString.length==0) {
+                    return;
+                }
                 NSInteger sizeNumber = (NSInteger)[WB_FileService fileSizeAtPath:filePath];
                 NSString * exestr = [filePath lastPathComponent];
-                NSString * fileName = [PHAssetResource assetResourcesForAsset:obj.asset].firstObject.originalFilename;
+                NSString * fileName = [PHAssetResource assetResourcesForAsset:jyasset.asset].firstObject.originalFilename;
                 if(IsNilString(fileName)) {
                     fileName = exestr;
                 }

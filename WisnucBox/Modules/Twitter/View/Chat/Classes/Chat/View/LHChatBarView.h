@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "LHChatBarMoreView.h"
 
 
 @class LHContentModel;
@@ -18,5 +18,5 @@
 @property (nonatomic, strong) void(^sendContent)(LHContentModel *content);
 
 - (void)hideKeyboard;
-
+- (void)moreViewPhotoAction:(LHChatBarMoreView *)moreVie;
 @end

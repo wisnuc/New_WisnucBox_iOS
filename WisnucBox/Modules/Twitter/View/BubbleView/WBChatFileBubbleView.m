@@ -21,7 +21,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
+    self.backgroundColor = [UIColor whiteColor];
     CGRect frame = self.bounds;
     CGRect imageViewFrame = self.bounds;
     imageViewFrame.size.width = 56 ;

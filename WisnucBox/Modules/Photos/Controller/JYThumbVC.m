@@ -526,20 +526,21 @@
     NSMutableArray *photosArray = [NSMutableArray arrayWithCapacity:0];
     NSMutableArray *localModelArray = [NSMutableArray arrayWithCapacity:0];
     NSArray *sourceArray =[NSArray arrayWithArray:self.choosePhotos];
-    CGSize size = [weak_self getImageSizeWithImageArray:sourceArray];
-     dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    CGSize size = CGSizeMake(MAX_SIZE, MAX_SIZE);
+//    CGSize size = [weak_self getImageSizeWithImageArray:sourceArray];
+//     dispatch_async(dispatch_get_global_queue(0, 0), ^{
     [self.choosePhotos enumerateObjectsUsingBlock:^( id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSLog(@"%@",_choosePhotos);
         if (![obj isKindOfClass:[WBAsset class]]) {
             JYAsset *asset = obj;
-            [PHPhotoLibrary requestImageForAsset:asset.asset size:size completion:^(UIImage *image, NSDictionary *info) {
+             WBTweetlocalImageModel *localImageModel = [WBTweetlocalImageModel new];
+            [PHPhotoLibrary requestImageForAsset:asset.asset size:size resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
                 if(!weak_self) return;
-                WBTweetlocalImageModel *localImageModel = [WBTweetlocalImageModel new];
                 localImageModel.localImage = image;
-                localImageModel.asset = obj;
-                [localModelArray addObject:localImageModel];
                 [photosArray addObject:image];
             }];
+            localImageModel.asset = obj;
+            [localModelArray addObject:localImageModel];
         }else{
             WBAsset *asset = obj;
             if (asset.image) {
@@ -565,7 +566,6 @@
             }
         }
     }];
-     });
     if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerDidFinishPickingPhotos:sourceAssets:LocalImageModelArray:isSelectOriginalPhoto:)]) {
         [self.delegate imagePickerDidFinishPickingPhotos:photosArray sourceAssets:self.choosePhotos LocalImageModelArray:localModelArray isSelectOriginalPhoto:YES];
     }
@@ -1053,12 +1053,17 @@ bool isDecelerating = NO;
         [self.chooseSection removeObject:headView.fmIndexPath];
         [self.choosePhotos removeObjectsInArray:(NSArray *)self.arrDataSources[headView.fmIndexPath.section]];
     }
-    
-    if (self.choosePhotos.count == 0) {
-        self.isSelectMode = NO;
-        [self leftBtnClick:_leftBtn];
+    if (!_isBoxSelectType) {
+        if (self.choosePhotos.count == 0) {
+            self.isSelectMode = NO;
+            [self leftBtnClick:_leftBtn];
+        }
     }
+    
     _countLb.text = [NSString stringWithFormat:WBLocalizedString(@"select_count", nil),(unsigned long)self.choosePhotos.count];
+    if (_isBoxSelectType) {
+        [_boxTypeSelectFinishButton setTitle:[NSString stringWithFormat:@"完成(%lu)",(unsigned long)self.choosePhotos.count] forState:UIControlStateNormal];
+    }
     [self.collectionView reloadData];
 }
 

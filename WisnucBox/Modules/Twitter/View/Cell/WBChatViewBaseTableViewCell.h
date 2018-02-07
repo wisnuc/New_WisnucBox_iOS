@@ -26,7 +26,7 @@
 @property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) WBChatBaseBubbleView *bubbleView;   //内容区域
 @property (nonatomic, strong) WBTweetModel *messageModel;
-
+- (void)layout;
 - (id)initWithMessageModel:(WBTweetModel *)model reuseIdentifier:(NSString *)reuseIdentifier;
 - (void)setupSubviewsForMessageModel:(WBTweetModel *)model;
 

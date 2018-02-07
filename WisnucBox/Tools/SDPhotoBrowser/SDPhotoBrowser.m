@@ -84,7 +84,7 @@
     saveButton.clipsToBounds = YES;
     [saveButton addTarget:self action:@selector(saveImage) forControlEvents:UIControlEventTouchUpInside];
     _saveButton = saveButton;
-    [self addSubview:saveButton];
+//    [self addSubview:saveButton];
 }
 
 - (void)saveImage
@@ -165,6 +165,7 @@
 {
     SDBrowserImageView *imageView = _scrollView.subviews[index];
     self.currentImageIndex = index;
+   
     if (imageView.hasLoadedImage) return;
     //    if ([self highQualityImageURLForIndex:index]) {
     
@@ -176,18 +177,16 @@
     if ([self highQualityImageBoxInfoForIndex:index]) {
         NSDictionary *dic = [self highQualityImageBoxInfoForIndex:index];
         NSLog(@"%@",dic);
-       
+        imageView.image = [self placeholderImageForIndex:self.currentImageIndex];
         if (dic[kMessageImageBoxLocalAsset]) {
             if ([dic[kMessageImageBoxLocalAsset] isKindOfClass:[WBAsset class]]) {
-                [SXLoadingView showProgressHUD:@""];
+//                [SXLoadingView showProgressHUD:@""];
                 WBAsset*asset = dic[kMessageImageBoxLocalAsset];
                 [WB_NetService getHighWebImageWithHash:asset.fmhash completeBlock:^(NSError *error, UIImage *netImage) {
                     if (!error &&netImage) {
                         imageView.image = netImage;
-                        [SXLoadingView hideProgressHUD];
                     }else{
                         imageView.image = [self placeholderImageForIndex:index];
-                        [SXLoadingView hideProgressHUD];
                     }
                 }];
                 return;
@@ -202,14 +201,12 @@
             }];
             }
         }else{
-            [SXLoadingView showProgressHUD:@""];
+//            [SXLoadingView showProgressHUD:@""];
             [WB_NetService getTweeethighQualityImageWithHash:dic[kMessageImageBoxNetImageHash] BoxUUID:dic[kMessageImageBoxUUID] complete:^(NSError *error, UIImage *netImage) {
                 if (!error &&netImage) {
                     imageView.image = netImage;
-                    [SXLoadingView hideProgressHUD];
                 }else{
                     imageView.image = [self placeholderImageForIndex:index];
-                    [SXLoadingView hideProgressHUD];
                 }
             }];
         }

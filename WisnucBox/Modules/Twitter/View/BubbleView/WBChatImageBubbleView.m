@@ -59,6 +59,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
+    
 //
 //    CGRect frame = self.bounds;
 ////    frame.size.width -= BUBBLE_ARROW_WIDTH;
@@ -110,9 +111,7 @@
 ////            frame.origin.x = 2 + BUBBLE_ARROW_WIDTH;
 //        }
 
-    dispatch_main_async_safe(^{
-        self.frame = frame;
-    });
+  
     return imageWithHeight;
 }
 
@@ -126,7 +125,7 @@
         [_imageArray removeAllObjects];
     }
     UIImage *image = [UIImage imageNamed:@"IM_Chart_imageDownloadFail.png"];
-    self.localImageArray = [[NSMutableArray alloc]initWithArray:messageModel.localImageArray copyItems:YES];
+//    self.localImageArray = [[NSMutableArray alloc]initWithArray:messageModel.localImageArray copyItems:YES];
     if (!self.messageModel)return;
     float imageWithHeight = 0.0;
     if (messageModel.isSender) {
@@ -146,11 +145,9 @@
 //        }
         
         [localImageArray enumerateObjectsUsingBlock:^(WBTweetlocalImageModel *localImageModel, NSUInteger idx, BOOL * _Nonnull stop) {
-
-        
             NSInteger index = 0 ;
             NSInteger page = 0 ;
-            
+            CGSize size = CGSizeMake(MAX_SIZE, MAX_SIZE);
             if (messageModel.localImageArray.count == 1) {
                 index = 0;
                 page= 0;
@@ -173,20 +170,31 @@
             //
             UIImageView *imageView ;
             if (idx<=5) {
-           imageView = [[UIImageView alloc]init];
+            imageView = [[UIImageView alloc]init];
             imageView.tag = idx;
             imageView.userInteractionEnabled = YES;
             
             imageView.frame = CGRectMake(index * (imageWithHeight + Width_Space) + Start_X,page * (imageWithHeight + Height_Space)+Start_Y, imageWithHeight, imageWithHeight);
             UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(bubbleViewPressed:)];
             [imageView addGestureRecognizer:tap];
-            imageView.image = localImageModel.localImage;
-        
+                if (localImageModel.localImage) {
+                   imageView.image = localImageModel.localImage;
+                         [self.imageArray addObject:imageView.image];
+                }else{
+                    [PHPhotoLibrary requestImageForAsset:((JYAsset *)localImageModel.asset).asset size:size resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
+                        if (image) {
+                             imageView.image = image;
+                        }else{
+                            imageView.image = [UIImage imageWithColor:NOIMAGECOLOR];
+                        }
+                        [self.imageArray addObject:imageView.image];
+                    }];
+                }
             }
             dispatch_main_async_safe(^{
                 [weakSelf addSubview:imageView];
             });
-            [self.imageArray addObject:localImageModel.localImage];
+       
        }];
         imageWithHeight = 89.0f;
         NSMutableArray *dataArray;
@@ -378,8 +386,8 @@
     browser.currentImageIndex = imageView.tag;
     browser.sourceImagesContainerView = self;
     browser.imageCount = self.messageModel.list.count;
-    if (self.messageModel.isSender && self.localImageArray.count>0) {
-        browser.imageCount = self.localImageArray.count;
+    if (self.messageModel.isSender && self.messageModel.localImageArray.count>0) {
+        browser.imageCount = self.messageModel.localImageArray.count;
     }
     browser.delegate = self;
     [browser show];
@@ -398,7 +406,7 @@
     NSMutableArray *highQualityphotosArray = [NSMutableArray arrayWithCapacity:0];
     if (self.messageModel.isSender) {
         [self.messageModel.localImageArray enumerateObjectsUsingBlock:^(WBTweetlocalImageModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj isKindOfClass:[WBAsset class]]) {
+            if ([obj.asset isKindOfClass:[WBAsset class]]) {
                 WBAsset * asset = obj.asset;
                 MWPhoto *photo = [MWPhoto photoHighImageWithHash:asset.fmhash];
                 [highQualityphotosArray addObject:photo];

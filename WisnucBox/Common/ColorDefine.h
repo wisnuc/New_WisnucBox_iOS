@@ -14,6 +14,7 @@
 #define COR1  UICOLOR_RGB(0x03a9f4)
 #define LINECOLOR  RGBACOLOR(0, 0, 0, 0.12f)
 #define MainBackgroudColor  UICOLOR_RGB(0xfafafa)
+#define NOIMAGECOLOR  UICOLOR_RGB(0xf5f5f5)
 #define kWhiteColor  [UIColor whiteColor]
 #define kBlackColor  [UIColor blackColor]
 
