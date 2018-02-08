@@ -15,7 +15,10 @@
 //mtime: 1515996040812
 
 @interface WBBoxesUsersModel : NSObject
-
+@property(nonatomic,copy)NSString *avatarUrl;
+@property(nonatomic,copy)NSString *nickName;
+@property(nonatomic,copy)NSNumber *status;
+@property(nonatomic,copy)NSString *userId;
 @end
 
 @interface WBBoxesModel : WBBaseModel

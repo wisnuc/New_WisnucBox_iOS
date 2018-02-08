@@ -15,7 +15,6 @@
 #import "LocalDownloadViewController.h"
 #import "CSFileUtil.h"
 #import "JYProcessView.h"
-#import "FilesNextViewController.h"
 #import "FilesDataSourceManager.h"
 #import "CSFilesOneDownloadManager.h"
 #import "WBFilesAndTransmitProtocal.h"
@@ -65,7 +64,7 @@ FilesHelperOpenFilesDelegate
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    if (self.cellStatus != FLFliesCellStatusCanChoose) {
+    if (self.cellStatus == FLFliesCellStatusCanChoose) {
         [self actionForNormalStatus];
     }
     if (!self.chooseHeadView.hidden) {
@@ -76,7 +75,13 @@ FilesHelperOpenFilesDelegate
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.navigationController.view addSubview:self.chooseHeadView];
+    if (_selectType == WBFilesFirstBoxSelectType) {
+        self.navigationItem.rightBarButtonItem = nil;
+        self.cellStatus = FLFliesCellStatusCanChoose;
+        [self createNavBtns];
+    }else{
+        [self.navigationController.view addSubview:self.chooseHeadView];
+    }
 }
 
 - (void)dealloc{
@@ -87,8 +92,16 @@ FilesHelperOpenFilesDelegate
     self.title = _name;
 //    self.navigationItem.rightBarButtonItem = nil;
     UIButton * rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 24, 24)];
+    if (_selectType == WBFilesFirstBoxSelectType) {
+        [rightBtn setTitle:@"完成" forState:UIControlStateNormal];
+        [rightBtn setTitleColor:COR1 forState:UIControlStateNormal];
+        rightBtn.frame = CGRectMake(0, 0, 100, 24);
+        rightBtn.titleLabel.font = [UIFont boldSystemFontOfSize:16];
+        rightBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    }else{
     [rightBtn setImage:[UIImage imageNamed:@"more"] forState:UIControlStateNormal];
     [rightBtn setImage:[UIImage imageNamed:@"more_highlight"] forState:UIControlStateHighlighted];
+    }
     NSString* phoneVersion = [[UIDevice currentDevice] systemVersion];
     NSLog(@"%@",phoneVersion);
    
@@ -135,7 +148,9 @@ FilesHelperOpenFilesDelegate
 }
 
 - (void)registerNotifacationAndDelegate{
-    [KDefaultNotificationCenter addObserver:self selector:@selector(handlerStatusChangeNotify:) name:FLFilesStatusChangeNotify object:nil];
+    if (_selectType != WBFilesFirstBoxSelectType) {
+           [KDefaultNotificationCenter addObserver:self selector:@selector(handlerStatusChangeNotify:) name:FLFilesStatusChangeNotify object:nil];
+    }
 
     [FLFIlesHelper helper].openFilesdelegate = self;
 }
@@ -151,6 +166,19 @@ FilesHelperOpenFilesDelegate
 }
 
 - (void)rightBtnClick:(UIButton *)btn{
+    if (_selectType == WBFilesFirstBoxSelectType) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+        [dic setObject:[FLFIlesHelper helper].chooseFiles forKey:@"filesModel"];
+        [dic setObject:_parentUUID forKey:@"dirUUID"];
+        [dic setObject:_driveUUID forKey:@"driveUUID"];
+        [KDefaultNotificationCenter postNotificationName:kBoxFileSelect object:nil userInfo:dic];
+        [self dismissViewControllerAnimated:YES completion:^{
+            if ([FLFIlesHelper helper].chooseFiles.count==0) {
+                [SXLoadingView showProgressHUDText:@"您尚未选择文件" duration:1.2f];
+            }
+        }];
+        return;
+    }
     NSString *cancelTitle = WBLocalizedString(@"cancel", nil);
     NSString *selectTitle = WBLocalizedString(@"select_file", nil);
     if (self.cellStatus != FLFliesCellStatusCanChoose) {
@@ -220,6 +248,18 @@ FilesHelperOpenFilesDelegate
     }
     
     [self.tableView.mj_header setHidden:NO];
+    if ([FLFIlesHelper helper].chooseFiles.count >0) {
+        [[FLFIlesHelper helper] removeAllChooseFile];
+    }
+    //    [self.rdv_tabBarController setTabBarHidden:NO animated:YES];
+    self.cellStatus = FLFliesCellStatusNormal;
+    _countLb.text = [NSString stringWithFormat:WBLocalizedString(@"select_count", nil),1];
+    [self.tableView reloadData];
+    
+    if (_selectType == WBFilesFirstBoxSelectType) {
+        return;
+    }
+    
     [UIView animateWithDuration:0.2 animations:^{
         self.chooseHeadView.transform = CGAffineTransformTranslate(self.chooseHeadView.transform, 0, -64);
     } completion:^(BOOL finished) {
@@ -227,11 +267,7 @@ FilesHelperOpenFilesDelegate
          _addButton.hidden = YES;
     }];
   
-   
-//    [self.rdv_tabBarController setTabBarHidden:NO animated:YES];
-    self.cellStatus = FLFliesCellStatusNormal;
-    _countLb.text = [NSString stringWithFormat:WBLocalizedString(@"select_count", nil),1];
-    [self.tableView reloadData];
+
 }
 
 - (void)handlerStatusChangeNotify:(NSNotification *)notify{
@@ -326,6 +362,12 @@ FilesHelperOpenFilesDelegate
             vc.parentUUID = model.uuid;
             vc.driveUUID = _driveUUID;
             vc.name = model.name;
+            if (_selectType == WBFilesFirstBoxSelectType) {
+                vc.selectType = WBFilesFirstBoxSelectType;
+                [[FilesDataSourceManager manager].dataArray removeAllObjects];
+                [self.navigationController pushViewController:vc animated:YES];
+                return;
+            }
             if (self.cellStatus == FLFliesCellStatusNormal) {
                 [[FilesDataSourceManager manager].dataArray removeAllObjects];
                 [self.navigationController pushViewController:vc animated:YES];

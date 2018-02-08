@@ -11,6 +11,7 @@
 #import "WBChatListAddUserTableViewCell.h"
 #import "WBGetBoxesAPI.h"
 #import "WBUpdateBoxAPI.h"
+#import "WBBoxUserAPI.h"
 
 @interface WBChatListAddUserViewController ()<UITableViewDelegate,UITableViewDataSource,BEMCheckBoxDelegate>
 @property (nonatomic)NSMutableArray *userArray;
@@ -49,7 +50,41 @@
 
 - (void)getUserInfo{
     @weaky(self)
-    
+    if (WB_UserService.currentUser.isCloudLogin) {
+        NSMutableArray *tempDataSource = [NSMutableArray arrayWithCapacity:0];
+        NSMutableArray *chooseUserSource = [NSMutableArray arrayWithCapacity:0];
+        NSMutableArray *exsitDataSource = [NSMutableArray arrayWithCapacity:0];
+        
+        [[WBBoxUserAPI userApiWithGuid:WB_UserService.currentUser.guid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+            NSArray *array = request.responseJsonObject[@"data"];
+            [array enumerateObjectsUsingBlock:^(NSDictionary *dic, NSUInteger idx, BOOL * _Nonnull stop) {
+                WBBoxesUsersModel *model = [WBBoxesUsersModel modelWithDictionary:dic];
+                [tempDataSource addObject:model];
+                if(_type == WBUserAddressBookCreat || _type == WBUserAddressBookAdd){
+                    if ([model.userId isEqualToString:WB_UserService.currentUser.guid]) {
+                        [chooseUserSource addObject:model];
+                        [exsitDataSource addObject:model];
+                    }
+                    [_boxModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                        if([obj.userId isEqualToString:model.userId]){
+                            if (![chooseUserSource containsObject:model]) {
+                                [chooseUserSource addObject:model];
+                                [exsitDataSource addObject:model];
+                            }
+                        }
+                    }];
+                }
+            }];
+            self.userArray = tempDataSource;
+            self.choosedUserArray = chooseUserSource;
+            self.exsitDataArray = exsitDataSource;
+            [weak_self reloadData];
+            NSLog(@"%@",request.responseJsonObject);
+        } failure:^(__kindof JYBaseRequest *request) {
+            NSLog(@"%@",request.error);
+            [weak_self reloadData];
+        }];
+    }else{
     [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
         [[FMAsyncUsersAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
             NSLog(@"%@",request.responseJsonObject);
@@ -87,6 +122,7 @@
              NSLog(@"%@",request.error);
            [weak_self reloadData];
         }];
+    }
 }
 
 - (void)reloadData{
@@ -237,40 +273,81 @@
     if (!cell) {
         cell = (WBChatListAddUserTableViewCell *)[[[NSBundle mainBundle]loadNibNamed:NSStringFromClass([WBChatListAddUserTableViewCell class]) owner:self options:nil]lastObject];
     }
-    UserModel *model = self.userArray[indexPath.row];
-    cell.userImageView.image = [UIImage imageForName:model.username size:cell.userImageView.bounds.size];
-    cell.userNameLabel.text = model.username;
-    cell.checkBox.delegate = self;
-    switch (_type) {
-        case WBUserAddressBookAdd:{
-            [self.choosedUserArray enumerateObjectsUsingBlock:^(UserModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                //        NSLog(@"%@/%@",model.uuid ,obj.uuid);
-                if ([model.global.guid isEqualToString:obj.global.guid]) {
-                    [cell.checkBox setOn:YES animated:NO];
-                }
-            }];
+    
+    if (WB_UserService.currentUser.isCloudLogin) {
+        WBBoxesUsersModel *model = self.userArray[indexPath.row];
+        if (model.avatarUrl.length>0) {
+            [cell.userImageView was_setCircleImageWithUrlString:model.avatarUrl placeholder:[UIImage imageForName:model.nickName size:cell.userImageView.bounds.size]];
+        }else{
+             cell.userImageView.image = [UIImage imageForName:model.nickName size:cell.userImageView.bounds.size];
         }
-            break;
-            
-        case WBUserAddressBookDelete:{
-            
+        
+        cell.userNameLabel.text = model.nickName;
+        cell.checkBox.delegate = self;
+        switch (_type) {
+            case WBUserAddressBookAdd:{
+                [self.choosedUserArray enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    //        NSLog(@"%@/%@",model.uuid ,obj.uuid);
+                    if ([model.userId isEqualToString:obj.userId]) {
+                        [cell.checkBox setOn:YES animated:NO];
+                    }
+                }];
+            }
+                break;
+                
+            case WBUserAddressBookDelete:{
+                
+            }
+                break;
+                
+            case WBUserAddressBookCreat:{
+                [self.choosedUserArray enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    //        NSLog(@"%@/%@",model.uuid ,obj.uuid);
+                    if ([model.userId isEqualToString:obj.userId]) {
+                        [cell.checkBox setOn:YES animated:NO];
+                    }
+                }];
+            }
+                break;
+                
+            default:
+                break;
         }
-            break;
-            
-        case WBUserAddressBookCreat:{
-            [self.choosedUserArray enumerateObjectsUsingBlock:^(UserModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                //        NSLog(@"%@/%@",model.uuid ,obj.uuid);
-                if ([model.global.guid isEqualToString:obj.global.guid]) {
-                    [cell.checkBox setOn:YES animated:NO];
-                }
-            }];
+    }else{
+        UserModel *model = self.userArray[indexPath.row];
+        cell.userImageView.image = [UIImage imageForName:model.username size:cell.userImageView.bounds.size];
+        cell.userNameLabel.text = model.username;
+        cell.checkBox.delegate = self;
+        switch (_type) {
+            case WBUserAddressBookAdd:{
+                [self.choosedUserArray enumerateObjectsUsingBlock:^(UserModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    //        NSLog(@"%@/%@",model.uuid ,obj.uuid);
+                    if ([model.global.guid isEqualToString:obj.global.guid]) {
+                        [cell.checkBox setOn:YES animated:NO];
+                    }
+                }];
+            }
+                break;
+                
+            case WBUserAddressBookDelete:{
+                
+            }
+                break;
+                
+            case WBUserAddressBookCreat:{
+                [self.choosedUserArray enumerateObjectsUsingBlock:^(UserModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    //        NSLog(@"%@/%@",model.uuid ,obj.uuid);
+                    if ([model.global.guid isEqualToString:obj.global.guid]) {
+                        [cell.checkBox setOn:YES animated:NO];
+                    }
+                }];
+            }
+                break;
+                
+            default:
+                break;
         }
-            break;
-            
-        default:
-            break;
     }
-   
     return cell;
 }
 

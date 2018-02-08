@@ -107,22 +107,29 @@
     }
     WBBoxesModel *boxesModel = self.boxDataArray[indexPath.row];
     cell.nameLabel.text = boxesModel.name;
-    if (boxesModel.name.length == 0|| !boxesModel.name) {
+    if (boxesModel.name.length == 0|| !boxesModel.name){
+        cell.nameLabel.text = [NSString stringWithFormat:@"群聊(%ld)",(unsigned long)boxesModel.users.count];
+        
         switch (boxesModel.users.count) {
+            case 0:
+                break;
             case 1:
-                cell.nameLabel.text = [NSString stringWithFormat:@"%@",boxesModel.users[0]];
+                cell.nameLabel.text = [NSString stringWithFormat:@"%@",((WBBoxesUsersModel *)boxesModel.users[0]).nickName];
                 break;
             case 2:
-                 cell.nameLabel.text = [NSString stringWithFormat:@"%@、%@",boxesModel.users[0],boxesModel.users[1]];
+                 cell.nameLabel.text = [NSString stringWithFormat:@"%@、%@",((WBBoxesUsersModel *)boxesModel.users[0]).nickName,((WBBoxesUsersModel *)boxesModel.users[1]).nickName];
                 break;
             case 3:
-                 cell.nameLabel.text = [NSString stringWithFormat:@"%@、%@、%@",boxesModel.users[0],boxesModel.users[1],boxesModel.users[2]];
+                 cell.nameLabel.text = [NSString stringWithFormat:@"%@、%@、%@",((WBBoxesUsersModel *)boxesModel.users[0]).nickName,((WBBoxesUsersModel *)boxesModel.users[1]).nickName,((WBBoxesUsersModel *)boxesModel.users[2]).nickName];
                 break;
             case 4:
-                cell.nameLabel.text = [NSString stringWithFormat:@"%@、%@、%@、%@",boxesModel.users[0],boxesModel.users[1],boxesModel.users[2],boxesModel.users[3]];
+                cell.nameLabel.text = [NSString stringWithFormat:@"%@、%@、%@、%@",((WBBoxesUsersModel *)boxesModel.users[0]).nickName,((WBBoxesUsersModel *)boxesModel.users[1]).nickName,((WBBoxesUsersModel *)boxesModel.users[2]).nickName,((WBBoxesUsersModel *)boxesModel.users[3]).nickName];
                 break;
-                
+            case 5:
+                cell.nameLabel.text = [NSString stringWithFormat:@"%@、%@、%@、%@、%@...",((WBBoxesUsersModel *)boxesModel.users[0]).nickName,((WBBoxesUsersModel *)boxesModel.users[1]).nickName,((WBBoxesUsersModel *)boxesModel.users[2]).nickName,((WBBoxesUsersModel *)boxesModel.users[3]).nickName,((WBBoxesUsersModel *)boxesModel.users[4]).nickName];
+                break;
             default:
+                cell.nameLabel.text = [NSString stringWithFormat:@"%@、%@、%@、%@、%@...",((WBBoxesUsersModel *)boxesModel.users[0]).nickName,((WBBoxesUsersModel *)boxesModel.users[1]).nickName,((WBBoxesUsersModel *)boxesModel.users[2]).nickName,((WBBoxesUsersModel *)boxesModel.users[3]).nickName,((WBBoxesUsersModel *)boxesModel.users[4]).nickName];
                 break;
         }
     

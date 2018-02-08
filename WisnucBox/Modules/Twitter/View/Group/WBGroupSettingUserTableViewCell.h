@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GroupUserModel.h"
+#import "WBBoxesModel.h"
 @class WBGroupSettingUserTableViewCell;
 typedef void(^ImageClickBlock)(NSInteger iamgeTag);
 typedef void(^AddUserClickBlock)(WBGroupSettingUserTableViewCell *groupSettingUsercell);

@@ -115,66 +115,66 @@
              [[CSUploadHelper shareManager]startUploadAction];
         }
     }
-    
+#warning lkk
     if(_isLogining) return;
-    if (status == AFNetworkReachabilityStatusReachableViaWWAN) {
-        if (WB_UserService.currentUser && WB_UserService.currentUser.autoBackUp) {
-            [self.photoUploadManager stop];
-            if(!WB_UserService.currentUser.isCloudLogin)
-                [WB_NetService checkForLANIP:WB_UserService.currentUser.localAddr commplete:^(BOOL success) { //测试是否可用网络
-                    if(success){
-                        [self startUploadAssets:nil];
-                    }else{
-                        [WB_NetService testAndCheckoutCloudIfSuccessComplete:^{
-                            //                     [self startUploadAssets:nil];
-                        }];
-                    }
-                }];
-            else
-                [WB_NetService testAndCheckoutIfSuccessComplete:^{
+//    if (status == AFNetworkReachabilityStatusReachableViaWWAN) {
+//        if (WB_UserService.currentUser && WB_UserService.currentUser.autoBackUp) {
+//            [self.photoUploadManager stop];
+//            if(!WB_UserService.currentUser.isCloudLogin)
+//                [WB_NetService checkForLANIP:WB_UserService.currentUser.localAddr commplete:^(BOOL success) { //测试是否可用网络
+//                    if(success){
+//                        [self startUploadAssets:nil];
+//                    }else{
+//                        [WB_NetService testAndCheckoutCloudIfSuccessComplete:^{
+//                            //                     [self startUploadAssets:nil];
+//                        }];
+//                    }
+//                }];
+//            else
+//                [WB_NetService testAndCheckoutIfSuccessComplete:^{
+////                    [self startUploadAssets:nil];
+//                }];
+//        }else if(WB_UserService.currentUser &&!WB_UserService.currentUser.autoBackUp){
+//            if(!WB_UserService.currentUser.isCloudLogin)
+//                [WB_NetService checkForLANIP:WB_UserService.currentUser.localAddr commplete:^(BOOL success) { //测试是否可用网络
+//                    if(success){
+//                      [self startUploadAssets:nil];
+//                    }else{
+//                        [WB_NetService testAndCheckoutCloudIfSuccessComplete:^{
+////                            [self startUploadAssets:nil];
+//                        }];
+//                    }
+//                }];
+//            else
+//                [WB_NetService testAndCheckoutIfSuccessComplete:^{
+////                    [self startUploadAssets:nil];
+//                }];
+//        }
+//    }
+//
+//    if(!WB_UserService.currentUser) return;
+//    if (status == AFNetworkReachabilityStatusReachableViaWiFi) {
+//        if(!WB_UserService.currentUser.isCloudLogin)
+//           [WB_NetService checkForLANIP:WB_UserService.currentUser.localAddr commplete:^(BOOL success) { //测试是否可用网络
+//               if (WB_UserService.currentUser.autoBackUp) {
+//                   if(success) {
+//                       [self startUploadAssets:nil];
+////                   }else{
+////                       [WB_NetService testAndCheckoutCloudIfSuccessComplete:^{
+////                           //                            [self startUploadAssets:nil];
+////                       }];
+//                   }
+//               }
+//           }];
+//        else
+//            [WB_NetService testAndCheckoutIfSuccessComplete:^{
+//                if (WB_UserService.currentUser.autoBackUp) {
 //                    [self startUploadAssets:nil];
-                }];
-        }else if(WB_UserService.currentUser &&!WB_UserService.currentUser.autoBackUp){
-            if(!WB_UserService.currentUser.isCloudLogin)
-                [WB_NetService checkForLANIP:WB_UserService.currentUser.localAddr commplete:^(BOOL success) { //测试是否可用网络
-                    if(success){
-                      [self startUploadAssets:nil];
-                    }else{
-                        [WB_NetService testAndCheckoutCloudIfSuccessComplete:^{
-//                            [self startUploadAssets:nil];
-                        }];
-                    }
-                }];
-            else
-                [WB_NetService testAndCheckoutIfSuccessComplete:^{
-//                    [self startUploadAssets:nil];
-                }];
-        }
-    }
-    
-    if(!WB_UserService.currentUser) return;
-    if (status == AFNetworkReachabilityStatusReachableViaWiFi) {
-        if(!WB_UserService.currentUser.isCloudLogin)
-           [WB_NetService checkForLANIP:WB_UserService.currentUser.localAddr commplete:^(BOOL success) { //测试是否可用网络
-               if (WB_UserService.currentUser.autoBackUp) {
-                   if(success) {
-                       [self startUploadAssets:nil];
-//                   }else{
-//                       [WB_NetService testAndCheckoutCloudIfSuccessComplete:^{
-//                           //                            [self startUploadAssets:nil];
-//                       }];
-                   }
-               }
-           }];
-        else
-            [WB_NetService testAndCheckoutIfSuccessComplete:^{
-                if (WB_UserService.currentUser.autoBackUp) {
-                    [self startUploadAssets:nil];
-                }
-            }];
-    }else {
-        [self.photoUploadManager stop];
-    }
+//                }
+//            }];
+//    }else {
+//        [self.photoUploadManager stop];
+//    }
 }
 
 //获取当前window
@@ -283,21 +283,23 @@
     [WB_UserService setCurrentUser:user];
     [WB_UserService synchronizedCurrentUser];
     NSLog(@"GET Token Success");
-    [WB_NetService testForLANIP:user.localAddr commplete:^(BOOL success) { // test for it
-        if(success) {
-            [WB_NetService getLocalTokenWithCloud:^(NSError *error, NSString *token) {
-                if(!error) {
-                    user.isCloudLogin = NO;
-                    [self.netServices updateIsCloud:NO andLocalURL:user.localAddr andCloudURL:WX_BASE_URL];
-                    user.localToken = token;
-                }
-                [WB_UserService setCurrentUser:user];
-                [WB_UserService synchronizedCurrentUser];
-                [weak_self nextSteapForLogin:_callback];
-            }];
-        }else
+    
+    #warning lkk
+//    [WB_NetService testForLANIP:user.localAddr commplete:^(BOOL success) { // test for it
+//        if(success) {
+//            [WB_NetService getLocalTokenWithCloud:^(NSError *error, NSString *token) {
+//                if(!error) {
+//                    user.isCloudLogin = NO;
+//                    [self.netServices updateIsCloud:NO andLocalURL:user.localAddr andCloudURL:WX_BASE_URL];
+//                    user.localToken = token;
+//                }
+//                [WB_UserService setCurrentUser:user];
+//                [WB_UserService synchronizedCurrentUser];
+//                [weak_self nextSteapForLogin:_callback];
+//            }];
+//        }else
             [weak_self nextSteapForLogin:_callback];
-    }];
+//    }];
 }
 
 - (void)nextSteapForLogin:(void(^)(NSError *error, WBUser *user))callback{

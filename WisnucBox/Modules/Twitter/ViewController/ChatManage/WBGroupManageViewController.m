@@ -75,10 +75,8 @@
 
 - (void)getUserData{
     NSMutableArray *userGroupArray = [NSMutableArray arrayWithCapacity:0];
-    [_boxModel.users enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        GroupUserModel *model = [GroupUserModel new];
-        model.userName = obj;
-        [userGroupArray addObject:model];
+    [_boxModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [userGroupArray addObject:obj];
     }];
     self.userGroupArray = userGroupArray;
     [self.tableView reloadData];

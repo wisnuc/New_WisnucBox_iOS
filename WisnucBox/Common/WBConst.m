@@ -43,6 +43,8 @@ NSString *const kMessageImageBoxNetImageHash = @"kMessageImageBoxNetImageHash";
 
 NSInteger kMessageCount = 20;
 
+NSString *const kBoxFileSelect = @"kBoxFileSelect";
+
 #pragma mark - IM模块常量
 
 // 头像大小

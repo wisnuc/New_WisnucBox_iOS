@@ -127,6 +127,8 @@
 
 - (void)setupScrollView
 {
+    
+  
     _scrollView = [[UIScrollView alloc] init];
     _scrollView.delegate = self;
     _scrollView.showsHorizontalScrollIndicator = NO;
@@ -136,7 +138,7 @@
 //    _scrollView.minimumZoomScale = 1.0;
 //    _scrollView.multipleTouchEnabled = YES;
     [self addSubview:_scrollView];
-    
+    NSLog(@"%ld",(long)self.imageCount);
     for (int i = 0; i < self.imageCount; i++) {
         SDBrowserImageView *imageView = [[SDBrowserImageView alloc] init];
         imageView.tag = i;
@@ -163,10 +165,11 @@
 // 加载图片
 - (void)setupImageOfImageViewForIndex:(NSInteger)index
 {
-    SDBrowserImageView *imageView = _scrollView.subviews[index];
+
+    self.imageView = _scrollView.subviews[index];
     self.currentImageIndex = index;
    
-    if (imageView.hasLoadedImage) return;
+    if (self.imageView.hasLoadedImage) return;
     //    if ([self highQualityImageURLForIndex:index]) {
     
     //        [imageView setImageWithURL:[self highQualityImageURLForIndex:index] placeholderImage:[self placeholderImageForIndex:index]];
@@ -177,16 +180,16 @@
     if ([self highQualityImageBoxInfoForIndex:index]) {
         NSDictionary *dic = [self highQualityImageBoxInfoForIndex:index];
         NSLog(@"%@",dic);
-        imageView.image = [self placeholderImageForIndex:self.currentImageIndex];
+        self.imageView.image = [self placeholderImageForIndex:self.currentImageIndex];
         if (dic[kMessageImageBoxLocalAsset]) {
             if ([dic[kMessageImageBoxLocalAsset] isKindOfClass:[WBAsset class]]) {
 //                [SXLoadingView showProgressHUD:@""];
                 WBAsset*asset = dic[kMessageImageBoxLocalAsset];
                 [WB_NetService getHighWebImageWithHash:asset.fmhash completeBlock:^(NSError *error, UIImage *netImage) {
                     if (!error &&netImage) {
-                        imageView.image = netImage;
+                        self.imageView.image = netImage;
                     }else{
-                        imageView.image = [self placeholderImageForIndex:index];
+                        self.imageView.image = [self placeholderImageForIndex:index];
                     }
                 }];
                 return;
@@ -194,9 +197,9 @@
              JYAsset *jyasset = dic[kMessageImageBoxLocalAsset];
             [PHPhotoLibrary requestOriginalImageForAsset:jyasset.asset completion:^(UIImage *localImage, NSDictionary *info) {
                 if (localImage) {
-                    imageView.image = localImage;
+                    self.imageView.image = localImage;
                 }else{
-                    imageView.image = [self placeholderImageForIndex:index];
+                    self.imageView.image = [self placeholderImageForIndex:index];
                 }
             }];
             }
@@ -204,16 +207,16 @@
 //            [SXLoadingView showProgressHUD:@""];
             [WB_NetService getTweeethighQualityImageWithHash:dic[kMessageImageBoxNetImageHash] BoxUUID:dic[kMessageImageBoxUUID] complete:^(NSError *error, UIImage *netImage) {
                 if (!error &&netImage) {
-                    imageView.image = netImage;
+                    self.imageView.image = netImage;
                 }else{
-                    imageView.image = [self placeholderImageForIndex:index];
+                    self.imageView.image = [self placeholderImageForIndex:index];
                 }
             }];
         }
     }else{
-        imageView.image = [self placeholderImageForIndex:index];
+        self.imageView.image = [self placeholderImageForIndex:index];
     }
-    imageView.hasLoadedImage = YES;
+    self.imageView.hasLoadedImage = YES;
 }
 
 
@@ -432,5 +435,10 @@
 //    return _scrollView.subviews[self.currentImageIndex];
 //}
 
-
+- (SDBrowserImageView *)imageView{
+    if (!_imageView) {
+        _imageView = [[SDBrowserImageView alloc]init];
+    }
+    return _imageView;
+}
 @end

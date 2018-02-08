@@ -8,11 +8,16 @@
 
 #import "WBBoxesModel.h"
 @implementation WBBoxesUsersModel
++ (NSDictionary *)modelCustomPropertyMapper {
+    return @{
+             @"userId" : @"id",
+             };
+}
 @end
 
 @implementation WBBoxesModel
-//+ (NSDictionary *)modelContainerPropertyGenericClass {
-//    return @{@"users" : [WBBoxesUsersModel class]
-//             };
-//}
++ (NSDictionary *)modelContainerPropertyGenericClass {
+    return @{@"users" : [WBBoxesUsersModel class]
+             };
+}
 @end

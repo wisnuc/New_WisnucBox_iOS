@@ -47,4 +47,6 @@
 @property (nonatomic,copy)NSString *type;
 @property (nonatomic,copy)NSString *uuid;
 @property (nonatomic,strong)NSArray *localImageArray;
+//@property (nonatomic,copy)NSString *dirUUID;
+//@property (nonatomic,copy)NSString *driveUUID;
 @end

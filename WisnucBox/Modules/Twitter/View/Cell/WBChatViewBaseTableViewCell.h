@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "WBChatBaseBubbleView.h"
 #import "WBTweetModel.h"
+#import "WBBoxesModel.h"
 #import "WBChatTextBubbleView.h"
 #import "WBChatImageBubbleView.h"
 #import "WBChatFileBubbleView.h"
@@ -26,6 +27,7 @@
 @property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) WBChatBaseBubbleView *bubbleView;   //内容区域
 @property (nonatomic, strong) WBTweetModel *messageModel;
+@property (nonatomic, strong) WBBoxesModel *boxModel;
 - (void)layout;
 - (id)initWithMessageModel:(WBTweetModel *)model reuseIdentifier:(NSString *)reuseIdentifier;
 - (void)setupSubviewsForMessageModel:(WBTweetModel *)model;

@@ -7,11 +7,12 @@
 //
 
 #import "FABaseVC.h"
-
+#import "FirstFilesViewController.h"
 
 
 @interface FilesNextViewController : FABaseVC
 @property (nonatomic) NSString * parentUUID;
 @property (nonatomic) NSString * driveUUID;
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic) WBFilesFirstSelectType selectType;
 @end

@@ -7,9 +7,11 @@
 //
 
 #import "FABaseVC.h"
+#import "FirstFilesViewController.h"
 @class ShareFilesModel;
 @interface FilesShareViewController : FABaseVC
 @property (nonatomic,strong) NSMutableArray *dataSouceArray;
+@property (nonatomic) WBFilesFirstSelectType selectType;
 @end
 
 @interface ShareFilesModel : NSObject

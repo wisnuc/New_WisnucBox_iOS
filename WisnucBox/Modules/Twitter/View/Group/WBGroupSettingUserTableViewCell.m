@@ -34,7 +34,7 @@
 
 - (void)initUserImageViewAndUserNameLabel{
      @weaky(self)
-    [_userArray enumerateObjectsUsingBlock:^(GroupUserModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
+    [_userArray enumerateObjectsUsingBlock:^(WBBoxesUsersModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
         NSInteger index = idx % 4;
         NSInteger page = idx / 4;
         
@@ -43,10 +43,10 @@
 
         _userImageView.userInteractionEnabled = YES;
         _userImageView.tag = idx;
-        if (model.imageURL) {
-           [_userImageView was_setCircleImageWithUrlString:model.imageURL placeholder:[UIImage imageForName:model.userName size:_userImageView.bounds.size]];
+        if (model.avatarUrl) {
+           [_userImageView was_setCircleImageWithUrlString:model.avatarUrl placeholder:[UIImage imageForName:model.nickName size:_userImageView.bounds.size]];
         }else{
-            _userImageView.image = [UIImage imageForName:model.userName size:_userImageView.size];
+            _userImageView.image = [UIImage imageForName:model.nickName size:_userImageView.size];
         }
        
         UITapGestureRecognizer *singleTap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(onClickImage:)];
@@ -59,7 +59,7 @@
         _userNameLabel.textAlignment = NSTextAlignmentCenter;
         _userNameLabel.font = [UIFont systemFontOfSize:12];
         _userNameLabel.textColor = RGBACOLOR(0, 0, 0, 0.87f);
-        _userNameLabel.text = model.userName;
+        _userNameLabel.text = model.nickName;
 //        [_userNameLabel sizeToFit];
         [weak_self.contentView addSubview:_userImageView];
         [weak_self.contentView addSubview:_userNameLabel];
@@ -82,8 +82,6 @@
     removeUserButton.layer.cornerRadius = Button_Width/2;
     removeUserButton.layer.borderWidth = 1.0f;
     removeUserButton.layer.borderColor = RGBACOLOR(0, 0, 0, 0.37f).CGColor;
-
-
     
     NSInteger judgement = _userArray.count % 4;
     NSInteger page = _userArray.count / 4;

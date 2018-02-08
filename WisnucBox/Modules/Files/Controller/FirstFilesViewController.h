@@ -17,8 +17,13 @@ typedef NS_ENUM(NSInteger,WBFilesFirstDirectoryType) {
     WBFilesFirstDirectoryPublic
 };
 
-@interface FirstFilesViewController : FMBaseFirstVC
+typedef NS_ENUM(NSInteger,WBFilesFirstSelectType) {
+    WBFilesFirstBoxSelectType = 1,
+    WBFilesFirstNormalType
+};
 
+@interface FirstFilesViewController : FMBaseFirstVC
+@property (nonatomic) WBFilesFirstSelectType selectType;
 @end
 
 @interface FirstFilesModel : NSObject

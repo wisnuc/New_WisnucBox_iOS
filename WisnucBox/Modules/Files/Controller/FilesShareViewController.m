@@ -91,6 +91,9 @@ UITableViewDataSource
     filesVC.name = model.label;
     filesVC.parentUUID = model.uuid;
     filesVC.driveUUID = model.uuid;
+    if (_selectType == WBFilesFirstBoxSelectType) {
+        filesVC.selectType = WBFilesFirstBoxSelectType;
+    }
     [self.navigationController pushViewController:filesVC animated:YES];
 }
 

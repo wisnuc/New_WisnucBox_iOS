@@ -22,17 +22,29 @@
     
 }
 
+- (void)setBoxModel:(WBBoxesModel *)boxModel{
+    _boxModel = boxModel;
+}
+
 - (void)setMessageModel:(WBTweetModel *)messageModel {
     _messageModel = messageModel;
+    _nameLabel.hidden = messageModel.isSender;
     
-//    _nameLabel.hidden = !messageModel.isChatGroup;
+
     NSString *imgaeName = nil;
     if (_messageModel.isSender) {
         imgaeName = @"";
+        self.headImageView.image = [UIImage imageNamed:imgaeName];
     } else {
-        imgaeName = @"send_head.jpg";
+        if (messageModel) {
+            [_boxModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([messageModel.tweeter.tweeterId isEqualToString:obj.userId]) {
+                    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:obj.avatarUrl] placeholderImage:[UIImage imageForName:obj.nickName size:self.headImageView.size]];
+                    _nameLabel.text = obj.nickName;
+                }
+            }];
+        }
     }
-    self.headImageView.image = [UIImage imageNamed:imgaeName];
 }
 
 - (void)prepareForReuse {

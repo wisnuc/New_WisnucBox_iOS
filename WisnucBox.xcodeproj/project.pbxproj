@@ -638,6 +638,7 @@
 		1FF1484C20297BF3009BBEF8 /* MWTapDetectingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF1481B20297BF3009BBEF8 /* MWTapDetectingView.m */; };
 		1FF1484D20297BF3009BBEF8 /* MWGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF1481D20297BF3009BBEF8 /* MWGridViewController.m */; };
 		1FF1484E20297BF3009BBEF8 /* MWGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF1482020297BF3009BBEF8 /* MWGridCell.m */; };
+		1FF14851202C02BD009BBEF8 /* WBBoxUserAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF14850202C02BD009BBEF8 /* WBBoxUserAPI.m */; };
 		1FF3AD511FD5254C00E1E536 /* LoginSeverPathModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3AD501FD5254C00E1E536 /* LoginSeverPathModel.m */; };
 		1FF3AD541FD63F5C00E1E536 /* WBLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3AD531FD63F5C00E1E536 /* WBLoginViewController.m */; };
 		1FF3AD5A1FD669DB00E1E536 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1FF3AD5C1FD669DB00E1E536 /* Localizable.strings */; };
@@ -1964,6 +1965,8 @@
 		1FF1482020297BF3009BBEF8 /* MWGridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWGridCell.m; sourceTree = "<group>"; };
 		1FF1482120297BF3009BBEF8 /* UIImage+MWPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MWPhotoBrowser.h"; sourceTree = "<group>"; };
 		1FF1482220297BF3009BBEF8 /* MWZoomingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWZoomingScrollView.h; sourceTree = "<group>"; };
+		1FF1484F202C02BD009BBEF8 /* WBBoxUserAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBBoxUserAPI.h; sourceTree = "<group>"; };
+		1FF14850202C02BD009BBEF8 /* WBBoxUserAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBBoxUserAPI.m; sourceTree = "<group>"; };
 		1FF3AD4F1FD5254C00E1E536 /* LoginSeverPathModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginSeverPathModel.h; sourceTree = "<group>"; };
 		1FF3AD501FD5254C00E1E536 /* LoginSeverPathModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginSeverPathModel.m; sourceTree = "<group>"; };
 		1FF3AD521FD63F5C00E1E536 /* WBLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBLoginViewController.h; sourceTree = "<group>"; };
@@ -4311,6 +4314,8 @@
 				1F70A5BF202018DE001DED64 /* WBGetOneBoxAPI.m */,
 				1F70A5C120204082001DED64 /* WBDeleteBoxAPI.h */,
 				1F70A5C220204082001DED64 /* WBDeleteBoxAPI.m */,
+				1FF1484F202C02BD009BBEF8 /* WBBoxUserAPI.h */,
+				1FF14850202C02BD009BBEF8 /* WBBoxUserAPI.m */,
 			);
 			path = Box;
 			sourceTree = "<group>";
@@ -6397,7 +6402,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-WisnucBox/Pods-WisnucBox-resources.sh",
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser/MWPhotoBrowser.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/MWPhotoBrowser/MWPhotoBrowser.bundle,
 				"${PODS_ROOT}/MaterialComponents/components/ActivityIndicator/src/MaterialActivityIndicator.bundle",
 				"${PODS_ROOT}/MaterialComponents/components/AppBar/src/MaterialAppBar.bundle",
 				"${PODS_ROOT}/MaterialComponents/components/BottomNavigation/src/MaterialBottomNavigation.bundle",
@@ -6407,13 +6412,13 @@
 				"${PODS_ROOT}/MaterialComponents/components/FeatureHighlight/src/MaterialFeatureHighlight.bundle",
 				"${PODS_ROOT}/MaterialComponents/components/PageControl/src/MaterialPageControl.bundle",
 				"${PODS_ROOT}/MaterialComponents/components/Tabs/src/MaterialTabs.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_arrow_back.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_check.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_check_circle.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_chevron_right.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_info.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_radio_button_unchecked.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_reorder.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_arrow_back.bundle,
+				$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_check.bundle,
+				$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_check_circle.bundle,
+				$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_chevron_right.bundle,
+				$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_info.bundle,
+				$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_radio_button_unchecked.bundle,
+				$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_reorder.bundle,
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -6733,6 +6738,7 @@
 				1F922EBF1FCE816800A7614B /* WBStationManageEquipmentTableViewCell.m in Sources */,
 				1F922E531FC7FB3600A7614B /* CSFilesOneDownloadManager.m in Sources */,
 				1F70A5BC201F2F69001DED64 /* WBUpdateBoxAPI.m in Sources */,
+				1FF14851202C02BD009BBEF8 /* WBBoxUserAPI.m in Sources */,
 				71A3D6711FB57F830002B8B1 /* FMAsyncUsersAPI.m in Sources */,
 				1F70A5B5201EEBD3001DED64 /* WBChatListAddUserTableViewCell.m in Sources */,
 				1F8EAF251FB9A7C100FEED19 /* LocalDownloadingTableViewCell.m in Sources */,

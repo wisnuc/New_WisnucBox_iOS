@@ -91,8 +91,7 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
 //        //        _nameLabel.text = [model.message.ext objectForKey:sendUserName];
 //        _nameLabel.hidden = model.isSender;
 //    }
-    _nameLabel.hidden = model.isSender;
-    _nameLabel.text = @"aaaa";
+
     _bubbleView.messageModel = model;
     if ( model.messageBodytype == MessageBodyType_File) {
            [_bubbleView sizeToFit];

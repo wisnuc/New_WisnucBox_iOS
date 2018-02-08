@@ -42,7 +42,38 @@ UITableViewDataSource
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    if (_selectType == WBFilesFirstBoxSelectType) {
+        [self initNaviForBoxSelectType];
+    }
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
+- (void)initNaviForBoxSelectType{
+    //    dispatch_main_async_safe(^{
+    
+    UIButton * leftButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 24)];
+    leftButton.backgroundColor= [UIColor clearColor];
+    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = nil;
+    self.navigationItem.leftBarButtonItems = @[leftButtonItem];
+    
+    UIButton * rBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 30)];
+    rBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    [rBtn setEnlargeEdgeWithTop:5 right:10 bottom:5 left:5];
+    [rBtn setTitleColor:kTitleTextColor forState:UIControlStateNormal];
+    [rBtn setTitle:@"取消" forState:UIControlStateNormal];
+    rBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    [rBtn addTarget:self action:@selector(rBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem * item = [[UIBarButtonItem alloc]initWithCustomView:rBtn];
+    self.navigationItem.rightBarButtonItem = nil;
+    self.navigationItem.rightBarButtonItem = item;
+    //    });
+}
+
+- (void)rBtnClick{
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
 }
 
 
@@ -161,17 +192,24 @@ UITableViewDataSource
         filesVC.name = model.name;
         filesVC.parentUUID = WB_UserService.currentUser.userHome;
         filesVC.driveUUID = WB_UserService.currentUser.userHome;
+        if (_selectType == WBFilesFirstBoxSelectType) {
+            filesVC.selectType = WBFilesFirstBoxSelectType;
+        }
         [self.navigationController pushViewController:filesVC animated:YES];
     }else if (model.type == WBFilesFirstDirectoryPublic){
         FilesNextViewController *filesVC = [[FilesNextViewController alloc]init];
         filesVC.name = model.name;
         filesVC.parentUUID = model.uuid;
         filesVC.driveUUID = model.uuid;
+        if (_selectType == WBFilesFirstBoxSelectType) {
+            filesVC.selectType = WBFilesFirstBoxSelectType;
+        }
         [self.navigationController pushViewController:filesVC animated:YES];
     }else{
         FilesShareViewController * filesVC = [[FilesShareViewController alloc]init];
         filesVC.title = model.name;
         filesVC.dataSouceArray = _shareDataArray;
+        
 //        [filesVC setDataSouceArrayWith:self.shareDataArray];
         [self.navigationController pushViewController:filesVC animated:YES];
     }

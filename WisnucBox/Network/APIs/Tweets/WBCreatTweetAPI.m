@@ -20,10 +20,18 @@
 }
 
 - (id)requestArgument{
-    
-    NSDictionary *dic = @{
-                          @"metadata":@"true"
-                          };
+    NSDictionary *dic;
+    if (WB_UserService.currentUser.isCloudLogin) {
+        dic = @{
+                @"metadata":@"true",
+                @"resource" : [[NSString stringWithFormat:@"boxes/%@/tweets",_boxuuid] base64EncodedString],
+                @"method" : @"POST"
+                };
+    }else{
+    dic = @{
+            @"metadata":@"true"
+            };
+    }
     return dic;
 }
 

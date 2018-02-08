@@ -22,6 +22,7 @@
 #import "WBTweetModel.h"
 #import "WBChatViewNormalTableViewCell.h"
 #import "VCFloatingActionButton.h"
+#import "FirstFilesViewController.h"
 
 NSString *const kTableViewOffset = @"contentOffset";
 NSString *const kTableViewFrame = @"frame";
@@ -74,6 +75,7 @@ NSString *const kTableViewFrame = @"frame";
 //    });
    
     [KDefaultNotificationCenter addObserver:self selector:@selector(dataChanged:) name:kDataChangedName object:nil];
+    [KDefaultNotificationCenter addObserver:self selector:@selector(fileSelectChanged:) name:kBoxFileSelect object:nil];
 }
 
 
@@ -120,14 +122,24 @@ NSString *const kTableViewFrame = @"frame";
 //    [self.tableView removeObserver:self forKeyPath:kTableViewFrame];
 //    [self.tableView removeObserver:self forKeyPath:kTableViewOffset];
     [KDefaultNotificationCenter removeObserver:self name:kDataChangedName object:nil];
+    [KDefaultNotificationCenter removeObserver:self name:kBoxFileSelect object:nil];
 }
 
 - (void)getData{
     if (_boxModel.uuid.length == 0)return;
     [[WBTweetAPI apiWithBoxuuid:_boxModel.uuid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
        NSLog(@"%@",request.responseJsonObject);
+//        if ([request.responseJsonObject isKindOfClass:[NSDictionary class]]) {
+////            NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"]
+////            : request.responseJsonObject;
+//             [self.tableView reloadData];
+//            return ;
+//        }
         NSArray * array = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"]
         : request.responseJsonObject;
+        if (![array isKindOfClass:[NSArray class]]) {
+            return ;
+        }
         NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
         [array enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
             WBTweetModel *model = [WBTweetModel modelWithDictionary:obj];
@@ -163,6 +175,37 @@ NSString *const kTableViewFrame = @"frame";
     [self.navigationController pushViewController:groupManageVC animated:YES];
 }
 
+- (void)fileSelectChanged:(NSNotification *)noti{
+    NSDictionary *dataDic = noti.userInfo;
+    long long date = (long long)([[NSDate date] timeIntervalSince1970] * 1000);
+    __block WBTweetModel *messageModel = [WBTweetModel new];
+    messageModel.isSender = YES;
+    messageModel.isRead = YES;
+    messageModel.status = MessageDeliveryState_Delivering;
+    messageModel.ctime = date;
+    messageModel.messageBodytype = MessageBodyType_File;
+    
+    NSString *time = [LHTools processingTimeWithDate:messageModel.ctime];
+    if ([time isEqualToString:self.lastTime]) {
+        [self insertNewMessageOrTime:time];
+        self.lastTime = time;
+    }
+    
+    NSIndexPath *index = [self insertNewMessageOrTime:messageModel];
+    WBChatViewNormalTableViewCell *cell = [self.tableView cellForRowAtIndexPath:index];
+    //    [self.messages addObject:messageModel];
+    [self.tableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    [self sendFileMessageToNetSeverWithDataDic:dataDic TableViewCell:cell];
+}
+
+- (void)sendFileMessageToNetSeverWithDataDic:(NSDictionary *)dic TableViewCell:(WBChatViewNormalTableViewCell *)cell{
+    [WB_BoxService sendTweetWithFilesDic:dic Boxuuid:_boxModel.uuid Complete:^(WBTweetModel *tweetModel, NSError *error) {
+        if (!error) {
+        }else{
+            
+        }
+    }];
+}
 //- (void)dropDownLoadDataWithScrollView:(UIScrollView *)scrollView {
 //    if ([scrollView isMemberOfClass:[UITableView class]]) {
 //        if (!self.isHeaderRefreshing) return;
@@ -205,6 +248,13 @@ NSString *const kTableViewFrame = @"frame";
     [self.dataSource addObject:NewMessage];
     [self.tableView insertRowsAtIndexPaths:@[index] withRowAnimation:UITableViewRowAnimationNone];
     return index;
+}
+
+- (void)sendFilesAction{
+    FirstFilesViewController *filesVC = [[FirstFilesViewController alloc]init];
+    filesVC.selectType = WBFilesFirstBoxSelectType;
+    NavViewController *nav = [[NavViewController alloc] initWithRootViewController:filesVC];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 
@@ -358,32 +408,6 @@ NSString *const kTableViewFrame = @"frame";
 }
 
 
-// 图片的bubble被点击
-//- (void)chatImageCellBubblePressed:(WBTweetModel *)model ImageViewTag:(NSInteger)tag{
-//    NSMutableArray *imageKeys = @[].mutableCopy;
-//    __block NSString *currentKey = nil;
-//    [self.messages enumerateObjectsUsingBlock:^(WBTweetModel *messageModel, NSUInteger idx, BOOL * stop) {
-//        if (messageModel.messageBodytype == MessageBodyType_Image) {
-//            [imageKeys addObject:[NSString stringWithFormat:@"%@%lld%ld",messageModel.uuid,messageModel.ctime,tag]];
-//            if (messageModel.ctime == model.ctime) {
-//                currentKey = [NSString stringWithFormat:@"%@%lld%ld",messageModel.uuid,messageModel.ctime,tag];
-//            }
-//        }
-//    }];
-//
-//    _imageKeys = imageKeys.copy;
-//    _imageIndex = [imageKeys indexOfObject:currentKey];
-//    LHPhotoPreviewController *photoPreview = [LHPhotoPreviewController new];
-//    photoPreview.currentIndex = _imageIndex;
-//    photoPreview.models = imageKeys;
-//    self.browserAnimateDelegate.delegate = self;
-//    self.browserAnimateDelegate.index = _imageIndex;
-//    self.browserAnimateDelegate.im = YES;
-//    photoPreview.transitioningDelegate = self.browserAnimateDelegate;
-//    photoPreview.modalPresentationStyle = UIModalPresentationCustom;
-//    [self presentViewController:photoPreview animated:YES completion:nil];
-//}
-
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataSource.count;
@@ -400,8 +424,9 @@ NSString *const kTableViewFrame = @"frame";
     if (!messageCell) {
         messageCell = [[WBChatViewNormalTableViewCell alloc] initWithMessageModel:messageModel reuseIdentifier:cellIdentifier];
     }
-    
+    messageCell.boxModel = _boxModel;
     messageCell.messageModel = messageModel;
+    
     [messageCell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
     return messageCell;
 }
@@ -455,7 +480,7 @@ NSString *const kTableViewFrame = @"frame";
 //        return 40;
 //    }
 //    return 20;
-    return 0.1;
+    return 16;
 }
 //
 //- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -500,6 +525,8 @@ NSString *const kTableViewFrame = @"frame";
 - (void)didSelectMenuOptionAtIndex:(NSInteger)row{
     if (row == 0) {
         [self.chatBarView moreViewPhotoAction:nil];
+    }else{
+        [self sendFilesAction];
     }
 }
 
@@ -536,8 +563,8 @@ NSString *const kTableViewFrame = @"frame";
         CGRect floatFrame = CGRectMake(__kWidth - 56 - 16 , __kHeight - 64 - 56 - 16, 56, 56);
         _addButton = [[VCFloatingActionButton alloc]initWithFrame:floatFrame normalImage:[UIImage imageNamed:@"add_album"] andPressedImage:[UIImage imageNamed:@"icon_close"] withScrollview:self.tableView];
         _addButton.automaticallyInsets = YES;
-        _addButton.imageArray = @[@"download"];
-        _addButton.labelArray = @[@""];
+        _addButton.imageArray = @[@"download",@"fab_share"];
+        _addButton.labelArray = @[@"",@""];
         _addButton.delegate = self;
     }
     return _addButton;
