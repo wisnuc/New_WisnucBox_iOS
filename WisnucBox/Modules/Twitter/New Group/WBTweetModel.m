@@ -31,6 +31,24 @@
 + (NSArray *)modelPropertyBlacklist {
     return @[@"localImage", @"asset"];
 }
+
+
+- (id)copyWithZone:(NSZone *)zone {
+    WBTweetlistModel *newClass = [[WBTweetlistModel alloc]init];
+    newClass.filename = self.filename;
+    newClass.sha256 = self.sha256;
+    newClass.metadata = self.metadata;
+    newClass.size = self.size;
+    return newClass;
+}
+- (nonnull id)mutableCopyWithZone:(nullable NSZone *)zone {
+    WBTweetlistModel *newClass = [[WBTweetlistModel alloc]init];
+    newClass.filename = self.filename;
+    newClass.sha256 = self.sha256;
+    newClass.metadata = self.metadata;
+    newClass.size = self.size;
+    return newClass;
+}
 @end
 
 
@@ -72,18 +90,20 @@
         self.isSender = YES;
     }
     _messageBodytype = MessageBodyType_Image;
-    if (self.isSender) {
+ 
+    [self.list enumerateObjectsUsingBlock:^(WBTweetlistModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (!obj.metadata) {
+            _messageBodytype = MessageBodyType_File;
+            *stop = YES;
+        }
+    }];
+    
+    
+    if (self.isSender && _messageBodytype == MessageBodyType_Image) {
         [self setImageWidthHeightWithX:3 Y:2 Array:self.localImageArray];
         [self setImageWidthHeightWithX:3 Y:2 Array:self.list];
         return YES;
     }
-    [self.list enumerateObjectsUsingBlock:^(WBTweetlistModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (!obj.metadata) {
-            *stop = YES;
-            _messageBodytype = MessageBodyType_File;
-        }
-    }];
-    
     if (_messageBodytype == MessageBodyType_Image) {
         [self setImageWidthHeightWithX:3 Y:2 Array:self.list];
     }

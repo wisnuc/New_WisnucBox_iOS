@@ -133,7 +133,7 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
         _retryButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _retryButton.frame = CGRectMake(0, 0, SEND_STATUS_SIZE_X, SEND_STATUS_SIZE_X);
         [_retryButton addTarget:self action:@selector(retryButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [_retryButton setImage:[UIImage imageNamed:@"messageSendFail"] forState:UIControlStateNormal];
+        [_retryButton setImage:[UIImage imageNamed:@"float_btn_del"] forState:UIControlStateNormal];
         [_activityView addSubview:_retryButton];
         
         // 菊花

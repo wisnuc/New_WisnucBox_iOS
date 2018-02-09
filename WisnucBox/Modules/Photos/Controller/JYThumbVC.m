@@ -753,6 +753,7 @@
         if (_isBoxSelectType) {
             [_boxTypeSelectFinishButton setTitle:[NSString stringWithFormat:@"完成(%lu)",(unsigned long)weakSelf.choosePhotos.count] forState:UIControlStateNormal];
         }
+        
         _countLb.text = [NSString stringWithFormat:WBLocalizedString(@"select_count", nil),(unsigned long)weakSelf.choosePhotos.count];
     };
     
@@ -803,8 +804,25 @@
 {
     if(_isSelectMode) {
         JYCollectionViewCell * cell = (JYCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+      
         if(cell){
-            [cell btnSelectClick:nil];
+            if (_isBoxSelectType) {
+               if (WB_UserService.currentUser.cloudToken) {
+                   if (self.choosePhotos.count==1) {
+                       if (cell.isSelect) {
+                           [cell btnSelectClick:nil];
+                           return;
+                       }
+                       [SXLoadingView showProgressHUDText:@"远程微信连接状态每次暂时只能上传一张照片" duration:1.2f];
+                   }else{
+                       [cell btnSelectClick:nil];
+                   }
+               }else{
+                  [cell btnSelectClick:nil];
+               }
+            }else{
+                 [cell btnSelectClick:nil];
+            }
         }
     }else{
         JYAsset *model = ((NSMutableArray *)self.arrDataSources[indexPath.section])[indexPath.row];
@@ -1047,6 +1065,12 @@ bool isDecelerating = NO;
 
 -(void)FMHeadView:(FMHeadView *)headView isChooseBtn:(BOOL)isChoose {
     if(isChoose) {
+        if (_isBoxSelectType && ((NSArray *)self.arrDataSources[headView.fmIndexPath.section]).count>1){
+             [headView.choosebtn setBackgroundImage:[UIImage imageNamed:[headView getImageWithChoose:NO]] forState:UIControlStateNormal];
+            [SXLoadingView showProgressHUDText:@"远程微信连接状态每次暂时只能上传一张照片" duration:1.2f];
+           
+            return;
+        }
         [self.chooseSection addObject:headView.fmIndexPath];
         [self.choosePhotos addObjectsFromArray:(NSArray *)self.arrDataSources[headView.fmIndexPath.section]];
     }else{

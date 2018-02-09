@@ -144,7 +144,15 @@ NSString *const kTableViewFrame = @"frame";
         [array enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
             WBTweetModel *model = [WBTweetModel modelWithDictionary:obj];
             model.boxuuid = _boxModel.uuid;
-            [dataArray addObject:model];
+            if (model.list.count>0){
+                [dataArray addObject:model];
+            }
+            if ([model.type isEqualToString:@"boxmessage"]) {
+                WBBoxMessageModel *boxMessageModel = [WBBoxMessageModel modelWithJSON:model.comment];
+                if (![boxMessageModel.op isEqualToString:@"deleteUser"]) {
+                    [dataArray addObject:model];
+                }
+            }
         }];
         self.dataSource = dataArray;
         [self.tableView reloadData];
@@ -184,6 +192,16 @@ NSString *const kTableViewFrame = @"frame";
     messageModel.status = MessageDeliveryState_Delivering;
     messageModel.ctime = date;
     messageModel.messageBodytype = MessageBodyType_File;
+    NSArray *listArr = [[NSArray alloc]initWithArray:dataDic[@"filesModel"] copyItems:YES];
+    NSMutableArray *listMutableArr = [NSMutableArray arrayWithCapacity:0];
+    [listArr enumerateObjectsUsingBlock:^(EntriesModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        WBTweetlistModel *listModel = [WBTweetlistModel new];
+        listModel.size = [NSNumber numberWithLongLong:obj.size];
+        listModel.filename = obj.name;
+        listModel.sha256 = obj.photoHash;
+        [listMutableArr addObject:listModel];
+    }];
+    messageModel.list = [[NSArray alloc]initWithArray:listMutableArr copyItems:YES];
     
     NSString *time = [LHTools processingTimeWithDate:messageModel.ctime];
     if ([time isEqualToString:self.lastTime]) {
@@ -200,10 +218,19 @@ NSString *const kTableViewFrame = @"frame";
 
 - (void)sendFileMessageToNetSeverWithDataDic:(NSDictionary *)dic TableViewCell:(WBChatViewNormalTableViewCell *)cell{
     [WB_BoxService sendTweetWithFilesDic:dic Boxuuid:_boxModel.uuid Complete:^(WBTweetModel *tweetModel, NSError *error) {
+         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if (!error) {
+            dispatch_main_async_safe(^{
+                cell.messageModel.status = MessageDeliveryState_Delivered;
+                [cell layoutSubviews];
+            });
         }else{
-            
+            dispatch_main_async_safe(^{
+                cell.messageModel.status = MessageDeliveryState_Failure;
+                [cell layoutSubviews];
+            });
         }
+              });
     }];
 }
 //- (void)dropDownLoadDataWithScrollView:(UIScrollView *)scrollView {
@@ -280,6 +307,7 @@ NSString *const kTableViewFrame = @"frame";
         [imageArray addObject:obj];
     }];
         [WB_BoxService sendTweetWithImageArray:imageArray Boxuuid:_boxModel.uuid Complete:^(WBTweetModel *tweetModel, NSError *error) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             if (!error) {
                 [content.photos.photos enumerateObjectsUsingBlock:^(UIImage *image, NSUInteger idx, BOOL * _Nonnull stop) {
                     [SDImageCache.sharedImageCache storeImage:image forKey:[NSString stringWithFormat:@"%@%lld%ld",tweetModel.uuid,tweetModel.ctime,idx] toDisk:YES completion:nil];
@@ -294,6 +322,7 @@ NSString *const kTableViewFrame = @"frame";
                 [tabelViewCell layoutSubviews];
                 });
             }
+                 });
         }];
 
 }
@@ -417,7 +446,58 @@ NSString *const kTableViewFrame = @"frame";
     id obj = [self.dataSource objectAtIndex:indexPath.row];
       WBTweetModel *messageModel = (WBTweetModel *)obj;
 //    NSLog(@"%@",self.dataSource);
-    
+    if (messageModel.comment.length>0 &&[messageModel.type isEqualToString:@"boxmessage"]) {
+        LHChatTimeCell *timeCell = (LHChatTimeCell *)[tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LHChatTimeCell class])];
+        if (!timeCell) {
+            timeCell = [[LHChatTimeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([LHChatTimeCell class])];
+        }
+        
+        WBBoxMessageModel *boxMessageModel = [WBBoxMessageModel modelWithJSON:messageModel.comment];
+        if ([boxMessageModel.op isEqualToString:@"changeBoxName"]) {
+            NSString *groupName = boxMessageModel.value.lastObject;
+            __block NSString *userName ;
+            [_boxModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([messageModel.tweeter.tweeterId isEqualToString:obj.userId]) {
+                    userName = obj.nickName;
+                }
+            }];
+            if(userName.length ==0)userName = @"";
+            timeCell.timeLable.text = [NSString stringWithFormat:@"%@将群名更改为“%@”",userName,groupName];
+        }else if ([boxMessageModel.op isEqualToString:@"addUser"]){
+            __block NSMutableString *userName = [NSMutableString stringWithCapacity:0];
+                [_boxModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    [boxMessageModel.value enumerateObjectsUsingBlock:^(NSString *userId, NSUInteger idx, BOOL * _Nonnull stop) {
+                        if ([userId isEqualToString:obj.userId]) {
+                            [userName  appendFormat:@"%@,",obj.nickName];;
+                        }
+                    }];
+                }];
+                timeCell.timeLable.text = [NSString stringWithFormat:@"%@已加入群",userName];
+        }else if ([boxMessageModel.op isEqualToString:@"createBox"]){
+          __block  NSString *groupName;
+            [_boxModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([_boxModel.owner isEqualToString:obj.userId]) {
+                    groupName = obj.nickName;
+                }
+            }];
+        if(groupName.length == 0)groupName = @"";
+          timeCell.timeLable.text = [NSString stringWithFormat:@"%@组建了群",groupName];
+            
+        }
+        
+//        else if ([boxMessageModel.op isEqualToString:@"deleteUser"]){
+//             __block NSMutableString *userName = [NSMutableString stringWithCapacity:0];
+//            [_boxModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//                [boxMessageModel.value enumerateObjectsUsingBlock:^(NSString *userId, NSUInteger idx, BOOL * _Nonnull stop) {
+//                    if ([userId isEqualToString:obj.userId]) {
+//                        [userName  appendFormat:@"%@", userId];;
+//                    }
+//                }];
+//            }];
+//            timeCell.timeLable.text = [NSString stringWithFormat:@"%@已退出群",userName];
+//        }
+        return timeCell;
+    }
     NSString *cellIdentifier = [WBChatViewNormalTableViewCell cellIdentifierForMessageModel:messageModel];
     WBChatViewNormalTableViewCell *messageCell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 
@@ -461,7 +541,8 @@ NSString *const kTableViewFrame = @"frame";
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSObject *obj = [self.dataSource objectAtIndex:indexPath.row];
-    if ([obj isKindOfClass:[NSString class]]) {
+        WBTweetModel *messageModel = (WBTweetModel *)obj;
+    if (messageModel.comment.length>0 &&[messageModel.type isEqualToString:@"boxmessage"]) {
         return 31;
     } else {
         WBTweetModel *model = (WBTweetModel *)obj;
@@ -597,6 +678,12 @@ NSString *const kTableViewFrame = @"frame";
     }
     return _browserAnimateDelegate;
 }
+
+@end
+
+
+
+@implementation WBBoxMessageModel
 
 @end
 

@@ -12,7 +12,7 @@
     @private
     UIView * _contentView;
     UILabel * _titleLb;
-    UIButton * _choosebtn;
+
 }
 
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes{

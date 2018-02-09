@@ -55,8 +55,11 @@
     NSString *labelTextString = [NSString stringWithFormat:@"分享“%@”等%ld个文件",listModel.filename,messageModel.list.count];
     self.shareTextLable.text = labelTextString;
     [self otherColorLabel:self.shareTextLable Range:NSMakeRange(3, listModel.filename.length) Color:COR1];
-    
-    NSString *sizeLabelString = [NSString transformedValue:@1000000];
+    __block long long pulsSize = 0;
+    [messageModel.list enumerateObjectsUsingBlock:^(WBTweetlistModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        pulsSize = +[obj.size longLongValue];
+    }];
+    NSString *sizeLabelString = [NSString transformedValue:[NSNumber numberWithLongLong:pulsSize]];
     self.sizeLabel.text = sizeLabelString;
 }
 

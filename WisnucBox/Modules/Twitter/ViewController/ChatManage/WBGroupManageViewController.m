@@ -97,6 +97,21 @@
 }
 
 - (void)rightButtonClick:(UIButton *)sender{
+    
+    if (![_boxModel.owner isEqualToString:WB_UserService.currentUser.guid]) {
+        NSArray *arr = [NSArray arrayWithObject:WB_UserService.currentUser.guid];
+        [[WBUpdateBoxAPI updateApiWithBoxuuid:_boxModel.uuid Users:arr Option:@"delete"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+            NSLog(@"%@",request.responseJsonObject);
+            for (UIViewController *temp in self.navigationController.viewControllers) {
+                if ([temp isKindOfClass:[WBChatListViewController class]]) {
+                    [self.navigationController popToViewController:temp animated:YES];
+                }
+            }
+        } failure:^(__kindof JYBaseRequest *request) {
+            NSLog(@"%@",request.error);
+        }];
+        return;
+    }
     [[WBDeleteBoxAPI deleteBoxApiWithBoxuuid:_boxModel.uuid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
          [SXLoadingView showProgressHUDText:@"该群已解散" duration:1.2f];
@@ -176,6 +191,7 @@
     }
     @weaky(self)
     [[WBGetOneBoxAPI getBoxApiWithBoxuuid:_boxModel.uuid] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.responseJsonObject);
          NSDictionary * responseDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
          WBBoxesModel *model = [WBBoxesModel modelWithDictionary:responseDic];
         _boxModel = model;
@@ -265,6 +281,11 @@
             {
                 switch (indexPath.row) {
                     case 0:{
+                        if (![_boxModel.owner isEqualToString:WB_UserService.currentUser.guid]) {
+                            [SXLoadingView showProgressHUDText:@"非群主无法暂无法修改群名称" duration:1.2];
+                            return;
+                        }
+                        
                         WBStationManageRenameViewController *renameVC = [[WBStationManageRenameViewController alloc]init];
                         renameVC.vcType = WBRenameVCTypeBoxName;
                         if (_boxModel.name && _boxModel.name.length>0) {

@@ -7,6 +7,13 @@
 //
 
 #import "WBBoxesModel.h"
+@implementation WBBoxesTweetModel
++ (NSDictionary *)modelContainerPropertyGenericClass {
+    return @{@"list" : [WBTweetlistModel class],
+             };
+}
+@end
+
 @implementation WBBoxesUsersModel
 + (NSDictionary *)modelCustomPropertyMapper {
     return @{

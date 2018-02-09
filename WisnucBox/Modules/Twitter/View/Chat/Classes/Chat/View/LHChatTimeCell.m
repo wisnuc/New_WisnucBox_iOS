@@ -19,6 +19,7 @@
         self.timeLable.textColor = UICOLOR_RGB(0x8e8e93);
         self.timeLable.font = [UIFont systemFontOfSize:11.0];
         self.timeLable.backgroundColor = [UIColor clearColor];
+        
         [self.contentView addSubview:self.timeLable];
     }
     return self;

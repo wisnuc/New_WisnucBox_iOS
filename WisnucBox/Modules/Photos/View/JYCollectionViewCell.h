@@ -39,6 +39,10 @@
 
 @property (nonatomic, assign) BOOL isSelectMode;
 
+@property (nonatomic, assign) BOOL isBoxSelectType;
+
+@property (nonatomic) NSArray *chooseArray;
+
 - (void)setIsSelect:(BOOL)isSelect animation:(BOOL)animat;
 
 - (void)btnSelectClick:(UIButton *)sender;

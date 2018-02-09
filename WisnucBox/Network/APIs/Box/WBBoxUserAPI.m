@@ -28,7 +28,7 @@
 /// 请求的URL
 - (NSString *)requestUrl{
     
-    return [NSString stringWithFormat:@"%@users/%@/interesting", WX_BASE_URL,_guid];
+    return [NSString stringWithFormat:@"%@users/%@/interestingPerson", WX_BASE_URL,_guid];
 }
 
 - (NSDictionary *)requestHeaderFieldValueDictionary{

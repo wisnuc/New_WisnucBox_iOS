@@ -94,6 +94,7 @@
            return;
        }
        [[WBUpdateBoxAPI updateApiWithBoxName:_renameTextField.text Boxuuid:_boxuuid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+           NSLog(@"%@",request.responseJsonObject);
            if (self.delegate && [self.delegate respondsToSelector:@selector(reNameComplete)]) {
                [self.delegate reNameComplete];
                [SXLoadingView showProgressHUDText:@"修改成功" duration:1.2f];

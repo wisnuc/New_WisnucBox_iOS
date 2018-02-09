@@ -25,11 +25,23 @@
 }
 
 - (JYRequestMethod)requestMethod{
+    if (WB_UserService.currentUser.cloudToken) {
+        return JYRequestMethodPost;
+    }
     return JYRequestMethodPatch;
 }
 
 - (id)requestArgument{
     if (_boxName) {
+        if (WB_UserService.currentUser.cloudToken) {
+            NSDictionary *dic;
+            dic = @{
+                    @"name":_boxName,
+                    @"resource" : [[NSString stringWithFormat:@"boxes/%@",_boxuuid] base64EncodedString],
+                    @"method" : @"PATCH"
+                    };
+            return dic;
+        }
         NSDictionary *dic = @{
                               @"name":_boxName
                               };
@@ -38,17 +50,22 @@
     NSMutableDictionary *mutableDic = [NSMutableDictionary dictionaryWithCapacity:0];
     [mutableDic setObject:_users forKey:@"value"];
     [mutableDic setObject:_op forKey:@"op"];
+   
     NSLog(@"%@",mutableDic);
     NSData *josnData = [NSJSONSerialization dataWithJSONObject:mutableDic options:NSJSONWritingPrettyPrinted error:nil];
     NSMutableDictionary *dicx = [NSJSONSerialization JSONObjectWithData:josnData options:NSJSONReadingMutableLeaves error:nil];
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
     [dic setObject:dicx forKey:@"users"];
+    if (WB_UserService.currentUser.isCloudLogin) {
+        [dic setObject:@"PATCH" forKey:@"method"];
+        [dic setObject:[[NSString stringWithFormat:@"boxes/%@",_boxuuid] base64EncodedString] forKey:@"resource"];
+    }
     return dic;
 }
 
 /// 请求的URL
 - (NSString *)requestUrl{
-    return WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@?resource=%@&method=GET", kCloudAddr, kCloudCommonJsonUrl, [[NSString stringWithFormat:@"boxes/%@",_boxuuid] base64EncodedString]] : [NSString stringWithFormat:@"boxes/%@",_boxuuid];
+    return WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@", kCloudAddr, kCloudCommonJsonUrl] : [NSString stringWithFormat:@"boxes/%@",_boxuuid];
 }
 
 - (NSDictionary *)requestHeaderFieldValueDictionary{

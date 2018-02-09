@@ -27,4 +27,7 @@
 
 @property (nonatomic) BOOL isSelectMode;
 
+@property (nonatomic,strong) UIButton * choosebtn;
+- (NSString *)getImageWithChoose:(BOOL)isChoose;
+
 @end

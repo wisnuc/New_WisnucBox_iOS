@@ -17,6 +17,7 @@
 @property (nonatomic,copy)NSString *filename;
 @property (nonatomic,copy)NSString *sha256;
 @property (nonatomic,copy)NSDictionary *metadata;
+@property (nonatomic,copy)NSNumber *size;
 @end
 
 @interface WBTweetTweeterModel : NSObject
@@ -34,11 +35,11 @@
 @property (nonatomic, assign) CGFloat width;
 @property (nonatomic, assign) CGFloat height;
 @property (nonatomic, strong) NSURL *imageRemoteURL;
-@property (nonatomic, strong) NSString *boxuuid;
+@property (nonatomic, copy) NSString *boxuuid;
 
 @property (nonatomic, assign) MessageBodyType messageBodytype;
 @property (nonatomic, assign) MessageDeliveryState status;
-
+@property (nonatomic, copy)NSString *owner;
 @property (nonatomic,copy)NSString *comment;
 @property (nonatomic)long long ctime;
 @property (nonatomic)NSInteger index;

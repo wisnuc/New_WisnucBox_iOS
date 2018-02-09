@@ -14,6 +14,18 @@
 //ctime: 1515996040812,
 //mtime: 1515996040812
 
+
+@interface WBBoxesTweetModel : NSObject
+@property(nonatomic,copy)NSString *comment;
+@property(nonatomic,copy)NSString *createdAt;
+@property(nonatomic,copy)NSString *updatedAt;
+@property(nonatomic,copy)NSNumber *ctime;
+@property(nonatomic,copy)NSNumber *index;
+@property(nonatomic,copy)NSString *tweeter;
+@property(nonatomic,copy)NSString *type;
+@property (nonatomic)NSArray *list;
+@end
+
 @interface WBBoxesUsersModel : NSObject
 @property(nonatomic,copy)NSString *avatarUrl;
 @property(nonatomic,copy)NSString *nickName;
@@ -28,4 +40,5 @@
 @property(nonatomic)NSArray *users;
 @property(nonatomic,assign)long long ctime;
 @property(nonatomic,assign)long long mtime;
+@property(nonatomic)WBBoxesTweetModel *tweet;
 @end

@@ -35,6 +35,7 @@
         [uploadDic setObject:model.name forKey:@"filename"];
         [uploadDic setObject:dataDic[@"dirUUID"] forKey:@"dirUUID"];
         [uploadDic setObject:dataDic[@"driveUUID"] forKey:@"driveUUID"];
+        [uploadDic setObject:@"file" forKey:@"type"];
         [dataArray addObject:uploadDic];
     }];
     
@@ -68,16 +69,16 @@
         NSData *josnData = [NSJSONSerialization dataWithJSONObject:manifestDic options:NSJSONWritingPrettyPrinted error:nil];
         NSString *result = [[NSString alloc] initWithData:josnData  encoding:NSUTF8StringEncoding];
         [dataMutableDic setObject:result forKey:@"manifest"];
-
+        NSLog(@"%@",dataMutableDic);
     }else{
         [dataMutableDic setObject:@"" forKey:@"comment"];
-        [dataMutableDic setObject:@"list" forKey:@"type"]; 
-        if (dataArray.count>0)
-            [dataMutableDic setObject:dataArray forKey:@"indrive"];
+        [dataMutableDic setObject:@"list" forKey:@"type"];
+        if (dataArray.count>0)[dataMutableDic setObject:dataArray forKey:@"indrive"];
+        
+         josnData = [NSJSONSerialization dataWithJSONObject:dataMutableDic options:NSJSONWritingPrettyPrinted error:nil];
+        dataMutableDic = nil;
     }
-    
-    josnData = [NSJSONSerialization dataWithJSONObject:dataMutableDic options:NSJSONWritingPrettyPrinted error:nil];
-    
+
     NSURLSessionDataTask *dataTask = [manager POST:urlString parameters:dataMutableDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         if (!WB_UserService.currentUser.isCloudLogin) {
             [formData appendPartWithFormData:josnData name:@"list"];
@@ -87,7 +88,8 @@
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        WBTweetModel *model = [WBTweetModel modelWithJSON:responseObject];
+         NSDictionary * responseDic = WB_UserService.currentUser.isCloudLogin ? responseObject[@"data"] : responseObject;
+        WBTweetModel *model = [WBTweetModel modelWithDictionary:responseDic];
         NSLog(@"%@",model.uuid);
         callback(model,nil);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -186,9 +188,7 @@
         NSData *josnData = [NSJSONSerialization dataWithJSONObject:manifestDic options:NSJSONWritingPrettyPrinted error:nil];
         NSString *result = [[NSString alloc] initWithData:josnData  encoding:NSUTF8StringEncoding];
         [dataMutableDic setObject:result forKey:@"manifest"];
-//        NSData * josnDatax = [NSJSONSerialization dataWithJSONObject:manifestDic options:NSJSONWritingPrettyPrinted error:nil];
-//        NSString *result = [[NSString alloc] initWithData:josnDatax  encoding:NSUTF8StringEncoding];
-//        [dataMutableDic setObject:result forKey:@"manifest"];
+
     }else{
         [dataMutableDic setObject:@"" forKey:@"comment"];
         [dataMutableDic setObject:@"list" forKey:@"type"];
@@ -204,9 +204,11 @@
         if (netImageListArray.count>0) {
             [dataMutableDic setObject:netImageListArray forKey:@"indrive"];
         }
+         josnData = [NSJSONSerialization dataWithJSONObject:dataMutableDic options:NSJSONWritingPrettyPrinted error:nil];
+        dataMutableDic = nil;
     }
   
-    josnData = [NSJSONSerialization dataWithJSONObject:dataMutableDic options:NSJSONWritingPrettyPrinted error:nil];
+    
   
     NSURLSessionDataTask *dataTask = [manager POST:urlString parameters:dataMutableDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         if (!WB_UserService.currentUser.isCloudLogin) {
@@ -230,7 +232,8 @@
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        WBTweetModel *model = [WBTweetModel modelWithJSON:responseObject];
+        NSDictionary * responseDic = WB_UserService.currentUser.isCloudLogin ? responseObject[@"data"] : responseObject;
+        WBTweetModel *model = [WBTweetModel modelWithDictionary:responseDic];
          NSLog(@"%@",model.uuid);
         callback(model,nil);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

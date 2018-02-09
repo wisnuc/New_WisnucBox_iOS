@@ -14,4 +14,27 @@
              @"photoHash": @"hash"
              };
 }
+
+- (id)copyWithZone:(NSZone *)zone {
+    EntriesModel *newClass = [[EntriesModel alloc]init];
+    newClass.name = self.name;
+    newClass.type = self.type;
+    newClass.uuid = self.uuid;
+    newClass.photoHash = self.photoHash;
+    newClass.magic = self.magic;
+    newClass.mtime = self.mtime;
+    newClass.size = self.size;
+    return newClass;
+}
+- (nonnull id)mutableCopyWithZone:(nullable NSZone *)zone {
+    EntriesModel *newClass = [[EntriesModel alloc]init];
+    newClass.name = self.name;
+    newClass.type = self.type;
+    newClass.uuid = self.uuid;
+    newClass.photoHash = self.photoHash;
+    newClass.magic = self.magic;
+    newClass.mtime = self.mtime;
+    newClass.size = self.size;
+    return newClass;
+}
 @end

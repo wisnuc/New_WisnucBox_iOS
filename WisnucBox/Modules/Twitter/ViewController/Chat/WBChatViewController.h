@@ -12,3 +12,8 @@
 @interface WBChatViewController : FABaseVC
 @property (nonatomic) WBBoxesModel *boxModel;
 @end
+
+@interface WBBoxMessageModel:NSObject
+@property (nonatomic,copy)NSString *op;
+@property (nonatomic)NSArray *value;
+@end
