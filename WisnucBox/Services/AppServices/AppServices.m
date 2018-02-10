@@ -22,6 +22,7 @@
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "FMCheckManager.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "MQTTClientManager.h"
 
 
 @interface AppServices ()
@@ -581,6 +582,7 @@ static BOOL needRestart = NO;
     [CSUploadHelper destroyAll];
     [CSFileUploadManager destroyAll];
     [FMCheckManager destroyAll];
+    [MQTTClientManager destroyAll];
 }
 
 @end

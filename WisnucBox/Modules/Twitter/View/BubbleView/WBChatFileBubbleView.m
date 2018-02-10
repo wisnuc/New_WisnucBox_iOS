@@ -34,7 +34,12 @@
     
 //    frame.origin.y = 2;
     [self.shareFileImageView setFrame:imageViewFrame];
+    UIImage *image = [UIImage imageNamed:@"folder_icon"];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    imageView.center = self.shareFileImageView.center;
+    imageView.image = image;
     
+    [self.shareFileImageView addSubview:imageView];
     CGRect shareLabelFrame = frame;
     shareLabelFrame.origin.x = CGRectGetMaxX(imageViewFrame) + 8;
     shareLabelFrame.origin.y = 8;
@@ -57,7 +62,7 @@
     [self otherColorLabel:self.shareTextLable Range:NSMakeRange(3, listModel.filename.length) Color:COR1];
     __block long long pulsSize = 0;
     [messageModel.list enumerateObjectsUsingBlock:^(WBTweetlistModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        pulsSize = +[obj.size longLongValue];
+        pulsSize += [obj.size longLongValue];
     }];
     NSString *sizeLabelString = [NSString transformedValue:[NSNumber numberWithLongLong:pulsSize]];
     self.sizeLabel.text = sizeLabelString;
@@ -130,12 +135,9 @@
 
 - (UIImageView *)shareFileImageView{
         if (!_shareFileImageView) {
-            UIImage *image = [UIImage imageWithColor:[UIColor orangeColor]];
-            _shareFileImageView = [[UIImageView alloc] initWithImage:image];
-    
-//            _shareFileImageView.userInteractionEnabled = YES;
-//            UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(bubbleViewPressed:)];
-//            [_shareFileImageView addGestureRecognizer:tap];
+              _shareFileImageView = [[UIImageView alloc] init];
+       
+            _shareFileImageView.backgroundColor = [UIColor orangeColor];
         }
         return _shareFileImageView;
 }

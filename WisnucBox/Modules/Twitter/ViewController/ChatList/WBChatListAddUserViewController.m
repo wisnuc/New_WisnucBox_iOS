@@ -26,9 +26,12 @@
     [super viewDidLoad];
     [self setNavigationBarContent];
     [self setTitleText];
-    if (WB_UserService.currentUser.isAdmin || WB_UserService.currentUser.isFirstUser) {
+    if ((WB_UserService.currentUser.isAdmin || WB_UserService.currentUser.isFirstUser) && _type != WBUserAddressBookDelete) {
         [self getUserInfo];
+    }else if ((WB_UserService.currentUser.isAdmin || WB_UserService.currentUser.isFirstUser) && _type == WBUserAddressBookDelete){
+        [self getDeleteInfo];
     }
+   
     [self.view addSubview:self.tableView];
 }
 
@@ -129,6 +132,23 @@
 //           [weak_self reloadData];
 //        }];
 //    }
+}
+
+- (void)getDeleteInfo{
+    if (!WB_UserService.currentUser.cloudToken) {
+        [SXLoadingView showProgressHUDText:@"本地连接暂无法使用" duration:1.2f];
+        return;
+    }
+    NSMutableArray *tempDataSource = [NSMutableArray arrayWithCapacity:0];
+    NSMutableArray *chooseUserSource = [NSMutableArray arrayWithCapacity:0];
+    NSMutableArray *exsitDataSource = [NSMutableArray arrayWithCapacity:0];
+    [_boxModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [tempDataSource addObject:obj];
+    }];
+    self.userArray = tempDataSource;
+    self.choosedUserArray = chooseUserSource;
+    self.exsitDataArray = exsitDataSource;
+    [self reloadData];
 }
 
 - (void)reloadData{

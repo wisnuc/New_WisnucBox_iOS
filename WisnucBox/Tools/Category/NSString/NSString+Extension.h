@@ -16,4 +16,5 @@
 + (NSString *)fileSizeWithFLModel:(EntriesModel *)model;
 + (NSString *)URLDecodedString:(NSString *)str;
 + (NSString *)transformedValue:(id)value;
++ (NSString *)getReleaseTime:(long long)releaseTime;
 @end

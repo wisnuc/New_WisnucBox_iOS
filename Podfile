@@ -29,6 +29,7 @@ pod 'YYKit'
 pod 'SDAutoLayout'
 pod 'DACircularProgress'
 pod 'SDWebImage'
+pod 'MQTTClient'
 end
 
 #post_install do |installer|

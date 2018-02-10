@@ -171,11 +171,14 @@ FilesHelperOpenFilesDelegate
         [dic setObject:[FLFIlesHelper helper].chooseFiles forKey:@"filesModel"];
         [dic setObject:_parentUUID forKey:@"dirUUID"];
         [dic setObject:_driveUUID forKey:@"driveUUID"];
-        [KDefaultNotificationCenter postNotificationName:kBoxFileSelect object:nil userInfo:dic];
+       
         NSArray *array = [NSArray arrayWithArray:dic[@"filesModel"]];
         if (array.count==0) {
             [SXLoadingView showProgressHUDText:@"您尚未选择文件" duration:1.2f];
+            return;
         }
+        
+        [KDefaultNotificationCenter postNotificationName:kBoxFileSelect object:nil userInfo:dic];
         [self dismissViewControllerAnimated:YES completion:^{
            
         }];

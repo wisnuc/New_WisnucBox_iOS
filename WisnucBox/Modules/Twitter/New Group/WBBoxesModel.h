@@ -7,13 +7,19 @@
 //
 
 #import "WBBaseModel.h"
-//uuid: 'a96241c5-bfe2-458f-90a0-46ccd1c2fa9a',
-//name: 'hello',
-//owner: 'ocMvos6NjeKLIBqg5Mr9QjxrP1FA',
-//users: [],
-//ctime: 1515996040812,
-//mtime: 1515996040812
 
+@interface WBBoxesStationModel : NSObject
+//LANIP = "10.10.9.214";
+//id = "f448eca8-b079-42dc-8ceb-b235de864c1d";
+//isOnline = 1;
+//name = "J-214\U578b\U6d4b\U8bd5\U673a";
+//status = 1;
+@property(nonatomic,copy)NSString *LANIP;
+@property(nonatomic,copy)NSNumber *isOnline;
+@property(nonatomic,copy)NSString *name;
+@property(nonatomic,copy)NSNumber *status;
+@property(nonatomic,copy)NSString *stationId;
+@end
 
 @interface WBBoxesTweetModel : NSObject
 @property(nonatomic,copy)NSString *comment;
@@ -24,6 +30,7 @@
 @property(nonatomic,copy)NSString *tweeter;
 @property(nonatomic,copy)NSString *type;
 @property (nonatomic)NSArray *list;
+@property(nonatomic,copy)NSString *uuid;
 @end
 
 @interface WBBoxesUsersModel : NSObject
@@ -40,5 +47,6 @@
 @property(nonatomic)NSArray *users;
 @property(nonatomic,assign)long long ctime;
 @property(nonatomic,assign)long long mtime;
-@property(nonatomic)WBBoxesTweetModel *tweet;
+@property(nonatomic)WBTweetModel *tweet;
+@property(nonatomic)WBBoxesStationModel *station;
 @end

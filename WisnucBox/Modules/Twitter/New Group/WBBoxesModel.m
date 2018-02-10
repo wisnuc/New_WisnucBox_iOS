@@ -28,3 +28,11 @@
              };
 }
 @end
+
+@implementation WBBoxesStationModel
++ (NSDictionary *)modelCustomPropertyMapper {
+    return @{
+             @"stationId" : @"id",
+             };
+}
+@end

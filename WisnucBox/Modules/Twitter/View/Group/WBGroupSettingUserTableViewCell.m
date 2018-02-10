@@ -32,6 +32,10 @@
     [self initUserImageViewAndUserNameLabel];
 }
 
+- (void)setBoxModel:(WBBoxesModel *)boxModel{
+    _boxModel = boxModel;
+}
+
 - (void)initUserImageViewAndUserNameLabel{
      @weaky(self)
     [_userArray enumerateObjectsUsingBlock:^(WBBoxesUsersModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -54,6 +58,7 @@
 //        _userImageView
         
         _userNameLabel = [[UILabel alloc]init];
+        _userNameLabel.tag = idx;
         _userNameLabel.frame = CGRectMake(0,0,60,14);
         _userNameLabel.center = CGPointMake(_userImageView.center.x, _userImageView.center.y +Button_Height/2 +14);
         _userNameLabel.textAlignment = NSTextAlignmentCenter;
@@ -87,28 +92,37 @@
     NSInteger page = _userArray.count / 4;
     NSLog(@"%ld",page);
     
+    if ([_boxModel.owner isEqualToString:WB_UserService.currentUser.guid]) {
     if (judgement <=2) {
-     addUserButton.frame = CGRectMake(judgement * (Button_Width + Width_Space) + Start_X,page * (Button_Height + Height_Space)+Start_Y, Button_Width, Button_Height);
-     removeUserButton.frame = CGRectMake((judgement + 1) * (Button_Width + Width_Space) + Start_X,page * (Button_Height + Height_Space)+Start_Y, Button_Width, Button_Height);
-    }else if (judgement ==3){
-     addUserButton.frame = CGRectMake(judgement * (Button_Width + Width_Space) + Start_X,page * (Button_Height + Height_Space)+Start_Y, Button_Width, Button_Height);
-     removeUserButton.frame = CGRectMake(0 * (Button_Width + Width_Space) + Start_X,(page+1) * (Button_Height + Height_Space)+Start_Y, Button_Width, Button_Height);
-    }else{
-        addUserButton.frame = CGRectMake(judgement * (Button_Width + Width_Space) + Start_X,page * (Button_Height + Height_Space)+Start_Y, Button_Width, Button_Height);
-        removeUserButton.frame = CGRectMake((judgement + 1) * (Button_Width + Width_Space) + Start_X,page * (Button_Height + Height_Space)+Start_Y, Button_Width, Button_Height);
+         addUserButton.frame = CGRectMake(judgement * (Button_Width + Width_Space) + Start_X,page * (Button_Height + Height_Space)+Start_Y, Button_Width, Button_Height);
+         removeUserButton.frame = CGRectMake((judgement + 1) * (Button_Width + Width_Space) + Start_X,page * (Button_Height + Height_Space)+Start_Y, Button_Width, Button_Height);
+        }else if (judgement ==3){
+         addUserButton.frame = CGRectMake(judgement * (Button_Width + Width_Space) + Start_X,page * (Button_Height + Height_Space)+Start_Y, Button_Width, Button_Height);
+         removeUserButton.frame = CGRectMake(0 * (Button_Width + Width_Space) + Start_X,(page+1) * (Button_Height + Height_Space)+Start_Y, Button_Width, Button_Height);
+        }else{
+            addUserButton.frame = CGRectMake(judgement * (Button_Width + Width_Space) + Start_X,page * (Button_Height + Height_Space)+Start_Y, Button_Width, Button_Height);
+            removeUserButton.frame = CGRectMake((judgement + 1) * (Button_Width + Width_Space) + Start_X,page * (Button_Height + Height_Space)+Start_Y, Button_Width, Button_Height);
+        }
+        [self.contentView addSubview:addUserButton];
+        [self.contentView addSubview:removeUserButton];
     }
-    
+ 
+    if (_userArray.count<44) {
+        return;
+    }
     UIButton *checkAllUserButton = [[UIButton alloc]init];
     checkAllUserButton.frame = CGRectMake(0, 0, __kWidth,15);
-    checkAllUserButton.center = CGPointMake(__kWidth/2, CGRectGetMaxY(removeUserButton.frame) + 12.0f + 15.0f +30.0f+15/2);
+    if ([_boxModel.owner isEqualToString:WB_UserService.currentUser.guid]) {
+         checkAllUserButton.center = CGPointMake(__kWidth/2, CGRectGetMaxY(removeUserButton.frame) + 12.0f + 15.0f +30.0f+15/2);
+    }else{
+        UILabel * label = [_userNameLabel viewWithTag:_userArray.count -1];
+        checkAllUserButton.center = CGPointMake(__kWidth/2, CGRectGetMaxY(label.frame) + 12.0f + 15.0f +30.0f+15/2);
+    }
     checkAllUserButton.titleLabel.font = [UIFont systemFontOfSize:14];
     [checkAllUserButton setTitleColor:RGBACOLOR(0, 0, 0, 0.54f) forState:UIControlStateNormal];
     [checkAllUserButton setTitle:@"查看更多群员  >" forState:UIControlStateNormal];
     [checkAllUserButton addTarget:self action:@selector(checkAllUserButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    [self.contentView addSubview:addUserButton];
-    [self.contentView addSubview:removeUserButton];
+
     [self.contentView addSubview:checkAllUserButton];
 }
 

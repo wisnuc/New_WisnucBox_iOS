@@ -23,4 +23,5 @@ typedef void(^RemoveUserClickBlock)(WBGroupSettingUserTableViewCell *groupSettin
 @property (nonatomic) ImageClickBlock clickBlock;
 @property (nonatomic) AddUserClickBlock  addUserClickBlock;
 @property (nonatomic) RemoveUserClickBlock  removeUserClickBlock;
+@property (nonatomic) WBBoxesModel *boxModel;
 @end

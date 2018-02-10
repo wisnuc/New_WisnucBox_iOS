@@ -80,6 +80,62 @@
         convertedValue /= 1024;multiplyFactor++;
     }
     return [NSString stringWithFormat:@"%4.2f %@",convertedValue, [tokens objectAtIndex:multiplyFactor]];
+}
+
++ (NSString *)getReleaseTime:(long long)releaseTime
+{
+    if (releaseTime == 0 ||!releaseTime) {
+        return @"";
+    }
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
+    //dateFormat时间样式属性,传入格式必须按这个
+    //    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss.S";
+    
+    //locale："区域；场所"
+    formatter.locale = [NSLocale currentLocale];
+    
+    //发布时间
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:(releaseTime/1000.0)];
+    
+    //现在时间
+    NSDate *now = [NSDate date];
+    
+    //发布时间到现在间隔多长时间，用timeIntervalSinceDate
+    NSTimeInterval interval = [now timeIntervalSinceDate:date];
+    
+    NSString *format;
+    
+    if (interval <= 60) {
+        
+        format = @"刚刚";
+        
+    } else if(interval <= 60*60){
+        
+        format = [NSString stringWithFormat:@"%.f分钟前",interval/60];
+        
+    } else if(interval <= 60*60*24){
+        
+        format = [NSString stringWithFormat:@"%.f小时前",interval/3600];
+        
+    } else if (interval <= 60*60*24*7){
+        
+        format = [NSString stringWithFormat:@"%d天前",
+                  (int)interval/(60*60*24)];
+        
+    } else if (interval > 60*60*24*7 & interval <= 60*60*24*30 ){
+        
+        format = [NSString stringWithFormat:@"%d周前",
+                  (int)interval/(60*60*24*7)];
+        
+    }else if(interval > 60*60*24*30 ){
+        format = [NSString stringWithFormat:@"%d月前",
+                  (int)interval/(60*60*24*30)];
+    }
+   
+   
+    
+    return format;
     
 }
 @end

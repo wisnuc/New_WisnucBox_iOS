@@ -37,6 +37,7 @@ extern NSString *const kMessageImageBoxUUID;
 extern NSString *const kMessageImageBoxLocalAsset;
 extern NSString *const kMessageImageBoxNetImageHash;
 extern NSString *const kBoxFileSelect;
+extern NSString *const kBoxMQTTFresh;
 
 extern NSInteger kMessageCount;
 

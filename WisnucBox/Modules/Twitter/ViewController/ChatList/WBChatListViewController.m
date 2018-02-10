@@ -12,11 +12,14 @@
 #import "WBGetBoxesAPI.h"
 #import "WBBoxesModel.h"
 #import "WBChatListAddUserViewController.h"
+#import "MQTTClientManagerDelegate.h"
+#import "MQTTClientManager.h"
 
-@interface WBChatListViewController () <UITableViewDataSource,UITableViewDelegate,ChatListAddUserEndDelegate>
+@interface WBChatListViewController () <UITableViewDataSource,UITableViewDelegate,ChatListAddUserEndDelegate,MQTTClientManagerDelegate>
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic)MDCFloatingButton *addButton;
 @property (nonatomic)NSMutableArray *boxDataArray;
+
 @end
 
 @implementation WBChatListViewController
@@ -24,19 +27,43 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.tableView];
-    [self.view addSubview:self.addButton];
+    
+//    [self.view addSubview:self.addButton];
  
     [self initMjFreshHeader];
  
 //    [self initMjFreshFooter];
-    
+    if (WB_UserService.currentUser.guid.length>0) {
+         [self didMQTTServerJoinIn];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self createNavBtns];
     [self getBoxesListData];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
+
+- (void)createNavBtns{
+    UIButton * rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 24, 24)];
+    [rightBtn setImage:[UIImage imageNamed:@"creat_box"] forState:UIControlStateNormal];
+    NSString* phoneVersion = [[UIDevice currentDevice] systemVersion];
+    NSLog(@"%@",phoneVersion);
+    
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -10;
+    if([phoneVersion floatValue]>=11.0){
+        rightBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 0,0, -10);
+    }
+    [rightBtn addTarget:self action:@selector(didTapAdd:) forControlEvents:UIControlEventTouchUpInside];
+    [rightBtn setEnlargeEdgeWithTop:10 right:5 bottom:5 left:5];
+    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:rightItem,negativeSpacer,nil];
+}
+
 
 - (void)initMjFreshHeader{
     __weak __typeof(self) weakSelf = self;
@@ -56,11 +83,19 @@
     }];
 }
 
+- (void)didMQTTServerJoinIn{
+    NSString *topic = [NSString stringWithFormat:@"client/user/%@/box",WB_UserService.currentUser.guid];
+    [[MQTTClientManager shareInstance]registerDelegate:self];
+    [[MQTTClientManager shareInstance]loginWithIp:KMQTTTESTHOST port:KMQTTPORT userName:nil password:nil topic:topic];
+    
+}
+
 - (void)getBoxesListData{
     if (!WB_UserService.currentUser.cloudToken) {
         [SXLoadingView showProgressHUDText:@"非微信远程登录暂无法使用" duration:1.2f];
         return ;
     }
+    @weaky(self)
     [[WBGetBoxesAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
         NSArray * array = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"]
@@ -72,7 +107,7 @@
         }];
         self.boxDataArray = dataArray;
         [self.tableView.mj_header endRefreshing];
-        [self.tableView reloadData];
+        [weak_self sortDataSouce];
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
         NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
@@ -82,7 +117,36 @@
     }];
 }
 
-- (void)didTapAdd:(MDCFloatingButton *)sender{
+ - (void)sortDataSouce{
+    NSComparator cmptr = ^(WBBoxesModel * model1, WBBoxesModel * model2){
+//        if (model1.tweet.ctime  < model2.tweet.ctime) {
+//            return (NSComparisonResult)NSOrderedDescending;
+//        }
+        if (model1.tweet.ctime < model2.tweet.ctime) {
+            return (NSComparisonResult)NSOrderedDescending;
+        }
+        return (NSComparisonResult)NSOrderedSame;
+    };
+    [self.boxDataArray sortUsingComparator:cmptr];
+     NSMutableArray *ctimeArray = [NSMutableArray arrayWithCapacity:0];
+     NSMutableArray *ctimeNoArray = [NSMutableArray arrayWithCapacity:0];
+     
+     [self.boxDataArray enumerateObjectsUsingBlock:^(WBBoxesModel * model, NSUInteger idx, BOOL * _Nonnull stop) {
+
+         if (!model.tweet.ctime ||model.tweet.ctime == 0) {
+               [ctimeNoArray addObject:model];
+         }else{
+               [ctimeArray addObject:model];
+         }
+     }];
+
+    [self.boxDataArray removeAllObjects];
+    [self.boxDataArray addObjectsFromArray:ctimeArray];
+    [self.boxDataArray addObjectsFromArray:ctimeNoArray];
+    [self.tableView reloadData];
+}
+
+- (void)didTapAdd:(UIButton *)sender{
     if (!WB_UserService.currentUser.cloudToken) {
         [SXLoadingView showProgressHUDText:@"非微信远程登录暂无法使用" duration:1.2f];
         return;
@@ -113,10 +177,53 @@
     if (!cell) {
         cell = (WBChatListTableViewCell *)[[[NSBundle mainBundle]loadNibNamed:NSStringFromClass([WBChatListTableViewCell class]) owner:self options:nil]lastObject];
     }
+
     WBBoxesModel *boxesModel = self.boxDataArray[indexPath.row];
+    NSInteger n = MIN(boxesModel.users.count, 5);
+    float r = 20 * n / (2.5 * n - 1.5);
+    [boxesModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *userModel, NSUInteger idx, BOOL * _Nonnull stop) {
+        double deg =  M_PI * (double)(idx * 2 / n - 1 / 4);
+        NSLog(@"😑%lu",(idx * 2 / n - 1 / 4));
+        float top = (float)(1 - cos(deg)) * (20 - r);
+        float left = (float)(1 + sin(deg)) * (20 - r);
+        UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(left, top, r *2, r*2)];
+        imageView.layer.masksToBounds = YES;
+        imageView.layer.cornerRadius = r;
+        [imageView was_setCircleImageWithUrlString:userModel.avatarUrl placeholder:[UIImage imageWithColor:RGBACOLOR(0, 0, 0, 0.37)]];
+        [cell.leftImageView addSubview:imageView];
+    }];
+//    renderAvatars(users) {
+//        const n = Math.min(users.length, 5)
+//        const r = 20 * n / (2.5 * n - 1.5) // radius
+//        return (
+//                <div style={{ height: 40, width: 40, position: 'relative' }}>
+//                {
+//                    users.map((u, i) => {
+//                        if (i > n - 1) return <div />
+//                            const deg = Math.PI * (i * 2 / n - 1 / 4)
+//                            const top = (1 - Math.cos(deg)) * (20 - r)
+//                            const left = (1 + Math.sin(deg)) * (20 - r)
+//                            return (
+//                                    <Avatar
+//                                    src={imgUrl}
+//                                    style={{
+//                            position: 'absolute',
+//                            width: r * 2,
+//                            height: r * 2,
+//                                top,
+//                                left
+//                            }}
+//                                    />
+//                                    )
+//                            })
+//                }
+//                </div>
+//                )
+//    }
+    
+    
     cell.nameLabel.text = boxesModel.name;
     if (boxesModel.tweet) {
-       
         if (boxesModel.tweet.list.count>0) {
             cell.detailLabel.text = @"[图片]";
             [boxesModel.tweet.list enumerateObjectsUsingBlock:^(WBTweetlistModel *listModel, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -125,19 +232,11 @@
                     *stop = YES;
                 }
             }];
-            long long tweetTime = [boxesModel.tweet.ctime longLongValue];
-
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss.S"];
-            
-            NSDate *date = [NSDate dateWithTimeIntervalSince1970:tweetTime];
-            
-            NSString *formattedDateString = [dateFormatter stringFromDate:date];
-            NSLog(@"formattedDateString: %@", formattedDateString);
-   
-            cell.timeLable.text = [self getReleaseTime:tweetTime];
         }
     }
+    
+    long long tweetTime = boxesModel.tweet.ctime;
+    cell.timeLable.text = [NSString getReleaseTime:tweetTime];
     if (boxesModel.name.length == 0|| !boxesModel.name){
         cell.nameLabel.text = [NSString stringWithFormat:@"群聊(%ld)",(unsigned long)boxesModel.users.count];
         
@@ -168,60 +267,6 @@
     return cell;
 }
 
-- (NSString *)getReleaseTime:(long long)releaseTime
-{
-    
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    
-    //dateFormat时间样式属性,传入格式必须按这个
-//    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss.S";
-    
-    //locale："区域；场所"
-    formatter.locale = [NSLocale currentLocale];
-    
-    //发布时间
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:(releaseTime/1000.0)];
-    
-    //现在时间
-    NSDate *now = [NSDate date];
-    
-    //发布时间到现在间隔多长时间，用timeIntervalSinceDate
-    NSTimeInterval interval = [now timeIntervalSinceDate:date];
-    
-    NSString *format;
-    
-    if (interval <= 60) {
-        
-        format = @"刚刚";
-        
-    } else if(interval <= 60*60){
-        
-        format = [NSString stringWithFormat:@"%.f分钟前",interval/60];
-        
-    } else if(interval <= 60*60*24){
-        
-        format = [NSString stringWithFormat:@"%.f小时前",interval/3600];
-        
-    } else if (interval <= 60*60*24*7){
-        
-        format = [NSString stringWithFormat:@"%d天前",
-                  (int)interval/(60*60*24)];
-        
-    } else if (interval > 60*60*24*7 & interval <= 60*60*24*30 ){
-        
-        format = [NSString stringWithFormat:@"%d周前",
-                  (int)interval/(60*60*24*7)];
-        
-    }else if(interval > 60*60*24*30 ){
-        
-        format = [NSString stringWithFormat:@"%d月前",
-                  (int)interval/(60*60*24*30)];
-        
-    }
-    
-    return format;
-    
-}
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -236,6 +281,36 @@
     chatVC.title = cell.nameLabel.text;
     chatVC.boxModel = model;
     [self.navigationController pushViewController:chatVC animated:YES];
+}
+
+- (void)messageTopic:(NSString *)topic jsonStr:(NSString *)jsonStr{
+    [KDefaultNotificationCenter postNotificationName:kBoxMQTTFresh object:jsonStr];
+    
+    NSData *data = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+    NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    NSLog(@"%@",array);
+    NSMutableArray *uuidArray = [NSMutableArray arrayWithCapacity:0];
+    @weaky(self)
+    [array enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+         WBBoxesModel *model = [WBBoxesModel modelWithDictionary:obj];
+        [self.boxDataArray enumerateObjectsUsingBlock:^(WBBoxesModel *boxModel, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([boxModel.uuid isEqualToString:model.uuid]) {
+//                NSIndexPath *indexForSelf = [NSIndexPath indexPathForRow:idx inSection:0];
+//                WBChatListTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexForSelf];
+                [self.boxDataArray removeObjectAtIndex:idx];
+                [self.boxDataArray insertObject:model atIndex:0];
+                [self.tableView reloadData];
+            }
+            [uuidArray addObject:boxModel.uuid];
+        }];
+        
+        if (![uuidArray containsObject:model.uuid]) {
+            [self.boxDataArray insertObject:model atIndex:0];
+            [self.tableView reloadData];
+        }
+    }];
+    
+    
 }
 
 - (UITableView *)tableView{
@@ -270,4 +345,5 @@
     }
     return _boxDataArray;
 }
+
 @end

@@ -23,6 +23,8 @@
 #import "WBChatViewNormalTableViewCell.h"
 #import "VCFloatingActionButton.h"
 #import "FirstFilesViewController.h"
+#import "WBChatListViewController.h"
+
 
 NSString *const kTableViewOffset = @"contentOffset";
 NSString *const kTableViewFrame = @"frame";
@@ -52,6 +54,7 @@ NSString *const kTableViewFrame = @"frame";
 @property (nonatomic, assign) BOOL isScrollBottom;
 @property (nonatomic, strong)VCFloatingActionButton *addButton;
 
+@property (nonatomic)NSMutableArray *freshBoxDataArray;
 
 @end
 
@@ -73,7 +76,7 @@ NSString *const kTableViewFrame = @"frame";
 //    dispatch_main_async_safe(^{
 //         [self scrollToBottomAnimated:NO refresh:YES];
 //    });
-   
+    [KDefaultNotificationCenter addObserver:self selector:@selector(mqttFreshChanged:) name:kBoxMQTTFresh object:nil];
     [KDefaultNotificationCenter addObserver:self selector:@selector(dataChanged:) name:kDataChangedName object:nil];
     [KDefaultNotificationCenter addObserver:self selector:@selector(fileSelectChanged:) name:kBoxFileSelect object:nil];
 }
@@ -123,6 +126,7 @@ NSString *const kTableViewFrame = @"frame";
 //    [self.tableView removeObserver:self forKeyPath:kTableViewOffset];
     [KDefaultNotificationCenter removeObserver:self name:kDataChangedName object:nil];
     [KDefaultNotificationCenter removeObserver:self name:kBoxFileSelect object:nil];
+    [KDefaultNotificationCenter removeObserver:self name:kBoxMQTTFresh object:nil];
 }
 
 - (void)getData{
@@ -191,6 +195,7 @@ NSString *const kTableViewFrame = @"frame";
     messageModel.isRead = YES;
     messageModel.status = MessageDeliveryState_Delivering;
     messageModel.ctime = date;
+    messageModel.uuid = @"myselfPush";
     messageModel.messageBodytype = MessageBodyType_File;
     NSArray *listArr = [[NSArray alloc]initWithArray:dataDic[@"filesModel"] copyItems:YES];
     NSMutableArray *listMutableArr = [NSMutableArray arrayWithCapacity:0];
@@ -534,7 +539,6 @@ NSString *const kTableViewFrame = @"frame";
             
             self.isScrollBottom = YES;
         }
-        
     }
 }
 
@@ -611,6 +615,35 @@ NSString *const kTableViewFrame = @"frame";
     }
 }
 
+- (void)mqttFreshChanged:(NSNotification *)noti{
+    NSString *jsonStr = noti.object;
+    NSData *data = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+    NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    NSLog(@"%@",array);
+    NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
+    @weaky(self)
+    [array enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        WBBoxesModel *model = [WBBoxesModel modelWithDictionary:obj];
+        if ([model.uuid isEqualToString:_boxModel.uuid]) {
+            model.tweet.uuid = model.uuid;
+            NSIndexPath *indexForSelf = [NSIndexPath indexPathForRow:self.dataSource.count-1 inSection:0];
+            WBChatViewNormalTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexForSelf];
+//            NSDate *date = [NSDate dateWithTimeIntervalSince1970:(model.tweet.ctime/1000.0)];
+//            NSDate *now = [NSDate date];
+            //发布时间到现在间隔多长时间，用timeIntervalSinceDate
+//            NSTimeInterval interval = [now timeIntervalSinceDate:date];
+            if (![cell.messageModel.uuid isEqualToString:@"myselfPush"]) {
+                NSIndexPath *index = [weak_self insertNewMessageOrTime:model.tweet];
+                [self.messages addObject:model];
+                [self.tableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+                [dataArray addObject: model.tweet];
+//                [self.tableView reloadData];
+            }
+        }
+    }];
+    self.freshBoxDataArray = dataArray;
+}
+
 #pragma mark - lazy
 - (UITableView *)tableView {
     if (!_tableView) {
@@ -644,7 +677,7 @@ NSString *const kTableViewFrame = @"frame";
         CGRect floatFrame = CGRectMake(__kWidth - 56 - 16 , __kHeight - 64 - 56 - 16, 56, 56);
         _addButton = [[VCFloatingActionButton alloc]initWithFrame:floatFrame normalImage:[UIImage imageNamed:@"add_album"] andPressedImage:[UIImage imageNamed:@"icon_close"] withScrollview:self.tableView];
         _addButton.automaticallyInsets = YES;
-        _addButton.imageArray = @[@"download",@"fab_share"];
+        _addButton.imageArray = @[@"box_share_photo",@"box_share_folder"];
         _addButton.labelArray = @[@"",@""];
         _addButton.delegate = self;
     }
@@ -679,8 +712,14 @@ NSString *const kTableViewFrame = @"frame";
     return _browserAnimateDelegate;
 }
 
-@end
 
+- (NSMutableArray *)freshBoxDataArray{
+    if (!_freshBoxDataArray) {
+        _freshBoxDataArray = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _freshBoxDataArray;
+}
+@end
 
 
 @implementation WBBoxMessageModel

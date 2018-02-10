@@ -11,6 +11,18 @@
 #import "UIButton+WebCache.h"
 
 @implementation UIImage (extension)
+
++ (UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize{
+    
+    UIGraphicsBeginImageContext(CGSizeMake(image.size.width * scaleSize, image.size.height * scaleSize));
+                                [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height * scaleSize)];
+                                UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+                                UIGraphicsEndImageContext();
+                                
+                                return scaledImage;
+                                
+}
+                                
 - (void)was_roundImageWithSize:(CGSize)size fillColor:(UIColor *)fillColor opaque:(BOOL)opaque completion:(void (^)(UIImage *))completion {
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -288,4 +300,6 @@
     }
     
 }
+
+
 @end

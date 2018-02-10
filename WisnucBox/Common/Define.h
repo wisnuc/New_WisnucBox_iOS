@@ -29,6 +29,18 @@
 #define kCloudCommonPipeUrl [NSString stringWithFormat:@"c/v1/stations/%@/pipe", WB_UserService.currentUser.stationId]
 #define kCloudCommonBoxesUrl  @"c/v1/boxes"
 
+//MQTT
+
+//test
+
+#define KMQTTTESTHOST  @"test.siyouqun.com"
+#define KMQTTHOST      @"www.siyouqun.com"
+
+#define KMQTTPORT      1883
+
+
+
+
 
 #define KWxAppID      @"wx99b54eb728323fe8"
 

@@ -86,6 +86,11 @@
 }
 
 - (BOOL)modelCustomTransformFromDictionary:(NSDictionary *)dic {
+    if ([dic[@"tweeter"] isKindOfClass:[NSString class]]) {
+//        NSLog(@"%@",self.tweeter);
+        self.tweeter = [WBTweetTweeterModel new];
+        self.tweeter.tweeterId = dic[@"tweeter"];
+    }
     if ([self.tweeter.tweeterId isEqualToString:WB_UserService.currentUser.guid]) {
         self.isSender = YES;
     }
@@ -133,7 +138,7 @@
                 self.width = MAX_SIZE *2 + SEPARATE *array.count;
             }
         }
-    
+
 }
 
 @end

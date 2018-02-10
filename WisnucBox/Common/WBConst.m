@@ -45,6 +45,8 @@ NSInteger kMessageCount = 20;
 
 NSString *const kBoxFileSelect = @"kBoxFileSelect";
 
+NSString *const kBoxMQTTFresh = @"kBoxMQTTFresh";
+
 #pragma mark - IM模块常量
 
 // 头像大小
