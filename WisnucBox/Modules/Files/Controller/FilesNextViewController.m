@@ -89,6 +89,10 @@ FilesHelperOpenFilesDelegate
 }
 
 -(void)createNavBtns{
+    if (_selectType == WBFilesFirstBoxBrowseType) {
+        self.title = @"文件查看";
+        return;
+    }
     self.title = _name;
 //    self.navigationItem.rightBarButtonItem = nil;
     UIButton * rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 24, 24)];
@@ -131,6 +135,20 @@ FilesHelperOpenFilesDelegate
 }
 
 - (void)loadData{
+    if (_selectType == WBFilesFirstBoxBrowseType) {
+        [self.tweetModel.list enumerateObjectsUsingBlock:^(WBTweetlistModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            EntriesModel *model = [[EntriesModel alloc]init];
+            model.name = obj.filename;
+            model.size = [obj.size longLongValue];
+            model.photoHash = obj.sha256;
+            model.type = @"file";
+            model.mtime = self.tweetModel.ctime;
+            [self.dataSouceArray addObject:model];
+        }];
+        [self.tableView reloadData];
+        return;
+    }
+    
     [FilesDataSourceManager manager].delegate = self;
     [[FilesDataSourceManager manager] getFilesWithDriveUUID:_driveUUID DirUUID:_parentUUID];
     _cellStatus = FLFliesCellStatusNormal;
@@ -345,7 +363,8 @@ FilesHelperOpenFilesDelegate
         cell= (FLFilesCell *)[[[NSBundle  mainBundle] loadNibNamed:NSStringFromClass([FLFilesCell class]) owner:self options:nil]  lastObject];
     }
     EntriesModel *dataModel = _dataSouceArray[indexPath.row];
-    [[FLFIlesHelper helper] configCells:cell withModel:dataModel cellStatus:self.cellStatus viewController:self parentUUID:_parentUUID RootUUID:_driveUUID];
+    cell.selectType = _selectType;
+    [[FLFIlesHelper helper] configCells:cell withModel:dataModel cellStatus:self.cellStatus viewController:self parentUUID:_parentUUID RootUUID:_driveUUID BoxUUID:_tweetModel.boxuuid];
     return cell;
 }
 
@@ -388,6 +407,7 @@ FilesHelperOpenFilesDelegate
                 _countLb.text = [NSString stringWithFormat:WBLocalizedString(@"select_count", nil),(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
                 [self.tableView reloadData];
             }else{
+              
                 NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
                 NSString* suffixName = model.uuid;
                 NSString *fileName = model.name;
@@ -399,6 +419,50 @@ FilesHelperOpenFilesDelegate
                     _documentController.delegate = self;
                     [self presentOptionsMenu];
                 }else{
+                    if (_selectType == WBFilesFirstBoxBrowseType && _tweetModel.boxuuid.length>0) {
+                        self.progressView.descLb.text =@"正在下载文件";
+                        self.progressView.subDescLb.text = [NSString stringWithFormat:@"1个项目 "];
+                        self.progressView.cancleBlock = ^(){
+                            [[CSFilesOneDownloadManager shareManager] cancelAllDownloadTask];
+                        };
+                        [_progressView show];
+                        [[CSDownloadHelper shareManager] downloadOneFileWithFileModel:model BoxUUID:_tweetModel.boxuuid FileHash:model.photoHash IsDownloading:^(BOOL isDownloading) {
+                            if (isDownloading){
+                                [_progressView dismiss];
+                                if (self.cellStatus == FLFliesCellStatusCanChoose) {
+                                    [self actionForNormalStatus];
+                                }
+                                LocalDownloadViewController *localDownloadViewController = [[LocalDownloadViewController alloc] init];
+                                [self.navigationController pushViewController:localDownloadViewController animated:YES];
+                            }
+                        } begin:^{
+                            
+                        } progress:^(NSProgress *downloadProgress) {
+                            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                                CGFloat downloadProgressFloat = (float)downloadProgress.completedUnitCount/(float)downloadProgress.totalUnitCount;
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    if (WB_UserService.currentUser.isCloudLogin) {
+                                        
+                                        [_progressView setValueForProcess:downloadProgressFloat];
+                                        //                                NSLog(@"%lld",downloadProgress.completedUnitCount);
+                                    }else{
+                                        [_progressView setValueForProcess:downloadProgress.fractionCompleted];
+                                    }
+                                });
+                            });
+                        } complete:^(CSOneDowloadTask *downloadTask,NSError *error) {
+                            [_progressView dismiss];
+                            if (!error) {
+                                _documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:downloadTask.downloadFileModel.downloadFileSavePath]];
+                                _documentController.delegate = self;
+                                [self presentOptionsMenu];
+                            }else{
+                                //                            [SXLoadingView showProgressHUDText:@"下载失败,请重试" duration:1.5];
+                            }
+                        }];
+                    
+                    }else{
+                    
                     self.progressView.descLb.text =@"正在下载文件";
                     self.progressView.subDescLb.text = [NSString stringWithFormat:@"1个项目 "];
                     self.progressView.cancleBlock = ^(){
@@ -440,6 +504,7 @@ FilesHelperOpenFilesDelegate
                         }
                     }];
                 }
+              }
             }
         }
     }

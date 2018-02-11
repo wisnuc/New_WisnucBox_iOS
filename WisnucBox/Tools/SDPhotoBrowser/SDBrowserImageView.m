@@ -51,32 +51,32 @@
     
     CGSize imageSize = self.image.size;
     
-    if (self.bounds.size.width * (imageSize.height / imageSize.width) > self.bounds.size.height) {
-        if (!_scroll) {
-            UIScrollView *scroll = [[UIScrollView alloc] init];
-            scroll.backgroundColor = [UIColor whiteColor];
-            UIImageView *imageView = [[UIImageView alloc] init];
-            imageView.image = self.image;
-            _scrollImageView = imageView;
-            [scroll addSubview:imageView];
-            scroll.backgroundColor = SDPhotoBrowserBackgrounColor;
-            _scroll = scroll;
-            [self addSubview:scroll];
-            if (_waitingView) {
-                [self bringSubviewToFront:_waitingView];
-            }
-        }
-        _scroll.frame = self.bounds;
-
-        CGFloat imageViewH = self.bounds.size.width * (imageSize.height / imageSize.width);
-
-        _scrollImageView.bounds = CGRectMake(0, 0, _scroll.frame.size.width, imageViewH);
-        _scrollImageView.center = CGPointMake(_scroll.frame.size.width * 0.5, _scrollImageView.frame.size.height * 0.5);
-        _scroll.contentSize = CGSizeMake(0, _scrollImageView.bounds.size.height);
-        
-    } else {
+//    if (self.bounds.size.width * (imageSize.height / imageSize.width) > self.bounds.size.height) {
+//        if (!_scroll) {
+//            UIScrollView *scroll = [[UIScrollView alloc] init];
+//            scroll.backgroundColor = [UIColor whiteColor];
+//            UIImageView *imageView = [[UIImageView alloc] init];
+//            imageView.image = self.image;
+//            _scrollImageView = imageView;
+//            [scroll addSubview:imageView];
+//            scroll.backgroundColor = SDPhotoBrowserBackgrounColor;
+//            _scroll = scroll;
+//            [self addSubview:scroll];
+//            if (_waitingView) {
+//                [self bringSubviewToFront:_waitingView];
+//            }
+//        }
+//        _scroll.frame = self.bounds;
+//
+//        CGFloat imageViewH = self.bounds.size.width * (imageSize.height / imageSize.width);
+//
+//        _scrollImageView.bounds = CGRectMake(0, 0, _scroll.frame.size.width, imageViewH);
+//        _scrollImageView.center = CGPointMake(_scroll.frame.size.width * 0.5, _scrollImageView.frame.size.height * 0.5);
+//        _scroll.contentSize = CGSizeMake(0, _scrollImageView.bounds.size.height);
+//
+//    } else {
         if (_scroll) [_scroll removeFromSuperview]; // 防止旋转时适配的scrollView的影响
-    }
+//    }
     
 }
 

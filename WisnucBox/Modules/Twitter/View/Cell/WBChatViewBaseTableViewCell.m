@@ -78,7 +78,7 @@
         _nameLabel.backgroundColor = [UIColor clearColor];
         _nameLabel.textColor = [UIColor grayColor];
         _nameLabel.textAlignment = NSTextAlignmentLeft;
-        _nameLabel.font = [UIFont systemFontOfSize:NAME_LABEL_FONT_SIZE];
+        _nameLabel.font = [UIFont boldSystemFontOfSize:NAME_LABEL_FONT_SIZE];
         [self.contentView addSubview:_nameLabel];
         
         [self setupSubviewsForMessageModel:model];

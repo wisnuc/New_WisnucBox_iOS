@@ -95,8 +95,35 @@ static MBProgressHUD  *s_progressHUD = nil;
              [s_progressHUD hide:YES afterDelay:30];
         }
     });
-    
-    
+}
+
++ (void)showProgressHUD:(NSString *)aString View:(UIView *)view{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (!s_progressHUD) {
+            static dispatch_once_t once;
+            dispatch_once(&once, ^{
+                s_progressHUD = [[MBProgressHUD alloc] initWithView:view];
+            });
+        }else{
+            [s_progressHUD hide:NO];
+        }
+        [view addSubview:s_progressHUD];
+        s_progressHUD.userInteractionEnabled = NO;
+        s_progressHUD.removeFromSuperViewOnHide = YES;
+        s_progressHUD.animationType = MBProgressHUDAnimationZoom;
+        s_progressHUD.dimBackground = NO;
+        //        s_progressHUD.
+        if ([aString length]>0) {
+            s_progressHUD.labelText = aString;
+        }
+        else s_progressHUD.labelText = nil;
+        
+        s_progressHUD.opacity = 0.7;
+        [s_progressHUD show:YES];
+        if (s_progressHUD) {
+            [s_progressHUD hide:YES afterDelay:30];
+        }
+    });
 }
 
 + (void)showAlertHUD:(NSString *)aString duration:(CGFloat)duration {

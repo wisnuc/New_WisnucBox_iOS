@@ -15,6 +15,8 @@
         [self addSubview:self.shareTextLable];
         [self addSubview:self.shareFileImageView];
         [self addSubview:self.sizeLabel];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bubbleViewPressed:)];
+        [self addGestureRecognizer:tap];
     }
     return self;
 }
@@ -101,6 +103,11 @@
 //    NSLog(@"%@",NSStringFromCGSize(retSize));
     return CGSizeMake(BOX_FILE_SIZE_WIDTH,BOX_FILE_SIZE_HEIGHT);
 }
+
+- (void)bubbleViewPressed:(id)sender {
+    [self routerEventWithName:kRouterEventFileBubbleTapEventName userInfo:@{kMessageKey : self.messageModel}];
+}
+
 
 #pragma mark - public
 

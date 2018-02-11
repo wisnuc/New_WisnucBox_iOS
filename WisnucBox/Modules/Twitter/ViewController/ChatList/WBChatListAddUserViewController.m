@@ -302,7 +302,7 @@
         cell = (WBChatListAddUserTableViewCell *)[[[NSBundle mainBundle]loadNibNamed:NSStringFromClass([WBChatListAddUserTableViewCell class]) owner:self options:nil]lastObject];
     }
     
-    if (WB_UserService.currentUser.cloudToken) {
+    if (WB_UserService.currentUser.isCloudLogin) {
         WBBoxesUsersModel *model = self.userArray[indexPath.row];
         if (model.avatarUrl.length>0) {
             [cell.userImageView was_setCircleImageWithUrlString:model.avatarUrl placeholder:[UIImage imageForName:model.nickName size:cell.userImageView.bounds.size]];
@@ -351,7 +351,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (WB_UserService.currentUser.cloudToken) {
+    if (WB_UserService.currentUser.isCloudLogin) {
          WBBoxesUsersModel *model = self.userArray[indexPath.row];
         WBChatListAddUserTableViewCell *cell  = [tableView cellForRowAtIndexPath:indexPath];
         switch (_type) {

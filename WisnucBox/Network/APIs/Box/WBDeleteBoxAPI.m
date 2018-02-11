@@ -17,10 +17,21 @@
 
 
 - (JYRequestMethod)requestMethod{
+    if (WB_UserService.currentUser.isCloudLogin) {
+        return JYRequestMethodPost;
+    }
     return JYRequestMethodDelete;
 }
 
 - (id)requestArgument{
+    if (WB_UserService.currentUser.isCloudLogin) {
+        NSDictionary *dic = @{
+                              @"resource" :[[NSString stringWithFormat:@"boxes/%@",_boxuuid] base64EncodedString],
+                              @"method" : @"DELETE",
+                              @"uuid":_boxuuid
+                              };
+        return dic;
+    }
     NSDictionary *dic = @{
                           @"uuid":_boxuuid
                           };

@@ -23,6 +23,7 @@
 @property(nonatomic, strong)    NSString *topic;//单个主题订阅
 @property(nonatomic, strong)    NSDictionary *topics;//多个主题订阅
 @property(nonatomic, strong)    MQTTStatus *mqttStatus;//连接服务器状态
+@property(nonatomic) NSInteger m;
 @end
 
 @implementation MQTTClientManager
@@ -68,6 +69,7 @@ static dispatch_once_t onceToken;
 
 - (instancetype)init{
     if (self = [super init]) {
+        _m = 0;
         [self.mqttSession addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionOld context:nil];
     }
     return self;
@@ -138,7 +140,7 @@ static dispatch_once_t onceToken;
     [self.mqttSession setReceiveMaximum:@(5*1000)];
     
     //会话链接并设置超时时间
-    [self.mqttSession connectAndWaitTimeout:5*1000];
+    [self.mqttSession connectAndWaitTimeout:1000];
 }
 /**
  断开连接，清空数据
@@ -224,9 +226,14 @@ static dispatch_once_t onceToken;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
-    if (self.mqttSession.status == 4) {
-        [self.mqttSession connect];
-    }
+    _m ++;
+    
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//    if (_m<=10) {
+//        if (self.mqttSession.status == 4) {
+//            [self.mqttSession connect];
+//        }
+//    }
 }
 
 @end

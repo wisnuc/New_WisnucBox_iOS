@@ -26,6 +26,9 @@
     self.layerView.layer.cornerRadius = 20;
 }
 - (void)handlelongPress:(id)sender {
+    if (_selectType == WBFilesFirstBoxBrowseType) {
+        return;
+    }
     if (self.longpressBlock) {
         @weaky(self);
         _longpressBlock(weak_self);

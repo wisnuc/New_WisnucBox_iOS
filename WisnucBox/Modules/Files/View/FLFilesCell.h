@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "FirstFilesViewController.h"
 
 typedef enum : NSUInteger {
     FLFliesCellStatusNormal = 0,
@@ -25,6 +25,7 @@ typedef void(^longPressBlock)(FLFilesCell * cell);
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *downBtn;
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
+@property (nonatomic) WBFilesFirstSelectType selectType;
     
 @property (nonatomic) downBtnClockBlock clickBlock;
 @property (nonatomic) longPressBlock longpressBlock;

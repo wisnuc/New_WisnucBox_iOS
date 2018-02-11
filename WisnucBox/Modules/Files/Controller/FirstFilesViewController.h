@@ -19,7 +19,8 @@ typedef NS_ENUM(NSInteger,WBFilesFirstDirectoryType) {
 
 typedef NS_ENUM(NSInteger,WBFilesFirstSelectType) {
     WBFilesFirstBoxSelectType = 1,
-    WBFilesFirstNormalType
+    WBFilesFirstNormalType,
+    WBFilesFirstBoxBrowseType
 };
 
 @interface FirstFilesViewController : FMBaseFirstVC

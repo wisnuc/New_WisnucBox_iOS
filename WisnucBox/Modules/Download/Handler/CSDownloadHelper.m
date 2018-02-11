@@ -141,6 +141,86 @@ __strong static id _sharedObject = nil;
     }
 }
 
+
+- (void)downloadOneFileWithFileModel:(EntriesModel *)dataModel
+                            BoxUUID:(NSString *)boxUUID
+                                FileHash:(NSString *)fileHash
+                       IsDownloading:(HelperDownloadingEventHandler)isDownloading
+                               begin:(CSDownloadBeginEventHandler)begin
+                            progress:(CSDownloadingEventHandler)progress
+                            complete:(CSOneDownloadedEventHandler)complete{
+    
+    NSString *resource = [NSString stringWithFormat:@"/boxes/%@/files/%@",boxUUID,fileHash];
+    
+    NSString *loaclFormUrl = [NSString stringWithFormat:@"%@boxes/%@/files/%@",[JYRequestConfig sharedConfig].baseURL,boxUUID,fileHash];
+    
+    NSString* fromUrl = WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@?resource=%@&method=GET", kCloudAddr, kCloudCommonPipeUrl, [resource base64EncodedString]] :loaclFormUrl;
+    
+    //    NSLog(@"%@",fromUrl);
+    NSString* suffixName = dataModel.name;
+    NSDate* datenow = [NSDate date];
+    //    NSString* tmpFileName = [NSString stringWithFormat:@"file-%@%@.tmp",suffixName,datenow];
+    NSString* saveFileName= [NSString stringWithFormat:@"%@",dataModel.uuid];
+    NSString *extensionstring = [suffixName pathExtension];
+    NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:YES];
+    NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",suffixName]];
+    NSFileManager *manager = [NSFileManager defaultManager];
+    
+    if ([manager fileExistsAtPath:saveFile]) {
+        [SXLoadingView showProgressHUDText:WBLocalizedString(@"file_downloaded", nil) duration:1.8];
+        return;
+    }
+    
+    NSLog(@"成功下载路径为:%@",savePath);
+    NSLog(@"成功文件为:%@",saveFile);
+    
+    //    NSString* tempPath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/Tmp" createIfNotExist:YES];
+    //    NSString* tempFile = [tempPath stringByAppendingPathComponent:tmpFileName];
+    //
+    //    NSLog(@"临时下载路径为:%@",tempPath);
+    //    NSLog(@"临时文件为:%@",tempFile);
+    
+    //     NSString* fileName = [suffixName stringByDeletingPathExtension];
+    
+    CSDownloadModel* downloadFileModel = [[CSDownloadModel alloc] init];
+    [downloadFileModel setDownloadFileName:[NSString stringWithFormat:@"%@",suffixName]];
+    [downloadFileModel setGetDownloadFileUUID:dataModel.uuid];
+    [downloadFileModel setDownloadTaskURL:fromUrl];
+    [downloadFileModel setDownloadFileSavePath:saveFile];
+    //    [downloadFileModel setDownloadTempSavePath:tempFile];
+    [downloadFileModel setDownloadFileUserId:WB_UserService.currentUser.uuid];
+    [downloadFileModel setDownloadFilePlistURL:@""];
+    NSNumber* fileSize = [NSNumber numberWithLongLong:dataModel.size];
+    [downloadFileModel setDownloadFileSize:fileSize];
+    
+    CSOneDowloadTask* downloadTask = [[CSOneDowloadTask alloc] init];
+    [downloadTask setDownloadTaskId:[NSString stringWithFormat:@"%d", _downdloadIdCount + 1]];
+    [downloadTask setDownloadFileModel:downloadFileModel];
+    [downloadTask setDownloadUIBinder:self];
+    if(_manager.downloadingTasks.count>0){
+        __block BOOL find = NO;
+        [_manager.downloadingTasks enumerateObjectsUsingBlock:^(CSDownloadTask * obj, NSUInteger idx, BOOL *stop) {
+            NSLog(@"%@", downloadTask.downloadFileModel.getDownloadFileUUID);
+            NSLog(@"%@",obj.downloadFileModel.getDownloadFileUUID);
+            if([obj.downloadFileModel.getDownloadFileUUID  isEqualToString:downloadTask.downloadFileModel.getDownloadFileUUID]){
+                * stop = YES;
+                isDownloading(YES);
+            }
+        }];
+        
+        if (!find) {
+            [_oneDownloadArray addObject:downloadTask];
+            [self startOneDownloadWithTask:downloadTask begin:begin progress:progress complete:complete];
+        }
+        
+    } else{
+        
+        [_oneDownloadArray addObject:downloadTask];
+        [self startOneDownloadWithTask:downloadTask begin:begin progress:progress complete:complete];
+    }
+}
+
+
 - (void)downloadFileWithFileModel:(EntriesModel *)dataModel RootUUID:(NSString *)rootUUID UUID:(NSString *)uuid{
     _downdloadIdCount++;
     _downdloadCount++;
@@ -211,6 +291,78 @@ __strong static id _sharedObject = nil;
  
     _downdloadCount = 0;
 }
+
+- (void)downloadFileWithFileModel:(EntriesModel *)dataModel BoxUUID:(NSString *)boxUUID FileHash:(NSString *)fileHash{
+    _downdloadIdCount++;
+    _downdloadCount++;
+    NSString *resource = [NSString stringWithFormat:@"/boxes/%@/files/%@",boxUUID,fileHash];
+    
+    NSString *loaclFormUrl = [NSString stringWithFormat:@"%@boxes/%@/files/%@",[JYRequestConfig sharedConfig].baseURL,boxUUID,fileHash];
+    
+    NSString* fromUrl = WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@?resource=%@&method=GET", kCloudAddr, kCloudCommonPipeUrl, [resource base64EncodedString]] :loaclFormUrl;
+    
+    NSString* suffixName = dataModel.name;
+    //    NSString* tmpFileName = [NSString stringWithFormat:@"file-%d.tmp",_downdloadIdCount];
+    NSString* saveFileName= [NSString stringWithFormat:@"%@",dataModel.uuid];
+    
+    NSString *extensionstring = [suffixName pathExtension];
+    NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:YES];
+    NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",suffixName]];
+    NSFileManager *manager = [NSFileManager defaultManager];
+    
+    if ([manager fileExistsAtPath:saveFile]) {
+        //        [SXLoadingView showProgressHUDText:@"该文件已下载" duration:1.0];
+        return;
+    }
+    
+    NSLog(@"成功下载路径为:%@",savePath);
+    NSLog(@"成功文件为:%@",saveFile);
+    
+    //    NSString* tempPath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/Tmp" createIfNotExist:YES];
+    //    NSString* tempFile = [tempPath stringByAppendingPathComponent:tmpFileName];
+    
+    //    NSLog(@"临时下载路径为:%@",tempPath);
+    //    NSLog(@"临时文件为:%@",tempFile);
+    
+    //     NSString* fileName = [suffixName stringByDeletingPathExtension];
+    
+    CSDownloadModel* downloadFileModel = [[CSDownloadModel alloc] init];
+    [downloadFileModel setDownloadFileName:[NSString stringWithFormat:@"%@",suffixName]];
+    [downloadFileModel setGetDownloadFileUUID:dataModel.uuid];
+    [downloadFileModel setDownloadTaskURL:fromUrl];
+    [downloadFileModel setDownloadFileSavePath:saveFile];
+    //    [downloadFileModel setDownloadTempSavePath:tempFile];
+    [downloadFileModel setDownloadFileUserId:WB_UserService.currentUser.uuid];
+    [downloadFileModel setDownloadFilePlistURL:@""];
+    NSNumber* fileSize = [NSNumber numberWithLongLong:dataModel.size];
+    [downloadFileModel setDownloadFileSize:fileSize];
+    
+    CSDownloadTask* downloadTask = [[CSDownloadTask alloc] init];
+    [downloadTask setDownloadTaskId:[NSString stringWithFormat:@"%d", _downdloadIdCount]];
+    [downloadTask setDownloadFileModel:downloadFileModel];
+    [downloadTask setDownloadUIBinder:self];
+    
+    if(_manager.downloadingTasks.count>0){
+        __block BOOL find = NO;
+        [_manager.downloadingTasks enumerateObjectsUsingBlock:^(CSDownloadTask * obj, NSUInteger idx, BOOL *stop) {
+            if([obj.downloadFileModel.getDownloadFileUUID  isEqualToString:downloadTask.downloadFileModel.getDownloadFileUUID]){
+                * stop = YES;
+                find = YES;
+            }
+        }];
+        if (!find) {
+            [_manager addDownloadTask:downloadTask];
+            [self startDownloadWithTask:downloadTask];
+        }
+        
+    } else{
+        [_manager addDownloadTask:downloadTask];
+        [self startDownloadWithTask:downloadTask];
+    }
+    
+    _downdloadCount = 0;
+}
+
 
 
 - (void)startOneDownloadWithTask:(CSOneDowloadTask*)downloadTask begin:(CSDownloadBeginEventHandler)begin
@@ -305,6 +457,10 @@ __strong static id _sharedObject = nil;
                                }];
     
 }
+
+
+
+
 
 - (void)startAllDownloadTask{
    [_manager startAllDownloadTask];

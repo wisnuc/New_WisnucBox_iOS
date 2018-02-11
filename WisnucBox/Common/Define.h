@@ -21,10 +21,10 @@
 #define RGBACOLOR(r, g, b ,a)      [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:a]
 
 #warning test
-//#define kCloudAddr    @"http://www.siyouqun.com/"
-#define kCloudAddr    @"http://10.10.9.87:4000/"
-#define WX_BASE_URL   @"http://10.10.9.87:4000/c/v1/"
-//#define WX_BASE_URL   @"http://www.siyouqun.com/c/v1/"
+#define kCloudAddr    @"http://www.siyouqun.com/"
+//#define kCloudAddr    @"http://10.10.9.87:4000/"
+//#define WX_BASE_URL   @"http://10.10.9.87:4000/c/v1/"
+#define WX_BASE_URL   @"http://www.siyouqun.com/c/v1/"
 #define kCloudCommonJsonUrl [NSString stringWithFormat:@"c/v1/stations/%@/json", WB_UserService.currentUser.stationId]
 #define kCloudCommonPipeUrl [NSString stringWithFormat:@"c/v1/stations/%@/pipe", WB_UserService.currentUser.stationId]
 #define kCloudCommonBoxesUrl  @"c/v1/boxes"
@@ -32,9 +32,9 @@
 //MQTT
 
 //test
+//#define KMQTTHOST  @"test.siyouqun.com"
 
-#define KMQTTTESTHOST  @"test.siyouqun.com"
-#define KMQTTHOST      @"www.siyouqun.com"
+#define KMQTTHOST      @"mqtt.siyouqun.com"
 
 #define KMQTTPORT      1883
 

@@ -24,6 +24,7 @@
 #import "VCFloatingActionButton.h"
 #import "FirstFilesViewController.h"
 #import "WBChatListViewController.h"
+#import "FilesNextViewController.h"
 
 
 NSString *const kTableViewOffset = @"contentOffset";
@@ -64,7 +65,7 @@ NSString *const kTableViewFrame = @"frame";
 #pragma mark - 初始化
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = MainBackgroudColor;
     self.automaticallyAdjustsScrollViewInsets = YES;
 
     // 初始化
@@ -131,6 +132,14 @@ NSString *const kTableViewFrame = @"frame";
 
 - (void)getData{
     if (_boxModel.uuid.length == 0)return;
+    if (![_boxModel.station.isOnline boolValue]) {
+        UILabel *label =  [[UILabel alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 80)];
+        label.text = @"该群设备已离线";
+        label.textColor = COR1;
+        label.textAlignment = NSTextAlignmentCenter;
+        self.tableView.tableFooterView =label;
+        return;
+    }
     [[WBTweetAPI apiWithBoxuuid:_boxModel.uuid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
        NSLog(@"%@",request.responseJsonObject);
 //        if ([request.responseJsonObject isKindOfClass:[NSDictionary class]]) {
@@ -226,16 +235,32 @@ NSString *const kTableViewFrame = @"frame";
          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if (!error) {
             dispatch_main_async_safe(^{
+                if (!cell) {
+                    NSIndexPath *index = [NSIndexPath indexPathForRow:self.dataSource.count-1 inSection:0];
+                    WBChatViewNormalTableViewCell *fileCell = [self.tableView cellForRowAtIndexPath:index];
+                    fileCell.messageModel.status = MessageDeliveryState_Delivered;
+                    [fileCell layoutSubviews];
+    
+                }else{
                 cell.messageModel.status = MessageDeliveryState_Delivered;
                 [cell layoutSubviews];
+                }
             });
         }else{
             dispatch_main_async_safe(^{
+                if (!cell) {
+                    NSIndexPath *index = [NSIndexPath indexPathForRow:self.dataSource.count-1 inSection:0];
+                    WBChatViewNormalTableViewCell *fileCell = [self.tableView cellForRowAtIndexPath:index];
+                    fileCell.messageModel.status = MessageDeliveryState_Failure;
+                    [fileCell layoutSubviews];
+                    
+                }else{
                 cell.messageModel.status = MessageDeliveryState_Failure;
                 [cell layoutSubviews];
+                }
             });
         }
-              });
+    });
     }];
 }
 //- (void)dropDownLoadDataWithScrollView:(UIScrollView *)scrollView {
@@ -306,29 +331,51 @@ NSString *const kTableViewFrame = @"frame";
 }
 
 - (void)sendMessageToNetSeverWith:(LHContentModel *)content TableViewCell:(WBChatViewNormalTableViewCell *)tabelViewCell{
+   
 #warning upload;
     NSMutableArray *imageArray = [NSMutableArray arrayWithCapacity:0];
     [content.photos.assets enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [imageArray addObject:obj];
     }];
-        [WB_BoxService sendTweetWithImageArray:imageArray Boxuuid:_boxModel.uuid Complete:^(WBTweetModel *tweetModel, NSError *error) {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    [WB_BoxService sendTweetWithImageArray:imageArray Boxuuid:_boxModel.uuid Complete:^(WBTweetModel *tweetModel, NSError *error) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             if (!error) {
                 [content.photos.photos enumerateObjectsUsingBlock:^(UIImage *image, NSUInteger idx, BOOL * _Nonnull stop) {
                     [SDImageCache.sharedImageCache storeImage:image forKey:[NSString stringWithFormat:@"%@%lld%ld",tweetModel.uuid,tweetModel.ctime,idx] toDisk:YES completion:nil];
                 }];
-                dispatch_main_async_safe(^{
-                tabelViewCell.messageModel.status = MessageDeliveryState_Delivered;
-                [tabelViewCell layoutSubviews];
-                });
+                
+                NSLog(@"%@",tabelViewCell);
+//                dispatch_main_async_safe(^{
+                if (!tabelViewCell) {
+                    NSIndexPath *index = [NSIndexPath indexPathForRow:self.dataSource.count-1 inSection:0];
+                    WBChatViewNormalTableViewCell *cell = [self.tableView cellForRowAtIndexPath:index];
+                    cell.messageModel.status = MessageDeliveryState_Delivered;
+                    [cell layoutSubviews];
+                    [cell reloadFinishLoadData];
+                }else{
+                    tabelViewCell.messageModel.status = MessageDeliveryState_Delivered;
+                    [tabelViewCell layoutSubviews];
+                    [tabelViewCell reloadFinishLoadData];
+                }
+//                });
             }else{
-                  dispatch_main_async_safe(^{
-                tabelViewCell.messageModel.status = MessageDeliveryState_Failure;
-                [tabelViewCell layoutSubviews];
-                });
+                if (!tabelViewCell) {
+                    NSIndexPath *index = [NSIndexPath indexPathForRow:self.dataSource.count-1 inSection:0];
+                    WBChatViewNormalTableViewCell *cell = [self.tableView cellForRowAtIndexPath:index];
+                    cell.messageModel.status = MessageDeliveryState_Delivered;
+                    [cell layoutSubviews];
+                    [cell reloadFinishLoadData];
+                }else{
+                    tabelViewCell.messageModel.status = MessageDeliveryState_Failure;
+                    [tabelViewCell layoutSubviews];
+                    [tabelViewCell reloadFinishLoadData];;
+                }
+//                dispatch_main_async_safe(^{
+                
+//                });
             }
-                 });
-        }];
+        });
+    }];
 
 }
 
@@ -345,6 +392,7 @@ NSString *const kTableViewFrame = @"frame";
     messageModel.isRead = YES;
     messageModel.status = MessageDeliveryState_Delivering;
     messageModel.ctime = date;
+    messageModel.uuid = @"myselfPush";
     messageModel.messageBodytype = MessageBodyType_Image;
     messageModel.localImageArray = contentModel.photos.localImageModelArray;
     switch (type) {
@@ -368,8 +416,10 @@ NSString *const kTableViewFrame = @"frame";
     
     NSIndexPath *index = [self insertNewMessageOrTime:messageModel];
     WBChatViewNormalTableViewCell *cell = [self.tableView cellForRowAtIndexPath:index];
+    
 //    [self.messages addObject:messageModel];
     [self.tableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    NSLog(@"%@",cell);
 //    if (self.tableView.contentSize.height > self.tableView.frame.size.height)
 //    {
 //        CGPoint offset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height);
@@ -430,14 +480,20 @@ NSString *const kTableViewFrame = @"frame";
 
 #pragma mark  cell事件处理
 - (void)routerEventWithName:(NSString *)eventName userInfo:(NSDictionary *)userInfo {
-    WBTweetModel *model = [userInfo objectForKey:kMessageKey];
-    UIImageView *imageView = [userInfo objectForKey:kMessageImageKey];
+//    WBTweetModel *model = [userInfo objectForKey:kMessageKey];
+//    UIImageView *imageView = [userInfo objectForKey:kMessageImageKey];
     if ([eventName isEqualToString:kRouterEventImageBubbleTapEventName]) {
         //点击图片
 //        [self chatImageCellBubblePressed:model ImageViewTag:imageView.tag];
     }else if ([eventName isEqualToString:kRouterEventChatResendEventName]){
-         WBChatViewNormalTableViewCell *cell = [userInfo objectForKey:kMessageKey];
+//         WBChatViewNormalTableViewCell *cell = [userInfo objectForKey:kMessageKey];
 //         [self sendMessageToNetSeverWith:(LHContentModel *)content TableViewCell:cell];
+    }else if ([eventName isEqualToString:kRouterEventFileBubbleTapEventName]){
+        WBTweetModel *model = [userInfo objectForKey:kMessageKey];
+        FilesNextViewController *nextVC = [[FilesNextViewController alloc]init];
+        nextVC.selectType = WBFilesFirstBoxBrowseType;
+        nextVC.tweetModel = model;
+        [self.navigationController pushViewController:nextVC animated:YES];
     }
 }
 
@@ -487,7 +543,7 @@ NSString *const kTableViewFrame = @"frame";
             }];
         if(groupName.length == 0)groupName = @"";
           timeCell.timeLable.text = [NSString stringWithFormat:@"%@组建了群",groupName];
-            
+          timeCell.timeLable.text = @"私友群已建立，你可以分享照片和文件给群友";   
         }
         
 //        else if ([boxMessageModel.op isEqualToString:@"deleteUser"]){
@@ -622,23 +678,36 @@ NSString *const kTableViewFrame = @"frame";
     NSLog(@"%@",array);
     NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
     @weaky(self)
+    //    dispatch_async(dispatch_get_global_queue(0, 0), ^{
     [array enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        @synchronized(self) {
         WBBoxesModel *model = [WBBoxesModel modelWithDictionary:obj];
         if ([model.uuid isEqualToString:_boxModel.uuid]) {
             model.tweet.uuid = model.uuid;
             NSIndexPath *indexForSelf = [NSIndexPath indexPathForRow:self.dataSource.count-1 inSection:0];
-            WBChatViewNormalTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexForSelf];
-//            NSDate *date = [NSDate dateWithTimeIntervalSince1970:(model.tweet.ctime/1000.0)];
-//            NSDate *now = [NSDate date];
-            //发布时间到现在间隔多长时间，用timeIntervalSinceDate
-//            NSTimeInterval interval = [now timeIntervalSinceDate:date];
-            if (![cell.messageModel.uuid isEqualToString:@"myselfPush"]) {
-                NSIndexPath *index = [weak_self insertNewMessageOrTime:model.tweet];
-                [self.messages addObject:model];
-                [self.tableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-                [dataArray addObject: model.tweet];
-//                [self.tableView reloadData];
-            }
+             if ([model.tweet.type isEqualToString:@"boxmessage"]) {
+//                   LHChatTimeCell *cell = [self.tableView cellForRowAtIndexPath:indexForSelf];
+                     NSIndexPath *index = [weak_self insertNewMessageOrTime:model.tweet];
+                     [self.messages addObject:model];
+                     [self.tableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+                     [dataArray addObject: model.tweet];
+
+             }else{
+                    WBChatViewNormalTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexForSelf];
+                 if (![cell.messageModel.uuid isEqualToString:@"myselfPush"]) {
+                     NSIndexPath *index = [weak_self insertNewMessageOrTime:model.tweet];
+                     [self.messages addObject:model];
+                     [self.tableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+                     [dataArray addObject: model.tweet];
+                     //                [self.tableView reloadData];
+                 }else{
+//                     cell.boxModel = model;
+//                     cell.messageModel.boxuuid = model.uuid;
+//                     cell.messageModel = model.tweet;
+//                     [cell layoutSubviews];
+                 }
+             }
+        }
         }
     }];
     self.freshBoxDataArray = dataArray;

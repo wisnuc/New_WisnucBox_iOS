@@ -16,4 +16,6 @@ typedef void(^ReloadCellBlock)(WBChatViewNormalTableViewCell *cell);
 @property (nonatomic, strong) UIView *activityView;
 @property (nonatomic, strong) UIButton *retryButton;
 @property (nonatomic)ReloadCellBlock reloadCellBlock;
+
+- (void)reloadFinishLoadData;
 @end

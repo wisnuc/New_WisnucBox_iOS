@@ -30,32 +30,42 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = WBLocalizedString(@"group_setting", nil);
-    [self initView];
     [self getUserData];
+    [self initView];
+    
+    [self.view addSubview:self.tableView];
+
 
 }
 
 - (void)getUserData{
     NSMutableArray *userGroupArray = [NSMutableArray arrayWithCapacity:0];
     [_boxModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([_boxModel.owner isEqualToString:WB_UserService.currentUser.guid]) {
+            [self initView];
+        }
         [userGroupArray addObject:obj];
     }];
     self.userGroupArray = userGroupArray;
+    
     [self.tableView reloadData];
 }
 
 - (void)initView{
+    self.navigationItem.rightBarButtonItem = nil;
     UIButton * rightButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 24)];
     rightButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
     [rightButton setTitleColor:COR1 forState:UIControlStateNormal];
     [rightButton setTitle:@"退出" forState:UIControlStateNormal];
+    if ([_boxModel.owner isEqualToString:WB_UserService.currentUser.guid]) {
+        rightButton.frame =CGRectMake(0, 0, 80, 24);
+        [rightButton setTitle:@"删除群" forState:UIControlStateNormal];
+    }
     [rightButton addTarget:self action:@selector(rightButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     rightButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [rightButton setEnlargeEdgeWithTop:5 right:10 bottom:5 left:5];
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem = rightButtonItem;
-    
-    [self.view addSubview:self.tableView];
 }
 
 - (void)rightButtonClick:(UIButton *)sender{
@@ -166,7 +176,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 4;
+    return 2;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -232,15 +242,15 @@
         }
             break;
             
-        case 2:{
-            return [self generalHeaderViewWithTitle:@"消息通知" Message:nil];
-        }
-            break;
-        case 3:{
-            
-            return [self generalHeaderViewWithTitle:@"群管理" Message:nil];
-        }
-            break;
+//        case 2:{
+//            return [self generalHeaderViewWithTitle:@"消息通知" Message:nil];
+//        }
+//            break;
+//        case 3:{
+//
+//            return [self generalHeaderViewWithTitle:@"群管理" Message:nil];
+//        }
+//            break;
             
         default:{
             UIView *headeView = [[UIView alloc]initWithFrame:CGRectZero];
@@ -273,23 +283,23 @@
                     }
                         break;
                         
-                    case 1:{
-                        if (![_boxModel.owner isEqualToString:WB_UserService.currentUser.guid]) {
-                            [SXLoadingView showProgressHUDText:@"非群主无法暂无法修改群名称" duration:1.2];
-                            return;
-                        }
-                        
-                        WBStationManageRenameViewController *renameVC = [[WBStationManageRenameViewController alloc]init];
-                        renameVC.vcType = WBRenameVCTypeBoxName;
-                        if (_boxModel.name && _boxModel.name.length>0) {
-                            renameVC.stationName = _boxModel.name;
-                        }
-                        renameVC.boxuuid = _boxModel.uuid;
-                        renameVC.delegate = self;
-                        [self.navigationController.navigationBar setBarTintColor:COR1];
-                        [self.navigationController pushViewController:renameVC animated:YES];
-                    }
-                        break;
+//                    case 1:{
+//                        if (![_boxModel.owner isEqualToString:WB_UserService.currentUser.guid]) {
+//                            [SXLoadingView showProgressHUDText:@"非群主无法暂无法修改群名称" duration:1.2];
+//                            return;
+//                        }
+//
+//                        WBStationManageRenameViewController *renameVC = [[WBStationManageRenameViewController alloc]init];
+//                        renameVC.vcType = WBRenameVCTypeBoxName;
+//                        if (_boxModel.name && _boxModel.name.length>0) {
+//                            renameVC.stationName = _boxModel.name;
+//                        }
+//                        renameVC.boxuuid = _boxModel.uuid;
+//                        renameVC.delegate = self;
+//                        [self.navigationController.navigationBar setBarTintColor:COR1];
+//                        [self.navigationController pushViewController:renameVC animated:YES];
+//                    }
+//                        break;
                         
                     default:
                         break;

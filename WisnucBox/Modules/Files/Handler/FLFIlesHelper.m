@@ -117,7 +117,7 @@ static dispatch_once_t onceToken;
     [[FLFIlesHelper helper] removeAllChooseFile];
 }
 
-- (void)configCells:(FLFilesCell * )cell withModel:(EntriesModel *)model cellStatus:(FLFliesCellStatus)status viewController:(UIViewController *)viewController parentUUID:(NSString *)uuid RootUUID:(NSString *)rootUUID{
+- (void)configCells:(FLFilesCell * )cell withModel:(EntriesModel *)model cellStatus:(FLFliesCellStatus)status viewController:(UIViewController *)viewController parentUUID:(NSString *)uuid RootUUID:(NSString *)rootUUID BoxUUID:(NSString *)boxUUID{
     cell.nameLabel.text = model.name;
     cell.sizeLabel.text = [NSString transformedValue:[NSNumber numberWithLongLong:model.size]];
 
@@ -209,6 +209,14 @@ static dispatch_once_t onceToken;
                 if ([downloadString isEqualToString:redownloadString]) {
                     [_filesServices deleteFileWithFileUUID:model.uuid FileName:model.name ActionType:nil];
                 }
+                    if (cell.selectType == WBFilesFirstBoxBrowseType && boxUUID.length>0) {
+                        [[CSDownloadHelper  shareManager] downloadFileWithFileModel:model BoxUUID:boxUUID FileHash:model.photoHash];
+                        if(viewController){
+                            LocalDownloadViewController * localVC = [[LocalDownloadViewController alloc] init];
+                            [viewController.navigationController pushViewController:localVC animated:true];
+                        }
+                        return ;
+                    }
                 [[CSDownloadHelper  shareManager] downloadFileWithFileModel:model RootUUID:rootUUID UUID:uuid ];
                 if(viewController){
 	                LocalDownloadViewController * localVC = [[LocalDownloadViewController alloc] init];

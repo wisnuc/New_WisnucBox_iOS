@@ -4,8 +4,6 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
-	<key>NSCameraUsageDescription</key>
-	<string>WISNUC 需要访问您的摄像头</string>
 	<key>CFBundleDisplayName</key>
 	<string>WISNUC</string>
 	<key>CFBundleDocumentTypes</key>
@@ -44,7 +42,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.14.2</string>
+	<string>1.14.3</string>
 	<key>CFBundleTypeName</key>
 	<string>com.myapp.common-data</string>
 	<key>CFBundleURLTypes</key>
@@ -61,7 +59,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>3</string>
+	<string>1</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>weixin</string>
@@ -90,6 +88,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>WISNUC 需要访问您的摄像头</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>WISNUC 需要访问您的相册用以备份</string>
 	<key>UIFileSharingEnabled</key>

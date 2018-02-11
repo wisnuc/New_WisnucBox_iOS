@@ -27,7 +27,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.tableView];
-    
+    if (!WB_UserService.currentUser.isCloudLogin) {
+        [SXLoadingView showProgressHUDText:@"本地连接暂不能使用私友群功能" duration:1.2f];
+        return ;
+    }
 //    [self.view addSubview:self.addButton];
  
     [self initMjFreshHeader];
@@ -86,14 +89,14 @@
 - (void)didMQTTServerJoinIn{
     NSString *topic = [NSString stringWithFormat:@"client/user/%@/box",WB_UserService.currentUser.guid];
     [[MQTTClientManager shareInstance]registerDelegate:self];
-    [[MQTTClientManager shareInstance]loginWithIp:KMQTTTESTHOST port:KMQTTPORT userName:nil password:nil topic:topic];
+    [[MQTTClientManager shareInstance]loginWithIp:KMQTTHOST port:KMQTTPORT userName:nil password:nil topic:topic];
     
 }
 
 - (void)getBoxesListData{
-    if (!WB_UserService.currentUser.cloudToken) {
-        [SXLoadingView showProgressHUDText:@"非微信远程登录暂无法使用" duration:1.2f];
-        return ;
+    if (!WB_UserService.currentUser.isCloudLogin) {
+//        [SXLoadingView showProgressHUDText:@"非微信登录暂不能使用私友群功能" duration:1.2f];
+        return;
     }
     @weaky(self)
     [[WBGetBoxesAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
@@ -148,7 +151,7 @@
 
 - (void)didTapAdd:(UIButton *)sender{
     if (!WB_UserService.currentUser.cloudToken) {
-        [SXLoadingView showProgressHUDText:@"非微信远程登录暂无法使用" duration:1.2f];
+        [SXLoadingView showProgressHUDText:@"本地连接暂无法使用" duration:1.2f];
         return;
     }
     WBChatListAddUserViewController *addUserViewController = [[WBChatListAddUserViewController alloc]init];
@@ -182,8 +185,8 @@
     NSInteger n = MIN(boxesModel.users.count, 5);
     float r = 20 * n / (2.5 * n - 1.5);
     [boxesModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *userModel, NSUInteger idx, BOOL * _Nonnull stop) {
-        double deg =  M_PI * (double)(idx * 2 / n - 1 / 4);
-        NSLog(@"😑%lu",(idx * 2 / n - 1 / 4));
+        double deg =  M_PI * (idx * 2 / n - 1 / 4);
+        NSLog(@"😑%u",idx * 2 / n - 1 / 4);
         float top = (float)(1 - cos(deg)) * (20 - r);
         float left = (float)(1 + sin(deg)) * (20 - r);
         UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(left, top, r *2, r*2)];
@@ -192,36 +195,7 @@
         [imageView was_setCircleImageWithUrlString:userModel.avatarUrl placeholder:[UIImage imageWithColor:RGBACOLOR(0, 0, 0, 0.37)]];
         [cell.leftImageView addSubview:imageView];
     }];
-//    renderAvatars(users) {
-//        const n = Math.min(users.length, 5)
-//        const r = 20 * n / (2.5 * n - 1.5) // radius
-//        return (
-//                <div style={{ height: 40, width: 40, position: 'relative' }}>
-//                {
-//                    users.map((u, i) => {
-//                        if (i > n - 1) return <div />
-//                            const deg = Math.PI * (i * 2 / n - 1 / 4)
-//                            const top = (1 - Math.cos(deg)) * (20 - r)
-//                            const left = (1 + Math.sin(deg)) * (20 - r)
-//                            return (
-//                                    <Avatar
-//                                    src={imgUrl}
-//                                    style={{
-//                            position: 'absolute',
-//                            width: r * 2,
-//                            height: r * 2,
-//                                top,
-//                                left
-//                            }}
-//                                    />
-//                                    )
-//                            })
-//                }
-//                </div>
-//                )
-//    }
-    
-    
+
     cell.nameLabel.text = boxesModel.name;
     if (boxesModel.tweet) {
         if (boxesModel.tweet.list.count>0) {
@@ -237,6 +211,9 @@
     
     long long tweetTime = boxesModel.tweet.ctime;
     cell.timeLable.text = [NSString getReleaseTime:tweetTime];
+    if (![boxesModel.station.isOnline boolValue]) {
+         cell.timeLable.text = @"已离线";
+    }
     if (boxesModel.name.length == 0|| !boxesModel.name){
         cell.nameLabel.text = [NSString stringWithFormat:@"群聊(%ld)",(unsigned long)boxesModel.users.count];
         
@@ -297,9 +274,9 @@
             if ([boxModel.uuid isEqualToString:model.uuid]) {
 //                NSIndexPath *indexForSelf = [NSIndexPath indexPathForRow:idx inSection:0];
 //                WBChatListTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexForSelf];
-                [self.boxDataArray removeObjectAtIndex:idx];
-                [self.boxDataArray insertObject:model atIndex:0];
-                [self.tableView reloadData];
+                [weak_self.boxDataArray removeObjectAtIndex:idx];
+                [weak_self.boxDataArray insertObject:model atIndex:0];
+                [weak_self.tableView reloadData];
             }
             [uuidArray addObject:boxModel.uuid];
         }];

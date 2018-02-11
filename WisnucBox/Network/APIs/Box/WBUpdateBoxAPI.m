@@ -25,7 +25,7 @@
 }
 
 - (JYRequestMethod)requestMethod{
-    if (WB_UserService.currentUser.cloudToken) {
+    if (WB_UserService.currentUser.isCloudLogin) {
         return JYRequestMethodPost;
     }
     return JYRequestMethodPatch;
@@ -33,7 +33,7 @@
 
 - (id)requestArgument{
     if (_boxName) {
-        if (WB_UserService.currentUser.cloudToken) {
+        if (WB_UserService.currentUser.isCloudLogin) {
             NSDictionary *dic;
             dic = @{
                     @"name":_boxName,

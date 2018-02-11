@@ -95,7 +95,7 @@ UITableViewDataSource
         BOOL swichOn = [number boolValue];
         _switchOn = swichOn;
         if (swichOn) {
-           self.addButton.enabled = YES;
+           self.addButton.hidden = NO;
            [self.timer fire];
         }else{
             UILabel *label =  [[UILabel alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 80)];
@@ -103,7 +103,7 @@ UITableViewDataSource
             label.textColor = COR1;
             label.textAlignment = NSTextAlignmentCenter;
             self.tableView.tableFooterView =label;
-            self.addButton.enabled = NO;
+            self.addButton.hidden = YES;
             self.downloadedClearButton.enabled = NO;
             self.downloadingClearButton.enabled = NO;
         }
@@ -111,7 +111,7 @@ UITableViewDataSource
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
          [SXLoadingView hideProgressHUD];
-        self.addButton.enabled = NO;
+        self.addButton.hidden = YES;
         self.downloadedClearButton.enabled = NO;
         self.downloadingClearButton.enabled = NO;
     }];

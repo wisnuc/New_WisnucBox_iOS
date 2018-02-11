@@ -31,6 +31,7 @@ extern NSString *const kRouterEventChatCellBubbleTapEventName;
 extern NSString *const kRouterEventChatHeadImageTapEventName;
 extern NSString *const kRouterEventTextURLTapEventName;
 extern NSString *const kRouterEventImageBubbleTapEventName;
+extern NSString *const kRouterEventFileBubbleTapEventName;
 
 extern NSString *const kDataChangedName;
 extern NSString *const kMessageImageBoxUUID;

@@ -168,7 +168,7 @@
 
     self.imageView = _scrollView.subviews[index];
     self.currentImageIndex = index;
-   
+    
     if (self.imageView.hasLoadedImage) return;
     //    if ([self highQualityImageURLForIndex:index]) {
     
@@ -177,40 +177,49 @@
     //        imageView.image = [self placeholderImageForIndex:index];
     //    }
     @weaky(self)
+    
     if ([self highQualityImageBoxInfoForIndex:index]) {
         NSDictionary *dic = [self highQualityImageBoxInfoForIndex:index];
         NSLog(@"%@",dic);
         self.imageView.image = [self placeholderImageForIndex:self.currentImageIndex];
         if (dic[kMessageImageBoxLocalAsset]) {
             if ([dic[kMessageImageBoxLocalAsset] isKindOfClass:[WBAsset class]]) {
-//                [SXLoadingView showProgressHUD:@""];
+                //                [SXLoadingView showProgressHUD:@""];
                 WBAsset*asset = dic[kMessageImageBoxLocalAsset];
                 [WB_NetService getHighWebImageWithHash:asset.fmhash completeBlock:^(NSError *error, UIImage *netImage) {
+                    dispatch_main_async_safe(^{
+                        if (!error &&netImage) {
+                            self.imageView.image = netImage;
+                        }else{
+                            self.imageView.image = [self placeholderImageForIndex:index];
+                        }
+                        
+                    });
+                }];
+                return;
+            }else{
+                JYAsset *jyasset = dic[kMessageImageBoxLocalAsset];
+                [PHPhotoLibrary requestOriginalImageForAsset:jyasset.asset completion:^(UIImage *localImage, NSDictionary *info) {
+                    dispatch_main_async_safe(^{
+                        if (localImage) {
+                            self.imageView.image = localImage;
+                        }else{
+                            self.imageView.image = [self placeholderImageForIndex:index];
+                        }
+                    });
+                }];
+            }
+        }else{
+            //            [SXLoadingView showProgressHUD:@""];
+            [WB_NetService getTweeethighQualityImageWithHash:dic[kMessageImageBoxNetImageHash] BoxUUID:dic[kMessageImageBoxUUID] complete:^(NSError *error, UIImage *netImage) {
+                dispatch_main_async_safe(^{
                     if (!error &&netImage) {
+//                        self.imageView.image = [UIImage imageWithColor:[UIColor cyanColor]];
                         self.imageView.image = netImage;
                     }else{
                         self.imageView.image = [self placeholderImageForIndex:index];
                     }
-                }];
-                return;
-            }else{
-             JYAsset *jyasset = dic[kMessageImageBoxLocalAsset];
-            [PHPhotoLibrary requestOriginalImageForAsset:jyasset.asset completion:^(UIImage *localImage, NSDictionary *info) {
-                if (localImage) {
-                    self.imageView.image = localImage;
-                }else{
-                    self.imageView.image = [self placeholderImageForIndex:index];
-                }
-            }];
-            }
-        }else{
-//            [SXLoadingView showProgressHUD:@""];
-            [WB_NetService getTweeethighQualityImageWithHash:dic[kMessageImageBoxNetImageHash] BoxUUID:dic[kMessageImageBoxUUID] complete:^(NSError *error, UIImage *netImage) {
-                if (!error &&netImage) {
-                    self.imageView.image = netImage;
-                }else{
-                    self.imageView.image = [self placeholderImageForIndex:index];
-                }
+                });
             }];
         }
     }else{

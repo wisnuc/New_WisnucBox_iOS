@@ -79,7 +79,8 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
         self.activityView.frame = frame;
     }
     else{
-        bubbleFrame.origin.x = HEAD_PADDING  + HEAD_SIZE + 8;
+         bubbleFrame.origin.x = HEAD_PADDING  + HEAD_SIZE + 12;
+         bubbleFrame.origin.y = bubbleFrame.origin.y + 8;
         _bubbleView.frame = bubbleFrame;
     }
 }
@@ -224,7 +225,37 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
 }
 
 - (void)reloadFinishLoadData{
-
+    if (self.messageModel.isSender) {
+//        bubbleFrame.origin.y = self.headImageView.frame.origin.y;
+        // 菊花状态 （因不确定菊花具体位置，要在子类中实现位置的修改）
+        switch (self.messageModel.status) {
+            case MessageDeliveryState_Delivering:
+            {
+                [_activityView setHidden:NO];
+                [_retryButton setHidden:YES];
+                [_activtiy setHidden:NO];
+                [_activtiy startAnimating];
+            }
+                break;
+            case MessageDeliveryState_Delivered:
+            {
+                [_activtiy stopAnimating];
+                [_activityView setHidden:YES];
+                
+            }
+                break;
+            case MessageDeliveryState_Failure:
+            {
+                [_activityView setHidden:NO];
+                [_activtiy stopAnimating];
+                [_activtiy setHidden:YES];
+                [_retryButton setHidden:NO];
+            }
+                break;
+            default:
+                break;
+        }
+    }
 }
 
 @end

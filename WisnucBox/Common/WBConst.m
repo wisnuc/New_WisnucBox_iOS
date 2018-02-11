@@ -35,6 +35,7 @@ NSString *const kRouterEventChatHeadImageTapEventName = @"kRouterEventChatHeadIm
 NSString *const kRouterEventChatResendEventName = @"kRouterEventChatResendEventName";
 NSString *const kRouterEventTextURLTapEventName = @"kRouterEventTextURLTapEventName";
 NSString *const kRouterEventImageBubbleTapEventName = @"kRouterEventImageBubbleTapEventName";
+NSString *const kRouterEventFileBubbleTapEventName = @"kRouterEventFileBubbleTapEventName";
 
 NSString *const kDataChangedName = @"kDataChangedName";
 NSString *const kMessageImageBoxUUID = @"kMessageImageBoxUUID";
@@ -64,7 +65,7 @@ CGFloat const NAME_LABEL_HEIGHT = 11.0f;
 // nameLabel间距
 CGFloat const NAME_LABEL_PADDING = 0.0f;
 // 字体
-CGFloat const NAME_LABEL_FONT_SIZE = 10.0f;
+CGFloat const NAME_LABEL_FONT_SIZE = 13.0f;
 
 
 

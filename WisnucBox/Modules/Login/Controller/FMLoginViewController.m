@@ -167,7 +167,7 @@ WXApiDelegate
 }
 
 - (void)firstbeginSearching {
-    [SXLoadingView showProgressHUD:@""];
+    [SXLoadingView showProgressHUD:@"" View:self.view];
     if (_reachabilityTimer) {
         [_reachabilityTimer invalidate];
 

@@ -126,7 +126,7 @@
         [self.arrDataSources addObjectsFromArray:assets];
         self.localArrDataSourcesBackup = [NSMutableArray  arrayWithArray:self.arrDataSources]; // backup
         _isSelectMode = NO;
-        [self initMjRefresh];
+  
     }
     return self;
 }
@@ -140,9 +140,8 @@
             _isBoxSelectType = YES;
         }
        
-        [self initMjRefresh];
+//        [self initMjRefresh];
         [self.view addSubview:self.boxTypeBar];
-        
     }
     return self;
 }
@@ -293,6 +292,8 @@
     [self initCollectionView];
     if (_isBoxSelectType) {
          [self initNaviForBoxSelectType];
+    }else{
+        [self initMjRefresh];
     }
     [self sort:[self merge]];
     [self addPinchGesture];
@@ -764,6 +765,7 @@
         weakSelf.addButton.hidden = NO;
         
         [weakSelf.choosePhotos addObject:model];
+        
         __block BOOL containAll = YES;
         [(NSArray *)weakSelf.arrDataSources[indexPath.section] enumerateObjectsUsingBlock:^(JYAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if(![weakSelf.choosePhotos containsObject:obj]) {
@@ -807,7 +809,7 @@
       
         if(cell){
             if (_isBoxSelectType) {
-               if (WB_UserService.currentUser.cloudToken) {
+               if (WB_UserService.currentUser.isCloudLogin) {
                    if (self.choosePhotos.count==1) {
                        if (cell.isSelect) {
                            [cell btnSelectClick:nil];

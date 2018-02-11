@@ -32,9 +32,18 @@ typedef void (^HelperDownloadingEventHandler) (BOOL isDownloading);
 
 - (void)downloadFileWithFileModel:(EntriesModel *)dataModel RootUUID:(NSString *)rootUUID UUID:(NSString *)uuid;
 
+- (void)downloadFileWithFileModel:(EntriesModel *)dataModel BoxUUID:(NSString *)boxUUID FileHash:(NSString *)fileHash;
+
 - (void)downloadOneFileWithFileModel:(EntriesModel *)dataModel
                             RootUUID:(NSString *)rootUUID
                                 UUID:(NSString *)uuid
+                       IsDownloading:(HelperDownloadingEventHandler)isDownloading
+                               begin:(CSDownloadBeginEventHandler)begin
+                            progress:(CSDownloadingEventHandler)progress
+                            complete:(CSOneDownloadedEventHandler)complete;
+- (void)downloadOneFileWithFileModel:(EntriesModel *)dataModel
+                             BoxUUID:(NSString *)boxUUID
+                            FileHash:(NSString *)fileHash
                        IsDownloading:(HelperDownloadingEventHandler)isDownloading
                                begin:(CSDownloadBeginEventHandler)begin
                             progress:(CSDownloadingEventHandler)progress
