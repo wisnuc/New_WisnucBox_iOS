@@ -31,7 +31,7 @@
     }else if ((WB_UserService.currentUser.isAdmin || WB_UserService.currentUser.isFirstUser) && _type == WBUserAddressBookDelete){
         [self getDeleteInfo];
     }
-   
+    
     [self.view addSubview:self.tableView];
 }
 
@@ -57,81 +57,81 @@
         [SXLoadingView showProgressHUDText:@"本地连接暂无法使用" duration:1.2f];
         return;
     }
-//    if (WB_UserService.currentUser.isCloudLogin) {
-        NSMutableArray *tempDataSource = [NSMutableArray arrayWithCapacity:0];
-        NSMutableArray *chooseUserSource = [NSMutableArray arrayWithCapacity:0];
-        NSMutableArray *exsitDataSource = [NSMutableArray arrayWithCapacity:0];
-        
-        [[WBBoxUserAPI userApiWithGuid:WB_UserService.currentUser.guid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-            NSArray *array = request.responseJsonObject[@"data"];
-            [array enumerateObjectsUsingBlock:^(NSDictionary *dic, NSUInteger idx, BOOL * _Nonnull stop) {
-                WBBoxesUsersModel *model = [WBBoxesUsersModel modelWithDictionary:dic];
-                [tempDataSource addObject:model];
-                if(_type == WBUserAddressBookCreat || _type == WBUserAddressBookAdd){
-                    if ([model.userId isEqualToString:WB_UserService.currentUser.guid]) {
-                        [chooseUserSource addObject:model];
-                        [exsitDataSource addObject:model];
-                    }
-                    [_boxModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                        if([obj.userId isEqualToString:model.userId]){
-                            if (![chooseUserSource containsObject:model]) {
-                                [chooseUserSource addObject:model];
-                                [exsitDataSource addObject:model];
-                            }
-                        }
-                    }];
+    //    if (WB_UserService.currentUser.isCloudLogin) {
+    NSMutableArray *tempDataSource = [NSMutableArray arrayWithCapacity:0];
+    NSMutableArray *chooseUserSource = [NSMutableArray arrayWithCapacity:0];
+    NSMutableArray *exsitDataSource = [NSMutableArray arrayWithCapacity:0];
+    
+    [[WBBoxUserAPI userApiWithGuid:WB_UserService.currentUser.guid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSArray *array = request.responseJsonObject[@"data"];
+        [array enumerateObjectsUsingBlock:^(NSDictionary *dic, NSUInteger idx, BOOL * _Nonnull stop) {
+            WBBoxesUsersModel *model = [WBBoxesUsersModel modelWithDictionary:dic];
+            [tempDataSource addObject:model];
+            if(_type == WBUserAddressBookCreat || _type == WBUserAddressBookAdd){
+                if ([model.userId isEqualToString:WB_UserService.currentUser.guid]) {
+                    //                        [chooseUserSource addObject:model];
+                    [exsitDataSource addObject:model];
                 }
-            }];
-            self.userArray = tempDataSource;
-            self.choosedUserArray = chooseUserSource;
-            self.exsitDataArray = exsitDataSource;
-            [weak_self reloadData];
-            NSLog(@"%@",request.responseJsonObject);
-        } failure:^(__kindof JYBaseRequest *request) {
-            NSLog(@"%@",request.error);
-            [weak_self reloadData];
+                [_boxModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if([obj.userId isEqualToString:model.userId]){
+                        if (![chooseUserSource containsObject:model]) {
+                            //                                [chooseUserSource addObject:model];
+                            [exsitDataSource addObject:model];
+                        }
+                    }
+                }];
+            }
         }];
-//    }
-//
-//    else{
-//    [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
-//        [[FMAsyncUsersAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-//            NSLog(@"%@",request.responseJsonObject);
-//            NSArray * userArr = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"]
-//            : request.responseJsonObject;
-//            NSLog(@"%@",request.responseJsonObject);
-//            NSMutableArray *tempDataSource = [NSMutableArray arrayWithCapacity:0];
-//            NSMutableArray *chooseUserSource = [NSMutableArray arrayWithCapacity:0];
-//            NSMutableArray *exsitDataSource = [NSMutableArray arrayWithCapacity:0];
-//
-//            for (NSDictionary * dic in userArr) {
-//                UserModel * model = [UserModel modelWithJSON:dic];
-//                if (model.global) {
-//                        [tempDataSource addObject:model];
-//                    if(_type == WBUserAddressBookCreat || _type == WBUserAddressBookAdd){
-//                    if ([model.uuid isEqualToString:WB_UserService.currentUser.uuid]) {
-//                        [chooseUserSource addObject:model];
-//                        [exsitDataSource addObject:model];
-//                    }
-//
-//                    if([_boxModel.users containsObject:model.global.guid]){
-//                        if (![chooseUserSource containsObject:model]) {
-//                            [chooseUserSource addObject:model];
-//                            [exsitDataSource addObject:model];
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//            self.userArray = tempDataSource;
-//            self.choosedUserArray = chooseUserSource;
-//            self.exsitDataArray = exsitDataSource;
-//            [weak_self reloadData];
-//        } failure:^(__kindof JYBaseRequest *request) {
-//             NSLog(@"%@",request.error);
-//           [weak_self reloadData];
-//        }];
-//    }
+        self.userArray = tempDataSource;
+        self.choosedUserArray = chooseUserSource;
+        self.exsitDataArray = exsitDataSource;
+        [weak_self reloadData];
+        NSLog(@"%@",request.responseJsonObject);
+    } failure:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.error);
+        [weak_self reloadData];
+    }];
+    //    }
+    //
+    //    else{
+    //    [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
+    //        [[FMAsyncUsersAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+    //            NSLog(@"%@",request.responseJsonObject);
+    //            NSArray * userArr = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"]
+    //            : request.responseJsonObject;
+    //            NSLog(@"%@",request.responseJsonObject);
+    //            NSMutableArray *tempDataSource = [NSMutableArray arrayWithCapacity:0];
+    //            NSMutableArray *chooseUserSource = [NSMutableArray arrayWithCapacity:0];
+    //            NSMutableArray *exsitDataSource = [NSMutableArray arrayWithCapacity:0];
+    //
+    //            for (NSDictionary * dic in userArr) {
+    //                UserModel * model = [UserModel modelWithJSON:dic];
+    //                if (model.global) {
+    //                        [tempDataSource addObject:model];
+    //                    if(_type == WBUserAddressBookCreat || _type == WBUserAddressBookAdd){
+    //                    if ([model.uuid isEqualToString:WB_UserService.currentUser.uuid]) {
+    //                        [chooseUserSource addObject:model];
+    //                        [exsitDataSource addObject:model];
+    //                    }
+    //
+    //                    if([_boxModel.users containsObject:model.global.guid]){
+    //                        if (![chooseUserSource containsObject:model]) {
+    //                            [chooseUserSource addObject:model];
+    //                            [exsitDataSource addObject:model];
+    //                        }
+    //                    }
+    //                }
+    //            }
+    //        }
+    //            self.userArray = tempDataSource;
+    //            self.choosedUserArray = chooseUserSource;
+    //            self.exsitDataArray = exsitDataSource;
+    //            [weak_self reloadData];
+    //        } failure:^(__kindof JYBaseRequest *request) {
+    //             NSLog(@"%@",request.error);
+    //           [weak_self reloadData];
+    //        }];
+    //    }
 }
 
 - (void)getDeleteInfo{
@@ -167,7 +167,7 @@
     UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftButtonItem;
     
-
+    
     UIButton * rightButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 24)];
     rightButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
     [rightButton setTitleColor:COR1 forState:UIControlStateNormal];
@@ -186,7 +186,7 @@
 }
 
 - (void)rightButtonClick:(UIButton *)sender{
- 
+    
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];
@@ -234,41 +234,38 @@
 }
 
 - (void)addUserAction{
-    
-    if (self.exsitDataArray.count == self.choosedUserArray.count)return;
+    if (self.choosedUserArray.count==0)return;
     @weaky(self)
     NSMutableArray *globalArray = [NSMutableArray arrayWithCapacity:0];
     [self.choosedUserArray enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [globalArray addObject:obj.userId];
     }];
     
-    if (globalArray && globalArray.count>1) {
+    if (globalArray && globalArray.count>0) {
         NSArray *arr = [NSArray arrayWithArray:globalArray];
-    [[WBUpdateBoxAPI updateApiWithBoxuuid:_boxModel.uuid Users:arr Option:@"add"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-        NSLog(@"%@",request.responseJsonObject);
-        if (_endDelegate && [_endDelegate respondsToSelector:@selector(endAddUser)]) {
-            [weak_self.endDelegate endAddUser];
-        }
-    } failure:^(__kindof JYBaseRequest *request) {
-        NSLog(@"%@",request.error);
-    }];
+        [[WBUpdateBoxAPI updateApiWithBoxuuid:_boxModel.uuid Users:arr Option:@"add"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+            NSLog(@"%@",request.responseJsonObject);
+            if (_endDelegate && [_endDelegate respondsToSelector:@selector(endAddUser)]) {
+                [weak_self.endDelegate endAddUser];
+            }
+        } failure:^(__kindof JYBaseRequest *request) {
+            NSLog(@"%@",request.error);
+        }];
     }
 }
 
 - (void)creatBoxAction{
     @weaky(self)
-
-    if (self.choosedUserArray.count == 1 && [((WBBoxesUsersModel *)self.choosedUserArray[0]).userId isEqualToString:WB_UserService.currentUser.guid]) {
+    if (self.choosedUserArray.count == 0) {
         [SXLoadingView showProgressHUDText:@"您尚未选择其他用户" duration:1.2f];
         return;
     }
     
     NSMutableArray *globalArray = [NSMutableArray arrayWithCapacity:0];
     [self.choosedUserArray enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        
         [globalArray addObject:obj.userId];
     }];
-    
+    [globalArray addObject:WB_UserService.currentUser.guid];
     if (globalArray && globalArray.count>1) {
         NSArray *arr = [NSArray arrayWithArray:globalArray];
         [[WBGetBoxesAPI creatApiWithUsers:arr BoxName:nil] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
@@ -302,19 +299,19 @@
         cell = (WBChatListAddUserTableViewCell *)[[[NSBundle mainBundle]loadNibNamed:NSStringFromClass([WBChatListAddUserTableViewCell class]) owner:self options:nil]lastObject];
     }
     
-    if (WB_UserService.currentUser.isCloudLogin) {
+    if (WB_UserService.currentUser.cloudToken) {
         WBBoxesUsersModel *model = self.userArray[indexPath.row];
         if (model.avatarUrl.length>0) {
             [cell.userImageView was_setCircleImageWithUrlString:model.avatarUrl placeholder:[UIImage imageForName:model.nickName size:cell.userImageView.bounds.size]];
         }else{
-             cell.userImageView.image = [UIImage imageForName:model.nickName size:cell.userImageView.bounds.size];
+            cell.userImageView.image = [UIImage imageForName:model.nickName size:cell.userImageView.bounds.size];
         }
         
         cell.userNameLabel.text = model.nickName;
         cell.checkBox.delegate = self;
         switch (_type) {
             case WBUserAddressBookAdd:{
-                [self.choosedUserArray enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [self.exsitDataArray enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
                     //        NSLog(@"%@/%@",model.uuid ,obj.uuid);
                     if ([model.userId isEqualToString:obj.userId]) {
                         [cell.checkBox setOn:YES animated:NO];
@@ -329,7 +326,7 @@
                 break;
                 
             case WBUserAddressBookCreat:{
-                [self.choosedUserArray enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [self.exsitDataArray enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
                     //        NSLog(@"%@/%@",model.uuid ,obj.uuid);
                     if ([model.userId isEqualToString:obj.userId]) {
                         [cell.checkBox setOn:YES animated:NO];
@@ -351,8 +348,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (WB_UserService.currentUser.isCloudLogin) {
-         WBBoxesUsersModel *model = self.userArray[indexPath.row];
+    if (WB_UserService.currentUser.cloudToken) {
+        WBBoxesUsersModel *model = self.userArray[indexPath.row];
         WBChatListAddUserTableViewCell *cell  = [tableView cellForRowAtIndexPath:indexPath];
         switch (_type) {
             case WBUserAddressBookAdd:{
@@ -442,3 +439,4 @@
 }
 
 @end
+

@@ -34,7 +34,7 @@
                 @"users":_users,
                 @"name":_boxName
                 };
-        if (WB_UserService.currentUser.isCloudLogin) {
+        if (WB_UserService.currentUser.cloudToken) {
             dic = @{
                     @"resource" : [@"boxes" base64EncodedString],
                     @"method" : @"POST",
@@ -49,13 +49,13 @@
 /// 请求的URL
 - (NSString *)requestUrl{
     if (_users && _users.count>0) {
-        return  WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@", kCloudAddr, kCloudCommonJsonUrl] : @"boxes";
+        return  WB_UserService.currentUser.cloudToken ? [NSString stringWithFormat:@"%@%@", kCloudAddr, kCloudCommonJsonUrl] : @"boxes";
     }
-    return WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@", kCloudAddr, kCloudCommonBoxesUrl] : @"boxes";
+    return WB_UserService.currentUser.cloudToken ? [NSString stringWithFormat:@"%@%@", kCloudAddr, kCloudCommonBoxesUrl] : @"boxes";
 }
 
 - (NSDictionary *)requestHeaderFieldValueDictionary{
-    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithObject:(WB_UserService.currentUser.isCloudLogin ? WB_UserService.currentUser.cloudToken : [NSString stringWithFormat:@"JWT %@ %@", WB_UserService.currentUser.boxToken,WB_UserService.defaultToken]) forKey:@"Authorization"];
+    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithObject:(WB_UserService.currentUser.cloudToken ? WB_UserService.currentUser.cloudToken : [NSString stringWithFormat:@"JWT %@ %@", WB_UserService.currentUser.boxToken,WB_UserService.defaultToken]) forKey:@"Authorization"];
     return dic;
 }
 @end

@@ -25,7 +25,7 @@
 }
 
 - (JYRequestMethod)requestMethod{
-    if (WB_UserService.currentUser.isCloudLogin) {
+    if (WB_UserService.currentUser.localToken) {
         return JYRequestMethodPost;
     }
     return JYRequestMethodPatch;
@@ -33,7 +33,7 @@
 
 - (id)requestArgument{
     if (_boxName) {
-        if (WB_UserService.currentUser.isCloudLogin) {
+        if (WB_UserService.currentUser.localToken) {
             NSDictionary *dic;
             dic = @{
                     @"name":_boxName,
@@ -56,7 +56,7 @@
     NSMutableDictionary *dicx = [NSJSONSerialization JSONObjectWithData:josnData options:NSJSONReadingMutableLeaves error:nil];
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
     [dic setObject:dicx forKey:@"users"];
-    if (WB_UserService.currentUser.isCloudLogin) {
+    if (WB_UserService.currentUser.cloudToken) {
         [dic setObject:@"PATCH" forKey:@"method"];
         [dic setObject:[[NSString stringWithFormat:@"boxes/%@",_boxuuid] base64EncodedString] forKey:@"resource"];
     }
@@ -65,11 +65,11 @@
 
 /// 请求的URL
 - (NSString *)requestUrl{
-    return WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@", kCloudAddr, kCloudCommonJsonUrl] : [NSString stringWithFormat:@"boxes/%@",_boxuuid];
+    return WB_UserService.currentUser.localToken ? [NSString stringWithFormat:@"%@%@", kCloudAddr, kCloudCommonJsonUrl] : [NSString stringWithFormat:@"boxes/%@",_boxuuid];
 }
 
 - (NSDictionary *)requestHeaderFieldValueDictionary{
-    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithObject:(WB_UserService.currentUser.isCloudLogin ? WB_UserService.currentUser.cloudToken : [NSString stringWithFormat:@"JWT %@ %@", WB_UserService.currentUser.boxToken,WB_UserService.defaultToken]) forKey:@"Authorization"];
+    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithObject:(WB_UserService.currentUser.localToken ? WB_UserService.currentUser.cloudToken : [NSString stringWithFormat:@"JWT %@ %@", WB_UserService.currentUser.boxToken,WB_UserService.defaultToken]) forKey:@"Authorization"];
     return dic;
 }
 @end

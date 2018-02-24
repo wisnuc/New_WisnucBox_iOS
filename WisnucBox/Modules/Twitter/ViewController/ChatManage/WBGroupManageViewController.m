@@ -74,6 +74,15 @@
         NSArray *arr = [NSArray arrayWithObject:WB_UserService.currentUser.guid];
         [[WBUpdateBoxAPI updateApiWithBoxuuid:_boxModel.uuid Users:arr Option:@"delete"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
             NSLog(@"%@",request.responseJsonObject);
+           NSDictionary * dic = WB_UserService.currentUser.cloudToken ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+           
+            if (WB_UserService.currentUser.cloudToken) {
+                NSNumber *number = dic[@"code"];
+                if ([number integerValue]>0) {
+                    [SXLoadingView showProgressHUDText:[NSString stringWithFormat:@"error:%@",dic[@"message"]] duration:1.2];
+                    return ;
+                }
+            }
             for (UIViewController *temp in self.navigationController.viewControllers) {
                 if ([temp isKindOfClass:[WBChatListViewController class]]) {
                     [self.navigationController popToViewController:temp animated:YES];
@@ -164,7 +173,7 @@
     @weaky(self)
     [[WBGetOneBoxAPI getBoxApiWithBoxuuid:_boxModel.uuid] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
-         NSDictionary * responseDic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+         NSDictionary * responseDic = WB_UserService.currentUser.cloudToken ? request.responseJsonObject[@"data"] : request.responseJsonObject;
          WBBoxesModel *model = [WBBoxesModel modelWithDictionary:responseDic];
         _boxModel = model;
         [weak_self getUserData];

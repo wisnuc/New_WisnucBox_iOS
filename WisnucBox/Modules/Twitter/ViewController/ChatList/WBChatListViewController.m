@@ -26,8 +26,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+  
     [self.view addSubview:self.tableView];
-    if (!WB_UserService.currentUser.isCloudLogin) {
+    if (!WB_UserService.currentUser.cloudToken) {
         [SXLoadingView showProgressHUDText:@"本地连接暂不能使用私友群功能" duration:1.2f];
         return ;
     }
@@ -94,14 +95,14 @@
 }
 
 - (void)getBoxesListData{
-    if (!WB_UserService.currentUser.isCloudLogin) {
+    if (!WB_UserService.currentUser.cloudToken) {
 //        [SXLoadingView showProgressHUDText:@"非微信登录暂不能使用私友群功能" duration:1.2f];
         return;
     }
     @weaky(self)
     [[WBGetBoxesAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
-        NSArray * array = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"]
+        NSArray * array = WB_UserService.currentUser.cloudToken ? request.responseJsonObject[@"data"]
         : request.responseJsonObject;
         NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
         [array enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
