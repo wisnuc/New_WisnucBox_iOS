@@ -26,9 +26,9 @@
     [super viewDidLoad];
     [self setNavigationBarContent];
     [self setTitleText];
-    if ((WB_UserService.currentUser.isAdmin || WB_UserService.currentUser.isFirstUser) && _type != WBUserAddressBookDelete) {
+    if ( _type != WBUserAddressBookDelete) {
         [self getUserInfo];
-    }else if ((WB_UserService.currentUser.isAdmin || WB_UserService.currentUser.isFirstUser) && _type == WBUserAddressBookDelete){
+    }else{
         [self getDeleteInfo];
     }
     
@@ -245,6 +245,13 @@
         NSArray *arr = [NSArray arrayWithArray:globalArray];
         [[WBUpdateBoxAPI updateApiWithBoxuuid:_boxModel.uuid Users:arr Option:@"add"] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
             NSLog(@"%@",request.responseJsonObject);
+            if (WB_UserService.currentUser.cloudToken) {
+                NSDictionary *dic = request.responseJsonObject[@"data"];
+                NSNumber *codeNumber = dic[@"code"];
+                if ([codeNumber integerValue]>0) {
+                    [SXLoadingView showProgressHUDText:[NSString stringWithFormat:@"error:%@",dic[@"message"]] duration:1.2f];
+                }
+            }
             if (_endDelegate && [_endDelegate respondsToSelector:@selector(endAddUser)]) {
                 [weak_self.endDelegate endAddUser];
             }
@@ -262,10 +269,11 @@
     }
     
     NSMutableArray *globalArray = [NSMutableArray arrayWithCapacity:0];
+    [globalArray addObject:WB_UserService.currentUser.guid];
     [self.choosedUserArray enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [globalArray addObject:obj.userId];
     }];
-    [globalArray addObject:WB_UserService.currentUser.guid];
+  
     if (globalArray && globalArray.count>1) {
         NSArray *arr = [NSArray arrayWithArray:globalArray];
         [[WBGetBoxesAPI creatApiWithUsers:arr BoxName:nil] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {

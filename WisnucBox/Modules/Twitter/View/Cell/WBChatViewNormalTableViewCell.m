@@ -18,7 +18,7 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
         self.headImageView.clipsToBounds = YES;
         self.headImageView.layer.cornerRadius = 20.0;
         if (model.isSender) {
-             self.headImageView.layer.cornerRadius = 2.0;
+            self.headImageView.layer.cornerRadius = 2.0;
         }
         self.backgroundColor = [UIColor clearColor];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -36,9 +36,9 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
     CGRect bubbleFrame = _bubbleView.frame;
     bubbleFrame.origin.y = self.headImageView.frame.origin.y;
     
-//    if (self.messageModel.isChatGroup) {
-        bubbleFrame.origin.y = self.headImageView.frame.origin.y + NAME_LABEL_HEIGHT;
-//    }
+    //    if (self.messageModel.isChatGroup) {
+    bubbleFrame.origin.y = self.headImageView.frame.origin.y + NAME_LABEL_HEIGHT;
+    //    }
     if (self.messageModel.isSender) {
         bubbleFrame.origin.y = self.headImageView.frame.origin.y;
         // 菊花状态 （因不确定菊花具体位置，要在子类中实现位置的修改）
@@ -79,8 +79,8 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
         self.activityView.frame = frame;
     }
     else{
-         bubbleFrame.origin.x = HEAD_PADDING  + HEAD_SIZE + 12;
-         bubbleFrame.origin.y = bubbleFrame.origin.y + 8;
+        bubbleFrame.origin.x = HEAD_PADDING  + HEAD_SIZE + 12;
+        bubbleFrame.origin.y = bubbleFrame.origin.y + 8;
         _bubbleView.frame = bubbleFrame;
     }
 }
@@ -88,16 +88,16 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
 - (void)setMessageModel:(WBTweetModel *)model {
     [super setMessageModel:model];
     
-//    if (model.isChatGroup) {
-//        //        _nameLabel.text = [model.message.ext objectForKey:sendUserName];
-//        _nameLabel.hidden = model.isSender;
-//    }
-
+    //    if (model.isChatGroup) {
+    //        //        _nameLabel.text = [model.message.ext objectForKey:sendUserName];
+    //        _nameLabel.hidden = model.isSender;
+    //    }
+    
     _bubbleView.messageModel = model;
     if ( model.messageBodytype == MessageBodyType_File) {
-           [_bubbleView sizeToFit];
+        [_bubbleView sizeToFit];
     }
-
+    
 }
 
 - (void)prepareForReuse {
@@ -174,7 +174,7 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
         case MessageBodyType_File: {
             return [[WBChatFileBubbleView alloc] init];
         }
-             break;
+            break;
         default:
             break;
     }
@@ -218,15 +218,15 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
 + (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath withObject:(WBTweetModel *)model {
     NSInteger bubbleHeight = [self bubbleViewHeightForMessageModel:model];
     NSInteger headHeight = HEAD_SIZE;
-//    if (model.isChatGroup && !model.isSender) {
-//        bubbleHeight += NAME_LABEL_HEIGHT;
-//    }
+    //    if (model.isChatGroup && !model.isSender) {
+    //        bubbleHeight += NAME_LABEL_HEIGHT;
+    //    }
     return MAX(headHeight, bubbleHeight);
 }
 
 - (void)reloadFinishLoadData{
     if (self.messageModel.isSender) {
-//        bubbleFrame.origin.y = self.headImageView.frame.origin.y;
+        //        bubbleFrame.origin.y = self.headImageView.frame.origin.y;
         // 菊花状态 （因不确定菊花具体位置，要在子类中实现位置的修改）
         switch (self.messageModel.status) {
             case MessageDeliveryState_Delivering:
@@ -259,3 +259,4 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
 }
 
 @end
+

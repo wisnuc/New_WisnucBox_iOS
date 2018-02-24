@@ -67,16 +67,16 @@ NSString *const kTableViewFrame = @"frame";
     [super viewDidLoad];
     self.view.backgroundColor = MainBackgroudColor;
     self.automaticallyAdjustsScrollViewInsets = YES;
-
+    
     // 初始化
     self.isScrollBottom = NO;
     [self getData];
     [self createNavBtns];
     [self setupInit];
-//    [self loadMessageWithId:nil];
-//    dispatch_main_async_safe(^{
-//         [self scrollToBottomAnimated:NO refresh:YES];
-//    });
+    //    [self loadMessageWithId:nil];
+    //    dispatch_main_async_safe(^{
+    //         [self scrollToBottomAnimated:NO refresh:YES];
+    //    });
     [KDefaultNotificationCenter addObserver:self selector:@selector(mqttFreshChanged:) name:kBoxMQTTFresh object:nil];
     [KDefaultNotificationCenter addObserver:self selector:@selector(dataChanged:) name:kDataChangedName object:nil];
     [KDefaultNotificationCenter addObserver:self selector:@selector(fileSelectChanged:) name:kBoxFileSelect object:nil];
@@ -117,14 +117,14 @@ NSString *const kTableViewFrame = @"frame";
     [self.view addSubview:self.addButton];
     [self.view addSubview:self.chatBarView];
     
-//    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self.chatBarView action:@selector(hideKeyboard)];
-//    [self.tableView addGestureRecognizer:tapGesture];
+    //    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self.chatBarView action:@selector(hideKeyboard)];
+    //    [self.tableView addGestureRecognizer:tapGesture];
 }
 
 
 - (void)dealloc {
-//    [self.tableView removeObserver:self forKeyPath:kTableViewFrame];
-//    [self.tableView removeObserver:self forKeyPath:kTableViewOffset];
+    //    [self.tableView removeObserver:self forKeyPath:kTableViewFrame];
+    //    [self.tableView removeObserver:self forKeyPath:kTableViewOffset];
     [KDefaultNotificationCenter removeObserver:self name:kDataChangedName object:nil];
     [KDefaultNotificationCenter removeObserver:self name:kBoxFileSelect object:nil];
     [KDefaultNotificationCenter removeObserver:self name:kBoxMQTTFresh object:nil];
@@ -141,13 +141,13 @@ NSString *const kTableViewFrame = @"frame";
         return;
     }
     [[WBTweetAPI apiWithBoxuuid:_boxModel.uuid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-       NSLog(@"%@",request.responseJsonObject);
-//        if ([request.responseJsonObject isKindOfClass:[NSDictionary class]]) {
-////            NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"]
-////            : request.responseJsonObject;
-//             [self.tableView reloadData];
-//            return ;
-//        }
+        NSLog(@"%@",request.responseJsonObject);
+        //        if ([request.responseJsonObject isKindOfClass:[NSDictionary class]]) {
+        ////            NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"]
+        ////            : request.responseJsonObject;
+        //             [self.tableView reloadData];
+        //            return ;
+        //        }
         NSArray * array = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"]
         : request.responseJsonObject;
         if (![array isKindOfClass:[NSArray class]]) {
@@ -232,35 +232,35 @@ NSString *const kTableViewFrame = @"frame";
 
 - (void)sendFileMessageToNetSeverWithDataDic:(NSDictionary *)dic TableViewCell:(WBChatViewNormalTableViewCell *)cell{
     [WB_BoxService sendTweetWithFilesDic:dic Boxuuid:_boxModel.uuid Complete:^(WBTweetModel *tweetModel, NSError *error) {
-         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if (!error) {
-            dispatch_main_async_safe(^{
-                if (!cell) {
-                    NSIndexPath *index = [NSIndexPath indexPathForRow:self.dataSource.count-1 inSection:0];
-                    WBChatViewNormalTableViewCell *fileCell = [self.tableView cellForRowAtIndexPath:index];
-                    fileCell.messageModel.status = MessageDeliveryState_Delivered;
-                    [fileCell layoutSubviews];
-    
-                }else{
-                cell.messageModel.status = MessageDeliveryState_Delivered;
-                [cell layoutSubviews];
-                }
-            });
-        }else{
-            dispatch_main_async_safe(^{
-                if (!cell) {
-                    NSIndexPath *index = [NSIndexPath indexPathForRow:self.dataSource.count-1 inSection:0];
-                    WBChatViewNormalTableViewCell *fileCell = [self.tableView cellForRowAtIndexPath:index];
-                    fileCell.messageModel.status = MessageDeliveryState_Failure;
-                    [fileCell layoutSubviews];
-                    
-                }else{
-                cell.messageModel.status = MessageDeliveryState_Failure;
-                [cell layoutSubviews];
-                }
-            });
-        }
-    });
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if (!error) {
+                dispatch_main_async_safe(^{
+                    if (!cell) {
+                        NSIndexPath *index = [NSIndexPath indexPathForRow:self.dataSource.count-1 inSection:0];
+                        WBChatViewNormalTableViewCell *fileCell = [self.tableView cellForRowAtIndexPath:index];
+                        fileCell.messageModel.status = MessageDeliveryState_Delivered;
+                        [fileCell layoutSubviews];
+                        
+                    }else{
+                        cell.messageModel.status = MessageDeliveryState_Delivered;
+                        [cell layoutSubviews];
+                    }
+                });
+            }else{
+                dispatch_main_async_safe(^{
+                    if (!cell) {
+                        NSIndexPath *index = [NSIndexPath indexPathForRow:self.dataSource.count-1 inSection:0];
+                        WBChatViewNormalTableViewCell *fileCell = [self.tableView cellForRowAtIndexPath:index];
+                        fileCell.messageModel.status = MessageDeliveryState_Failure;
+                        [fileCell layoutSubviews];
+                        
+                    }else{
+                        cell.messageModel.status = MessageDeliveryState_Failure;
+                        [cell layoutSubviews];
+                    }
+                });
+            }
+        });
     }];
 }
 //- (void)dropDownLoadDataWithScrollView:(UIScrollView *)scrollView {
@@ -278,26 +278,26 @@ NSString *const kTableViewFrame = @"frame";
 
 
 - (void)loadMessageWithId:(NSString *)Id {
-        NSArray *messages = [[LHIMDBManager shareManager] searchModelArr:[WBTweetModel class] byKey:Id];
+    NSArray *messages = [[LHIMDBManager shareManager] searchModelArr:[WBTweetModel class] byKey:Id];
     
-        self.meetRefresh = messages.count == kMessageCount;
+    self.meetRefresh = messages.count == kMessageCount;
     
-        [messages enumerateObjectsUsingBlock:^(WBTweetModel *messageModel, NSUInteger idx, BOOL * stop) {
-            [self.dataSource insertObject:messageModel atIndex:0];
-            [self.messages insertObject:messageModel atIndex:0];
-    
-            NSString *time = [LHTools processingTimeWithDate:messageModel.ctime];
-            if (![self.lastTime isEqualToString:time]) {
-                [self.dataSource insertObject:time atIndex:0];
-                self.lastTime = time;
-            }
-        }];
-    
-        NSUInteger index = [self.dataSource indexOfObject:self.lastTime];
-        if (index) {
-            [self.dataSource removeObjectAtIndex:index];
-            [self.dataSource insertObject:self.lastTime atIndex:0];
+    [messages enumerateObjectsUsingBlock:^(WBTweetModel *messageModel, NSUInteger idx, BOOL * stop) {
+        [self.dataSource insertObject:messageModel atIndex:0];
+        [self.messages insertObject:messageModel atIndex:0];
+        
+        NSString *time = [LHTools processingTimeWithDate:messageModel.ctime];
+        if (![self.lastTime isEqualToString:time]) {
+            [self.dataSource insertObject:time atIndex:0];
+            self.lastTime = time;
         }
+    }];
+    
+    NSUInteger index = [self.dataSource indexOfObject:self.lastTime];
+    if (index) {
+        [self.dataSource removeObjectAtIndex:index];
+        [self.dataSource insertObject:self.lastTime atIndex:0];
+    }
 }
 
 - (NSIndexPath *)insertNewMessageOrTime:(id)NewMessage {
@@ -323,15 +323,15 @@ NSString *const kTableViewFrame = @"frame";
     }
     if (!content.photos && !content.photos.photos.count) return;
     // 图片类型
-//    [content.photos.photos enumerateObjectsUsingBlock:^(UIImage *image, NSUInteger idx, BOOL * stop) {
-//
-        [self seavMessage:content type:MessageBodyType_Image];
-//    }];
-
+    //    [content.photos.photos enumerateObjectsUsingBlock:^(UIImage *image, NSUInteger idx, BOOL * stop) {
+    //
+    [self seavMessage:content type:MessageBodyType_Image];
+    //    }];
+    
 }
 
 - (void)sendMessageToNetSeverWith:(LHContentModel *)content TableViewCell:(WBChatViewNormalTableViewCell *)tabelViewCell{
-   
+    
 #warning upload;
     NSMutableArray *imageArray = [NSMutableArray arrayWithCapacity:0];
     [content.photos.assets enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -345,7 +345,7 @@ NSString *const kTableViewFrame = @"frame";
                 }];
                 
                 NSLog(@"%@",tabelViewCell);
-//                dispatch_main_async_safe(^{
+                //                dispatch_main_async_safe(^{
                 if (!tabelViewCell) {
                     NSIndexPath *index = [NSIndexPath indexPathForRow:self.dataSource.count-1 inSection:0];
                     WBChatViewNormalTableViewCell *cell = [self.tableView cellForRowAtIndexPath:index];
@@ -357,7 +357,7 @@ NSString *const kTableViewFrame = @"frame";
                     [tabelViewCell layoutSubviews];
                     [tabelViewCell reloadFinishLoadData];
                 }
-//                });
+                //                });
             }else{
                 if (!tabelViewCell) {
                     NSIndexPath *index = [NSIndexPath indexPathForRow:self.dataSource.count-1 inSection:0];
@@ -370,20 +370,20 @@ NSString *const kTableViewFrame = @"frame";
                     [tabelViewCell layoutSubviews];
                     [tabelViewCell reloadFinishLoadData];;
                 }
-//                dispatch_main_async_safe(^{
+                //                dispatch_main_async_safe(^{
                 
-//                });
+                //                });
             }
         });
     }];
-
+    
 }
 
 
 - (void)seavMessage:(id)content type:(MessageBodyType)type {
     LHContentModel *contentModel;
     if ([content isKindOfClass:[LHContentModel class]]) {
-       contentModel =(LHContentModel *)content;
+        contentModel =(LHContentModel *)content;
     }
     
     long long date = (long long)([[NSDate date] timeIntervalSince1970] * 1000);
@@ -417,77 +417,77 @@ NSString *const kTableViewFrame = @"frame";
     NSIndexPath *index = [self insertNewMessageOrTime:messageModel];
     WBChatViewNormalTableViewCell *cell = [self.tableView cellForRowAtIndexPath:index];
     
-//    [self.messages addObject:messageModel];
+    //    [self.messages addObject:messageModel];
     [self.tableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     NSLog(@"%@",cell);
-//    if (self.tableView.contentSize.height > self.tableView.frame.size.height)
-//    {
-//        CGPoint offset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height);
-//        [self.tableView setContentOffset:offset animated:NO];
-//    }
+    //    if (self.tableView.contentSize.height > self.tableView.frame.size.height)
+    //    {
+    //        CGPoint offset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height);
+    //        [self.tableView setContentOffset:offset animated:NO];
+    //    }
     [self sendMessageToNetSeverWith:(LHContentModel *)content TableViewCell:cell];
 #warning
-//    // 模仿延迟发送
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        messageModel.status = MessageDeliveryState_Delivered;
-//        WBTweetModel *dbMessageModel = [[LHIMDBManager shareManager] searchModel:[WBTweetModel class] keyValues:@{@"date" : [NSString stringWithFormat:@"%lld",date], @"status" : @(MessageDeliveryState_Delivering)}];
-//        NSLog(@"%@",dbMessageModel);
-//        dbMessageModel.status = MessageDeliveryState_Delivered;
-//        NSArray *cells = [self.tableView visibleCells];
-//        [cells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//            if ([obj isKindOfClass:[WBChatViewNormalTableViewCell class]]) {
-//                WBChatViewNormalTableViewCell *messagecell = (WBChatViewNormalTableViewCell *)obj;
-//                if (messagecell.messageModel.ctime == dbMessageModel.ctime) {
-//                    [messagecell layoutSubviews];
-//                    [[LHIMDBManager shareManager] insertModel:dbMessageModel];
-//                    *stop = YES;
-//                }
-//            }
-//        }];
-
-        // 模仿消息回复
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            dbMessageModel.isSender = NO;
-//            dbMessageModel.uuid = nil;
-//            [[LHIMDBManager shareManager] insertModel:dbMessageModel];
-//            NSIndexPath *index = [self insertNewMessageOrTime:dbMessageModel];
-//            [self.messages addObject:dbMessageModel];
-//            [self.tableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-//        });
-//    });
+    //    // 模仿延迟发送
+    //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    //        messageModel.status = MessageDeliveryState_Delivered;
+    //        WBTweetModel *dbMessageModel = [[LHIMDBManager shareManager] searchModel:[WBTweetModel class] keyValues:@{@"date" : [NSString stringWithFormat:@"%lld",date], @"status" : @(MessageDeliveryState_Delivering)}];
+    //        NSLog(@"%@",dbMessageModel);
+    //        dbMessageModel.status = MessageDeliveryState_Delivered;
+    //        NSArray *cells = [self.tableView visibleCells];
+    //        [cells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    //            if ([obj isKindOfClass:[WBChatViewNormalTableViewCell class]]) {
+    //                WBChatViewNormalTableViewCell *messagecell = (WBChatViewNormalTableViewCell *)obj;
+    //                if (messagecell.messageModel.ctime == dbMessageModel.ctime) {
+    //                    [messagecell layoutSubviews];
+    //                    [[LHIMDBManager shareManager] insertModel:dbMessageModel];
+    //                    *stop = YES;
+    //                }
+    //            }
+    //        }];
+    
+    // 模仿消息回复
+    //        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    //            dbMessageModel.isSender = NO;
+    //            dbMessageModel.uuid = nil;
+    //            [[LHIMDBManager shareManager] insertModel:dbMessageModel];
+    //            NSIndexPath *index = [self insertNewMessageOrTime:dbMessageModel];
+    //            [self.messages addObject:dbMessageModel];
+    //            [self.tableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    //        });
+    //    });
 }
 
 #pragma mark - 事件监听
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-//    if ([keyPath isEqualToString:kTableViewFrame]) {
-//        UITableView *tableView = (UITableView *)object;
-//        CGRect newValue = [change[NSKeyValueChangeNewKey] CGRectValue];
-//        CGRect oldValue = [change[NSKeyValueChangeOldKey] CGRectValue];
-//        if (newValue.size.height != oldValue.size.height &&
-//            tableView.contentSize.height > newValue.size.height) {
-//
-//            [tableView setContentOffset:CGPointMake(0, tableView.contentSize.height - newValue.size.height) animated:YES];
-//        }
-//        return;
-//    }
+    //    if ([keyPath isEqualToString:kTableViewFrame]) {
+    //        UITableView *tableView = (UITableView *)object;
+    //        CGRect newValue = [change[NSKeyValueChangeNewKey] CGRectValue];
+    //        CGRect oldValue = [change[NSKeyValueChangeOldKey] CGRectValue];
+    //        if (newValue.size.height != oldValue.size.height &&
+    //            tableView.contentSize.height > newValue.size.height) {
+    //
+    //            [tableView setContentOffset:CGPointMake(0, tableView.contentSize.height - newValue.size.height) animated:YES];
+    //        }
+    //        return;
+    //    }
     
     //    UITableView *tableView = (UITableView *)object;
-//    CGPoint newValue = [change[NSKeyValueChangeNewKey] CGPointValue];
-//    CGPoint oldValue = [change[NSKeyValueChangeOldKey] CGPointValue];
-//    if (!self.headerRefreshing) self.headerRefreshing = newValue.y < 40 && self.isMeetRefresh;
+    //    CGPoint newValue = [change[NSKeyValueChangeNewKey] CGPointValue];
+    //    CGPoint oldValue = [change[NSKeyValueChangeOldKey] CGPointValue];
+    //    if (!self.headerRefreshing) self.headerRefreshing = newValue.y < 40 && self.isMeetRefresh;
     //    DLog(@"newValue = %f, oldValue = %f", newValue.y, oldValue.y);
 }
 
 #pragma mark  cell事件处理
 - (void)routerEventWithName:(NSString *)eventName userInfo:(NSDictionary *)userInfo {
-//    WBTweetModel *model = [userInfo objectForKey:kMessageKey];
-//    UIImageView *imageView = [userInfo objectForKey:kMessageImageKey];
+    //    WBTweetModel *model = [userInfo objectForKey:kMessageKey];
+    //    UIImageView *imageView = [userInfo objectForKey:kMessageImageKey];
     if ([eventName isEqualToString:kRouterEventImageBubbleTapEventName]) {
         //点击图片
-//        [self chatImageCellBubblePressed:model ImageViewTag:imageView.tag];
+        //        [self chatImageCellBubblePressed:model ImageViewTag:imageView.tag];
     }else if ([eventName isEqualToString:kRouterEventChatResendEventName]){
-//         WBChatViewNormalTableViewCell *cell = [userInfo objectForKey:kMessageKey];
-//         [self sendMessageToNetSeverWith:(LHContentModel *)content TableViewCell:cell];
+        //         WBChatViewNormalTableViewCell *cell = [userInfo objectForKey:kMessageKey];
+        //         [self sendMessageToNetSeverWith:(LHContentModel *)content TableViewCell:cell];
     }else if ([eventName isEqualToString:kRouterEventFileBubbleTapEventName]){
         WBTweetModel *model = [userInfo objectForKey:kMessageKey];
         FilesNextViewController *nextVC = [[FilesNextViewController alloc]init];
@@ -505,8 +505,8 @@ NSString *const kTableViewFrame = @"frame";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     id obj = [self.dataSource objectAtIndex:indexPath.row];
-      WBTweetModel *messageModel = (WBTweetModel *)obj;
-//    NSLog(@"%@",self.dataSource);
+    WBTweetModel *messageModel = (WBTweetModel *)obj;
+    //    NSLog(@"%@",self.dataSource);
     if (messageModel.comment.length>0 &&[messageModel.type isEqualToString:@"boxmessage"]) {
         LHChatTimeCell *timeCell = (LHChatTimeCell *)[tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LHChatTimeCell class])];
         if (!timeCell) {
@@ -526,42 +526,42 @@ NSString *const kTableViewFrame = @"frame";
             timeCell.timeLable.text = [NSString stringWithFormat:@"%@将群名更改为“%@”",userName,groupName];
         }else if ([boxMessageModel.op isEqualToString:@"addUser"]){
             __block NSMutableString *userName = [NSMutableString stringWithCapacity:0];
-                [_boxModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    [boxMessageModel.value enumerateObjectsUsingBlock:^(NSString *userId, NSUInteger idx, BOOL * _Nonnull stop) {
-                        if ([userId isEqualToString:obj.userId]) {
-                            [userName  appendFormat:@"%@,",obj.nickName];;
-                        }
-                    }];
+            [_boxModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [boxMessageModel.value enumerateObjectsUsingBlock:^(NSString *userId, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if ([userId isEqualToString:obj.userId]) {
+                        [userName  appendFormat:@"%@,",obj.nickName];;
+                    }
                 }];
-                timeCell.timeLable.text = [NSString stringWithFormat:@"%@已加入群",userName];
+            }];
+            timeCell.timeLable.text = [NSString stringWithFormat:@"%@已加入群",userName];
         }else if ([boxMessageModel.op isEqualToString:@"createBox"]){
-          __block  NSString *groupName;
+            __block  NSString *groupName;
             [_boxModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 if ([_boxModel.owner isEqualToString:obj.userId]) {
                     groupName = obj.nickName;
                 }
             }];
-        if(groupName.length == 0)groupName = @"";
-          timeCell.timeLable.text = [NSString stringWithFormat:@"%@组建了群",groupName];
-          timeCell.timeLable.text = @"私友群已建立，你可以分享照片和文件给群友";   
+            if(groupName.length == 0)groupName = @"";
+            timeCell.timeLable.text = [NSString stringWithFormat:@"%@组建了群",groupName];
+            timeCell.timeLable.text = @"私友群已建立，你可以分享照片和文件给群友";
         }
         
-//        else if ([boxMessageModel.op isEqualToString:@"deleteUser"]){
-//             __block NSMutableString *userName = [NSMutableString stringWithCapacity:0];
-//            [_boxModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//                [boxMessageModel.value enumerateObjectsUsingBlock:^(NSString *userId, NSUInteger idx, BOOL * _Nonnull stop) {
-//                    if ([userId isEqualToString:obj.userId]) {
-//                        [userName  appendFormat:@"%@", userId];;
-//                    }
-//                }];
-//            }];
-//            timeCell.timeLable.text = [NSString stringWithFormat:@"%@已退出群",userName];
-//        }
+        //        else if ([boxMessageModel.op isEqualToString:@"deleteUser"]){
+        //             __block NSMutableString *userName = [NSMutableString stringWithCapacity:0];
+        //            [_boxModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        //                [boxMessageModel.value enumerateObjectsUsingBlock:^(NSString *userId, NSUInteger idx, BOOL * _Nonnull stop) {
+        //                    if ([userId isEqualToString:obj.userId]) {
+        //                        [userName  appendFormat:@"%@", userId];;
+        //                    }
+        //                }];
+        //            }];
+        //            timeCell.timeLable.text = [NSString stringWithFormat:@"%@已退出群",userName];
+        //        }
         return timeCell;
     }
     NSString *cellIdentifier = [WBChatViewNormalTableViewCell cellIdentifierForMessageModel:messageModel];
     WBChatViewNormalTableViewCell *messageCell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-
+    
     if (!messageCell) {
         messageCell = [[WBChatViewNormalTableViewCell alloc] initWithMessageModel:messageModel reuseIdentifier:cellIdentifier];
     }
@@ -582,15 +582,15 @@ NSString *const kTableViewFrame = @"frame";
     //    }
     
     if (self.isScrollBottom == NO) {
-//        id obj = [self.dataSource objectAtIndex:indexPath.row];
-//        WBTweetModel *messageModel = (WBTweetModel *)obj;
-//        ((WBChatViewNormalTableViewCell *)cell).messageModel = messageModel;
+        //        id obj = [self.dataSource objectAtIndex:indexPath.row];
+        //        WBTweetModel *messageModel = (WBTweetModel *)obj;
+        //        ((WBChatViewNormalTableViewCell *)cell).messageModel = messageModel;
         if (self.tableView.contentSize.height > self.tableView.frame.size.height)
         {
             CGPoint offset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height);
             [self.tableView setContentOffset:offset animated:NO];
         }
-   
+        
         if (indexPath.row == self.dataSource.count-1) {
             
             self.isScrollBottom = YES;
@@ -601,7 +601,7 @@ NSString *const kTableViewFrame = @"frame";
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSObject *obj = [self.dataSource objectAtIndex:indexPath.row];
-        WBTweetModel *messageModel = (WBTweetModel *)obj;
+    WBTweetModel *messageModel = (WBTweetModel *)obj;
     if (messageModel.comment.length>0 &&[messageModel.type isEqualToString:@"boxmessage"]) {
         return 31;
     } else {
@@ -617,10 +617,10 @@ NSString *const kTableViewFrame = @"frame";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-//    if (self.isMeetRefresh) {
-//        return 40;
-//    }
-//    return 20;
+    //    if (self.isMeetRefresh) {
+    //        return 40;
+    //    }
+    //    return 20;
     return 16;
 }
 //
@@ -647,20 +647,20 @@ NSString *const kTableViewFrame = @"frame";
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     DLog(@" scrollViewDidEndDecelerating == %.2f", scrollView.contentOffset.y);
-//    [self dropDownLoadDataWithScrollView:scrollView];
+    //    [self dropDownLoadDataWithScrollView:scrollView];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     if (decelerate == NO) {
         DLog(@"scrollView停止滚动，完全静止");
-//        [self dropDownLoadDataWithScrollView:scrollView];
+        //        [self dropDownLoadDataWithScrollView:scrollView];
     } else {
         DLog(@"用户停止拖拽，但是scrollView由于惯性，会继续滚动，并且减速");
     }
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-//    [self.chatBarView hideKeyboard];
+    //    [self.chatBarView hideKeyboard];
 }
 
 - (void)didSelectMenuOptionAtIndex:(NSInteger)row{
@@ -681,33 +681,33 @@ NSString *const kTableViewFrame = @"frame";
     //    dispatch_async(dispatch_get_global_queue(0, 0), ^{
     [array enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         @synchronized(self) {
-        WBBoxesModel *model = [WBBoxesModel modelWithDictionary:obj];
-        if ([model.uuid isEqualToString:_boxModel.uuid]) {
-            model.tweet.uuid = model.uuid;
-            NSIndexPath *indexForSelf = [NSIndexPath indexPathForRow:self.dataSource.count-1 inSection:0];
-             if ([model.tweet.type isEqualToString:@"boxmessage"]) {
-//                   LHChatTimeCell *cell = [self.tableView cellForRowAtIndexPath:indexForSelf];
-                     NSIndexPath *index = [weak_self insertNewMessageOrTime:model.tweet];
-                     [self.messages addObject:model];
-                     [self.tableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-                     [dataArray addObject: model.tweet];
-
-             }else{
+            WBBoxesModel *model = [WBBoxesModel modelWithDictionary:obj];
+            if ([model.uuid isEqualToString:_boxModel.uuid]) {
+                model.tweet.uuid = model.uuid;
+                NSIndexPath *indexForSelf = [NSIndexPath indexPathForRow:self.dataSource.count-1 inSection:0];
+                if ([model.tweet.type isEqualToString:@"boxmessage"]) {
+                    //                   LHChatTimeCell *cell = [self.tableView cellForRowAtIndexPath:indexForSelf];
+                    NSIndexPath *index = [weak_self insertNewMessageOrTime:model.tweet];
+                    [self.messages addObject:model];
+                    [self.tableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+                    [dataArray addObject: model.tweet];
+                    
+                }else{
                     WBChatViewNormalTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexForSelf];
-                 if (![cell.messageModel.uuid isEqualToString:@"myselfPush"]) {
-                     NSIndexPath *index = [weak_self insertNewMessageOrTime:model.tweet];
-                     [self.messages addObject:model];
-                     [self.tableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-                     [dataArray addObject: model.tweet];
-                     //                [self.tableView reloadData];
-                 }else{
-//                     cell.boxModel = model;
-//                     cell.messageModel.boxuuid = model.uuid;
-//                     cell.messageModel = model.tweet;
-//                     [cell layoutSubviews];
-                 }
-             }
-        }
+                    if (![cell.messageModel.uuid isEqualToString:@"myselfPush"]) {
+                        NSIndexPath *index = [weak_self insertNewMessageOrTime:model.tweet];
+                        [self.messages addObject:model];
+                        [self.tableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+                        [dataArray addObject: model.tweet];
+                        //                [self.tableView reloadData];
+                    }else{
+                        //                     cell.boxModel = model;
+                        //                     cell.messageModel.boxuuid = model.uuid;
+                        //                     cell.messageModel = model.tweet;
+                        //                     [cell layoutSubviews];
+                    }
+                }
+            }
         }
     }];
     self.freshBoxDataArray = dataArray;
@@ -721,8 +721,8 @@ NSString *const kTableViewFrame = @"frame";
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//        [_tableView addObserver:self forKeyPath:kTableViewOffset options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
-//        [_tableView addObserver:self forKeyPath:kTableViewFrame options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+        //        [_tableView addObserver:self forKeyPath:kTableViewOffset options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+        //        [_tableView addObserver:self forKeyPath:kTableViewFrame options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
     }
     return _tableView;
 }

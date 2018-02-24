@@ -410,7 +410,7 @@
         [dic setValue:WB_UserService.currentUser.isCloudLogin ? WB_UserService.currentUser.cloudToken : [NSString stringWithFormat:@"JWT %@",WB_UserService.defaultToken] forKey:@"Authorization"];
         return dic;
     };
-    [SDWebImageManager sharedManager].imageDownloader.downloadTimeout = 60;
+    [SDWebImageManager sharedManager].imageDownloader.downloadTimeout = 200;
     NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"%@media/%@?alt=thumbnail&width=200&height=200&modifier=caret&autoOrient=true", [self currentURL], hash]];
     if(WB_UserService.currentUser.isCloudLogin)
         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resource=%@&method=GET&alt=thumbnail&width=134&height=134&modifier=caret&autoOrient=true", kCloudAddr, kCloudCommonPipeUrl, [[NSString stringWithFormat:@"media/%@", hash] base64EncodedString]]];

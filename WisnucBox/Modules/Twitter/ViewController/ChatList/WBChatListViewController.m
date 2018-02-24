@@ -181,22 +181,29 @@
     if (!cell) {
         cell = (WBChatListTableViewCell *)[[[NSBundle mainBundle]loadNibNamed:NSStringFromClass([WBChatListTableViewCell class]) owner:self options:nil]lastObject];
     }
-
+    
     WBBoxesModel *boxesModel = self.boxDataArray[indexPath.row];
     NSInteger n = MIN(boxesModel.users.count, 5);
     float r = 20 * n / (2.5 * n - 1.5);
     [boxesModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *userModel, NSUInteger idx, BOOL * _Nonnull stop) {
-        double deg =  M_PI * (idx * 2 / n - 1 / 4);
-        NSLog(@"😑%u",idx * 2 / n - 1 / 4);
-        float top = (float)(1 - cos(deg)) * (20 - r);
-        float left = (float)(1 + sin(deg)) * (20 - r);
-        UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(left, top, r *2, r*2)];
-        imageView.layer.masksToBounds = YES;
-        imageView.layer.cornerRadius = r;
-        [imageView was_setCircleImageWithUrlString:userModel.avatarUrl placeholder:[UIImage imageWithColor:RGBACOLOR(0, 0, 0, 0.37)]];
-        [cell.leftImageView addSubview:imageView];
+        if (idx<= n - 1){
+            float deg =  M_PI * ((float)idx * 2 / n - 1 / 4);
+            NSLog(@"😈%lu",idx * 2 / n - 1 / 4);
+//            NSLog(@"🌶%lu",idx);
+//            NSLog(@"😑%f",deg);
+            float top = (1 - cosf(deg)) * (20 - r);
+            float left = (1 + sinf(deg)) * (20 - r);
+            //        NSLog(@"😑%f,%f",left,top);
+            UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(left, top, r *2, r*2)];
+            imageView.layer.masksToBounds = YES;
+            imageView.layer.cornerRadius = r;
+            imageView.layer.borderWidth = 0.5f;
+            imageView.layer.borderColor = [UIColor whiteColor].CGColor;
+            [imageView was_setCircleImageWithUrlString:userModel.avatarUrl placeholder:[UIImage imageWithColor:RGBACOLOR(0, 0, 0, 0.37)]];
+            [cell.leftImageView addSubview:imageView];
+        }
     }];
-
+    
     cell.nameLabel.text = boxesModel.name;
     if (boxesModel.tweet) {
         if (boxesModel.tweet.list.count>0) {
@@ -213,7 +220,7 @@
     long long tweetTime = boxesModel.tweet.ctime;
     cell.timeLable.text = [NSString getReleaseTime:tweetTime];
     if (![boxesModel.station.isOnline boolValue]) {
-         cell.timeLable.text = @"已离线";
+        cell.timeLable.text = @"已离线";
     }
     if (boxesModel.name.length == 0|| !boxesModel.name){
         cell.nameLabel.text = [NSString stringWithFormat:@"群聊(%ld)",(unsigned long)boxesModel.users.count];
@@ -225,10 +232,10 @@
                 cell.nameLabel.text = [NSString stringWithFormat:@"%@",((WBBoxesUsersModel *)boxesModel.users[0]).nickName];
                 break;
             case 2:
-                 cell.nameLabel.text = [NSString stringWithFormat:@"%@、%@",((WBBoxesUsersModel *)boxesModel.users[0]).nickName,((WBBoxesUsersModel *)boxesModel.users[1]).nickName];
+                cell.nameLabel.text = [NSString stringWithFormat:@"%@、%@",((WBBoxesUsersModel *)boxesModel.users[0]).nickName,((WBBoxesUsersModel *)boxesModel.users[1]).nickName];
                 break;
             case 3:
-                 cell.nameLabel.text = [NSString stringWithFormat:@"%@、%@、%@",((WBBoxesUsersModel *)boxesModel.users[0]).nickName,((WBBoxesUsersModel *)boxesModel.users[1]).nickName,((WBBoxesUsersModel *)boxesModel.users[2]).nickName];
+                cell.nameLabel.text = [NSString stringWithFormat:@"%@、%@、%@",((WBBoxesUsersModel *)boxesModel.users[0]).nickName,((WBBoxesUsersModel *)boxesModel.users[1]).nickName,((WBBoxesUsersModel *)boxesModel.users[2]).nickName];
                 break;
             case 4:
                 cell.nameLabel.text = [NSString stringWithFormat:@"%@、%@、%@、%@",((WBBoxesUsersModel *)boxesModel.users[0]).nickName,((WBBoxesUsersModel *)boxesModel.users[1]).nickName,((WBBoxesUsersModel *)boxesModel.users[2]).nickName,((WBBoxesUsersModel *)boxesModel.users[3]).nickName];
@@ -240,7 +247,7 @@
                 cell.nameLabel.text = [NSString stringWithFormat:@"%@、%@、%@、%@、%@...",((WBBoxesUsersModel *)boxesModel.users[0]).nickName,((WBBoxesUsersModel *)boxesModel.users[1]).nickName,((WBBoxesUsersModel *)boxesModel.users[2]).nickName,((WBBoxesUsersModel *)boxesModel.users[3]).nickName,((WBBoxesUsersModel *)boxesModel.users[4]).nickName];
                 break;
         }
-    
+        
     }
     return cell;
 }

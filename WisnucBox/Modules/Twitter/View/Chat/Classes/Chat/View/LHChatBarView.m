@@ -379,17 +379,18 @@ CGFloat const kChatBatItemWH = 26.0f;
     }
    
     JYThumbVC * photosVC = [[JYThumbVC alloc] initWithLocalDataSource:[AppServices sharedService].assetServices.allAssets IsBoxSelectType:YES];
+    [photosVC addNetAssets:[AppServices sharedService].assetServices.allNetAssets];
     photosVC.delegate = self;
-     [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
+//     [SXLoadingView showProgressHUD:WBLocalizedString(@"loading...", nil)];
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [WB_AssetService getNetAssets:^(NSError *error, NSArray<WBAsset *> *netAssets) {
-            if(!error){
-            [photosVC addNetAssets:netAssets];
-            }
-          
-            NSLog(@"Fetch Net Assets Error --> : %@", error);
-          
-        }];
+//        [WB_AssetService getNetAssets:^(NSError *error, NSArray<WBAsset *> *netAssets) {
+//            if(!error){
+    
+//            }
+    
+//            NSLog(@"Fetch Net Assets Error --> : %@", error);
+//
+//        }];
 //    });
     NavViewController *nav = [[NavViewController alloc] initWithRootViewController:photosVC];
 //    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:9 delegate:self];
