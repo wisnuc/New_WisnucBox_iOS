@@ -205,6 +205,9 @@
     }];
     
     cell.nameLabel.text = boxesModel.name;
+    if (boxesModel.badgeIndex) {
+        [self updateTableViewCell:cell forCount:[boxesModel.badgeIndex unsignedIntegerValue]];
+    }
     if (boxesModel.tweet) {
         if (boxesModel.tweet.list.count>0) {
             cell.detailLabel.text = @"[图片]";
@@ -280,22 +283,72 @@
          WBBoxesModel *model = [WBBoxesModel modelWithDictionary:obj];
         [self.boxDataArray enumerateObjectsUsingBlock:^(WBBoxesModel *boxModel, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([boxModel.uuid isEqualToString:model.uuid]) {
-//                NSIndexPath *indexForSelf = [NSIndexPath indexPathForRow:idx inSection:0];
+//                NSIndexPath *indexForSelf = [NSIndexPath indexPathForRow:0 inSection:0];
 //                WBChatListTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexForSelf];
-                [weak_self.boxDataArray removeObjectAtIndex:idx];
-                [weak_self.boxDataArray insertObject:model atIndex:0];
+//                [weak_self.boxDataArray removeObjectAtIndex:idx];
+//                [weak_self.boxDataArray insertObject:model atIndex:0];
+                [weak_self.boxDataArray replaceObjectAtIndex:idx withObject:model];
+                [weak_self.boxDataArray exchangeObjectAtIndex:0 withObjectAtIndex:idx];
+//                 [self updateTableViewCell:cell forCount:1];
                 [weak_self.tableView reloadData];
+//                [weak_self]
             }
             [uuidArray addObject:boxModel.uuid];
         }];
         
         if (![uuidArray containsObject:model.uuid]) {
-            [self.boxDataArray insertObject:model atIndex:0];
-            [self.tableView reloadData];
+            [weak_self.boxDataArray insertObject:model atIndex:0];
+//            NSIndexPath *indexForSelf = [NSIndexPath indexPathForRow:0 inSection:0];
+//            WBChatListTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexForSelf];
+//            [self updateTableViewCell:cell forCount:1];
+            [weak_self.tableView reloadData];
         }
     }];
+}
+
+- (void)saveUnreadMessageIndex{
+//    [self indexOfAccessibilityElement:<#(nonnull id)#>]
+}
+
+- (void)updateTableViewCell:(WBChatListTableViewCell *)cell forCount:(NSUInteger)count
+{
+    // Count > 0, show count
+    if (count > 0) {
+        
+        // Create label
+        CGFloat fontSize = 14;
+        UILabel *label = [[UILabel alloc] init];
+        label.font = [UIFont systemFontOfSize:fontSize];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor whiteColor];
+        label.backgroundColor = [UIColor redColor];
+        
+        // Add count to label and size to fit
+        label.text = [NSString stringWithFormat:@"%@", @(count)];
+        [label sizeToFit];
+        
+//         Adjust frame to be square for single digits or elliptical for numbers > 9
+        CGRect frame = label.frame;
+        frame.size.height += (int)(0.4*fontSize);
+        frame.size.width = (count <= 9) ? frame.size.height : frame.size.width + (int)fontSize;
+        frame.origin.x = 0;
+        frame.origin.y = 0;
+        label.frame = frame;
+       
+//         Set radius and clip to bounds
+        label.layer.cornerRadius = frame.size.height/2.0;
+        label.clipsToBounds = true;
+//        NSLog(@"%@",NSStringFromCGRect(label.frame));
+        // Show label in accessory view and remove disclosure
+        [cell.badgeLabel addSubview:label];
+//        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
     
-    
+    // Count = 0, show disclosure
+//    else {
+//        cell.accessoryView = nil;
+//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//    }
 }
 
 - (UITableView *)tableView{

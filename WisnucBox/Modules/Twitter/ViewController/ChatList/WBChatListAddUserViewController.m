@@ -61,7 +61,7 @@
     NSMutableArray *tempDataSource = [NSMutableArray arrayWithCapacity:0];
     NSMutableArray *chooseUserSource = [NSMutableArray arrayWithCapacity:0];
     NSMutableArray *exsitDataSource = [NSMutableArray arrayWithCapacity:0];
-    
+    __block NSInteger index = 0;
     [[WBBoxUserAPI userApiWithGuid:WB_UserService.currentUser.guid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSArray *array = request.responseJsonObject[@"data"];
         [array enumerateObjectsUsingBlock:^(NSDictionary *dic, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -71,8 +71,9 @@
                 if ([model.userId isEqualToString:WB_UserService.currentUser.guid]) {
                     //                        [chooseUserSource addObject:model];
                     [exsitDataSource addObject:model];
+                    index = idx;
                 }
-                [_boxModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [_boxModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idxns, BOOL * _Nonnull stop) {
                     if([obj.userId isEqualToString:model.userId]){
                         if (![chooseUserSource containsObject:model]) {
                             //                                [chooseUserSource addObject:model];
@@ -82,6 +83,9 @@
                 }];
             }
         }];
+        if (index!=0) {
+            [tempDataSource exchangeObjectAtIndex:0 withObjectAtIndex:index];
+        }
         self.userArray = tempDataSource;
         self.choosedUserArray = chooseUserSource;
         self.exsitDataArray = exsitDataSource;

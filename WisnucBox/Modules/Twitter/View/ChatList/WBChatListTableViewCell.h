@@ -13,5 +13,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *detailLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *leftImageView;
 @property (weak, nonatomic) IBOutlet UILabel *timeLable;
+@property (weak, nonatomic) IBOutlet UILabel *badgeLabel;
 
 @end

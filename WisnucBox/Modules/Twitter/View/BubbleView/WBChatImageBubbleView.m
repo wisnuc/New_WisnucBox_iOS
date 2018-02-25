@@ -124,25 +124,26 @@
     if (self.imageArray) {
         [_imageArray removeAllObjects];
     }
-    UIImage *image = [UIImage imageNamed:@"IM_Chart_imageDownloadFail.png"];
-//    self.localImageArray = [[NSMutableArray alloc]initWithArray:messageModel.localImageArray copyItems:YES];
+//    UIImage *image = [UIImage imageNamed:@"IM_Chart_imageDownloadFail.png"];
+     UIImage *image = [UIImage imageWithColor:UICOLOR_RGB(0xf5f5f5)];
+    //    self.localImageArray = [[NSMutableArray alloc]initWithArray:messageModel.localImageArray copyItems:YES];
     if (!self.messageModel)return;
-    float imageWithHeight = 0.0;
+    __block float imageWithHeight = 0.0;
     if (messageModel.isSender) {
-      imageWithHeight = [self setFrameSelfFrameWithArray:messageModel.localImageArray];
+        imageWithHeight = [self setFrameSelfFrameWithArray:messageModel.localImageArray];
     }else{
-      imageWithHeight = [self setFrameSelfFrameWithArray:messageModel.list];
+        imageWithHeight = [self setFrameSelfFrameWithArray:messageModel.list];
     }
-
+    
     if (messageModel.isSender && messageModel.localImageArray.count==0){
         
     }
     
     if (messageModel.isSender && messageModel.localImageArray.count>0) {
         NSMutableArray *localImageArray = [NSMutableArray arrayWithArray:messageModel.localImageArray];
-//        if (localImageArray.count>6) {
-//            localImageArray = [NSMutableArray arrayWithArray:[messageModel.localImageArray subarrayWithRange:NSMakeRange(0, 6)]];
-//        }
+        //        if (localImageArray.count>6) {
+        //            localImageArray = [NSMutableArray arrayWithArray:[messageModel.localImageArray subarrayWithRange:NSMakeRange(0, 6)]];
+        //        }
         
         [localImageArray enumerateObjectsUsingBlock:^(WBTweetlocalImageModel *localImageModel, NSUInteger idx, BOOL * _Nonnull stop) {
             NSInteger index = 0 ;
@@ -170,20 +171,20 @@
             //
             UIImageView *imageView ;
             if (idx<=5) {
-            imageView = [[UIImageView alloc]init];
-            imageView.tag = idx;
-            imageView.userInteractionEnabled = YES;
-            
-            imageView.frame = CGRectMake(index * (imageWithHeight + Width_Space) + Start_X,page * (imageWithHeight + Height_Space)+Start_Y, imageWithHeight, imageWithHeight);
-            UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(bubbleViewPressed:)];
-            [imageView addGestureRecognizer:tap];
+                imageView = [[UIImageView alloc]init];
+                imageView.tag = idx;
+                imageView.userInteractionEnabled = YES;
+                
+                imageView.frame = CGRectMake(index * (imageWithHeight + Width_Space) + Start_X,page * (imageWithHeight + Height_Space)+Start_Y, imageWithHeight, imageWithHeight);
+                UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(bubbleViewPressed:)];
+                [imageView addGestureRecognizer:tap];
                 if (localImageModel.localImage) {
-                   imageView.image = localImageModel.localImage;
-                         [self.imageArray addObject:imageView.image];
+                    imageView.image = localImageModel.localImage;
+                    [self.imageArray addObject:imageView.image];
                 }else{
                     [PHPhotoLibrary requestImageForAsset:((JYAsset *)localImageModel.asset).asset size:size resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
                         if (image) {
-                             imageView.image = image;
+                            imageView.image = image;
                         }else{
                             imageView.image = [UIImage imageWithColor:NOIMAGECOLOR];
                         }
@@ -194,8 +195,8 @@
             dispatch_main_async_safe(^{
                 [weakSelf addSubview:imageView];
             });
-       
-       }];
+            
+        }];
         imageWithHeight = 89.0f;
         NSMutableArray *dataArray;
         if (messageModel.isSender) {
@@ -204,7 +205,7 @@
             dataArray = [NSMutableArray arrayWithArray:messageModel.list];
         }
         if (dataArray.count >6) {
-//            maskImageView.alpha = 0.54f;
+            //            maskImageView.alpha = 0.54f;
             self.maskImageView.frame = CGRectMake(2 * (imageWithHeight + Width_Space) + Start_X,1 * (imageWithHeight + Height_Space)+Start_Y, imageWithHeight, imageWithHeight);
             UILabel *label = [[UILabel alloc]initWithFrame:self.maskImageView.bounds];
             label.text = [NSString stringWithFormat:@"+%ld",dataArray.count - 6];
@@ -218,27 +219,27 @@
         }
         return;
     }
- 
-
+    
+    
     imageWithHeight = [self setFrameSelfFrameWithArray:messageModel.list];
     
     
-            if (self.thumbnailRequestOperationArray && self.thumbnailRequestOperationArray.count>0){
-                [self.thumbnailRequestOperationArray enumerateObjectsUsingBlock:^(SDWebImageDownloadToken *thumbnailRequestOperation, NSUInteger idx, BOOL * _Nonnull stop) {
-                    [[SDWebImageDownloader sharedDownloader] cancel:thumbnailRequestOperation];
-                }];
-            }
-            [self.thumbnailRequestOperationArray removeAllObjects];
-            self.thumbnailRequestOperationArray = nil;
-//            _imageView.image = image;
-//            NSLog(@"🍰%ld",messageModel.list.count);
+    if (self.thumbnailRequestOperationArray && self.thumbnailRequestOperationArray.count>0){
+        [self.thumbnailRequestOperationArray enumerateObjectsUsingBlock:^(SDWebImageDownloadToken *thumbnailRequestOperation, NSUInteger idx, BOOL * _Nonnull stop) {
+            [[SDWebImageDownloader sharedDownloader] cancel:thumbnailRequestOperation];
+        }];
+    }
+    [self.thumbnailRequestOperationArray removeAllObjects];
+    self.thumbnailRequestOperationArray = nil;
+    //            _imageView.image = image;
+    //            NSLog(@"🍰%ld",messageModel.list.count);
     
-            NSMutableArray *imageArray = [NSMutableArray arrayWithArray:messageModel.list];
-//            if (imageArray.count>6) {
-//                imageArray = [NSMutableArray arrayWithArray:[messageModel.list subarrayWithRange:NSMakeRange(0, 6)]];
-//            }
+    NSMutableArray *imageArray = [NSMutableArray arrayWithArray:messageModel.list];
+    //            if (imageArray.count>6) {
+    //                imageArray = [NSMutableArray arrayWithArray:[messageModel.list subarrayWithRange:NSMakeRange(0, 6)]];
+    //            }
     
-//           NSLog(@"😝");
+    //           NSLog(@"😝");
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [imageArray enumerateObjectsUsingBlock:^(WBTweetlistModel *listModel, NSUInteger idx, BOOL * _Nonnull stop) {
             NSLog(@"😝%ld",idx);
@@ -276,7 +277,7 @@
                 [imageView addGestureRecognizer:tap];
                 imageView.image = image;
             }
-            NSString *key = [NSString stringWithFormat:@"%@%lld%ld",messageModel.uuid,messageModel.ctime,idx];
+            NSString *key = [NSString stringWithFormat:@"%@%lld%@",messageModel.uuid,messageModel.ctime,listModel.sha256];
             [SDImageCache.sharedImageCache diskImageExistsWithKey:key completion:^(BOOL isInCache) {
                 if (isInCache) {
                     [SDImageCache.sharedImageCache queryCacheOperationForKey:key done:^(UIImage * _Nullable image, NSData * _Nullable data, SDImageCacheType cacheType) {
@@ -289,7 +290,7 @@
                     __block SDWebImageDownloadToken *thumbnailDownloadToken = [WB_NetService getTweeetThumbnailImageWithHash:listModel.sha256 BoxUUID:messageModel.boxuuid complete:^(NSError *error, UIImage *img) {
                         if(!weakSelf) return;
                         if (!error &&img) {
-                            [SDImageCache.sharedImageCache storeImage:img forKey:[NSString stringWithFormat:@"%@%lld%ld",messageModel.uuid,messageModel.ctime,imageView.tag] toDisk:YES completion:^{
+                            [SDImageCache.sharedImageCache storeImage:img forKey:key toDisk:YES completion:^{
                             }];
                             
                             dispatch_main_async_safe(^{
@@ -321,32 +322,32 @@
                 }
             });
         }];
+        imageWithHeight = 89.0f;
+        NSMutableArray *dataArray;
+        if (messageModel.isSender) {
+            dataArray = [NSMutableArray arrayWithArray:messageModel.localImageArray] ;
+            [dataArray addObjectsFromArray:messageModel.list];
+        }else{
+            dataArray = [NSMutableArray arrayWithArray:messageModel.list];
+        }
+        if (dataArray.count >6) {
+            dispatch_main_async_safe((^{
+                //            maskImageView.alpha = 0.54f;
+                self.maskImageView.frame = CGRectMake(2 * (imageWithHeight + Width_Space) + Start_X,1 * (imageWithHeight + Height_Space)+Start_Y, imageWithHeight, imageWithHeight);
+                UILabel *label = [[UILabel alloc]initWithFrame:self.maskImageView.bounds];
+                label.text = [NSString stringWithFormat:@"+%ld",dataArray.count - 6];
+                label.font = [UIFont boldSystemFontOfSize:21];
+                label.textAlignment = NSTextAlignmentCenter;
+                label.textColor = kWhiteColor;
+                
+                [self.maskImageView addSubview:label];
+                [self addSubview:self.maskImageView];
+            }));
+        }
         
     });
     
-    imageWithHeight = 89.0f;
-    NSMutableArray *dataArray;
-    if (messageModel.isSender) {
-        dataArray = [NSMutableArray arrayWithArray:messageModel.localImageArray] ;
-        [dataArray addObjectsFromArray:messageModel.list];
-    }else{
-        dataArray = [NSMutableArray arrayWithArray:messageModel.list];
-    }
-    if (dataArray.count >6) {
-        if (dataArray.count >6) {
-            //            maskImageView.alpha = 0.54f;
-            self.maskImageView.frame = CGRectMake(2 * (imageWithHeight + Width_Space) + Start_X,1 * (imageWithHeight + Height_Space)+Start_Y, imageWithHeight, imageWithHeight);
-            UILabel *label = [[UILabel alloc]initWithFrame:self.maskImageView.bounds];
-            label.text = [NSString stringWithFormat:@"+%ld",dataArray.count - 6];
-            label.font = [UIFont boldSystemFontOfSize:21];
-            label.textAlignment = NSTextAlignmentCenter;
-            label.textColor = kWhiteColor;
-            [self.maskImageView addSubview:label];
-            dispatch_main_async_safe(^{
-                [self addSubview:self.maskImageView];
-            });
-        }
-    }
+   
 }
 
 

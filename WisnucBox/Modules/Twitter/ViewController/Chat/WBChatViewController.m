@@ -106,12 +106,14 @@ NSString *const kTableViewFrame = @"frame";
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.tabBarController.tabBar setHidden:YES];
-}
-
-- (void)setupInit {
     if (!_boxModel.name || _boxModel.name.length==0) {
         self.title = [NSString stringWithFormat:@"群聊(%ld)",_boxModel.users.count];
     }
+    [self.tableView reloadData];
+}
+
+- (void)setupInit {
+    
     self.view.backgroundColor = MainBackgroudColor;
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.addButton];
@@ -331,7 +333,6 @@ NSString *const kTableViewFrame = @"frame";
 }
 
 - (void)sendMessageToNetSeverWith:(LHContentModel *)content TableViewCell:(WBChatViewNormalTableViewCell *)tabelViewCell{
-    
 #warning upload;
     NSMutableArray *imageArray = [NSMutableArray arrayWithCapacity:0];
     [content.photos.assets enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -340,9 +341,9 @@ NSString *const kTableViewFrame = @"frame";
     [WB_BoxService sendTweetWithImageArray:imageArray Boxuuid:_boxModel.uuid Complete:^(WBTweetModel *tweetModel, NSError *error) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             if (!error) {
-                [content.photos.photos enumerateObjectsUsingBlock:^(UIImage *image, NSUInteger idx, BOOL * _Nonnull stop) {
-                    [SDImageCache.sharedImageCache storeImage:image forKey:[NSString stringWithFormat:@"%@%lld%ld",tweetModel.uuid,tweetModel.ctime,idx] toDisk:YES completion:nil];
-                }];
+//                [content.photos.photos enumerateObjectsUsingBlock:^(UIImage *image, NSUInteger idx, BOOL * _Nonnull stop) {
+//                    [SDImageCache.sharedImageCache storeImage:image forKey:[NSString stringWithFormat:@"%@%lld%ld",tweetModel.uuid,tweetModel.ctime,idx] toDisk:YES completion:nil];
+//                }];
                 
                 NSLog(@"%@",tabelViewCell);
                 //                dispatch_main_async_safe(^{
@@ -533,7 +534,12 @@ NSString *const kTableViewFrame = @"frame";
                     }
                 }];
             }];
-            timeCell.timeLable.text = [NSString stringWithFormat:@"%@已加入群",userName];
+//            if (userName.length>0) {
+                timeCell.timeLable.text = [NSString stringWithFormat:@"%@已加入群",userName];
+//            }else{
+//                [self.dataSource removeObjectAtIndex:indexPath.row];
+//                [self.tableView reloadData];
+//            }
         }else if ([boxMessageModel.op isEqualToString:@"createBox"]){
             __block  NSString *groupName;
             [_boxModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {

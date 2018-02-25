@@ -35,4 +35,9 @@
              @"stationId" : @"id",
              };
 }
+
++ (NSArray *)modelPropertyBlacklist {
+    return @[@"badgeIndex"];
+}
+
 @end

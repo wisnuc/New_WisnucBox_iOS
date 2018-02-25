@@ -47,6 +47,7 @@
 @property(nonatomic)NSArray *users;
 @property(nonatomic,assign)long long ctime;
 @property(nonatomic,assign)long long mtime;
+@property(nonatomic)NSNumber *badgeIndex;
 @property(nonatomic)WBTweetModel *tweet;
 @property(nonatomic)WBBoxesStationModel *station;
 @end

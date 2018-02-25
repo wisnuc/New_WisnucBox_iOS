@@ -526,10 +526,11 @@
     if (self.choosePhotos.count == 0)return;
     NSMutableArray *photosArray = [NSMutableArray arrayWithCapacity:0];
     NSMutableArray *localModelArray = [NSMutableArray arrayWithCapacity:0];
-    NSArray *sourceArray =[NSArray arrayWithArray:self.choosePhotos];
+//    NSArray *sourceArray =[NSArray arrayWithArray:self.choosePhotos];
     CGSize size = CGSizeMake(MAX_SIZE, MAX_SIZE);
 //    CGSize size = [weak_self getImageSizeWithImageArray:sourceArray];
 //     dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    RACSubject *subject = [RACSubject subject];
     [self.choosePhotos enumerateObjectsUsingBlock:^( id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSLog(@"%@",_choosePhotos);
         if (![obj isKindOfClass:[WBAsset class]]) {
@@ -551,6 +552,7 @@
                 [localModelArray addObject:localImageModel];
                 [photosArray addObject:asset.image];
             }else{
+       
           __block SDWebImageDownloadToken *thumbnailRequestOperation = [WB_NetService getThumbnailWithHash:[(WBAsset *)obj fmhash] complete:^(NSError *error, UIImage *img) {
                 if(!weak_self) return;
                 if (!error && img) {
@@ -567,6 +569,9 @@
             }
         }
     }];
+//    if (photosArray.count == 0) {
+//        return;
+//    }
     if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerDidFinishPickingPhotos:sourceAssets:LocalImageModelArray:isSelectOriginalPhoto:)]) {
         [self.delegate imagePickerDidFinishPickingPhotos:photosArray sourceAssets:self.choosePhotos LocalImageModelArray:localModelArray isSelectOriginalPhoto:YES];
     }
@@ -718,7 +723,9 @@
     
     JYAsset *model;
     model = ((NSMutableArray *)self.arrDataSources[indexPath.section])[indexPath.row];
-    
+    if (!model) {
+        return cell;
+    }
     jy_weakify(self);
     cell.selectedBlock = ^(BOOL selected) {
         if(!weakSelf.isSelectMode) return;

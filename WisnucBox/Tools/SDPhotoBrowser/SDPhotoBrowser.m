@@ -193,10 +193,11 @@
                         }else{
                             self.imageView.image = [self placeholderImageForIndex:index];
                         }
+                           self.imageView.hasLoadedImage = YES;
                         
                     });
                 }];
-                return;
+//                return;
             }else{
                 JYAsset *jyasset = dic[kMessageImageBoxLocalAsset];
                 [PHPhotoLibrary requestOriginalImageForAsset:jyasset.asset completion:^(UIImage *localImage, NSDictionary *info) {
@@ -206,6 +207,7 @@
                         }else{
                             self.imageView.image = [self placeholderImageForIndex:index];
                         }
+                           self.imageView.hasLoadedImage = YES;
                     });
                 }];
             }
@@ -219,13 +221,14 @@
                     }else{
                         self.imageView.image = [self placeholderImageForIndex:index];
                     }
+                       self.imageView.hasLoadedImage = YES;
                 });
             }];
         }
     }else{
         self.imageView.image = [self placeholderImageForIndex:index];
     }
-    self.imageView.hasLoadedImage = YES;
+ 
 }
 
 
@@ -426,8 +429,12 @@
     if (!_willDisappear) {
         _indexLabel.text = [NSString stringWithFormat:@"%d/%ld", index + 1, (long)self.imageCount];
     }
-    [self setupImageOfImageViewForIndex:index];
+    NSLog(@"😋%f",scrollView.contentOffset.x);
+    if (scrollView.contentOffset.x>__kWidth/2 - 60) {
+        [self setupImageOfImageViewForIndex:index];
+    }
 }
+
 
 //- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
 //    SDBrowserImageView *imageView = _scrollView.subviews[self.currentImageIndex];

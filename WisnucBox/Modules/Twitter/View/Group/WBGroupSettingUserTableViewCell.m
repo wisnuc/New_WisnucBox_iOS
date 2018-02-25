@@ -38,6 +38,13 @@
 
 - (void)initUserImageViewAndUserNameLabel{
      @weaky(self)
+    NSMutableArray * array = [[NSMutableArray alloc]initWithArray:_userArray];
+    [array enumerateObjectsUsingBlock:^(WBBoxesUsersModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([_boxModel.owner isEqualToString:model.userId]) {
+            [_userArray exchangeObjectAtIndex:0 withObjectAtIndex:idx];
+        }
+    }];
+    
     [_userArray enumerateObjectsUsingBlock:^(WBBoxesUsersModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
         NSInteger index = idx % 4;
         NSInteger page = idx / 4;

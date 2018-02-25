@@ -413,8 +413,8 @@
     [SDWebImageManager sharedManager].imageDownloader.downloadTimeout = 200;
     NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"%@media/%@?alt=thumbnail&width=200&height=200&modifier=caret&autoOrient=true", [self currentURL], hash]];
     if(WB_UserService.currentUser.isCloudLogin)
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resource=%@&method=GET&alt=thumbnail&width=134&height=134&modifier=caret&autoOrient=true", kCloudAddr, kCloudCommonPipeUrl, [[NSString stringWithFormat:@"media/%@", hash] base64EncodedString]]];
-    return [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:url options:SDWebImageDownloaderHighPriority progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, BOOL finished) {
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resource=%@&method=GET&alt=thumbnail&width=200&height=200&modifier=caret&autoOrient=true", kCloudAddr, kCloudCommonPipeUrl, [[NSString stringWithFormat:@"media/%@", hash] base64EncodedString]]];
+    return [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:url options:SDWebImageDownloaderUseNSURLCache progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, BOOL finished) {
         if (image) {
             callback(nil, image);
         }else{
@@ -434,7 +434,7 @@
 //    NSLog(@"%@",url.absoluteString);
     if(WB_UserService.currentUser.isCloudLogin)
         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resource=%@&method=GET&alt=thumbnail&width=134&height=134&modifier=caret&autoOrient=true&boxUUID=%@", kCloudAddr, kCloudCommonPipeUrl, [[NSString stringWithFormat:@"media/%@", hash] base64EncodedString],boxUUID]];
-    return [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:url options:SDWebImageDownloaderHighPriority progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, BOOL finished) {
+    return [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:url options:SDWebImageDownloaderUseNSURLCache progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, BOOL finished) {
         if (image) {
             callback(nil, image);
         }else{
