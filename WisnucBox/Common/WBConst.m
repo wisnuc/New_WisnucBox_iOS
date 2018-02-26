@@ -48,6 +48,8 @@ NSString *const kBoxFileSelect = @"kBoxFileSelect";
 
 NSString *const kBoxMQTTFresh = @"kBoxMQTTFresh";
 
+NSString *const kBoxUnread = @"kBoxUnread";
+
 #pragma mark - IM模块常量
 
 // 头像大小

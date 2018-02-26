@@ -40,6 +40,8 @@ extern NSString *const kMessageImageBoxNetImageHash;
 extern NSString *const kBoxFileSelect;
 extern NSString *const kBoxMQTTFresh;
 
+extern NSString *const kBoxUnread;
+
 extern NSInteger kMessageCount;
 
 #pragma mark - IM模块常量

@@ -223,6 +223,9 @@ static dispatch_once_t onceToken;
 
 - (void)connectionError:(MQTTSession *)session error:(NSError *)error{
     NSLog(@"MQTT连接状态错误%@",error);
+    if (self.mqttSession.status == MQTTSessionStatusError || self.mqttSession.status == MQTTSessionStatusClosed ||self.mqttSession.status == MQTTSessionStatusDisconnecting) {
+        [self.mqttSession connect];
+    }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
