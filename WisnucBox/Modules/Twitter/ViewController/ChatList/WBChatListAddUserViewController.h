@@ -10,6 +10,8 @@
 #import "WBBoxesModel.h"
 @protocol ChatListAddUserEndDelegate <NSObject>
 - (void)endAddUser;
+@optional
+- (void)endDeleteUser;
 @end
 
 @interface WBChatListAddUserViewController : FABaseVC

@@ -200,7 +200,14 @@
 //                return;
             }else{
                 JYAsset *jyasset = dic[kMessageImageBoxLocalAsset];
-                [PHPhotoLibrary requestOriginalImageForAsset:jyasset.asset completion:^(UIImage *localImage, NSDictionary *info) {
+
+                CGFloat scale = [UIScreen mainScreen].scale;
+                CGFloat width = MIN(kViewWidth, kMaxImageWidth);
+                CGSize size = CGSizeZero;
+                if(jyasset.asset)
+                    size = CGSizeMake(width*scale, width*scale*jyasset.asset.pixelHeight/jyasset.asset.pixelWidth);
+                
+                [PHPhotoLibrary requestImageForAsset:jyasset.asset size:size completion:^(UIImage *localImage, NSDictionary *info) {
                     dispatch_main_async_safe(^{
                         if (localImage) {
                             self.imageView.image = localImage;

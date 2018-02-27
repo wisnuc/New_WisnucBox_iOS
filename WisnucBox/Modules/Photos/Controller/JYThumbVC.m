@@ -1074,7 +1074,7 @@ bool isDecelerating = NO;
 
 -(void)FMHeadView:(FMHeadView *)headView isChooseBtn:(BOOL)isChoose {
     if(isChoose) {
-        if (_isBoxSelectType && ((NSArray *)self.arrDataSources[headView.fmIndexPath.section]).count>1){
+        if (_isBoxSelectType && ((NSArray *)self.arrDataSources[headView.fmIndexPath.section]).count>1 && WB_UserService.currentUser.isCloudLogin){
              [headView.choosebtn setBackgroundImage:[UIImage imageNamed:[headView getImageWithChoose:NO]] forState:UIControlStateNormal];
             [SXLoadingView showProgressHUDText:@"远程微信连接状态每次暂时只能上传一张照片" duration:1.2f];
            

@@ -26,19 +26,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-  
+    
     [self.view addSubview:self.tableView];
     if (!WB_UserService.currentUser.cloudToken) {
         [SXLoadingView showProgressHUDText:@"本地连接暂不能使用私友群功能" duration:1.2f];
         return ;
     }
-//    [self.view addSubview:self.addButton];
- 
+    //    [self.view addSubview:self.addButton];
+    
     [self initMjFreshHeader];
- 
-//    [self initMjFreshFooter];
+    
+    //    [self initMjFreshFooter];
     if (WB_UserService.currentUser.guid.length>0) {
-         [self didMQTTServerJoinIn];
+        [self didMQTTServerJoinIn];
     }
 }
 
@@ -74,9 +74,9 @@
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [weakSelf getBoxesListData];
-         [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_header endRefreshing];
     }];
-   
+    
     self.tableView.mj_header.ignoredScrollViewContentInsetTop = KDefaultOffset;
     
 }
@@ -91,12 +91,11 @@
     NSString *topic = [NSString stringWithFormat:@"client/user/%@/box",WB_UserService.currentUser.guid];
     [[MQTTClientManager shareInstance]registerDelegate:self];
     [[MQTTClientManager shareInstance]loginWithIp:KMQTTHOST port:KMQTTPORT userName:nil password:nil topic:topic];
-    
 }
 
 - (void)getBoxesListData{
     if (!WB_UserService.currentUser.cloudToken) {
-//        [SXLoadingView showProgressHUDText:@"非微信登录暂不能使用私友群功能" duration:1.2f];
+        //        [SXLoadingView showProgressHUDText:@"非微信登录暂不能使用私友群功能" duration:1.2f];
         return;
     }
     @weaky(self)
@@ -106,7 +105,7 @@
         : request.responseJsonObject;
         NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
         [array enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-           WBBoxesModel *model = [WBBoxesModel modelWithDictionary:obj];
+            WBBoxesModel *model = [WBBoxesModel modelWithDictionary:obj];
             [dataArray addObject:model];
         }];
         self.boxDataArray = dataArray;
@@ -114,36 +113,40 @@
         [weak_self sortDataSouce];
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
-        NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
-        self.boxDataArray = dataArray;
-        [self.tableView.mj_header endRefreshing];
-        [self.tableView reloadData];
+        NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+        if(errorData.length >0){
+            NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+            NSLog(@"失败,%@",serializedData);
+        }
+        [SXLoadingView showProgressHUDText:@"获取聊天列表失败，请重新刷新" duration:1.2f];
+//        NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
+//        self.boxDataArray = dataArray;
+//        [self.tableView.mj_header endRefreshing];
+//        [self.tableView reloadData];
     }];
 }
 
- - (void)sortDataSouce{
+- (void)sortDataSouce{
     NSComparator cmptr = ^(WBBoxesModel * model1, WBBoxesModel * model2){
-//        if (model1.tweet.ctime  < model2.tweet.ctime) {
-//            return (NSComparisonResult)NSOrderedDescending;
-//        }
+        //        if (model1.tweet.ctime  < model2.tweet.ctime) {
+        //            return (NSComparisonResult)NSOrderedDescending;
+        //        }
         if (model1.tweet.ctime < model2.tweet.ctime) {
             return (NSComparisonResult)NSOrderedDescending;
         }
         return (NSComparisonResult)NSOrderedSame;
     };
     [self.boxDataArray sortUsingComparator:cmptr];
-     NSMutableArray *ctimeArray = [NSMutableArray arrayWithCapacity:0];
-     NSMutableArray *ctimeNoArray = [NSMutableArray arrayWithCapacity:0];
-     
-     [self.boxDataArray enumerateObjectsUsingBlock:^(WBBoxesModel * model, NSUInteger idx, BOOL * _Nonnull stop) {
-
-         if (!model.tweet.ctime ||model.tweet.ctime == 0) {
-               [ctimeNoArray addObject:model];
-         }else{
-               [ctimeArray addObject:model];
-         }
-     }];
-
+    NSMutableArray *ctimeArray = [NSMutableArray arrayWithCapacity:0];
+    NSMutableArray *ctimeNoArray = [NSMutableArray arrayWithCapacity:0];
+    [self.boxDataArray enumerateObjectsUsingBlock:^(WBBoxesModel * model, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        if (!model.tweet.ctime ||model.tweet.ctime == 0) {
+            [ctimeNoArray addObject:model];
+        }else{
+            [ctimeArray addObject:model];
+        }
+    }];
     [self.boxDataArray removeAllObjects];
     [self.boxDataArray addObjectsFromArray:ctimeArray];
     [self.boxDataArray addObjectsFromArray:ctimeNoArray];
@@ -189,8 +192,8 @@
         if (idx<= n - 1){
             float deg =  M_PI * ((float)idx * 2 / n - 1 / 4);
             NSLog(@"😈%lu",idx * 2 / n - 1 / 4);
-//            NSLog(@"🌶%lu",idx);
-//            NSLog(@"😑%f",deg);
+            //            NSLog(@"🌶%lu",idx);
+            //            NSLog(@"😑%f",deg);
             float top = (1 - cosf(deg)) * (20 - r);
             float left = (1 + sinf(deg)) * (20 - r);
             //        NSLog(@"😑%f,%f",left,top);
@@ -205,16 +208,12 @@
     }];
     
     cell.nameLabel.text = boxesModel.name;
-    NSArray *unreadArray = [kUserDefaults objectForKey:WB_UserService.currentUser.guid];
-    NSLog(@"😁%@",unreadArray);
-    [unreadArray enumerateObjectsUsingBlock:^(NSDictionary *dic, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSNumber *unreadMessageNumber =dic[boxesModel.uuid];
-//        NSLog(@"😁%@",unreadMessageNumber);
-        if (unreadMessageNumber) {
-            [self updateTableViewCell:cell forCount:[unreadMessageNumber unsignedIntegerValue]];
-        }
-    }];
-   
+    NSMutableDictionary *userDefaultsDic = [kUserDefaults objectForKey:WB_UserService.currentUser.guid];
+    NSNumber *unreadMessageNumber =userDefaultsDic[boxesModel.uuid];
+    if (unreadMessageNumber) {
+        [self updateTableViewCell:cell forCount:[unreadMessageNumber unsignedIntegerValue]];
+    }
+    
     if (boxesModel.tweet) {
         if (boxesModel.tweet.list.count>0) {
             cell.detailLabel.text = @"[图片]";
@@ -278,18 +277,17 @@
     [self.navigationController pushViewController:chatVC animated:YES];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        NSArray *unreadArray = [kUserDefaults objectForKey:WB_UserService.currentUser.guid];
-        NSMutableArray *resultArray = [NSMutableArray arrayWithArray:unreadArray];
-        NSMutableDictionary *unreadDictionary = [NSMutableDictionary dictionaryWithCapacity:0];
-        [unreadArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            NSNumber *unreadMessageNumber = obj[model.uuid];
-            if (unreadMessageNumber) {
-                NSNumber *unreadNumber = @0;
-                [unreadDictionary setObject:unreadNumber forKey:model.uuid];
-                [resultArray replaceObjectAtIndex:idx withObject:unreadDictionary];
-            }
-        }];
-        [kUserDefaults setObject:resultArray forKey:WB_UserService.currentUser.guid];
+        NSMutableDictionary *userDefaultsDic = [kUserDefaults objectForKey:WB_UserService.currentUser.guid];
+        if (!userDefaultsDic) {
+            return ;
+        }
+        NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionaryWithDictionary:userDefaultsDic];
+        NSNumber *unreadMessageNumber = userDefaultsDic[model.uuid];
+        if (unreadMessageNumber) {
+            NSNumber *unreadNumber = @0;
+            [resultDictionary setObject:unreadNumber forKey:model.uuid];
+        }
+        [kUserDefaults setObject:resultDictionary forKey:WB_UserService.currentUser.guid];
         [kUserDefaults synchronize];
     });
 }
@@ -302,70 +300,66 @@
     NSLog(@"%@",array);
     NSMutableArray *uuidArray = [NSMutableArray arrayWithCapacity:0];
     
-    NSMutableDictionary *userDefaultsDic = [kUserDefaults objectForKey:WB_UserService.currentUser.guid];
+    __block NSMutableDictionary *userDefaultsDic = [kUserDefaults objectForKey:WB_UserService.currentUser.guid];
     if (!userDefaultsDic) {
         userDefaultsDic = [NSMutableDictionary dictionaryWithCapacity:0];
     }
-//    NSMutableDictionary *unreadDictionary = [NSMutableDictionary dictionaryWithCapacity:0];
-//    NSMutableArray *unreadArray = [NSMutableArray arrayWithCapacity:0];
+    NSMutableDictionary *resultDic = [NSMutableDictionary dictionaryWithDictionary:userDefaultsDic];
     @weaky(self)
     __block NSUInteger unreadIntager = 0;
-   
-    [array enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-         WBBoxesModel *model = [WBBoxesModel modelWithDictionary:obj];
-//        [model.owner isEqualToString:WB_UserService.currentUser.guid];
+    
+    [array enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull rootStop) {
+        WBBoxesModel *model = [WBBoxesModel modelWithDictionary:obj];
         [self.boxDataArray enumerateObjectsUsingBlock:^(WBBoxesModel *boxModel, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([boxModel.uuid isEqualToString:model.uuid]) {
-//                NSIndexPath *indexForSelf = [NSIndexPath indexPathForRow:0 inSection:0];
-//                WBChatListTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexForSelf];
-//                [weak_self.boxDataArray removeObjectAtIndex:idx];
-//                [weak_self.boxDataArray insertObject:model atIndex:0];
-              
-//                [userDefaultsArray enumerateObjectsUsingBlock:^(NSDictionary *dic, NSUInteger idx, BOOL * _Nonnull stop) {
-                    NSNumber *unreadMessageNumber =userDefaultsDic[model.uuid];
-                    NSLog(@"😁%@",unreadMessageNumber);
-                    if (unreadMessageNumber) {
-                        unreadIntager = [unreadMessageNumber unsignedIntegerValue];
+                [weak_self.boxDataArray removeObjectAtIndex:idx];
+                [weak_self.boxDataArray insertObject:model atIndex:0];
+                __block BOOL isSelfSender = NO;
+//                if ([model.tweet.tweeter.tweeterId isKindOfClass:[NSString class]]) {
+//                    NSString *tweeterId = (NSString *)model.tweet.tweeter;
+                    if ([model.tweet.tweeter.tweeterId isEqualToString:WB_UserService.currentUser.guid]) {
+                        [weak_self.tableView reloadData];
+                        *stop = YES;
+//                        *rootStop = YES;
+                        isSelfSender = YES;
                     }
-//                }];
-                [weak_self.boxDataArray replaceObjectAtIndex:idx withObject:model];
-                [weak_self.boxDataArray exchangeObjectAtIndex:0 withObjectAtIndex:idx];
+//                }
+                if (!isSelfSender) {
+                NSNumber *unreadMessageNumber =userDefaultsDic[model.uuid];
+                NSLog(@"😁%@",unreadMessageNumber);
+                if (unreadMessageNumber) {
+                    unreadIntager = [unreadMessageNumber unsignedIntegerValue];
+                }
                 unreadIntager ++;
-                NSNumber *unreadNumber = [NSNumber numberWithUnsignedInteger:unreadIntager] ;
-                [userDefaultsDic setObject:unreadNumber forKey:model.uuid];
-//                [unreadArray addObject:unreadDictionary];
+                NSNumber *unreadNumber = [NSNumber numberWithUnsignedInteger:unreadIntager];
+                NSLog(@"%@",userDefaultsDic);
+                [resultDic setObject:unreadNumber forKey:model.uuid];
                 [weak_self.tableView reloadData];
+                }
             }
             [uuidArray addObject:boxModel.uuid];
         }];
         
         if (![uuidArray containsObject:model.uuid]) {
-            
-//            NSArray *array = [kUserDefaults objectForKey:WB_UserService.currentUser.guid];
-//            [array enumerateObjectsUsingBlock:^(NSDictionary *dic, NSUInteger idx, BOOL * _Nonnull stop) {
-//                NSNumber *unreadMessageNumber =dic[model.uuid];
-//                NSLog(@"😁%@",unreadMessageNumber);
-//                if (unreadMessageNumber) {
-//                     unreadIntager = [unreadMessageNumber unsignedIntegerValue];
-//                }
-//            }];
-//            unreadIntager ++;
-//            NSNumber *unreadNumber = [NSNumber numberWithUnsignedInteger:unreadIntager] ;
-//            [unreadDictionary setObject:unreadNumber forKey:model.uuid];
-//            [unreadArray addObject:unreadDictionary];
+            NSNumber *unreadMessageNumber =userDefaultsDic[model.uuid];
+            NSLog(@"😁%@",unreadMessageNumber);
+            if (unreadMessageNumber) {
+                unreadIntager = [unreadMessageNumber unsignedIntegerValue];
+            }
+            unreadIntager ++;
+            NSNumber *unreadNumber = [NSNumber numberWithUnsignedInteger:unreadIntager] ;
+            NSLog(@"%@",userDefaultsDic);
+            [resultDic setObject:unreadNumber forKey:model.uuid];
             [weak_self.boxDataArray insertObject:model atIndex:0];
-//            NSIndexPath *indexForSelf = [NSIndexPath indexPathForRow:0 inSection:0];
-//            WBChatListTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexForSelf];
-//            [self updateTableViewCell:cell forCount:1];
             [weak_self.tableView reloadData];
         }
     }];
-    [kUserDefaults setObject:userDefaultsDic forKey:WB_UserService.currentUser.guid];
+    [kUserDefaults setObject:resultDic forKey:WB_UserService.currentUser.guid];
     [kUserDefaults synchronize];
 }
 
 - (void)saveUnreadMessageIndex{
-
+    
 }
 
 - (void)updateTableViewCell:(WBChatListTableViewCell *)cell forCount:(NSUInteger)count
@@ -385,28 +379,28 @@
         label.text = [NSString stringWithFormat:@"%@", @(count)];
         [label sizeToFit];
         
-//         Adjust frame to be square for single digits or elliptical for numbers > 9
+        //         Adjust frame to be square for single digits or elliptical for numbers > 9
         CGRect frame = label.frame;
         frame.size.height += (int)(0.4*fontSize);
         frame.size.width = (count <= 9) ? frame.size.height : frame.size.width + (int)fontSize;
         frame.origin.x = 0;
         frame.origin.y = 0;
         label.frame = frame;
-       
-//         Set radius and clip to bounds
+        
+        //         Set radius and clip to bounds
         label.layer.cornerRadius = frame.size.height/2.0;
         label.clipsToBounds = true;
-//        NSLog(@"%@",NSStringFromCGRect(label.frame));
+        //        NSLog(@"%@",NSStringFromCGRect(label.frame));
         // Show label in accessory view and remove disclosure
         [cell.badgeLabel addSubview:label];
-//        cell.accessoryType = UITableViewCellAccessoryNone;
+        //        cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
     // Count = 0, show disclosure
-//    else {
-//        cell.accessoryView = nil;
-//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//    }
+    //    else {
+    //        cell.accessoryView = nil;
+    //        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    //    }
 }
 
 - (UITableView *)tableView{
@@ -443,3 +437,4 @@
 }
 
 @end
+

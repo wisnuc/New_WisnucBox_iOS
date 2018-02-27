@@ -12,6 +12,8 @@
 #import "WBGetBoxesAPI.h"
 #import "WBUpdateBoxAPI.h"
 #import "WBBoxUserAPI.h"
+#import "WBDeleteBoxAPI.h"
+#import "WBChatListViewController.h"
 
 @interface WBChatListAddUserViewController ()<UITableViewDelegate,UITableViewDataSource,BEMCheckBoxDelegate>
 @property (nonatomic)NSMutableArray *userArray;
@@ -147,7 +149,9 @@
     NSMutableArray *chooseUserSource = [NSMutableArray arrayWithCapacity:0];
     NSMutableArray *exsitDataSource = [NSMutableArray arrayWithCapacity:0];
     [_boxModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [tempDataSource addObject:obj];
+        if (![obj.userId isEqualToString:WB_UserService.currentUser.guid]) {
+            [tempDataSource addObject:obj];
+        }
     }];
     self.userArray = tempDataSource;
     self.choosedUserArray = chooseUserSource;
@@ -217,8 +221,22 @@
 }
 
 - (void)deleteUserAction{
-    if (self.choosedUserArray.count==0)return;
     @weaky(self)
+    if (self.choosedUserArray.count==0)return;
+    if (self.choosedUserArray.count == self.choosedUserArray.count && ![self filterArr:self.choosedUserArray andArr2:self.userArray]) {
+        [[WBDeleteBoxAPI deleteBoxApiWithBoxuuid:_boxModel.uuid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+            NSLog(@"%@",request.responseJsonObject);
+            [SXLoadingView showProgressHUDText:@"该群已解散" duration:1.2f];
+            if (_endDelegate && [_endDelegate respondsToSelector:@selector(endDeleteUser)]) {
+                [weak_self.endDelegate endDeleteUser];
+            }
+        } failure:^(__kindof JYBaseRequest *request) {
+            NSLog(@"%@",request.error);
+            [SXLoadingView showProgressHUDText:@"解散群失败" duration:1.2f];
+        }];
+        return;
+    }
+   
     NSMutableArray *globalArray = [NSMutableArray arrayWithCapacity:0];
     [self.choosedUserArray enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [globalArray addObject:obj.userId];
@@ -417,6 +435,16 @@
     }
 }
 
+//比较两个数组中是否有不同元素
+- (BOOL)filterArr:(NSArray *)arr1 andArr2:(NSArray *)arr2 {
+    NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"NOT (SELF IN %@)",arr1];
+    //得到两个数组中不同的数据
+    NSArray *reslutFilteredArray = [arr2 filteredArrayUsingPredicate:filterPredicate];
+    if (reslutFilteredArray.count > 0) {
+        return YES;
+    }
+    return NO;
+}
 
 - (NSMutableArray *)userArray{
     if (!_userArray) {

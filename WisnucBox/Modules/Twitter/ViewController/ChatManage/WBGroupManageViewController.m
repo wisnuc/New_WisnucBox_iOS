@@ -104,7 +104,7 @@
         
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
-        [SXLoadingView showProgressHUDText:@"退出群失败" duration:1.2f];
+        [SXLoadingView showProgressHUDText:@"解散群失败" duration:1.2f];
     }];
 }
 
@@ -182,6 +182,14 @@
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
     }];;
+}
+
+- (void)endDeleteUser{
+    for (UIViewController *temp in self.navigationController.viewControllers) {
+        if ([temp isKindOfClass:[WBChatListViewController class]]) {
+            [self.navigationController popToViewController:temp animated:YES];
+        }
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{

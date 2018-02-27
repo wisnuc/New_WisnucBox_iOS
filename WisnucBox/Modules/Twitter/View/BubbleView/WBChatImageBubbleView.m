@@ -172,6 +172,8 @@
             UIImageView *imageView ;
             if (idx<=5) {
                 imageView = [[UIImageView alloc]init];
+                imageView.contentMode = UIViewContentModeScaleAspectFill;
+                imageView.clipsToBounds = YES;
                 imageView.tag = idx;
                 imageView.userInteractionEnabled = YES;
                 
@@ -272,6 +274,8 @@
             if (idx <=5) {
                 imageView = [[UIImageView alloc]initWithFrame:CGRectMake(index * (imageWithHeight + Width_Space) + Start_X,page * (imageWithHeight + Height_Space)+Start_Y, imageWithHeight, imageWithHeight)];
                 imageView.tag = idx;
+                imageView.contentMode = UIViewContentModeScaleAspectFill;
+                imageView.clipsToBounds = YES;
                 imageView.userInteractionEnabled = YES;
                 UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(bubbleViewPressed:)];
                 [imageView addGestureRecognizer:tap];

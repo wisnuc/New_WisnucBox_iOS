@@ -140,6 +140,7 @@ NSString *const kTableViewFrame = @"frame";
         label.textColor = COR1;
         label.textAlignment = NSTextAlignmentCenter;
         self.tableView.tableFooterView =label;
+        self.addButton.hidden = YES;
         return;
     }
     [[WBTweetAPI apiWithBoxuuid:_boxModel.uuid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
