@@ -44,7 +44,7 @@
 
 @implementation WBTweetlistModel
 + (NSArray *)modelPropertyBlacklist {
-    return @[@"localImage", @"asset"];
+    return @[@"localImage", @"asset",@"dirUUID",@"parentUUID"];
 }
 
 - (id)copyWithZone:(NSZone *)zone {
@@ -53,6 +53,8 @@
     newClass.sha256 = self.sha256;
     newClass.metadata = self.metadata;
     newClass.size = self.size;
+    newClass.parentUUID = self.parentUUID;
+    newClass.dirUUID = self.dirUUID;
     return newClass;
 }
 - (nonnull id)mutableCopyWithZone:(nullable NSZone *)zone {
@@ -61,6 +63,8 @@
     newClass.sha256 = self.sha256;
     newClass.metadata = self.metadata;
     newClass.size = self.size;
+    newClass.parentUUID = self.parentUUID;
+    newClass.dirUUID = self.dirUUID;
     return newClass;
 }
 
@@ -70,6 +74,8 @@
     [aCoder encodeObject:self.sha256 forKey:@"sha256"];
     [aCoder encodeObject:self.metadata forKey:@"metadata"];
     [aCoder encodeObject:self.size forKey:@"size"];
+    [aCoder encodeObject:self.dirUUID forKey:@"dirUUID"];
+    [aCoder encodeObject:self.parentUUID forKey:@"parentUUID"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -79,6 +85,8 @@
         self.sha256 = [aDecoder decodeObjectForKey:@"sha256"];
         self.metadata = [aDecoder decodeObjectForKey:@"metadata"];
         self.size = [aDecoder decodeObjectForKey:@"size"];
+        self.parentUUID = [aDecoder decodeObjectForKey:@"parentUUID"];
+        self.dirUUID = [aDecoder decodeObjectForKey:@"dirUUID"];
     }
     return self;
 }

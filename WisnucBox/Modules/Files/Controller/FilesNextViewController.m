@@ -143,6 +143,8 @@ FilesHelperOpenFilesDelegate
             model.photoHash = obj.sha256;
             model.type = @"file";
             model.mtime = self.tweetModel.ctime;
+            model.driveUUID = obj.dirUUID;
+            model.parentUUID = obj.parentUUID;
             [self.dataSouceArray addObject:model];
         }];
         [self.tableView reloadData];

@@ -269,7 +269,7 @@ NSString *const kTableViewFrame = @"frame";
     messageModel.uuid = @"myselfPush";
     messageModel.messageBodytype = MessageBodyType_File;
 
-    NSArray *listArr = [[NSArray alloc]initWithArray:dataDic[@"filesModel"] copyItems:YES];
+    NSArray *listArr = [[NSArray alloc]initWithArray:dataDic[@"filesModel"]copyItems:YES];
     NSMutableArray *listMutableArr = [NSMutableArray arrayWithCapacity:0];
     NSMutableArray *localImageModelArr = [NSMutableArray arrayWithCapacity:0];
 #warning Files -> Photos
@@ -320,9 +320,11 @@ NSString *const kTableViewFrame = @"frame";
         listModel.size = [NSNumber numberWithLongLong:obj.size];
         listModel.filename = obj.name;
         listModel.sha256 = obj.photoHash;
+        listModel.dirUUID = obj.driveUUID;
+        listModel.parentUUID = obj.parentUUID;
         [listMutableArr addObject:listModel];
     }];
-    messageModel.list = [[NSArray alloc]initWithArray:listMutableArr copyItems:YES];
+    messageModel.list = [[NSArray alloc]initWithArray:listMutableArr];
     
     NSString *time = [LHTools processingTimeWithDate:messageModel.ctime];
     if ([time isEqualToString:self.lastTime]) {

@@ -18,6 +18,8 @@
 @property (nonatomic,copy)NSString *sha256;
 @property (nonatomic,copy)NSDictionary *metadata;
 @property (nonatomic,copy)NSNumber *size;
+@property (nonatomic,copy)NSString *dirUUID;
+@property (nonatomic,copy)NSString *parentUUID;
 @end
 
 @interface WBTweetTweeterModel : NSObject<NSCopying,NSMutableCopying>

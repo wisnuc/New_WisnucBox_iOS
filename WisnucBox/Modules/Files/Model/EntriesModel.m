@@ -27,6 +27,8 @@
     newClass.magic = self.magic;
     newClass.mtime = self.mtime;
     newClass.size = self.size;
+    newClass.parentUUID = self.parentUUID;
+    newClass.driveUUID = self.driveUUID;
     return newClass;
 }
 - (nonnull id)mutableCopyWithZone:(nullable NSZone *)zone {
@@ -38,6 +40,8 @@
     newClass.magic = self.magic;
     newClass.mtime = self.mtime;
     newClass.size = self.size;
+    newClass.parentUUID = self.parentUUID;
+    newClass.driveUUID = self.driveUUID;
     return newClass;
 }
 
