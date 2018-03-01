@@ -17,6 +17,21 @@
              };
 }
 
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.fmhash forKey:@"fmhash"];
+
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super init]) {
+        self.fmhash = [aDecoder decodeObjectForKey:@"fmhash"];
+    }
+    return self;
+}
+
+
 - (instancetype)init{
     self = [super init];
     self.type = JYAssetTypeNetImage;

@@ -11,5 +11,10 @@
 @interface WBFeaturesChangeAPI : JYBaseRequest
 @property(nonatomic)NSString *type;
 @property(nonatomic)NSString *action;
+/*
+ * WISNUC API:FEATURES SERVICES STATUS SWITCH
+ * @param type    Service Type(samba,dlna)
+ * @param action    Switch Action(start,stop)
+ */
 + (instancetype)apiWithType:(NSString *)type Action:(NSString *)action;
 @end

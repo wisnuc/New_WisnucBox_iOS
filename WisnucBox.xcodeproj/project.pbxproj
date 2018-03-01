@@ -185,7 +185,6 @@
 		1F70A5BC201F2F69001DED64 /* WBUpdateBoxAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70A5BB201F2F69001DED64 /* WBUpdateBoxAPI.m */; };
 		1F70A5C0202018DE001DED64 /* WBGetOneBoxAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70A5BF202018DE001DED64 /* WBGetOneBoxAPI.m */; };
 		1F70A5C320204082001DED64 /* WBDeleteBoxAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70A5C220204082001DED64 /* WBDeleteBoxAPI.m */; };
-		1F70A5C62020573A001DED64 /* WBCreatTweetAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70A5C52020573A001DED64 /* WBCreatTweetAPI.m */; };
 		1F70A5CA202160A4001DED64 /* BoxServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70A5C9202160A4001DED64 /* BoxServices.m */; };
 		1F78E14F202EA15F008C9CB9 /* creat_box@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F78E14C202EA15E008C9CB9 /* creat_box@2x.png */; };
 		1F78E150202EA15F008C9CB9 /* creat_box@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F78E14D202EA15F008C9CB9 /* creat_box@3x.png */; };
@@ -708,7 +707,6 @@
 		C127BD611FBC7C5700596112 /* NSString+WBUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = C127BD601FBC7C5700596112 /* NSString+WBUUID.m */; };
 		C138D0571FB94396000CF518 /* FLDrivesAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D0561FB94396000CF518 /* FLDrivesAPI.m */; };
 		C138D05A1FB94D8D000CF518 /* FLGetDriveDirAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D0591FB94D8D000CF518 /* FLGetDriveDirAPI.m */; };
-		C138D05D1FB96100000CF518 /* FLCreateDirAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D05C1FB96100000CF518 /* FLCreateDirAPI.m */; };
 		C138D0601FB970F7000CF518 /* NSString+DeviceName.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D05F1FB970F7000CF518 /* NSString+DeviceName.m */; };
 		C138D0661FB99AF3000CF518 /* FMMediaAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D0651FB99AF3000CF518 /* FMMediaAPI.m */; };
 		C138D0781FB9A4B0000CF518 /* DriveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C138D0721FB9A4AF000CF518 /* DriveModel.m */; };
@@ -1416,8 +1414,6 @@
 		1F70A5BF202018DE001DED64 /* WBGetOneBoxAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBGetOneBoxAPI.m; sourceTree = "<group>"; };
 		1F70A5C120204082001DED64 /* WBDeleteBoxAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBDeleteBoxAPI.h; sourceTree = "<group>"; };
 		1F70A5C220204082001DED64 /* WBDeleteBoxAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBDeleteBoxAPI.m; sourceTree = "<group>"; };
-		1F70A5C42020573A001DED64 /* WBCreatTweetAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBCreatTweetAPI.h; sourceTree = "<group>"; };
-		1F70A5C52020573A001DED64 /* WBCreatTweetAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBCreatTweetAPI.m; sourceTree = "<group>"; };
 		1F70A5C8202160A4001DED64 /* BoxServices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BoxServices.h; sourceTree = "<group>"; };
 		1F70A5C9202160A4001DED64 /* BoxServices.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BoxServices.m; sourceTree = "<group>"; };
 		1F78E14C202EA15E008C9CB9 /* creat_box@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "creat_box@2x.png"; sourceTree = "<group>"; };
@@ -2096,8 +2092,6 @@
 		C138D0561FB94396000CF518 /* FLDrivesAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FLDrivesAPI.m; sourceTree = "<group>"; };
 		C138D0581FB94D8D000CF518 /* FLGetDriveDirAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FLGetDriveDirAPI.h; sourceTree = "<group>"; };
 		C138D0591FB94D8D000CF518 /* FLGetDriveDirAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FLGetDriveDirAPI.m; sourceTree = "<group>"; };
-		C138D05B1FB96100000CF518 /* FLCreateDirAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FLCreateDirAPI.h; sourceTree = "<group>"; };
-		C138D05C1FB96100000CF518 /* FLCreateDirAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FLCreateDirAPI.m; sourceTree = "<group>"; };
 		C138D05E1FB970F7000CF518 /* NSString+DeviceName.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+DeviceName.h"; sourceTree = "<group>"; };
 		C138D05F1FB970F7000CF518 /* NSString+DeviceName.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+DeviceName.m"; sourceTree = "<group>"; };
 		C138D0641FB99AF3000CF518 /* FMMediaAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMMediaAPI.h; sourceTree = "<group>"; };
@@ -4485,8 +4479,6 @@
 			children = (
 				1FF6410A20183546007118F5 /* WBTweetAPI.h */,
 				1FF6410B20183546007118F5 /* WBTweetAPI.m */,
-				1F70A5C42020573A001DED64 /* WBCreatTweetAPI.h */,
-				1F70A5C52020573A001DED64 /* WBCreatTweetAPI.m */,
 			);
 			path = Tweets;
 			sourceTree = "<group>";
@@ -4766,8 +4758,6 @@
 				C138D0561FB94396000CF518 /* FLDrivesAPI.m */,
 				C138D0581FB94D8D000CF518 /* FLGetDriveDirAPI.h */,
 				C138D0591FB94D8D000CF518 /* FLGetDriveDirAPI.m */,
-				C138D05B1FB96100000CF518 /* FLCreateDirAPI.h */,
-				C138D05C1FB96100000CF518 /* FLCreateDirAPI.m */,
 			);
 			path = Drives;
 			sourceTree = "<group>";
@@ -6659,7 +6649,6 @@
 				1F922EBB1FCE617B00A7614B /* WBStatioManageEquipmentViewController.m in Sources */,
 				F67D64111FAC7D7F00E23D16 /* Base64.m in Sources */,
 				1F7F161E2011A367003CB83D /* GroupUserModel.m in Sources */,
-				C138D05D1FB96100000CF518 /* FLCreateDirAPI.m in Sources */,
 				1F4083BD20061A3100DC0634 /* WBPpgAPI.m in Sources */,
 				F67D644E1FAC84E800E23D16 /* NavViewController.m in Sources */,
 				F67D643A1FAC7E5600E23D16 /* FirstDecorationSectionView.m in Sources */,
@@ -6691,7 +6680,6 @@
 				C138D0781FB9A4B0000CF518 /* DriveModel.m in Sources */,
 				F6830F181FB300D2005AC578 /* FMLeftUserCell.m in Sources */,
 				1FA8604D200F229800550C7B /* WBConst.m in Sources */,
-				1F70A5C62020573A001DED64 /* WBCreatTweetAPI.m in Sources */,
 				1FA86407200F405100550C7B /* LHPhotoPreviewCell.m in Sources */,
 				C183CE041FD006A9002E29CD /* WBCloudLocalTokenAPI.m in Sources */,
 				1FCFB3E11FE8B43700BD3375 /* RadioButton.m in Sources */,

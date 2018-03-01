@@ -7,7 +7,9 @@
 //
 
 #import "JYBaseRequest.h"
-
+/*
+ * WISNUC API:GET CLOUD TOKEN
+ */
 @interface WBCloudLocalTokenAPI : JYBaseRequest
 
 @end

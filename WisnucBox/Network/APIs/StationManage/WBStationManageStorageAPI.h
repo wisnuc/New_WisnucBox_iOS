@@ -7,7 +7,9 @@
 //
 
 #import "JYBaseRequest.h"
-
+/*
+ * WISNUC API:GET STATION STORAGE INFO
+ */
 @interface WBStationManageStorageAPI : JYBaseRequest
 @property(nonatomic,copy) NSString *path;
 +(instancetype)apiWithURLPath:(NSString *)path;

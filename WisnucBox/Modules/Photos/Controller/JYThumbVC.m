@@ -552,7 +552,6 @@
                 [localModelArray addObject:localImageModel];
                 [photosArray addObject:asset.image];
             }else{
-       
           __block SDWebImageDownloadToken *thumbnailRequestOperation = [WB_NetService getThumbnailWithHash:[(WBAsset *)obj fmhash] complete:^(NSError *error, UIImage *img) {
                 if(!weak_self) return;
                 if (!error && img) {

@@ -41,6 +41,7 @@ extern NSString *const kBoxFileSelect;
 extern NSString *const kBoxMQTTFresh;
 
 extern NSString *const kBoxUnread;
+extern NSString *const kBoxChatListArchiverName;
 
 extern NSInteger kMessageCount;
 

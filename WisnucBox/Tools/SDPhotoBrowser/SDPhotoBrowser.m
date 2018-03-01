@@ -200,7 +200,6 @@
 //                return;
             }else{
                 JYAsset *jyasset = dic[kMessageImageBoxLocalAsset];
-
                 CGFloat scale = [UIScreen mainScreen].scale;
                 CGFloat width = MIN(kViewWidth, kMaxImageWidth);
                 CGSize size = CGSizeZero;

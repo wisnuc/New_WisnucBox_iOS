@@ -60,6 +60,20 @@
     return newClass;
 }
 
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.asset forKey:@"asset"];
+
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super init]) {
+        self.asset = [aDecoder decodeObjectForKey:@"asset"];
+    }
+    return self;
+}
+
 + (instancetype)modelWithAsset:(PHAsset *)asset type:(JYAssetType)type duration:(NSString *)duration
 {
     JYAsset *model = [[[self class] alloc] init];

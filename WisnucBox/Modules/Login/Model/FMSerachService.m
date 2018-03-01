@@ -18,6 +18,9 @@
 }
 
 - (void)getData{
+    /*
+     * WISNUC API:GET USERS LIST IN STATION (local)
+     */
     self.isReadly = NO;
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = 40;

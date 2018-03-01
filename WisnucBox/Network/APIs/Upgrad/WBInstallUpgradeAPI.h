@@ -13,6 +13,11 @@
 @property (nonatomic) NSString *tagName;
 @property (nonatomic) NSString *method;
 @property (nonatomic) NSString *state;
+/*
+ * WISNUC API:FIRMWARE INSTALL
+ * @param urlPath    URL
+ * @param tagName    Tag Name
+ */
 + (instancetype)apiWithURLPath:(NSString *)urlPath  RequestMethod:(NSString *)method TagName:(NSString *)tagName;
 + (instancetype)apiWithURLPath:(NSString *)urlPath  RequestMethod:(NSString *)method State:(NSString *)state;
 @end

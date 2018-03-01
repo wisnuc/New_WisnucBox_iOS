@@ -11,5 +11,10 @@
 @interface WBHttpDownloadAPI : JYBaseRequest
 @property(nonatomic)NSString *dirUUID;
 @property(nonatomic)NSString *downloadURL;
+/*
+ * WISNUC API:HTTP DOWNLOAD
+ * @param dirUUID   Directory UUID
+ * @param downloadURL   Download URL
+ */
 + (instancetype)apiWithDirUUID:(NSString *)dirUUID DownloadURL:(NSString *)downloadURL;
 @end

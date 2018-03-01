@@ -7,7 +7,9 @@
 //
 
 #import "JYBaseRequest.h"
-
+/*
+ * WISNUC API:GET SAMBA SERVICE STATUS
+ */
 @interface WBFeaturesSambaStatusAPI : JYBaseRequest
 
 @end

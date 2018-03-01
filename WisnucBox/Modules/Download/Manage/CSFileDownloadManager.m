@@ -136,7 +136,9 @@ __strong static id _sharedObject = nil;
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
    
-    
+    /*
+     * WISNUC API:DOWNLOAD A FILE
+     */
     //获取文件模型数据
     __block CSDownloadModel* fileModel = [downloadTask getDownloadFileModel];
     

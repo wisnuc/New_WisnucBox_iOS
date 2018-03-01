@@ -469,7 +469,16 @@ FilesHelperOpenFilesDelegate
                         [[CSFilesOneDownloadManager shareManager] cancelAllDownloadTask];
                     };
                     [_progressView show];
-                    [[CSDownloadHelper shareManager] downloadOneFileWithFileModel:model RootUUID:_driveUUID  UUID:_parentUUID IsDownloading:^(BOOL isDownloading) {
+                        NSString *rootUUID = _driveUUID;
+                        if (!rootUUID) {
+                            rootUUID = model.driveUUID;
+                        }
+                        NSString *parentUUUID = _parentUUID;
+                        if (!parentUUUID) {
+                            parentUUUID = model.parentUUID;
+                        }
+                        
+                    [[CSDownloadHelper shareManager] downloadOneFileWithFileModel:model RootUUID:rootUUID  UUID:parentUUUID IsDownloading:^(BOOL isDownloading) {
                         if (isDownloading){
                             [_progressView dismiss];
                             if (self.cellStatus == FLFliesCellStatusCanChoose) {

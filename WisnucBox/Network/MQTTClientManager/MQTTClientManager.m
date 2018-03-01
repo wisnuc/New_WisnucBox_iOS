@@ -31,7 +31,7 @@
 #pragma mark 懒加载
 -(MQTTSession *)mqttSession{
     if (!_mqttSession) {
-        /*app包名+|iOS|+设备信息作为连接id确保唯一性*/
+        /*client_ios_+GUID作为连接id确保唯一性*/
         NSString *clientID = [NSString stringWithFormat:@"client_ios_%@",WB_UserService.currentUser.guid];
         NSLog(@"-----------------MQTT连接的ClientID-----------------%@",clientID);
         _mqttSession=[[MQTTSession alloc] initWithClientId:clientID];

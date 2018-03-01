@@ -7,7 +7,9 @@
 //
 
 #import "JYBaseRequest.h"
-
+/*
+ * WISNUC API:GET MEDIA LIST
+ */
 @interface FMMediaAPI : JYBaseRequest
 
 @end

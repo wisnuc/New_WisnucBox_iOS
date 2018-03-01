@@ -7,7 +7,9 @@
 //
 
 #import "JYBaseRequest.h"
-
+/*
+ * WISNUC API:GET STATION TIME INFO
+ */
 @interface WBStationManageTimedateAPI : JYBaseRequest
 
 @end

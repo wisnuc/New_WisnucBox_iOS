@@ -11,5 +11,10 @@
 @interface WBPpgDownloadActionAPI : JYBaseRequest
 @property (nonatomic)NSString *ppgId;
 @property (nonatomic)NSString *op;
+/*
+ * WISNUC API:/B/T/ DOWNLOAD STATUS ACTION
+ * @param ppgId    M/a/g/n/e/t ID
+ * @param op       Option(destroy,pause,resume)
+ */
 + (instancetype)apiWithPpgId:(NSString *)ppgId Option:(NSString *)op;
 @end

@@ -12,7 +12,11 @@
 
 @property (nonatomic) NSString * guid;
 @property (nonatomic) NSString * cloudToken;
-
+/*
+ * WISNUC API:GET STATIONS FOR CLOUD LOGIN
+ * @param guid  guid
+ * @param token  token
+ */
 + (instancetype)apiWithGuid:(NSString *)guid andToken:(NSString *)token;
 
 @end

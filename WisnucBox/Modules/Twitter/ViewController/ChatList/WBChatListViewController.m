@@ -191,12 +191,8 @@
     [boxesModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *userModel, NSUInteger idx, BOOL * _Nonnull stop) {
         if (idx<= n - 1){
             float deg =  M_PI * ((float)idx * 2 / n - 1 / 4);
-            NSLog(@"😈%lu",idx * 2 / n - 1 / 4);
-            //            NSLog(@"🌶%lu",idx);
-            //            NSLog(@"😑%f",deg);
             float top = (1 - cosf(deg)) * (20 - r);
             float left = (1 + sinf(deg)) * (20 - r);
-            //        NSLog(@"😑%f,%f",left,top);
             UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(left, top, r *2, r*2)];
             imageView.layer.masksToBounds = YES;
             imageView.layer.cornerRadius = r;

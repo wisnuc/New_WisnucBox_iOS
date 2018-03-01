@@ -8,7 +8,7 @@
 
 #import "JYAsset.h"
 
-@interface WBAsset : JYAsset
+@interface WBAsset : JYAsset <NSCopying>
 
 @property (nonatomic) NSString *m;
 @property (nonatomic) NSInteger h;

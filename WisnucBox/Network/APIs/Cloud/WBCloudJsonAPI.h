@@ -9,9 +9,11 @@
 #import "JYBaseRequest.h"
 
 @interface WBCloudJsonAPI : JYBaseRequest
-
 @property (nonatomic) id body;
-
+/*
+ * WISNUC API:CLOUD API FOR mkdir
+ * @param body(args) param(URL Resource+RequestMethod+Directory Name)
+ */
 + (instancetype)apiWithBody:(id)args;
 
 @end

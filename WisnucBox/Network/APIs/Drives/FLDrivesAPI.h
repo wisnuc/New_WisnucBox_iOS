@@ -7,7 +7,9 @@
 //
 
 #import "JYBaseRequest.h"
-
+/*
+ * WISNUC API:GET DRIVES INFO
+ */
 @interface FLDrivesAPI : JYBaseRequest
 
 @end

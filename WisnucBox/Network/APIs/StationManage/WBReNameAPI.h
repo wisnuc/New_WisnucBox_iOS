@@ -10,5 +10,9 @@
 
 @interface WBReNameAPI : JYBaseRequest
 @property (nonatomic) NSString * name;
+/*
+ * WISNUC API:UPDATE STATION NAME
+ * @param name     New Station Name
+ */
 + (instancetype)apiWithName:(NSString *)name;
 @end

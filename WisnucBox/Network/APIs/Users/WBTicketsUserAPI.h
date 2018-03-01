@@ -11,6 +11,10 @@
 @interface WBTicketsUserAPI : JYBaseRequest
 @property (nonatomic) NSString *ticketId;
 @property (nonatomic) NSString *token;
-
+/*
+ * WISNUC API:GET USER(CLOUD)
+ * @param ticketId    TicketId
+ * @param token       Cloud Token
+ */
 + (instancetype)apiWithTicketId:(NSString *)ticketId WithToken:(NSString *)token;
 @end

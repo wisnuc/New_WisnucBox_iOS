@@ -10,5 +10,9 @@
 
 @interface WBCloudLoginAPI : JYBaseRequest
 @property (nonatomic)NSString *code;
+/*
+ * WISNUC API:GET CLOUD LOGIN DATA(token,avatarUrl...)
+ * @param code  Wechat Callbcak Code
+ */
 + (instancetype)apiWithCode:(NSString *)code;
 @end

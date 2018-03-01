@@ -10,5 +10,9 @@
 
 @interface WBBoxUserAPI : JYBaseRequest
 @property (nonatomic) NSString *guid;
+/*
+ * WISNUC API:GET BOX ENABLE USERS (TO CREAT A BOX,USER ADD ,USER DELETE)
+ * @param guid   GUID
+ */
 + (instancetype)userApiWithGuid:(NSString *)guid;
 @end

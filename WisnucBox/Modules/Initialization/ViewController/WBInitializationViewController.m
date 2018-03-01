@@ -645,7 +645,9 @@
         NSString * Basic = [UUID base64EncodedString];
         AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
         NSString* urlString = [NSString stringWithFormat:@"http://%@:3000/", _searchModel.displayPath];
-        
+        /*
+         * WISNUC API:GET TOKEN
+         */
         [manager.requestSerializer setValue:[NSString stringWithFormat:@"Basic %@",Basic] forHTTPHeaderField:@"Authorization"];
         [manager GET:[NSString stringWithFormat:@"%@token",urlString] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSString * token = responseObject[@"token"];

@@ -9,6 +9,10 @@
 #import "JYBaseRequest.h"
 
 @interface WBGetUpgradStateAPI : JYBaseRequest
-+ (instancetype)apiWithURLPath:(NSString *)urlPath;
 @property (nonatomic) NSString *urlPath;
+/*
+ * WISNUC API:  GET FIRMWARE UPDATE INFO
+ * @param urlPath    URL
+ */
++ (instancetype)apiWithURLPath:(NSString *)urlPath;
 @end

@@ -15,15 +15,34 @@
     return api;
 }
 
++ (instancetype)apiWithBoxuuid:(NSString *)boxuuid First:(NSNumber *)first Last:(NSNumber *)last Count:(NSNumber *)count{
+    WBTweetAPI *api = [WBTweetAPI new];
+    api.uuid = boxuuid;
+    api.first = first;
+    api.last = last;
+    api.count = count;
+    return api;
+}
+
 - (JYRequestMethod)requestMethod{
     return JYRequestMethodGet;
 }
 
 - (id)requestArgument{
-
-    NSDictionary *dic = @{
-                          @"metadata":@"true"
-                          };
+    
+    NSDictionary *dic;
+    if (_first) {
+        dic = @{
+                @"first":_first,
+                @"last":_last,
+                @"count":_count,
+                @"metadata":@"true"
+                };
+        return dic;
+    }
+    dic = @{
+            @"metadata":@"true"
+            };
     return dic;
 }
 

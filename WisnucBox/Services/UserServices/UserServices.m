@@ -124,10 +124,11 @@
     if(WB_UserService.isUserLogin && !WB_UserService.currentUser.isIgnoreUpgradeCheck && WB_UserService.currentUser.isAdmin) {
         @weaky(self)
         NSString *urlString = [NSString stringWithFormat:@"%@",WB_UserService.currentUser.sn_address];
-        NSLog(@"%@",urlString);
-        if (!urlString) {
+        if (!WB_UserService.currentUser.sn_address) {
             return;
         }
+        NSLog(@"%@",urlString);
+      
         [[WBGetUpgradStateAPI apiWithURLPath:urlString] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
             //        NSLog(@"%@",request.responseJsonObject);
             WBGetUpgradStateModel *model = [WBGetUpgradStateModel modelWithJSON:request.responseJsonObject];

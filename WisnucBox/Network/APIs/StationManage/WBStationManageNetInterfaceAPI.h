@@ -7,7 +7,9 @@
 //
 
 #import "JYBaseRequest.h"
-
+/*
+ * WISNUC API:GET STATION NET INTERFACE INFO
+ */
 @interface WBStationManageNetInterfaceAPI : JYBaseRequest
 
 @end

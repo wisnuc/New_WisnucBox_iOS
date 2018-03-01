@@ -69,10 +69,16 @@ __strong static id _sharedObject = nil;
     
     //    BOOL isResuming = NO;
     
+    /*
+     * WISNUC API:DOWNLOAD A FILE
+     */
     NSString* dataUrl = [fileModel getDownloadTaskURL];
     
     NSMutableURLRequest* urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[dataUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet  URLQueryAllowedCharacterSet]]]];
     [urlRequest setValue:WB_UserService.currentUser.isCloudLogin ? WB_UserService.currentUser.cloudToken : [NSString stringWithFormat:@"JWT %@", WB_UserService.defaultToken] forHTTPHeaderField:@"Authorization"];
+    if (downloadTask.isBoxDownload) {
+       [urlRequest setValue:WB_UserService.currentUser.cloudToken ? WB_UserService.currentUser.cloudToken : [NSString stringWithFormat:@"JWT %@", WB_UserService.defaultToken] forHTTPHeaderField:@"Authorization"];
+    }
     NSString* tempPath = [fileModel getDownloadTempSavePath];
     NSLog(@"临时下载地:%@",tempPath);
     NSLog(@"%@", urlRequest.URL) ;

@@ -13,19 +13,19 @@
 @property (nonatomic,copy)UIImage *localImage;
 @end
 
-@interface WBTweetlistModel : NSObject
+@interface WBTweetlistModel : NSObject<NSCopying,NSMutableCopying>
 @property (nonatomic,copy)NSString *filename;
 @property (nonatomic,copy)NSString *sha256;
 @property (nonatomic,copy)NSDictionary *metadata;
 @property (nonatomic,copy)NSNumber *size;
 @end
 
-@interface WBTweetTweeterModel : NSObject
+@interface WBTweetTweeterModel : NSObject<NSCopying,NSMutableCopying>
 @property (nonatomic,copy)NSString *tweeterId;
 @property (nonatomic)NSArray *wx;
 @end
 
-@interface WBTweetModel : NSObject
+@interface WBTweetModel : NSObject<NSCopying,NSMutableCopying>
 /** 是否是发送者 */
 @property (nonatomic, assign) BOOL isSender;
 /** 是否已读 */

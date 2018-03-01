@@ -10,5 +10,9 @@
 
 @interface WBgetStationInfoAPI : JYBaseRequest
 @property (nonatomic) NSString *servicePath;
+/*
+ * WISNUC API:GET STATION INFO
+ * @param servicePath   URL
+ */
 +(instancetype)apiWithServicePath:(NSString *)servicePath;
 @end

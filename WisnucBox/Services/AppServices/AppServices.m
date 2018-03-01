@@ -1113,6 +1113,9 @@ static BOOL needRestart = NO;
 
 static NSArray * invaildChars;
 - (void)startUseTimeStamp:(BOOL)yesOrNo completeBlock:(void(^)(NSError * , id))callback {
+    /*
+     * WISNUC API:UPLOAD A FILE
+     */
     self.callback = callback;
     invaildChars = [NSArray arrayWithObjects:@"/", @"?", @"<", @">", @"\\", @":", @"*", @"|", @"\"", nil];
     @weaky(self);

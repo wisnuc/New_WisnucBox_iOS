@@ -7,7 +7,9 @@
 //
 
 #import "JYBaseRequest.h"
-
+/*
+ * WISNUC API:GET DLNA SERVICE STATUS
+ */
 @interface WBFeaturesDlnaStatusAPI : JYBaseRequest
 
 @end

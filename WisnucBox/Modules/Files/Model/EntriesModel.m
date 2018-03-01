@@ -14,6 +14,9 @@
              @"photoHash": @"hash"
              };
 }
++ (NSArray *)modelPropertyBlacklist {
+    return @[@"driveUUID", @"parentUUID"];
+}
 
 - (id)copyWithZone:(NSZone *)zone {
     EntriesModel *newClass = [[EntriesModel alloc]init];
@@ -37,4 +40,10 @@
     newClass.size = self.size;
     return newClass;
 }
+
+- (BOOL)modelCustomTransformFromDictionary:(NSDictionary *)dic {
+    
+    return YES;
+}
+
 @end

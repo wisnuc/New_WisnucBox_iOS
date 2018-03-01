@@ -50,6 +50,8 @@ NSString *const kBoxMQTTFresh = @"kBoxMQTTFresh";
 
 NSString *const kBoxUnread = @"kBoxUnread";
 
+
+NSString *const kBoxChatListArchiverName = @"BoxChatListArchiver";
 #pragma mark - IM模块常量
 
 // 头像大小

@@ -143,6 +143,53 @@ NSString *const kTableViewFrame = @"frame";
         self.addButton.hidden = YES;
         return;
     }
+    NSArray *array1 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+    NSString *documents = [array1 lastObject];
+    NSString *documentPath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
+    NSData *resultData = [NSData dataWithContentsOfFile:documentPath];
+    NSArray *resultArray = [NSKeyedUnarchiver unarchiveObjectWithData:resultData];//将数据反序列化
+//    NSLog(@"😆%@",resultArray);
+    self.dataSource = [NSMutableArray arrayWithArray:resultArray];
+    if (resultArray && resultArray.count>0) {
+        [[WBTweetAPI apiWithBoxuuid:_boxModel.uuid First:@0 Last:[NSNumber numberWithInteger:resultArray.count-1] Count:@0]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+            NSLog(@"%@",request.responseJsonObject);
+            NSArray * array = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"]
+            : request.responseJsonObject;
+            if (![array isKindOfClass:[NSArray class]]) {
+                return ;
+            }
+//            NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
+            [array enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                WBTweetModel *model = [WBTweetModel modelWithDictionary:obj];
+                model.boxuuid = _boxModel.uuid;
+                if (model.list.count>0){
+                    [self.dataSource addObject:model];
+                }
+                if ([model.type isEqualToString:@"boxmessage"]) {
+                    WBBoxMessageModel *boxMessageModel = [WBBoxMessageModel modelWithJSON:model.comment];
+                    if (![boxMessageModel.op isEqualToString:@"deleteUser"]) {
+                        [self.dataSource addObject:model];
+                    }
+                }
+            }];
+//            self.dataSource = dataArray;
+            [self.tableView reloadData];
+            // 准备好要存到本地的数组
+            NSArray *archiverdataArray= [NSArray arrayWithArray:self.dataSource];
+            
+            //    将数组序列化后再存储
+            NSData *arrayData = [NSKeyedArchiver archivedDataWithRootObject:archiverdataArray];
+            BOOL isTureWrite = [arrayData writeToFile:documentPath atomically:YES];
+            if (isTureWrite) {
+                NSLog(@"存储成功");
+            }else{
+                NSLog(@"存储失败");
+            }
+        } failure:^(__kindof JYBaseRequest *request) {
+            NSLog(@"%@",request.error);
+        }];
+        return;
+    }
     [[WBTweetAPI apiWithBoxuuid:_boxModel.uuid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
         //        if ([request.responseJsonObject isKindOfClass:[NSDictionary class]]) {
@@ -172,6 +219,18 @@ NSString *const kTableViewFrame = @"frame";
         }];
         self.dataSource = dataArray;
         [self.tableView reloadData];
+   
+        // 准备好要存到本地的数组
+        NSArray *archiverdataArray= [NSArray arrayWithArray:dataArray];
+        
+        //    将数组序列化后再存储
+        NSData *arrayData = [NSKeyedArchiver archivedDataWithRootObject:archiverdataArray];
+        BOOL isTureWrite = [arrayData writeToFile:documentPath atomically:YES];
+        if (isTureWrite) {
+            NSLog(@"存储成功");
+        }else{
+            NSLog(@"存储失败");
+        }
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
     }];
@@ -209,8 +268,53 @@ NSString *const kTableViewFrame = @"frame";
     messageModel.ctime = date;
     messageModel.uuid = @"myselfPush";
     messageModel.messageBodytype = MessageBodyType_File;
+
     NSArray *listArr = [[NSArray alloc]initWithArray:dataDic[@"filesModel"] copyItems:YES];
     NSMutableArray *listMutableArr = [NSMutableArray arrayWithCapacity:0];
+    NSMutableArray *localImageModelArr = [NSMutableArray arrayWithCapacity:0];
+#warning Files -> Photos
+    __block BOOL isPhoto = YES;
+    [listArr enumerateObjectsUsingBlock:^(EntriesModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSString *pathExtension = [obj.name pathExtension];
+        NSString *astring01 = @"jpg";
+        BOOL result = [astring01 compare:pathExtension
+                                 options:NSCaseInsensitiveSearch | NSNumericSearch] == NSOrderedSame;
+
+
+        NSString *astring02 = @"png";
+        BOOL result2 = [astring02 compare:pathExtension
+                                 options:NSCaseInsensitiveSearch | NSNumericSearch] == NSOrderedSame;
+        
+        NSString *astring03 = @"jpeg";
+        BOOL result3 = [astring03 compare:pathExtension
+                                  options:NSCaseInsensitiveSearch | NSNumericSearch] == NSOrderedSame;
+        NSLog(@"result:%d",result);
+        if (result || result2 ||result3) {
+            WBAsset *asset = [WBAsset new];
+            asset.fmhash = obj.photoHash;
+            WBTweetlocalImageModel *localImageModel = [WBTweetlocalImageModel new];
+            localImageModel.asset = asset;
+            [localImageModelArr addObject:localImageModel];
+            [listMutableArr addObject:asset];
+        }else{
+            isPhoto = NO;
+            *stop = YES;
+        }
+    }];
+    
+    if (isPhoto) {
+        messageModel.messageBodytype = MessageBodyType_Image;
+        messageModel.localImageArray = localImageModelArr;
+        messageModel.boxuuid = _boxModel.uuid;
+        NSIndexPath *index = [self insertNewMessageOrTime:messageModel];
+        WBChatViewNormalTableViewCell *cell = [self.tableView cellForRowAtIndexPath:index];
+         [self.tableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        [self sendMessageToNetSeverWithContent:listMutableArr TableViewCell:cell];
+        return;
+    }
+    if (listMutableArr.count>0) {
+        [listMutableArr removeAllObjects];
+    }
     [listArr enumerateObjectsUsingBlock:^(EntriesModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         WBTweetlistModel *listModel = [WBTweetlistModel new];
         listModel.size = [NSNumber numberWithLongLong:obj.size];
@@ -262,6 +366,20 @@ NSString *const kTableViewFrame = @"frame";
                         [cell layoutSubviews];
                     }
                 });
+            }
+            NSArray *array1 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+            NSString *documents = [array1 lastObject];
+            NSString *documentPath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
+            // 准备好要存到本地的数组
+            NSArray *archiverdataArray= [NSArray arrayWithArray:self.dataSource];
+            
+            //    将数组序列化后再存储
+            NSData *arrayData = [NSKeyedArchiver archivedDataWithRootObject:archiverdataArray];
+            BOOL isTureWrite = [arrayData writeToFile:documentPath atomically:YES];
+            if (isTureWrite) {
+                NSLog(@"存储成功");
+            }else{
+                NSLog(@"存储失败");
             }
         });
     }];
@@ -333,12 +451,18 @@ NSString *const kTableViewFrame = @"frame";
     
 }
 
-- (void)sendMessageToNetSeverWith:(LHContentModel *)content TableViewCell:(WBChatViewNormalTableViewCell *)tabelViewCell{
+- (void)sendMessageToNetSeverWithContent:(id)content TableViewCell:(WBChatViewNormalTableViewCell *)tabelViewCell{
 #warning upload;
+    
     NSMutableArray *imageArray = [NSMutableArray arrayWithCapacity:0];
-    [content.photos.assets enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [imageArray addObject:obj];
-    }];
+    if ([content isKindOfClass:[LHContentModel class]]) {
+        [((LHContentModel *)content).photos.assets enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [imageArray addObject:obj];
+        }];
+    }else{
+        imageArray = (NSMutableArray *)content;
+    }
+    
     [WB_BoxService sendTweetWithImageArray:imageArray Boxuuid:_boxModel.uuid Complete:^(WBTweetModel *tweetModel, NSError *error) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             if (!error) {
@@ -372,9 +496,21 @@ NSString *const kTableViewFrame = @"frame";
                     [tabelViewCell layoutSubviews];
                     [tabelViewCell reloadFinishLoadData];;
                 }
-                //                dispatch_main_async_safe(^{
-                
-                //                });
+            }
+            
+            NSArray *array1 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+            NSString *documents = [array1 lastObject];
+            NSString *documentPath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
+            // 准备好要存到本地的数组
+            NSArray *archiverdataArray= [NSArray arrayWithArray:self.dataSource];
+            
+            //    将数组序列化后再存储
+            NSData *arrayData = [NSKeyedArchiver archivedDataWithRootObject:archiverdataArray];
+            BOOL isTureWrite = [arrayData writeToFile:documentPath atomically:YES];
+            if (isTureWrite) {
+                NSLog(@"存储成功");
+            }else{
+                NSLog(@"存储失败");
             }
         });
     }];
@@ -427,7 +563,7 @@ NSString *const kTableViewFrame = @"frame";
     //        CGPoint offset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height);
     //        [self.tableView setContentOffset:offset animated:NO];
     //    }
-    [self sendMessageToNetSeverWith:(LHContentModel *)content TableViewCell:cell];
+    [self sendMessageToNetSeverWithContent:(LHContentModel *)content TableViewCell:cell];
 #warning
     //    // 模仿延迟发送
     //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -613,12 +749,12 @@ NSString *const kTableViewFrame = @"frame";
         return 31;
     } else {
         WBTweetModel *model = (WBTweetModel *)obj;
-        CGFloat height = [[self.rowHeight objectForKey:model.uuid] floatValue];
-        if (height) {
-            return height;
-        }
-        height = [WBChatViewNormalTableViewCell tableView:tableView heightForRowAtIndexPath:indexPath withObject:model];
-        [self.rowHeight setObject:@(height) forKey:model.uuid];
+//        CGFloat height = [[self.rowHeight objectForKey:model.uuid] floatValue];
+//        if (height) {
+//            return height;
+//        }
+        CGFloat height = [WBChatViewNormalTableViewCell tableView:tableView heightForRowAtIndexPath:indexPath withObject:model];
+//        [self.rowHeight setObject:@(height) forKey:model.uuid];
         return height;
     }
 }
@@ -799,6 +935,19 @@ NSString *const kTableViewFrame = @"frame";
 
 
 @implementation WBBoxMessageModel
-
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.op forKey:@"op"];
+    [aCoder encodeObject:self.value forKey:@"value"];
+    
+}
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super init]) {
+        self.op = [aDecoder decodeObjectForKey:@"op"];
+        self.value = [aDecoder decodeObjectForKey:@"value"];
+    }
+    return self;
+}
 @end
 

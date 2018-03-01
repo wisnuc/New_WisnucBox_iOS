@@ -13,6 +13,17 @@
 @property (nonatomic)NSString *boxName;
 @property (nonatomic)NSString *op;
 @property (nonatomic)NSString *boxuuid;
+/*
+ * WISNUC API:UPDATE UPDATE A BOX USERS(DELETE,ADD)
+ * @param boxuuid    Box UUID
+ * @param users      ALL Users Array
+ * @param op         Option
+ */
 + (instancetype)updateApiWithBoxuuid:(NSString *)boxuuid Users:(NSArray *)users Option:(NSString *)op;
+/*
+ * WISNUC API:UPDATE A BOX NAME
+ * @param boxuuid    Box UUID
+ * @param boxName    box Name
+ */
 + (instancetype)updateApiWithBoxName:(NSString *)boxName Boxuuid:(NSString *)boxuuid;
 @end

@@ -11,5 +11,11 @@
 @interface WBGetDownloadAPI : JYBaseRequest
 @property (nonatomic)NSString *type;
 @property (nonatomic)NSString *ppgId;
+/*
+ * WISNUC API:/B/T/ DOWNLOAD STATUS
+ * @param type   DOWNLOAD STATUS
+ * @param ppgId    M/a/g/n/e/t ID
+ * ALL DOWNLOAD STATUS(no param)
+ */
 + (instancetype)apiWithType:(NSString *)type PpgId:(NSString *)ppgId;
 @end

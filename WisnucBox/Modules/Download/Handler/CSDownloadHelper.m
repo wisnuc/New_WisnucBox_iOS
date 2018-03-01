@@ -154,7 +154,7 @@ __strong static id _sharedObject = nil;
     
     NSString *loaclFormUrl = [NSString stringWithFormat:@"%@boxes/%@/files/%@",[JYRequestConfig sharedConfig].baseURL,boxUUID,fileHash];
     
-    NSString* fromUrl = WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@?resource=%@&method=GET", kCloudAddr, kCloudCommonPipeUrl, [resource base64EncodedString]] :loaclFormUrl;
+    NSString* fromUrl = WB_UserService.currentUser.cloudToken ? [NSString stringWithFormat:@"%@%@?resource=%@&method=GET", kCloudAddr, kCloudCommonPipeUrl, [resource base64EncodedString]] :loaclFormUrl;
     
     //    NSLog(@"%@",fromUrl);
     NSString* suffixName = dataModel.name;
@@ -194,6 +194,7 @@ __strong static id _sharedObject = nil;
     [downloadFileModel setDownloadFileSize:fileSize];
     
     CSOneDowloadTask* downloadTask = [[CSOneDowloadTask alloc] init];
+    [downloadTask setIsBoxDownload:YES];
     [downloadTask setDownloadTaskId:[NSString stringWithFormat:@"%d", _downdloadIdCount + 1]];
     [downloadTask setDownloadFileModel:downloadFileModel];
     [downloadTask setDownloadUIBinder:self];

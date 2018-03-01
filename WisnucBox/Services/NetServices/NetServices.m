@@ -37,6 +37,9 @@
 }
 
 - (void)testForLANIP:(NSString *)LANIP commplete:(void(^)(BOOL success))callback {
+    /*
+     * WISNUC API:SEARCH A ENABLE API TO CHECK STATUS
+     */
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = 3;
     [manager GET:[NSString stringWithFormat:@"%@station/info", LANIP] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -234,6 +237,9 @@
 }
 
 // local mkdir
+/*
+ * WISNUC API:local mkdir
+ */
 - (void)mkdirInDir:(NSString *)dirUUID andName:(NSString *)name completeBlock:(void(^)(NSError *, DirectoriesModel *))completeBlock{
     NSString *resource = [NSString stringWithFormat:@"drives/%@/dirs/%@/entries", WB_UserService.currentUser.userHome, dirUUID];
     NSString *urlString = [NSString stringWithFormat:@"%@%@", [self currentURL], resource];
@@ -369,7 +375,9 @@
 }
 
 #pragma mark - Get nas origin image or thumbnail image
-
+/*
+ * WISNUC API:GET IMAGE(High Resolution)
+ */
 - (SDWebImageDownloadToken *)getHighWebImageWithHash:(NSString *)hash completeBlock:(void(^)(NSError *, UIImage *))callback {
     [SDWebImageManager sharedManager].imageDownloader.headersFilter = ^NSDictionary *(NSURL *url, NSDictionary *headers) {
         NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:headers];
@@ -403,7 +411,9 @@
 //    }];
 }
 
-
+/*
+ * WISNUC API:GET THUMBNAIL IMAGE
+ */
 - (SDWebImageDownloadToken *)getThumbnailWithHash:(NSString *)hash complete:(void(^)(NSError *, UIImage *))callback {
     [SDWebImageManager sharedManager].imageDownloader.headersFilter = ^NSDictionary *(NSURL *url, NSDictionary *headers) {
         NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:headers];
@@ -423,6 +433,9 @@
     }];
 }
 
+/*
+ * WISNUC API:GET TWEET THUMBNAIL IMAGE
+ */
 - (SDWebImageDownloadToken *)getTweeetThumbnailImageWithHash:(NSString *)hash BoxUUID:(NSString *)boxUUID complete:(void(^)(NSError *, UIImage *))callback {
     [SDWebImageManager sharedManager].imageDownloader.headersFilter = ^NSDictionary *(NSURL *url, NSDictionary *headers) {
         NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:headers];
@@ -431,7 +444,7 @@
     };
     [SDWebImageManager sharedManager].imageDownloader.downloadTimeout = 60;
     NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"%@media/%@?alt=thumbnail&width=134&height=134&modifier=caret&autoOrient=true&boxUUID=%@", [self currentURL], hash,boxUUID]];
-//    NSLog(@"%@",url.absoluteString);
+    NSLog(@"%@,%@",hash,boxUUID);
     if(WB_UserService.currentUser.isCloudLogin)
         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resource=%@&method=GET&alt=thumbnail&width=134&height=134&modifier=caret&autoOrient=true&boxUUID=%@", kCloudAddr, kCloudCommonPipeUrl, [[NSString stringWithFormat:@"media/%@", hash] base64EncodedString],boxUUID]];
     return [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:url options:SDWebImageDownloaderUseNSURLCache progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, BOOL finished) {
@@ -443,7 +456,9 @@
     }];
 }
 
-
+/*
+ * WISNUC API:GET TWEET IMAGE(High Resolution)
+ */
 - (SDWebImageDownloadToken *)getTweeethighQualityImageWithHash:(NSString *)hash BoxUUID:(NSString *)boxUUID complete:(void(^)(NSError *, UIImage *))callback {
     [SDWebImageManager sharedManager].imageDownloader.headersFilter = ^NSDictionary *(NSURL *url, NSDictionary *headers) {
         NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:headers];

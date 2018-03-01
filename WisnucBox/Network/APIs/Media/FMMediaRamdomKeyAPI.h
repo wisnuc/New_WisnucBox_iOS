@@ -11,7 +11,10 @@
 @interface FMMediaRamdomKeyAPI : JYBaseRequest
 
 @property (nonatomic) NSString * photoHash;
-
+/*
+ * WISNUC API:GET MEDIA RANDOM KEY
+ * @param hash   Photo Hash
+ */
 + (instancetype)apiWithHash:(NSString *)hash;
 
 @end

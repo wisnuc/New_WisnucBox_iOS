@@ -69,7 +69,11 @@ __strong static id _sharedObject = nil;
     }
 }
 
+
 - (void)readyUploadPpgFilesWithFilePath:(NSString *)filePath DirUUID:(NSString *)dirUUID Complete:(void (^)(BOOL isComplete))complete{
+    /*
+     * WISNUC API:UPLOAD FILES
+     */
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString * hashString  = [FileHash sha256HashOfFileAtPath:filePath];
     NSNumber * sizeNumber = [NSNumber numberWithLongLong:[WB_FileService fileSizeAtPath:filePath]];

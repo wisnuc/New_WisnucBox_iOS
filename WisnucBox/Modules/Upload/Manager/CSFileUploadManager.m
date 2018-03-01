@@ -129,7 +129,9 @@ __strong static id _sharedObject = nil;
                  progress:(CSUploadingEventHandler)progress
                  complete:(CSUploadedEventHandler)complete
 {
-
+    /*
+     * WISNUC API:UPLOAD FILES
+     */
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     

@@ -135,9 +135,9 @@
         imageWithHeight = [self setFrameSelfFrameWithArray:messageModel.list];
     }
     
-    if (messageModel.isSender && messageModel.localImageArray.count==0){
-        
-    }
+//    if (messageModel.isSender && messageModel.localImageArray.count==0){
+//
+//    }
     
     if (messageModel.isSender && messageModel.localImageArray.count>0) {
         NSMutableArray *localImageArray = [NSMutableArray arrayWithArray:messageModel.localImageArray];
@@ -183,6 +183,29 @@
                 if (localImageModel.localImage) {
                     imageView.image = localImageModel.localImage;
                     [self.imageArray addObject:imageView.image];
+                }else if([localImageModel.asset isKindOfClass:[WBAsset class]]){
+                    __block SDWebImageDownloadToken *thumbnailDownloadToken = [WB_NetService getTweeetThumbnailImageWithHash:((WBAsset *)localImageModel.asset).fmhash BoxUUID:messageModel.boxuuid complete:^(NSError *error, UIImage *img) {
+                        if(!weakSelf) return;
+                        if (!error &&img) {
+                            dispatch_main_async_safe(^{
+                                imageView.image = img;
+                                [weakSelf.imageArray addObject:img];
+                            });
+                            
+                            [weakSelf.thumbnailRequestOperationArray addObject:thumbnailDownloadToken];
+                        }else{
+                            dispatch_main_async_safe(^{
+                                imageView.image = image;
+                                [weakSelf.imageArray addObject:image];
+                            });
+                            NSLog(@"get thumbnail error ---> : %@", error);
+                            [weakSelf.thumbnailRequestOperationArray enumerateObjectsUsingBlock:^(SDWebImageDownloadToken * thumbnailDownloadTokenIn, NSUInteger idx, BOOL * _Nonnull stop) {
+                                if ([thumbnailDownloadTokenIn isEqual:thumbnailDownloadToken]) {
+                                    [[SDWebImageDownloader sharedDownloader] cancel:thumbnailDownloadTokenIn];
+                                }
+                            }];
+                        }
+                    }];
                 }else{
                     [PHPhotoLibrary requestImageForAsset:((JYAsset *)localImageModel.asset).asset size:size resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
                         if (image) {

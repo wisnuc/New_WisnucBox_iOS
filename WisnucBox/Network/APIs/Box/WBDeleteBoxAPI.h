@@ -10,5 +10,9 @@
 
 @interface WBDeleteBoxAPI : JYBaseRequest
 @property (nonatomic)NSString *boxuuid;
+/*
+ * WISNUC API:DELETE A BOX
+ * @param boxuuid    Box UUID
+ */
 + (instancetype)deleteBoxApiWithBoxuuid:(NSString *)boxuuid;
 @end

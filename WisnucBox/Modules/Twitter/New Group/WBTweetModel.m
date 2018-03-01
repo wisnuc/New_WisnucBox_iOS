@@ -25,13 +25,27 @@
     return newClass;
 }
 
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.asset forKey:@"asset"];
+    [aCoder encodeObject:self.localImage forKey:@"localImage"];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super init]) {
+        self.asset = [aDecoder decodeObjectForKey:@"asset"];
+        self.localImage = [aDecoder decodeObjectForKey:@"localImage"];
+    }
+    return self;
+}
+
 @end
 
 @implementation WBTweetlistModel
 + (NSArray *)modelPropertyBlacklist {
     return @[@"localImage", @"asset"];
 }
-
 
 - (id)copyWithZone:(NSZone *)zone {
     WBTweetlistModel *newClass = [[WBTweetlistModel alloc]init];
@@ -49,10 +63,45 @@
     newClass.size = self.size;
     return newClass;
 }
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.filename forKey:@"filename"];
+    [aCoder encodeObject:self.sha256 forKey:@"sha256"];
+    [aCoder encodeObject:self.metadata forKey:@"metadata"];
+    [aCoder encodeObject:self.size forKey:@"size"];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super init]) {
+        self.filename = [aDecoder decodeObjectForKey:@"filename"];
+        self.sha256 = [aDecoder decodeObjectForKey:@"sha256"];
+        self.metadata = [aDecoder decodeObjectForKey:@"metadata"];
+        self.size = [aDecoder decodeObjectForKey:@"size"];
+    }
+    return self;
+}
 @end
 
 
 @implementation WBTweetTweeterModel
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.tweeterId forKey:@"tweeterId"];
+    [aCoder encodeObject:self.wx forKey:@"wx"];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super init]) {        
+        self.tweeterId = [aDecoder decodeObjectForKey:@"tweeterId"];
+        self.wx = [aDecoder decodeObjectForKey:@"wx"];
+    }
+    return self;
+}
+
 + (NSDictionary *)modelCustomPropertyMapper {
     return @{
              @"tweeterId" : @"id",
@@ -64,10 +113,53 @@
     return YES;
 }
 
+
+
 @end
 
 
 @implementation WBTweetModel
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeFloat:self.width forKey:@"width"];
+    [aCoder encodeFloat:self.height forKey:@"height"];
+    [aCoder encodeObject:self.boxuuid forKey:@"boxuuid"];
+    [aCoder encodeInteger:self.messageBodytype forKey:@"messageBodytype"];
+    [aCoder encodeInteger:self.status forKey:@"status"];
+    [aCoder encodeObject:self.owner forKey:@"owner"];
+    [aCoder encodeObject:self.comment forKey:@"comment"];
+    [aCoder encodeInt64:self.ctime forKey:@"ctime"];
+    [aCoder encodeInteger:self.index forKey:@"index"];
+    [aCoder encodeObject:self.list forKey:@"list"];
+    [aCoder encodeObject:self.tweeter forKey:@"tweeter"];
+    [aCoder encodeObject:self.type forKey:@"type"];
+    [aCoder encodeObject:self.uuid forKey:@"uuid"];
+    [aCoder encodeObject:self.localImageArray forKey:@"localImageArray"];
+    [aCoder encodeBool:self.isSender forKey:@"isSender"];
+    [aCoder encodeBool:self.isRead forKey:@"isRead"];
+}
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super init]) {
+        self.width = [aDecoder decodeFloatForKey:@"width"];
+        self.height = [aDecoder decodeFloatForKey:@"height"];
+        self.boxuuid = [aDecoder decodeObjectForKey:@"boxuuid"];
+        self.messageBodytype = (MessageBodyType)[aDecoder decodeIntegerForKey:@"messageBodytype"];
+        self.status = (MessageDeliveryState)[aDecoder decodeIntegerForKey:@"status"];
+        self.owner = [aDecoder decodeObjectForKey:@"owner"];
+        self.comment = [aDecoder decodeObjectForKey:@"comment"];
+        self.ctime = [aDecoder decodeInt64ForKey:@"ctime"];
+        self.index = [aDecoder decodeIntegerForKey:@"index"];
+        self.list = [aDecoder decodeObjectForKey:@"list"];
+        self.tweeter = [aDecoder decodeObjectForKey:@"tweeter"];
+        self.type = [aDecoder decodeObjectForKey:@"type"];
+        self.uuid = [aDecoder decodeObjectForKey:@"uuid"];
+        self.localImageArray = [aDecoder decodeObjectForKey:@"localImageArray"];
+        self.isSender = [aDecoder decodeBoolForKey:@"isSender"];
+        self.isRead = [aDecoder decodeBoolForKey:@"isRead"];
+    }
+    return self;
+}
 // 如果实现了该方法，则处理过程中会忽略该列表内的所有属性
 + (NSArray *)modelPropertyBlacklist {
     return @[@"isSender", @"isRead",@"messageBodytype",@"status",@"width",@"height",@"boxuuid",@"localImageArray"];

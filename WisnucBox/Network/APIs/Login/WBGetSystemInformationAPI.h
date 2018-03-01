@@ -10,5 +10,9 @@
 
 @interface WBGetSystemInformationAPI : JYBaseRequest
 @property (nonatomic) NSString *servicePath;
+/*
+ * WISNUC API:GET SYSTEM INFO
+ * @param servicePath   URL
+ */
 +(instancetype)apiWithServicePath:(NSString *)servicePath;
 @end

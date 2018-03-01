@@ -17,5 +17,6 @@
 @property (nonatomic) NSNumber *magic;
 @property (nonatomic) long long mtime;
 @property (nonatomic) long long size;
-
+@property (nonatomic) NSString *driveUUID;
+@property (nonatomic) NSString *parentUUID;
 @end

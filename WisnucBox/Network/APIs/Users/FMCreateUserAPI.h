@@ -7,7 +7,9 @@
 //
 
 #import "JYBaseRequest.h"
-
+/*
+ * WISNUC API:CREAT A USER
+ */
 @interface FMCreateUserAPI : JYBaseRequest
 
 @property (nonatomic) NSDictionary * param;

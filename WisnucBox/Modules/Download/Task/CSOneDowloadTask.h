@@ -34,6 +34,8 @@
 @property (nonatomic,strong,getter = getDownloadUIBinder) id<CSDownloadUIBindProtocol> downloadUIBinder;
 
 @property (nonatomic, copy) void(^progressBlock)(NSProgress *downloadProgress);
+
+@property (nonatomic)BOOL isBoxDownload;
 // end
 
 @end

@@ -38,7 +38,9 @@
         [uploadDic setObject:@"file" forKey:@"type"];
         [dataArray addObject:uploadDic];
     }];
-    
+    /*
+     * WISNUC API:SEND A TWEET 
+     */
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     manager.requestSerializer.timeoutInterval = 200000;
@@ -146,6 +148,7 @@
    
     [self creatAtweetWithNetImageListArray:netImageListArray LocalImageListArray:localImageListArray   Boxuuid:boxuuid   Complete:callback];
 }
+
 
 - (void)creatAtweetWithNetImageListArray:(NSArray *)netImageListArray LocalImageListArray:(NSArray *)localImageListArray  Boxuuid:(NSString *)boxuuid  Complete:(void(^)(WBTweetModel *tweetModel,NSError *error))callback{
     

@@ -14,6 +14,11 @@
 
 @property (nonatomic) NSString * dirUUID;
 
+/*
+ * WISNUC API:GET DRIVES DIRECTORY INFO
+ * @param driveUUID   Drive UUID
+ * @param dirUUID     Directory UUID
+ */
 + (instancetype)apiWithDrive:(NSString *)driveUUID dir:(NSString *)dirUUID;
 
 @end

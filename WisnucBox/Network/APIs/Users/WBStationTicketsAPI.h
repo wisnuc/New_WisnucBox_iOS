@@ -7,10 +7,15 @@
 //
 
 #import "JYBaseRequest.h"
-
+/*
+ * WISNUC API:GET TICKET(no param,requestMethodString is GET)
+ */
 @interface WBStationTicketsAPI : JYBaseRequest
 @property (nonatomic) NSString *requestMethodString;
 @property (nonatomic) NSString *type;
-
+/*
+ * WISNUC API:TICKET ACTION WITH TYPE
+ * @param type    Action Type(bind,invite)
+ */
 + (instancetype)apiWithRequestMethodString:(NSString *)requestMethodString Type:(NSString *)type;
 @end

@@ -7,7 +7,10 @@
 //
 
 #import "JYBaseRequest.h"
-
+/*
+ * WISNUC API:UPDATE USER NAME
+ * @param userName    UserName
+ */
 @interface FMUpdateUserAPI : JYBaseRequest
 
 @property (nonatomic) NSString * userName;

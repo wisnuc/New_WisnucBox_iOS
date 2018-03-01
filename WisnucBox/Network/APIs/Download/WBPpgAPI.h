@@ -11,5 +11,10 @@
 @interface WBPpgAPI : JYBaseRequest
 @property(nonatomic)NSString *dirUUID;
 @property(nonatomic)NSString *ppgURL;
+/*
+ * WISNUC API:M/A/G/N/E/T DOWNLOAD
+ * @param dirUUID   Directory UUID
+ * @param ppgURL    M/a/g/n/e/t URL
+ */
 + (instancetype)apiWithDirUUID:(NSString *)dirUUID PpgURL:(NSString *)ppgURL;
 @end

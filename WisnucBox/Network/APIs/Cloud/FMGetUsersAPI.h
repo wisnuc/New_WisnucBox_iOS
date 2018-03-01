@@ -9,7 +9,13 @@
 #import "JYBaseRequest.h"
 
 @interface FMGetUsersAPI : JYBaseRequest<JYRequestDelegate>
-+ (instancetype)apiWithStationId:(NSString *)stationId Token:(NSString *)token;
 @property (nonatomic,strong)NSString *stationId;
 @property (nonatomic,strong)NSString *cloudToken;
+/*
+ * WISNUC API:  GET ALL USERS FOR CLOUD LOGIN
+ * @param stationId      Station ID
+ * @param token          Token
+ */
++ (instancetype)apiWithStationId:(NSString *)stationId Token:(NSString *)token;
+
 @end

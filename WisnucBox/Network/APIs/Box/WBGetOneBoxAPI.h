@@ -10,5 +10,9 @@
 
 @interface WBGetOneBoxAPI : JYBaseRequest
 @property (nonatomic)NSString *boxuuid;
+/*
+ * WISNUC API:GET A BOX DATA
+ * @param boxuuid    Box UUID
+ */
 + (instancetype)getBoxApiWithBoxuuid:(NSString *)boxuuid;
 @end
