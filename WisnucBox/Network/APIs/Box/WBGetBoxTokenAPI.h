@@ -7,9 +7,9 @@
 //
 
 #import "JYBaseRequest.h"
-@property (nonatomic) NSString *guid;
 
 @interface WBGetBoxTokenAPI : JYBaseRequest
+@property (nonatomic) NSString *guid;
 /*
  * WISNUC API:GET BOX TOKEN
  * @param guid    GUID
