@@ -30,8 +30,8 @@
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-
-//        [self addSubview:self.imageView];
+        
+        //        [self addSubview:self.imageView];
         
     }
     return self;
@@ -44,44 +44,44 @@
         retSize.width = MAX_SIZE;
         retSize.height = MAX_SIZE;
     }
-//    if (retSize.width > retSize.height) {
-//        CGFloat height =  MAX_SIZE / retSize.width  *  retSize.height;
-//        retSize.height = height;
-//        retSize.width = MAX_SIZE;
-//    } else {
-//        CGFloat width = MAX_SIZE / retSize.height * retSize.width;
-//        retSize.width = width;
-//        retSize.height = MAX_SIZE;
-//    }
-//    NSLog(@"%@",NSStringFromCGSize(CGSizeMake(retSize.width + BUBBLE_VIEW_PADDING * 1, 1 * BUBBLE_VIEW_PADDING + retSize.height)));
+    //    if (retSize.width > retSize.height) {
+    //        CGFloat height =  MAX_SIZE / retSize.width  *  retSize.height;
+    //        retSize.height = height;
+    //        retSize.width = MAX_SIZE;
+    //    } else {
+    //        CGFloat width = MAX_SIZE / retSize.height * retSize.width;
+    //        retSize.width = width;
+    //        retSize.height = MAX_SIZE;
+    //    }
+    //    NSLog(@"%@",NSStringFromCGSize(CGSizeMake(retSize.width + BUBBLE_VIEW_PADDING * 1, 1 * BUBBLE_VIEW_PADDING + retSize.height)));
     return CGSizeMake(retSize.width + BUBBLE_VIEW_PADDING * 1, 1 * BUBBLE_VIEW_PADDING + retSize.height);
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-//
-//    CGRect frame = self.bounds;
-////    frame.size.width -= BUBBLE_ARROW_WIDTH;
-//    frame = CGRectInset(frame, 2, 2);
-////    if (self.messageModel.isSender) {
-//        frame.origin.x = 2;
-////    } else {
-////        frame.origin.x = 2 + BUBBLE_ARROW_WIDTH;
-////    }
-//
-//    frame.origin.y = 2;
-//    [self.imageView setFrame:frame];
+    //
+    //    CGRect frame = self.bounds;
+    ////    frame.size.width -= BUBBLE_ARROW_WIDTH;
+    //    frame = CGRectInset(frame, 2, 2);
+    ////    if (self.messageModel.isSender) {
+    //        frame.origin.x = 2;
+    ////    } else {
+    ////        frame.origin.x = 2 + BUBBLE_ARROW_WIDTH;
+    ////    }
+    //
+    //    frame.origin.y = 2;
+    //    [self.imageView setFrame:frame];
     
-
-//    self.backgroundColor = [UIColor whiteColor];
-//
+    
+    //    self.backgroundColor = [UIColor whiteColor];
+    //
 }
 
 - (float)setFrameSelfFrameWithArray:(NSArray *)array{
     float imageWithHeight = 0.0;
     CGRect frame = self.frame;
-   if (array.count  == 0 || !array)return 0;
+    if (array.count  == 0 || !array)return 0;
     if (array.count % 2 == 0) {
         if (array.count == 4) {
             frame.size.width = IMG_THREE_Width *2;
@@ -105,13 +105,13 @@
         imageWithHeight = IMG_THREE_Width;
     }
     
-//        if (self.messageModel.isSender) {
-//            frame.origin.x = 2;
-//        } else {
-////            frame.origin.x = 2 + BUBBLE_ARROW_WIDTH;
-//        }
-
-  
+    //        if (self.messageModel.isSender) {
+    //            frame.origin.x = 2;
+    //        } else {
+    ////            frame.origin.x = 2 + BUBBLE_ARROW_WIDTH;
+    //        }
+    
+    
     return imageWithHeight;
 }
 
@@ -124,8 +124,8 @@
     if (self.imageArray) {
         [_imageArray removeAllObjects];
     }
-//    UIImage *image = [UIImage imageNamed:@"IM_Chart_imageDownloadFail.png"];
-     UIImage *image = [UIImage imageWithColor:UICOLOR_RGB(0xf5f5f5)];
+    //    UIImage *image = [UIImage imageNamed:@"IM_Chart_imageDownloadFail.png"];
+    UIImage *image = [UIImage imageWithColor:UICOLOR_RGB(0xf5f5f5)];
     //    self.localImageArray = [[NSMutableArray alloc]initWithArray:messageModel.localImageArray copyItems:YES];
     if (!self.messageModel)return;
     __block float imageWithHeight = 0.0;
@@ -135,9 +135,9 @@
         imageWithHeight = [self setFrameSelfFrameWithArray:messageModel.list];
     }
     
-//    if (messageModel.isSender && messageModel.localImageArray.count==0){
-//
-//    }
+    //    if (messageModel.isSender && messageModel.localImageArray.count==0){
+    //
+    //    }
     
     if (messageModel.isSender && messageModel.localImageArray.count>0) {
         NSMutableArray *localImageArray = [NSMutableArray arrayWithArray:messageModel.localImageArray];
@@ -169,9 +169,10 @@
                 page= idx / 3;
             }
             //
+            
             UIImageView *imageView ;
-            if (idx<=5) {
-                imageView = [[UIImageView alloc]init];
+            if (idx <=5) {
+                imageView = [[UIImageView alloc]initWithImage:image];
                 imageView.contentMode = UIViewContentModeScaleAspectFill;
                 imageView.clipsToBounds = YES;
                 imageView.tag = idx;
@@ -180,47 +181,48 @@
                 imageView.frame = CGRectMake(index * (imageWithHeight + Width_Space) + Start_X,page * (imageWithHeight + Height_Space)+Start_Y, imageWithHeight, imageWithHeight);
                 UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(bubbleViewPressed:)];
                 [imageView addGestureRecognizer:tap];
-                if (localImageModel.localImage) {
-                    imageView.image = localImageModel.localImage;
-                    [self.imageArray addObject:imageView.image];
-                }else if([localImageModel.asset isKindOfClass:[WBAsset class]]){
-                    __block SDWebImageDownloadToken *thumbnailDownloadToken = [WB_NetService getTweeetThumbnailImageWithHash:((WBAsset *)localImageModel.asset).fmhash BoxUUID:messageModel.boxuuid complete:^(NSError *error, UIImage *img) {
-                        if(!weakSelf) return;
-                        if (!error &&img) {
-                            dispatch_main_async_safe(^{
-                                imageView.image = img;
-                                [weakSelf.imageArray addObject:img];
-                            });
-                            
-                            [weakSelf.thumbnailRequestOperationArray addObject:thumbnailDownloadToken];
-                        }else{
-                            dispatch_main_async_safe(^{
-                                imageView.image = image;
-                                [weakSelf.imageArray addObject:image];
-                            });
-                            NSLog(@"get thumbnail error ---> : %@", error);
-                            [weakSelf.thumbnailRequestOperationArray enumerateObjectsUsingBlock:^(SDWebImageDownloadToken * thumbnailDownloadTokenIn, NSUInteger idx, BOOL * _Nonnull stop) {
-                                if ([thumbnailDownloadTokenIn isEqual:thumbnailDownloadToken]) {
-                                    [[SDWebImageDownloader sharedDownloader] cancel:thumbnailDownloadTokenIn];
-                                }
-                            }];
-                        }
-                    }];
-                }else{
-                    [PHPhotoLibrary requestImageForAsset:((JYAsset *)localImageModel.asset).asset size:size resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
-                        if (image) {
-                            imageView.image = image;
-                        }else{
-                            imageView.image = [UIImage imageWithColor:NOIMAGECOLOR];
-                        }
-                        [self.imageArray addObject:imageView.image];
-                    }];
-                }
             }
-            dispatch_main_async_safe(^{
-                [weakSelf addSubview:imageView];
-            });
-            
+            if (localImageModel.localImage) {
+                imageView.image = localImageModel.localImage;
+                [self.imageArray addObject:imageView.image];
+            }else if([localImageModel.asset isKindOfClass:[WBAsset class]]){
+                __block SDWebImageDownloadToken *thumbnailDownloadToken = [WB_NetService getThumbnailWithHash:((WBAsset *)localImageModel.asset).fmhash complete:^(NSError *error, UIImage *img) {
+                    if(!weakSelf) return;
+                    if (!error &&img) {
+                        dispatch_main_async_safe(^{
+                            imageView.image = img;
+                            [weakSelf.imageArray addObject:img];
+                        });
+                        
+                        [weakSelf.thumbnailRequestOperationArray addObject:thumbnailDownloadToken];
+                    }else{
+                        dispatch_main_async_safe(^{
+                            imageView.image = image;
+                            [weakSelf.imageArray addObject:image];
+                        });
+                        NSLog(@"get thumbnail error ---> : %@", error);
+                        [weakSelf.thumbnailRequestOperationArray enumerateObjectsUsingBlock:^(SDWebImageDownloadToken * thumbnailDownloadTokenIn, NSUInteger idx, BOOL * _Nonnull stop) {
+                            if ([thumbnailDownloadTokenIn isEqual:thumbnailDownloadToken]) {
+                                [[SDWebImageDownloader sharedDownloader] cancel:thumbnailDownloadTokenIn];
+                            }
+                        }];
+                    }
+                }];
+            }else{
+                [PHPhotoLibrary requestImageForAsset:((JYAsset *)localImageModel.asset).asset size:size resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
+                    if (image) {
+                        imageView.image = image;
+                    }else{
+                        imageView.image = [UIImage imageWithColor:NOIMAGECOLOR];
+                    }
+                    [self.imageArray addObject:imageView.image];
+                }];
+            }
+            if (idx<=5) {
+                dispatch_main_async_safe(^{
+                    [weakSelf addSubview:imageView];
+                });
+            }
         }];
         imageWithHeight = 89.0f;
         NSMutableArray *dataArray;
@@ -374,7 +376,7 @@
         
     });
     
-   
+    
 }
 
 
@@ -387,21 +389,21 @@
         retSize.width = MAX_SIZE;
         retSize.height = MAX_SIZE;
     }
-//    else if (retSize.width > retSize.height) {
-//        CGFloat height =  MAX_SIZE / retSize.width  *  retSize.height;
-//        retSize.height = height;
-//        retSize.width = MAX_SIZE;
-//    } else {
-//        CGFloat width = MAX_SIZE / retSize.height * retSize.width;
-//        retSize.width = width;
-//        retSize.height = MAX_SIZE;
-//    }
-//    NSInteger duration = 0;
-//    if (object.list.count%2==0) {
-//        duration = (NSInteger)round(object.list.count/2);
-//    }else if (object.list.count%3==0){
-//        duration = (NSInteger)round(object.list.count/3);
-//    }
+    //    else if (retSize.width > retSize.height) {
+    //        CGFloat height =  MAX_SIZE / retSize.width  *  retSize.height;
+    //        retSize.height = height;
+    //        retSize.width = MAX_SIZE;
+    //    } else {
+    //        CGFloat width = MAX_SIZE / retSize.height * retSize.width;
+    //        retSize.width = width;
+    //        retSize.height = MAX_SIZE;
+    //    }
+    //    NSInteger duration = 0;
+    //    if (object.list.count%2==0) {
+    //        duration = (NSInteger)round(object.list.count/2);
+    //    }else if (object.list.count%3==0){
+    //        duration = (NSInteger)round(object.list.count/3);
+    //    }
     
     return 2 * BUBBLE_VIEW_PADDING + retSize.height + 20;
 }
@@ -409,7 +411,7 @@
 - (void)bubbleViewPressed:(id)sender {
     UITapGestureRecognizer *tap = (UITapGestureRecognizer*)sender;
     UIImageView *imageView = (UIImageView *)tap.view;
-
+    
     SDPhotoBrowser *browser = [[SDPhotoBrowser alloc] init];
     browser.currentImageIndex = imageView.tag;
     browser.sourceImagesContainerView = self;
@@ -419,8 +421,8 @@
     }
     browser.delegate = self;
     [browser show];
-//    [self routerEventWithName:kRouterEventImageBubbleTapEventName
-//                     userInfo:@{kMessageKey : self.messageModel,kMessageImageKey:imageView}];
+    //    [self routerEventWithName:kRouterEventImageBubbleTapEventName
+    //                     userInfo:@{kMessageKey : self.messageModel,kMessageImageKey:imageView}];
 }
 
 - (void)maskViewPressed:(id)sender{
@@ -454,13 +456,13 @@
             [highQualityphotosArray addObject:photo];
         }];
     }
-     self.photoArray = highQualityphotosArray;
-//    if (self.messageModel.isSender) {
-//        [photoArray addObjectsFromArray:self.localImageArray] ;
-//        [photoArray addObjectsFromArray:self.messageModel.list];
-//    }else{
-//        [photoArray addObjectsFromArray:self.messageModel.list];
-//    }
+    self.photoArray = highQualityphotosArray;
+    //    if (self.messageModel.isSender) {
+    //        [photoArray addObjectsFromArray:self.localImageArray] ;
+    //        [photoArray addObjectsFromArray:self.messageModel.list];
+    //    }else{
+    //        [photoArray addObjectsFromArray:self.messageModel.list];
+    //    }
     MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc]initWithDelegate:self];
     photoBrowser.displayActionButton = NO;//显示分享按钮(左右划动按钮显示才有效)
     photoBrowser.displayNavArrows = YES; //显示左右划动
@@ -473,7 +475,7 @@
     photoBrowser.displayActionButton = YES;
     [photoBrowser showNextPhotoAnimated:YES];
     [photoBrowser showPreviousPhotoAnimated:YES];
-
+    
     [[UIViewController getCurrentVC].navigationController pushViewController:photoBrowser animated:YES];
 }
 
@@ -511,15 +513,15 @@
 - (UIImage *)photoBrowser:(SDPhotoBrowser *)browser placeholderImageForIndex:(NSInteger)index {
     NSLog(@"%@",self.subviews);
     UIImageView *imageView = self.subviews[index];
-
+    
     return imageView.image;
 }
 
 - (NSDictionary *)photoBrowser:(SDPhotoBrowser *)browser highQualityImageBoxInfoForIndex:(NSInteger)index{
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
-  
+    
     if (self.messageModel.localImageArray.count>0) {
-       WBTweetlocalImageModel *localImageModel = self.messageModel.localImageArray[index];
+        WBTweetlocalImageModel *localImageModel = self.messageModel.localImageArray[index];
         [dic setObject:localImageModel.asset forKey:kMessageImageBoxLocalAsset];
         return dic;
     }

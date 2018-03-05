@@ -127,8 +127,8 @@ UIDocumentInteractionControllerDelegate
     AFNetworkReachabilityStatus status = [statusNumber integerValue];
     if (status != AFNetworkReachabilityStatusReachableViaWiFi) {
         [_transmitingArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:idx inSection:0];
-            LocalDownloadingTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+//            NSIndexPath *indexPath = [NSIndexPath i                                                                                ndexPathForRow:idx inSection:0];
+//            LocalDownloadingTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
 //            cell.progressLabel.text = @"等待传输";
         }];
     }

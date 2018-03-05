@@ -24,6 +24,8 @@ typedef NS_ENUM(NSUInteger, JYAssetType) {
 
 //asset对象
 @property (nonatomic, strong) PHAsset *asset;
+
+@property (nonatomic, strong) NSString *assetLocalIdentifier;
 //asset类型
 @property (nonatomic, assign) JYAssetType type;
 //视频时长

@@ -249,6 +249,7 @@
             [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
                 
             }];
+//
             [[YYImageCache sharedCache].diskCache removeAllObjects];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [SXLoadingView hideProgressHUD];

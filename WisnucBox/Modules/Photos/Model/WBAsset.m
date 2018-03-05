@@ -20,13 +20,14 @@
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
     [aCoder encodeObject:self.fmhash forKey:@"fmhash"];
-
+    [aCoder encodeObject:self.asset forKey:@"asset"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     if (self = [super init]) {
         self.fmhash = [aDecoder decodeObjectForKey:@"fmhash"];
+        self.asset = [aDecoder decodeObjectForKey:@"asset"];
     }
     return self;
 }

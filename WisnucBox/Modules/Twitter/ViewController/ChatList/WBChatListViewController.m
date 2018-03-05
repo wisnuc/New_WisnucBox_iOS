@@ -95,6 +95,8 @@
 
 - (void)getBoxesListData{
     if (!WB_UserService.currentUser.cloudToken) {
+        [self.tableView displayWithMsg:@"聊天列表暂无" withRowCount:self.boxDataArray.count andIsNoData:YES  andTableViewFrame:self.view.bounds
+                         andTouchBlock:nil];
         //        [SXLoadingView showProgressHUDText:@"非微信登录暂不能使用私友群功能" duration:1.2f];
         return;
     }
@@ -111,6 +113,8 @@
         self.boxDataArray = dataArray;
         [self.tableView.mj_header endRefreshing];
         [weak_self sortDataSouce];
+        [self.tableView displayWithMsg:@"聊天列表暂无" withRowCount:self.boxDataArray.count andIsNoData:YES  andTableViewFrame:self.view.bounds
+                         andTouchBlock:nil];
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
         NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
@@ -119,6 +123,8 @@
             NSLog(@"失败,%@",serializedData);
         }
         [SXLoadingView showProgressHUDText:@"获取聊天列表失败，请重新刷新" duration:1.2f];
+        [self.tableView displayWithMsg:@"聊天列表暂无" withRowCount:self.boxDataArray.count andIsNoData:YES  andTableViewFrame:self.view.bounds
+                         andTouchBlock:nil];
 //        NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
 //        self.boxDataArray = dataArray;
 //        [self.tableView.mj_header endRefreshing];

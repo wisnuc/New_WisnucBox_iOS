@@ -55,6 +55,7 @@
     newClass.size = self.size;
     newClass.parentUUID = self.parentUUID;
     newClass.dirUUID = self.dirUUID;
+    newClass.fileuuid = self.fileuuid;
     return newClass;
 }
 - (nonnull id)mutableCopyWithZone:(nullable NSZone *)zone {
@@ -65,6 +66,7 @@
     newClass.size = self.size;
     newClass.parentUUID = self.parentUUID;
     newClass.dirUUID = self.dirUUID;
+    newClass.fileuuid = self.fileuuid;
     return newClass;
 }
 
@@ -76,6 +78,7 @@
     [aCoder encodeObject:self.size forKey:@"size"];
     [aCoder encodeObject:self.dirUUID forKey:@"dirUUID"];
     [aCoder encodeObject:self.parentUUID forKey:@"parentUUID"];
+    [aCoder encodeObject:self.fileuuid forKey:@"fileuuid"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -87,6 +90,7 @@
         self.size = [aDecoder decodeObjectForKey:@"size"];
         self.parentUUID = [aDecoder decodeObjectForKey:@"parentUUID"];
         self.dirUUID = [aDecoder decodeObjectForKey:@"dirUUID"];
+        self.fileuuid = [aDecoder decodeObjectForKey:@"fileuuid"];
     }
     return self;
 }

@@ -34,7 +34,8 @@
         UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(zoomImage:)];
         pinch.delegate = self;
         [self addGestureRecognizer:pinch];
-     
+        
+      
     }
     return self;
 }

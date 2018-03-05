@@ -212,7 +212,7 @@
     }
   
     
-  
+     __block NSString *filePath;
     NSURLSessionDataTask *dataTask = [manager POST:urlString parameters:dataMutableDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         if (!WB_UserService.currentUser.isCloudLogin) {
           [formData appendPartWithFormData:josnData name:@"list"];
@@ -224,7 +224,7 @@
                 NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
                 [dic setObject:[mutableDic objectForKey:@"size"]  forKey:@"size"];
                 [dic setObject:[mutableDic objectForKey:@"sha256"]  forKey:@"sha256"];
-                NSString *filePath =[mutableDic objectForKey:@"filePath"];
+                filePath =[mutableDic objectForKey:@"filePath"];
                 NSError *formdataError;
                 NSData *jsonFileNameData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
                 NSString *jsonString =  [[NSString alloc] initWithData:jsonFileNameData  encoding:NSUTF8StringEncoding];
@@ -238,9 +238,12 @@
         NSDictionary * responseDic = WB_UserService.currentUser.isCloudLogin ? responseObject[@"data"] : responseObject;
         WBTweetModel *model = [WBTweetModel modelWithDictionary:responseDic];
          NSLog(@"%@",model.uuid);
+        [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
         callback(model,nil);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
+        [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+      
         callback(nil,error);
     }];
     [dataTask resume];

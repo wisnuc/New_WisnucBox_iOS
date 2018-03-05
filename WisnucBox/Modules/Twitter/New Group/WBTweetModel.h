@@ -20,6 +20,7 @@
 @property (nonatomic,copy)NSNumber *size;
 @property (nonatomic,copy)NSString *dirUUID;
 @property (nonatomic,copy)NSString *parentUUID;
+@property (nonatomic,copy)NSString *fileuuid;
 @end
 
 @interface WBTweetTweeterModel : NSObject<NSCopying,NSMutableCopying>

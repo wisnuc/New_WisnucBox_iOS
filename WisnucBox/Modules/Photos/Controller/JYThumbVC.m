@@ -287,15 +287,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.showIndicator = YES;
-//    [self sort:self.arrDataSources];
+    //    [self sort:self.arrDataSources];
     [self addRightBtn];
     [self initCollectionView];
     if (_isBoxSelectType) {
-         [self initNaviForBoxSelectType];
+        [self initNaviForBoxSelectType];
     }else{
         [self initMjRefresh];
     }
-    [self sort:[self merge]];
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [self sort:[self merge]];
+//    });
     [self addPinchGesture];
     [self createControlbtn];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userAuthChange:) name:ASSETS_AUTH_CHANGE_NOTIFY object:nil];
@@ -706,6 +708,9 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
+//    if ([(NSArray *)self.arrDataSources[section] isKindOfClass:[JYAsset class]]) {
+//        return 0;
+//    }
     return ((NSArray *)self.arrDataSources[section]).count;
 }
 

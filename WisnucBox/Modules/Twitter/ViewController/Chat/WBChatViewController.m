@@ -158,6 +158,8 @@ NSString *const kTableViewFrame = @"frame";
             if (![array isKindOfClass:[NSArray class]]) {
                 return ;
             }
+            
+            if (array.count == 0) return;
 //            NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
             [array enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 WBTweetModel *model = [WBTweetModel modelWithDictionary:obj];
@@ -174,6 +176,8 @@ NSString *const kTableViewFrame = @"frame";
             }];
 //            self.dataSource = dataArray;
             [self.tableView reloadData];
+            CGPoint offset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height);
+            [self.tableView setContentOffset:offset animated:NO];
             // 准备好要存到本地的数组
             NSArray *archiverdataArray= [NSArray arrayWithArray:self.dataSource];
             
@@ -187,10 +191,11 @@ NSString *const kTableViewFrame = @"frame";
             }
         } failure:^(__kindof JYBaseRequest *request) {
             NSLog(@"%@",request.error);
+            [SXLoadingView showProgressHUDText:@"获取聊天记录失败" duration:1.2f];
         }];
         return;
     }
-    [[WBTweetAPI apiWithBoxuuid:_boxModel.uuid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+    [[WBTweetAPI apiWithBoxuuid:_boxModel.uuid]                                            startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
         //        if ([request.responseJsonObject isKindOfClass:[NSDictionary class]]) {
         ////            NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"]
@@ -221,8 +226,7 @@ NSString *const kTableViewFrame = @"frame";
         [self.tableView reloadData];
    
         // 准备好要存到本地的数组
-        NSArray *archiverdataArray= [NSArray arrayWithArray:dataArray];
-        
+        NSArray *archiverdataArray = [NSArray arrayWithArray:dataArray];
         //    将数组序列化后再存储
         NSData *arrayData = [NSKeyedArchiver archivedDataWithRootObject:archiverdataArray];
         BOOL isTureWrite = [arrayData writeToFile:documentPath atomically:YES];
@@ -280,7 +284,6 @@ NSString *const kTableViewFrame = @"frame";
         BOOL result = [astring01 compare:pathExtension
                                  options:NSCaseInsensitiveSearch | NSNumericSearch] == NSOrderedSame;
 
-
         NSString *astring02 = @"png";
         BOOL result2 = [astring02 compare:pathExtension
                                  options:NSCaseInsensitiveSearch | NSNumericSearch] == NSOrderedSame;
@@ -322,6 +325,7 @@ NSString *const kTableViewFrame = @"frame";
         listModel.sha256 = obj.photoHash;
         listModel.dirUUID = obj.driveUUID;
         listModel.parentUUID = obj.parentUUID;
+        listModel.fileuuid = obj.uuid;
         [listMutableArr addObject:listModel];
     }];
     messageModel.list = [[NSArray alloc]initWithArray:listMutableArr];
@@ -490,7 +494,7 @@ NSString *const kTableViewFrame = @"frame";
                 if (!tabelViewCell) {
                     NSIndexPath *index = [NSIndexPath indexPathForRow:self.dataSource.count-1 inSection:0];
                     WBChatViewNormalTableViewCell *cell = [self.tableView cellForRowAtIndexPath:index];
-                    cell.messageModel.status = MessageDeliveryState_Delivered;
+                    cell.messageModel.status = MessageDeliveryState_Failure;
                     [cell layoutSubviews];
                     [cell reloadFinishLoadData];
                 }else{
@@ -626,8 +630,23 @@ NSString *const kTableViewFrame = @"frame";
         //点击图片
         //        [self chatImageCellBubblePressed:model ImageViewTag:imageView.tag];
     }else if ([eventName isEqualToString:kRouterEventChatResendEventName]){
-        //         WBChatViewNormalTableViewCell *cell = [userInfo objectForKey:kMessageKey];
-        //         [self sendMessageToNetSeverWith:(LHContentModel *)content TableViewCell:cell];
+         WBChatViewNormalTableViewCell *cell = [userInfo objectForKey:kShouldResendCell];
+        WBTweetModel *model = [self.dataSource objectAtIndex:cell.sd_indexPath.row];
+        NSLog(@"%@",model);
+        if (model.messageBodytype == MessageBodyType_Image) {
+            NSMutableArray *resultArray = [NSMutableArray arrayWithCapacity:0];
+            if (model.localImageArray.count>0) {
+                [model.localImageArray enumerateObjectsUsingBlock:^(WBTweetlocalImageModel *localImageModel, NSUInteger idx, BOOL * _Nonnull stop) {
+                    [resultArray addObject:localImageModel.asset];
+                }];
+            }
+            model.status = MessageDeliveryState_Delivering;
+            [cell layoutSubviews];
+            [self sendMessageToNetSeverWithContent:resultArray TableViewCell:cell];
+        }else if (model.messageBodytype == MessageBodyType_File){
+            
+        }
+//         [self sendMessageToNetSeverWith:(LHContentModel *)content TableViewCell:cell];
     }else if ([eventName isEqualToString:kRouterEventFileBubbleTapEventName]){
         WBTweetModel *model = [userInfo objectForKey:kMessageKey];
         FilesNextViewController *nextVC = [[FilesNextViewController alloc]init];
@@ -856,6 +875,20 @@ NSString *const kTableViewFrame = @"frame";
         }
     }];
     self.freshBoxDataArray = dataArray;
+    NSArray *array1 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+    NSString *documents = [array1 lastObject];
+    NSString *documentPath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
+    // 准备好要存到本地的数组
+    NSArray *archiverdataArray= [NSArray arrayWithArray:self.dataSource];
+    
+    //    将数组序列化后再存储
+    NSData *arrayData = [NSKeyedArchiver archivedDataWithRootObject:archiverdataArray];
+    BOOL isTureWrite = [arrayData writeToFile:documentPath atomically:YES];
+    if (isTureWrite) {
+        NSLog(@"存储成功");
+    }else{
+        NSLog(@"存储失败");
+    }
 }
 
 #pragma mark - lazy

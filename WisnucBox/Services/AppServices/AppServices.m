@@ -1189,6 +1189,11 @@ static NSArray * invaildChars;
             request.HTTPBodyStream = nil;
             weak_self.dataTask = [_manager uploadTaskWithRequest:request fromFile:requestFileTempPath progress:^(NSProgress * _Nonnull uploadProgress) {
             } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+                NSError *fileError;
+                [[NSFileManager defaultManager] removeItemAtPath:filePath error:&fileError];
+                [[NSFileManager defaultManager] removeItemAtPath:requestTempPath error:&fileError];
+                
+                NSLog(@"%@",fileError);
                 if(!weak_self) return;
                 if(_shouldStop) return callback([NSError errorWithDomain:@"cancel" code:20010 userInfo:nil], nil);
                 if(!error) {
@@ -1219,8 +1224,7 @@ static NSArray * invaildChars;
                     weak_self.error = error;
                     if (weak_self.callback) weak_self.callback(error, nil);
                 }
-                [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
-                [[NSFileManager defaultManager] removeItemAtPath:requestTempPath error:nil];
+               
             }];
             [weak_self.dataTask resume];
         }];

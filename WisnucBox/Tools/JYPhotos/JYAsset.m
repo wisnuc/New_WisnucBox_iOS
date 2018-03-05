@@ -43,7 +43,7 @@
     newClass.image = self.image;
     newClass.digest = self.digest;
     newClass.indexPath = self.indexPath;
-    
+    newClass.assetLocalIdentifier = self.assetLocalIdentifier;
     return newClass;
 }
 - (nonnull id)mutableCopyWithZone:(nullable NSZone *)zone {
@@ -57,19 +57,20 @@
     newClass.image = self.image;
     newClass.digest = self.digest;
     newClass.indexPath = self.indexPath;
+    newClass.assetLocalIdentifier = self.assetLocalIdentifier;
     return newClass;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeObject:self.asset forKey:@"asset"];
+    [aCoder  encodeObject:self.assetLocalIdentifier forKey:@"assetLocalIdentifier"];
 
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     if (self = [super init]) {
-        self.asset = [aDecoder decodeObjectForKey:@"asset"];
+        self.assetLocalIdentifier = [aDecoder decodeObjectForKey:@"assetLocalIdentifier"];
     }
     return self;
 }
@@ -81,7 +82,19 @@
     model.type = type;
     model.duration = duration;
     model.selected = NO;
+    if (asset) {
+        model.assetLocalIdentifier = asset.localIdentifier;
+    }
     return model;
+}
+
+- (instancetype)init{
+    if (self = [super init]) {
+        if (self.asset) {
+            self.assetLocalIdentifier = self.asset.localIdentifier;
+        }
+    }
+    return self;
 }
 
 - (NSDate *)createDate{
