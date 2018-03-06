@@ -646,7 +646,6 @@ NSString *const kTableViewFrame = @"frame";
         }else if (model.messageBodytype == MessageBodyType_File){
             
         }
-//         [self sendMessageToNetSeverWith:(LHContentModel *)content TableViewCell:cell];
     }else if ([eventName isEqualToString:kRouterEventFileBubbleTapEventName]){
         WBTweetModel *model = [userInfo objectForKey:kMessageKey];
         FilesNextViewController *nextVC = [[FilesNextViewController alloc]init];
@@ -847,7 +846,7 @@ NSString *const kTableViewFrame = @"frame";
         @synchronized(self) {
             WBBoxesModel *model = [WBBoxesModel modelWithDictionary:obj];
             if ([model.uuid isEqualToString:_boxModel.uuid]) {
-                model.tweet.uuid = model.uuid;
+                model.tweet.boxuuid = model.uuid;
                 NSIndexPath *indexForSelf = [NSIndexPath indexPathForRow:self.dataSource.count-1 inSection:0];
                 if ([model.tweet.type isEqualToString:@"boxmessage"]) {
                     //                   LHChatTimeCell *cell = [self.tableView cellForRowAtIndexPath:indexForSelf];
@@ -861,6 +860,7 @@ NSString *const kTableViewFrame = @"frame";
                     if (![cell.messageModel.uuid isEqualToString:@"myselfPush"]) {
                         NSIndexPath *index = [weak_self insertNewMessageOrTime:model.tweet];
                         [self.messages addObject:model];
+                        model.tweet.boxuuid = model.uuid;
                         [self.tableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionBottom animated:YES];
                         [dataArray addObject: model.tweet];
                         //                [self.tableView reloadData];
@@ -875,20 +875,20 @@ NSString *const kTableViewFrame = @"frame";
         }
     }];
     self.freshBoxDataArray = dataArray;
-    NSArray *array1 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
-    NSString *documents = [array1 lastObject];
-    NSString *documentPath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
-    // 准备好要存到本地的数组
-    NSArray *archiverdataArray= [NSArray arrayWithArray:self.dataSource];
-    
-    //    将数组序列化后再存储
-    NSData *arrayData = [NSKeyedArchiver archivedDataWithRootObject:archiverdataArray];
-    BOOL isTureWrite = [arrayData writeToFile:documentPath atomically:YES];
-    if (isTureWrite) {
-        NSLog(@"存储成功");
-    }else{
-        NSLog(@"存储失败");
-    }
+//    NSArray *array1 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+//    NSString *documents = [array1 lastObject];
+//    NSString *documentPath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
+//    // 准备好要存到本地的数组
+//    NSArray *archiverdataArray= [NSArray arrayWithArray:self.dataSource];
+//    
+//    //    将数组序列化后再存储
+//    NSData *arrayData = [NSKeyedArchiver archivedDataWithRootObject:archiverdataArray];
+//    BOOL isTureWrite = [arrayData writeToFile:documentPath atomically:YES];
+//    if (isTureWrite) {
+//        NSLog(@"存储成功");
+//    }else{
+//        NSLog(@"存储失败");
+//    }
 }
 
 #pragma mark - lazy

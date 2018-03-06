@@ -221,6 +221,8 @@ __strong static id _sharedObject = nil;
         
                         [downloadTask setDownloadStatus:CSDownloadStatusFailure];
                         [_downloadTasks removeObject:downloadTask];
+                        NSString *path = [fileModel getDownloadFileSavePath];
+                        [[NSFileManager defaultManager]removeItemAtPath:path error:nil];
                     }
             if (complete) {
                 complete(downloadTask,error);

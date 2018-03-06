@@ -65,7 +65,7 @@
 
 /// 请求的URL
 - (NSString *)requestUrl{
-    return WB_UserService.currentUser.localToken ? [NSString stringWithFormat:@"%@%@", kCloudAddr, kCloudCommonJsonUrl] : [NSString stringWithFormat:@"boxes/%@",_boxuuid];
+    return WB_UserService.currentUser.localToken ? [NSString stringWithFormat:@"%@%@/%@/%@", kCloudAddr, kCloudCommonBoxesUrl,_boxuuid,kCloudCommonBoxesJsonUrl] : [NSString stringWithFormat:@"boxes/%@",_boxuuid];
 }
 
 - (NSDictionary *)requestHeaderFieldValueDictionary{

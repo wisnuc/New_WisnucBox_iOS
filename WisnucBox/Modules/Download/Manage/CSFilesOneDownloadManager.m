@@ -122,8 +122,9 @@ __strong static id _sharedObject = nil;
             if (self.souceArray.count>0) {
                 [self.souceArray removeObject:downloadTask];
             }
-            
-            //                [GSFileUtil deleteFileAtPath:tmpPath];
+            NSString *path = [fileModel getDownloadFileSavePath];
+//            [[NSFileManager defaultManager]removeItemAtPath:path error:nil];
+            [CSFileUtil deleteFileAtPath:path];
             //调用外部回调（比如执行UI更新），通知UI任务已经失败了
             if (complete) {
                 complete(downloadTask,error);

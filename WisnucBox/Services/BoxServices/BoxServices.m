@@ -47,7 +47,7 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
     NSString *urlString;
     if (WB_UserService.currentUser.isCloudLogin) {
-        urlString = [NSString stringWithFormat:@"%@%@", kCloudAddr, kCloudCommonPipeUrl];
+        urlString = [NSString stringWithFormat:@"%@%@/%@/%@", kCloudAddr, kCloudCommonBoxesUrl,boxuuid,kCloudCommonBoxesPipeUrl];
         [manager.requestSerializer setValue:[NSString stringWithFormat:@"%@", WB_UserService.currentUser.cloudToken] forHTTPHeaderField:@"Authorization"];
     }else{
         urlString = [NSString stringWithFormat:@"%@boxes/%@/tweets",[JYRequestConfig sharedConfig].baseURL,boxuuid];
@@ -159,7 +159,7 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
     NSString *urlString;
     if (WB_UserService.currentUser.isCloudLogin) {
-        urlString = [NSString stringWithFormat:@"%@%@", kCloudAddr, kCloudCommonPipeUrl];
+        urlString =  [NSString stringWithFormat:@"%@%@/%@/%@", kCloudAddr, kCloudCommonBoxesUrl,boxuuid,kCloudCommonBoxesPipeUrl];
         [manager.requestSerializer setValue:[NSString stringWithFormat:@"%@", WB_UserService.currentUser.cloudToken] forHTTPHeaderField:@"Authorization"];
     }else{
         urlString = [NSString stringWithFormat:@"%@boxes/%@/tweets",[JYRequestConfig sharedConfig].baseURL,boxuuid];

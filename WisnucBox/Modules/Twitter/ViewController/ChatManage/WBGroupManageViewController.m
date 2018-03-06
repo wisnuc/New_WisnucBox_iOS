@@ -83,6 +83,16 @@
                     return ;
                 }
             }
+            
+            NSArray *array1 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+            NSString *documents = [array1 lastObject];
+            NSString *documentPath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
+//            NSData *resultData = [NSData dataWithContentsOfFile:documentPath];
+            NSError *fileError;
+            [[NSFileManager defaultManager] removeItemAtPath:documentPath error:&fileError];
+            if (!fileError) {
+                NSLog(@"删除本地数据成功");
+            }
             for (UIViewController *temp in self.navigationController.viewControllers) {
                 if ([temp isKindOfClass:[WBChatListViewController class]]) {
                     [self.navigationController popToViewController:temp animated:YES];
@@ -90,11 +100,35 @@
             }
         } failure:^(__kindof JYBaseRequest *request) {
             NSLog(@"%@",request.error);
+            NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+            if(errorData.length >0){
+                NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+                NSLog(@"失败,%@",serializedData);
+            }
+            [SXLoadingView showProgressHUDText:@"退出群失败" duration:1.2f];
         }];
         return;
     }
     [[WBDeleteBoxAPI deleteBoxApiWithBoxuuid:_boxModel.uuid]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
+          NSDictionary * dic = WB_UserService.currentUser.cloudToken ? request.responseJsonObject[@"data"] : request.responseJsonObject;
+        if (WB_UserService.currentUser.cloudToken) {
+            NSNumber *number = dic[@"code"];
+            if ([number integerValue]>0) {
+                [SXLoadingView showProgressHUDText:[NSString stringWithFormat:@"error:%@",dic[@"message"]] duration:1.2];
+                return ;
+            }
+        }
+        NSArray *array1 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+        NSString *documents = [array1 lastObject];
+        NSString *documentPath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
+        //            NSData *resultData = [NSData dataWithContentsOfFile:documentPath];
+        NSError *fileError;
+        [[NSFileManager defaultManager] removeItemAtPath:documentPath error:&fileError];
+        if (!fileError) {
+            NSLog(@"删除本地数据成功");
+        }
+        
          [SXLoadingView showProgressHUDText:@"该群已解散" duration:1.2f];
         for (UIViewController *temp in self.navigationController.viewControllers) {
             if ([temp isKindOfClass:[WBChatListViewController class]]) {
@@ -105,6 +139,11 @@
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
         [SXLoadingView showProgressHUDText:@"解散群失败" duration:1.2f];
+        NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+        if(errorData.length >0){
+            NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+            NSLog(@"失败,%@",serializedData);
+        }
     }];
 }
 

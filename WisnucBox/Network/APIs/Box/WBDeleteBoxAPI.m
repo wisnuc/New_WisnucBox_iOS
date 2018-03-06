@@ -40,7 +40,7 @@
 
 /// 请求的URL
 - (NSString *)requestUrl{
-    return WB_UserService.currentUser.isCloudLogin ? [NSString stringWithFormat:@"%@%@?resource=%@&method=GET", kCloudAddr, kCloudCommonJsonUrl, [[NSString stringWithFormat:@"boxes/%@",_boxuuid] base64EncodedString]] : [NSString stringWithFormat:@"boxes/%@",_boxuuid];
+    return WB_UserService.currentUser.isCloudLogin ?  [NSString stringWithFormat:@"%@%@/%@/%@", kCloudAddr, kCloudCommonBoxesUrl,_boxuuid,kCloudCommonBoxesJsonUrl] : [NSString stringWithFormat:@"boxes/%@",_boxuuid];
 }
 
 - (NSDictionary *)requestHeaderFieldValueDictionary{
