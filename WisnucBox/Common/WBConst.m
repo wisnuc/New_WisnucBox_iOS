@@ -65,7 +65,7 @@ CGFloat const CELLPADDING = 5.0f;
 // nameLabel宽度
 CGFloat const NAME_LABEL_WIDTH = 180.f;
 // nameLabel 高度
-CGFloat const NAME_LABEL_HEIGHT = 11.0f;
+CGFloat const NAME_LABEL_HEIGHT = 12.0f;
 // nameLabel间距
 CGFloat const NAME_LABEL_PADDING = 0.0f;
 // 字体

@@ -38,4 +38,5 @@
 @dynamic isIgnoreUpgradeCheck;
 @dynamic ppgSelectType;
 @dynamic boxToken;
+@dynamic boxTokenDate;
 @end

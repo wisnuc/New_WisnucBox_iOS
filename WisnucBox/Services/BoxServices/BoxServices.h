@@ -12,4 +12,6 @@
 @interface BoxServices : NSObject <ServiceProtocol>
 - (void)sendTweetWithImageArray:(NSArray *)array Boxuuid:(NSString *)boxuuid Complete:(void(^)(WBTweetModel *tweetModel,NSError *error))callback;
 - (void)sendTweetWithFilesDic:(NSDictionary *)dic Boxuuid:(NSString *)boxuuid Complete:(void(^)(WBTweetModel *tweetModel,NSError *error))callback;
+- (void)saveBoxesTokenWithGuid:(NSString *)guid;
+- (NSString *)boxToken;
 @end

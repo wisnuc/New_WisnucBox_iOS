@@ -18,13 +18,21 @@
 #import "WBGetBoxTokenAPI.h"
 
 
-@interface NetServices()
+@interface NetServices(){
+    NSInteger _updateCount;
+}
 
 @property (nonatomic) AFNetworkReachabilityStatus status;
 
 @end
 
 @implementation NetServices
+- (instancetype)init{
+    if (self= [super init]) {
+        _updateCount = 0;
+    }
+    return self;
+}
 
 - (void)abort {
     
@@ -110,6 +118,7 @@
 
 - (instancetype)initWithLocalURL:(NSString *)localUrl andCloudURL:(NSString *)cloudUrl {
     if(self = [super init]){
+        _updateCount = 0;
         self.localUrl = localUrl;
         self.cloudUrl = cloudUrl;
         if (self.localUrl.length>0  && self.cloudUrl.length == 0) {
@@ -202,11 +211,20 @@
 }
 
 - (void)getBoxesTokenWithGuid:(NSString *)guid comlete:(void(^)(NSError *, NSString * token))callback{
+    @weaky(self)
     if(!WB_UserService.isUserLogin) return callback([NSError errorWithDomain:@"User Not Login" code:NO_USER_LOGIN userInfo:nil], NULL);
     [[WBGetBoxTokenAPI apiWithGuid:guid] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSString * token = ((NSDictionary *)request.responseJsonObject)[@"token"];
         return callback(nil, token);
     } failure:^(__kindof JYBaseRequest *request) {
+        if (request.responseStatusCode == 401) {
+            _updateCount ++;
+            if (_updateCount<=3) {
+                [weak_self performSelector:@selector(getBoxesTokenWithGuid:comlete:) withObject:guid withObject:callback];
+            }else{
+             return callback(request.error, nil);
+            }
+        }
         return callback(request.error, nil);
     }];
 }

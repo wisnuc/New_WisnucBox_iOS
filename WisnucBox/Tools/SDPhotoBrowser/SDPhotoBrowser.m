@@ -181,22 +181,23 @@
 - (void)setupImageOfImageViewForIndex:(NSInteger)index
 {
 
-    self.imageView = _scrollView.subviews[index];
+    SDBrowserImageView *imageView = _scrollView.subviews[index];
     self.currentImageIndex = index;
     
-    if (self.imageView.hasLoadedImage) return;
+    if (imageView.hasLoadedImage) return;
     //    if ([self highQualityImageURLForIndex:index]) {
     
     //        [imageView setImageWithURL:[self highQualityImageURLForIndex:index] placeholderImage:[self placeholderImageForIndex:index]];
     //    } else {
     //        imageView.image = [self placeholderImageForIndex:index];
     //    }
-    @weaky(self)
+//    @weaky(self)
     
     if ([self highQualityImageBoxInfoForIndex:index]) {
         NSDictionary *dic = [self highQualityImageBoxInfoForIndex:index];
-        NSLog(@"%@",dic);
-        self.imageView.image = [self placeholderImageForIndex:self.currentImageIndex];
+        NSLog(@"🍄🍄🍄🍄🍄🍄🍄🍄🍄🍄%ld",index);
+        
+        imageView.image = [self placeholderImageForIndex:self.currentImageIndex];
         if (dic[kMessageImageBoxLocalAsset]) {
             if ([dic[kMessageImageBoxLocalAsset] isKindOfClass:[WBAsset class]]) {
                 //                [SXLoadingView showProgressHUD:@""];
@@ -204,12 +205,11 @@
                 [WB_NetService getHighWebImageWithHash:asset.fmhash completeBlock:^(NSError *error, UIImage *netImage) {
                     dispatch_main_async_safe(^{
                         if (!error &&netImage) {
-                            self.imageView.image = netImage;
+                            imageView.image = netImage;
                         }else{
-                            self.imageView.image = [self placeholderImageForIndex:index];
+                            imageView.image = [self placeholderImageForIndex:index];
                         }
-                           self.imageView.hasLoadedImage = YES;
-                        
+                            imageView.hasLoadedImage = YES;
                     });
                 }];
 //                return;
@@ -231,11 +231,11 @@
                 [PHPhotoLibrary requestImageForAsset:jyasset.asset size:size completion:^(UIImage *localImage, NSDictionary *info) {
                     dispatch_main_async_safe(^{
                         if (localImage) {
-                            self.imageView.image = localImage;
+                               imageView.image = localImage;
                         }else{
-                            self.imageView.image = [self placeholderImageForIndex:index];
+                               imageView.image = [self placeholderImageForIndex:index];
                         }
-                           self.imageView.hasLoadedImage = YES;
+                               imageView.hasLoadedImage = YES;
                     });
                 }];
             }
@@ -245,16 +245,16 @@
                 dispatch_main_async_safe(^{
                     if (!error &&netImage) {
 //                        self.imageView.image = [UIImage imageWithColor:[UIColor cyanColor]];
-                        self.imageView.image = netImage;
+                          imageView.image = netImage;
                     }else{
-                        self.imageView.image = [self placeholderImageForIndex:index];
+                          imageView.image = [self placeholderImageForIndex:index];
                     }
-                       self.imageView.hasLoadedImage = YES;
+                          imageView.hasLoadedImage = YES;
                 });
             }];
         }
     }else{
-        self.imageView.image = [self placeholderImageForIndex:index];
+         imageView.image = [self placeholderImageForIndex:index];
     }
  
 }
@@ -271,16 +271,12 @@
     float viewHalfHeight = viewHeight/2;
     
     CGPoint translatedPoint = [(UIPanGestureRecognizer*)sender translationInView:self];
-    
+    CGPoint translatedPointForAnimation = [(UIPanGestureRecognizer*)sender translationInView:self];
+//    NSLog(@"😈😈😈😈😈😈😈%@",NSStringFromCGPoint(translatedPoint));
     // Gesture Began
     if ([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateBegan) {
         firstX = [scrollView center].x;
         firstY = [scrollView center].y;
-        
-        //        _senderViewForAnimation.hidden = (_currentPageIndex == _initalPageIndex);
-        
-//        _isdraggingPhoto = YES;
-//        [self setNeedsStatusBarAppearanceUpdate];
     }
     
     translatedPoint = CGPointMake(firstX, firstY+translatedPoint.y);
@@ -297,8 +293,8 @@
     if ([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateEnded) {
         if(scrollView.center.y > viewHalfHeight+40 || scrollView.center.y < viewHalfHeight-40) // Automatic Dismiss View
         {
-            if (self.imageView) {
-                [self photoClick:nil];
+            if (_scrollView.subviews[_currentImageIndex]) {
+                [self performDismissAnimationWithTranslatedPoint:translatedPointForAnimation];
                 return;
             }
             
@@ -320,14 +316,9 @@
             [scrollView setCenter:CGPointMake(finalX, finalY)];
             self.backgroundColor = [UIColor colorWithWhite:0 alpha:newAlpha];
             [UIView commitAnimations];
-            
-//            [self performSelector:@selector(back:) withObject:self afterDelay:animationDuration];
         }
         else // Continue Showing View
         {
-//            _isdraggingPhoto = NO;
-//            [self setNeedsStatusBarAppearanceUpdate];
-            
             self.backgroundColor = [UIColor colorWithWhite:0 alpha:1];
             
             CGFloat velocityY = (.35*[(UIPanGestureRecognizer*)sender velocityInView:self].y);
@@ -347,64 +338,79 @@
     }
 }
 
-//- (void)performDismissAnimation
-//{
-//    float fadeAlpha = 1 - fabs(_scrollView.frame.origin.y)/_scrollView.frame.size.height;
-//
-//    //    JYBigImgCell * cell = _collectionView.visibleCells[0];
-//    NSIndexPath *indexP = [NSIndexPath indexPathForRow:_currentPage - 1 inSection:0];
-//    JYBigImgCell * cell = (JYBigImgCell *)[_collectionView cellForItemAtIndexPath:indexP];
-//    UIWindow * mainWindow = [UIApplication sharedApplication].keyWindow;
-//
-//    CGRect rect = [cell.previewView convertRect:cell.previewView.imageViewFrame toView:self.view];
-//
-////    self.imageView = [_delegate photoBrowser:self willDismissAtIndexPath:cell.model.indexPath];
-//    UIImage * image = [self getImageFromView:_senderViewForAnimation];
-//
-//
-//    UIView *fadeView = [[UIView alloc] initWithFrame:mainWindow.bounds];
-//    fadeView.backgroundColor = [UIColor blackColor];
-//    fadeView.alpha = fadeAlpha;
-//    [mainWindow addSubview:fadeView];
-//
-//    UIImageView *resizableImageView;
-//
-//    resizableImageView  = [[UIImageView alloc] initWithImage:image];
-//    resizableImageView.frame = rect;
-//    resizableImageView.contentMode = _senderViewForAnimation ? _senderViewForAnimation.contentMode : UIViewContentModeScaleAspectFill;
-//    resizableImageView.backgroundColor = [UIColor clearColor];
-//    resizableImageView.contentMode = UIViewContentModeScaleAspectFill;
-//    resizableImageView.layer.masksToBounds = YES;
-//    [mainWindow addSubview:resizableImageView];
-//    self.view.hidden = YES;
-//
-//    void (^completion)(void) = ^() {
-//        _senderViewForAnimation.hidden = NO;
-//        _senderViewForAnimation = nil;
-//        _scaleImage = nil;
-//
-//        [fadeView removeFromSuperview];
-//        [resizableImageView removeFromSuperview];
-//
-//        // Gesture
-//        [mainWindow removeGestureRecognizer:_panGesture];
-//        // Controls
-//        [NSObject cancelPreviousPerformRequestsWithTarget:self];
-//
-//        self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-//        [self dismissViewControllerAnimated:NO completion:nil];
-//    };
-//
-//    CGRect senderViewOriginalFrame = [_senderViewForAnimation.superview convertRect:_senderViewForAnimation.frame toView:nil];
-//    [UIView animateWithDuration:0.4 animations:^{
-//        resizableImageView.frame = senderViewOriginalFrame;
-//        fadeView.alpha = 0;
-//        self.view.backgroundColor = [UIColor clearColor];
-//    } completion:^(BOOL finished) {
-//        completion();
-//    }];
-//}
+- (void)performDismissAnimationWithTranslatedPoint:(CGPoint)translatedPoint
+{
+    float fadeAlpha = 1 - fabs(_scrollView.frame.origin.y)/_scrollView.frame.size.height;
 
+    UIWindow * mainWindow = [UIApplication sharedApplication].keyWindow;
+    //    得到当前视图的frame
+    
+    CGSize selfSize = self.frame.size;
+    
+    //    得到image的frame
+    
+    CGSize imageSize = ((UIImageView *)_scrollView.subviews[_currentImageIndex]).image.size;
+    
+    //    得到imageView 的frame
+    
+    CGRect imageVRect = _scrollView.subviews[_currentImageIndex].frame;
+    
+    //    确定imageView 的宽度
+    
+    imageVRect.size.width = selfSize.width;
+    
+    //    根据宽度计算imageView 的高度
+    
+    imageVRect.size.height = imageVRect.size.width*imageSize.height/imageSize.width;
+    
+    //计算x，y
+    
+    imageVRect.origin.x = 0;
+    
+    imageVRect.origin.y = translatedPoint.y;
+    
+    CGRect rect = [_scrollView.subviews[_currentImageIndex] convertRect:imageVRect toView:self];
+    NSLog(@"%@",NSStringFromCGSize(((UIImageView *)_scrollView.subviews[_currentImageIndex]).image.size));
+    UIView *senderViewForAnimation = [_delegate photoBrowser:self willDismissAtIndex:_currentImageIndex];
+    UIImage * image = ((UIImageView *)senderViewForAnimation).image;
+
+
+    UIView *fadeView = [[UIView alloc] initWithFrame:mainWindow.bounds];
+    fadeView.backgroundColor = [UIColor blackColor];
+    fadeView.alpha = fadeAlpha;
+    [mainWindow addSubview:fadeView];
+
+    UIImageView *resizableImageView;
+
+    resizableImageView  = [[UIImageView alloc] initWithImage:image];
+    resizableImageView.frame = rect;
+    resizableImageView.backgroundColor = [UIColor clearColor];
+    resizableImageView.contentMode = UIViewContentModeScaleAspectFill;
+    resizableImageView.layer.masksToBounds = YES;
+    [mainWindow addSubview:resizableImageView];
+    self.hidden = YES;
+
+    void (^completion)(void) = ^() {
+        senderViewForAnimation.hidden = NO;
+//        senderViewForAnimation = nil;
+
+        [fadeView removeFromSuperview];
+        [resizableImageView removeFromSuperview];
+
+        // Gesture
+        [NSObject cancelPreviousPerformRequestsWithTarget:self];
+
+    };
+
+    CGRect senderViewOriginalFrame = [senderViewForAnimation.superview convertRect:senderViewForAnimation.frame toView:nil];
+    [UIView animateWithDuration:0.4 animations:^{
+        resizableImageView.frame = senderViewOriginalFrame;
+        fadeView.alpha = 0;
+        self.backgroundColor = [UIColor clearColor];
+    } completion:^(BOOL finished) {
+        completion();
+    }];
+}
 
 - (void)photoClick:(UITapGestureRecognizer *)recognizer
 {
@@ -653,10 +659,14 @@
     if (!_willDisappear) {
         _indexLabel.text = [NSString stringWithFormat:@"%d/%ld", index + 1, (long)self.imageCount];
     }
-    NSLog(@"😋%f",scrollView.contentOffset.x);
+//    NSLog(@"😋%f",scrollView.contentOffset.x);
     if (scrollView.contentOffset.x>__kWidth/2 - 60) {
         [self setupImageOfImageViewForIndex:index];
     }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    
 }
 
 
@@ -675,10 +685,10 @@
 //    return _scrollView.subviews[self.currentImageIndex];
 //}
 
-- (SDBrowserImageView *)imageView{
-    if (!_imageView) {
-        _imageView = [[SDBrowserImageView alloc]init];
-    }
-    return _imageView;
-}
+//- (SDBrowserImageView *)imageView{
+//    if (!_imageView) {
+//        _imageView = [[SDBrowserImageView alloc]init];
+//    }
+//    return _imageView;
+//}
 @end

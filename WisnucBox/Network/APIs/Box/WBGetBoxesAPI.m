@@ -55,7 +55,7 @@
 }
 
 - (NSDictionary *)requestHeaderFieldValueDictionary{
-    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithObject:(WB_UserService.currentUser.cloudToken ? WB_UserService.currentUser.cloudToken : [NSString stringWithFormat:@"JWT %@ %@", WB_UserService.currentUser.boxToken,WB_UserService.defaultToken]) forKey:@"Authorization"];
+    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithObject:(WB_UserService.currentUser.cloudToken ? WB_UserService.currentUser.cloudToken : [NSString stringWithFormat:@"JWT %@ %@", WB_BoxService.boxToken,WB_UserService.defaultToken]) forKey:@"Authorization"];
 //    NSLog(@"%@",dic)
     return dic;
 }

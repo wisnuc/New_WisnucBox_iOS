@@ -691,12 +691,12 @@ NSString *const kTableViewFrame = @"frame";
                     }
                 }];
             }];
-//            if (userName.length>0) {
+            if (userName.length>0) {
                 timeCell.timeLable.text = [NSString stringWithFormat:@"%@已加入群",userName];
-//            }else{
-//                [self.dataSource removeObjectAtIndex:indexPath.row];
-//                [self.tableView reloadData];
-//            }
+            }else{
+                [self.dataSource removeObjectAtIndex:indexPath.row];
+                [self.tableView reloadData];
+            }
         }else if ([boxMessageModel.op isEqualToString:@"createBox"]){
             __block  NSString *groupName;
             [_boxModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -854,7 +854,6 @@ NSString *const kTableViewFrame = @"frame";
                     [self.messages addObject:model];
                     [self.tableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionBottom animated:YES];
                     [dataArray addObject: model.tweet];
-                    
                 }else{
                     WBChatViewNormalTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexForSelf];
                     if (![cell.messageModel.uuid isEqualToString:@"myselfPush"]) {
@@ -880,7 +879,7 @@ NSString *const kTableViewFrame = @"frame";
 //    NSString *documentPath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
 //    // 准备好要存到本地的数组
 //    NSArray *archiverdataArray= [NSArray arrayWithArray:self.dataSource];
-//    
+//
 //    //    将数组序列化后再存储
 //    NSData *arrayData = [NSKeyedArchiver archivedDataWithRootObject:archiverdataArray];
 //    BOOL isTureWrite = [arrayData writeToFile:documentPath atomically:YES];

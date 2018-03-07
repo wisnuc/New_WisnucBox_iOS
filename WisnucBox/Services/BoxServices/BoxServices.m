@@ -52,7 +52,7 @@
     }else{
         urlString = [NSString stringWithFormat:@"%@boxes/%@/tweets",[JYRequestConfig sharedConfig].baseURL,boxuuid];
         
-        [manager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@ %@", WB_UserService.currentUser.boxToken,WB_UserService.defaultToken] forHTTPHeaderField:@"Authorization"];
+        [manager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@ %@", WB_BoxService.boxToken,WB_UserService.defaultToken] forHTTPHeaderField:@"Authorization"];
     }
     NSData *josnData;
     NSMutableDictionary *dataMutableDic = [NSMutableDictionary dictionaryWithCapacity:0];
@@ -163,8 +163,7 @@
         [manager.requestSerializer setValue:[NSString stringWithFormat:@"%@", WB_UserService.currentUser.cloudToken] forHTTPHeaderField:@"Authorization"];
     }else{
         urlString = [NSString stringWithFormat:@"%@boxes/%@/tweets",[JYRequestConfig sharedConfig].baseURL,boxuuid];
-        
-        [manager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@ %@", WB_UserService.currentUser.boxToken,WB_UserService.defaultToken] forHTTPHeaderField:@"Authorization"];
+        [manager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@ %@", WB_BoxService.boxToken,WB_UserService.defaultToken] forHTTPHeaderField:@"Authorization"];
     }
     NSData *josnData;
     NSMutableDictionary *dataMutableDic = [NSMutableDictionary dictionaryWithCapacity:0];
@@ -249,6 +248,54 @@
     [dataTask resume];
 //    }
     
+}
+
+- (NSString *)boxToken{
+    __block NSString *tokenForBox;
+    NSDate* date = [NSDate dateWithTimeIntervalSinceNow:0];//获取当前时间0秒后的时间
+    NSTimeInterval time=[date timeIntervalSince1970];
+    if (WB_UserService.currentUser.boxToken && (time-[self boxTokenDateLongLongValue]<3600.00)) {
+        return WB_UserService.currentUser.boxToken;
+    }
+    
+    if (!WB_UserService.currentUser.guid) {
+        return nil;
+    }
+    dispatch_semaphore_t signal = dispatch_semaphore_create(1);
+    [WB_NetService getBoxesTokenWithGuid:WB_UserService.currentUser.guid comlete:^(NSError *error, NSString *token) {
+        if (!error) {
+            tokenForBox = token;
+        }
+        dispatch_semaphore_signal(signal);
+    }];
+    dispatch_semaphore_wait(signal, DISPATCH_TIME_FOREVER);
+    return tokenForBox;
+}
+
+- (NSTimeInterval)boxTokenDateLongLongValue{
+    NSTimeInterval resultTime = 0.0;
+    if (WB_UserService.currentUser.boxTokenDate) {
+        NSDate* date = WB_UserService.currentUser.boxTokenDate;
+        NSTimeInterval time=[date timeIntervalSince1970];
+        resultTime = time;
+        return resultTime;
+    }else{
+        return resultTime;
+    }
+}
+
+- (void)saveBoxesTokenWithGuid:(NSString *)guid {
+    [WB_NetService getBoxesTokenWithGuid:guid comlete:^(NSError *error, NSString *token) {
+        if (!error) {
+            WB_UserService.currentUser.boxToken = token;
+            WB_UserService.currentUser.boxTokenDate = [NSDate dateWithTimeIntervalSinceNow:0];
+            [WB_UserService setCurrentUser:WB_UserService.currentUser];
+            [WB_UserService synchronizedCurrentUser];
+        }else{
+            NSLog(@"%@",error);
+            
+        }
+    }];
 }
 
 - (void)cancel{

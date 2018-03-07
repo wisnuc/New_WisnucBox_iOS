@@ -39,7 +39,7 @@
 
 + (NSString *)processingTimeWithDate:(long long)date {
 //    NSTimeInterval time = [[date substringToIndex:10] doubleValue];//因为时差问题要加8小时
-    NSDate *sinceDate = [NSDate dateWithTimeIntervalSince1970:date];
+    NSDate *sinceDate = [NSDate dateWithTimeIntervalSince1970:date/1000.0];
     //实例化一个NSDateFormatter对象
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     //设定时间格式,这里可以设置成自己需要的格式

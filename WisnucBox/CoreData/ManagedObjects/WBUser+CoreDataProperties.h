@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSString *guid;
 @property (nullable, nonatomic, copy) NSString *ppgSelectType;
 @property (nullable, nonatomic, copy) NSString *boxToken;
+@property (nullable, nonatomic, copy) NSDate *boxTokenDate;
 @property (nonatomic) BOOL isFirstUser;
 @property (nonatomic) BOOL isAdmin;
 @property (nonatomic) BOOL isCloudLogin;

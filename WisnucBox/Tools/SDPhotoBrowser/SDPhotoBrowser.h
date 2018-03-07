@@ -21,7 +21,7 @@
 
 - (NSURL *)photoBrowser:(SDPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index;
 - (NSDictionary *)photoBrowser:(SDPhotoBrowser *)browser highQualityImageBoxInfoForIndex:(NSInteger)index;
-
+- (UIImageView *)photoBrowser:(SDPhotoBrowser *)browser willDismissAtIndex:(NSInteger )index;
 @end
 
 
@@ -30,7 +30,7 @@
 @property (nonatomic, weak) UIView *sourceImagesContainerView;
 @property (nonatomic, assign) NSInteger currentImageIndex;
 @property (nonatomic, assign) NSInteger imageCount;
-@property (nonatomic, strong)SDBrowserImageView *imageView;
+//@property (nonatomic, strong)SDBrowserImageView *imageView;
 @property (nonatomic, weak) id<SDPhotoBrowserDelegate> delegate;
 
 - (void)show;

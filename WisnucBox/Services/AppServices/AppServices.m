@@ -101,6 +101,7 @@
 
 // Net Reachability
 - (void)handleNetReachabilityNotify:(NSNotification *)noti {
+    @weaky(self)
     _notiNumber ++;
     AFNetworkReachabilityStatus status = self.netServices.status;
     if (_notiNumber>0) {
@@ -109,11 +110,11 @@
                 [[CSFileDownloadManager sharedDownloadManager] pauseAllDownloadTask];
             }
         }else{
-          
+            
             if ([CSFileDownloadManager sharedDownloadManager].downloadingTasks.count >0) {
                 [[CSFileDownloadManager sharedDownloadManager] startAllDownloadTask];
             }
-             [[CSUploadHelper shareManager]startUploadAction];
+            [[CSUploadHelper shareManager]startUploadAction];
         }
     }
 #warning lkk
@@ -124,7 +125,10 @@
             if(!WB_UserService.currentUser.isCloudLogin)
                 [WB_NetService checkForLANIP:WB_UserService.currentUser.localAddr commplete:^(BOOL success) { //测试是否可用网络
                     if(success){
-                        [self startUploadAssets:nil];
+                        [weak_self startUploadAssets:nil];
+                        if (WB_UserService.currentUser.guid) {
+                            [WB_BoxService saveBoxesTokenWithGuid:WB_UserService.currentUser.guid];
+                        }
                     }else{
                         [WB_NetService testAndCheckoutCloudIfSuccessComplete:^{
                             //                     [self startUploadAssets:nil];
@@ -133,44 +137,58 @@
                 }];
             else
                 [WB_NetService testAndCheckoutIfSuccessComplete:^{
-//                    [self startUploadAssets:nil];
+                    if (WB_UserService.currentUser.guid) {
+                        [WB_BoxService saveBoxesTokenWithGuid:WB_UserService.currentUser.guid];
+                    }
+                    //                    [self startUploadAssets:nil];
                 }];
         }else if(WB_UserService.currentUser &&!WB_UserService.currentUser.autoBackUp){
             if(!WB_UserService.currentUser.isCloudLogin)
                 [WB_NetService checkForLANIP:WB_UserService.currentUser.localAddr commplete:^(BOOL success) { //测试是否可用网络
                     if(success){
-                      [self startUploadAssets:nil];
+                        [self startUploadAssets:nil];
+                        if (WB_UserService.currentUser.guid) {
+                            [WB_BoxService saveBoxesTokenWithGuid:WB_UserService.currentUser.guid];
+                        }
                     }else{
                         [WB_NetService testAndCheckoutCloudIfSuccessComplete:^{
-//                            [self startUploadAssets:nil];
+                            //                            [self startUploadAssets:nil];
+                            
                         }];
                     }
                 }];
             else
                 [WB_NetService testAndCheckoutIfSuccessComplete:^{
-//                    [self startUploadAssets:nil];
+                    //                    [self startUploadAssets:nil];
+                    if (WB_UserService.currentUser.guid) {
+                        [WB_BoxService saveBoxesTokenWithGuid:WB_UserService.currentUser.guid];
+                    }
                 }];
         }
     }
-
+    
     if(!WB_UserService.currentUser) return;
     if (status == AFNetworkReachabilityStatusReachableViaWiFi) {
         if(!WB_UserService.currentUser.isCloudLogin)
-           [WB_NetService checkForLANIP:WB_UserService.currentUser.localAddr commplete:^(BOOL success) { //测试是否可用网络
-               if (WB_UserService.currentUser.autoBackUp) {
-                   if(success) {
-                       [self startUploadAssets:nil];
-//                   }else{
-//                       [WB_NetService testAndCheckoutCloudIfSuccessComplete:^{
-//                           //                            [self startUploadAssets:nil];
-//                       }];
-                   }
-               }
-           }];
+            [WB_NetService checkForLANIP:WB_UserService.currentUser.localAddr commplete:^(BOOL success) { //测试是否可用网络
+                if (WB_UserService.currentUser.autoBackUp) {
+                    if(success) {
+                        [self startUploadAssets:nil];
+                        
+                        //                   }else{
+                        //                       [WB_NetService testAndCheckoutCloudIfSuccessComplete:^{
+                        //                           //                            [self startUploadAssets:nil];
+                        //                       }];
+                    }
+                }
+            }];
         else
             [WB_NetService testAndCheckoutIfSuccessComplete:^{
                 if (WB_UserService.currentUser.autoBackUp) {
                     [self startUploadAssets:nil];
+                    if (WB_UserService.currentUser.guid) {
+                        [WB_BoxService saveBoxesTokenWithGuid:WB_UserService.currentUser.guid];
+                    }
                 }
             }];
     }else {
@@ -239,7 +257,7 @@
         WBUser *user = [WB_UserService createUserWithUserUUID:uuid];
         user.userName = userName;
         user.localAddr = urlString;
-//        user.cloudToken = nil;
+        //        user.cloudToken = nil;
         user.localToken = token;
         user.isFirstUser = NO;
         user.isAdmin = NO;
@@ -285,7 +303,7 @@
     [WB_UserService synchronizedCurrentUser];
     NSLog(@"GET Token Success");
     
-    #warning lkk
+#warning lkk
     [WB_NetService testForLANIP:user.localAddr commplete:^(BOOL success) { // test for it
         if(success) {
             [WB_NetService getLocalTokenWithCloud:^(NSError *error, NSString *token) {
@@ -348,7 +366,7 @@
     [[FMAccountUsersAPI new] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSDictionary * dic = WB_UserService.currentUser.isCloudLogin ? request.responseJsonObject[@"data"] : request.responseJsonObject;
         NSLog(@"%@",request.responseJsonObject);
-         UserModel *userModel = [UserModel modelWithDictionary:dic];
+        UserModel *userModel = [UserModel modelWithDictionary:dic];
         if (IsEquallString(userModel.uuid, WB_UserService.currentUser.uuid)) {
             WB_UserService.currentUser.isAdmin = [userModel.isAdmin boolValue];
             WB_UserService.currentUser.isFirstUser = [userModel.isFirstUser boolValue];
@@ -362,8 +380,8 @@
             //notify
             [[NSNotificationCenter defaultCenter] postNotificationName:UserInfoChangedNotify object:nil];
         }
-      
-      
+        
+        
         if(callback) return callback(nil, WB_UserService.currentUser.isAdmin);
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"Update user info error : %@", request.error);
@@ -527,19 +545,19 @@ static BOOL needRestart = NO;
     [[SDWebImageManager sharedManager] cancelAll];
     [[SDWebImageDownloader sharedDownloader] cancelAllDownloads];
     
-//    _userServices ? [_userServices abort] : nil;
+    //    _userServices ? [_userServices abort] : nil;
     _fileServices ? [_fileServices abort] : nil;
     _assetServices ? [_assetServices abort] : nil;
     _netServices ? [_netServices abort] : nil;
     _dbServices ? [_dbServices abort] : nil;
     _photoUploadManager ? [_photoUploadManager destroy] : nil;
     
-//    _userServices = nil;
-//    _fileServices = nil;
-//    _assetServices = nil;
-//    _netServices = nil;
-//    _dbServices = nil;
-//    _photoUploadManager = nil;
+    //    _userServices = nil;
+    //    _fileServices = nil;
+    //    _assetServices = nil;
+    //    _netServices = nil;
+    //    _dbServices = nil;
+    //    _photoUploadManager = nil;
     //cancel download
     
     [CSFileDownloadManager destroyAll];
@@ -1138,11 +1156,11 @@ static NSArray * invaildChars;
         fileName = tempFileName;
         if(yesOrNo) {
             fileName = [NSString stringWithFormat:@"%f_%@", [[NSDate date] timeIntervalSince1970], fileName];
-//          NSString * fileNameDeletingPathExtension = [fileName stringByDeletingPathExtension];
-//            // 获得文件的后缀名（不带'.'）
-//          NSString * pathExtension = [filePath pathExtension];
-//            fileName = [NSString stringWithFormat:@"%@_%f.%@", fileNameDeletingPathExtension, [[NSDate date] timeIntervalSince1970],pathExtension];
-
+            //          NSString * fileNameDeletingPathExtension = [fileName stringByDeletingPathExtension];
+            //            // 获得文件的后缀名（不带'.'）
+            //          NSString * pathExtension = [filePath pathExtension];
+            //            fileName = [NSString stringWithFormat:@"%@_%f.%@", fileNameDeletingPathExtension, [[NSDate date] timeIntervalSince1970],pathExtension];
+            
         }
         NSLog(@"filename : %@", fileName);
         NSString *urlString;
@@ -1224,7 +1242,7 @@ static NSArray * invaildChars;
                     weak_self.error = error;
                     if (weak_self.callback) weak_self.callback(error, nil);
                 }
-               
+                
             }];
             [weak_self.dataTask resume];
         }];
@@ -1234,7 +1252,7 @@ static NSArray * invaildChars;
 - (void)cancel {
     self->_shouldStop = YES;
     if(_requestFileID) {
-       [[PHImageManager defaultManager] cancelImageRequest:_requestFileID];
+        [[PHImageManager defaultManager] cancelImageRequest:_requestFileID];
         _requestFileID = PHInvalidImageRequestID;
     }
     if(_dataTask) {
@@ -1243,3 +1261,4 @@ static NSArray * invaildChars;
 }
 
 @end
+

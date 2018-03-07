@@ -134,17 +134,8 @@
     }else{
         imageWithHeight = [self setFrameSelfFrameWithArray:messageModel.list];
     }
-    
-    //    if (messageModel.isSender && messageModel.localImageArray.count==0){
-    //
-    //    }
-    
     if (messageModel.isSender && messageModel.localImageArray.count>0) {
         NSMutableArray *localImageArray = [NSMutableArray arrayWithArray:messageModel.localImageArray];
-        //        if (localImageArray.count>6) {
-        //            localImageArray = [NSMutableArray arrayWithArray:[messageModel.localImageArray subarrayWithRange:NSMakeRange(0, 6)]];
-        //        }
-        
         [localImageArray enumerateObjectsUsingBlock:^(WBTweetlocalImageModel *localImageModel, NSUInteger idx, BOOL * _Nonnull stop) {
             NSInteger index = 0 ;
             NSInteger page = 0 ;
@@ -184,7 +175,7 @@
             }
             if (localImageModel.localImage) {
                 imageView.image = localImageModel.localImage;
-                [self.imageArray addObject:imageView.image];
+                [self.imageArray addObject:localImageModel.localImage];
             }else if([localImageModel.asset isKindOfClass:[WBAsset class]]){
                 __block SDWebImageDownloadToken *thumbnailDownloadToken = [WB_NetService getThumbnailWithHash:((WBAsset *)localImageModel.asset).fmhash complete:^(NSError *error, UIImage *img) {
                     if(!weakSelf) return;
@@ -210,12 +201,14 @@
                 }];
             }else{
                 [PHPhotoLibrary requestImageForAsset:((JYAsset *)localImageModel.asset).asset size:size resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
+                    UIImage *resutImage;
                     if (image) {
-                        imageView.image = image;
+                        resutImage = image;
                     }else{
-                        imageView.image = [UIImage imageWithColor:NOIMAGECOLOR];
+                        resutImage = [UIImage imageWithColor:NOIMAGECOLOR];
                     }
-                    [self.imageArray addObject:imageView.image];
+                    imageView.image = resutImage;
+                    [self.imageArray addObject:resutImage];
                 }];
             }
             if (idx<=5) {
@@ -258,18 +251,12 @@
     }
     [self.thumbnailRequestOperationArray removeAllObjects];
     self.thumbnailRequestOperationArray = nil;
-    //            _imageView.image = image;
-    //            NSLog(@"🍰%ld",messageModel.list.count);
-    
+
     NSMutableArray *imageArray = [NSMutableArray arrayWithArray:messageModel.list];
-    //            if (imageArray.count>6) {
-    //                imageArray = [NSMutableArray arrayWithArray:[messageModel.list subarrayWithRange:NSMakeRange(0, 6)]];
-    //            }
-    
-    //           NSLog(@"😝");
+
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [imageArray enumerateObjectsUsingBlock:^(WBTweetlistModel *listModel, NSUInteger idx, BOOL * _Nonnull stop) {
-            NSLog(@"😝%ld",idx);
+//            NSLog(@"😝%ld",idx);
             
             NSInteger index = 0 ;
             NSInteger page = 0 ;
@@ -373,10 +360,7 @@
                 [self addSubview:self.maskImageView];
             }));
         }
-        
     });
-    
-    
 }
 
 
@@ -529,6 +513,11 @@
     [dic setObject:self.messageModel.boxuuid forKey:kMessageImageBoxUUID];
     [dic setObject:((WBTweetlistModel *)self.messageModel.list[index]).sha256 forKey:kMessageImageBoxNetImageHash];
     return dic;
+}
+
+- (UIImageView *)photoBrowser:(SDPhotoBrowser *)browser willDismissAtIndex:(NSInteger )index {
+    UIImageView *imageView = self.subviews[index];
+    return imageView;
 }
 
 #pragma mark - MWPhotosBrowserDelegate

@@ -7,6 +7,7 @@
 //
 
 #import "WBChatViewBaseTableViewCell.h"
+#import "LHTools.h"
 
 @implementation WBChatViewBaseTableViewCell
 
@@ -17,10 +18,19 @@
     _headImageView.frame = frame;
     
     _nameLabel.frame = CGRectMake(CGRectGetMaxX(_headImageView.frame) + 8, CGRectGetMinY(_headImageView.frame), NAME_LABEL_WIDTH, NAME_LABEL_HEIGHT);
+    [_nameLabel sizeToFit];
+    _timeLabel.frame = CGRectMake(CGRectGetMaxX(_nameLabel.frame) + 8,CGRectGetMinY(_headImageView.frame) , NAME_LABEL_WIDTH, NAME_LABEL_HEIGHT);
+
+    [_timeLabel sizeToFit];
+    
+//    if (_messageModel.isSender) {
+//        _timeLabel.frame = CGRectMake(CGRectGetMinX(_headImageView.frame) - 8, CGRectGetMinY(_headImageView.frame), NAME_LABEL_WIDTH, NAME_LABEL_HEIGHT);
+//    }
 }
 - (void)layout{
     
 }
+
 
 - (void)setBoxModel:(WBBoxesModel *)boxModel{
     _boxModel = boxModel;
@@ -29,12 +39,12 @@
 - (void)setMessageModel:(WBTweetModel *)messageModel {
     _messageModel = messageModel;
     _nameLabel.hidden = messageModel.isSender;
-    
 
     NSString *imgaeName = nil;
     if (_messageModel.isSender) {
         imgaeName = @"";
         self.headImageView.image = [UIImage imageNamed:imgaeName];
+        _timeLabel.text =[LHTools processingTimeWithDate:messageModel.ctime];
     } else {
         if (messageModel) {
             [_boxModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -43,9 +53,23 @@
                     _nameLabel.text = obj.nickName;
                 }
             }];
+            
+            _timeLabel.text =[LHTools processingTimeWithDate:messageModel.ctime];
         }
     }
+    
+    
 }
+
+- (NSString *)getTimeWithTime:(long long)time{
+    NSTimeInterval second = time/1000.0;
+    NSDate * date = [NSDate dateWithTimeIntervalSince1970:second];
+    NSDateFormatter * formater = [NSDateFormatter new];
+    formater.dateFormat = @"yyyy.MM.dd";
+    NSString * dateString = [formater stringFromDate:date];
+    return dateString;
+}
+
 
 - (void)prepareForReuse {
     [super prepareForReuse];
@@ -80,6 +104,13 @@
         _nameLabel.textAlignment = NSTextAlignmentLeft;
         _nameLabel.font = [UIFont boldSystemFontOfSize:NAME_LABEL_FONT_SIZE];
         [self.contentView addSubview:_nameLabel];
+        
+        _timeLabel = [[UILabel alloc] init];
+        _timeLabel.backgroundColor = [UIColor clearColor];
+        _timeLabel.textColor = [UIColor grayColor];
+        _timeLabel.textAlignment = NSTextAlignmentLeft;
+        _timeLabel.font = [UIFont boldSystemFontOfSize:NAME_LABEL_FONT_SIZE];
+        [self.contentView addSubview:_timeLabel];
         
         [self setupSubviewsForMessageModel:model];
     }

@@ -244,7 +244,6 @@ FilesHelperOpenFilesDelegate
 
 - (void)presentOptionsMenu
 {
-    
     BOOL canOpen = [self.documentController presentPreviewAnimated:YES];
     if (!canOpen) {
         [SXLoadingView showProgressHUDText:WBLocalizedString(@"file_preview_failed", nil) duration:1];
@@ -420,9 +419,9 @@ FilesHelperOpenFilesDelegate
         }else{
             
             NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
-            NSString* suffixName = model.uuid;
+//            NSString* suffixName = model.uuid;
             NSString *fileName = model.name;
-            NSString *extensionstring = [fileName pathExtension];
+//            NSString *extensionstring = [fileName pathExtension];
             NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",fileName]];
             NSLog(@"文件位置%@",saveFile);
             if ([[NSFileManager defaultManager] fileExistsAtPath:saveFile]) {
@@ -505,7 +504,6 @@ FilesHelperOpenFilesDelegate
                             CGFloat downloadProgressFloat = (float)downloadProgress.completedUnitCount/(float)downloadProgress.totalUnitCount;
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 if (WB_UserService.currentUser.isCloudLogin) {
-                                    
                                     [_progressView setValueForProcess:downloadProgressFloat];
                                     //                                NSLog(@"%lld",downloadProgress.completedUnitCount);
                                 }else{

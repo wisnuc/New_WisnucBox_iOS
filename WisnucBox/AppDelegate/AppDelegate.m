@@ -72,17 +72,6 @@
     [self.window makeKeyAndVisible];
 }
 
-- (void)saveBoxesTokenWithGuid:(NSString *)guid {
-    [WB_NetService getBoxesTokenWithGuid:guid comlete:^(NSError *error, NSString *token) {
-        if (!error) {
-            WB_UserService.currentUser.boxToken = token;
-            [WB_UserService setCurrentUser:WB_UserService.currentUser];
-            [WB_UserService synchronizedCurrentUser];
-        }else{
-            NSLog(@"%@",error);
-        }
-    }];
-}
 
 - (CYLTabBarController *)setUpTabbar {
     CYLTabBarController * tabbar = [CYLTabBarController new];
@@ -98,7 +87,7 @@
         [WB_UserService upgradeCheckAction];
         NSLog(@"%@",WB_UserService.currentUser.guid);
         if (WB_UserService.currentUser.guid) {
-            [self saveBoxesTokenWithGuid:WB_UserService.currentUser.guid];
+            [WB_BoxService saveBoxesTokenWithGuid:WB_UserService.currentUser.guid];
         }
     });
     
