@@ -43,7 +43,7 @@
     //实例化一个NSDateFormatter对象
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     //设定时间格式,这里可以设置成自己需要的格式
-    [formatter setDateFormat:@"yyyy/MM/dd HH:mm"];
+    [formatter setDateFormat:@"yyyy年MM月dd日 HH:mm"];
     NSString *createdAtString  = [formatter stringFromDate:sinceDate];
     
     if (sinceDate.lh_isInThisYear) { // 是今年
@@ -53,7 +53,7 @@
             createdAtString = [NSString stringWithFormat:@"昨天 %@", [formatter stringFromDate:sinceDate]];
         }
         else if (!sinceDate.lh_isInToDay) {
-            [formatter setDateFormat:@"MM.dd HH:mm"];
+            [formatter setDateFormat:@"MM月dd日 HH:mm"];
             createdAtString = [formatter stringFromDate:sinceDate];
         }
     }

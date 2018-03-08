@@ -89,8 +89,17 @@
         case 1:{
             cell.textLabel.text = WBLocalizedString(@"clear_cache", nil);
             NSUInteger  i = [SDImageCache sharedImageCache].getSize;
-           
-            i = i + [[YYImageCache sharedCache].diskCache totalCost];
+            NSArray *array1 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+            NSString *documents = [array1 lastObject];
+            NSString *boxChatDirectory = [documents stringByAppendingPathComponent:@"BoxChat"];
+            NSArray *boxChatDirectoryFiles = [[NSFileManager defaultManager]subpathsOfDirectoryAtPath:boxChatDirectory error:nil];
+            NSLog(@"%@",boxChatDirectoryFiles);
+            __block NSUInteger  m = 0;
+            [boxChatDirectoryFiles enumerateObjectsUsingBlock:^(NSString *filePath, NSUInteger idx, BOOL * _Nonnull stop) {
+                NSData *resultData = [NSData dataWithContentsOfFile:filePath];
+                m = m + resultData.length;
+            }];
+            i = i + [[YYImageCache sharedCache].diskCache totalCost] + m;
              NSLog(@"%ld",(long)[[YYImageCache sharedCache].diskCache totalCost]);
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[NSString transformedValue:[NSNumber numberWithUnsignedInteger:i]]];
         }
@@ -247,10 +256,13 @@
         [SXLoadingView showProgressHUD:WBLocalizedString(@"clearing_cache", nil)];
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
-                
             }];
 //
             [[YYImageCache sharedCache].diskCache removeAllObjects];
+            NSArray *array1 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+            NSString *documents = [array1 lastObject];
+            NSString *boxChatDirectory = [documents stringByAppendingPathComponent:@"BoxChat"];
+            [[NSFileManager defaultManager] removeItemAtPath:boxChatDirectory error:nil];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [SXLoadingView hideProgressHUD];
                 [SXLoadingView showAlertHUD:WBLocalizedString(@"clear_completed", nil) duration:0.5];

@@ -145,7 +145,9 @@ NSString *const kTableViewFrame = @"frame";
     }
     NSArray *array1 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
     NSString *documents = [array1 lastObject];
-    NSString *documentPath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
+    NSString *boxChatDirectory = [documents stringByAppendingPathComponent:@"BoxChat"];
+    [[NSFileManager defaultManager] createDirectoryAtPath:boxChatDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+    NSString *documentPath = [boxChatDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
     NSData *resultData = [NSData dataWithContentsOfFile:documentPath];
     NSArray *resultArray = [NSKeyedUnarchiver unarchiveObjectWithData:resultData];//将数据反序列化
 //    NSLog(@"😆%@",resultArray);
@@ -373,20 +375,20 @@ NSString *const kTableViewFrame = @"frame";
                     }
                 });
             }
-            NSArray *array1 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
-            NSString *documents = [array1 lastObject];
-            NSString *documentPath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
-            // 准备好要存到本地的数组
-            NSArray *archiverdataArray= [NSArray arrayWithArray:self.dataSource];
-            
-            //    将数组序列化后再存储
-            NSData *arrayData = [NSKeyedArchiver archivedDataWithRootObject:archiverdataArray];
-            BOOL isTureWrite = [arrayData writeToFile:documentPath atomically:YES];
-            if (isTureWrite) {
-                NSLog(@"存储成功");
-            }else{
-                NSLog(@"存储失败");
-            }
+//            NSArray *array1 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+//            NSString *documents = [array1 lastObject];
+//            NSString *documentPath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
+//            // 准备好要存到本地的数组
+//            NSArray *archiverdataArray= [NSArray arrayWithArray:self.dataSource];
+//
+//            //    将数组序列化后再存储
+//            NSData *arrayData = [NSKeyedArchiver archivedDataWithRootObject:archiverdataArray];
+//            BOOL isTureWrite = [arrayData writeToFile:documentPath atomically:YES];
+//            if (isTureWrite) {
+//                NSLog(@"存储成功");
+//            }else{
+//                NSLog(@"存储失败");
+//            }
         });
     }];
 }
@@ -469,7 +471,7 @@ NSString *const kTableViewFrame = @"frame";
         imageArray = (NSMutableArray *)content;
     }
     
-    [WB_BoxService sendTweetWithImageArray:imageArray Boxuuid:_boxModel.uuid Complete:^(WBTweetModel *tweetModel, NSError *error) {
+    [WB_BoxService sendTweetWithImageArray:imageArray   BoxModel:_boxModel Complete:^(WBTweetModel *tweetModel, NSError *error) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             if (!error) {
 //                [content.photos.photos enumerateObjectsUsingBlock:^(UIImage *image, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -506,10 +508,12 @@ NSString *const kTableViewFrame = @"frame";
             
             NSArray *array1 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
             NSString *documents = [array1 lastObject];
-            NSString *documentPath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
+            NSString *boxChatDirectory = [documents stringByAppendingPathComponent:@"BoxChat"];
+            [[NSFileManager defaultManager] createDirectoryAtPath:boxChatDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+            NSString *documentPath = [boxChatDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
             // 准备好要存到本地的数组
             NSArray *archiverdataArray= [NSArray arrayWithArray:self.dataSource];
-            
+
             //    将数组序列化后再存储
             NSData *arrayData = [NSKeyedArchiver archivedDataWithRootObject:archiverdataArray];
             BOOL isTureWrite = [arrayData writeToFile:documentPath atomically:YES];

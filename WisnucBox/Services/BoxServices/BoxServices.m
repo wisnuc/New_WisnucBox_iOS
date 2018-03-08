@@ -101,7 +101,7 @@
     [dataTask resume];
 }
 
-- (void)sendTweetWithImageArray:(NSArray *)array Boxuuid:(NSString *)boxuuid Complete:(void(^)(WBTweetModel *tweetModel,NSError *error))callback{
+- (void)sendTweetWithImageArray:(NSArray *)array BoxModel:(WBBoxesModel *)boxModel Complete:(void(^)(WBTweetModel *tweetModel,NSError *error))callback{
     NSMutableArray *localImageListArray = [NSMutableArray arrayWithCapacity:0];
     NSMutableArray *netImageListArray = [NSMutableArray arrayWithCapacity:0];
     [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -146,11 +146,11 @@
         }
     }];
    
-    [self creatAtweetWithNetImageListArray:netImageListArray LocalImageListArray:localImageListArray   Boxuuid:boxuuid   Complete:callback];
+    [self creatAtweetWithNetImageListArray:netImageListArray LocalImageListArray:localImageListArray  BoxModel:boxModel   Complete:callback];
 }
 
 
-- (void)creatAtweetWithNetImageListArray:(NSArray *)netImageListArray LocalImageListArray:(NSArray *)localImageListArray  Boxuuid:(NSString *)boxuuid  Complete:(void(^)(WBTweetModel *tweetModel,NSError *error))callback{
+- (void)creatAtweetWithNetImageListArray:(NSArray *)netImageListArray LocalImageListArray:(NSArray *)localImageListArray  BoxModel:(WBBoxesModel *)boxModel  Complete:(void(^)(WBTweetModel *tweetModel,NSError *error))callback{
     
    __block NSMutableArray *localDataArray = [[NSMutableArray alloc]initWithArray:localImageListArray copyItems:YES];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -159,16 +159,23 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
     NSString *urlString;
     if (WB_UserService.currentUser.isCloudLogin) {
-        urlString =  [NSString stringWithFormat:@"%@%@/%@/%@", kCloudAddr, kCloudCommonBoxesUrl,boxuuid,kCloudCommonBoxesPipeUrl];
+        urlString =  [NSString stringWithFormat:@"%@%@/%@/%@", kCloudAddr, kCloudCommonBoxesUrl,boxModel.uuid,kCloudCommonBoxesPipeUrl];
         [manager.requestSerializer setValue:[NSString stringWithFormat:@"%@", WB_UserService.currentUser.cloudToken] forHTTPHeaderField:@"Authorization"];
     }else{
-        urlString = [NSString stringWithFormat:@"%@boxes/%@/tweets",[JYRequestConfig sharedConfig].baseURL,boxuuid];
-        [manager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@ %@", WB_BoxService.boxToken,WB_UserService.defaultToken] forHTTPHeaderField:@"Authorization"];
+        NSLog(@"%@",WB_UserService.currentUser.cloudToken);
+        if ([WB_UserService.currentUser.stationId isEqualToString:boxModel.station.stationId]) {
+            urlString = [NSString stringWithFormat:@"%@boxes/%@/tweets",[JYRequestConfig sharedConfig].baseURL,boxModel.uuid];
+            [manager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@ %@", WB_BoxService.boxToken,WB_UserService.defaultToken] forHTTPHeaderField:@"Authorization"];
+        }else{
+            urlString =  [NSString stringWithFormat:@"%@%@/%@/%@", kCloudAddr, kCloudCommonBoxesUrl,boxModel.uuid,kCloudCommonBoxesPipeUrl];
+            [manager.requestSerializer setValue:[NSString stringWithFormat:@"%@", WB_UserService.currentUser.cloudToken] forHTTPHeaderField:@"Authorization"];
+        }
+      
     }
     NSData *josnData;
     NSMutableDictionary *dataMutableDic = [NSMutableDictionary dictionaryWithCapacity:0];
     if (WB_UserService.currentUser.isCloudLogin) {
-        NSString *requestUrl = [NSString stringWithFormat:@"/boxes/%@/tweets",boxuuid];
+        NSString *requestUrl = [NSString stringWithFormat:@"/boxes/%@/tweets",boxModel.uuid];
         NSString *resource =[requestUrl base64EncodedString] ;
         NSMutableDictionary *manifestDic  = [NSMutableDictionary dictionaryWithCapacity:0];
         [manifestDic setObject:@"POST" forKey:kCloudBodyMethod];
@@ -192,31 +199,61 @@
         [dataMutableDic setObject:result forKey:@"manifest"];
 
     }else{
-        [dataMutableDic setObject:@"" forKey:@"comment"];
-        [dataMutableDic setObject:@"list" forKey:@"type"];
-        
-        if (localImageListArray.count>0) {
-            [localImageListArray enumerateObjectsUsingBlock:^(NSMutableDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                [obj removeObjectForKey:@"filePath"];
-            }];
+       
+        if (![WB_UserService.currentUser.stationId isEqualToString:boxModel.station.stationId]) {
+            NSString *requestUrl = [NSString stringWithFormat:@"/boxes/%@/tweets",boxModel.uuid];
+            NSString *resource =[requestUrl base64EncodedString] ;
+            NSMutableDictionary *manifestDic  = [NSMutableDictionary dictionaryWithCapacity:0];
+            [manifestDic setObject:@"POST" forKey:kCloudBodyMethod];
+            [manifestDic setObject:resource forKey:kCloudBodyResource];
+            [manifestDic setObject:@"" forKey:@"comment"];
+            [manifestDic setObject:@"list" forKey:@"type"];
+            if (localImageListArray.count>0) {
+                [localImageListArray enumerateObjectsUsingBlock:^(NSMutableDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    [obj removeObjectForKey:@"filePath"];
+                }];
+                
+                NSLog(@"%@",localImageListArray);
+                [manifestDic setObject:localImageListArray forKey:@"list"];
+            }
+            if (netImageListArray.count>0) {
+                [manifestDic setObject:netImageListArray forKey:@"indrive"];
+            }
+            //        dataMutableDic = manifestDic;
+            NSData *josnData = [NSJSONSerialization dataWithJSONObject:manifestDic options:NSJSONWritingPrettyPrinted error:nil];
+            NSString *result = [[NSString alloc] initWithData:josnData  encoding:NSUTF8StringEncoding];
+            [dataMutableDic setObject:result forKey:@"manifest"];
+        }else{
+            [dataMutableDic setObject:@"" forKey:@"comment"];
+            [dataMutableDic setObject:@"list" forKey:@"type"];
             
-            NSLog(@"%@",localImageListArray);
-            [dataMutableDic setObject:localImageListArray forKey:@"list"];
+            if (localImageListArray.count>0) {
+                [localImageListArray enumerateObjectsUsingBlock:^(NSMutableDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    [obj removeObjectForKey:@"filePath"];
+                }];
+                
+                NSLog(@"%@",localImageListArray);
+                [dataMutableDic setObject:localImageListArray forKey:@"list"];
+            }
+            if (netImageListArray.count>0) {
+                [dataMutableDic setObject:netImageListArray forKey:@"indrive"];
+            }
+            josnData = [NSJSONSerialization dataWithJSONObject:dataMutableDic options:NSJSONWritingPrettyPrinted error:nil];
+            dataMutableDic = nil;
+            
         }
-        if (netImageListArray.count>0) {
-            [dataMutableDic setObject:netImageListArray forKey:@"indrive"];
-        }
-         josnData = [NSJSONSerialization dataWithJSONObject:dataMutableDic options:NSJSONWritingPrettyPrinted error:nil];
-        dataMutableDic = nil;
     }
   
     
-     __block NSString *filePath;
+    __block NSString *filePath;
     NSURLSessionDataTask *dataTask = [manager POST:urlString parameters:dataMutableDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         if (!WB_UserService.currentUser.isCloudLogin) {
-          [formData appendPartWithFormData:josnData name:@"list"];
+            if (![WB_UserService.currentUser.stationId isEqualToString:boxModel.station.stationId]) {
+            }else{
+            [formData appendPartWithFormData:josnData name:@"list"];
+            }
         }else{
-
+            
         }
         if (localImageListArray.count>0) {
             [localDataArray enumerateObjectsUsingBlock:^(NSMutableDictionary *mutableDic, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -242,7 +279,11 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
         [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
-      
+        NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+        if(errorData.length >0){
+            NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+            NSLog(@"失败,%@",serializedData);
+        }
         callback(nil,error);
     }];
     [dataTask resume];
@@ -293,7 +334,6 @@
             [WB_UserService synchronizedCurrentUser];
         }else{
             NSLog(@"%@",error);
-            
         }
     }];
 }

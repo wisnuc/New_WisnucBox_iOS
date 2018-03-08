@@ -16,16 +16,19 @@
     CGRect frame = _headImageView.frame;
     frame.origin.x = _messageModel.isSender ? (self.bounds.size.width - _headImageView.frame.size.width - HEAD_X) : HEAD_X;
     _headImageView.frame = frame;
-    
     _nameLabel.frame = CGRectMake(CGRectGetMaxX(_headImageView.frame) + 8, CGRectGetMinY(_headImageView.frame), NAME_LABEL_WIDTH, NAME_LABEL_HEIGHT);
     [_nameLabel sizeToFit];
     _timeLabel.frame = CGRectMake(CGRectGetMaxX(_nameLabel.frame) + 8,CGRectGetMinY(_headImageView.frame) , NAME_LABEL_WIDTH, NAME_LABEL_HEIGHT);
-
     [_timeLabel sizeToFit];
     
-//    if (_messageModel.isSender) {
-//        _timeLabel.frame = CGRectMake(CGRectGetMinX(_headImageView.frame) - 8, CGRectGetMinY(_headImageView.frame), NAME_LABEL_WIDTH, NAME_LABEL_HEIGHT);
-//    }
+    if (_messageModel.isSender) {
+         _nameLabel.frame = CGRectMake(CGRectGetMaxX(_headImageView.frame) -8 - 13, CGRectGetMinY(_headImageView.frame), 13, NAME_LABEL_HEIGHT);
+//        _nameLabel.backgroundColor = [UIColor redColor];
+//         [_nameLabel sizeToFit];
+        _timeLabel.frame = CGRectMake(CGRectGetMinX(_nameLabel.frame) - 8 - _timeLabel.frame.size.width, CGRectGetMinY(_headImageView.frame)-2, NAME_LABEL_WIDTH, NAME_LABEL_HEIGHT);
+        [_timeLabel sizeToFit];
+       
+    }
 }
 - (void)layout{
     
@@ -38,12 +41,13 @@
 
 - (void)setMessageModel:(WBTweetModel *)messageModel {
     _messageModel = messageModel;
-    _nameLabel.hidden = messageModel.isSender;
+//    _nameLabel.hidden = messageModel.isSender;
 
     NSString *imgaeName = nil;
     if (_messageModel.isSender) {
         imgaeName = @"";
         self.headImageView.image = [UIImage imageNamed:imgaeName];
+        self.nameLabel.text = @"我";
         _timeLabel.text =[LHTools processingTimeWithDate:messageModel.ctime];
     } else {
         if (messageModel) {

@@ -34,13 +34,14 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
     [super layoutSubviews];
     
     CGRect bubbleFrame = _bubbleView.frame;
-    bubbleFrame.origin.y = self.headImageView.frame.origin.y;
+//    bubbleFrame.origin.y = self.headImageView.frame.origin.y ;
     
     //    if (self.messageModel.isChatGroup) {
     bubbleFrame.origin.y = self.headImageView.frame.origin.y + NAME_LABEL_HEIGHT;
     //    }
     if (self.messageModel.isSender) {
-        bubbleFrame.origin.y = self.headImageView.frame.origin.y;
+//        bubbleFrame.origin.y = self.headImageView.frame.origin.y ;
+        bubbleFrame.origin.y = bubbleFrame.origin.y+8;
         // 菊花状态 （因不确定菊花具体位置，要在子类中实现位置的修改）
         switch (self.messageModel.status) {
             case MessageDeliveryState_Delivering:

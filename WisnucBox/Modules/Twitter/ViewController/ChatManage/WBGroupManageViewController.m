@@ -86,7 +86,9 @@
             
             NSArray *array1 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
             NSString *documents = [array1 lastObject];
-            NSString *documentPath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
+            NSString *boxChatDirectory = [documents stringByAppendingPathComponent:@"BoxChat"];
+            [[NSFileManager defaultManager] createDirectoryAtPath:boxChatDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+            NSString *documentPath = [boxChatDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
 //            NSData *resultData = [NSData dataWithContentsOfFile:documentPath];
             NSError *fileError;
             [[NSFileManager defaultManager] removeItemAtPath:documentPath error:&fileError];
@@ -121,7 +123,9 @@
         }
         NSArray *array1 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
         NSString *documents = [array1 lastObject];
-        NSString *documentPath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
+        NSString *boxChatDirectory = [documents stringByAppendingPathComponent:@"BoxChat"];
+        [[NSFileManager defaultManager] createDirectoryAtPath:boxChatDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+        NSString *documentPath = [boxChatDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
         //            NSData *resultData = [NSData dataWithContentsOfFile:documentPath];
         NSError *fileError;
         [[NSFileManager defaultManager] removeItemAtPath:documentPath error:&fileError];
