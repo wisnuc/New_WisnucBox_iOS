@@ -194,6 +194,7 @@ NSString *const kTableViewFrame = @"frame";
         } failure:^(__kindof JYBaseRequest *request) {
             NSLog(@"%@",request.error);
             [SXLoadingView showProgressHUDText:@"获取聊天记录失败" duration:1.2f];
+            [self.tableView reloadData];
         }];
         return;
     }
@@ -346,7 +347,7 @@ NSString *const kTableViewFrame = @"frame";
 }
 
 - (void)sendFileMessageToNetSeverWithDataDic:(NSDictionary *)dic TableViewCell:(WBChatViewNormalTableViewCell *)cell{
-    [WB_BoxService sendTweetWithFilesDic:dic Boxuuid:_boxModel.uuid Complete:^(WBTweetModel *tweetModel, NSError *error) {
+    [WB_BoxService sendTweetWithFilesDic:dic BoxModel:_boxModel Complete:^(WBTweetModel *tweetModel, NSError *error) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             if (!error) {
                 dispatch_main_async_safe(^{
@@ -868,9 +869,14 @@ NSString *const kTableViewFrame = @"frame";
                         [dataArray addObject: model.tweet];
                         //                [self.tableView reloadData];
                     }else{
-                        //                     cell.boxModel = model;
-                        //                     cell.messageModel.boxuuid = model.uuid;
-                        //                     cell.messageModel = model.tweet;
+                        WBTweetModel *localTweetModel = self.dataSource[indexForSelf.row];
+                        localTweetModel.boxuuid = model.uuid;
+                        localTweetModel.uuid = model.tweet.uuid;
+                        [self.dataSource replaceObjectAtIndex:indexForSelf.row withObject:localTweetModel];
+                        [self.tableView reloadRowAtIndexPath:indexForSelf withRowAnimation:UITableViewRowAnimationFade];
+//                                             cell.boxModel = model;
+//                                             cell.messageModel.boxuuid = model.uuid;
+//                                             cell.messageModel = model.tweet;
                         //                     [cell layoutSubviews];
                     }
                 }

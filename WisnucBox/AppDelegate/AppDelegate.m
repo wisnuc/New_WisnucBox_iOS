@@ -24,9 +24,11 @@
 #import "WBBoxViewController.h"
 #import "WBChatListViewController.h"
 
+
 @interface AppDelegate () <WXApiDelegate,WBPpgAskToUploadAlertDelegate>
 @property (nonatomic,strong) FMLoginViewController *loginController;
 @property (nonatomic,strong) NSString *filePath;
+@property (nonatomic,strong) MDCDialogTransitionController *transitionController;
 @end
 
 @implementation AppDelegate
@@ -124,7 +126,7 @@
     NSMutableArray *viewControllersMutArr = [[NSMutableArray alloc] initWithObjects:nav1,nav2,nav3,nil];
     [tabbar setViewControllers:viewControllersMutArr];
     tabbar.selectedIndex = 0;
-    
+//    [photosVC mergeDataSource];
     return tabbar;
 }
 
@@ -312,6 +314,7 @@
 }
 
 - (void)ppgDownloadAlert{
+    self.transitionController = [[MDCDialogTransitionController alloc] init];
     NSBundle *bundle = [NSBundle bundleForClass:[WBPpgAskToUploadAlertViewController class]];
     UIStoryboard *storyboard =
     [UIStoryboard storyboardWithName:NSStringFromClass([WBPpgAskToUploadAlertViewController class])bundle:bundle];
@@ -321,7 +324,8 @@
     [storyboard instantiateViewControllerWithIdentifier:identifier];
     WBPpgAskToUploadAlertViewController *vc = (WBPpgAskToUploadAlertViewController *)viewController;
     vc.delegate = self;
-    viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
+    viewController.modalPresentationStyle = UIModalPresentationCustom;
+    viewController.transitioningDelegate = self.transitionController;
     
     //    viewController
     [self.window.rootViewController presentViewController:viewController animated:YES completion:NULL];

@@ -18,7 +18,7 @@
 }
 
 @property (readwrite) BOOL isUserLogin;
-
+@property(nonatomic, strong) MDCDialogTransitionController *transitionController;
 @end
 
 @implementation UserServices
@@ -34,6 +34,7 @@
 - (instancetype)init {
     if(self = [super init]) {
         [self loadData];
+        
         _upradeCount = 0;
     }
     return self;
@@ -158,6 +159,7 @@
 }
 
 - (void)alertController{
+    self.transitionController = [[MDCDialogTransitionController alloc] init];
     NSBundle *bundle = [NSBundle bundleForClass:[WBUpgradeCheckViewController class]];
     UIStoryboard *storyboard =
     [UIStoryboard storyboardWithName:NSStringFromClass([WBUpgradeCheckViewController class]) bundle:bundle];
@@ -166,7 +168,8 @@
     UIViewController *alertViewController =
     [storyboard instantiateViewControllerWithIdentifier:identifier];
     
-    alertViewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
+    alertViewController.modalPresentationStyle = UIModalPresentationCustom;
+    alertViewController.transitioningDelegate = self.transitionController;
 
     [[UIViewController getCurrentVC] presentViewController:alertViewController animated:YES completion:nil];
     WBUpgradeCheckViewController *vc = (WBUpgradeCheckViewController *)alertViewController;

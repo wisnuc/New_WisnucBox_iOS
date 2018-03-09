@@ -33,6 +33,7 @@ UITableViewDataSource
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic) BOOL switchOn;
 @property (nonatomic) BOOL versionOn;
+@property (nonatomic, strong) MDCDialogTransitionController *transitionController;
 @end
 
 @implementation WBppgViewController
@@ -40,6 +41,7 @@ UITableViewDataSource
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = WBLocalizedString(@"download_manage", nil);
+    self.transitionController = [[MDCDialogTransitionController alloc] init];
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.addButton];
 }
@@ -229,7 +231,8 @@ UITableViewDataSource
     UIViewController *viewController =
     [storyboard instantiateViewControllerWithIdentifier:identifier];
     
-    viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
+    viewController.modalPresentationStyle = UIModalPresentationCustom;
+    viewController.transitioningDelegate = self.transitionController;
     WBPpgAlertViewController *vc = (WBPpgAlertViewController *)viewController;
     vc.delegate = self;
     [self presentViewController:viewController animated:YES completion:NULL];

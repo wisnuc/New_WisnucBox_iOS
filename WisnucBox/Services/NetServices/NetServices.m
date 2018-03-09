@@ -488,7 +488,7 @@
     //    NSLog(@"%@",url.absoluteString);
     if(WB_UserService.currentUser.isCloudLogin)
         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resource=%@&method=GET&alt=data&boxUUID=%@", kCloudAddr, kCloudCommonPipeUrl, [[NSString stringWithFormat:@"media/%@", hash] base64EncodedString],boxUUID]];
-    return [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:url options:SDWebImageDownloaderLowPriority progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, BOOL finished) {
+    return [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:url options:SDWebImageDownloaderUseNSURLCache progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, BOOL finished) {
         if (image) {
             callback(nil, image);
         }else{

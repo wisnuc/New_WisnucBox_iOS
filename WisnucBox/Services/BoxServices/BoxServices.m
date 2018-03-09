@@ -25,7 +25,7 @@
 }
 
 
-- (void)sendTweetWithFilesDic:(NSDictionary *)dic Boxuuid:(NSString *)boxuuid Complete:(void(^)(WBTweetModel *tweetModel,NSError *error))callback{
+- (void)sendTweetWithFilesDic:(NSDictionary *)dic BoxModel:(WBBoxesModel *)boxModel Complete:(void(^)(WBTweetModel *tweetModel,NSError *error))callback{
     NSMutableDictionary *dataDic = [[NSMutableDictionary alloc]initWithDictionary:dic copyItems:YES];
     NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
     NSArray *filesArr = dataDic[@"filesModel"];
@@ -47,17 +47,23 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
     NSString *urlString;
     if (WB_UserService.currentUser.isCloudLogin) {
-        urlString = [NSString stringWithFormat:@"%@%@/%@/%@", kCloudAddr, kCloudCommonBoxesUrl,boxuuid,kCloudCommonBoxesPipeUrl];
+        urlString = [NSString stringWithFormat:@"%@%@/%@/%@", kCloudAddr, kCloudCommonBoxesUrl,boxModel.uuid,kCloudCommonBoxesPipeUrl];
         [manager.requestSerializer setValue:[NSString stringWithFormat:@"%@", WB_UserService.currentUser.cloudToken] forHTTPHeaderField:@"Authorization"];
     }else{
-        urlString = [NSString stringWithFormat:@"%@boxes/%@/tweets",[JYRequestConfig sharedConfig].baseURL,boxuuid];
         
-        [manager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@ %@", WB_BoxService.boxToken,WB_UserService.defaultToken] forHTTPHeaderField:@"Authorization"];
+        if ([WB_UserService.currentUser.stationId isEqualToString:boxModel.station.stationId]) {
+            urlString = [NSString stringWithFormat:@"%@boxes/%@/tweets",[JYRequestConfig sharedConfig].baseURL,boxModel.uuid];
+            
+            [manager.requestSerializer setValue:[NSString stringWithFormat:@"JWT %@ %@", WB_BoxService.boxToken,WB_UserService.defaultToken] forHTTPHeaderField:@"Authorization"];
+        }else{
+            urlString = [NSString stringWithFormat:@"%@%@/%@/%@", kCloudAddr, kCloudCommonBoxesUrl,boxModel.uuid,kCloudCommonBoxesPipeUrl];
+            [manager.requestSerializer setValue:[NSString stringWithFormat:@"%@", WB_UserService.currentUser.cloudToken] forHTTPHeaderField:@"Authorization"];
+        }
     }
     NSData *josnData;
     NSMutableDictionary *dataMutableDic = [NSMutableDictionary dictionaryWithCapacity:0];
     if (WB_UserService.currentUser.isCloudLogin) {
-        NSString *requestUrl = [NSString stringWithFormat:@"/boxes/%@/tweets",boxuuid];
+        NSString *requestUrl = [NSString stringWithFormat:@"/boxes/%@/tweets",boxModel.uuid];
         NSString *resource =[requestUrl base64EncodedString] ;
         NSMutableDictionary *manifestDic  = [NSMutableDictionary dictionaryWithCapacity:0];
         [manifestDic setObject:@"POST" forKey:kCloudBodyMethod];
@@ -73,17 +79,41 @@
         [dataMutableDic setObject:result forKey:@"manifest"];
         NSLog(@"%@",dataMutableDic);
     }else{
-        [dataMutableDic setObject:@"" forKey:@"comment"];
-        [dataMutableDic setObject:@"list" forKey:@"type"];
-        if (dataArray.count>0)[dataMutableDic setObject:dataArray forKey:@"indrive"];
-        
-         josnData = [NSJSONSerialization dataWithJSONObject:dataMutableDic options:NSJSONWritingPrettyPrinted error:nil];
-        dataMutableDic = nil;
+       
+        if (![WB_UserService.currentUser.stationId isEqualToString:boxModel.station.stationId]) {
+            NSString *requestUrl = [NSString stringWithFormat:@"/boxes/%@/tweets",boxModel.uuid];
+            NSString *resource =[requestUrl base64EncodedString] ;
+            NSMutableDictionary *manifestDic  = [NSMutableDictionary dictionaryWithCapacity:0];
+            [manifestDic setObject:@"POST" forKey:kCloudBodyMethod];
+            [manifestDic setObject:resource forKey:kCloudBodyResource];
+            [manifestDic setObject:@"" forKey:@"comment"];
+            [manifestDic setObject:@"list" forKey:@"type"];
+            
+            if (dataArray.count>0)
+                [manifestDic setObject:dataArray forKey:@"indrive"];
+            
+            NSData *josnData = [NSJSONSerialization dataWithJSONObject:manifestDic options:NSJSONWritingPrettyPrinted error:nil];
+            NSString *result = [[NSString alloc] initWithData:josnData  encoding:NSUTF8StringEncoding];
+            [dataMutableDic setObject:result forKey:@"manifest"];
+            NSLog(@"%@",dataMutableDic);
+        }else{
+            [dataMutableDic setObject:@"" forKey:@"comment"];
+            [dataMutableDic setObject:@"list" forKey:@"type"];
+            if (dataArray.count>0)[dataMutableDic setObject:dataArray forKey:@"indrive"];
+            
+            josnData = [NSJSONSerialization dataWithJSONObject:dataMutableDic options:NSJSONWritingPrettyPrinted error:nil];
+            dataMutableDic = nil;
+        }
     }
 
     NSURLSessionDataTask *dataTask = [manager POST:urlString parameters:dataMutableDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+       
         if (!WB_UserService.currentUser.isCloudLogin) {
-            [formData appendPartWithFormData:josnData name:@"list"];
+            if (![WB_UserService.currentUser.stationId isEqualToString:boxModel.station.stationId]) {
+            }else{
+                [formData appendPartWithFormData:josnData name:@"list"];
+            }
+         
         }else{
             
         }
@@ -190,6 +220,7 @@
             NSLog(@"%@",localImageListArray);
             [manifestDic setObject:localImageListArray forKey:@"list"];
         }
+        
         if (netImageListArray.count>0) {
             [manifestDic setObject:netImageListArray forKey:@"indrive"];
         }
@@ -199,7 +230,6 @@
         [dataMutableDic setObject:result forKey:@"manifest"];
 
     }else{
-       
         if (![WB_UserService.currentUser.stationId isEqualToString:boxModel.station.stationId]) {
             NSString *requestUrl = [NSString stringWithFormat:@"/boxes/%@/tweets",boxModel.uuid];
             NSString *resource =[requestUrl base64EncodedString] ;

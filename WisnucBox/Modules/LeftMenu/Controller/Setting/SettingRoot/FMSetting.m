@@ -22,6 +22,8 @@
 @property (nonatomic,assign)BOOL btSwitchOn;
 @property (nonatomic,assign)BOOL sambaSwitchOn;
 @property (nonatomic,assign)BOOL miniDlnaSwitchOn;
+
+@property(nonatomic, strong) MDCDialogTransitionController *transitionController;
 @end
 
 @implementation FMSetting
@@ -39,6 +41,7 @@
     self.settingTableView.tableFooterView = [UIView new];
     self.displayProgress = NO;
     [self setSwitch];
+    self.transitionController = [[MDCDialogTransitionController alloc] init];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -178,7 +181,8 @@
                 UIViewController *viewController =
                 [storyboard instantiateViewControllerWithIdentifier:identifier];
         
-                viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
+                viewController.modalPresentationStyle = UIModalPresentationCustom;
+                viewController.transitioningDelegate = self.transitionController;
                 WBSettingSelectPpgAlertViewController *vc = (WBSettingSelectPpgAlertViewController *)viewController;
                 vc.typeString = [NSString stringWithFormat:@"%@",WB_UserService.currentUser.ppgSelectType];
                 vc.delegate = self;
@@ -203,7 +207,8 @@
             UIViewController *viewController =
             [storyboard instantiateViewControllerWithIdentifier:identifier];
             
-            viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
+            viewController.modalPresentationStyle = UIModalPresentationCustom;
+            viewController.transitioningDelegate = self.transitionController;
             WBSettingUpgradeSelectViewController *vc = (WBSettingUpgradeSelectViewController *)viewController;
             if (!WB_UserService.currentUser.isIgnoreUpgradeCheck) {
                 vc.typeString =  @"是";

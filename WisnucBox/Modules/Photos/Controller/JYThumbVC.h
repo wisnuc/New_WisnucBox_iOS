@@ -29,4 +29,6 @@
 - (instancetype)initWithLocalDataSource:(NSArray<JYAsset *> *)assets IsBoxSelectType:(BOOL)isBoxSelectType;
 
 - (void)addNetAssets:(NSArray<WBAsset *> *)assetsArr;
+
+- (void)mergeDataSource;
 @end

@@ -225,7 +225,6 @@
 }
 
 -(void)sort:(NSArray<JYAsset *> *)assetsArr {
-    
     NSMutableArray * arr = [NSMutableArray arrayWithArray:assetsArr];
     NSComparator cmptr = ^(JYAsset * photo1, JYAsset * photo2){
 //        NSLog(@"%@/%@",photo1,photo2);
@@ -292,6 +291,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.showIndicator = YES;
+   
     //    [self sort:self.arrDataSources];
     [self addRightBtn];
     [self initCollectionView];
@@ -300,18 +300,16 @@
     }else{
         [self initMjRefresh];
     }
-    
     [self sort:[self merge]];
-    NSLog(@"线程 = %@",[NSThread currentThread]);
     [self addPinchGesture];
     [self createControlbtn];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userAuthChange:) name:ASSETS_AUTH_CHANGE_NOTIFY object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(assetDidChangeHandle:) name:ASSETS_UPDATE_NOTIFY object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hashCalculateHandle) name:HashCalculateFinishedNotify object:nil];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated{
+
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
@@ -714,11 +712,9 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    
-//    NSLog(@"%@",self.arrDataSources[section]);
-//    if ([self.arrDataSources[section] isKindOfClass:[JYAsset class]]) {
-//        return 1;
-//    }
+    if ([self.arrDataSources[section] isKindOfClass:[JYAsset class]]) {
+        return 0;
+    }
     return ((NSArray *)self.arrDataSources[section]).count;
 }
 

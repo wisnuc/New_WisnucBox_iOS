@@ -242,8 +242,6 @@
     
     
     imageWithHeight = [self setFrameSelfFrameWithArray:messageModel.list];
-    
-    
     if (self.thumbnailRequestOperationArray && self.thumbnailRequestOperationArray.count>0){
         [self.thumbnailRequestOperationArray enumerateObjectsUsingBlock:^(SDWebImageDownloadToken *thumbnailRequestOperation, NSUInteger idx, BOOL * _Nonnull stop) {
             [[SDWebImageDownloader sharedDownloader] cancel:thumbnailRequestOperation];
@@ -308,7 +306,6 @@
                         if (!error &&img) {
                             [SDImageCache.sharedImageCache storeImage:img forKey:key toDisk:YES completion:^{
                             }];
-                            
                             dispatch_main_async_safe(^{
                                 imageView.image = img;
                                 [weakSelf.imageArray addObject:img];
@@ -349,7 +346,11 @@
         if (dataArray.count >6) {
             dispatch_main_async_safe((^{
                 //            maskImageView.alpha = 0.54f;
+               
                 self.maskImageView.frame = CGRectMake(2 * (imageWithHeight + Width_Space) + Start_X,1 * (imageWithHeight + Height_Space)+Start_Y, imageWithHeight, imageWithHeight);
+                if (messageModel.isSender) {
+                    self.maskImageView.frame = CGRectMake(0 * (imageWithHeight + Width_Space) + Start_X,1 * (imageWithHeight + Height_Space)+Start_Y, imageWithHeight, imageWithHeight);
+                }
                 UILabel *label = [[UILabel alloc]initWithFrame:self.maskImageView.bounds];
                 label.text = [NSString stringWithFormat:@"+%ld",dataArray.count - 6];
                 label.font = [UIFont boldSystemFontOfSize:21];

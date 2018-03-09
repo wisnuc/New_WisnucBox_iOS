@@ -99,6 +99,8 @@
 
 @property (nonatomic)NetServices *netServices;
 
+@property(nonatomic, strong) MDCDialogTransitionController *transitionController;
+
 @end
 
 @implementation WBInitializationViewController
@@ -106,6 +108,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = WBLocalizedString(@"initialization_guide", nil);
+    self.transitionController = [[MDCDialogTransitionController alloc] init];
     [self.view addSubview:self.mainScrollView];
     UITapGestureRecognizer *tapRecognizer =
     [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDidTouch)];
@@ -220,7 +223,8 @@
     UIViewController *viewController =
     [storyboard instantiateViewControllerWithIdentifier:identifier];
    
-    viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
+    viewController.modalPresentationStyle = UIModalPresentationCustom;
+    viewController.transitioningDelegate = self.transitionController;
     WBInitChangeDiskTypeAlertViewController *vc = (WBInitChangeDiskTypeAlertViewController *)viewController;
     vc.typeString = _diskTypeLabel.text;
 //    viewController
@@ -984,7 +988,8 @@
             UIViewController *viewController =
             [storyboard instantiateViewControllerWithIdentifier:identifier];
             
-            viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
+            viewController.modalPresentationStyle = UIModalPresentationCustom;
+            viewController.transitioningDelegate = self.transitionController;
             WBInitDiskDetailAlertViewController *vc = (WBInitDiskDetailAlertViewController *)viewController;
             vc.blocksmodel = model;
             [self presentViewController:viewController animated:YES completion:NULL];

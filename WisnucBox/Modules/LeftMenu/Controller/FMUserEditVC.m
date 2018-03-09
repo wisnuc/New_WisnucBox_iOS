@@ -43,7 +43,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *firstEditButton;
 @property (weak, nonatomic) IBOutlet UIButton *secondEditButton;
 @property (weak, nonatomic) IBOutlet UILabel *userTypeLabel;
-
+@property (nonatomic,strong) MDCDialogTransitionController *transitionController;
 @end
 
 @implementation FMUserEditVC
@@ -51,6 +51,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    self.title = @"编辑用户信息";
+    self.transitionController = [[MDCDialogTransitionController alloc] init];
     self.navigationController.navigationBar.translucent = NO;
     self.navigationTitle.text = WBLocalizedString(@"modify_user_info", nil);
     [self.leftNaviButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:10];
@@ -237,7 +238,8 @@
         UIViewController *viewController =
         [storyboard instantiateViewControllerWithIdentifier:identifier];
         
-        viewController.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
+        viewController.modalPresentationStyle = UIModalPresentationCustom;
+        viewController.transitioningDelegate = self.transitionController;
         WBSettingSelectRolesViewController *vc = (WBSettingSelectRolesViewController *)viewController;
         if ([_userModel.isAdmin boolValue]) {
             vc.typeString =  WBLocalizedString(@"administrator", nil);

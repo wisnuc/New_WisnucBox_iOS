@@ -30,6 +30,7 @@
 @property (nonatomic) ServerBrowser* browser;
 @property (nonatomic) UIViewController *alertViewController1;
 @property (nonatomic) UIViewController *alertViewController2;
+@property(nonatomic, strong) MDCDialogTransitionController *transitionController;
 @end
 
 @implementation WBStationManageRebotViewController
@@ -43,6 +44,7 @@
     [_rebootPowerOffLabel setText:WBLocalizedString(@"reboot_shutdown", nil)];
     [_miantainDetailLabel setText:WBLocalizedString(@"maintenance_explain", nil)];
     [_miantainLabel setText:WBLocalizedString(@"enter_maintenance", nil)];
+    self.transitionController = [[MDCDialogTransitionController alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -153,7 +155,8 @@
         UIViewController *alertViewController1 =
         [storyboard instantiateViewControllerWithIdentifier:identifier];
         
-        alertViewController1.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
+        alertViewController1.modalPresentationStyle = UIModalPresentationCustom;
+        alertViewController1.transitioningDelegate = self.transitionController;
         _alertViewController1 = alertViewController1;
         [self presentViewController:alertViewController1 animated:YES completion:nil];
         
@@ -241,7 +244,7 @@
                     if ([model.mode isEqualToString:@"maintenance"]) {
                     
                     [_alertViewController1 dismissViewControllerAnimated:YES completion:nil];
-                    
+
                     NSBundle *bundle = [NSBundle bundleForClass:[WBStationEnterMaintanceConfirmAVC class]];
                     UIStoryboard *storyboard =
                     [UIStoryboard storyboardWithName:NSStringFromClass([WBStationEnterMaintanceConfirmAVC class]) bundle:bundle];
@@ -250,7 +253,8 @@
                     UIViewController *alertViewController2 =
                     [storyboard instantiateViewControllerWithIdentifier:identifier];
                     
-                    alertViewController2.mdm_transitionController.transition = [[MDCDialogTransition alloc] init];
+                    alertViewController2.modalPresentationStyle = UIModalPresentationCustom;
+                    alertViewController2.transitioningDelegate = self.transitionController;
                     _alertViewController2 = alertViewController2;
                     [self presentViewController:alertViewController2 animated:YES completion:NULL];
                     
