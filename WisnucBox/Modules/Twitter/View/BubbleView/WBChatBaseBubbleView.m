@@ -52,6 +52,10 @@ NSString *const BUBBLE_RIGHT_IMAGE_NAME_X = @"IM_Chat_sender_bg";
 //    self.backImageView.image = image;
 }
 
+- (void)setBoxModel:(WBBoxesModel *)boxModel{
+    _boxModel = boxModel;
+}
+
 #pragma mark - public
 + (CGFloat)heightForBubbleWithObject:(WBTweetModel *)object {
     return 40;

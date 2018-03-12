@@ -24,6 +24,14 @@
 
 //  =============================================
 
+#define ShareViewHeight 126.0
+#define Width_Space      40.0f      // 2个按钮之间的横间距
+#define Height_Space     0     // 竖间距
+#define Button_Height   50.0f    // 高
+#define Button_Width    50.0f    // 宽
+#define Start_X          16.0f   // 第一个按钮的X坐标
+#define Start_Y          16.0f     // 第一个按钮的Y坐标
+
 @implementation SDPhotoBrowser 
 {
     UIScrollView *_scrollView;
@@ -32,6 +40,7 @@
     UIButton *_saveButton;
     UIActivityIndicatorView *_indicatorView;
     BOOL _willDisappear;
+    UIView *_shareView;
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -86,6 +95,29 @@
 //    [saveButton addTarget:self action:@selector(saveImage) forControlEvents:UIControlEventTouchUpInside];
 //    _saveButton = saveButton;
 //    [self addSubview:saveButton];
+    _shareView = [[UIView alloc]initWithFrame:CGRectMake(0, __kHeight, __kWidth, ShareViewHeight)];
+    _shareView.backgroundColor = [UIColor whiteColor];
+    UIToolbar *shareToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, ShareViewHeight - 44, __kWidth, 44)];
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareToOther)];
+    UIBarButtonItem* flexItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    flexItem.width = 16;
+    [shareToolbar setItems:@[flexItem,barButtonItem]];
+    
+    UIScrollView *scrollView = [[UIScrollView alloc]init];
+    scrollView.frame = CGRectMake(0, 0, __kWidth, ShareViewHeight - 44);
+    
+    [[self boxModel].users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *userModel, NSUInteger idx, BOOL * _Nonnull stop) {
+    
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(idx *(Button_Width + Width_Space) + Start_X,Start_Y, Button_Width, Button_Height)];
+        [imageView was_setCircleImageWithUrlString:userModel.avatarUrl placeholder:[UIImage imageWithColor:RGBACOLOR(0, 0, 0, 0.37)]];
+        imageView.tag = idx;
+        imageView.userInteractionEnabled = YES;
+        [scrollView addSubview:imageView];
+    }];
+    scrollView.contentSize = CGSizeMake([self boxModel].users.count*(Button_Width+Width_Space)+16*2 - Width_Space,scrollView.height );
+    [_shareView addSubview:shareToolbar];
+    [_shareView addSubview:scrollView];
+    [self addSubview:_shareView];
 }
 
 - (void)saveImage
@@ -153,6 +185,7 @@
         
         [singleTap requireGestureRecognizerToFail:doubleTap];
         
+        
 //        UISwipeGestureRecognizer *recognizer;
 //
 //        recognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeFrom:)];
@@ -164,11 +197,13 @@
         [panGesture setMinimumNumberOfTouches:1];
         [panGesture setMaximumNumberOfTouches:1];
        
+        UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewlongGesture:)];
         
         [imageView addGestureRecognizer:singleTap];
 //        [imageView addGestureRecognizer:recognizer];
         [imageView addGestureRecognizer:doubleTap];
         [self addGestureRecognizer:panGesture];
+        [imageView addGestureRecognizer:longGesture];
         [_scrollView addSubview:imageView];
     }
     
@@ -195,7 +230,6 @@
     
     if ([self highQualityImageBoxInfoForIndex:index]) {
         NSDictionary *dic = [self highQualityImageBoxInfoForIndex:index];
-        NSLog(@"🍄🍄🍄🍄🍄🍄🍄🍄🍄🍄%ld",index);
         
         imageView.image = [self placeholderImageForIndex:self.currentImageIndex];
         if (dic[kMessageImageBoxLocalAsset]) {
@@ -414,6 +448,14 @@
 
 - (void)photoClick:(UITapGestureRecognizer *)recognizer
 {
+    if (_shareView && _shareView.frame.origin.y == __kHeight - ShareViewHeight) {
+        [UIView animateWithDuration:.5f animations:^{
+            _shareView.frame = CGRectMake(0, __kHeight, __kWidth, ShareViewHeight);
+        } completion:^(BOOL finished) {
+            
+        }];
+        return;
+    }
     _scrollView.hidden = YES;
     _willDisappear = YES;
     
@@ -522,6 +564,19 @@
     SDBrowserImageView *view = (SDBrowserImageView *)recognizer.view;
 
     [view doubleTapToZommWithScale:scale];
+}
+
+- (void)imageViewlongGesture:(UILongPressGestureRecognizer*)gesture{
+   
+    [UIView  animateWithDuration:.5f animations:^{
+        _shareView.frame = CGRectMake(0, __kHeight - ShareViewHeight, __kWidth, ShareViewHeight);
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
+- (void)shareToOther{
+    
 }
 
 - (void)layoutSubviews
@@ -635,6 +690,12 @@
     return nil;
 }
 
+- (WBBoxesModel *)boxModel{
+    if ([self.delegate respondsToSelector:@selector(photoBrowser:)]) {
+        return [self.delegate photoBrowser:self];
+    }
+    return nil;
+}
 #pragma mark - scrollview代理方法
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView

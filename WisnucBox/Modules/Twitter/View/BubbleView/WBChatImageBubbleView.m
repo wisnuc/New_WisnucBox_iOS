@@ -118,6 +118,11 @@
 
 #pragma mark - setter
 
+- (void)setBoxModel:(WBBoxesModel *)boxModel{
+    [super setBoxModel:boxModel];
+    
+}
+
 - (void)setMessageModel:(WBTweetModel *)messageModel {
     [super setMessageModel:messageModel];
     jy_weakify(self);
@@ -500,6 +505,10 @@
     UIImageView *imageView = self.subviews[index];
     
     return imageView.image;
+}
+
+- (WBBoxesModel *)photoBrowser:(SDPhotoBrowser *)browser{
+    return self.boxModel;
 }
 
 - (NSDictionary *)photoBrowser:(SDPhotoBrowser *)browser highQualityImageBoxInfoForIndex:(NSInteger)index{

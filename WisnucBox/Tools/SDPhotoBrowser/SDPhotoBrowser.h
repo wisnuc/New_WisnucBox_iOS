@@ -22,6 +22,7 @@
 - (NSURL *)photoBrowser:(SDPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index;
 - (NSDictionary *)photoBrowser:(SDPhotoBrowser *)browser highQualityImageBoxInfoForIndex:(NSInteger)index;
 - (UIImageView *)photoBrowser:(SDPhotoBrowser *)browser willDismissAtIndex:(NSInteger )index;
+- (WBBoxesModel *)photoBrowser:(SDPhotoBrowser *)browser;
 @end
 
 

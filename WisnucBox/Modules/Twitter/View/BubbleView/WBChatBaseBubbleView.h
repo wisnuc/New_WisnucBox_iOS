@@ -12,6 +12,7 @@
 
 @interface WBChatBaseBubbleView : UIView
 @property (nonatomic, strong) WBTweetModel *messageModel;
+@property (nonatomic, strong) WBBoxesModel *boxModel;
 
 + (CGFloat)heightForBubbleWithObject:(WBTweetModel *)object;
 - (void)bubbleViewPressed:(id)sender;

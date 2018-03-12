@@ -101,6 +101,11 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
     
 }
 
+- (void)setBoxModel:(WBBoxesModel *)boxModel{
+    [super setBoxModel:boxModel];
+    _bubbleView.boxModel = boxModel;
+}
+
 - (void)prepareForReuse {
     [super prepareForReuse];
     if ([self.bubbleView isKindOfClass:[WBChatImageBubbleView class]]) {
@@ -157,6 +162,7 @@ CGFloat const SEND_STATUS_SIZE_X = 20.0f;
         case MessageBodyType_Image: {
             WBChatImageBubbleView *imageBubbleView = [[WBChatImageBubbleView alloc] initWithFrame:CGRectMake(0, 0, messageModel.width, messageModel.height)];
             imageBubbleView.refreshDelegate = self;
+//            imageBubbleView.boxModel = self.boxModel;
             return imageBubbleView;
         }
             break;

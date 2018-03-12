@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSMutableArray *thumbnailRequestOperationArray;
 @property (nonatomic, strong) NSMutableArray *imageArray;
 @property (nonatomic, strong) NSArray *localImageArray;
-@property (nonatomic,strong) UIImageView * maskImageView;
+@property (nonatomic, strong) UIImageView * maskImageView;
+
 @property (nonatomic,weak)id<RefreshDelegate> refreshDelegate;
 @end

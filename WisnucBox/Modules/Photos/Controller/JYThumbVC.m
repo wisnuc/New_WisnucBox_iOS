@@ -291,7 +291,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.showIndicator = YES;
-   
     //    [self sort:self.arrDataSources];
     [self addRightBtn];
     [self initCollectionView];
@@ -300,7 +299,13 @@
     }else{
         [self initMjRefresh];
     }
-    [self sort:[self merge]];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [self sort:[self merge]];
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [self.collectionView reloadData];
+        });
+    });
+   
     [self addPinchGesture];
     [self createControlbtn];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userAuthChange:) name:ASSETS_AUTH_CHANGE_NOTIFY object:nil];
@@ -309,7 +314,6 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
@@ -327,29 +331,33 @@
             [weakSelf leftBtnClick:_leftBtn];
         }
         [WB_AssetService getNetAssets:^(NSError *error, NSArray<WBAsset *> *netAssets) {
-        if(!error){
-         [weakSelf.localArrDataSourcesBackup removeAllObjects];
-         [weakSelf.netArrDataSourcesBackup removeAllObjects];
-         [weakSelf.arrDataSources removeAllObjects];
-         [weakSelf addLocalDataSource:[AppServices sharedService].assetServices.allAssets];
-         [weakSelf sort:self.arrDataSources];
-//         NSLog(@"%@",self.arrDataSources);
-         [weakSelf addNetAssets:netAssets];
-         
-         weakSelf.isSelectMode = _isSelectMode;
-           
-         [weakSelf.collectionView reloadData];
-         [weakSelf.collectionView.mj_header endRefreshing];
-        }else{
-            [weakSelf.collectionView reloadData];
-            [weakSelf.collectionView.mj_header endRefreshing];
-        }
-        NSLog(@"Fetch Net Assets Error --> : %@", error);
+            if(!error){
+                [weakSelf.localArrDataSourcesBackup removeAllObjects];
+                [weakSelf.netArrDataSourcesBackup removeAllObjects];
+                [weakSelf.arrDataSources removeAllObjects];
+                [weakSelf addLocalDataSource:[AppServices sharedService].assetServices.allAssets];
+                [weakSelf sort:self.arrDataSources];
+                //         NSLog(@"%@",self.arrDataSources);
+                [weakSelf addNetAssets:netAssets];
+                
+                weakSelf.isSelectMode = _isSelectMode;
+                dispatch_main_async_safe(^{
+                    [weakSelf.collectionView reloadData];
+                    [weakSelf.collectionView.mj_header endRefreshing];
+                });
+                
+            }else{
+                dispatch_main_async_safe(^{
+                    [weakSelf.collectionView reloadData];
+                    [weakSelf.collectionView.mj_header endRefreshing];
+                });
+            }
+            NSLog(@"Fetch Net Assets Error --> : %@", error);
+        }];
+        //        [weakSelf sort:self.arrDataSources];
+        //        [weakSelf.collectionView reloadData];
     }];
-//        [weakSelf sort:self.arrDataSources];
-//        [weakSelf.collectionView reloadData];
-}];
-//    self.tableView.mj_header.ignoredScrollViewContentInsetTop = KDefaultOffset;
+    //    self.tableView.mj_header.ignoredScrollViewContentInsetTop = KDefaultOffset;
     //    [self.tableView.mj_header beginRefreshing];
 }
 
@@ -808,7 +816,12 @@
 //headView
 - (FMHeadView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
     FMHeadView * headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headView" forIndexPath:indexPath];
-    headView.headTitle = [self getDateStringWithPhoto: ((JYAsset *)((NSMutableArray *)_arrDataSources[indexPath.section])[indexPath.row]).createDate];
+    if ([self.arrDataSources[indexPath.section] isKindOfClass:[JYAsset class]]) {
+        headView.headTitle = [self getDateStringWithPhoto:(        (JYAsset *)_arrDataSources[indexPath.section]).createDate];
+    }else{
+      headView.headTitle = [self getDateStringWithPhoto: ((JYAsset *)((NSMutableArray *)_arrDataSources[indexPath.section])[indexPath.row]).createDate];
+    }
+    
     headView.fmIndexPath = indexPath;
     headView.isSelectMode = _isSelectMode;
     headView.isChoose = [self.chooseSection containsObject:indexPath];
