@@ -15,4 +15,5 @@
 - (void)sendTweetWithFilesDic:(NSDictionary *)dic BoxModel:(WBBoxesModel *)boxModel Complete:(void(^)(WBTweetModel *tweetModel,NSError *error))callback;
 - (void)saveBoxesTokenWithGuid:(NSString *)guid;
 - (NSString *)boxToken;
+- (void)getBoxListCallBack:(void(^)(NSArray *boxesModelArr,NSError *error))callback;
 @end

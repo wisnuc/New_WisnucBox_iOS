@@ -62,8 +62,6 @@ typedef struct _FileHashComputationContext {
     CFReadStreamRef readStream = fileURL ? CFReadStreamCreateWithFile(kCFAllocatorDefault, fileURL) : NULL;
     BOOL didSucceed = readStream ? (BOOL)CFReadStreamOpen(readStream) : NO;
     if (didSucceed) {
-        
-        
         const size_t chunkSizeForReadingData = FileHashDefaultChunkSizeForReadingData;
         (*context->initFunction)(context->hashObjectPointer);
         BOOL hasMoreData = YES;
@@ -121,6 +119,31 @@ typedef struct _FileHashComputationContext {
     FileHashComputationContext context;
     FileHashComputationContextInitialize(context, SHA256);
     return [self hashOfFileAtPath:filePath withComputationContext:&context];
+}
+
++(NSString *)sha256HashOfData:(NSData *)inputData
+{
+  
+    // Make sure the file exists
+    if(inputData.length>0)
+    {
+        NSData *data = inputData;
+        unsigned char digest[CC_SHA256_DIGEST_LENGTH];
+        CC_SHA256( data.bytes, (CC_LONG)data.length, digest );
+        
+        NSMutableString *output = [NSMutableString stringWithCapacity:CC_SHA256_DIGEST_LENGTH * 2];
+        
+        for( int i = 0; i < CC_SHA256_DIGEST_LENGTH; i++ )
+        {
+            [output appendFormat:@"%02x", digest[i]];
+        }
+        
+        return output;
+    }
+    else
+    {
+        return @"";
+    }
 }
 
 @end

@@ -66,7 +66,7 @@
     if (WB_UserService.currentUser.isAdmin) {
         return 6;
     }else{
-        return 4;
+        return 3;
     }
    
 }
@@ -108,19 +108,19 @@
         }
         
             break;
-            
         case 2:{
+            cell.textLabel.text =  @"如何处理使用WISNUC打开的文件";
+        }
+            
+            break;
+        case 3:{
             
             cell.textLabel.text = @"服务管理";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
         }
             break;
-        case 3:{
-             cell.textLabel.text =  @"如何处理使用WISNUC打开的文件";
-        }
-
-            break;
+      
          
         case 4:{
             

@@ -131,6 +131,7 @@ static MBProgressHUD  *s_progressHUD = nil;
         [self hideProgressHUD];
         MBProgressHUD *progressHUD = [[MBProgressHUD alloc] initWithView:_mainWindow()];
         [_mainWindow() addSubview:progressHUD];
+        progressHUD.mode = MBProgressHUDModeIndeterminate;
         progressHUD.animationType = MBProgressHUDAnimationZoom;
         progressHUD.labelText =aString;
         progressHUD.removeFromSuperViewOnHide = YES;
@@ -140,6 +141,9 @@ static MBProgressHUD  *s_progressHUD = nil;
         [progressHUD hide:YES afterDelay:duration];
     });
 }
+
+
+
 
 + (void)hideProgressHUD {
     if (s_progressHUD) {

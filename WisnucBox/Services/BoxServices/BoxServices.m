@@ -8,7 +8,7 @@
 
 #import "BoxServices.h"
 #import "PHAsset+JYEXT.h"
-
+#import "WBGetBoxesAPI.h"
 
 @interface BoxServices(){
 //     AFHTTPSessionManager * _manager;
@@ -141,7 +141,16 @@
             [mutableDic setObject:@"media" forKey:@"type"];
             [mutableDic setObject:hashString forKey:@"sha256"];
             [netImageListArray addObject:mutableDic];
-            
+        }else if([obj isKindOfClass:[UIImageView class]]){
+            UIImage *resultImage = ((UIImageView *)obj).image;
+            NSData *data = UIImagePNGRepresentation(resultImage);
+            NSMutableDictionary * mutableDicx = [NSMutableDictionary dictionaryWithCapacity:0];
+            [mutableDicx setObject:@(data.length) forKey:@"size"];
+//            [mutableDicx setObject:resultImage.className forKey:@"filename"];
+            NSString * hashString = [FileHash sha256HashOfData:data];
+            [mutableDicx setObject:hashString forKey:@"sha256"];
+            [mutableDicx setObject:data forKey:@"imagedata"];
+            [localImageListArray addObject:mutableDicx];
         }else{
             JYAsset *jyasset = obj;
             PHImageRequestID requestFileID =  [jyasset.asset getFile:^(NSError *requestError, NSString *filePath) {
@@ -215,6 +224,7 @@
         if (localImageListArray.count>0) {
             [localImageListArray enumerateObjectsUsingBlock:^(NSMutableDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 [obj removeObjectForKey:@"filePath"];
+                [obj removeObjectForKey:@"imagedata"];
             }];
             
             NSLog(@"%@",localImageListArray);
@@ -241,6 +251,7 @@
             if (localImageListArray.count>0) {
                 [localImageListArray enumerateObjectsUsingBlock:^(NSMutableDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
                     [obj removeObjectForKey:@"filePath"];
+                    [obj removeObjectForKey:@"imagedata"];
                 }];
                 
                 NSLog(@"%@",localImageListArray);
@@ -260,6 +271,7 @@
             if (localImageListArray.count>0) {
                 [localImageListArray enumerateObjectsUsingBlock:^(NSMutableDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
                     [obj removeObjectForKey:@"filePath"];
+                    [obj removeObjectForKey:@"imagedata"];
                 }];
                 
                 NSLog(@"%@",localImageListArray);
@@ -291,6 +303,16 @@
                 [dic setObject:[mutableDic objectForKey:@"size"]  forKey:@"size"];
                 [dic setObject:[mutableDic objectForKey:@"sha256"]  forKey:@"sha256"];
                 filePath =[mutableDic objectForKey:@"filePath"];
+//                NSString *fileName =[mutableDic objectForKey:@"filename"];
+                NSData *data = [mutableDic objectForKey:@"imagedata"];
+                if (data.length>0) {
+//                    NSError *formdataError;
+                    NSData *jsonFileNameData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
+                    NSString *jsonString =  [[NSString alloc] initWithData:jsonFileNameData  encoding:NSUTF8StringEncoding];
+                    NSLog(@"%@",jsonFileNameData);
+                    [formData appendPartWithFileData:data  name:@"" fileName:jsonString mimeType:@"application/octet-stream"];
+                    return ;
+                }
                 NSError *formdataError;
                 NSData *jsonFileNameData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
                 NSString *jsonString =  [[NSString alloc] initWithData:jsonFileNameData  encoding:NSUTF8StringEncoding];
@@ -365,6 +387,33 @@
         }else{
             NSLog(@"%@",error);
         }
+    }];
+}
+
+- (void)getBoxListCallBack:(void(^)(NSArray *boxesModelArr,NSError *error))callback{
+    if (!WB_UserService.currentUser.cloudToken) {
+        [SXLoadingView showProgressHUDText:@"非微信登录暂不能使用私友群功能" duration:1.2f];
+        return;
+    }
+    [[WBGetBoxesAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.responseJsonObject);
+        NSArray * array = WB_UserService.currentUser.cloudToken ? request.responseJsonObject[@"data"]
+        : request.responseJsonObject;
+        NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
+        [array enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            WBBoxesModel *model = [WBBoxesModel modelWithDictionary:obj];
+            [dataArray addObject:model];
+        }];
+        callback(dataArray,nil) ;
+       
+    } failure:^(__kindof JYBaseRequest *request) {
+        NSLog(@"%@",request.error);
+        NSData *errorData = request.error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+        if(errorData.length >0){
+            NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+            NSLog(@"失败,%@",serializedData);
+        }
+        callback(nil,request.error);
     }];
 }
 
