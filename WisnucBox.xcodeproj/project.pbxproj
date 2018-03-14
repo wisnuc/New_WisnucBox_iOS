@@ -155,6 +155,9 @@
 		1F5D21831FBC3DB0006C65AA /* FilesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5D21821FBC3DB0006C65AA /* FilesModel.m */; };
 		1F611CAC1FF0CEFD00E34379 /* WBSettingSelectRolesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F611CAB1FF0CEFD00E34379 /* WBSettingSelectRolesViewController.m */; };
 		1F611CAE1FF0CF2000E34379 /* WBSettingSelectRolesViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F611CAD1FF0CF2000E34379 /* WBSettingSelectRolesViewController.storyboard */; };
+		1F661EC82058F9F700C2125B /* ic_cloud_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F661EC52058F9F400C2125B /* ic_cloud_white@2x.png */; };
+		1F661EC92058F9F700C2125B /* ic_cloud_white@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F661EC62058F9F400C2125B /* ic_cloud_white@3x.png */; };
+		1F661ECA2058F9F700C2125B /* ic_cloud_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F661EC72058F9F600C2125B /* ic_cloud_white.png */; };
 		1F6E547D1FFE1690009E38AE /* weChat_add@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6E547A1FFE168E009E38AE /* weChat_add@3x.png */; };
 		1F6E547E1FFE1690009E38AE /* weChat_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6E547B1FFE168F009E38AE /* weChat_add.png */; };
 		1F6E547F1FFE1690009E38AE /* weChat_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6E547C1FFE168F009E38AE /* weChat_add@2x.png */; };
@@ -1374,6 +1377,9 @@
 		1F611CAA1FF0CEFD00E34379 /* WBSettingSelectRolesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBSettingSelectRolesViewController.h; sourceTree = "<group>"; };
 		1F611CAB1FF0CEFD00E34379 /* WBSettingSelectRolesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBSettingSelectRolesViewController.m; sourceTree = "<group>"; };
 		1F611CAD1FF0CF2000E34379 /* WBSettingSelectRolesViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WBSettingSelectRolesViewController.storyboard; sourceTree = "<group>"; };
+		1F661EC52058F9F400C2125B /* ic_cloud_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_cloud_white@2x.png"; sourceTree = "<group>"; };
+		1F661EC62058F9F400C2125B /* ic_cloud_white@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_cloud_white@3x.png"; sourceTree = "<group>"; };
+		1F661EC72058F9F600C2125B /* ic_cloud_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_cloud_white.png; sourceTree = "<group>"; };
 		1F6E547A1FFE168E009E38AE /* weChat_add@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChat_add@3x.png"; sourceTree = "<group>"; };
 		1F6E547B1FFE168F009E38AE /* weChat_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weChat_add.png; sourceTree = "<group>"; };
 		1F6E547C1FFE168F009E38AE /* weChat_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weChat_add@2x.png"; sourceTree = "<group>"; };
@@ -4783,6 +4789,9 @@
 		C139DFC01FC7DFC7007098E5 /* photo */ = {
 			isa = PBXGroup;
 			children = (
+				1F661EC72058F9F600C2125B /* ic_cloud_white.png */,
+				1F661EC52058F9F400C2125B /* ic_cloud_white@2x.png */,
+				1F661EC62058F9F400C2125B /* ic_cloud_white@3x.png */,
 				1F6E54A520036660009E38AE /* ic_cloud_off_white.png */,
 				1F6E54A720036661009E38AE /* ic_cloud_off_white@2x.png */,
 				1F6E54A620036660009E38AE /* ic_cloud_off_white@3x.png */,
@@ -5678,6 +5687,7 @@
 				F68310B21FB30AAE005AC578 /* Default-667h@2x.png in Resources */,
 				F68311031FB30AAE005AC578 /* ic_person.png in Resources */,
 				F68311981FB30AAF005AC578 /* small_3.png in Resources */,
+				1F661ECA2058F9F700C2125B /* ic_cloud_white.png in Resources */,
 				1F40839F20060D0300DC0634 /* download_gray@2x.png in Resources */,
 				F68310B61FB30AAE005AC578 /* del@2x.png in Resources */,
 				1FFAE3961FE142D40054C393 /* ic_info@3x.png in Resources */,
@@ -6368,6 +6378,7 @@
 				1FA86442200F405100550C7B /* B_84@2x.gif in Resources */,
 				F68311491FB30AAE005AC578 /* person@3x.png in Resources */,
 				F68311391FB30AAE005AC578 /* more_highlight@3x.png in Resources */,
+				1F661EC82058F9F700C2125B /* ic_cloud_white@2x.png in Resources */,
 				1FF1483420297BF3009BBEF8 /* ImageError.png in Resources */,
 				F68310DF1FB30AAE005AC578 /* good_red_select@3x.png in Resources */,
 				1F3F998A1FB0353F00D6CC64 /* LocalDownloadTableViewCell.xib in Resources */,
@@ -6411,6 +6422,7 @@
 				F68311A21FB30AAF005AC578 /* storage_select@2x.png in Resources */,
 				1F6E548B1FFF56BE009E38AE /* share_disk@2x.png in Resources */,
 				1FA864E8200F405200550C7B /* C_86@2x.png in Resources */,
+				1F661EC92058F9F700C2125B /* ic_cloud_white@3x.png in Resources */,
 				1FAD748A1FD15EBE00A5D880 /* upload_download@2x.png in Resources */,
 				1FF1482C20297BF3009BBEF8 /* ImageError@2x.png in Resources */,
 				F68310B11FB30AAE005AC578 /* Default-568h@2x.png in Resources */,

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Photos/Photos.h>
+#import "WBBoxesModel.h"
 
 @class JYAsset;
 @class JYShowBigImgViewController;
@@ -43,6 +44,9 @@
 
 @property (nonatomic, weak) id<JYShowBigImgViewControllerDelegate> delegate;
 
+@property (nonatomic, strong)NSMutableArray *boxesDataArray;
+
+@property (nonatomic, strong)NSArray *shareDataArray;
 @end
 
 

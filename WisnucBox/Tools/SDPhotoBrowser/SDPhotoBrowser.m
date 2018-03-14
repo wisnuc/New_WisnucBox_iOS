@@ -650,6 +650,7 @@
 }
 
 - (void)shareToOther{
+    @weaky(self)
     UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:@[((UIImageView *)(_scrollView.subviews[self.currentImageIndex])).image] applicationActivities:nil];
     //初始化回调方法
     UIActivityViewControllerCompletionWithItemsHandler myBlock = ^(UIActivityType __nullable activityType, BOOL completed, NSArray * __nullable returnedItems, NSError * __nullable activityError)
@@ -668,6 +669,7 @@
         {
             NSLog(@"share cancel");
         }
+        [weak_self photoClick:nil];
     };
     
     // 初始化completionHandler，当post结束之后（无论是done还是cancel）该blog都会被调用

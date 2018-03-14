@@ -172,10 +172,18 @@
 {
     _model = model;
     if (model.type == JYAssetTypeImage && model.type != JYAssetTypeNetImage){
+        self.videoImageView.hidden = YES;
+        self.videoBottomView.hidden = YES;
+        self.liveImageView.hidden = YES;
+//        self.videoImageView.image = [UIImage imageNamed:@"ic_cloud_off_white"];
+        self.videoBottomView.hidden = NO;
+        self.liveImageView.hidden = YES;
+        self.timeLabel.hidden = YES;
+    }else if(model.type == JYAssetTypeNetImage){
         self.videoImageView.hidden = NO;
         self.videoBottomView.hidden = YES;
         self.liveImageView.hidden = YES;
-        self.videoImageView.image = [UIImage imageNamed:@"ic_cloud_off_white"];
+        self.videoImageView.image = [UIImage imageNamed:@"ic_cloud_white"];
         self.videoBottomView.hidden = NO;
         self.liveImageView.hidden = YES;
         self.timeLabel.hidden = YES;

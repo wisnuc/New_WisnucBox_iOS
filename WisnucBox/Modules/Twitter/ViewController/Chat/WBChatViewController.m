@@ -843,7 +843,7 @@ NSString *const kTableViewFrame = @"frame";
     NSString *jsonStr = noti.object;
     NSData *data = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
     NSMutableArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-    NSLog(@"%@",array);
+//    NSLog(@"%@",array);
     NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
     @weaky(self)
     //    dispatch_async(dispatch_get_global_queue(0, 0), ^{

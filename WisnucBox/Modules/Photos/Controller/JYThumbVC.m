@@ -24,8 +24,17 @@
 #import "JYProcessView.h"
 #import "AppDelegate.h"
 
+#define ShareViewHeight 131.0
+#define Width_Space      40.0f      // 2个按钮之间的横间距
+#define Height_Space     0     // 竖间距
+#define Button_Height   55.0f    // 高
+#define Button_Width    40.0f    // 宽
+#define Start_X          16.0f   // 第一个按钮的X坐标
+#define Start_Y          16.0f     // 第一个按钮的Y坐标
+
 @interface JYThumbVC ()<UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UIViewControllerPreviewingDelegate, JYShowBigImgViewControllerDelegate, FMHeadViewDelegate, floatMenuDelegate,UICollectionViewDataSourcePrefetching> {
     NSInteger _currentScale;
+    UITapGestureRecognizer *_tap;
     
 }
 
@@ -68,6 +77,9 @@
     UIButton * _leftBtn;//导航栏左边按钮
     UIButton * _rightbtn;//导航栏右边按钮
     UILabel * _countLb;
+    NSArray * _shareaDataArray;
+    NSMutableArray * _boxesDataArray;
+    UIView *_shareView;
 }
 
 - (NSMutableArray<WBAsset *> *)netArrDataSourcesBackup {
@@ -311,6 +323,18 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userAuthChange:) name:ASSETS_AUTH_CHANGE_NOTIFY object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(assetDidChangeHandle:) name:ASSETS_UPDATE_NOTIFY object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hashCalculateHandle) name:HashCalculateFinishedNotify object:nil];
+    
+    _shareView = [[UIView alloc]initWithFrame:CGRectMake(0, __kHeight, __kWidth, ShareViewHeight)];
+    _shareView.backgroundColor = [UIColor whiteColor];
+    UIToolbar *shareToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, ShareViewHeight - 44, __kWidth, 44)];
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareToOther)];
+    UIBarButtonItem* flexItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    flexItem.width = 16;
+    [shareToolbar setItems:@[flexItem,barButtonItem]];
+    
+    
+    [_shareView addSubview:shareToolbar];
+    [self.view addSubview:_shareView];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -1135,35 +1159,154 @@ bool isDecelerating = NO;
         [SXLoadingView showAlertHUD:WBLocalizedString(@"please_select_the_photo", nil) duration:1];
 }
 
+- (void)shareToOther{
+    @weaky(self)
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:_shareaDataArray applicationActivities:nil];
+    //初始化回调方法
+    UIActivityViewControllerCompletionWithItemsHandler myBlock = ^(UIActivityType __nullable activityType, BOOL completed, NSArray * __nullable returnedItems, NSError * __nullable activityError)
+    {
+        NSLog(@"activityType :%@", activityType);
+        if (completed)
+        {
+            NSLog(@"share completed");
+            if (activityType == UIActivityTypeSaveToCameraRoll) {
+                [SXLoadingView showProgressHUDText:@"已存入相册" duration:1.2f];
+            }else{
+                [SXLoadingView showProgressHUDText:@"分享完成" duration:1.2f];
+            }
+        }
+        else
+        {
+            NSLog(@"share cancel");
+        }
+        [weak_self dismissShareView];
+    };
+    
+    // 初始化completionHandler，当post结束之后（无论是done还是cancel）该blog都会被调用
+    activityVC.completionWithItemsHandler = myBlock;
+    
+    //关闭系统的一些activity类型 UIActivityTypeAirDrop 屏蔽aridrop
+    activityVC.excludedActivityTypes = @[];
+    
+    [weak_self presentViewController:activityVC animated:YES completion:nil];
+}
+
 //其他分享
 -(void)shareToOtherApp{
     //准备照片
     @weaky(self);
-    [self clickDownloadWithShare:YES andCompleteBlock:^(NSArray *images) {
-        UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:images applicationActivities:nil];
-        //初始化回调方法
-        UIActivityViewControllerCompletionWithItemsHandler myBlock = ^(NSString *activityType,BOOL completed,NSArray *returnedItems,NSError *activityError)
-        {
-            NSLog(@"activityType :%@", activityType);
-            if (completed)
-            {
-                NSLog(@"share completed");
+        [self clickDownloadWithShare:YES andCompleteBlock:^(NSArray *images) {
+            [self tabBarAnimationWithHidden:YES];
+            [weak_self shareScrollViewInit];
+            _shareaDataArray = images;
+        }];
+}
+
+- (void)shareScrollViewInit{
+    [UIView  animateWithDuration:.5f animations:^{
+        _shareView.frame = CGRectMake(0, __kHeight - ShareViewHeight-64, __kWidth, ShareViewHeight);
+    } completion:^(BOOL finished) {
+        self.collectionView.userInteractionEnabled = NO;
+        __block UIActivityIndicatorView *activtiy = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        activtiy.backgroundColor = [UIColor clearColor];
+        activtiy.frame = CGRectMake(0, 0, 30, 30);
+        activtiy.center = CGPointMake(_shareView.width/2, (_shareView.height - 44)/2);
+        [_shareView addSubview:activtiy];
+        [activtiy  startAnimating];
+        [WB_BoxService getBoxListCallBack:^(NSArray *boxesModelArr, NSError *error) {
+            [activtiy stopAnimating];
+            [activtiy removeFromSuperview];
+            if (!error) {
+                UIScrollView *scrollView = [[UIScrollView alloc]init];
+                scrollView.frame = CGRectMake(0, 0, __kWidth, ShareViewHeight - 44);
+                NSMutableArray *boxArray = [NSMutableArray arrayWithArray:boxesModelArr];
+                //                [boxesModelArr enumerateObjectsUsingBlock:^(WBBoxesModel *boxesModel, NSUInteger idx, BOOL * _Nonnull stop) {
+                //                    if ([boxesModel.uuid isEqualToString:[weak_self boxModel].uuid]) {
+                //                        [boxArray removeObject:boxesModel];
+                //                    }
+                //                }];
+                
+                _boxesDataArray = boxArray;
+                [boxArray enumerateObjectsUsingBlock:^(WBBoxesModel *boxesModel, NSUInteger idx, BOOL * _Nonnull stop) {
+                    UIButton *boxView = [[UIButton alloc]initWithFrame:CGRectMake(idx *(Button_Width + Width_Space) + Start_X,Start_Y, Button_Width, Button_Height)];
+                    //                        boxView.backgroundColor = [UIColor redColor];
+                    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, Button_Height - 15, Button_Width, 15)];
+                    label.textAlignment = NSTextAlignmentCenter;
+                    label.font = [UIFont systemFontOfSize:12];
+                    label.text = boxesModel.name;
+                    //                        NSLog(@"%@",boxesModel.name);
+                    //                        label.backgroundColor = [UIColor cyanColor];
+                    __block NSMutableString *userName = [NSMutableString stringWithCapacity:0];
+                    NSInteger n = MIN(boxesModel.users.count, 5);
+                    float r = 20 * n / (2.5 * n - 1.5);
+                    [boxesModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *userModel, NSUInteger idx, BOOL * _Nonnull stop) {
+                        if (idx<= n - 1){
+                            float deg =  M_PI * ((float)idx * 2 / n - 1 / 4);
+                            float top = (1 - cosf(deg)) * (20 - r);
+                            float left = (1 + sinf(deg)) * (20 - r);
+                            UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(left, top, r *2, r*2)];
+                            imageView.layer.masksToBounds = YES;
+                            imageView.layer.cornerRadius = r;
+                            imageView.layer.borderWidth = 0.5f;
+                            imageView.layer.borderColor = [UIColor whiteColor].CGColor;
+                            [imageView was_setCircleImageWithUrlString:userModel.avatarUrl placeholder:[UIImage imageWithColor:RGBACOLOR(0, 0, 0, 0.37)]];
+                            [boxView addSubview:imageView];
+                            if (boxesModel.name.length ==0) {
+                                [userName  appendFormat:@"%@,",userModel.nickName];
+                                label.text = userName;
+                            }
+                        }
+                    }];
+                    
+                    [boxView addSubview:label];
+                    boxView.tag = idx;
+                    [boxView addTarget:self action:@selector(boxShareClick:) forControlEvents:UIControlEventTouchUpInside];
+                    [scrollView addSubview:boxView];
+                }];
+                scrollView.contentSize = CGSizeMake(boxesModelArr.count*(Button_Width+Width_Space)+16*2 - Width_Space,scrollView.height );
+                [_shareView addSubview:scrollView];
+            }else{
+                [SXLoadingView showAlertHUD:@"获取群列表失败" duration:1.2f];
             }
-            else
-            {
-                NSLog(@"share cancel");
-            }
-            
-        };
-        
-        // 初始化completionHandler，当post结束之后（无论是done还是cancel）该blog都会被调用
-        activityVC.completionWithItemsHandler = myBlock;
-        
-        //关闭系统的一些activity类型 UIActivityTypeAirDrop 屏蔽aridrop
-        activityVC.excludedActivityTypes = @[];
-        
-        [weak_self presentViewController:activityVC animated:YES completion:nil];
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewPressed:)];
+            [self.view addGestureRecognizer:tap];
+            _tap = tap;
+        }];
     }];
+}
+
+- (void)boxShareClick:(UIButton *)sender{
+    [SXLoadingView showProgressHUD:@"正在分享"];
+    [WB_BoxService sendTweetWithImageArray:_shareaDataArray BoxModel:_boxesDataArray[sender.tag] Complete:^(WBTweetModel *tweetModel, NSError *error) {
+        if (!error) {
+            [SXLoadingView showAlertHUD:@"分享成功" duration:1.2f];
+        }else{
+            NSLog(@"%@",error);
+            [SXLoadingView showAlertHUD:@"分享失败" duration:1.2f];
+        }
+    }];
+    [self dismissShareView];
+}
+
+- (void)dismissShareView{
+    if (_shareView && _shareView.frame.origin.y == __kHeight - ShareViewHeight-64) {
+        [UIView animateWithDuration:.5f animations:^{
+            _shareView.frame = CGRectMake(0, __kHeight, __kWidth, ShareViewHeight);
+        } completion:^(BOOL finished) {
+            [_shareView.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([obj isKindOfClass:[UIScrollView class]]) {
+                    [obj removeFromSuperview];
+                }
+            }];
+        }];
+    }
+    [self tabBarAnimationWithHidden:NO];
+    self.collectionView.userInteractionEnabled = YES;
+}
+
+- (void)viewPressed:(UIGestureRecognizer*)gesture{
+    [self dismissShareView];
+    [self.view removeGestureRecognizer:_tap];
 }
 
 -(void)clickDownloadWithShare:(BOOL)share andCompleteBlock:(void(^)(NSArray * images))block{

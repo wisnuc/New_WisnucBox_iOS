@@ -33,9 +33,7 @@
         return ;
     }
     //    [self.view addSubview:self.addButton];
-    
     [self initMjFreshHeader];
-    
     //    [self initMjFreshFooter];
     if (WB_UserService.currentUser.guid.length>0) {
         [self didMQTTServerJoinIn];
@@ -67,7 +65,6 @@
     UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:rightItem,negativeSpacer,nil];
 }
-
 
 - (void)initMjFreshHeader{
     __weak __typeof(self) weakSelf = self;
@@ -168,9 +165,7 @@
     addUserViewController.type = WBUserAddressBookCreat;
     addUserViewController.endDelegate = self;
     NavViewController *navi = [[NavViewController alloc]initWithRootViewController:addUserViewController];
-    [self presentViewController:navi animated:YES completion:^{
-        
-    }];
+    [self presentViewController:navi animated:YES completion:^{}];
 }
 
 - (void)endAddUser{

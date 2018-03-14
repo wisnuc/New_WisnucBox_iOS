@@ -14,6 +14,14 @@
 #import "PHPhotoLibrary+JYEXT.h"
 #import "PHAsset+JYEXT.h"
 
+#define ShareViewHeight 131.0
+#define Width_Space      40.0f      // 2个按钮之间的横间距
+#define Height_Space     0     // 竖间距
+#define Button_Height   55.0f    // 高
+#define Button_Width    40.0f    // 宽
+#define Start_X          16.0f   // 第一个按钮的X坐标
+#define Start_Y          16.0f     // 第一个按钮的Y坐标
+
 @interface JYShowBigImgViewController ()<UIScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate,JYPreviewVideoPlayerDelegate>
 {
     UICollectionView *_collectionView;
@@ -46,6 +54,12 @@
     id _currentModelForRecord;
     
     UIImageView *_rightImageView;
+    
+    UIView *_shareView;
+    
+    UITapGestureRecognizer *_tap;
+    
+    BOOL _sharing;
 }
 
 @property (nonatomic) UILabel *titleLabel;
@@ -84,9 +98,9 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
     NSString* phoneVersion = [[UIDevice currentDevice] systemVersion];
-//    NSLog(@"%@",phoneVersion);
+    //    NSLog(@"%@",phoneVersion);
     if([phoneVersion floatValue]>=11.0){
-    if ([_collectionView respondsToSelector:@selector(setContentInsetAdjustmentBehavior:)]) {
+        if ([_collectionView respondsToSelector:@selector(setContentInsetAdjustmentBehavior:)]) {
             if (@available(iOS 11.0, *)) {
                 _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
             }
@@ -94,9 +108,7 @@
     }else {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-    
 
-    self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.clipsToBounds = YES;
     self.view.alpha = 0.0f;
     _isFirstAppear = YES;
@@ -112,7 +124,19 @@
     UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longGestureRecognized:)];
     [self.view addGestureRecognizer:longGesture];
     [self initNavBtns];
-
+    
+    _shareView = [[UIView alloc]initWithFrame:CGRectMake(0, __kHeight, __kWidth, ShareViewHeight)];
+    _shareView.backgroundColor = [UIColor whiteColor];
+    UIToolbar *shareToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, ShareViewHeight - 44, __kWidth, 44)];
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareToOther)];
+    UIBarButtonItem* flexItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    flexItem.width = 16;
+    [shareToolbar setItems:@[flexItem,barButtonItem]];
+    
+    
+    [_shareView addSubview:shareToolbar];
+    [self.view addSubview:_shareView];
+    _sharing = NO;
 }
 
 - (void)back:(id)btn
@@ -154,9 +178,9 @@
     [super viewDidLayoutSubviews];
     if (_rightImageView) {
         if ([self getCurrentPageModel].type == JYAssetTypeImage && [self getCurrentPageModel].type != JYAssetTypeNetImage) {
-            [_rightImageView setHidden:NO];
-        }else if([self getCurrentPageModel].type == JYAssetTypeNetImage) {
             [_rightImageView setHidden:YES];
+        }else if([self getCurrentPageModel].type == JYAssetTypeNetImage) {
+            [_rightImageView setHidden:NO];
         }
     }
 //    _layout.minimumLineSpacing = kItemMargin;
@@ -287,34 +311,163 @@
     [actionSheet show];
 }
 
+- (void)shareToOther{
+    @weaky(self)
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:self.shareDataArray applicationActivities:nil];
+    //初始化回调方法
+    UIActivityViewControllerCompletionWithItemsHandler myBlock = ^(UIActivityType __nullable activityType, BOOL completed, NSArray * __nullable returnedItems, NSError * __nullable activityError)
+    {
+        NSLog(@"activityType :%@", activityType);
+        if (completed)
+        {
+            NSLog(@"share completed");
+            if (activityType == UIActivityTypeSaveToCameraRoll) {
+                [SXLoadingView showProgressHUDText:@"已存入相册" duration:1.2f];
+            }else{
+                [SXLoadingView showProgressHUDText:@"分享完成" duration:1.2f];
+            }
+        }
+        else
+        {
+            NSLog(@"share cancel");
+        }
+        [weak_self dismissShareView];
+    };
+    
+    // 初始化completionHandler，当post结束之后（无论是done还是cancel）该blog都会被调用
+    activityVC.completionWithItemsHandler = myBlock;
+    
+    //关闭系统的一些activity类型 UIActivityTypeAirDrop 屏蔽aridrop
+    activityVC.excludedActivityTypes = @[];
+    
+    [self presentViewController:activityVC animated:YES completion:nil];
+
+}
+
 - (void)shareToOtherApp{
     //准备照片
     @weaky(self);
     [self clickDownloadWithShare:YES andCompleteBlock:^(NSArray *images) {
-        UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:images applicationActivities:nil];
-        //初始化回调方法
-        UIActivityViewControllerCompletionWithItemsHandler myBlock = ^(NSString *activityType,BOOL completed,NSArray *returnedItems,NSError *activityError)
-        {
-            NSLog(@"activityType :%@", activityType);
-            if (completed)
-            {
-                NSLog(@"share completed");
-               
-            }
-            else
-            {
-                NSLog(@"share cancel");
-            }
-        };
-        
-        // 初始化completionHandler，当post结束之后（无论是done还是cancel）该blog都会被调用
-        activityVC.completionWithItemsHandler = myBlock;
-        
-        //关闭系统的一些activity类型 UIActivityTypeAirDrop 屏蔽aridrop
-        activityVC.excludedActivityTypes = @[];
-        
-        [weak_self presentViewController:activityVC animated:YES completion:nil];
+        [weak_self shareScrollViewInit];
+        weak_self.shareDataArray = images;
     }];
+
+}
+
+- (void)shareScrollViewInit{
+    [UIView  animateWithDuration:.5f animations:^{
+        _shareView.frame = CGRectMake(0, __kHeight - ShareViewHeight, __kWidth, ShareViewHeight);
+    } completion:^(BOOL finished) {
+        _sharing = YES;
+        __block UIActivityIndicatorView *activtiy = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        activtiy.backgroundColor = [UIColor clearColor];
+        activtiy.frame = CGRectMake(0, 0, 30, 30);
+        activtiy.center = CGPointMake(_shareView.width/2, (_shareView.height - 44)/2);
+        [_shareView addSubview:activtiy];
+        [activtiy  startAnimating];
+        [WB_BoxService getBoxListCallBack:^(NSArray *boxesModelArr, NSError *error) {
+            [activtiy stopAnimating];
+            [activtiy removeFromSuperview];
+            if (!error) {
+                UIScrollView *scrollView = [[UIScrollView alloc]init];
+                scrollView.frame = CGRectMake(0, 0, __kWidth, ShareViewHeight - 44);
+                NSMutableArray *boxArray = [NSMutableArray arrayWithArray:boxesModelArr];
+                //                [boxesModelArr enumerateObjectsUsingBlock:^(WBBoxesModel *boxesModel, NSUInteger idx, BOOL * _Nonnull stop) {
+                //                    if ([boxesModel.uuid isEqualToString:[weak_self boxModel].uuid]) {
+                //                        [boxArray removeObject:boxesModel];
+                //                    }
+                //                }];
+                
+                self.boxesDataArray = boxArray;
+                [boxArray enumerateObjectsUsingBlock:^(WBBoxesModel *boxesModel, NSUInteger idx, BOOL * _Nonnull stop) {
+                    UIButton *boxView = [[UIButton alloc]initWithFrame:CGRectMake(idx *(Button_Width + Width_Space) + Start_X,Start_Y, Button_Width, Button_Height)];
+                    //                        boxView.backgroundColor = [UIColor redColor];
+                    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, Button_Height - 15, Button_Width, 15)];
+                    label.textAlignment = NSTextAlignmentCenter;
+                    label.font = [UIFont systemFontOfSize:12];
+                    label.text = boxesModel.name;
+                    //                        NSLog(@"%@",boxesModel.name);
+                    //                        label.backgroundColor = [UIColor cyanColor];
+                    __block NSMutableString *userName = [NSMutableString stringWithCapacity:0];
+                    NSInteger n = MIN(boxesModel.users.count, 5);
+                    float r = 20 * n / (2.5 * n - 1.5);
+                    [boxesModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *userModel, NSUInteger idx, BOOL * _Nonnull stop) {
+                        if (idx<= n - 1){
+                            float deg =  M_PI * ((float)idx * 2 / n - 1 / 4);
+                            float top = (1 - cosf(deg)) * (20 - r);
+                            float left = (1 + sinf(deg)) * (20 - r);
+                            UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(left, top, r *2, r*2)];
+                            imageView.layer.masksToBounds = YES;
+                            imageView.layer.cornerRadius = r;
+                            imageView.layer.borderWidth = 0.5f;
+                            imageView.layer.borderColor = [UIColor whiteColor].CGColor;
+                            [imageView was_setCircleImageWithUrlString:userModel.avatarUrl placeholder:[UIImage imageWithColor:RGBACOLOR(0, 0, 0, 0.37)]];
+                            [boxView addSubview:imageView];
+                            if (boxesModel.name.length ==0) {
+                                [userName  appendFormat:@"%@,",userModel.nickName];
+                                label.text = userName;
+                            }
+                        }
+                    }];
+                    
+                    [boxView addSubview:label];
+                    boxView.tag = idx;
+                    [boxView addTarget:self action:@selector(boxShareClick:) forControlEvents:UIControlEventTouchUpInside];
+                    [scrollView addSubview:boxView];
+                }];
+                scrollView.contentSize = CGSizeMake(boxesModelArr.count*(Button_Width+Width_Space)+16*2 - Width_Space,scrollView.height );
+                [_shareView addSubview:scrollView];
+            }else{
+                [SXLoadingView showAlertHUD:@"获取群列表失败" duration:1.2f];
+            }
+        }];
+    }];
+}
+
+- (void)boxShareClick:(UIButton *)sender{
+    [SXLoadingView showProgressHUD:@"正在分享"];
+    [WB_BoxService sendTweetWithImageArray:self.shareDataArray BoxModel:self.boxesDataArray[sender.tag] Complete:^(WBTweetModel *tweetModel, NSError *error) {
+        if (!error) {
+            [SXLoadingView showAlertHUD:@"分享成功" duration:1.2f];
+        }else{
+            NSLog(@"%@",error);
+           [SXLoadingView showAlertHUD:@"分享失败" duration:1.2f];
+            NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+            if(errorData.length >0){
+                NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+                NSLog(@"失败,%@",serializedData);
+//                if (WB_UserService.currentUser.isCloudLogin || (!WB_UserService.currentUser.isCloudLogin &&![WB_UserService.currentUser.stationId isEqualToString:((WBBoxesModel *)self.boxesDataArray[sender.tag]).station.stationId])) {
+//                    NSString *string = serializedData[@"message"];
+//                    if ([string containsString:@"not found"]) {
+//                        [SXLoadingView showAlertHUD:@"分享失败,该群不存在" duration:1.2f];
+//                    }
+//                }else{
+//                    NSString *string = serializedData[@"message"];
+//                    if ([string containsString:@"not found"]) {
+//                        [SXLoadingView showAlertHUD:@"分享失败,该群不存在" duration:1.2f];
+//                    }
+//                }
+//            }else{
+            
+            }
+        }
+    }];
+    [self dismissShareView];
+}
+
+- (void)dismissShareView{
+    if (_shareView && _shareView.frame.origin.y == __kHeight - ShareViewHeight) {
+        [UIView animateWithDuration:.5f animations:^{
+            _shareView.frame = CGRectMake(0, __kHeight, __kWidth, ShareViewHeight);
+        } completion:^(BOOL finished) {
+            [_shareView.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([obj isKindOfClass:[UIScrollView class]]) {
+                    [obj removeFromSuperview];
+                }
+            }];
+            _sharing = NO;
+        }];
+    }
 }
 
 - (void)clickDownloadWithShare:(BOOL)share andCompleteBlock:(void(^)(NSArray * images))block{
@@ -329,7 +482,6 @@
         _isDownloading = NO;
     };
     [self downloadItems:chooseItems withShare:share andCompleteBlock:block];
-
 }
 
 -(void)downloadItems:(NSArray *)items withShare:(BOOL)isShare andCompleteBlock:(void(^)(NSArray * images))block{
@@ -520,8 +672,8 @@
     
     [rightNaviButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
     
-    UIImageView *rightImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"ic_cloud_off_white"]];
-    [rightImageView setHidden:YES];
+    UIImageView *rightImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"ic_cloud_white"]];
+//    [rightImageView setHidden:YES];
     [naviView addSubview:rightImageView];
     
     [rightImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -531,8 +683,8 @@
     }];
    
     
-    if ([self getCurrentPageModel].type == JYAssetTypeImage && [self getCurrentPageModel].type != JYAssetTypeNetImage) {
-       [rightImageView setHidden:NO];
+    if ([self getCurrentPageModel].type != JYAssetTypeNetImage ) {
+       [rightImageView setHidden:YES];
     }
     
     _rightImageView = rightImageView;
@@ -583,6 +735,10 @@
 
 - (void)handlerSingleTap
 {
+    if (_sharing) {
+        [self dismissShareView];
+        return;
+    }
     _hideNavBar = !_hideNavBar;
     
     [self setNeedsStatusBarAppearanceUpdate];
@@ -591,6 +747,7 @@
     [UIView animateWithDuration:0.3 animations:^{
         _navView.frame = frame;
     }];
+   
 }
 
 #pragma mark - UICollectionDataSource
@@ -754,7 +911,6 @@
     resizableImageView.contentMode = _senderViewForAnimation ? _senderViewForAnimation.contentMode : UIViewContentModeScaleAspectFill;
     resizableImageView.backgroundColor = [UIColor clearColor];
     [mainWindow addSubview:resizableImageView];
-    
 //
 //    //jy
 //    //    _senderViewForAnimation.hidden = YES;
@@ -841,8 +997,6 @@
         completion();
     }];
 }
-
-
 
 - (void)playVideoWithAVPlayerViewController:(AVPlayerViewController *)viewController {
     [self presentViewController:viewController animated:YES completion:^{
