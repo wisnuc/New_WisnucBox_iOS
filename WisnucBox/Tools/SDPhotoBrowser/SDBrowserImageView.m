@@ -97,15 +97,12 @@
     waiting.mode = SDWaitingViewProgressMode;
     _waitingView = waiting;
     [self addSubview:waiting];
-    
-    
     __weak SDBrowserImageView *imageViewWeak = self;
 
     [self sd_setImageWithURL:url placeholderImage:placeholder options:SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
      imageViewWeak.progress = (CGFloat)receivedSize / expectedSize;
     } completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
         [imageViewWeak removeWaitingView];
-        
         
         if (error) {
             UILabel *label = [[UILabel alloc] init];
@@ -123,7 +120,6 @@
             _scrollImageView.image = image;
             [_scrollImageView setNeedsDisplay];
         }
-   
     }];
 }
 
@@ -190,10 +186,17 @@
         UIImageView *zoomingImageView = [[UIImageView alloc] initWithImage:self.image];
         CGSize imageSize = zoomingImageView.image.size;
         CGFloat imageViewH = self.bounds.size.height;
+        CGFloat imageViewW = self.bounds.size.width;
         if (imageSize.width > 0) {
             imageViewH = self.bounds.size.width * (imageSize.height / imageSize.width);
+            imageViewW =  self.bounds.size.width *(imageSize.height / imageSize.width);
         }
-        zoomingImageView.bounds = CGRectMake(0, 0, self.bounds.size.width, imageViewH);
+        
+        if (imageSize.width>imageSize.height) {
+//            imageViewH = self.bounds.size.width * (imageSize.height / imageSize.width);
+            imageViewW =  self.bounds.size.width;
+        }
+        zoomingImageView.bounds = CGRectMake(0, 0, imageViewW, imageViewH);
         zoomingImageView.center = _zoomingScroolView.center;
         zoomingImageView.contentMode = UIViewContentModeScaleAspectFit;
         _zoomingImageView = zoomingImageView;
@@ -227,6 +230,7 @@
 {
     [_waitingView removeFromSuperview];
 }
+
 
 
 

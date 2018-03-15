@@ -26,6 +26,7 @@
 + (MWPhoto *)photoWithAsset:(PHAsset *)asset targetSize:(CGSize)targetSize;
 + (MWPhoto *)videoWithURL:(NSURL *)url; // Initialise video with no poster image
 + (MWPhoto *)photoGetQualityImageWithHash:(NSString*)photoHash BoxUUID:(NSString *)boxuuid;
++ (MWPhoto *)photoWithAssetLocalIdentifier:(NSString *)assetLocalIdentifier;
 + (MWPhoto *)photoHighImageWithHash:(NSString*)photoHash;
 
 - (id)init;

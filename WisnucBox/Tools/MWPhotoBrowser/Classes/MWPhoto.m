@@ -25,6 +25,7 @@
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) NSURL *photoURL;
 @property (nonatomic, strong) PHAsset *asset;
+@property (nonatomic, strong) NSString *assetLocalIdentifier;
 @property (nonatomic) CGSize assetTargetSize;
 @property (nonatomic, strong) NSString *photoHash;
 @property (nonatomic, strong) NSString *boxuuid;
@@ -59,6 +60,10 @@
 
 + (MWPhoto *)photoWithAsset:(PHAsset *)asset targetSize:(CGSize)targetSize {
     return [[MWPhoto alloc] initWithAsset:asset targetSize:targetSize];
+}
+
++ (MWPhoto *)photoWithAssetLocalIdentifier:(NSString *)assetLocalIdentifier{
+    return [[MWPhoto alloc] initWithAssetLocalIdentifier:assetLocalIdentifier];
 }
 
 + (MWPhoto *)videoWithURL:(NSURL *)url {
@@ -113,6 +118,15 @@
         self.asset = asset;
         self.assetTargetSize = targetSize;
         self.isVideo = asset.mediaType == PHAssetMediaTypeVideo;
+        [self setup];
+    }
+    return self;
+}
+
+- (id)initWithAssetLocalIdentifier:(NSString *)assetLocalIdentifier{
+    if ((self = [super init])) {
+        self.assetLocalIdentifier = assetLocalIdentifier;
+    
         [self setup];
     }
     return self;
@@ -235,8 +249,9 @@
     }else if (!_boxuuid && _photoHash) {
         [self _performLoadUnderlyingImageAndNotifyWithPhotoHah:_photoHash];
     }
-    else {
-        
+    else if (_assetLocalIdentifier.length>0){
+        [self _performLoadUnderlyingImageAndNotifyWithAssetLocalIdentifier:_assetLocalIdentifier];
+    }else{
         // Image is empty
         [self imageLoadingComplete];
         
@@ -379,6 +394,37 @@
         });
     }];
 
+}
+
+- (void)_performLoadUnderlyingImageAndNotifyWithAssetLocalIdentifier:(NSString *)assetLocalIdentifier{
+    
+    PHImageManager *imageManager = [PHImageManager defaultManager];
+    
+    PHImageRequestOptions *options = [PHImageRequestOptions new];
+    options.networkAccessAllowed = YES;
+    options.resizeMode = PHImageRequestOptionsResizeModeFast;
+    options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+    options.synchronous = false;
+    options.progressHandler = ^(double progress, NSError *error, BOOL *stop, NSDictionary *info) {
+        NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithDouble: progress], @"progress",
+                              self, @"photo", nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:MWPHOTO_PROGRESS_NOTIFICATION object:dict];
+    };
+    
+    PHAsset *asset;
+    if (assetLocalIdentifier) {
+        asset  = [PHPhotoLibrary getAssetFromlocalIdentifier:assetLocalIdentifier];
+    }
+    CGSize targetSize = CGSizeMake(asset.pixelWidth,asset.pixelHeight);
+    self.isVideo = asset.mediaType == PHAssetMediaTypeVideo;
+    _assetRequestID = [imageManager requestImageForAsset:asset targetSize:targetSize contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage *result, NSDictionary *info) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.underlyingImage = result;
+            [self imageLoadingComplete];
+        });
+    }];
+    
 }
 
 // Release if we can get it again from path or url

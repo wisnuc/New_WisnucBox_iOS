@@ -60,7 +60,6 @@
         if (!cell) {
             cell= [[[NSBundle mainBundle] loadNibNamed:@"LoginTableViewCell" owner:nil options:nil] lastObject];
         }
-        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
 }

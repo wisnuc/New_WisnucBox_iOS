@@ -432,7 +432,12 @@
                 [highQualityphotosArray addObject:photo];
             }else{
                 JYAsset * jyasset = obj.asset;
-                MWPhoto *photo = [MWPhoto photoWithAsset:jyasset.asset targetSize:CGSizeMake(jyasset.asset.pixelWidth, jyasset.asset.pixelHeight)];
+                MWPhoto *photo;
+                if (!jyasset.asset && jyasset.assetLocalIdentifier.length>0) {
+                   photo = [MWPhoto photoWithAssetLocalIdentifier:jyasset.assetLocalIdentifier];
+                }else{
+                   photo = [MWPhoto photoWithAsset:jyasset.asset targetSize:CGSizeMake(jyasset.asset.pixelWidth, jyasset.asset.pixelHeight)];
+                }
                 [highQualityphotosArray addObject:photo];
             }
         }];
@@ -454,8 +459,8 @@
     //        [photoArray addObjectsFromArray:self.messageModel.list];
     //    }
     MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc]initWithDelegate:self];
-    photoBrowser.displayActionButton = NO;//显示分享按钮(左右划动按钮显示才有效)
-    photoBrowser.displayNavArrows = YES; //显示左右划动
+    photoBrowser.displayActionButton = YES;//显示分享按钮(左右划动按钮显示才有效)
+//    photoBrowser.displayNavArrows = ; //显示左右划动
     photoBrowser.alwaysShowControls = NO; //控制条始终显示
     photoBrowser.zoomPhotosToFill = YES; //是否自适应大小
     photoBrowser.startOnGrid = YES; //是否以网格开始;
