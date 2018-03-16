@@ -147,7 +147,7 @@ NSString *const kTableViewFrame = @"frame";
     NSString *documents = [array1 lastObject];
     NSString *boxChatDirectory = [documents stringByAppendingPathComponent:@"BoxChat"];
     [[NSFileManager defaultManager] createDirectoryAtPath:boxChatDirectory withIntermediateDirectories:YES attributes:nil error:nil];
-    NSString *documentPath = [boxChatDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
+    NSString *documentPath = [boxChatDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatTweetArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
     NSData *resultData = [NSData dataWithContentsOfFile:documentPath];
     NSArray *resultArray = [NSKeyedUnarchiver unarchiveObjectWithData:resultData];//将数据反序列化
 //    NSLog(@"😆%@",resultArray);
@@ -378,7 +378,7 @@ NSString *const kTableViewFrame = @"frame";
             }
 //            NSArray *array1 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
 //            NSString *documents = [array1 lastObject];
-//            NSString *documentPath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
+//            NSString *documentPath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatTweetArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
 //            // 准备好要存到本地的数组
 //            NSArray *archiverdataArray= [NSArray arrayWithArray:self.dataSource];
 //
@@ -511,7 +511,7 @@ NSString *const kTableViewFrame = @"frame";
             NSString *documents = [array1 lastObject];
             NSString *boxChatDirectory = [documents stringByAppendingPathComponent:@"BoxChat"];
             [[NSFileManager defaultManager] createDirectoryAtPath:boxChatDirectory withIntermediateDirectories:YES attributes:nil error:nil];
-            NSString *documentPath = [boxChatDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
+            NSString *documentPath = [boxChatDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatTweetArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
             // 准备好要存到本地的数组
             NSArray *archiverdataArray= [NSArray arrayWithArray:self.dataSource];
 
@@ -886,7 +886,7 @@ NSString *const kTableViewFrame = @"frame";
     self.freshBoxDataArray = dataArray;
 //    NSArray *array1 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
 //    NSString *documents = [array1 lastObject];
-//    NSString *documentPath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
+//    NSString *documentPath = [documents stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatTweetArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
 //    // 准备好要存到本地的数组
 //    NSArray *archiverdataArray= [NSArray arrayWithArray:self.dataSource];
 //

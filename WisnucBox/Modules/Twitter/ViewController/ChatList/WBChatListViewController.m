@@ -80,7 +80,6 @@
 
 - (void)initMjFreshFooter{
     self.tableView.mj_footer = [MJRefreshFooter footerWithRefreshingBlock:^{
-        
     }];
 }
 
@@ -97,6 +96,18 @@
         //        [SXLoadingView showProgressHUDText:@"非微信登录暂不能使用私友群功能" duration:1.2f];
         return;
     }
+    
+    //    NSArray *array1 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+    //    NSString *documents = [array1 lastObject];
+    //    NSString *boxChatDirectory = [documents stringByAppendingPathComponent:@"BoxChat"];
+    //    [[NSFileManager defaultManager] createDirectoryAtPath:boxChatDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+    //    NSString *documentPath = [boxChatDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid]];
+    //    NSData *resultData = [NSData dataWithContentsOfFile:documentPath];
+    //    NSArray *resultArray = [NSKeyedUnarchiver unarchiveObjectWithData:resultData];//将数据反序列化
+    //    if (resultArray.count ==0) {
+    //
+    //    }
+    
     @weaky(self)
     [[WBGetBoxesAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);
@@ -122,10 +133,10 @@
         [SXLoadingView showProgressHUDText:@"获取聊天列表失败，请重新刷新" duration:1.2f];
         [self.tableView displayWithMsg:@"聊天列表暂无" withRowCount:self.boxDataArray.count andIsNoData:YES  andTableViewFrame:self.view.bounds
                          andTouchBlock:nil];
-//        NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
-//        self.boxDataArray = dataArray;
-//        [self.tableView.mj_header endRefreshing];
-//        [self.tableView reloadData];
+        //        NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
+        //        self.boxDataArray = dataArray;
+        //        [self.tableView.mj_header endRefreshing];
+        //        [self.tableView reloadData];
     }];
 }
 
@@ -258,8 +269,6 @@
     return cell;
 }
 
-
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 72;
 }
@@ -312,26 +321,26 @@
                 [weak_self.boxDataArray removeObjectAtIndex:idx];
                 [weak_self.boxDataArray insertObject:model atIndex:0];
                 __block BOOL isSelfSender = NO;
-//                if ([model.tweet.tweeter.tweeterId isKindOfClass:[NSString class]]) {
-//                    NSString *tweeterId = (NSString *)model.tweet.tweeter;
-                    if ([model.tweet.tweeter.tweeterId isEqualToString:WB_UserService.currentUser.guid]) {
-                        [weak_self.tableView reloadData];
-                        *stop = YES;
-//                        *rootStop = YES;
-                        isSelfSender = YES;
-                    }
-//                }
-                if (!isSelfSender) {
-                NSNumber *unreadMessageNumber =userDefaultsDic[model.uuid];
-                NSLog(@"😁%@",unreadMessageNumber);
-                if (unreadMessageNumber) {
-                    unreadIntager = [unreadMessageNumber unsignedIntegerValue];
+                //                if ([model.tweet.tweeter.tweeterId isKindOfClass:[NSString class]]) {
+                //                    NSString *tweeterId = (NSString *)model.tweet.tweeter;
+                if ([model.tweet.tweeter.tweeterId isEqualToString:WB_UserService.currentUser.guid]) {
+                    [weak_self.tableView reloadData];
+                    *stop = YES;
+                    //                        *rootStop = YES;
+                    isSelfSender = YES;
                 }
-                unreadIntager ++;
-                NSNumber *unreadNumber = [NSNumber numberWithUnsignedInteger:unreadIntager];
-                NSLog(@"%@",userDefaultsDic);
-                [resultDic setObject:unreadNumber forKey:model.uuid];
-                [weak_self.tableView reloadData];
+                //                }
+                if (!isSelfSender) {
+                    NSNumber *unreadMessageNumber =userDefaultsDic[model.uuid];
+                    NSLog(@"😁%@",unreadMessageNumber);
+                    if (unreadMessageNumber) {
+                        unreadIntager = [unreadMessageNumber unsignedIntegerValue];
+                    }
+                    unreadIntager ++;
+                    NSNumber *unreadNumber = [NSNumber numberWithUnsignedInteger:unreadIntager];
+                    NSLog(@"%@",userDefaultsDic);
+                    [resultDic setObject:unreadNumber forKey:model.uuid];
+                    [weak_self.tableView reloadData];
                 }
             }
             [uuidArray addObject:boxModel.uuid];

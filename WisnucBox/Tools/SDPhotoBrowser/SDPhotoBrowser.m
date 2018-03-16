@@ -550,7 +550,7 @@
     if (imageView.isScaled) {
         scale = 1.0;
     } else {
-        scale = 2.0;
+        scale = 3.0;
     }
     
     SDBrowserImageView *view = (SDBrowserImageView *)recognizer.view;
@@ -817,7 +817,6 @@
             }];
         }
     }
-    
     
     if (!_willDisappear) {
         _indexLabel.text = [NSString stringWithFormat:@"%d/%ld", index + 1, (long)self.imageCount];

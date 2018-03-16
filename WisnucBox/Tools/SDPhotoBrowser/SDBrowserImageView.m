@@ -50,7 +50,7 @@
     [super layoutSubviews];
     _waitingView.center = CGPointMake(self.frame.size.width * 0.5, self.frame.size.height * 0.5);
     
-    CGSize imageSize = self.image.size;
+//    CGSize imageSize = self.image.size;
     
 //    if (self.bounds.size.width * (imageSize.height / imageSize.width) > self.bounds.size.height) {
 //        if (!_scroll) {
@@ -80,7 +80,6 @@
 //    }
     
 }
-
 
 
 - (void)setProgress:(CGFloat)progress
@@ -134,7 +133,7 @@
 
 - (void)setTotalScale:(CGFloat)totalScale
 {
-    if ((_totalScale < 0.5 && totalScale < _totalScale) || (_totalScale > 2.0 && totalScale > _totalScale)) return; // 最大缩放 2倍,最小0.5倍
+    if ((_totalScale < 0.5 && totalScale < _totalScale) || (_totalScale > 3.0 && totalScale > _totalScale)) return; // 最大缩放 2倍,最小0.5倍
     
     [self zoomWithScale:totalScale];
 }
@@ -147,17 +146,16 @@
     
     if (scale > 1) {
         CGFloat contentW = _zoomingImageView.frame.size.width;
+        
         CGFloat contentH = MAX(_zoomingImageView.frame.size.height, self.frame.size.height);
         
         _zoomingImageView.center = CGPointMake(contentW * 0.5, contentH * 0.5);
         _zoomingScroolView.contentSize = CGSizeMake(contentW, contentH);
 
-        
         CGPoint offset = _zoomingScroolView.contentOffset;
         offset.x = (contentW - _zoomingScroolView.frame.size.width) * 0.5;
 //        offset.y = (contentH - _zoomingImageView.frame.size.height) * 0.5;
         _zoomingScroolView.contentOffset = offset;
-        
     } else {
         _zoomingScroolView.contentSize = _zoomingScroolView.frame.size;
         _zoomingScroolView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
@@ -188,10 +186,9 @@
         CGFloat imageViewH = self.bounds.size.height;
         CGFloat imageViewW = self.bounds.size.width;
         if (imageSize.width > 0) {
-            imageViewH = self.bounds.size.width * (imageSize.height / imageSize.width);
-            imageViewW =  self.bounds.size.width *(imageSize.height / imageSize.width);
+            imageViewH = self.bounds.size.width *(imageSize.height / imageSize.width);
+            imageViewW = imageViewH;
         }
-        
         if (imageSize.width>imageSize.height) {
 //            imageViewH = self.bounds.size.width * (imageSize.height / imageSize.width);
             imageViewW =  self.bounds.size.width;
@@ -230,9 +227,5 @@
 {
     [_waitingView removeFromSuperview];
 }
-
-
-
-
 
 @end

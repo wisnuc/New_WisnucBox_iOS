@@ -553,13 +553,14 @@
 }
 - (void)photoBrowser:(MWPhotoBrowser *)photoBrowser actionButtonPressedForPhotoAtIndex:(NSUInteger)index{
     NSLog(@"分享按钮的点击方法----%ld",index);
+     UIImageView *imageView = self.subviews[index];
 }
 
 
 //有navigationBar时title才会显示
 - (NSString *)photoBrowser:(MWPhotoBrowser *)photoBrowser titleForPhotoAtIndex:(NSUInteger)index{
     
-    NSString *str = [NSString stringWithFormat:@"%ld/%ld",index,self.photoArray.count];
+    NSString *str = [NSString stringWithFormat:@"%ld/%ld",index + 1,self.photoArray.count];
     return str;
 }
 //如果要看缩略图必须实现这个方法

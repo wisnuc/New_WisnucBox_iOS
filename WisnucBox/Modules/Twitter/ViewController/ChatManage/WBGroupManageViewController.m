@@ -88,7 +88,7 @@
             NSString *documents = [array1 lastObject];
             NSString *boxChatDirectory = [documents stringByAppendingPathComponent:@"BoxChat"];
             [[NSFileManager defaultManager] createDirectoryAtPath:boxChatDirectory withIntermediateDirectories:YES attributes:nil error:nil];
-            NSString *documentPath = [boxChatDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
+            NSString *documentPath = [boxChatDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatTweetArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
 //            NSData *resultData = [NSData dataWithContentsOfFile:documentPath];
             NSError *fileError;
             [[NSFileManager defaultManager] removeItemAtPath:documentPath error:&fileError];
@@ -125,7 +125,7 @@
         NSString *documents = [array1 lastObject];
         NSString *boxChatDirectory = [documents stringByAppendingPathComponent:@"BoxChat"];
         [[NSFileManager defaultManager] createDirectoryAtPath:boxChatDirectory withIntermediateDirectories:YES attributes:nil error:nil];
-        NSString *documentPath = [boxChatDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatListArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
+        NSString *documentPath = [boxChatDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@",kBoxChatTweetArchiverName,WB_UserService.currentUser.guid,_boxModel.uuid]];
         //            NSData *resultData = [NSData dataWithContentsOfFile:documentPath];
         NSError *fileError;
         [[NSFileManager defaultManager] removeItemAtPath:documentPath error:&fileError];

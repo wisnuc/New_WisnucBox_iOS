@@ -72,6 +72,8 @@
     BOOL _viewHasAppearedInitially;
     CGPoint _currentGridContentOffset;
     
+    UIView *_shareView;
+    
 }
 
 // Properties
