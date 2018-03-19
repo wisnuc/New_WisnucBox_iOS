@@ -466,7 +466,7 @@
     photoBrowser.startOnGrid = YES; //是否以网格开始;
     photoBrowser.enableSwipeToDismiss = YES;
     photoBrowser.autoPlayOnAppear = NO;//是否自动播放视频
-    photoBrowser.enableGrid = YES;
+//    photoBrowser.enableGrid = NO;
     photoBrowser.displayActionButton = YES;
     [photoBrowser showNextPhotoAnimated:YES];
     [photoBrowser showPreviousPhotoAnimated:YES];
@@ -553,7 +553,36 @@
 }
 - (void)photoBrowser:(MWPhotoBrowser *)photoBrowser actionButtonPressedForPhotoAtIndex:(NSUInteger)index{
     NSLog(@"分享按钮的点击方法----%ld",index);
-     UIImageView *imageView = self.subviews[index];
+     MWPhoto *photo = self.photoArray[index];
+    photo.underlyingImage
+//    @weaky(self)
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:@[image] applicationActivities:nil];
+    //初始化回调方法
+    UIActivityViewControllerCompletionWithItemsHandler myBlock = ^(UIActivityType __nullable activityType, BOOL completed, NSArray * __nullable returnedItems, NSError * __nullable activityError)
+    {
+        NSLog(@"activityType :%@", activityType);
+        if (completed)
+        {
+            NSLog(@"share completed");
+            if (activityType == UIActivityTypeSaveToCameraRoll) {
+                [SXLoadingView showProgressHUDText:@"已存入相册" duration:1.2f];
+            }else{
+                [SXLoadingView showProgressHUDText:@"分享完成" duration:1.2f];
+            }
+        }
+        else
+        {
+            NSLog(@"share cancel");
+        }
+    };
+    
+    // 初始化completionHandler，当post结束之后（无论是done还是cancel）该blog都会被调用
+    activityVC.completionWithItemsHandler = myBlock;
+    
+    //关闭系统的一些activity类型 UIActivityTypeAirDrop 屏蔽aridrop
+    activityVC.excludedActivityTypes = @[];
+    
+    [[UIViewController getCurrentVC] presentViewController:activityVC animated:YES completion:nil];
 }
 
 

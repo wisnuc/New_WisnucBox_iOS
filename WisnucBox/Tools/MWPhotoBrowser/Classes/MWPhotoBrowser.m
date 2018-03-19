@@ -14,7 +14,7 @@
 #import "UIImage+MWPhotoBrowser.h"
 
 #define PADDING                  10
-#define ShareViewHeight 131.0
+#define ShareViewHeight 87.0
 #define Width_Space      40.0f      // 2个按钮之间的横间距
 #define Height_Space     0     // 竖间距
 #define Button_Height   55.0f    // 高
@@ -96,16 +96,7 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
                                                  name:MWPHOTO_LOADING_DID_END_NOTIFICATION
                                                object:nil];
     
-//    _shareView = [[UIView alloc]initWithFrame:CGRectMake(0, __kHeight, __kWidth, ShareViewHeight)];
-//    _shareView.backgroundColor = [UIColor whiteColor];
-//    UIToolbar *shareToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, ShareViewHeight - 44, __kWidth, 44)];
-//    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareToOther)];
-//    UIBarButtonItem* flexItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-//    flexItem.width = 16;
-//    [shareToolbar setItems:@[flexItem,barButtonItem]];
-//
-//    [_shareView addSubview:shareToolbar];
-//    [self.view addSubview:_shareView];
+
 }
 
 - (void)dealloc {
@@ -206,6 +197,16 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
         swipeGesture.direction = UISwipeGestureRecognizerDirectionDown | UISwipeGestureRecognizerDirectionUp;
         [self.view addGestureRecognizer:swipeGesture];
     }
+        _shareView = [[UIView alloc]initWithFrame:CGRectMake(0, __kHeight, __kWidth, ShareViewHeight)];
+        _shareView.backgroundColor = [UIColor whiteColor];
+    //    UIToolbar *shareToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, ShareViewHeight - 44, __kWidth, 44)];
+    //    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareToOther)];
+    //    UIBarButtonItem* flexItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    //    flexItem.width = 16;
+    //    [shareToolbar setItems:@[flexItem,barButtonItem]];
+    
+    //    [_shareView addSubview:shareToolbar];
+    [self.view addSubview:_shareView];
     
 	// Super
     [super viewDidLoad];
@@ -309,6 +310,7 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
 	_pagingScrollView.contentOffset = [self contentOffsetForPageAtIndex:_currentPageIndex];
     [self tilePages];
     _performingLayout = NO;
+    [self.view bringSubviewToFront:_shareView];
 }
 
 // Release any retained subviews of the main view.
@@ -873,7 +875,6 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
             
 		}
 	}
-	
 }
 
 - (void)updateVisiblePageStates {
@@ -1370,7 +1371,7 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
     } completion:^(BOOL finished) {
         [_gridController didMoveToParentViewController:self];
     }];
-    
+    [self dismissShareView];
 }
 
 - (void)hideGrid {
@@ -1509,7 +1510,116 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
 	// Will cancel existing timer but only begin hiding if
 	// they are visible
 	if (!permanent) [self hideControlsAfterDelay];
-	
+    if (!hidden) {
+        [UIView  animateWithDuration:.5f animations:^{
+            _shareView.frame = CGRectMake(0, __kHeight - ShareViewHeight-44, __kWidth, ShareViewHeight);
+        } completion:^(BOOL finished) {
+            __block UIActivityIndicatorView *activtiy = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            activtiy.backgroundColor = [UIColor clearColor];
+            activtiy.frame = CGRectMake(0, 0, 30, 30);
+            activtiy.center = CGPointMake(_shareView.width/2, (_shareView.height - 44)/2);
+            [_shareView addSubview:activtiy];
+            [activtiy  startAnimating];
+            [WB_BoxService getBoxListCallBack:^(NSArray *boxesModelArr, NSError *error) {
+                [activtiy stopAnimating];
+                [activtiy removeFromSuperview];
+                if (!error) {
+                    UIScrollView *scrollView = [[UIScrollView alloc]init];
+                    scrollView.frame = CGRectMake(0, 0, __kWidth, ShareViewHeight);
+                    NSMutableArray *boxArray = [NSMutableArray arrayWithArray:boxesModelArr];
+                    //                [boxesModelArr enumerateObjectsUsingBlock:^(WBBoxesModel *boxesModel, NSUInteger idx, BOOL * _Nonnull stop) {
+                    //                    if ([boxesModel.uuid isEqualToString:[weak_self boxModel].uuid]) {
+                    //                        [boxArray removeObject:boxesModel];
+                    //                    }
+                    //                }];
+                    
+                    self.boxesDataArray = boxArray;
+                    [boxArray enumerateObjectsUsingBlock:^(WBBoxesModel *boxesModel, NSUInteger idx, BOOL * _Nonnull stop) {
+                        UIButton *boxView = [[UIButton alloc]initWithFrame:CGRectMake(idx *(Button_Width + Width_Space) + Start_X,Start_Y, Button_Width, Button_Height)];
+                        //                        boxView.backgroundColor = [UIColor redColor];
+                        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, Button_Height - 15, Button_Width, 15)];
+                        label.textAlignment = NSTextAlignmentCenter;
+                        label.font = [UIFont systemFontOfSize:12];
+                        label.text = boxesModel.name;
+                        //                        NSLog(@"%@",boxesModel.name);
+                        //                        label.backgroundColor = [UIColor cyanColor];
+                        __block NSMutableString *userName = [NSMutableString stringWithCapacity:0];
+                        NSInteger n = MIN(boxesModel.users.count, 5);
+                        float r = 20 * n / (2.5 * n - 1.5);
+                        [boxesModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *userModel, NSUInteger idx, BOOL * _Nonnull stop) {
+                            if (idx<= n - 1){
+                                float deg =  M_PI * ((float)idx * 2 / n - 1 / 4);
+                                float top = (1 - cosf(deg)) * (20 - r);
+                                float left = (1 + sinf(deg)) * (20 - r);
+                                UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(left, top, r *2, r*2)];
+                                imageView.layer.masksToBounds = YES;
+                                imageView.layer.cornerRadius = r;
+                                imageView.layer.borderWidth = 0.5f;
+                                imageView.layer.borderColor = [UIColor whiteColor].CGColor;
+                                [imageView was_setCircleImageWithUrlString:userModel.avatarUrl placeholder:[UIImage imageWithColor:RGBACOLOR(0, 0, 0, 0.37)]];
+                                [boxView addSubview:imageView];
+                                if (boxesModel.name.length ==0) {
+                                    [userName  appendFormat:@"%@,",userModel.nickName];
+                                    label.text = userName;
+                                }
+                            }
+                        }];
+                        
+                        [boxView addSubview:label];
+                        boxView.tag = idx;
+                        [boxView addTarget:self action:@selector(boxShareClick:) forControlEvents:UIControlEventTouchUpInside];
+                        [scrollView addSubview:boxView];
+                    }];
+                    scrollView.contentSize = CGSizeMake(boxesModelArr.count*(Button_Width+Width_Space)+16*2 - Width_Space,scrollView.height );
+                    [_shareView addSubview:scrollView];
+                }else{
+                    [SXLoadingView showAlertHUD:@"获取群列表失败" duration:1.2f];
+                }
+            }];
+        }];
+    }else{
+        [self dismissShareView];
+    }
+}
+
+- (void)dismissShareView{
+    if (_shareView && _shareView.frame.origin.y == __kHeight - ShareViewHeight -44) {
+        [UIView animateWithDuration:.5f animations:^{
+            _shareView.frame = CGRectMake(0, __kHeight, __kWidth, ShareViewHeight);
+        } completion:^(BOOL finished) {
+            [_shareView.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([obj isKindOfClass:[UIScrollView class]]) {
+                    [obj removeFromSuperview];
+                }
+            }];
+        }];
+    }
+}
+
+- (void)boxShareClick:(UIButton *)sender{
+    [SXLoadingView showProgressHUD:@"正在分享"];
+    
+//    for (MWZoomingScrollView *page in _pagingScrollView.subviews) {
+//        NSLog(@"😆😝%@",page);
+//    }
+     MWZoomingScrollView *page = _pagingScrollView.subviews[0];
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:0];
+    for (MWTapDetectingView *view in page.subviews) {
+        if ([view isKindOfClass:[MWTapDetectingImageView class]]) {
+            [array addObject:view];
+        };
+    }
+   
+    
+    [WB_BoxService sendTweetWithImageArray:[NSArray arrayWithArray:array] BoxModel:self.boxesDataArray[sender.tag] Complete:^(WBTweetModel *tweetModel, NSError *error) {
+        if (!error) {
+            [SXLoadingView showAlertHUD:@"分享成功" duration:1.2f];
+        }else{
+            NSLog(@"%@",error);
+            [SXLoadingView showAlertHUD:@"分享失败" duration:1.2f];
+        }
+    }];
+    [self dismissShareView];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -1540,7 +1650,7 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
 - (void)hideControlsAfterDelay {
 	if (![self areControlsHidden]) {
         [self cancelControlHiding];
-		_controlVisibilityTimer = [NSTimer scheduledTimerWithTimeInterval:self.delayToHideElements target:self selector:@selector(hideControls) userInfo:nil repeats:NO];
+//        _controlVisibilityTimer = [NSTimer scheduledTimerWithTimeInterval:self.delayToHideElements target:self selector:@selector(hideControls) userInfo:nil repeats:NO];
 	}
 }
 
