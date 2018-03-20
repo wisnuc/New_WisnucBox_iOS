@@ -554,9 +554,9 @@
 - (void)photoBrowser:(MWPhotoBrowser *)photoBrowser actionButtonPressedForPhotoAtIndex:(NSUInteger)index{
     NSLog(@"分享按钮的点击方法----%ld",index);
      MWPhoto *photo = self.photoArray[index];
-    photo.underlyingImage
+//
 //    @weaky(self)
-    UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:@[image] applicationActivities:nil];
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:@[photo.underlyingImage] applicationActivities:nil];
     //初始化回调方法
     UIActivityViewControllerCompletionWithItemsHandler myBlock = ^(UIActivityType __nullable activityType, BOOL completed, NSArray * __nullable returnedItems, NSError * __nullable activityError)
     {

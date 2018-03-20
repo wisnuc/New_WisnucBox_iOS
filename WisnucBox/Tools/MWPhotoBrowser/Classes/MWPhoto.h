@@ -21,6 +21,7 @@
 @property (nonatomic) BOOL emptyImage;
 @property (nonatomic) BOOL isVideo;
 
+
 + (MWPhoto *)photoWithImage:(UIImage *)image;
 + (MWPhoto *)photoWithURL:(NSURL *)url;
 + (MWPhoto *)photoWithAsset:(PHAsset *)asset targetSize:(CGSize)targetSize;

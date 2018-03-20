@@ -261,7 +261,7 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
     // Left button - Grid
     if (_enableGrid) {
         hasItems = YES;
-        [items addObject:[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"UIBarButtonItemGrid"] style:UIBarButtonItemStylePlain target:self action:@selector(showGridAnimated)]];
+        [items addObject:[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"UIBarButtonItemGrid."] style:UIBarButtonItemStylePlain target:self action:@selector(showGridAnimated)]];
     } else {
         [items addObject:fixedSpace];
     }
@@ -1283,7 +1283,6 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
     } else {
         [self dismissViewControllerAnimated:YES completion:nil];
     }
-    
 }
 
 - (void)clearCurrentVideo {
@@ -1517,12 +1516,17 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
             __block UIActivityIndicatorView *activtiy = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
             activtiy.backgroundColor = [UIColor clearColor];
             activtiy.frame = CGRectMake(0, 0, 30, 30);
-            activtiy.center = CGPointMake(_shareView.width/2, (_shareView.height - 44)/2);
+            activtiy.center = CGPointMake(_shareView.width/2, _shareView.height /2);
             [_shareView addSubview:activtiy];
             [activtiy  startAnimating];
             [WB_BoxService getBoxListCallBack:^(NSArray *boxesModelArr, NSError *error) {
                 [activtiy stopAnimating];
                 [activtiy removeFromSuperview];
+                [_shareView.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if ([obj isKindOfClass:[UIScrollView class]]) {
+                        [obj removeFromSuperview];
+                    }
+                }];
                 if (!error) {
                     UIScrollView *scrollView = [[UIScrollView alloc]init];
                     scrollView.frame = CGRectMake(0, 0, __kWidth, ShareViewHeight);
