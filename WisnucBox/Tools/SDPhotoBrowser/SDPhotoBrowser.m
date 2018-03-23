@@ -432,6 +432,8 @@
     } completion:^(BOOL finished) {
         completion();
     }];
+    
+     [UIApplication sharedApplication].statusBarHidden = NO;
 }
 
 - (void)photoClick:(UITapGestureRecognizer *)recognizer
@@ -489,6 +491,7 @@
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];
+      [UIApplication sharedApplication].statusBarHidden = NO;
 }
 
 - (void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer{
@@ -720,6 +723,7 @@
     self.frame = window.bounds;
     [window addObserver:self forKeyPath:@"frame" options:0 context:nil];
     [window addSubview:self];
+    [UIApplication sharedApplication].statusBarHidden = YES;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(UIView *)object change:(NSDictionary *)change context:(void *)context

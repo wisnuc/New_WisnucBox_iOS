@@ -84,11 +84,11 @@ WXApiDelegate
     
     [super viewWillAppear:animated];
     [self firstbeginSearching];
-//    [self refreshDatasource];
+    //    [self refreshDatasource];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
-//    [self.navigationController.navigationBar setBackgroundColor:UICOLOR_RGB(0x0288d1)];
+    //    [self.navigationController.navigationBar setBackgroundColor:UICOLOR_RGB(0x0288d1)];
     [UIApplication sharedApplication].statusBarStyle =UIStatusBarStyleLightContent;
-  
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
     
@@ -96,8 +96,8 @@ WXApiDelegate
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-//      [self firstbeginSearching];
-  }
+    //      [self firstbeginSearching];
+}
 
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -124,29 +124,29 @@ WXApiDelegate
 
 - (instancetype)init{
     if (self = [super init]) {
-   
+        
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [self viewOfSeaching:YES];
-//    [self firstbeginSearching];
+    //    [self viewOfSeaching:YES];
+    //    [self firstbeginSearching];
     _count = 0;
     _dataSource = [NSMutableArray arrayWithCapacity:0];
     [self.view addSubview:self.stationScrollView];
- 
+    
     [self setStationCardView];
     [self.view addSubview:self.stationPageControl];
     [self.view addSubview:self.logoImageView];
     [self.view addSubview:self.userView];
     [self.view addSubview:self.userListTableViwe];
     [self.view addSubview:self.handButton];
-     if ([WXApi isWXAppInstalled]) {
-     [self.view addSubview:self.wechatView];
+    if ([WXApi isWXAppInstalled]) {
+        [self.view addSubview:self.wechatView];
     }
-
+    
     [self.view addSubview:self.alertView];
 }
 
@@ -155,14 +155,14 @@ WXApiDelegate
         _browser.delegate = nil;
         _browser = nil;
     }
-//    double delayInSeconds = 2;
-//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-//        NSLog(@"发现 %lu 台设备",(unsigned long)self.browser.discoveredServers.count);
-//          [self viewOfSeaching:NO];
-//    });
+    //    double delayInSeconds = 2;
+    //    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    //    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    //        NSLog(@"发现 %lu 台设备",(unsigned long)self.browser.discoveredServers.count);
+    //          [self viewOfSeaching:NO];
+    //    });
     if (self.browser.discoveredServers.count == 0) {
-//        [SXLoadingView hideProgressHUD];
+        //        [SXLoadingView hideProgressHUD];
     }
 }
 
@@ -170,24 +170,25 @@ WXApiDelegate
     [SXLoadingView showProgressHUD:@"" View:self.view];
     if (_reachabilityTimer) {
         [_reachabilityTimer invalidate];
-
+        
     }
-   
+    
     if (_browser) {
         _browser.delegate = nil;
         _browser = nil;
     }
-//    [self viewOfSeaching:YES];
-//    double delayInSeconds = 1;
-//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        NSLog(@"发现 %lu 台设备",(unsigned long)_browser.discoveredServers.count);
-        if (self.browser.discoveredServers.count == 0) {
-//             [SXLoadingView hideProgressHUD];
-        }
-        _reachabilityTimer =  [NSTimer scheduledTimerWithTimeInterval:12 target:self selector:@selector(searchingAndRefresh) userInfo:nil repeats:YES];
-        [_reachabilityTimer fire];
-//    });
+    //    [self viewOfSeaching:YES];
+    //    double delayInSeconds = 1;
+    //    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    //    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    NSLog(@"发现 %lu 台设备",(unsigned long)_browser.discoveredServers.count);
+    if (self.browser.discoveredServers.count == 0) {
+        //             [SXLoadingView hideProgressHUD];
+    }
+    
+    _reachabilityTimer =  [NSTimer scheduledTimerWithTimeInterval:12 target:self selector:@selector(searchingAndRefresh) userInfo:nil repeats:YES];
+    [_reachabilityTimer fire];
+    //    });
 }
 
 static BOOL needHide = YES;
@@ -197,7 +198,7 @@ static BOOL needHide = YES;
     }else{
         if(needHide) {
             needHide = NO;
-            NSLog(@"=============>>>>>>>          _____>>>>");
+            NSLog(@"=============>>>>>>>_____>>>>");
             [SXLoadingView hideProgressHUD];
         }
     }
@@ -205,12 +206,12 @@ static BOOL needHide = YES;
 
 - (void)serverBrowserFoundService:(NSNetService *)service {
     NSLog(@"%@",service.hostName);
-        if ([service.hostName rangeOfString:@"wisnuc-"].location !=NSNotFound) {
-            for (NSData * address in service.addresses) {
-                NSString* addressString = [GCDAsyncSocket hostFromAddress:address];
-                [self findIpToCheck:addressString andService:service];
-            }
+    if ([service.hostName rangeOfString:@"wisnuc-"].location !=NSNotFound) {
+        for (NSData * address in service.addresses) {
+            NSString* addressString = [GCDAsyncSocket hostFromAddress:address];
+            [self findIpToCheck:addressString andService:service];
         }
+    }
 }
 
 - (void)serverBrowserLostService:(NSNetService *)service index:(NSUInteger)index {
@@ -238,11 +239,11 @@ static BOOL needHide = YES;
 
 
 - (void)findIpToCheck:(NSString *)addressString andService:(NSNetService *)service{
-     @weaky(self)
+    @weaky(self)
     __block NSString* urlString = [NSString stringWithFormat:@"http://%@:3000/", addressString];
     NSLog(@"%@", urlString);
     //    @weaky(self)
-//    if (IsEquallString(urlString, @"http://10.10.9.141:3000/")) {
+    //    if (IsEquallString(urlString, @"http://10.10.9.141:3000/")) {
     if (!urlString || urlString.length == 0) {
         return;
     }
@@ -285,9 +286,9 @@ static BOOL needHide = YES;
         }];
     }];
     
-//    if ([urlString isEqualToString:@"http://10.10.9.141:3000/"]) {
-
-//    }
+    //    if ([urlString isEqualToString:@"http://10.10.9.141:3000/"]) {
+    
+    //    }
 }
 
 - (void)initializeActionWithURLString:(NSString *)urlString SearchModel:(FMSerachService *)ser AddressString:(NSString *)addressString  Service:(NSNetService *)service{
@@ -311,33 +312,32 @@ static BOOL needHide = YES;
         @weaky(self)
         NSLog(@"%@",request.responseJsonObject);
         BootModel *bootModel = [BootModel modelWithJSON:request.responseJsonObject];
-//        if (bootModel.current) {
-            if ([bootModel.state isEqualToString:@"started"]) {
-                block(bootModel);
-            }else if ([bootModel.state isEqualToString:@"stopping"]){
-                
-            }else{
-                dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0/*延迟执行时间*/ * NSEC_PER_SEC));
-                
-                dispatch_after(delayTime, dispatch_get_main_queue(), ^{
-                    _count ++;
-//                    if (_count<11) {
-                         [weak_self getBootInfoWithPath:path completeBlock:block];
-//                    }
-                });
-            }
-//        }
+        //        if (bootModel.current) {
+        if ([bootModel.state isEqualToString:@"started"]) {
+            block(bootModel);
+        }else if ([bootModel.state isEqualToString:@"stopping"]){
+            
+        }else{
+            dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0/*延迟执行时间*/ * NSEC_PER_SEC));
+            
+            dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+                _count ++;
+                //                    if (_count<11) {
+                [weak_self getBootInfoWithPath:path completeBlock:block];
+                //                    }
+            });
+        }
+        //        }
     } failure:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.error);
     }];
 }
 
 - (void)getSystemInformationWithURL:(NSString *)url Service:(NSNetService *)service Name:(NSString *)name FMSerachServiceModel:(FMSerachService *)model NASType:(NASType)NAStype{
-      @weaky(self)
-      NSString* finalUrl = [NSString stringWithFormat:@"http://%@:3000/", url];
+    @weaky(self)
+    NSString* finalUrl = [NSString stringWithFormat:@"http://%@:3000/", url];
     [[WBGetSystemInformationAPI apiWithServicePath:finalUrl]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         //            NSLog(@"%@",request.responseJsonObject);
-      
         NSDictionary *rootDic =request.responseJsonObject;
         NSDictionary *dic = [rootDic objectForKey:@"ws215i"];
         NSString *type;
@@ -347,7 +347,6 @@ static BOOL needHide = YES;
             type = WBLocalizedString(@"virtual_machine",nil);
         }
         
-       
         FMSerachService *ser = model;
         if (name) {
             ser.name = name;
@@ -356,24 +355,24 @@ static BOOL needHide = YES;
         }
         
         if (NAStype == NASTypeUninitialized) {
-//            if (!ser.name) {
-//                 ser.name = WBLocalizedString(@"wisnuc_box", nil);
-//            }
+            //            if (!ser.name) {
+            //                 ser.name = WBLocalizedString(@"wisnuc_box", nil);
+            //            }
             ser.NASType = NASTypeUninitialized;
             if (_storageModel) {
                 ser.storageModel = _storageModel;
             }
         }else if (NAStype == NASTypeMaintain){
-           ser.NASType = NASTypeMaintain;
+            ser.NASType = NASTypeMaintain;
         }else if (NAStype == NASTypeError){
-             ser.NASType = NASTypeError;
+            ser.NASType = NASTypeError;
             if (!ser.name) {
-                 ser.name = WBLocalizedString(@"wisnuc_box", nil);
+                ser.name = WBLocalizedString(@"wisnuc_box", nil);
             }
         }else if (NAStype == NASTypeNormal){
-             ser.NASType = NASTypeNormal;
+            ser.NASType = NASTypeNormal;
         }else{
-             ser.NASType = NASTypeNormal;
+            ser.NASType = NASTypeNormal;
         }
         
         ser.path = finalUrl;
@@ -382,11 +381,11 @@ static BOOL needHide = YES;
         ser.displayPath = url;
         ser.hostName = service.hostName;
         _expandCell = ser;
-//        if (_dataSource.count == 0) {
-//           [_dataSource addObject:ser];
-//           [weak_self refreshDatasource];
-//            return ;
-//        }
+        //        if (_dataSource.count == 0) {
+        //           [_dataSource addObject:ser];
+        //           [weak_self refreshDatasource];
+        //            return ;
+        //        }
         BOOL isNew = YES;
         for (FMSerachService * s in _dataSource) {
             if (IsEquallString(s.path, ser.path)) {
@@ -405,29 +404,29 @@ static BOOL needHide = YES;
 }
 
 - (void)refreshDatasource{
-//    NSMutableArray * temp = [NSMutableArray arrayWithCapacity:0];
+    //    NSMutableArray * temp = [NSMutableArray arrayWithCapacity:0];
     _userDataSource = [NSMutableArray arrayWithCapacity:0];
-     [self.tempDataSource removeAllObjects];
+    [self.tempDataSource removeAllObjects];
     [_dataSource enumerateObjectsUsingBlock:^(FMSerachService * ser, NSUInteger idx, BOOL * _Nonnull stop) {
         if (ser.NASType == NASTypeNormal) {
-//            if (ser.isReadly) {
-                [self.tempDataSource addObject:ser];
-//            wd}
+            //            if (ser.isReadly) {
+            [self.tempDataSource addObject:ser];
+            //            wd}
         }else{
             [self.tempDataSource addObject:ser];
         }
     }];
-//    for ( in _dataSource) {
-//
-//    }
-   
-//    if(self.tempDataSource.count != temp.count){
-//        [self.tempDataSource addObjectsFromArray:temp];
-//        [self.userListTableViwe reloadData];
-//    }else if (self.tempDataSource && self.tempDataSource.count ==0){
-//        [e addObjectsFromArray:temp];
-//        [self.userListTableViwe reloadData];
-//    }
+    //    for ( in _dataSource) {
+    //
+    //    }
+    
+    //    if(self.tempDataSource.count != temp.count){
+    //        [self.tempDataSource addObjectsFromArray:temp];
+    //        [self.userListTableViwe reloadData];
+    //    }else if (self.tempDataSource && self.tempDataSource.count ==0){
+    //        [e addObjectsFromArray:temp];
+    //        [self.userListTableViwe reloadData];
+    //    }
     if (_stationScrollView) {
         [_stationScrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }
@@ -540,7 +539,7 @@ static BOOL needHide = YES;
         make.centerY.equalTo(_stationCardView.mas_centerY).offset(2);
         make.height.equalTo(@15);
     }];
-
+    
     _stationNameLabel = [[UILabel alloc]init];
     _stationNameLabel.text = @"WS215i";
     _stationNameLabel.font = [UIFont boldSystemFontOfSize:16];
@@ -571,12 +570,12 @@ static BOOL needHide = YES;
 - (void)reloadDataWithService:(FMSerachService *)ser{
     _stationTypeLabel.text = ser.type;
     if ([ser.type isEqualToString:WBLocalizedString(@"virtual_machine",nil)]) {
-         _stationLogoImageView.image = [UIImage imageNamed:@"virtual_machine"];
+        _stationLogoImageView.image = [UIImage imageNamed:@"virtual_machine"];
     }
     _stationNameLabel.text = ser.name;
     _stationIpLabel.text = ser.displayPath;
- 
-//      [self viewOfSeaching:NO];
+    
+    //      [self viewOfSeaching:NO];
 }
 
 - (void)applicationWillResignActive:(NSNotification*)notification {
@@ -678,7 +677,7 @@ static BOOL needHide = YES;
 }
 
 - (void)getUsersWithStationDic:(NSDictionary *)stationDic Model:(CloudLoginModel *)model completeBlock:(void(^)(NSError *, CloudModelForUser *user))block{
-     NSString *stationId = stationDic[@"id"];
+    NSString *stationId = stationDic[@"id"];
     FMGetUsersAPI *api = [FMGetUsersAPI apiWithStationId:stationId Token:model.data.token];
     [api startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSDictionary *rootDic = request.responseJsonObject;
@@ -690,9 +689,9 @@ static BOOL needHide = YES;
                 NSDictionary *globalDic = dic[@"global"];
                 NSString * idString =  globalDic[@"id"];
                 if ([model.data.user.userId isEqualToString:idString]) {
-                     mutableDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+                    mutableDic = [NSMutableDictionary dictionaryWithDictionary:dic];
                     [mutableDic addEntriesFromDictionary:stationDic];
-                     NSLog(@"%@",model.data.user.userId);
+                    NSLog(@"%@",model.data.user.userId);
                     CloudModelForUser *userModel = [CloudModelForUser modelWithDictionary:mutableDic];
                     if(stationDic[@"LANIP"] && ((NSArray *)stationDic[@"LANIP"]).count){
                         userModel.LANIP = stationDic[@"LANIP"][0];
@@ -734,16 +733,16 @@ static BOOL needHide = YES;
 
 - (void)initializationLayoutUpdateWithModel:(FMSerachService *)model{
     NSLog(@"%u",model.NASType);
-  if (model.NASType == NASTypeUninitialized) {
+    if (model.NASType == NASTypeUninitialized) {
         [_userListTableViwe removeEmptyView];
         _userView.alpha = 0;
         _userListTableViwe.bounces = NO;
         _userListTableViwe.noDataImageName = @"disk_settings";
         CGRect rect;
         if (__kWidth == 320) {
-        rect = CGRectMake(0, 16, self.userListTableViwe.bounds.size.width, self.userListTableViwe.bounds.size.height);
+            rect = CGRectMake(0, 16, self.userListTableViwe.bounds.size.width, self.userListTableViwe.bounds.size.height);
         }else{
-        rect = CGRectMake(0, 0, self.userListTableViwe.bounds.size.width, self.userListTableViwe.bounds.size.height);
+            rect = CGRectMake(0, 0, self.userListTableViwe.bounds.size.width, self.userListTableViwe.bounds.size.height);
         }
         NSLog(@"%@--- %@",NSStringFromCGRect(rect),NSStringFromCGRect(self.userListTableViwe.bounds));
         [_userListTableViwe displayWithMsg:WBLocalizedString(@"initialization", nil) withRowCount:0 andIsNoData:YES  andTableViewFrame:rect
@@ -753,8 +752,8 @@ static BOOL needHide = YES;
                                  initializationVC.searchModel = model;
                                  [self.navigationController pushViewController:initializationVC animated:YES];
                              }];
-       [_userDataSource removeAllObjects];
-       [_userListTableViwe reloadData];
+        [_userDataSource removeAllObjects];
+        [_userListTableViwe reloadData];
     }else if (model.NASType == NASTypeMaintain){
         [_userListTableViwe removeEmptyView];
         _userView.alpha = 0;
@@ -772,29 +771,29 @@ static BOOL needHide = YES;
                                  WBMaintenanceViewController *maintenanceVC = [[WBMaintenanceViewController alloc]init];
                                  maintenanceVC.searchModel = model;
                                  [self.navigationController pushViewController:maintenanceVC animated:YES];
-//
+                                 //
                              }];
-         [_userDataSource removeAllObjects];
-         [_userListTableViwe reloadData];
+        [_userDataSource removeAllObjects];
+        [_userListTableViwe reloadData];
     }else if (model.NASType == NASTypeError){
-            [_userListTableViwe removeEmptyView];
-            _userView.alpha = 0;
-            _userListTableViwe.bounces = NO;
-            _userListTableViwe.noDataImageName = @"disk_settings";
-            CGRect rect;
-            if (__kWidth == 320) {
-                rect = CGRectMake(0, 16, self.userListTableViwe.bounds.size.width, self.userListTableViwe.bounds.size.height);
-            }else{
-                rect = CGRectMake(0, 0, self.userListTableViwe.bounds.size.width, self.userListTableViwe.bounds.size.height);
-            }
-            NSLog(@"%@--- %@",NSStringFromCGRect(rect),NSStringFromCGRect(self.userListTableViwe.bounds));
-            [_userListTableViwe displayWithMsg:WBLocalizedString(@"enter_maintenance", nil) withRowCount:0 andIsNoData:YES  andTableViewFrame:rect
-                                 andTouchBlock:^(UIButton *btn) {
-                                     WBMaintenanceViewController *maintenanceVC = [[WBMaintenanceViewController alloc]init];
-                                     maintenanceVC.searchModel = model;
-                                     [self.navigationController pushViewController:maintenanceVC animated:YES];
-                                     //
-                                 }];
+        [_userListTableViwe removeEmptyView];
+        _userView.alpha = 0;
+        _userListTableViwe.bounces = NO;
+        _userListTableViwe.noDataImageName = @"disk_settings";
+        CGRect rect;
+        if (__kWidth == 320) {
+            rect = CGRectMake(0, 16, self.userListTableViwe.bounds.size.width, self.userListTableViwe.bounds.size.height);
+        }else{
+            rect = CGRectMake(0, 0, self.userListTableViwe.bounds.size.width, self.userListTableViwe.bounds.size.height);
+        }
+        NSLog(@"%@--- %@",NSStringFromCGRect(rect),NSStringFromCGRect(self.userListTableViwe.bounds));
+        [_userListTableViwe displayWithMsg:WBLocalizedString(@"enter_maintenance", nil) withRowCount:0 andIsNoData:YES  andTableViewFrame:rect
+                             andTouchBlock:^(UIButton *btn) {
+                                 WBMaintenanceViewController *maintenanceVC = [[WBMaintenanceViewController alloc]init];
+                                 maintenanceVC.searchModel = model;
+                                 [self.navigationController pushViewController:maintenanceVC animated:YES];
+                                 //
+                             }];
         [_userDataSource removeAllObjects];
         [_userListTableViwe reloadData];
     }else if (model.NASType == NASTypeNormal) {
@@ -869,25 +868,24 @@ static BOOL needHide = YES;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         UserModel *model;
         if (_userDataSource.count >0) {
-          model  = _userDataSource[indexPath.row];
+            model  = _userDataSource[indexPath.row];
         }
         
         NSLog(@"%@======%lu",model.username,(unsigned long)_userDataSource.count);
         cell.userNameLabel.text = model.username;
         cell.userNameImageView.image = [UIImage imageForName:model.username size:cell.userNameImageView.bounds.size];
-        
         return cell;
     }else{
-      FMCloudUserTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FMCloudUserTableViewCell class])];
+        FMCloudUserTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FMCloudUserTableViewCell class])];
         if (!cell) {
             cell= [[[NSBundle mainBundle] loadNibNamed:@"FMCloudUserTableViewCell" owner:nil options:nil] lastObject];
         }
-     
-       CloudModelForUser *model = _cloudLoginStationArray[indexPath.row];
-       NSLog(@"%@",model);
-       cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-       cell.userNameLabel.text = [NSString stringWithFormat:@"%@",model.username];
-       cell.stationName.text = [NSString stringWithFormat:@"%@",model.name];
+        
+        CloudModelForUser *model = _cloudLoginStationArray[indexPath.row];
+        NSLog(@"%@",model);
+        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+        cell.userNameLabel.text = [NSString stringWithFormat:@"%@",model.username];
+        cell.stationName.text = [NSString stringWithFormat:@"%@",model.name];
         return cell;
     }
     
@@ -919,7 +917,7 @@ static BOOL needHide = YES;
 
 - (UITableViewCellAccessoryType)tableView:(UITableView*)tableView accessoryTypeForRowWithIndexPath:(NSIndexPath*)indexPath
 {
-
+    
     if(tableView == self.alertView.tableView){
         if(_current==indexPath.row)
         {
@@ -932,7 +930,7 @@ static BOOL needHide = YES;
     }else{
         return UITableViewCellAccessoryNone;
     }
-
+    
 }
 
 - (NSMutableArray *)tempDataSource{
@@ -947,7 +945,7 @@ static BOOL needHide = YES;
         _stationScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, __kWidth,448/2 + 64)];
         _stationScrollView.backgroundColor = UICOLOR_RGB(0x0288d1);
         _stationScrollView.pagingEnabled = YES;
-//        _stationScrollView.contentSize = CGSizeMake(self.tempDataSource.count * JYSCREEN_WIDTH, 0);
+        //        _stationScrollView.contentSize = CGSizeMake(self.tempDataSource.count * JYSCREEN_WIDTH, 0);
         _stationScrollView.delegate = self;
         _stationScrollView.bounces = YES;
         _stationScrollView.showsHorizontalScrollIndicator = NO;
@@ -958,7 +956,7 @@ static BOOL needHide = YES;
 - (UIPageControl *)stationPageControl{
     if (!_stationPageControl) {
         _stationPageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0,self.stationScrollView.frame.size.height - 36 , __kWidth, 30)];
-//        _stationPageControl.numberOfPages = self.tempDataSource.count;
+        //        _stationPageControl.numberOfPages = self.tempDataSource.count;
         _stationPageControl.currentPage = 0;
     }
     return _stationPageControl;
@@ -996,7 +994,7 @@ static BOOL needHide = YES;
         _userListTableViwe.delegate = self;
         _userListTableViwe.dataSource = self;
         _userListTableViwe.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-//        _userListTableViwe.backgroundColor = [UIColor orangeColor];
+        //        _userListTableViwe.backgroundColor = [UIColor orangeColor];
     }
     return _userListTableViwe;
 }
@@ -1044,7 +1042,7 @@ static BOOL needHide = YES;
         [_handButton setImage:[UIImage imageNamed:@"PLUS"] forState:UIControlStateNormal];
         [_handButton addTarget:self action:@selector(rightBtnClick) forControlEvents:UIControlEventTouchUpInside];
         [_handButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
-      }
+    }
     return _handButton;
 }
 
@@ -1094,3 +1092,4 @@ static BOOL needHide = YES;
              };
 }
 @end
+

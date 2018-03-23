@@ -365,8 +365,9 @@
 
 - (void)getBoxListCallBack:(void(^)(NSArray *boxesModelArr,NSError *error))callback{
     if (!WB_UserService.currentUser.cloudToken) {
-        [SXLoadingView showProgressHUDText:@"非微信登录暂不能使用私友群功能" duration:1.2f];
-        return;
+//        [SXLoadingView showProgressHUDText:@"非微信登录暂不能使用私友群功能" duration:1.2f];
+        NSError * error = [NSError errorWithDomain:@"no cloudToken" code:10000001 userInfo:nil];
+        callback(nil,error);
     }
     [[WBGetBoxesAPI new]startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
         NSLog(@"%@",request.responseJsonObject);

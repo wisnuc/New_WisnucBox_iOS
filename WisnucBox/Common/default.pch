@@ -55,6 +55,7 @@
 #import <DACircularProgress/DACircularProgress-umbrella.h>
 #import <SDWebImage/SDWebImage-umbrella.h>
 #import <MQTTClient/MQTTClient.h>
+#import <MobileVLCKit/MobileVLCKit.h>
 
 //Base
 //#import "RDVTabBarController.h"

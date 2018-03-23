@@ -30,6 +30,7 @@ pod 'SDAutoLayout'
 pod 'DACircularProgress'
 pod 'SDWebImage'
 pod 'MQTTClient'
+pod 'MobileVLCKit'
 end
 
 #post_install do |installer|

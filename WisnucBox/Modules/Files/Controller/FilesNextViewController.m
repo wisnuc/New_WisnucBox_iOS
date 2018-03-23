@@ -18,6 +18,8 @@
 #import "FilesDataSourceManager.h"
 #import "CSFilesOneDownloadManager.h"
 #import "WBFilesAndTransmitProtocal.h"
+#import "FMMediaRamdomKeyAPI.h"
+#import "NSArray+NormalTool.h"
 
 @interface FilesNextViewController ()
 <
@@ -27,11 +29,17 @@ floatMenuDelegate,
 LCActionSheetDelegate,
 UIDocumentInteractionControllerDelegate,
 FLDataSourceDelegate,
-FilesHelperOpenFilesDelegate
+FilesHelperOpenFilesDelegate,
+VLCMediaPlayerDelegate
 >
 {
     UIButton * _leftBtn;
     UILabel * _countLb;
+    VLCMediaPlayer *_mediaPlay;
+    UIView *_videoView;
+    UIView *_videoControlView;
+    UIButton *_playButton;
+    UIButton *_closeButton;
 }
 
 @property (strong, nonatomic) UITableView *tableView;
@@ -223,6 +231,42 @@ FilesHelperOpenFilesDelegate
         } otherButtonTitles:selectTitle, nil] show];
     }else{
     }
+}
+
+- (void)playButtonClick:(UIButton *)sender{
+    sender.selected = !sender.selected;
+    if (sender.selected) {
+        [_mediaPlay play];
+    }else{
+        [_mediaPlay pause];
+    }
+}
+
+- (void)playControlViewTap:(UIGestureRecognizer *)gesture{
+    if (_playButton.hidden == YES) {
+        [UIView animateWithDuration:.5f animations:^{
+            _playButton.hidden = NO;
+            _closeButton.hidden = NO;
+        }completion:^(BOOL finished) {
+            
+        }];
+    }else {
+        [UIView animateWithDuration:.5f animations:^{
+            _playButton.hidden = YES;
+            _closeButton.hidden = YES;
+        }completion:^(BOOL finished) {
+            
+        }];
+    }
+}
+
+- (void)playCloseButtonClick:(UIButton *)sender{
+    //    [[UIApplication sharedApplication].windows lastObject]removeFromSuperview
+    [_videoView removeFromSuperview];
+    [_videoControlView removeFromSuperview];
+    _videoView = nil;
+    _mediaPlay = nil;
+    _videoControlView = nil;
 }
 
 - (void)sequenceDataSource{
@@ -417,11 +461,13 @@ FilesHelperOpenFilesDelegate
             _countLb.text = [NSString stringWithFormat:WBLocalizedString(@"select_count", nil),(unsigned long)[FLFIlesHelper helper].chooseFiles.count];
             [self.tableView reloadData];
         }else{
-            
+            if ([self videoPlayerResultWithModel:model]){
+                return;
+            }
             NSString* savePath = [CSFileUtil getPathInDocumentsDirBy:@"Downloads/" createIfNotExist:NO];
-//            NSString* suffixName = model.uuid;
+            //            NSString* suffixName = model.uuid;
             NSString *fileName = model.name;
-//            NSString *extensionstring = [fileName pathExtension];
+            //            NSString *extensionstring = [fileName pathExtension];
             NSString* saveFile = [savePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",fileName]];
             NSLog(@"文件位置%@",saveFile);
             if ([[NSFileManager defaultManager] fileExistsAtPath:saveFile]) {
@@ -470,9 +516,7 @@ FilesHelperOpenFilesDelegate
                             //                            [SXLoadingView showProgressHUDText:@"下载失败,请重试" duration:1.5];
                         }
                     }];
-                    
                 }else{
-                    
                     self.progressView.descLb.text =@"正在下载文件";
                     self.progressView.subDescLb.text = [NSString stringWithFormat:@"1个项目 "];
                     self.progressView.cancleBlock = ^(){
@@ -526,7 +570,78 @@ FilesHelperOpenFilesDelegate
         }
     }
 }
-//}
+
+
+- (BOOL)videoPlayerResultWithModel:(EntriesModel*)model{
+    NSString *pathExtension = [model.name pathExtension];
+    NSMutableArray *vidioArr = [NSMutableArray arrayWithArray:[NSArray vidioFormatArray]];
+    __block BOOL result;
+    [vidioArr enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        result = [obj compare:pathExtension
+                      options:NSCaseInsensitiveSearch | NSNumericSearch] == NSOrderedSame;
+        if (result) {
+            *stop = YES;
+        }
+    }];
+    
+    if (result) {
+        
+//        NSString *loaclFormUrl = [NSString stringWithFormat:@"%@drives/%@/dirs/%@/entries/%@?name=%@",[JYRequestConfig sharedConfig].baseURL,_driveUUID,_parentUUID,model.uuid,model.name];
+//        NSLog(@"%@",loaclFormUrl);
+//        NSURL *url = [NSURL URLWithString:[loaclFormUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet  URLQueryAllowedCharacterSet]]];
+        [[FMMediaRamdomKeyAPI  apiWithHash:model.photoHash] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
+            _videoView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight)];
+            _videoView.backgroundColor = [UIColor blackColor];
+            UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+            [window addSubview:_videoView];
+            
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@media/random/%@", [JYRequestConfig sharedConfig].baseURL, request.responseJsonObject[@"key"]]];
+    
+            NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+        
+            VLCMediaPlayer *mediaPlay = [[VLCMediaPlayer alloc]init];
+            VLCMedia *media = [VLCMedia mediaWithURL:url];
+             [dic setValue:WB_UserService.currentUser.isCloudLogin ? WB_UserService.currentUser.cloudToken : [NSString stringWithFormat:@"JWT %@",WB_UserService.defaultToken] forKey:@"Authorization"];
+             [media addOptions:dic];
+    
+            _videoControlView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight)];
+            _videoControlView.backgroundColor = [UIColor clearColor];
+            
+            UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(playControlViewTap:)];
+            [_videoControlView addGestureRecognizer:tapGesture];
+            
+            [window addSubview:_videoControlView];
+            
+            _playButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 48, 48)];
+            _playButton.center =CGPointMake(__kWidth/2, __kHeight/2);
+            [_playButton setImage:[UIImage imageNamed:@"play2"] forState:UIControlStateNormal];
+            [_playButton setImage:[UIImage imageNamed:@"ic_pause"] forState:UIControlStateSelected];
+            [_playButton addTarget:self action:@selector(playButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+            [_playButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
+            [_videoControlView addSubview:_playButton];
+            
+            _closeButton = [[UIButton alloc]initWithFrame:CGRectMake(__kWidth - 24 - 16, 20 + 44/2-28/2 +5, 24, 24)];
+            [_closeButton setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
+            [_closeButton addTarget:self action:@selector(playCloseButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+            _closeButton.alpha = 0.5f;
+            [_closeButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
+            [_videoControlView addSubview:_closeButton];
+            
+            mediaPlay.media = media;
+            mediaPlay.delegate = self;
+            mediaPlay.drawable = _videoView;
+            _mediaPlay = mediaPlay;
+        } failure:^(__kindof JYBaseRequest *request) {
+            [SXLoadingView showAlertHUD:WBLocalizedString(@"play_failed", nil) duration:1];
+            result = NO;
+        }];
+    }
+    if (result) {
+        return YES;
+    }else{
+        return NO;
+    }
+}
 
 #pragma mark UIDocumentInteractionControllerDelegate
 
@@ -536,6 +651,26 @@ FilesHelperOpenFilesDelegate
     return self;
 }
 
+- (void)mediaPlayerStateChanged:(NSNotification *)aNotification{
+    NSLog(@"%@",aNotification);
+    VLCMediaPlayer *play = aNotification.object;
+    NSLog(@"%ld",(long)play.state);
+    if (play.state == VLCMediaPlayerStateError) {
+        [SXLoadingView showProgressHUDText:@"视频播发失败或暂不支持该格式" duration:1.2];
+    }else if (play.state == VLCMediaPlayerStatePlaying){
+        [UIView animateWithDuration:0.5f animations:^{
+            _playButton.hidden = YES;
+            _closeButton.hidden = _playButton.hidden;
+        }];
+    }else if (play.state == VLCMediaPlayerStateEnded){
+        if (_playButton.hidden) {
+            _playButton.hidden = NO;
+            _closeButton.hidden = _playButton.hidden;
+        }
+        _playButton.selected = NO;
+        [_mediaPlay stop];
+    }
+}
 
 - (UITableView *)tableView{
     if (!_tableView) {

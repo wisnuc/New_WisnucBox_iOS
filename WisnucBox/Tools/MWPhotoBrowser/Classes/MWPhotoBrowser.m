@@ -1577,6 +1577,10 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
                     scrollView.contentSize = CGSizeMake(boxesModelArr.count*(Button_Width+Width_Space)+16*2 - Width_Space,scrollView.height );
                     [_shareView addSubview:scrollView];
                 }else{
+                    if (error.code == 10000001) {
+                        [_shareView setHidden:YES];
+                        return ;
+                    }
                     [SXLoadingView showAlertHUD:@"获取群列表失败" duration:1.2f];
                 }
             }];
