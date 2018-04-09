@@ -106,7 +106,7 @@ static dispatch_once_t onceToken;
 }
 
 - (void)downloadChooseFilesParentUUID:(NSString *)uuid RootUUID:(NSString *)rootUUID{
-    for (EntriesModel * model in [FLFIlesHelper helper].chooseFiles) {
+    for (EntriesModel * model in self.chooseFiles) {
         if ([model.type isEqualToString:@"file"]) {
 //            NSLog(@"%@",model.type);
             [[CSDownloadHelper shareManager] downloadFileWithFileModel:model RootUUID:rootUUID UUID:uuid];
