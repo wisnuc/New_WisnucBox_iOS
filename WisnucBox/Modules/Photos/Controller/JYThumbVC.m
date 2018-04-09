@@ -304,13 +304,13 @@
     [super viewDidLoad];
     self.showIndicator = YES;
     [self sort:self.arrDataSources];
-    
+    [self initMjRefresh];
     [self addRightBtn];
     [self initCollectionView];
 //    if (_isBoxSelectType) {
 //        [self initNaviForBoxSelectType];
 //    }else{
-        [self initMjRefresh];
+    
 //    }
     
 #warning box hide
@@ -753,6 +753,7 @@
 //    }
     return ((NSArray *)self.arrDataSources[section]).count;
 }
+
 
 //head的高度
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
