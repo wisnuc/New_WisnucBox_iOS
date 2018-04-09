@@ -31,6 +31,7 @@ pod 'DACircularProgress'
 pod 'SDWebImage'
 pod 'MQTTClient'
 pod 'MobileVLCKit'
+pod 'ijkplayer'
 end
 
 #post_install do |installer|

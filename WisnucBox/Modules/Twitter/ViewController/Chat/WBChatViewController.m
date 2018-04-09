@@ -749,7 +749,7 @@ NSString *const kTableViewFrame = @"frame";
     //    if([indexPath row] == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).row){
     //    }
     
-    if (self.isScrollBottom == NO) {
+    if (!self.isScrollBottom) {
         //        id obj = [self.dataSource objectAtIndex:indexPath.row];
         //        WBTweetModel *messageModel = (WBTweetModel *)obj;
         //        ((WBChatViewNormalTableViewCell *)cell).messageModel = messageModel;

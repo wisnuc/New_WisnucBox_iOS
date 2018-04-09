@@ -167,27 +167,26 @@
         }
             break;
         case 2:{
-            WBServiceSettingViewController *vc = [[WBServiceSettingViewController alloc]init];
-            [self.navigationController pushViewController:vc animated:YES];
+            NSBundle *bundle = [NSBundle bundleForClass:[WBSettingSelectPpgAlertViewController class]];
+            UIStoryboard *storyboard =
+            [UIStoryboard storyboardWithName:NSStringFromClass([WBSettingSelectPpgAlertViewController class]) bundle:bundle];
+            NSString *identifier = NSStringFromClass([WBSettingSelectPpgAlertViewController class]);
+            
+            UIViewController *viewController =
+            [storyboard instantiateViewControllerWithIdentifier:identifier];
+            
+            viewController.modalPresentationStyle = UIModalPresentationCustom;
+            viewController.transitioningDelegate = self.transitionController;
+            WBSettingSelectPpgAlertViewController *vc = (WBSettingSelectPpgAlertViewController *)viewController;
+            vc.typeString = [NSString stringWithFormat:@"%@",WB_UserService.currentUser.ppgSelectType];
+            vc.delegate = self;
+            [self presentViewController:viewController animated:YES completion:NULL];
         }
             break;
             
         case 3:{
-                NSBundle *bundle = [NSBundle bundleForClass:[WBSettingSelectPpgAlertViewController class]];
-                UIStoryboard *storyboard =
-                [UIStoryboard storyboardWithName:NSStringFromClass([WBSettingSelectPpgAlertViewController class]) bundle:bundle];
-                NSString *identifier = NSStringFromClass([WBSettingSelectPpgAlertViewController class]);
-        
-                UIViewController *viewController =
-                [storyboard instantiateViewControllerWithIdentifier:identifier];
-        
-                viewController.modalPresentationStyle = UIModalPresentationCustom;
-                viewController.transitioningDelegate = self.transitionController;
-                WBSettingSelectPpgAlertViewController *vc = (WBSettingSelectPpgAlertViewController *)viewController;
-                vc.typeString = [NSString stringWithFormat:@"%@",WB_UserService.currentUser.ppgSelectType];
-                vc.delegate = self;
-                [self presentViewController:viewController animated:YES completion:NULL];
-    
+            WBServiceSettingViewController *vc = [[WBServiceSettingViewController alloc]init];
+            [self.navigationController pushViewController:vc animated:YES];
         }
             break;
         case 4:{

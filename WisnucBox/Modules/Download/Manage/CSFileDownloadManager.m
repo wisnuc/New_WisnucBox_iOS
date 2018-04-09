@@ -735,20 +735,20 @@ __strong static id _sharedObject = nil;
     
 }
 
-- (void)testQueueKVO
-{
-    
-    NSString* test = @"我是一个测试";
-    
-    _taskDoingQueue.maxCapacity = 100;
-    
-    [_taskDoingQueue enqueue:test];
-    [_taskDoingQueue enqueue:test];
-    
-    [_taskDoingQueue dequeue];
-    [_taskDoingQueue dequeue];
-    
-}
+//- (void)testQueueKVO
+//{
+//
+//    NSString* test = @"我是一个测试";
+//
+//    _taskDoingQueue.maxCapacity = 100;
+//
+//    [_taskDoingQueue enqueue:test];
+//    [_taskDoingQueue enqueue:test];
+//
+//    [_taskDoingQueue dequeue];
+//    [_taskDoingQueue dequeue];
+//
+//}
 
 - (void)setMaxDownload:(int)maxDownload
 {

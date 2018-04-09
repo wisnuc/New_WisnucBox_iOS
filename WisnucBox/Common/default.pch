@@ -56,6 +56,10 @@
 #import <SDWebImage/SDWebImage-umbrella.h>
 #import <MQTTClient/MQTTClient.h>
 #import <MobileVLCKit/MobileVLCKit.h>
+#import <IJKMediaFramework/IJKMediaFramework.h>
+
+
+#import <DeviceCheck/DeviceCheck.h>
 
 //Base
 //#import "RDVTabBarController.h"

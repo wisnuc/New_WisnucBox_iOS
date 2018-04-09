@@ -96,17 +96,17 @@
     [[CSUploadHelper shareManager]startUploadAction];
     
     FirstFilesViewController *filesViewController = [[FirstFilesViewController alloc]init];
-    WBChatListViewController *chatViewController = [[WBChatListViewController alloc]init];
+//    WBChatListViewController *chatViewController = [[WBChatListViewController alloc]init];
     NavViewController *nav2 = [[NavViewController alloc] initWithRootViewController:photosVC];
     NavViewController *nav3 = [[NavViewController alloc] initWithRootViewController:filesViewController];
-    NavViewController *nav1 = [[NavViewController alloc] initWithRootViewController:chatViewController];
+//    NavViewController *nav1 = [[NavViewController alloc] initWithRootViewController:chatViewController];
     photosVC.title = kPhotoTabBarTitle;
     filesViewController.title = kFileTabBarTitle;
-    chatViewController.title = kChatTabBarTitle;
-    NSDictionary *dict1 = @{
-                            CYLTabBarItemImage : @"group",
-                            CYLTabBarItemSelectedImage : @"group_highLight",
-                            };
+//    chatViewController.title = kChatTabBarTitle;
+//    NSDictionary *dict1 = @{
+//                            CYLTabBarItemImage : @"group",
+//                            CYLTabBarItemSelectedImage : @"group_highLight",
+//                            };
     NSDictionary *dict2 = @{
                             CYLTabBarItemImage : @"photo",
                             CYLTabBarItemSelectedImage : @"photo_select",
@@ -117,13 +117,13 @@
                             };
 
     
-    NSArray *tabBarItemsAttributes = @[ dict1, dict2,dict3];
+    NSArray *tabBarItemsAttributes = @[dict2,dict3];
     tabbar.tabBarItemsAttributes = tabBarItemsAttributes;
     [tabbar.tabBar setBackgroundImage:[UIImage new]];
     [tabbar.tabBar setShadowImage:[UIImage new]];
     [self dropShadowWithTabbarController:tabbar Offset:CGSizeMake(0, -1) radius:1 color:[UIColor blackColor] opacity:0.3];
     tabbar.tabBar.backgroundColor  = [UIColor colorWithRed:245/255.0f green:245/255.0f blue:245/255.0f alpha:1];
-    NSMutableArray *viewControllersMutArr = [[NSMutableArray alloc] initWithObjects:nav1,nav2,nav3,nil];
+    NSMutableArray *viewControllersMutArr = [[NSMutableArray alloc] initWithObjects:nav2,nav3,nil];
     [tabbar setViewControllers:viewControllersMutArr];
     tabbar.selectedIndex = 0;
 //    [photosVC mergeDataSource];

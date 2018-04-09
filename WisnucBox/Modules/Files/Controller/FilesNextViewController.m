@@ -20,6 +20,7 @@
 #import "WBFilesAndTransmitProtocal.h"
 #import "FMMediaRamdomKeyAPI.h"
 #import "NSArray+NormalTool.h"
+#import "MRVLCPlayer.h"
 
 @interface FilesNextViewController ()
 <
@@ -247,6 +248,8 @@ VLCMediaPlayerDelegate
         [UIView animateWithDuration:.5f animations:^{
             _playButton.hidden = NO;
             _closeButton.hidden = NO;
+            _playButton.userInteractionEnabled = YES;
+            _closeButton.userInteractionEnabled = YES;
         }completion:^(BOOL finished) {
             
         }];
@@ -254,6 +257,8 @@ VLCMediaPlayerDelegate
         [UIView animateWithDuration:.5f animations:^{
             _playButton.hidden = YES;
             _closeButton.hidden = YES;
+            _playButton.userInteractionEnabled = NO;
+            _closeButton.userInteractionEnabled = NO;
         }completion:^(BOOL finished) {
             
         }];
@@ -261,7 +266,6 @@ VLCMediaPlayerDelegate
 }
 
 - (void)playCloseButtonClick:(UIButton *)sender{
-    //    [[UIApplication sharedApplication].windows lastObject]removeFromSuperview
     [_videoView removeFromSuperview];
     [_videoControlView removeFromSuperview];
     _videoView = nil;
@@ -586,51 +590,58 @@ VLCMediaPlayerDelegate
     
     if (result) {
         
-//        NSString *loaclFormUrl = [NSString stringWithFormat:@"%@drives/%@/dirs/%@/entries/%@?name=%@",[JYRequestConfig sharedConfig].baseURL,_driveUUID,_parentUUID,model.uuid,model.name];
-//        NSLog(@"%@",loaclFormUrl);
-//        NSURL *url = [NSURL URLWithString:[loaclFormUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet  URLQueryAllowedCharacterSet]]];
+        //        NSString *loaclFormUrl = [NSString stringWithFormat:@"%@drives/%@/dirs/%@/entries/%@?name=%@",[JYRequestConfig sharedConfig].baseURL,_driveUUID,_parentUUID,model.uuid,model.name];
+        ////        NSLog(@"%@",loaclFormUrl);
+        //        NSURL *url = [NSURL URLWithString:[loaclFormUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet  URLQueryAllowedCharacterSet]]];
         [[FMMediaRamdomKeyAPI  apiWithHash:model.photoHash] startWithCompletionBlockWithSuccess:^(__kindof JYBaseRequest *request) {
-            _videoView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight)];
-            _videoView.backgroundColor = [UIColor blackColor];
-            UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
-            [window addSubview:_videoView];
+//            _videoView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight)];
+//            _videoView.backgroundColor = [UIColor blackColor];
+//            UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+//            [window addSubview:_videoView];
             
             NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@media/random/%@", [JYRequestConfig sharedConfig].baseURL, request.responseJsonObject[@"key"]]];
-    
-            NSMutableDictionary * dic = [NSMutableDictionary dictionary];
-        
-            VLCMediaPlayer *mediaPlay = [[VLCMediaPlayer alloc]init];
-            VLCMedia *media = [VLCMedia mediaWithURL:url];
-             [dic setValue:WB_UserService.currentUser.isCloudLogin ? WB_UserService.currentUser.cloudToken : [NSString stringWithFormat:@"JWT %@",WB_UserService.defaultToken] forKey:@"Authorization"];
-             [media addOptions:dic];
-    
-            _videoControlView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight)];
-            _videoControlView.backgroundColor = [UIColor clearColor];
             
-            UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(playControlViewTap:)];
-            [_videoControlView addGestureRecognizer:tapGesture];
+            MRVLCPlayer *player = [[MRVLCPlayer alloc] init];
             
-            [window addSubview:_videoControlView];
+            player.bounds = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.width / 16 * 9);
+            player.center = self.view.center;
+            player.mediaURL = url;
+            [player showInView:self.view.window];
+            //            NSMutableDictionary * dic = [NSMutableDictionary dictionary];
             
-            _playButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 48, 48)];
-            _playButton.center =CGPointMake(__kWidth/2, __kHeight/2);
-            [_playButton setImage:[UIImage imageNamed:@"play2"] forState:UIControlStateNormal];
-            [_playButton setImage:[UIImage imageNamed:@"ic_pause"] forState:UIControlStateSelected];
-            [_playButton addTarget:self action:@selector(playButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-            [_playButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
-            [_videoControlView addSubview:_playButton];
-            
-            _closeButton = [[UIButton alloc]initWithFrame:CGRectMake(__kWidth - 24 - 16, 20 + 44/2-28/2 +5, 24, 24)];
-            [_closeButton setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
-            [_closeButton addTarget:self action:@selector(playCloseButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-            _closeButton.alpha = 0.5f;
-            [_closeButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
-            [_videoControlView addSubview:_closeButton];
-            
-            mediaPlay.media = media;
-            mediaPlay.delegate = self;
-            mediaPlay.drawable = _videoView;
-            _mediaPlay = mediaPlay;
+//            VLCMediaPlayer *mediaPlay = [[VLCMediaPlayer alloc]init];
+//            VLCMedia *media = [VLCMedia mediaWithURL:url];
+//            //             [dic setValue:WB_UserService.currentUser.isCloudLogin ? WB_UserService.currentUser.cloudToken : [NSString stringWithFormat:@"JWT %@",WB_UserService.defaultToken] forKey:@"Authorization"];
+//            //
+//            //             [media addOptions:dic];
+//
+//            _videoControlView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight)];
+//            _videoControlView.backgroundColor = [UIColor clearColor];
+//
+//            UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(playControlViewTap:)];
+//            [_videoControlView addGestureRecognizer:tapGesture];
+//
+//            [window addSubview:_videoControlView];
+//
+//            _playButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 48, 48)];
+//            _playButton.center =CGPointMake(__kWidth/2, __kHeight/2);
+//            [_playButton setImage:[UIImage imageNamed:@"play2"] forState:UIControlStateNormal];
+//            [_playButton setImage:[UIImage imageNamed:@"ic_pause"] forState:UIControlStateSelected];
+//            [_playButton addTarget:self action:@selector(playButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+//            [_playButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
+//            [_videoControlView addSubview:_playButton];
+//
+//            _closeButton = [[UIButton alloc]initWithFrame:CGRectMake(__kWidth - 24 - 16, 20 + 44/2-28/2 +5, 24, 24)];
+//            [_closeButton setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
+//            [_closeButton addTarget:self action:@selector(playCloseButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+//            _closeButton.alpha = 0.5f;
+//            [_closeButton setEnlargeEdgeWithTop:5 right:5 bottom:5 left:5];
+//            [_videoControlView addSubview:_closeButton];
+//
+//            mediaPlay.media = media;
+//            mediaPlay.delegate = self;
+//            mediaPlay.drawable = _videoView;
+//            _mediaPlay = mediaPlay;
         } failure:^(__kindof JYBaseRequest *request) {
             [SXLoadingView showAlertHUD:WBLocalizedString(@"play_failed", nil) duration:1];
             result = NO;
@@ -651,6 +662,14 @@ VLCMediaPlayerDelegate
     return self;
 }
 
+- (void)mediaPlayerTimeChanged:(NSNotification *)aNotification{
+    NSLog(@"%@",aNotification);
+    VLCMediaPlayer *play = aNotification.object;
+    //    NSLog(@"😁%ld",(long)play.time);
+    NSString *dateString = [CSDateUtil stringWithDate:[NSDate dateWithTimeIntervalSince1970:(long)play.time] withFormat:@"mm:ss"];
+    NSLog(@"😁%@",dateString);
+}
+
 - (void)mediaPlayerStateChanged:(NSNotification *)aNotification{
     NSLog(@"%@",aNotification);
     VLCMediaPlayer *play = aNotification.object;
@@ -660,12 +679,16 @@ VLCMediaPlayerDelegate
     }else if (play.state == VLCMediaPlayerStatePlaying){
         [UIView animateWithDuration:0.5f animations:^{
             _playButton.hidden = YES;
-            _closeButton.hidden = _playButton.hidden;
+            _closeButton.hidden = YES;
+            _playButton.userInteractionEnabled = NO;
+            _closeButton.userInteractionEnabled = NO;
         }];
     }else if (play.state == VLCMediaPlayerStateEnded){
         if (_playButton.hidden) {
             _playButton.hidden = NO;
-            _closeButton.hidden = _playButton.hidden;
+            _closeButton.hidden = NO;
+            _playButton.userInteractionEnabled = YES;
+            _closeButton.userInteractionEnabled = YES;
         }
         _playButton.selected = NO;
         [_mediaPlay stop];

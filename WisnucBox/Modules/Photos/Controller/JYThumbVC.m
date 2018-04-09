@@ -303,7 +303,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.showIndicator = YES;
-    //    [self sort:self.arrDataSources];
+    [self sort:self.arrDataSources];
+    
     [self addRightBtn];
     [self initCollectionView];
     if (_isBoxSelectType) {
@@ -311,12 +312,14 @@
     }else{
         [self initMjRefresh];
     }
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        [self sort:[self merge]];
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            [self.collectionView reloadData];
-        });
-    });
+    
+#warning box
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    [self sort:[self merge]];
+//        dispatch_sync(dispatch_get_main_queue(), ^{
+//            [self.collectionView reloadData];
+//        });
+//    });
    
     [self addPinchGesture];
     [self createControlbtn];
@@ -375,8 +378,9 @@
                     [weakSelf.collectionView reloadData];
                     [weakSelf.collectionView.mj_header endRefreshing];
                 });
+                   NSLog(@"Fetch Net Assets Error --> : %@", error);
             }
-            NSLog(@"Fetch Net Assets Error --> : %@", error);
+         
         }];
         //        [weakSelf sort:self.arrDataSources];
         //        [weakSelf.collectionView reloadData];
@@ -744,9 +748,9 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    if ([self.arrDataSources[section] isKindOfClass:[JYAsset class]]) {
-        return 0;
-    }
+//    if ([self.arrDataSources[section] isKindOfClass:[JYAsset class]]) {
+//        return 0;
+//    }
     return ((NSArray *)self.arrDataSources[section]).count;
 }
 
