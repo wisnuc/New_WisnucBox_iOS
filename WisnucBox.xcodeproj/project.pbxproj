@@ -191,7 +191,6 @@
 		1F4D9F41206A10AC00989ACE /* MRVideoHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D9F23206A10AC00989ACE /* MRVideoHUDView.m */; };
 		1F4D9F42206A10AC00989ACE /* MRVideoControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D9F24206A10AC00989ACE /* MRVideoControlView.m */; };
 		1F4D9F43206A10AC00989ACE /* MRVLCPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F4D9F27206A10AC00989ACE /* MRVLCPlayer.mm */; };
-		1F4D9F45206A25EF00989ACE /* DeviceCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F4D9F44206A25EE00989ACE /* DeviceCheck.framework */; };
 		1F58DEE51FDFDC6B00768DD7 /* disk_settings@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F58DEE21FDFDC6A00768DD7 /* disk_settings@3x.png */; };
 		1F58DEE61FDFDC6B00768DD7 /* disk_settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F58DEE31FDFDC6A00768DD7 /* disk_settings.png */; };
 		1F58DEE71FDFDC6B00768DD7 /* disk_settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F58DEE41FDFDC6B00768DD7 /* disk_settings@2x.png */; };
@@ -2705,7 +2704,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F4D9F45206A25EF00989ACE /* DeviceCheck.framework in Frameworks */,
 				1F4D9EFB2068FF0300989ACE /* UIKit.framework in Frameworks */,
 				1F4D9EF92068FEF400989ACE /* QuartzCore.framework in Frameworks */,
 				1F4D9EF72068FED900989ACE /* MobileCoreServices.framework in Frameworks */,

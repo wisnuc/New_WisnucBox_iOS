@@ -59,7 +59,7 @@
 #import <IJKMediaFramework/IJKMediaFramework.h>
 
 
-#import <DeviceCheck/DeviceCheck.h>
+//#import <DeviceCheck/DeviceCheck.h>
 
 //Base
 //#import "RDVTabBarController.h"

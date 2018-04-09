@@ -125,18 +125,18 @@
     [self.view addGestureRecognizer:longGesture];
     [self initNavBtns];
     
-    _shareView = [[UIView alloc]initWithFrame:CGRectMake(0, __kHeight, __kWidth, ShareViewHeight)];
-    _shareView.backgroundColor = [UIColor whiteColor];
-    UIToolbar *shareToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, ShareViewHeight - 44, __kWidth, 44)];
-    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareToOther)];
-    UIBarButtonItem* flexItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    flexItem.width = 16;
-    [shareToolbar setItems:@[flexItem,barButtonItem]];
-    
-    
-    [_shareView addSubview:shareToolbar];
-    [self.view addSubview:_shareView];
-    _sharing = NO;
+//    _shareView = [[UIView alloc]initWithFrame:CGRectMake(0, __kHeight, __kWidth, ShareViewHeight)];
+//    _shareView.backgroundColor = [UIColor whiteColor];
+//    UIToolbar *shareToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, ShareViewHeight - 44, __kWidth, 44)];
+//    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareToOther)];
+//    UIBarButtonItem* flexItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+//    flexItem.width = 16;
+//    [shareToolbar setItems:@[flexItem,barButtonItem]];
+//
+//
+//    [_shareView addSubview:shareToolbar];
+//    [self.view addSubview:_shareView];
+//    _sharing = NO;
 }
 
 - (void)back:(id)btn
@@ -341,17 +341,17 @@
     activityVC.excludedActivityTypes = @[];
     
     [self presentViewController:activityVC animated:YES completion:nil];
-
 }
 
+#warning box hide
 - (void)shareToOtherApp{
     //准备照片
     @weaky(self);
     [self clickDownloadWithShare:YES andCompleteBlock:^(NSArray *images) {
-        [weak_self shareScrollViewInit];
+//        [weak_self shareScrollViewInit];
         weak_self.shareDataArray = images;
+        [self shareToOther];
     }];
-
 }
 
 - (void)shareScrollViewInit{

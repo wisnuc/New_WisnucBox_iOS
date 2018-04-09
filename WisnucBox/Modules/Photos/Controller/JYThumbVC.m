@@ -24,17 +24,8 @@
 #import "JYProcessView.h"
 #import "AppDelegate.h"
 
-#define ShareViewHeight 131.0
-#define Width_Space      40.0f      // 2个按钮之间的横间距
-#define Height_Space     0     // 竖间距
-#define Button_Height   55.0f    // 高
-#define Button_Width    40.0f    // 宽
-#define Start_X          16.0f   // 第一个按钮的X坐标
-#define Start_Y          16.0f     // 第一个按钮的Y坐标
-
 @interface JYThumbVC ()<UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UIViewControllerPreviewingDelegate, JYShowBigImgViewControllerDelegate, FMHeadViewDelegate, floatMenuDelegate,UICollectionViewDataSourcePrefetching> {
     NSInteger _currentScale;
-    UITapGestureRecognizer *_tap;
     
 }
 
@@ -63,13 +54,7 @@
 
 @property (nonatomic, assign) BOOL isDownloading;
 
-@property (nonatomic, assign) BOOL isBoxSelectType;
-
 @property (nonatomic, copy) void(^downloadBlock)(BOOL success ,UIImage *image);
-
-@property (nonatomic,strong) UIView *boxTypeBar;
-
-@property (nonatomic,strong) UIButton *boxTypeSelectFinishButton;
 
 @end
 
@@ -77,9 +62,6 @@
     UIButton * _leftBtn;//导航栏左边按钮
     UIButton * _rightbtn;//导航栏右边按钮
     UILabel * _countLb;
-    NSArray * _shareaDataArray;
-    NSMutableArray * _boxesDataArray;
-    UIView *_shareView;
 }
 
 - (NSMutableArray<WBAsset *> *)netArrDataSourcesBackup {
@@ -122,70 +104,19 @@
     if(!isSelectMode){
         [self.chooseSection removeAllObjects];
         [self.choosePhotos removeAllObjects];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.collectionView.mj_header.hidden = NO;
-        });
-        
+        self.collectionView.mj_header.hidden = NO;
     }else{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.collectionView.mj_header.hidden = YES;
-        });
+        self.collectionView.mj_header.hidden = YES;
     }
 }
 
-- (instancetype)initWithLocalDataSource:(NSArray<JYAsset *> *)assets{
+- (instancetype)initWithLocalDataSource:(NSArray<JYAsset *> *)assets {
     if(self = [super init]) {
         [self.arrDataSources addObjectsFromArray:assets];
         self.localArrDataSourcesBackup = [NSMutableArray  arrayWithArray:self.arrDataSources]; // backup
         _isSelectMode = NO;
-  
     }
     return self;
-}
-
-- (instancetype)initWithLocalDataSource:(NSArray<JYAsset *> *)assets IsBoxSelectType:(BOOL)isBoxSelectType{
-    if(self = [super init]) {
-        [self.arrDataSources addObjectsFromArray:assets];
-        self.localArrDataSourcesBackup = [NSMutableArray  arrayWithArray:self.arrDataSources]; // backup
-        if (isBoxSelectType) {
-            _isSelectMode = YES;
-            _isBoxSelectType = YES;
-        }
-       
-//        [self initMjRefresh];
-        [self.view addSubview:self.boxTypeBar];
-    }
-    return self;
-}
-
-- (void)initNaviForBoxSelectType{
-//    dispatch_main_async_safe(^{
-    
-    UIButton * leftButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 24)];
-    leftButton.backgroundColor= [UIColor clearColor];
-    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = nil;
-    self.navigationItem.leftBarButtonItems = @[leftButtonItem];
-    
-    UIButton * rBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 30)];
-    rBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-    [rBtn setEnlargeEdgeWithTop:5 right:10 bottom:5 left:5];
-    [rBtn setTitleColor:kTitleTextColor forState:UIControlStateNormal];
-    [rBtn setTitle:@"取消" forState:UIControlStateNormal];
-    rBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    [rBtn addTarget:self action:@selector(rBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem * item = [[UIBarButtonItem alloc]initWithCustomView:rBtn];
-    self.navigationItem.rightBarButtonItem = nil;
-    self.navigationItem.rightBarButtonItem = item;
-//    });
-}
-
-- (void)rBtnClick{
-    [self dismissViewControllerAnimated:YES completion:^{
-        [self.arrDataSources removeAllObjects];
-        [self.chooseSection removeAllObjects];
-        [self.choosePhotos removeAllObjects];
-    }];
 }
 
 - (void)addLocalDataSource:(NSArray<JYAsset *> *)assets{
@@ -200,13 +131,12 @@
         [self sort:[self merge]];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.collectionView reloadData];
-            [SXLoadingView hideProgressHUD];
         });
     });
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//
-//        [self.collectionView reloadData];
-//    });
+    //    dispatch_async(dispatch_get_main_queue(), ^{
+    //
+    //        [self.collectionView reloadData];
+    //    });
 }
 
 // merge localAssets and netAssets, delete net same asset which local had
@@ -239,7 +169,6 @@
 -(void)sort:(NSArray<JYAsset *> *)assetsArr {
     NSMutableArray * arr = [NSMutableArray arrayWithArray:assetsArr];
     NSComparator cmptr = ^(JYAsset * photo1, JYAsset * photo2){
-//        NSLog(@"%@/%@",photo1,photo2);
         NSDate * tempDate = [photo1.createDate laterDate: photo2.createDate];
         if ([tempDate isEqualToDate:photo1.createDate]) {
             return (NSComparisonResult)NSOrderedAscending;
@@ -304,45 +233,19 @@
     [super viewDidLoad];
     self.showIndicator = YES;
     [self sort:self.arrDataSources];
-    [self initMjRefresh];
     [self addRightBtn];
     [self initCollectionView];
-//    if (_isBoxSelectType) {
-//        [self initNaviForBoxSelectType];
-//    }else{
-    
-//    }
-    
-#warning box hide
-//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-//    [self sort:[self merge]];
-//        dispatch_sync(dispatch_get_main_queue(), ^{
-//            [self.collectionView reloadData];
-//        });
-//    });
-   
+    [self initMjRefresh];
     [self addPinchGesture];
     [self createControlbtn];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userAuthChange:) name:ASSETS_AUTH_CHANGE_NOTIFY object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(assetDidChangeHandle:) name:ASSETS_UPDATE_NOTIFY object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hashCalculateHandle) name:HashCalculateFinishedNotify object:nil];
-#warning box hide
-//    _shareView = [[UIView alloc]initWithFrame:CGRectMake(0, __kHeight, __kWidth, ShareViewHeight)];
-//    _shareView.backgroundColor = [UIColor whiteColor];
-//    UIToolbar *shareToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, ShareViewHeight - 44, __kWidth, 44)];
-//    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareToOther)];
-//    UIBarButtonItem* flexItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-//    flexItem.width = 16;
-//    [shareToolbar setItems:@[flexItem,barButtonItem]];
-//
-//
-//    [_shareView addSubview:shareToolbar];
-//    [self.view addSubview:_shareView];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:NO];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }
 
@@ -358,7 +261,9 @@
             [weakSelf leftBtnClick:_leftBtn];
         }
         [WB_AssetService getNetAssets:^(NSError *error, NSArray<WBAsset *> *netAssets) {
+            
             if(!error){
+                
                 [weakSelf.localArrDataSourcesBackup removeAllObjects];
                 [weakSelf.netArrDataSourcesBackup removeAllObjects];
                 [weakSelf.arrDataSources removeAllObjects];
@@ -368,19 +273,14 @@
                 [weakSelf addNetAssets:netAssets];
                 
                 weakSelf.isSelectMode = _isSelectMode;
-                dispatch_main_async_safe(^{
-                    [weakSelf.collectionView reloadData];
-                    [weakSelf.collectionView.mj_header endRefreshing];
-                });
                 
+                [weakSelf.collectionView reloadData];
+                [weakSelf.collectionView.mj_header endRefreshing];
             }else{
-                dispatch_main_async_safe(^{
-                    [weakSelf.collectionView reloadData];
-                    [weakSelf.collectionView.mj_header endRefreshing];
-                });
-                   NSLog(@"Fetch Net Assets Error --> : %@", error);
+                [weakSelf.collectionView reloadData];
+                [weakSelf.collectionView.mj_header endRefreshing];
             }
-         
+            NSLog(@"Fetch Net Assets Error --> : %@", error);
         }];
         //        [weakSelf sort:self.arrDataSources];
         //        [weakSelf.collectionView reloadData];
@@ -562,91 +462,6 @@
     }
 }
 
-//选择完成
-- (void)boxTypeSelectFinishButtonClick:(UIButton *)sender{
-    @weaky(self)
-    if (self.choosePhotos.count == 0)return;
-    NSMutableArray *photosArray = [NSMutableArray arrayWithCapacity:0];
-    NSMutableArray *localModelArray = [NSMutableArray arrayWithCapacity:0];
-//    NSArray *sourceArray =[NSArray arrayWithArray:self.choosePhotos];
-    CGSize size = CGSizeMake(MAX_SIZE, MAX_SIZE);
-//    CGSize size = [weak_self getImageSizeWithImageArray:sourceArray];
-//     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-    RACSubject *subject = [RACSubject subject];
-    [self.choosePhotos enumerateObjectsUsingBlock:^( id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSLog(@"%@",_choosePhotos);
-        if (![obj isKindOfClass:[WBAsset class]]) {
-            JYAsset *asset = obj;
-             WBTweetlocalImageModel *localImageModel = [WBTweetlocalImageModel new];
-            [PHPhotoLibrary requestImageForAsset:asset.asset size:size resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
-                if(!weak_self) return;
-                localImageModel.localImage = image;
-                [photosArray addObject:image];
-            }];
-            localImageModel.asset = obj;
-            [localModelArray addObject:localImageModel];
-        }else{
-            WBAsset *asset = obj;
-            if (asset.image) {
-                WBTweetlocalImageModel *localImageModel = [WBTweetlocalImageModel new];
-                localImageModel.localImage = asset.image;
-                localImageModel.asset = asset;
-                [localModelArray addObject:localImageModel];
-                [photosArray addObject:asset.image];
-            }else{
-          __block SDWebImageDownloadToken *thumbnailRequestOperation = [WB_NetService getThumbnailWithHash:[(WBAsset *)obj fmhash] complete:^(NSError *error, UIImage *img) {
-                if(!weak_self) return;
-                if (!error && img) {
-                    WBTweetlocalImageModel *localImageModel = [WBTweetlocalImageModel new];
-                    localImageModel.localImage = img;
-                    localImageModel.asset = obj;
-                    [localModelArray addObject:localImageModel];
-                    [photosArray addObject:img];
-                }else{
-//                    [[SDWebImageDownloader sharedDownloader]cancel:thumbnailRequestOperation];
-                    thumbnailRequestOperation = nil;
-                }
-             }];
-            }
-        }
-    }];
-//    if (photosArray.count == 0) {
-//        return;
-//    }
-    if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerDidFinishPickingPhotos:sourceAssets:LocalImageModelArray:isSelectOriginalPhoto:)]) {
-        [self.delegate imagePickerDidFinishPickingPhotos:photosArray sourceAssets:self.choosePhotos LocalImageModelArray:localModelArray isSelectOriginalPhoto:YES];
-    }
-    [self dismissViewControllerAnimated:YES completion:^{}];
-}
-
-- (CGSize)getImageSizeWithImageArray:(NSArray *)array{
-    CGSize size = CGSizeZero;
-    if (array.count  == 0 || !array)return CGSizeZero;
-    if (array.count % 2 == 0) {
-        if (array.count == 4) {
-            size.width = THREE_IMAGE_SIZE;
-            size.height = THREE_IMAGE_SIZE;
-        }else{
-            size.width = MAX_SIZE ;
-            size.height = MAX_SIZE;
-        }
-    }
-    if (array.count % 3 == 0){
-        size.width = THREE_IMAGE_SIZE;
-        size.height = THREE_IMAGE_SIZE;
-    }
-    if (array.count == 1) {
-        size.width = MAX_SIZE ;
-        size.height = MAX_SIZE;
-    }
-    
-    if (array.count >=5) {
-        size.width = THREE_IMAGE_SIZE;
-        size.height = THREE_IMAGE_SIZE;
-    }
-    return size;
-}
-
 -(void)changeFlowLayoutIsBeSmall:(BOOL)isSmall{
     if ((!isSmall && _currentScale == 1) || (isSmall && _currentScale == 6))
         return;
@@ -699,8 +514,8 @@
         [self registerForPreviewingWithDelegate:self sourceView:self.collectionView];
     [self.collectionView reloadData];
     
-//    self.collectionView.prefetchDataSource = self;
-//    self.collectionView.prefetchingEnabled = YES;
+    //    self.collectionView.prefetchDataSource = self;
+    //    self.collectionView.prefetchingEnabled = YES;
     if(_showIndicator) [self initIndicator];
 }
 
@@ -748,12 +563,8 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-//    if ([self.arrDataSources[section] isKindOfClass:[JYAsset class]]) {
-//        return 0;
-//    }
     return ((NSArray *)self.arrDataSources[section]).count;
 }
-
 
 //head的高度
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
@@ -763,14 +574,12 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    
     JYCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JYCollectionViewCell" forIndexPath:indexPath];
     
     JYAsset *model;
     model = ((NSMutableArray *)self.arrDataSources[indexPath.section])[indexPath.row];
-    if (!model) {
-        return cell;
-    }
+    
     jy_weakify(self);
     cell.selectedBlock = ^(BOOL selected) {
         if(!weakSelf.isSelectMode) return;
@@ -798,15 +607,10 @@
             [weakSelf.collectionView reloadData];
         }
         
-        if (weakSelf.choosePhotos.count == 0 &&!_isBoxSelectType) {
+        if (weakSelf.choosePhotos.count == 0) {
             weakSelf.isSelectMode = NO;
             [weakSelf leftBtnClick:_leftBtn];
         }
-        
-        if (_isBoxSelectType) {
-            [_boxTypeSelectFinishButton setTitle:[NSString stringWithFormat:@"完成(%lu)",(unsigned long)weakSelf.choosePhotos.count] forState:UIControlStateNormal];
-        }
-        
         _countLb.text = [NSString stringWithFormat:WBLocalizedString(@"select_count", nil),(unsigned long)weakSelf.choosePhotos.count];
     };
     
@@ -817,7 +621,6 @@
         weakSelf.addButton.hidden = NO;
         
         [weakSelf.choosePhotos addObject:model];
-        
         __block BOOL containAll = YES;
         [(NSArray *)weakSelf.arrDataSources[indexPath.section] enumerateObjectsUsingBlock:^(JYAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if(![weakSelf.choosePhotos containsObject:obj]) {
@@ -827,8 +630,8 @@
         }];
         if(containAll){ [weakSelf.chooseSection addObject:[NSIndexPath indexPathForRow:0 inSection:indexPath.section]];
         }
-       _countLb.text = [NSString stringWithFormat:WBLocalizedString(@"select_count", nil),(unsigned long)weakSelf.choosePhotos.count];
-       
+        _countLb.text = [NSString stringWithFormat:WBLocalizedString(@"select_count", nil),(unsigned long)weakSelf.choosePhotos.count];
+        
         [weakSelf.collectionView reloadData];
     };
     
@@ -845,12 +648,7 @@
 //headView
 - (FMHeadView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
     FMHeadView * headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headView" forIndexPath:indexPath];
-    if ([self.arrDataSources[indexPath.section] isKindOfClass:[JYAsset class]]) {
-        headView.headTitle = [self getDateStringWithPhoto:(        (JYAsset *)_arrDataSources[indexPath.section]).createDate];
-    }else{
-      headView.headTitle = [self getDateStringWithPhoto: ((JYAsset *)((NSMutableArray *)_arrDataSources[indexPath.section])[indexPath.row]).createDate];
-    }
-    
+    headView.headTitle = [self getDateStringWithPhoto: ((JYAsset *)((NSMutableArray *)_arrDataSources[indexPath.section])[indexPath.row]).createDate];
     headView.fmIndexPath = indexPath;
     headView.isSelectMode = _isSelectMode;
     headView.isChoose = [self.chooseSection containsObject:indexPath];
@@ -863,25 +661,8 @@
 {
     if(_isSelectMode) {
         JYCollectionViewCell * cell = (JYCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-      
         if(cell){
-            if (_isBoxSelectType) {
-               if (WB_UserService.currentUser.isCloudLogin) {
-                   if (self.choosePhotos.count==1) {
-                       if (cell.isSelect) {
-                           [cell btnSelectClick:nil];
-                           return;
-                       }
-                       [SXLoadingView showProgressHUDText:@"远程微信连接状态每次暂时只能上传一张照片" duration:1.2f];
-                   }else{
-                       [cell btnSelectClick:nil];
-                   }
-               }else{
-                  [cell btnSelectClick:nil];
-               }
-            }else{
-                 [cell btnSelectClick:nil];
-            }
+            [cell btnSelectClick:nil];
         }
     }else{
         JYAsset *model = ((NSMutableArray *)self.arrDataSources[indexPath.section])[indexPath.row];
@@ -932,59 +713,59 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView prefetchItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths{
-//    for (NSIndexPath *indexPath in indexPaths) {
-//        NSLog(@"🌶 %ld/%ld",indexPath.section,indexPath.row);
-//        
-//        JYAsset *model;
-//        model = ((NSMutableArray *)self.arrDataSources[indexPath.section])[indexPath.row];
-////        NSLog(@"%@",model);
-////        if (model) {
-//  JYCollectionViewCell * cell = (JYCollectionViewCell *)[self collectionView:collectionView cellForItemAtIndexPath:indexPath];//
-////     UICollectionViewCell *collectionViewCell  =[collectionView cellForItemAtIndexPath:indexPath];
-////        JYCollectionViewCell *cell = (JYCollectionViewCell *)collectionViewCell;
-//        NSLog(@"🌹%@",cell);
-//        CGSize size;
-//        size.width = GetViewWidth(cell) * 1.7 ;
-//        size.height = GetViewHeight(cell) * 1.7;
-//        if(model.asset)
-//            cell.identifier = model.asset.localIdentifier;
-//        else
-//            cell.identifier = [(WBAsset *)model fmhash];
-//        cell.imageView.image = nil;
-//        if(model.asset)
-//            cell.imageRequestID = [PHPhotoLibrary requestImageForAsset:model.asset size:size completion:^(UIImage *image, NSDictionary *info) {
-//                if(!cell) return;
-//                if ([cell.identifier isEqualToString:model.asset.localIdentifier]) {
-//                    cell.imageView.image = image;
-//                }
-//                if (![[info objectForKey:PHImageResultIsDegradedKey] boolValue]) {
-//                    cell.imageRequestID = -1;
-//                }
-//            }];
-//        else {
-//            id <SDWebImageOperation> thumbnailRequestOperation = [WB_NetService getThumbnailWithHash:[(WBAsset *)model fmhash] complete:^(NSError *error, UIImage *img) {
-//                if(!cell) return;
-//                if (!error && [cell.identifier isEqualToString:[(WBAsset *)model fmhash]]) {
-//                    cell.imageView.image = img;
-//                }else
-//                    NSLog(@"get thumbnail error ---> : %@", error);
-//                cell.thumbnailRequestOperation = nil;
-//            }];
-//            cell.thumbnailRequestOperation = thumbnailRequestOperation;
-//        }
-////     }
-//   }
+    //    for (NSIndexPath *indexPath in indexPaths) {
+    //        NSLog(@"🌶 %ld/%ld",indexPath.section,indexPath.row);
+    //
+    //        JYAsset *model;
+    //        model = ((NSMutableArray *)self.arrDataSources[indexPath.section])[indexPath.row];
+    ////        NSLog(@"%@",model);
+    ////        if (model) {
+    //  JYCollectionViewCell * cell = (JYCollectionViewCell *)[self collectionView:collectionView cellForItemAtIndexPath:indexPath];//
+    ////     UICollectionViewCell *collectionViewCell  =[collectionView cellForItemAtIndexPath:indexPath];
+    ////        JYCollectionViewCell *cell = (JYCollectionViewCell *)collectionViewCell;
+    //        NSLog(@"🌹%@",cell);
+    //        CGSize size;
+    //        size.width = GetViewWidth(cell) * 1.7 ;
+    //        size.height = GetViewHeight(cell) * 1.7;
+    //        if(model.asset)
+    //            cell.identifier = model.asset.localIdentifier;
+    //        else
+    //            cell.identifier = [(WBAsset *)model fmhash];
+    //        cell.imageView.image = nil;
+    //        if(model.asset)
+    //            cell.imageRequestID = [PHPhotoLibrary requestImageForAsset:model.asset size:size completion:^(UIImage *image, NSDictionary *info) {
+    //                if(!cell) return;
+    //                if ([cell.identifier isEqualToString:model.asset.localIdentifier]) {
+    //                    cell.imageView.image = image;
+    //                }
+    //                if (![[info objectForKey:PHImageResultIsDegradedKey] boolValue]) {
+    //                    cell.imageRequestID = -1;
+    //                }
+    //            }];
+    //        else {
+    //            id <SDWebImageOperation> thumbnailRequestOperation = [WB_NetService getThumbnailWithHash:[(WBAsset *)model fmhash] complete:^(NSError *error, UIImage *img) {
+    //                if(!cell) return;
+    //                if (!error && [cell.identifier isEqualToString:[(WBAsset *)model fmhash]]) {
+    //                    cell.imageView.image = img;
+    //                }else
+    //                    NSLog(@"get thumbnail error ---> : %@", error);
+    //                cell.thumbnailRequestOperation = nil;
+    //            }];
+    //            cell.thumbnailRequestOperation = thumbnailRequestOperation;
+    //        }
+    ////     }
+    //   }
 }
 
 -(void)collectionView:(UICollectionView *)collectionView cancelPrefetchingForItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
 {
-//      for (NSIndexPath *indexPath in indexPaths) {
-//            JYCollectionViewCell * cell = (JYCollectionViewCell *)[self collectionView:collectionView cellForItemAtIndexPath:indexPath];
-//          if (cell.thumbnailRequestOperation){
-//              [cell.thumbnailRequestOperation cancel];
-//              cell.thumbnailRequestOperation = nil;
-//          }
-//      }
+    //      for (NSIndexPath *indexPath in indexPaths) {
+    //            JYCollectionViewCell * cell = (JYCollectionViewCell *)[self collectionView:collectionView cellForItemAtIndexPath:indexPath];
+    //          if (cell.thumbnailRequestOperation){
+    //              [cell.thumbnailRequestOperation cancel];
+    //              cell.thumbnailRequestOperation = nil;
+    //          }
+    //      }
 }
 
 - (CGSize)getSize:(JYAsset *)model
@@ -1124,29 +905,18 @@ bool isDecelerating = NO;
 
 -(void)FMHeadView:(FMHeadView *)headView isChooseBtn:(BOOL)isChoose {
     if(isChoose) {
-        if (_isBoxSelectType && ((NSArray *)self.arrDataSources[headView.fmIndexPath.section]).count>1 && WB_UserService.currentUser.isCloudLogin){
-             [headView.choosebtn setBackgroundImage:[UIImage imageNamed:[headView getImageWithChoose:NO]] forState:UIControlStateNormal];
-            [SXLoadingView showProgressHUDText:@"远程微信连接状态每次暂时只能上传一张照片" duration:1.2f];
-           
-            return;
-        }
         [self.chooseSection addObject:headView.fmIndexPath];
         [self.choosePhotos addObjectsFromArray:(NSArray *)self.arrDataSources[headView.fmIndexPath.section]];
     }else{
         [self.chooseSection removeObject:headView.fmIndexPath];
         [self.choosePhotos removeObjectsInArray:(NSArray *)self.arrDataSources[headView.fmIndexPath.section]];
     }
-    if (!_isBoxSelectType) {
-        if (self.choosePhotos.count == 0) {
-            self.isSelectMode = NO;
-            [self leftBtnClick:_leftBtn];
-        }
-    }
     
-    _countLb.text = [NSString stringWithFormat:WBLocalizedString(@"select_count", nil),(unsigned long)self.choosePhotos.count];
-    if (_isBoxSelectType) {
-        [_boxTypeSelectFinishButton setTitle:[NSString stringWithFormat:@"完成(%lu)",(unsigned long)self.choosePhotos.count] forState:UIControlStateNormal];
+    if (self.choosePhotos.count == 0) {
+        self.isSelectMode = NO;
+        [self leftBtnClick:_leftBtn];
     }
+    _countLb.text = [NSString stringWithFormat:WBLocalizedString(@"select_count", nil),(unsigned long)self.choosePhotos.count];
     [self.collectionView reloadData];
 }
 
@@ -1164,158 +934,35 @@ bool isDecelerating = NO;
         [SXLoadingView showAlertHUD:WBLocalizedString(@"please_select_the_photo", nil) duration:1];
 }
 
-- (void)shareToOther{
-    @weaky(self)
-    UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:_shareaDataArray applicationActivities:nil];
-    //初始化回调方法
-    UIActivityViewControllerCompletionWithItemsHandler myBlock = ^(UIActivityType __nullable activityType, BOOL completed, NSArray * __nullable returnedItems, NSError * __nullable activityError)
-    {
-        NSLog(@"activityType :%@", activityType);
-        if (completed)
-        {
-            NSLog(@"share completed");
-            if (activityType == UIActivityTypeSaveToCameraRoll) {
-                [SXLoadingView showProgressHUDText:@"已存入相册" duration:1.2f];
-            }else{
-                [SXLoadingView showProgressHUDText:@"分享完成" duration:1.2f];
-            }
-        }
-        else
-        {
-            NSLog(@"share cancel");
-        }
-        [weak_self dismissShareView];
-    };
-    
-    // 初始化completionHandler，当post结束之后（无论是done还是cancel）该blog都会被调用
-    activityVC.completionWithItemsHandler = myBlock;
-    
-    //关闭系统的一些activity类型 UIActivityTypeAirDrop 屏蔽aridrop
-    activityVC.excludedActivityTypes = @[];
-    
-    [weak_self presentViewController:activityVC animated:YES completion:nil];
-}
-
 //其他分享
 -(void)shareToOtherApp{
     //准备照片
     @weaky(self);
-        [self clickDownloadWithShare:YES andCompleteBlock:^(NSArray *images) {
-            [self tabBarAnimationWithHidden:YES];
-            [weak_self shareScrollViewInit];
-            _shareaDataArray = images;
-        }];
-}
-
-- (void)shareScrollViewInit{
-    [UIView  animateWithDuration:.5f animations:^{
-        _shareView.frame = CGRectMake(0, __kHeight - ShareViewHeight-64, __kWidth, ShareViewHeight);
-    } completion:^(BOOL finished) {
-        self.collectionView.userInteractionEnabled = NO;
-        __block UIActivityIndicatorView *activtiy = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        activtiy.backgroundColor = [UIColor clearColor];
-        activtiy.frame = CGRectMake(0, 0, 30, 30);
-        activtiy.center = CGPointMake(_shareView.width/2, (_shareView.height - 44)/2);
-        [_shareView addSubview:activtiy];
-        [activtiy  startAnimating];
-        [WB_BoxService getBoxListCallBack:^(NSArray *boxesModelArr, NSError *error) {
-            [activtiy stopAnimating];
-            [activtiy removeFromSuperview];
-            if (!error) {
-                UIScrollView *scrollView = [[UIScrollView alloc]init];
-                scrollView.frame = CGRectMake(0, 0, __kWidth, ShareViewHeight - 44);
-                NSMutableArray *boxArray = [NSMutableArray arrayWithArray:boxesModelArr];
-                //                [boxesModelArr enumerateObjectsUsingBlock:^(WBBoxesModel *boxesModel, NSUInteger idx, BOOL * _Nonnull stop) {
-                //                    if ([boxesModel.uuid isEqualToString:[weak_self boxModel].uuid]) {
-                //                        [boxArray removeObject:boxesModel];
-                //                    }
-                //                }];
-                
-                _boxesDataArray = boxArray;
-                [boxArray enumerateObjectsUsingBlock:^(WBBoxesModel *boxesModel, NSUInteger idx, BOOL * _Nonnull stop) {
-                    UIButton *boxView = [[UIButton alloc]initWithFrame:CGRectMake(idx *(Button_Width + Width_Space) + Start_X,Start_Y, Button_Width, Button_Height)];
-                    //                        boxView.backgroundColor = [UIColor redColor];
-                    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, Button_Height - 15, Button_Width, 15)];
-                    label.textAlignment = NSTextAlignmentCenter;
-                    label.font = [UIFont systemFontOfSize:12];
-                    label.text = boxesModel.name;
-                    //                        NSLog(@"%@",boxesModel.name);
-                    //                        label.backgroundColor = [UIColor cyanColor];
-                    __block NSMutableString *userName = [NSMutableString stringWithCapacity:0];
-                    NSInteger n = MIN(boxesModel.users.count, 5);
-                    float r = 20 * n / (2.5 * n - 1.5);
-                    [boxesModel.users enumerateObjectsUsingBlock:^(WBBoxesUsersModel *userModel, NSUInteger idx, BOOL * _Nonnull stop) {
-                        if (idx<= n - 1){
-                            float deg =  M_PI * ((float)idx * 2 / n - 1 / 4);
-                            float top = (1 - cosf(deg)) * (20 - r);
-                            float left = (1 + sinf(deg)) * (20 - r);
-                            UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(left, top, r *2, r*2)];
-                            imageView.layer.masksToBounds = YES;
-                            imageView.layer.cornerRadius = r;
-                            imageView.layer.borderWidth = 0.5f;
-                            imageView.layer.borderColor = [UIColor whiteColor].CGColor;
-                            [imageView was_setCircleImageWithUrlString:userModel.avatarUrl placeholder:[UIImage imageWithColor:RGBACOLOR(0, 0, 0, 0.37)]];
-                            [boxView addSubview:imageView];
-                            if (boxesModel.name.length ==0) {
-                                [userName  appendFormat:@"%@,",userModel.nickName];
-                                label.text = userName;
-                            }
-                        }
-                    }];
-                    
-                    [boxView addSubview:label];
-                    boxView.tag = idx;
-                    [boxView addTarget:self action:@selector(boxShareClick:) forControlEvents:UIControlEventTouchUpInside];
-                    [scrollView addSubview:boxView];
-                }];
-                scrollView.contentSize = CGSizeMake(boxesModelArr.count*(Button_Width+Width_Space)+16*2 - Width_Space,scrollView.height );
-                [_shareView addSubview:scrollView];
-            }else{
-                if (error.code == 10000001) {
-                    [_shareView setHidden:YES];
-                    return ;
-                }
-                [SXLoadingView showAlertHUD:@"获取群列表失败" duration:1.2f];
+    [self clickDownloadWithShare:YES andCompleteBlock:^(NSArray *images) {
+        UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:images applicationActivities:nil];
+        //初始化回调方法
+        UIActivityViewControllerCompletionWithItemsHandler myBlock = ^(NSString *activityType,BOOL completed,NSArray *returnedItems,NSError *activityError)
+        {
+            NSLog(@"activityType :%@", activityType);
+            if (completed)
+            {
+                NSLog(@"share completed");
             }
-            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewPressed:)];
-            [self.view addGestureRecognizer:tap];
-            _tap = tap;
-        }];
+            else
+            {
+                NSLog(@"share cancel");
+            }
+            
+        };
+        
+        // 初始化completionHandler，当post结束之后（无论是done还是cancel）该blog都会被调用
+        activityVC.completionWithItemsHandler = myBlock;
+        
+        //关闭系统的一些activity类型 UIActivityTypeAirDrop 屏蔽aridrop
+        activityVC.excludedActivityTypes = @[];
+        
+        [weak_self presentViewController:activityVC animated:YES completion:nil];
     }];
-}
-
-- (void)boxShareClick:(UIButton *)sender{
-    [SXLoadingView showProgressHUD:@"正在分享"];
-    [WB_BoxService sendTweetWithImageArray:_shareaDataArray BoxModel:_boxesDataArray[sender.tag] Complete:^(WBTweetModel *tweetModel, NSError *error) {
-        if (!error) {
-            [SXLoadingView showAlertHUD:@"分享成功" duration:1.2f];
-        }else{
-            NSLog(@"%@",error);
-            [SXLoadingView showAlertHUD:@"分享失败" duration:1.2f];
-        }
-    }];
-    [self dismissShareView];
-}
-
-- (void)dismissShareView{
-    if (_shareView && _shareView.frame.origin.y == __kHeight - ShareViewHeight-64) {
-        [UIView animateWithDuration:.5f animations:^{
-            _shareView.frame = CGRectMake(0, __kHeight, __kWidth, ShareViewHeight);
-        } completion:^(BOOL finished) {
-            [_shareView.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                if ([obj isKindOfClass:[UIScrollView class]]) {
-                    [obj removeFromSuperview];
-                }
-            }];
-        }];
-    }
-    [self tabBarAnimationWithHidden:NO];
-    self.collectionView.userInteractionEnabled = YES;
-}
-
-- (void)viewPressed:(UIGestureRecognizer*)gesture{
-    [self dismissShareView];
-    [self.view removeGestureRecognizer:_tap];
 }
 
 -(void)clickDownloadWithShare:(BOOL)share andCompleteBlock:(void(^)(NSArray * images))block{
@@ -1373,7 +1020,7 @@ bool isDecelerating = NO;
     if ([item isKindOfClass:[WBAsset class]]) {
         NSLog(@"%lu",(unsigned long)item.type);
         if (item.type == JYAssetTypeNetImage) {
-            __block SDWebImageDownloadToken *sdDownloadToken =  [WB_NetService getHighWebImageWithHash:[(WBAsset *)item fmhash] completeBlock:^(NSError *error, UIImage *img) {
+            __block id<SDWebImageOperation> operation =  [WB_NetService getHighWebImageWithHash:[(WBAsset *)item fmhash] completeBlock:^(NSError *error, UIImage *img) {
                 if (error) {
                     NSLog(@"%@",error);
                     // TODO: Load Error Image
@@ -1397,8 +1044,8 @@ bool isDecelerating = NO;
                         });
                     NSLog(@"%@",img);
                 }
-               [[SDWebImageDownloader sharedDownloader] cancel:sdDownloadToken];
-                sdDownloadToken = nil;
+                [operation cancel];
+                operation = nil;
             }];
         }
     }else{
@@ -1427,29 +1074,6 @@ bool isDecelerating = NO;
         }else
             block(NO,nil);
     }
-}
-
-- (UIView *)boxTypeBar{
-    if (!_boxTypeBar) {
-        _boxTypeBar = [[UIView alloc]initWithFrame:CGRectMake(0, __kHeight - 44 - 64,__kWidth,44)];
-        [_boxTypeBar setLayerShadow:[UIColor blackColor] offset:CGSizeMake(0, -1) radius:1.0f];
-        _boxTypeBar.layer.shadowOpacity = 0.3f;
-        _boxTypeBar.backgroundColor = UICOLOR_RGB(0xf8f8fa);
-        [_boxTypeBar addSubview:self.boxTypeSelectFinishButton];
-    }
-    return _boxTypeBar;
-}
-
-- (UIButton *)boxTypeSelectFinishButton{
-    if (!_boxTypeSelectFinishButton) {
-        _boxTypeSelectFinishButton = [[UIButton alloc]initWithFrame:CGRectMake(__kWidth - 16 - 100, 0,100,44)];
-        [_boxTypeSelectFinishButton setTitle:[NSString stringWithFormat:@"完成(%ld)", self.choosePhotos.count] forState:UIControlStateNormal];
-        _boxTypeSelectFinishButton.titleLabel.font = [UIFont systemFontOfSize:16];
-        _boxTypeSelectFinishButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-        [_boxTypeSelectFinishButton setTitleColor:COR1 forState:UIControlStateNormal];
-        [_boxTypeSelectFinishButton addTarget:self action:@selector(boxTypeSelectFinishButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _boxTypeSelectFinishButton;
 }
 
 @end
