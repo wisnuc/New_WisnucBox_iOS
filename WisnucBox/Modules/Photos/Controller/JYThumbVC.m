@@ -307,15 +307,15 @@
     
     [self addRightBtn];
     [self initCollectionView];
-    if (_isBoxSelectType) {
-        [self initNaviForBoxSelectType];
-    }else{
+//    if (_isBoxSelectType) {
+//        [self initNaviForBoxSelectType];
+//    }else{
         [self initMjRefresh];
-    }
+//    }
     
-#warning box
+#warning box hide
 //    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-    [self sort:[self merge]];
+//    [self sort:[self merge]];
 //        dispatch_sync(dispatch_get_main_queue(), ^{
 //            [self.collectionView reloadData];
 //        });
@@ -326,18 +326,18 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userAuthChange:) name:ASSETS_AUTH_CHANGE_NOTIFY object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(assetDidChangeHandle:) name:ASSETS_UPDATE_NOTIFY object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hashCalculateHandle) name:HashCalculateFinishedNotify object:nil];
-    
-    _shareView = [[UIView alloc]initWithFrame:CGRectMake(0, __kHeight, __kWidth, ShareViewHeight)];
-    _shareView.backgroundColor = [UIColor whiteColor];
-    UIToolbar *shareToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, ShareViewHeight - 44, __kWidth, 44)];
-    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareToOther)];
-    UIBarButtonItem* flexItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    flexItem.width = 16;
-    [shareToolbar setItems:@[flexItem,barButtonItem]];
-    
-    
-    [_shareView addSubview:shareToolbar];
-    [self.view addSubview:_shareView];
+#warning box hide
+//    _shareView = [[UIView alloc]initWithFrame:CGRectMake(0, __kHeight, __kWidth, ShareViewHeight)];
+//    _shareView.backgroundColor = [UIColor whiteColor];
+//    UIToolbar *shareToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, ShareViewHeight - 44, __kWidth, 44)];
+//    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareToOther)];
+//    UIBarButtonItem* flexItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+//    flexItem.width = 16;
+//    [shareToolbar setItems:@[flexItem,barButtonItem]];
+//
+//
+//    [_shareView addSubview:shareToolbar];
+//    [self.view addSubview:_shareView];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
